@@ -2042,7 +2042,7 @@ class Hello(Div):
         self.counter = 1
         super().__init__(**kwargs)
         self.classes = 'm-1 p-1 text-2xl text-center text-white bg-blue-500 hover:bg-blue-800'
-        self.text = 'Hello!'
+        self.text = 'Hello! (click me)'
 
         def click(self, msg):
             self.text = f'Hello! I was clicked {self.counter} times'
