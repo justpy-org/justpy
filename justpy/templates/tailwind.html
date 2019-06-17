@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JustPy</title>
+    <link rel="shortcut icon" href={{ url_for('static', path='favicon-32x32.png') }}>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Vuetify -->
+{#    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">#}
+{#    <link href="css/form.css" rel="stylesheet">#}
+
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .75s
+        }
+
+        .fade-enter, .fade-leave-to {
+            opacity: 0
+        }
+
+        {% include 'css/form.css' %}
+
+    </style>
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"/>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+{#    <script src="https://unpkg.com/ag-grid-enterprise@19.0.0/dist/ag-grid-enterprise.min.js"></script>#}
+{% if not html %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.18/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+{% endif %}
+{#    <script src="https://unpkg.com/v-tooltip"></script>#}
+
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.0.1/vuex.min.js"></script>#}
+{#    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>#}
+{#    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.15.0/vuedraggable.min.js"></script>#}
+{% if options.highcharts %}
+    <style>
+{#need for exporting menu#}
+    hr {
+    display: block;
+    margin-before: 0.5em;
+    margin-after: 0.5em;
+    margin-start: auto;
+    margin-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+    </style>
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+{#    <script src="https://code.highcharts.com/stock/highcharts-more.js">/script>#}
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/histogram-bellcurve.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src=https://code.highcharts.com/modules/offline-exporting.js></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/boost.js"></script>
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/es-modules/themes/dark-unica.js"></script>#}
+{#    <script src={{ url_for('static', path='highchart_themes/dark-unica.js') }}></script>#}
+    <script src={{ url_for('static', path='highchart_themes/sand-signika.js') }}></script>
+{% endif %}
+
+</head>
+
+
+<body class="bg-white" style="">
+{% if html %}
+{{ html | safe }}
+{% else %}
+
+<div id="components-demo">
+
+</div>
+
+<script>
+
+
+
+    {% include 'js/EventHandlerJP.js' %}
+    {% include 'js/html_component.js' %}
+    {% include 'js/graphjp.js' %}
+    {% include 'js/gridbase.js' %}
+    {% include 'js/editorjp.js' %}
+    
+
+    
+    var page_id = {{ page_id | safe }};
+    //var session_id = '{{ session_id | safe }}';
+    var websocket_id = '';
+    var use_websockets = JSON.parse('{{ use_websockets }}');
+    console.log('use');
+    console.log(use_websockets);
+    if (use_websockets) {console.log('it is true')} else {console.log('it is false')}
+    var justpyComponents = {{ justpy_dict | safe }};
+
+    if (use_websockets) {
+        console.log(document.domain);
+        var socket = new WebSocket('ws://' + document.domain + ':' + location.port);
+
+    socket.addEventListener('open', function (event) {
+        console.log('Webocket opened');
+        socket.send(JSON.stringify({'type': 'connect'  ,'page_id': page_id}));
+    });
+
+    socket.addEventListener('message', function (event) {
+        msg = JSON.parse(event.data);
+        console.log('Message from server ',msg);
+                console.log(event);
+
+        switch (msg.type) {
+            case 'page_update':
+                app1.justpyComponents = msg.data;
+                break;
+            case 'websocket_update':
+                websocket_id = msg.data;
+                break;
+            case 'component_update':
+                // update just specific components on the page
+                // msg format is {'id': id, 'dict': the json describing object}
+                //app1.justpyComponents = msg;
+                //need to test this
+                console.log('About to replace'); console.log(msg.data);
+                comp_replace(msg.data, app1.justpyComponents);
+                console.log('Done replacing');
+                break;
+            case 'tooltip_update':
+                console.log('tooltip update');
+                console.log(msg.data);
+                var chart_on = cached_graph_def['chart'+msg.id];
+                                console.log(chart_on);
+                                chart_on.tooltip.label.attr({
+                                    text: msg.data
+                                });
+                break;
+        }
+    });
+}
+ else {
+      // Not sure code is needed here
+ }
+
+    function comp_replace(comp, comp_list) {
+        var m_id = comp['id'];
+        for (let i = 0; i < comp_list.length; i++) {
+            if (comp_list[i]['id'] == m_id) {
+                var spliced = comp_list.splice(i, 1, comp);
+                return 1;
+            } else {
+                if (comp_list[i]['object_props']) {
+                    if (comp_replace(comp, comp_list[i]['object_props'])) return 1;
+                }
+            }
+        }
+    }
+
+{% if page_options.reload_interval %}
+ setInterval(function() {
+    //d = JSON.stringify({'type': 'event'  ,'event_data': e});
+            $.ajax({
+            type: "POST",
+            url: "/zzz_justpy_ajax",
+            data: JSON.stringify({'type': 'event'  ,'event_data': {'event_type': 'page_update', 'page_id': {{ page_id | safe }} }}),
+            success: function( msg ) {
+  //$( ".result" ).html( data );
+            console.log( "Ajax from RELOAD was performed." );
+            {#console.log(msg);#}
+            if (msg) app1.justpyComponents = msg.data;
+        },
+            dataType: 'json'
+        });
+},1000 * {{ page_options.reload_interval }});
+    {% endif %}
+    // socket.emit('close_event', {data: 'page closing', page_id: page_id, session_id: sessionStorage.getItem("session_id")});
+    // e.preventDefault();
+    // Chrome requires returnValue to be set.
+    // e.returnValue = null;
+    //});
+
+    var app1 = new Vue({
+        el: '#components-demo',
+        //store,
+        data: {
+            justpyComponents: justpyComponents
+        },
+        render: function (h) {
+            var comps = [];
+            for (var i = 0; i < this.justpyComponents.length; i++) {
+
+                if (this.justpyComponents[i].show) {  // (this.justpyComponents[i].show)
+                    comps.push(h(this.justpyComponents[i].vue_type, {
+                        props: {
+                            jp_props: this.justpyComponents[i]
+                        }
+                    }))
+                }
+            }
+
+            //console.log(this.justpyComponents);
+            return h('div', {class: ''}, comps);
+
+
+        }
+    });
+
+
+</script>
+{% endif %}
+</body>
+</html>
