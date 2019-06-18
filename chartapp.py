@@ -408,7 +408,6 @@ def sine_together(request):
 
 def sine_alone(request):
     wp = WebPage()
-    co = Dict()
     d = Div(classes='flex flex-wrap', a=wp)
     x = np.linspace(-np.pi, np.pi, 201)
 
