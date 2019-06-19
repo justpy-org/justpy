@@ -182,13 +182,19 @@ class JustpyEvents(WebSocketEndpoint):
 
     async def on_disconnect(self, websocket, close_code):
         print(WebPage.sockets)
-        WebPage.sockets[websocket.page_id].pop(websocket.id)
-        if not WebPage.sockets[websocket.page_id]:
-            WebPage.sockets.pop(websocket.page_id)
+        pid = websocket.page_id
+        WebPage.sockets[pid].pop(websocket.id)
+        if not WebPage.sockets[pid]:
+            WebPage.sockets.pop(pid)
+            WebPage.instances[pid].components = []
+            WebPage.instances.pop(pid)
         # Need to add garbage collection, remove all webpages and components that will not be used amymore, probably background process
         # The WebPAge instance that was closed is still part of the WebPAage class instance list so the system will not remove it
+        # WebPage.instances[self.page_id] = self
+
         print(close_code, 'close code')
         print(WebPage.sockets)
+        print(WebPage.instances)
 
 
     async def _connect(self, websocket, data_dict):

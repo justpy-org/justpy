@@ -84,13 +84,13 @@ s3="""
 
 }
 """
-print(demjson.decode(s1))
-print(demjson.decode(s2))
-s4 = (demjson.decode(s3))
-print(s4)
-print()
+# print(demjson.decode(s1))
+# print(demjson.decode(s2))
+# s4 = (demjson.decode(s3))
+# print(s4)
+# print()
 # help(demjson)
-print(json.dumps(s4))
+# print(json.dumps(s4))
 
 # pt = parse_test("a = {text: 'hello', subtext: 'bye'}")
 
@@ -192,3 +192,17 @@ a = ['columnrange',
      'windbarb',
      'wordcloud',
      'xrange']
+
+a = """
+{ legend: {
+        align: 'right',
+        verticalAlign: 'top',
+        layout: 'vertical',
+        x: 0,
+        y: 100
+    }}
+
+"""
+import json, demjson
+print(a)
+print(demjson.decode(a))

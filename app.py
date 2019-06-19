@@ -6,7 +6,7 @@ from justpy.tailwind import Tailwind
 
 def inp(self, msg):
     # print(self.parent.components)
-    self.value = msg['value']
+    self.value = msg.value
     print(msg)
     for i in self.parent.components:
         i.value = self.value
@@ -584,27 +584,7 @@ async def colors_test1(request):
 
 
 
-async def clock_counter(wp, delay):
-    print('in clock counter')
-    if wp.start_flag:
-        wp.start_flag = False
-        await asyncio.sleep(3)
-    await asyncio.sleep(delay)
-    wp.clock.text+=1
-    await wp.update()
-    loop = WebPage.loop
-    # loop.call_later(4, clock_counter)
-    task1 = loop.create_task(clock_counter(wp, delay))
 
-async def clock_test(request):
-    wp = WebPage()
-    wp.start_flag = True
-    clock = jp.Div(classes='m-2 text-6xl', a=wp, text = 1000)
-    wp.clock = clock
-    loop = WebPage.loop
-    task1 = loop.create_task(clock_counter(wp, 0.1))
-    # await asyncio.sleep(5)
-    return wp
 
 def my_click(self, msg):
     print('in click')
@@ -640,9 +620,9 @@ def form_test(request):
 
 # jp.justpy(comp_update_test)
 # jp.justpy(papillon_demo)
-jp.justpy(very_simple)
+# jp.justpy(very_simple)
 # jp.justpy(form_test)
 # jp.justpy(simple, websockets=True)
-# jp.justpy(test)
+jp.justpy(test)
 # jp.justpy(colors_test, websockets=True)
 # jp.justpy(clock_test)

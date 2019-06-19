@@ -388,14 +388,48 @@ async def stock_chart(request):
 
 def sine_together(request):
     wp = WebPage()
-    co = Dict()
-    g = HighCharts(options=co, a=wp)
+    a = demjson.decode("""
+    {legend: {
+        align: 'left',
+        verticalAlign: 'top',
+        layout: 'vertical',
+        x: 0,
+        y: 100
+    }}
+    """)
+    b = """
+    {legend: {
+        align: 'right',
+        verticalAlign: 'top',
+        layout: 'vertical',
+        x: 0,
+        y: 0
+    }}
+    """
+    # co = Dict({'legend': {'align': 'left', 'verticalAlign': 'top', 'layout': 'vertical', 'x': 0, 'y': 100}})
+    # co = Dict(a)
+    # co = Dict()
+    # co['legend'] = Dict({'align': 'left', 'verticalAlign': 'top', 'layout': 'vertical', 'x': 0, 'y': 100})
+    # co.legend.align = 'right'
+    # co.legend.x = -50
+    g = HighCharts( a=wp, classes='m-1 w-1/2')
+    g.load_json(b)
+    co = g.options
+    co.legend.align = 'right'
+    co.legend.layout = 'proximate'
     co.chart.type = 'spline'
+    # co.chart.width = 600
     co.title.text = 'Sine Graph'
-    x = np.linspace(-np.pi, np.pi, 201)
+    # co.legend.layout = 'vertical'
+    # co.legend.align = 'right'
+    # co.legend.verticalAlign = 'top'
+    # co.legend.x = 0
+    # co.legend.y = 50
+    a = {'legend': {'align': 'right', 'verticalAlign': 'top', 'layout': 'vertical', 'x': 0, 'y': 100}}
+    x = np.linspace(-np.pi, 1.2*np.pi, 201)
     sinx = np.sin(x)
     co.series = []
-    for f in range(1,10):
+    for f in range(1,6):
         s = Dict()
         s.name = f'Cycle {f}'
         sinx = np.sin(f * x)
@@ -422,13 +456,32 @@ def sine_alone(request):
         sinx = np.sin(f * x)
         s.data = [list(i) for i in zip(x, sinx)]
         co.series.append(s)
-
-
     return wp
 
+def file_load_test_histogram(request):
+    wp = WebPage()
+    g = HighCharts(a=wp)
+    co = g.load_json_from_file('highcharts/histogram.txt')
+    data = [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6,
+            3.3, 3.4, 3, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3,
+            3.8, 3.2, 3.7, 3.3, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2, 3, 2.2, 2.9, 2.9, 3.1, 3, 2.7, 2.2,
+            2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3, 2.8, 3, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3, 3.4, 3.1, 2.3, 3, 2.5, 2.6, 3,
+            2.6, 2.3, 2.7, 3, 2.9, 2.9, 2.5, 2.8, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6, 3.2, 2.7, 3, 2.5, 2.8,
+            3.2, 3, 3.8, 2.6, 2.2, 3.2, 2.8, 2.8, 2.7, 3.3, 3.2, 2.8, 3, 2.8, 3, 2.8, 3.8, 2.8, 2.8, 2.6, 3, 3.4, 3.1,
+            3, 3.1, 3.1, 3.1, 2.7, 3.2, 3.3, 3, 2.5, 3, 3.4, 3]
+    co.series[1].data = data
+    print(co)
+    return wp
 
+def file_load_test(request):
+    wp = WebPage()
+    g = HighCharts(a=wp)
+    co = g.load_json_from_file('highcharts/streamgraph.txt')
 
+    print(co)
+    return wp
 
 # justpy(chart_test)
 # justpy(stock_chart)
-justpy(sine_alone)
+# justpy(sine_alone)
+justpy(file_load_test)

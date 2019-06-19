@@ -2054,10 +2054,11 @@ class Hello(Div):
 def component_by_tag(tag, **kwargs):
 
     c = None
+    tag = tag.lower()
     if tag in _tag_class_dict:
         c = _tag_class_dict[tag](**kwargs)
     else:
-        print(f'Tag not defined: {tag}')
+        raise ValueError(f'Tag not defined: {tag}')
     return c
 
 get_tag = component_by_tag
@@ -2250,6 +2251,11 @@ async def get(url):
     return result.json()
 
 def get_websocket(msg):
+    """
+    Gets websocket from event message
+    :param msg:
+    :return:
+    """
     websocket_dict = WebPage.sockets[msg.page.page_id]
     return websocket_dict[msg.websocket_id]
 
