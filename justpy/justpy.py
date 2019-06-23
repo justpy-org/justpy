@@ -23,7 +23,7 @@ import uvicorn, datetime, logging, uuid, time
 #TODO: Embed editor  https://github.com/ajaxorg/ace-builds/  https://codemirror.net/
 #TODO: Docker bitnami stacksmith digitalocean one click app
 
-config = Config('.env')
+config = Config('test.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
 SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
@@ -33,7 +33,7 @@ COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One 
 HOST = config('HOST', cast=str, default='0.0.0.0')
 PORT = config('PORT', cast=int, default=8000)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
-# HIGHCHARTS = True
+# HIGHCHARTS = False
 
 template_options = {}
 template_options['highcharts'] = HIGHCHARTS
@@ -186,11 +186,12 @@ class JustpyEvents(WebSocketEndpoint):
         WebPage.sockets[pid].pop(websocket.id)
         if not WebPage.sockets[pid]:
             WebPage.sockets.pop(pid)
-            WebPage.instances[pid].components = []
-            WebPage.instances.pop(pid)
+            # WebPage.instances[pid].components = []
+            # WebPage.instances.pop(pid)
         # Need to add garbage collection, remove all webpages and components that will not be used amymore, probably background process
         # The WebPAge instance that was closed is still part of the WebPAage class instance list so the system will not remove it
         # WebPage.instances[self.page_id] = self
+        #TODO:  Need flaxg if web page can be deleted. Same for all components? Improve garbage collection
 
         print(close_code, 'close code')
         print(WebPage.sockets)
@@ -254,12 +255,12 @@ async def handle_event(data_dict, com_type=0):
             await p.update()
         elif com_type == 1:   # Ajax communication
             build_list = p.build_list()
-    else:
-        try:
-            if event_result['type'] == 'tooltip':
-                print(event_result, 'we got tooltip')
-        except:
-            pass
+    # else:
+    #     try:
+    #         if event_result['type'] == 'tooltip':
+    #             print(event_result, 'we got tooltip')
+    #     except:
+    #         pass
     try:
         after_result = await run_event_function(c, 'after', event_data, True)
     except:

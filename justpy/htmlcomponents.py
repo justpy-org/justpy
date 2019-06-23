@@ -57,7 +57,7 @@ class WebPage:
 
 
     def __init__(self, **kwargs):
-        self.dirty = False  # Indicates if page has changed
+        # self.dirty = False  # Indicates if page has changed
         # self.name = name
         self.page_id = WebPage.next_page_id
         WebPage.next_page_id += 1
@@ -69,7 +69,7 @@ class WebPage:
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.delete_flag = True
         self.template_file = 'tailwindsbase.html'
-        self.static_template_file = 'server_render.html'
+        # self.static_template_file = 'server_render.html'
         self.components = []  # list  of components on page
         # self.sessions = []  # List of sessions page is on
         self.folders = []  # List of folders page is in
@@ -196,10 +196,16 @@ class JustpyBaseComponent(Tailwind):
 
     def __init__(self,  **kwargs): # c_name=None,
 
-        cls = JustpyBaseComponent
-        cls.instances[cls.next_id] = self
-        self.id = cls.next_id
-        cls.next_id += 1
+        temp = kwargs.get('temp', False)
+        # If object is not a temporary one
+        if not temp:
+            cls = JustpyBaseComponent
+            cls.instances[cls.next_id] = self
+            self.id = cls.next_id
+            cls.next_id += 1
+        # object is temporary and is not added to instance list
+        else:
+            self.id = 'temp'
         self.events = []
         self.allowed_events = []
 
@@ -467,7 +473,7 @@ class Div(HTMLBaseComponent):
     def last(self):
         return self.components[-1]
 
-    #TODO: Handle inner_html. Basically if it exists that is the html
+
     def to_html(self, indent=0, indent_step=0, format=True):
         block_indent = ' '*indent
         if format:
@@ -478,11 +484,16 @@ class Div(HTMLBaseComponent):
         d = self.convert_object_to_dict()
         for attr, value in d['attrs'].items():
             s = f'{s}{attr}="{value}" '
+        if self.style:
+            s = f'{s}style="{self.style}"'
         if self.classes:
             s = f'{s}class="{self.classes}">{ws}'
         else:
             s = f'{s}>{ws}'
         # Add the text in the beginning if exists, need to test
+        if self.inner_html:
+            s = f'{s}{self.inner_html}</{self.html_tag}>{ws}'
+            return s
         try:
             s = f'{s}{self.text}{ws}'
         except:
@@ -515,6 +526,11 @@ class Div(HTMLBaseComponent):
         d['object_props'] = self.build_list()
         if hasattr(self, 'text'):
             d['text'] = self.text
+            # Handle HTML entities. Warning, they should be in their own spnad or div etc. Setting inner_html erases all other stuff in container
+            if self.text[0] == '&':
+                d['inner_html'] = self.text
+
+
         return d
 
 DivJP = Div

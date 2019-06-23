@@ -6,12 +6,13 @@ wp = jp.WebPage()
 clock_div = jp.Span(text='loading...', classes='text-5xl m-1 p-1 bg-gray-300 font-mono', a=wp)
 
 async def clock_counter():
-    clock_div.text = time.strftime("%a, %d %b %Y, %H:%M:%S", time.localtime())
+    while True:
+        clock_div.text = time.strftime("%a, %d %b %Y, %H:%M:%S", time.localtime())
     # jp.JustPy.loop.create_task(wp.update())
-    jp.run_task(wp.update())
-    await asyncio.sleep(1)
+        jp.run_task(wp.update())
+        await asyncio.sleep(1)
     # jp.JustPy.loop.create_task(clock_counter())
-    jp.run_task(clock_counter())
+    # jp.run_task(clock_counter())
 
 
 async def clock_test(request):
@@ -80,3 +81,4 @@ def session_test(request):
 
 
 jp.justpy(clock_test, startup=clock_init)
+# jp.justpy(clock_test, startup=clock_init, host='198.199.81.28', port=80, websockets=True)

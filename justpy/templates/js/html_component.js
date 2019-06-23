@@ -6,7 +6,9 @@ Vue.component('html_component', {
     render: function (h) {
         if (this.jp_props.hasOwnProperty('text')) {
             var comps = [this.jp_props.text];
-        } else comps = [];
+        }
+        else comps = [];
+
         //console.log(this.jp_props);
         for (var i = 0; i < this.jp_props.object_props.length; i++) {
 

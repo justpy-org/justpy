@@ -112,7 +112,7 @@ radio_options_2 = [
           'value': 'op3'
         }
       ]
-
+# TODO: Use this as an example of model
 def comp_test(request):
     wp = WebPage(data={'radio': 'op3'})
     print(wp)

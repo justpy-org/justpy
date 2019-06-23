@@ -65,6 +65,7 @@ async def get_dog(self, msg):
 async def change_breed(self, msg):
 
     print('in change breed')
+    print(msg)
     # WebPage.instances[msg['page_id']].breed = self.value
     msg.page.breed = self.value
 
@@ -619,10 +620,10 @@ def form_test(request):
 
 
 # jp.justpy(comp_update_test)
-# jp.justpy(papillon_demo)
+jp.justpy(papillon_demo)
 # jp.justpy(very_simple)
 # jp.justpy(form_test)
 # jp.justpy(simple, websockets=True)
-jp.justpy(test)
+# jp.justpy(test)
 # jp.justpy(colors_test, websockets=True)
 # jp.justpy(clock_test)

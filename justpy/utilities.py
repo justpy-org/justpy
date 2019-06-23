@@ -1,6 +1,7 @@
 import inspect
 import asyncio
 from types import SimpleNamespace
+from addict import Dict
 
 
 def print_request(request):
@@ -85,11 +86,16 @@ async def create_delayed_task(task, delay, loop):
 # msg = {'event_type': 'submit', 'id': 1, 'class_name': 'Form', 'html_tag': 'form', 'event_target': '1', 'event_current_target': '1', 'running_id': 0, 'page_id': 0, 'form_data': [{'html_tag': 'input', 'id': '2', 'name': 'cat1', 'type': 'radio', 'value': 'volvo', 'class': 'form-radio', 'checked': False}, {'html_tag': 'input', 'id': '4', 'name': 'cat1', 'type': 'radio', 'value': 'volvo 12', 'class': 'form-radio', 'checked': False}, {'html_tag': 'input', 'id': '6', 'name': 'cat1', 'type': 'radio', 'value': 'volvo 13', 'checked': True}, {'html_tag': 'input', 'id': '8', 'name': 'cat1123', 'type': 'checkbox', 'value': 'volvocheck', 'checked': True}, {'html_tag': 'button', 'id': '9', 'value': ''}], 'session_id': '92a895d72fca4443aa9effb0b70f8229', 'page': 'page object'}
 
 def create_namespace(msg):
+    j = Dict(msg)
+    return j
     j = SimpleNamespace(**msg)
     # if hasattr(j, 'form_data'):
     if j.form_data:
         for counter, value in enumerate(j.form_data):
             j.form_data[counter] = SimpleNamespace(**j.form_data[counter])
+    if hasattr(j, 'points'):
+        for counter, value in enumerate(j.points):
+            j.points[counter] = SimpleNamespace(**j.points[counter])
     return j
 
 

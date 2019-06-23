@@ -104,14 +104,18 @@
     //var session_id = '{{ session_id | safe }}';
     var websocket_id = '';
     var use_websockets = JSON.parse('{{ use_websockets }}');
-    console.log('use');
-    console.log(use_websockets);
-    if (use_websockets) {console.log('it is true')} else {console.log('it is false')}
     var justpyComponents = {{ justpy_dict | safe }};
 
     if (use_websockets) {
-        console.log(document.domain);
-        var socket = new WebSocket('ws://' + document.domain + ':' + location.port);
+        console.log('Domain: ' + document.domain);
+        if (location.port) {
+            var socket = new WebSocket('ws://' + document.domain + ':' + location.port);
+        }
+        else {
+            var socket = new WebSocket('ws://' + document.domain);
+        }
+
+        //var socket = new WebSocket('ws://127.0.0.1:8000');
 
     socket.addEventListener('open', function (event) {
         console.log('Webocket opened');
@@ -120,7 +124,7 @@
 
     socket.addEventListener('message', function (event) {
         msg = JSON.parse(event.data);
-        console.log('Message from server ',msg);
+        console.log('Message received from server ',msg);
                 console.log(event);
 
         switch (msg.type) {
@@ -140,13 +144,31 @@
                 console.log('Done replacing');
                 break;
             case 'tooltip_update':
-                console.log('tooltip update');
-                console.log(msg.data);
+                //https://github.com/highcharts/highcharts/issues/6824
                 var chart_on = cached_graph_def['chart'+msg.id];
-                                console.log(chart_on);
+
+                                if (chart_on.options.tooltip.split) {
+                                    chart_on.tooltip.tt.attr({
+                                    text: msg.data[0]
+                                });
+
+                                    var j = 1;
+                                    for (var i=0; i<chart_on.tooltip.chart.series.length; i++) {
+                                        if (chart_on.tooltip.chart.series[i].visible &&
+                                            (chart_on.tooltip.chart.series[i].tt != null)) {
+                                            chart_on.tooltip.chart.series[i].tt.attr({
+                                            text: msg.data[j++]
+                                        });
+
+                                        }
+                                    }
+
+                                }
+                                else {
                                 chart_on.tooltip.label.attr({
                                     text: msg.data
                                 });
+                            }
                 break;
         }
     });

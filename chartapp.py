@@ -323,8 +323,36 @@ async def my_tooltip(self, msg):
     print(msg)
     # await asyncio.sleep(0.2)
     websocket = get_websocket(msg)
-    await websocket.send_json({'type': 'tooltip_update', 'data': f'<span style="font-size:20px">hello eli {msg.series_name} {msg.x} {msg.y}</span>', 'id': msg.id})
+    s1 = f'<span style="color: {msg.color}">&#x25CF;</span>'
+    div1 = f'<div>{s1} My formatter:</div>'
+    div2 = f'<div>{msg.series_name}</div>'
+    div3 = f'<div>Year: {msg.x}</div>'
+    div4 = f'<div>Number of employees: {"{:,}".format(msg.y)}</div>'
+    tooltip_div = f'<div class="text-white bg-blue-800 text-lg"> {div1}{div2}{div3}{div4}</div>'
+    await websocket.send_json({'type': 'tooltip_update', 'data': tooltip_div, 'id': msg.id})
     return True
+
+async def my_shared_tooltip(self, msg):
+    print(msg.points)
+
+    return_string = ''
+    print('x', msg.x)
+    for point in msg.points:
+        # return_string += f'<div style="font-size:10px">{point["series_name"]}   {point["x"]} {point["y"]}</div>'
+        #<span style="color:' + this.point.color + '">\u25CF</span>
+        #<span style="color:' + this.point.color + '">&#x25CF;</span>
+        # s1 = f'<span style="color: {point.color}">&#x25CF;</span>'
+        s1 = f'<span style="color: {point.color}">&#129409;</span>'
+        return_string += f'<div style="font-size:12px"> {s1} {point.series_name}   {point.x} {point.y}</div>'
+    # await asyncio.sleep(0.2)
+    websocket = get_websocket(msg)
+    # await websocket.send_json({'type': 'tooltip_update', 'data': f'<span style="font-size:20px">Daniel {msg.series_name} {msg.x} {msg.y}</span>', 'id': msg.id})
+    print(return_string);
+    await websocket.send_json({'type': 'tooltip_update', 'data': return_string, 'id': msg.id})
+    return True
+
+
+
 
 def add_point(self, msg):
     series = self.chart.options.series
@@ -339,9 +367,13 @@ def chart_test(request):
     charts = [s3] #, s4, var_pie]
     for chart in charts:
         my_chart = HighCharts()
+
         my_chart.load_json(chart)
+        my_chart.options.title.text = 'My Chart'
+        my_chart.options.tooltip.shared = False
+        # my_chart.options.tooltip.split = True
         my_chart.on('tooltip', my_tooltip)
-        my_chart.on('point_click', chart_click)
+        # my_chart.on('point_click', chart_click)
         print(my_chart.options)
         d.add(my_chart)
     b = Button(text='click me', classes='shadow m-2', click=add_point, a=wp)
@@ -349,6 +381,43 @@ def chart_test(request):
     b.chart = my_chart
 
     return wp
+
+def tool_tip_demo(request):
+    wp = WebPage()
+    d = Div(classes='flex flex-wrap ', a=wp)
+    charts = [s3, s3, s3]
+    my_charts = []
+    for chart in charts:
+        my_chart = HighCharts(a=d, classes='m-2 p-2 border')
+        my_charts.append(my_chart)
+        my_chart.load_json(chart)
+
+        # my_chart.on('tooltip', my_shared_tooltip)
+    my_charts[0].options.tooltip.shared = False
+    my_charts[1].options.tooltip.shared = True
+    my_charts[2].options.tooltip.split = True
+    my_charts[0].options.title.text = 'Simple Tooltip'
+    my_charts[1].options.title.text = 'Shared Tooltip'
+    my_charts[2].options.title.text = 'Split Tooltip'
+
+    d = Div(classes='flex flex-wrap', a=wp)
+    charts = [s3, s3, s3]
+    my_charts = []
+    for chart in charts:
+        my_chart = HighCharts(a=d, classes='m-2 p-2 border')
+        my_charts.append(my_chart)
+        my_chart.load_json(chart)
+
+        # my_chart.on('tooltip', my_shared_tooltip)
+    my_charts[0].options.tooltip.shared = False
+    my_charts[1].options.tooltip.shared = True
+    my_charts[2].options.tooltip.split = True
+    my_charts[0].options.title.text = 'Simple Tooltip - Formatter Example'
+    my_charts[1].options.title.text = 'Shared Tooltip - Formatter Example'
+    my_charts[2].options.title.text = 'Split Tooltip - Formatter Example'
+
+    return wp
+
 
 async def stock_chart(request):
     wp = WebPage()
@@ -481,7 +550,9 @@ def file_load_test(request):
     print(co)
     return wp
 
-# justpy(chart_test)
+justpy(chart_test)
 # justpy(stock_chart)
 # justpy(sine_alone)
-justpy(file_load_test)
+# justpy(file_load_test)
+# justpy(file_load_test, host='198.199.81.28', port=80, websockets=True)
+# justpy(tool_tip_demo)

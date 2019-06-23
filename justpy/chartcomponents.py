@@ -69,7 +69,13 @@ class HighCharts(JustpyBaseComponent):
                 print('Problem with websocket in page update, ignoring')
         return self
 
+    async def tooltip_update(self, tooltip, websocket):
+        await websocket.send_json({'type': 'tooltip_update', 'data': tooltip, 'id': self.id})
+        # So the page itself does not update, only the tooltip
+        return True
+
     async def example_on_tooltip(self, msg):
+        # https://api.highcharts.com/highcharts/tooltip.formatter
         print(msg)
         websocket_dict = WebPage.sockets[msg.page.page_id]
         await asyncio.sleep(0.2)

@@ -90,7 +90,7 @@ def upload_starpy():
 
     base_directory = '/root/starpy/justpy/'
     with Connection('198.199.81.28', user='root', port=22, connect_kwargs=p) as c:
-        for f in ['classcreator.py', 'htmlcomponents.py', 'justpy.py', 'tailwind.py', 'utilities.py', '__init__.py']:
+        for f in ['classcreator.py', 'htmlcomponents.py', 'justpy.py', 'tailwind.py', 'utilities.py', '__init__.py', 'chartcomponents.py']:
             print(f)
             r = c.put('justpy/' + f, base_directory + f)
             print(f)
@@ -100,7 +100,7 @@ def upload_starpy():
             r = c.put('justpy/templates/' + f, base_directory + 'templates/' + f)
             print(f)
 
-        for f in ['editorjp.js', 'EventHandlerJP.js', 'graphjp.js', 'gridbase.js', 'htmljp.js', 'html_component - Copy.js', 'html_component.js']:
+        for f in ['editorjp.js', 'EventHandlerJP.js', 'graphjp.js', 'gridbase.js', 'htmljp.js', 'html_component.js']:
             print(f)
             r = c.put('justpy/templates/js/' + f, base_directory + 'templates/js/' + f)
             print(f)
@@ -110,13 +110,52 @@ def upload_starpy():
             r = c.put('justpy/templates/css/' + f, base_directory + 'templates/css/' + f)
             print(f)
 
+        for f in ['favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png']:
+            print(f)
+            r = c.put('justpy/static/' + f, base_directory + 'static/' + f)
+            print(f)
+
+        for f in ['bubble.txt', 'histogram.txt', 'streamgraph.txt']:
+            print(f)
+            r = c.put('highcharts/' + f, '/root/starpy/' + 'highcharts/' + f)
+            print(f)
+
         #r = c.run('source jp')
         print('++++++++++++++++++++++++++++++++++++++++++++++++')
         # print(r.stdout)
         print('++++++++++++++++++++++++++++++++++++++++++++++++')
 
-upload_starpy()
+# upload_starpy()
 
+
+def upload_starpy_just_apps():
+    print(os.getcwd())
+    print('Uploading to DigitalOcean...')
+    p = {"password": "d$$5Fg1tt"}
+
+    base_directory = '/root/starpy/'
+    with Connection('198.199.81.28', user='root', port=22, connect_kwargs=p) as c:
+        for f in ['clock.py', 'chartapp.py']:
+            print(f)
+            r = c.put( f, base_directory + f)
+            print(f)
+
+# upload_starpy_just_apps()
+
+def upload_tailwind():
+    print(os.getcwd())
+    print('Uploading to DigitalOcean...')
+    p = {"password": "d$$5Fg1tt"}
+
+    base_directory = '/root/starpy/justpy/'
+    with Connection('198.199.81.28', user='root', port=22, connect_kwargs=p) as c:
+
+        for f in ['tailwind.html', '__init__.py']:
+            print(f)
+            r = c.put('justpy/templates/' + f, base_directory + 'templates/' + f)
+            print(f)
+
+upload_tailwind()
 # C:\Users\eli\PycharmProjects\StarPy
 # C:\Users\eli\PycharmProjects\StarPy\justpy ['static', 'templates', '__pycache__'] ['classcreator.py', 'htmlcomponents.py', 'justpy.py', 'tailwind.py', 'utilities.py', '__init__.py']
 # C:\Users\eli\PycharmProjects\StarPy\justpy\static [] []
