@@ -137,3 +137,137 @@ class HighStock(HighCharts):
 
         super().__init__(**kwargs)
         self.stock = True
+
+
+class Histogram(HighCharts):
+
+    # This is a component that other components can be added to
+
+    def __init__(self, data, **kwargs):
+        _s1 = """
+        {
+            chart: {
+                type: 'spline',
+                zoomType: 'xy',
+                width: 600
+            },
+
+            title: {
+                text: 'Histogram Chart'
+            },
+
+            yAxis: {
+                title: {
+                    text: 'Y Axis Title'
+                }
+            },
+
+            xAxis: {
+                title: {
+                    text: 'X Axis Title'
+                }
+            },
+
+            legend: {
+                layout: 'proximate',
+                align: 'right'
+
+            },
+
+
+            series: [],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+
+        }
+
+        """
+        super().__init__(**kwargs)
+        chart = self
+        chart.load_json(_s1)
+        c = Dict()
+        chart.options.legend.layout = 'horizontal'
+        chart.options.legend.align = 'center'
+        chart.options.xAxis = []
+        chart.options.xAxis.append(Dict({'title': {'text': 'Data'}, 'alignTicks': False}))
+        chart.options.xAxis.append(Dict({'title': {'text': 'Histogram'}, 'alignTicks': False, 'opposite': True}))
+        chart.options.yAxis = []
+        chart.options.yAxis.append(Dict({'title': {'text': 'Data'}}))
+        chart.options.yAxis.append(Dict({'title': {'text': 'Histogram'}, 'opposite': True}))
+        c.type = 'histogram'
+        c.name = 'Histogram'
+        c.xAxis = 1
+        c.yAxis = 1
+        c.baseSeries = 's1'
+        c.zIndex = -1
+        chart.options.series.append(c)
+        c = Dict()
+        c.id = 's1'
+        c.data = list(data)
+        c.type = 'scatter'
+        c.marker.radius = 1.5
+        c.name = 'Data'
+        chart.options.series.append(c)
+
+class Pie(HighCharts):
+
+    # This is a component that other components can be added to
+
+    def __init__(self, data, labels, **kwargs):
+        _s1= """
+
+        {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                width: 600,
+                type: 'pie'
+            },
+            title: {
+                text: 'Pie Chart'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+
+                    }
+                }
+            },
+            series: []
+        }
+        """
+        super().__init__(**kwargs)
+        chart = self
+        chart.load_json(_s1)
+        series = Dict()
+        series.name = kwargs.get('name', '')
+        series_data = []
+        series.data = series_data
+        for i, value in enumerate(data):
+            print(i,value, labels[i])
+            c = Dict()
+            c.name = labels[i]
+            c.y = value
+            series_data.append(c)
+        chart.options.series.append(series)

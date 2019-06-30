@@ -364,7 +364,7 @@ def chart_test(request):
     wp = WebPage()
     Hello(a=wp)
     d = Div(classes='flex flex-wrap', a=wp)
-    charts = [s3] #, s4, var_pie]
+    charts = [var_pie] #, s4, var_pie]
     for chart in charts:
         my_chart = HighCharts()
 
@@ -550,9 +550,101 @@ def file_load_test(request):
     print(co)
     return wp
 
-justpy(chart_test)
+def test_histogram(request):
+    wp = WebPage()
+    data = [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6,
+            3.3, 3.4, 3, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3,
+            3.8, 3.2, 3.7, 3.3, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2, 3, 2.2, 2.9, 2.9, 3.1, 3, 2.7, 2.2,
+            2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3, 2.8, 3, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3, 3.4, 3.1, 2.3, 3, 2.5, 2.6, 3,
+            2.6, 2.3, 2.7, 3, 2.9, 2.9, 2.5, 2.8, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6, 3.2, 2.7, 3, 2.5, 2.8,
+            3.2, 3, 3.8, 2.6, 2.2, 3.2, 2.8, 2.8, 2.7, 3.3, 3.2, 2.8, 3, 2.8, 3, 2.8, 3.8, 2.8, 2.8, 2.6, 3, 3.4, 3.1,
+            3, 3.1, 3.1, 3.1, 2.7, 3.2, 3.3, 3, 2.5, 3, 3.4, 3]
+    g = Histogram(data, a=wp)
+    return wp
+
+pie_string = """
+
+{
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        width: 600,
+        type: 'pie'
+    },
+    title: {
+        text: 'Browser market shares in January, 2018'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Chrome',
+            y: 61.41,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Internet Explorer',
+            y: 11.84
+        }, {
+            name: 'Firefox',
+            y: 10.85
+        }, {
+            name: 'Edge',
+            y: 4.67
+        }, {
+            name: 'Safari',
+            y: 4.18
+        }, {
+            name: 'Sogou Explorer',
+            y: 1.64
+        }, {
+            name: 'Opera',
+            y: 1.6
+        }, {
+            name: 'QQ',
+            y: 1.2
+        }, {
+            name: 'Other',
+            y: 2.61
+        }]
+    }]
+}
+"""
+
+def pie_test1():
+
+    wp = WebPage()
+    g = HighCharts(a=wp)
+    co = g.load_json(pie_string)
+    return wp
+
+def pie_test():
+    wp = WebPage()
+    g = Pie([1,2,3,4], ['a','b','c','d'], a=wp, name='Brands')
+    print(g.options)
+    return wp
+
+# justpy(chart_test)
+justpy(pie_test)
 # justpy(stock_chart)
 # justpy(sine_alone)
 # justpy(file_load_test)
+# justpy(file_load_test_histogram)
 # justpy(file_load_test, host='198.199.81.28', port=80, websockets=True)
 # justpy(tool_tip_demo)
+# justpy(test_histogram)

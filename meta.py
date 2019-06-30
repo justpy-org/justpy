@@ -203,6 +203,36 @@ a = """
     }}
 
 """
-import json, demjson
-print(a)
-print(demjson.decode(a))
+dict1 = {'name': ["aparna", "pankaj", "sudhir", "Geeku"],
+        'degree': ["MBA", "BCA", "M.Tech", "MBA"],
+        'score': [90, 40, 80, 98]}
+dict1 = {'score1': [93, 45, 8, 98],
+'score2': [9, 4, 8, 98],
+'score3': [22, 5, 55, 98],
+        'score': [90, 40, 80, 98]}
+
+# creating a dataframe from a dictionary
+df = pd.DataFrame(dict1)
+ts = pd.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
+ts = ts.cumsum()
+# iterating over rows using iterrows() function
+# df1 = pd.DataFrame(np.random.randn(1000, 4),index=ts.index, columns=list('ABCD'))
+# df1 = pd.DataFrame(np.random.randn(1000, 4),index=['hello']*1000, columns=list('ABCD'))
+df1 = pd.DataFrame(10*np.random.randn(1000, 4),index=range(1000), columns=list('ABCD'))
+# df1 = pd.DataFrame(np.random.randn(10, 4),index=range(10), columns=list('ABCD'))
+df2 = pd.DataFrame(np.random.randn(10, 19),index=range(10), columns=list('ABCDefghijklmnopqrs'))
+# df1 = df1.cumsum().abs()
+df2 = df2.cumsum().abs()
+wp = jp.WebPage()
+# chart = jp.pandas_plot(df1, stock=True, a=wp)
+# chart = jp.pandas_plot(df1, width=600, a=wp, kind='column', stacking='normal')
+chart_list = jp.pandas_subplot(df1, width=600, a=wp, kind='histogram')
+print(chart_list)
+for c in chart_list:
+    wp.add(c)
+# chart.options.tooltip.split = True
+# wp.add(chart)
+def test_plot(request):
+    return wp
+
+jp.justpy(test_plot)

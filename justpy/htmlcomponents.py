@@ -68,7 +68,7 @@ class WebPage:
         self.cache = None   # Holds the last result of build_list
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.delete_flag = True
-        self.template_file = 'tailwindsbase.html'
+        self.template_file = 'tailwind.html'
         # self.static_template_file = 'server_render.html'
         self.components = []  # list  of components on page
         # self.sessions = []  # List of sessions page is on
@@ -193,10 +193,12 @@ class WebPage:
 class JustpyBaseComponent(Tailwind):
     next_id = 0
     instances = {}
+    # Set this to true if you want all components to be temporary by default
+    temp_flag = False
 
     def __init__(self,  **kwargs): # c_name=None,
 
-        temp = kwargs.get('temp', False)
+        temp = kwargs.get('temp', JustpyBaseComponent.temp_flag)
         # If object is not a temporary one
         if not temp:
             cls = JustpyBaseComponent
@@ -291,6 +293,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.slot = None
         self.scoped_slots = {}   # for Quasar initially
         self.style = ''
+        self.directives = []
         self.data = {}
         # self.name = 'c' + str(self.id)
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
@@ -399,13 +402,13 @@ class HTMLBaseComponent(JustpyBaseComponent):
         for attr in HTMLBaseComponent.attribute_list:
             d[attr] = getattr(self, attr)
         d['directives'] = {}
-        for i in self.prop_list+self.attributes:
+        for i in self.directives:
             if i[0:2]=='v-':    #It is a directive
                 try:
-                    d['directives'][i[2:]] = getattr(self, i)
+                    d['directives'][i[2:]] = getattr(self, i.replace('-','_'))
                 except:
                     pass
-                continue
+        for i in self.prop_list+self.attributes:
             try:
                 d['attrs'][i] = getattr(self, i)
             except:
@@ -2162,6 +2165,7 @@ class BasicHTMLParser(HTMLParser):
 
 
     def handle_starttag(self, tag, attrs):
+        #TODO: Handle kebab to snake conversion v-ripple only works if v_ripple
         self.level = self.level + 1
         # print(self.__starttag_text)
         c = component_by_tag(tag)
@@ -2181,8 +2185,11 @@ class BasicHTMLParser(HTMLParser):
             # Add to name to dict of named components. Each entry is a list of components to support multiple components with same name
             if attr[0]=='name':
                 if attr[1] not in self.name_dict:
-                    self.name_dict[attr[1]]= [c]
+                    # self.name_dict[attr[1]]= [c]
+                    self.name_dict[attr[1]]= c
                 else:
+                    # self.name_dict[attr[1]].append(c)
+                    self.name_dict[attr[1]] = [self.name_dict[attr[1]]]
                     self.name_dict[attr[1]].append(c)
             if attr[0]=='class':
                 c.classes = attr[1]
@@ -2275,3 +2282,6 @@ def get_websocket(msg):
     websocket_dict = WebPage.sockets[msg.page.page_id]
     return websocket_dict[msg.websocket_id]
 
+def set_temp_flag(flag):
+    # Sets whether components are temporary ones by default
+    JustpyBaseComponent.temp_flag = flag

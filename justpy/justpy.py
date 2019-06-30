@@ -14,8 +14,11 @@ from starlette.config import Config
 from itsdangerous import Signer
 # from .htmlcomponents import *
 from .chartcomponents import *
+from .quasarcomponents import *
+from .pandas import *
 from .utilities import print_request, run_event_function, run_task
 import uvicorn, datetime, logging, uuid, time
+#TODO: Reseller Hosting https://www.pcmag.com/roundup/322294/the-best-reseller-web-hosting-services https://www.hostgator.com/reseller-hosting
 #TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
 #TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
 #TODO: https://github.com/kennethreitz/setup.py setup.py file
@@ -100,11 +103,18 @@ class Homepage(HTTPEndpoint):
                 request.session_id = request.state.session_id
                 new_cookie = True
                 logging.info(f'New session_id created: {request.session_id}')
-
+        # Number of parameters func_to_run has
+        func_parameters = len(inspect.signature(func_to_run).parameters)
         if inspect.iscoroutinefunction(func_to_run):
-            load_page = await func_to_run(request)
+            if func_parameters == 1:
+                load_page = await func_to_run(request)
+            else:
+                load_page = await func_to_run()
         else:
-            load_page = func_to_run(request)
+            if func_parameters == 1:
+                load_page = func_to_run(request)
+            else:
+                load_page = func_to_run()
         page_options = {'reload_interval': load_page.reload_interval}
         if load_page.use_cache:
             page_dict = load_page.cache
@@ -113,7 +123,8 @@ class Homepage(HTTPEndpoint):
         context = {'request': request, 'page_id': load_page.page_id, 'justpy_dict': json.dumps(page_dict),
                    'use_websockets': json.dumps(WebPage.use_websockets), 'options': template_options, 'page_options': page_options,
                    'html': load_page.html}
-        response = templates.TemplateResponse('tailwind.html', context)
+        # response = templates.TemplateResponse('tailwind.html', context)
+        response = templates.TemplateResponse(load_page.template_file, context)
         if SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)
             cookie_value = cookie_value.decode("utf-8")
@@ -191,7 +202,7 @@ class JustpyEvents(WebSocketEndpoint):
         # Need to add garbage collection, remove all webpages and components that will not be used amymore, probably background process
         # The WebPAge instance that was closed is still part of the WebPAage class instance list so the system will not remove it
         # WebPage.instances[self.page_id] = self
-        #TODO:  Need flaxg if web page can be deleted. Same for all components? Improve garbage collection
+        #TODO:  Need flag if web page can be deleted. Same for all components? Improve garbage collection
 
         print(close_code, 'close code')
         print(WebPage.sockets)
@@ -234,6 +245,7 @@ async def handle_event(data_dict, com_type=0):
         build_list = p.build_list()
         return {'type': 'page_update', 'data': build_list}
     c = JustpyBaseComponent.instances[event_data['id']]
+    # before_result = await run_event_function(c, 'before', event_data, True)
     try:
         before_result = await run_event_function(c, 'before', event_data, True)
     except:

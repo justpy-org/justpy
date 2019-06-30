@@ -11,9 +11,7 @@ class RadioGroup(Div):
         super().__init__(**kwargs)
         self._options = copy.deepcopy(self.options)  #self.options.copy()
         self.set_class('flex')
-        print(self.item_classes)
         self.radio_components = []  # A list of the Input components with type='radio'. Needed for model parameter
-        print('options', self.options)
         for option in self._options:
             if 'value' not in option:
                 option['value'] = ''
@@ -21,7 +19,6 @@ class RadioGroup(Div):
                 option['label'] = ''
             if 'classes' not in option:
                 option['classes'] = self.item_classes
-            # print(option)
             outer_div = Div(a=self, classes='m-1')
             item_label = Label(a=outer_div)
             in1 = Input(type='radio', classes='form-radio ', value=option['value'], name=self.group_name, a=item_label, change=self.change_function, parent=self)
