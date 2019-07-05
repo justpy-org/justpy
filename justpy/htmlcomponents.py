@@ -16,6 +16,7 @@ import requests
 # import aiohttp
 from .tailwind import Tailwind
 
+#TODO: Handle scroll event https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
 #Metaclasses: https://stackoverflow.com/questions/41215107/programmatically-defining-a-class-type-vs-types-new-class
 
 class JustPy:
@@ -345,9 +346,14 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
         if event_type in self.allowed_events:
             setattr(self, 'on_' + event_type, MethodType(func, self))
-            self.events.append(event_type)
+            if event_type not in self.events:
+                self.events.append(event_type)
         else:
             raise Exception('No event of type {} supported'.format(event_type))
+
+    def remove_event(self, event_type):
+        if event_type in self.events:
+            self.events.remove(event_type)
 
 
     def has_event_function(self, event_type):
@@ -369,7 +375,14 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.attrs[attr] = value
 
     def add_event(self, event_type):
-        self.allowed_events.append(event_type)
+        # Adds an allowed event
+        if event_type not in self.allowed_events:
+            self.allowed_events.append(event_type)
+
+    def add_allowed_event(self, event_type):
+        # Adds an allowed event
+        if event_type not in self.allowed_events:
+            self.allowed_events.append(event_type)
 
     def add_scoped_slot(self, slot, c):
         self.scoped_slots[slot] = c
@@ -654,9 +667,15 @@ class Input(Div):
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
         if self.type in ['radio', 'checkbox', 'select']:    # Ignore input event from radios, checkboxes and selects
-            self.events.extend(['change'])
+            if 'change' not in self.events:
+                self.events.append('change')
+            # self.events.extend(['change'])
         else:
-            self.events.extend(['input', 'change'])
+            if 'change' not in self.events:
+                self.events.append('change')
+            if 'input' not in self.events:
+                self.events.append('input')
+            # self.events.extend(['input', 'change'])
         if self.checked:
             d['attrs']['checked'] = True
         else:
@@ -2173,6 +2192,12 @@ class BasicHTMLParser(HTMLParser):
             print(tag, 'No such tag, Div being used instead *****************************************')
             c = Div()
         for attr in attrs:
+            attr = list(attr)
+            attr[0] = attr[0].replace('-', '_')
+            if attr[0][0] == ':':
+                # attr = list(attr)
+                attr[0] = attr[0][1:]
+                attr[1] = eval(attr[1])
             if attr[0]=='id':
                 continue
             if attr[1] is None:

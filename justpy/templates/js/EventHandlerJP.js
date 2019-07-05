@@ -3,7 +3,7 @@ function eventHandler(props, event, form_data) {
     console.log('-------------------------');
         console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
     // console.log(JSON.stringify(props, null, 2));
-    console.log(event);
+    console.log( event);
     console.log('-------------------------');
         e = {
             'event_type': event.type,
@@ -40,7 +40,8 @@ function eventHandler(props, event, form_data) {
             }
                         }
         if (use_websockets){
-        socket.send(JSON.stringify({'type': 'event'  ,'event_data': e}));
+        if (websocket_ready)
+            socket.send(JSON.stringify({'type': 'event'  ,'event_data': e}));
             }
         else{
 

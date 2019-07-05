@@ -90,7 +90,7 @@
 
 <script>
 
-
+    var websocket_ready = false;
 
     {% include 'js/EventHandlerJP.js' %}
     {% include 'js/html_component.js' %}
@@ -106,6 +106,7 @@
     var use_websockets = JSON.parse('{{ use_websockets }}');
     var justpyComponents = {{ justpy_dict | safe }};
 
+
     if (use_websockets) {
         console.log('Domain: ' + document.domain);
         if (location.port) {
@@ -115,7 +116,6 @@
             var socket = new WebSocket('ws://' + document.domain);
         }
 
-        //var socket = new WebSocket('ws://127.0.0.1:8000');
 
     socket.addEventListener('open', function (event) {
         console.log('Webocket opened');
@@ -133,6 +133,7 @@
                 break;
             case 'websocket_update':
                 websocket_id = msg.data;
+                websocket_ready = true;
                 break;
             case 'component_update':
                 // update just specific components on the page

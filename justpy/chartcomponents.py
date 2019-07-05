@@ -224,7 +224,7 @@ class Histogram(HighCharts):
 
 class Pie(HighCharts):
 
-    # This is a component that other components can be added to
+    #
 
     def __init__(self, data, labels, **kwargs):
         _s1= """
@@ -234,8 +234,7 @@ class Pie(HighCharts):
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
-                width: 600,
-                type: 'pie'
+                width: 600
             },
             title: {
                 text: 'Pie Chart'
@@ -261,7 +260,67 @@ class Pie(HighCharts):
         chart = self
         chart.load_json(_s1)
         series = Dict()
+        series.type = 'pie'
         series.name = kwargs.get('name', '')
+        series_data = []
+        series.data = series_data
+        for i, value in enumerate(data):
+            print(i,value, labels[i])
+            c = Dict()
+            c.name = labels[i]
+            c.y = value
+            series_data.append(c)
+        chart.options.series.append(series)
+
+class PieSemiCircle(HighCharts):
+
+    #
+
+    def __init__(self, data, labels, **kwargs):
+        _s1= """
+
+        {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                width: 600
+            },
+            title: {
+        text: 'SemiCircle Chart',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 40
+    },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%'],
+            size: '110%'
+        }
+    },
+            series: []
+        }
+        """
+        super().__init__(**kwargs)
+        chart = self
+        chart.load_json(_s1)
+        series = Dict()
+        series.type = 'pie'
+        series.name = kwargs.get('name', '')
+        series.innerSize = '60%'
         series_data = []
         series.data = series_data
         for i, value in enumerate(data):

@@ -77,7 +77,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@quasar/extras/material-icons/material-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.min.css">
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.umd.min.js"></script>
 
@@ -110,6 +111,7 @@
     var websocket_id = '';
     var use_websockets = JSON.parse('{{ use_websockets }}');
     var justpyComponents = {{ justpy_dict | safe }};
+    var websocket_ready = false;
 
     if (use_websockets) {
         console.log('Domain: ' + document.domain);
@@ -129,8 +131,8 @@
 
     socket.addEventListener('message', function (event) {
         msg = JSON.parse(event.data);
-        console.log('Message received from server ',msg);
-                console.log(event);
+        console.log('Websocket message received: ',msg);
+        //console.log(event);
 
         switch (msg.type) {
             case 'page_update':
@@ -138,6 +140,7 @@
                 break;
             case 'websocket_update':
                 websocket_id = msg.data;
+                websocket_ready = true;
                 break;
             case 'component_update':
                 // update just specific components on the page

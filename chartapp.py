@@ -637,6 +637,8 @@ def pie_test():
     wp = WebPage()
     g = Pie([1,2,3,4], ['a','b','c','d'], a=wp, name='Brands')
     print(g.options)
+    g = PieSemiCircle([1, 2, 3, 4], ['a', 'b', 'c', 'd'], a=wp, name='Brands')
+    g.options.chart.width = 600
     return wp
 
 # justpy(chart_test)

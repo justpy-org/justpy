@@ -4,13 +4,13 @@
 Vue.component('quasar_component', {
 
     render: function (h) {
+        //console.log(this.jp_props);
         if (this.jp_props.hasOwnProperty('text')) {
             var comps = [this.jp_props.text];
         } else comps = [];
 
         // console.log(this.jp_props);
         for (var i = 0; i < this.jp_props.object_props.length; i++) {
-console.log((this.jp_props.object_props[i].show));
             //if (this.jp_props.show) {   // (this.jp_props.show)
             if (this.jp_props.object_props[i].show) {   // (this.jp_props.show)
                 comps.push(h(this.jp_props.object_props[i].vue_type, {
@@ -46,10 +46,23 @@ console.log((this.jp_props.object_props[i].show));
             description_object['class'] = this.jp_props.classes;
         }
 
-        event_description = {};
+        var event_description = {};
+        var fn;
         for (i = 0; i < this.jp_props.events.length; i++) {
-            event_description[this.jp_props.events[i]] = this.eventFunction
+           switch (this.jp_props.events[i]) {
+
+               case 'input': fn = this.inputEvent; break;
+               case 'change': fn = this.changeEvent; break;
+
+
+               // default: fn = this.eventFunction;
+               default: fn = this.defaultEvent;
+           }
+
+            // event_description[this.jp_props.events[i]] = this.eventFunction;
+            event_description[this.jp_props.events[i]] = fn;
         }
+
         description_object['on'] = event_description;
 
 
@@ -69,10 +82,9 @@ console.log((this.jp_props.object_props[i].show));
         for (slot_name in this.jp_props.scoped_slots) {
             b[slot_name] = this.jp_props.scoped_slots[slot_name];
             var vue_type = this.jp_props.vue_type;
-            if (true || 'vue_type' in b[slot_name])
+            //if (true || 'vue_type' in b[slot_name])
                 scoped_slots[slot_name] = (function (v, e) {
                 return function () {
-                    //return h('quasar_component', {props: {jp_props: b[e]}});
                     return h(v, {props: {jp_props: b[e]}});
                 }
             })(vue_type, slot_name);
@@ -83,16 +95,49 @@ console.log((this.jp_props.object_props[i].show));
 
     },
     methods: {
-
-        eventFunction: (function (event) {
-            console.log('In component eventFunction');
-            console.log('loggin event: ' + this.$props.jp_props.html_tag);
+        createEvent: (function (event, event_type) {
+            // console.log('Event for ' + this.$props.jp_props.html_tag);
+            //             console.log(typeof event );
+                        if (event == null) event = '';
+                        // if (typeof event === 'string' || typeof event === 'boolean') {
+                        new_event = {};
+                        // new_event.type = 'input';
+                        new_event.type = event_type;
+                        new_event.target = {};
+                        new_event.currentTarget = {};
+                        new_event.target.value = event;
+                        this.$props.jp_props.input_type = 'text';
+                        eventHandler(this.$props, new_event, false);
+                        // } // else event.stopPropagation();
+        }),
+        defaultEvent: (function (event) {
+            console.log('%%%%%% In Default event');
             console.log(event);
-            // if (event == null) return;
+            // if (event == null) event = '';
+            this.eventFunction(event, event.type);
+        }),
+        inputEvent: (function (event) {
+            console.log('%%%%%% In Input event');
+            if (event == null) event = '';
+            this.eventFunction(event, 'input');
+        }),
+        changeEvent: (function (event) {
+            console.log('%%%%%% In change event');
+            if (event == null) event = '';
+            this.eventFunction(event, 'change');
+        }),
+
+        eventFunction: (function (event, event_type) {
+            console.log('In component eventFunction. ');
+            console.log(event);
+            console.log('Tag: ' + this.$props.jp_props.html_tag);
+            console.log('Event type: ' + event_type);
+            // if (typeof event === 'object') event_type = event.type;
+            // console.log(event); console.log(event_type);
             if (!this.$props.jp_props.event_propagation) {
                 event.stopPropagation();
             }
-            if (event != null && event.type == 'submit') {
+            if (event.type == 'submit') {
                 var form_reference = this.$el;
                 var props = this.$props;
                 event.preventDefault();    //stop form from submitting
@@ -123,24 +168,19 @@ console.log((this.jp_props.object_props[i].show));
                 switch (this.$props.jp_props.html_tag) {
 
 
-                    case   'q-tabs':
-                    case 'q-input':
-                        console.log('in q-input switch');
-                        console.log(typeof event );
-                        if (event == null) event = '';
-                        if (typeof event === 'string') {
-                        new_event = {};
-                        new_event.type = 'input';
-                        new_event.target = {};
-                        new_event.currentTarget = {};
-                        new_event.target.value = event;
-                        this.$props.jp_props.input_type = 'text';
-                        eventHandler(this.$props, new_event, false);
-                        } // else event.stopPropagation();
+                    case 'q-chip':
+                        // console.log(this.$props.jp_props);
+                        if (this.$props.jp_props.removable) this.createEvent(event);
+                        else if (this.$props.jp_props.clickable)
+                            if (typeof event === 'object')
+                                eventHandler(this.$props, event, false);
+                            else this.createEvent(event);
                         break;
 
-                    default:
-                        eventHandler(this.$props, event, false);
+                        default:
+                        if (typeof event === 'object')
+                                eventHandler(this.$props, event, false);
+                        else this.createEvent(event, event_type);
                 }
 
                 // eventHandler(this.$props, event, false);
@@ -151,6 +191,7 @@ console.log((this.jp_props.object_props[i].show));
         })
     },
     mounted() {
+        // if (this.$props.jp_props.html_tag != 'q-dialog')
 
         if (this.$props.jp_props.input_type) {    //this.$props.jp_props.input_type
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
@@ -159,7 +200,8 @@ console.log((this.jp_props.object_props[i].show));
     },
     updated() {
         //console.log('in updated'); console.log(this.$props.jp_props);console.log(this.$props.jp_props.slide_down);
-        // if (typeof this.$props.jp_props === 'undefined') return;
+        // if (this.$props.jp_props.html_tag == 'q-dialog') {return}
+
         if (this.$props.jp_props.input_type) {    //this.$props.jp_props.input_type
 
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;    //make sure that the input value is the correct one received from server

@@ -267,12 +267,6 @@ async def handle_event(data_dict, com_type=0):
             await p.update()
         elif com_type == 1:   # Ajax communication
             build_list = p.build_list()
-    # else:
-    #     try:
-    #         if event_result['type'] == 'tooltip':
-    #             print(event_result, 'we got tooltip')
-    #     except:
-    #         pass
     try:
         after_result = await run_event_function(c, 'after', event_data, True)
     except:
@@ -282,7 +276,7 @@ async def handle_event(data_dict, com_type=0):
 
 
 #TODO: Decorator and periodoc functions (see clock example, need to generalize?)
-#TODO: URL to bind to justpy add as parameter
+#TODO: URL to bind to justpy add as parameter or decorator for function use starlette mechanism regular expression
 
 def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, log_level=LOGGING_LEVEL):
     global func_to_run, startup_func
