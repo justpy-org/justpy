@@ -12,18 +12,18 @@ from starlette.config import Config
 # from starlette.routing import Router, Mount
 # from starlette.datastructures import CommaSeparatedStrings, Secret
 from itsdangerous import Signer
+import typing
 # from .htmlcomponents import *
 from .chartcomponents import *
 from .quasarcomponents import *
 from .pandas import *
+from .routing import Route, SetRoute
 from .utilities import print_request, run_event_function, run_task
 import uvicorn, datetime, logging, uuid, time
-#TODO: Reseller Hosting https://www.pcmag.com/roundup/322294/the-best-reseller-web-hosting-services https://www.hostgator.com/reseller-hosting
 #TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
 #TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
 #TODO: https://github.com/kennethreitz/setup.py setup.py file
 #TODO: Dockerfile https://github.com/pypa/pipenv/blob/master/Dockerfile
-#TODO: Embed editor  https://github.com/ajaxorg/ace-builds/  https://codemirror.net/
 #TODO: Docker bitnami stacksmith digitalocean one click app
 
 config = Config('test.env')
@@ -53,7 +53,7 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 def initial_func(request):
     wp = WebPage()
-    Div(text='JustPy installed successfully', classes='inline-block text-5xl m-3 p-1 text-white bg-blue-600', a=wp)
+    Div(text='JustPy says: Page not found', classes='inline-block text-5xl m-3 p-3 text-white bg-blue-600', a=wp)
     return wp
 
 func_to_run = initial_func
@@ -83,11 +83,12 @@ class Homepage(HTTPEndpoint):
 
 
     async def get(self, request):
-
+        # global func_to_run
         # if request['path']=='/favicon.ico':     #Need to add option for favicon insertion
         #     return PlainTextResponse('')
         # print_request(request)
         session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
+        print('num routes:', len(Route.instances))
         if SESSIONS:
             new_cookie = False
             if session_cookie:
@@ -104,7 +105,15 @@ class Homepage(HTTPEndpoint):
                 new_cookie = True
                 logging.info(f'New session_id created: {request.session_id}')
         # Number of parameters func_to_run has
+        for route in Route.instances:
+            func = route.matches(request['path'], request)
+            if func:
+                func_to_run = func
+                break
+
+
         func_parameters = len(inspect.signature(func_to_run).parameters)
+        assert func_parameters < 2, f"Function {func_to_run.__name__} cannot have more than one parameter"
         if inspect.iscoroutinefunction(func_to_run):
             if func_parameters == 1:
                 load_page = await func_to_run(request)
@@ -115,7 +124,8 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run(request)
             else:
                 load_page = func_to_run()
-        page_options = {'reload_interval': load_page.reload_interval}
+        page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
+                        'body_classes': load_page.body_classes, 'css': load_page.css}
         if load_page.use_cache:
             page_dict = load_page.cache
         else:
@@ -256,6 +266,7 @@ async def handle_event(data_dict, com_type=0):
         event_result = await run_event_function(c, event_data['event_type'], event_data, True)
         logging.info('%s %s', 'Event result:', event_result)
     except Exception as e:
+        # raise Exception(e)
         print(e)
         # logging.error(traceback.format_exc())
         event_result = None
@@ -276,7 +287,7 @@ async def handle_event(data_dict, com_type=0):
 
 
 #TODO: Decorator and periodoc functions (see clock example, need to generalize?)
-#TODO: URL to bind to justpy add as parameter or decorator for function use starlette mechanism regular expression
+#TODO: URL to bind to justpy add as parameter or decorator for function use starlette mechanism regular expression https://github.com/encode/starlette/blob/master/starlette/routing.py line 82
 
 def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, log_level=LOGGING_LEVEL):
     global func_to_run, startup_func
@@ -290,12 +301,21 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
         WebPage.use_websockets = True
     else:
         WebPage.use_websockets = False
+    Route("/{path:path}", func_to_run, last=True, name='default')
     # host = '0.0.0.0'
     if start_server:
         uvicorn.run(app, host=host, port=port) #, log_level=log_level)
         # host='198.199.81.28'  for droplet
         #sudo apt-get install python3.6-dev apt-get install python3.6-venvpyt1
     return func_to_run
+
+def convert_dict_to_object(d):
+    obj = globals()[d['class_name']](temp=True)
+    for obj_prop in d['object_props']:
+        obj.add(convert_dict_to_object(obj_prop))
+    for k,v in d.items():
+        obj.__dict__[k] = v
+    return obj
 
 
 

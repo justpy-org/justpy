@@ -20,6 +20,11 @@
         {% include 'css/form.css' %}
 
     </style>
+<style>
+
+    {{ page_options.css }}
+
+</style>
 
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
@@ -79,7 +84,7 @@
 </head>
 
 
-<body class="bg-white" style="">
+<body class="" style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
 {% if html %}
 {{ html | safe }}
 {% else %}

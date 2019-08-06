@@ -1,6 +1,40 @@
 from justpy import *
 
 
+class CalendarDateJP(Div):
+
+    def __init__(self, **kwargs):
+        self.month = 'Jan'
+        self.year = '2010'
+        self.weekday = 'Sun'
+        self.day = '1'
+        super().__init__(**kwargs)
+        self.template_string = """
+        <div class="w-24 flex-no-shrink rounded-t overflow-hidden bg-white text-center m-2">
+            <div class="bg-red-500 text-white py-1">
+                {{ month }}
+            </div>
+            <div class="pt-1 border-l border-r">
+                <span class="text-4xl font-bold">{{ day }}</span>
+            </div>
+            <div class="pb-2 px-2 border-l border-r border-b rounded-b flex justify-between">
+                <span class="text-xs font-bold">{{ weekday }}</span>
+                <span class="text-xs font-bold">{{ year }}</span>
+            </div>
+        </div>
+
+        """
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        # Add read from file capability
+        # with open('template.html.jinja2') as file_:
+        #     template = Template(file_.read())
+        self.template = Template(self.template_string)
+        d['inner_html'] = self.template.render(month=self.month, day=self.day, weekday=self.weekday, year=self.year)
+        return d
+
+
 class Calculator(Div):
 
     def __init__(self, **kwargs):
@@ -30,7 +64,7 @@ class Calculator(Div):
         btn_classes = 'w-1/4 text-xl font-bold p-2 m-1 border bg-gray-200 hover:bg-gray-700 shadow'
         layout_text = [['7', '8', '9', '*'], ['4', '5', '6', '-'], ['1', '2', '3', '+'], ['C', '0', '.', '=']]
         for line in layout_text:
-            d = DivJP(classes='flex w-auto m-2', a=self)
+            d = Div(classes='flex w-auto m-2', a=self)
             for b in line:
                 b1 = Button(text=b, a=d, classes=btn_classes, click=calculator_click)
                 b1.calculator = self

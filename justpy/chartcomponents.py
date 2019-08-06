@@ -54,6 +54,16 @@ class HighCharts(JustpyBaseComponent):
     def __repr__(self):
         return f'{self.__class__.__name__}(id: {self.id}, vue_type: {self.vue_type}, chart options: {self.options})'
 
+    def __setattr__(self, key, value):
+        if key == 'options':
+            if isinstance(value, str):
+                self.load_json(value)
+            else:
+                self.__dict__[key] = value
+        else:
+            self.__dict__[key] = value
+
+
     async def update(self):
         try:
             websocket_dict = WebPage.sockets[self.page_id]

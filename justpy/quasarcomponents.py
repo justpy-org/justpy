@@ -1,278 +1,644 @@
 from .htmlcomponents import *
-from .htmlcomponents import _tag_class_dict
+from .htmlcomponents import _tag_class_dict, parse_dict
 from addict import Dict
-
+import demjson
 
 quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog']
 
+
 class QuasarPage(WebPage):
 
-    def __init__(self,  **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.template_file='quasar.html'
+        self.template_file = 'quasar.html'
 
 
 class QDiv(Div):
 
+    slots = []
 
-    def __init__(self,  **kwargs):
-
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.vue_type = 'quasar_component'
         self.directives = quasar_directives
-        self.attributes.append('key')   # For group transition
+        # self.attributes.append('key')  # For group transition
+
+    def __setattr__(self, key, value):
+        if key in self.__class__.slots:
+            self.add_scoped_slot(key[:key.index('_')], value)
+        else:
+            self.__dict__[key] = value
 
 
-class QInput(Input):
+class _QInputBase(Input):
 
+    slots = []
 
-    slots = ['before_slot', 'after_slot', 'error_slot', 'hint_slot', 'counter_slot', 'loading_slot']
-
-    def __init__(self,  **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.vue_type = 'quasar_component'
-        self.html_tag = 'q-input'
         self.directives = quasar_directives
+        self.disable_events = False
+        self.prop_list = []
+        self.attributes = []
+
+    def __setattr__(self, key, value):
+        if key == 'options':
+            if isinstance(value, str):
+                self.load_json(value)
+            else:
+                self.__dict__[key] = value
+        elif key in self.__class__.slots:
+            self.add_scoped_slot(key[:key.index('_')], value)
+        else:
+            self.__dict__[key] = value
+
+    def model_update(self):
+        update_value = self.model[0].data[self.model[1]]
+        self.value = update_value
+
+    def load_json(self, options_string):
+        self.options = demjson.decode(options_string.encode("ascii", "ignore"))
+        return self.options
+
+
+    def load_json_from_file(self, file_name):
+        with open(file_name,'r') as f:
+            self.options = demjson.decode(f.read().encode("ascii", "ignore"))
+        return self.options
+
+    def convert_object_to_dict(self):
+
+        d = super().convert_object_to_dict()
+        if self.disable_events:
+            d['events'] = []
+
+        return d
+
+
+@parse_dict
+class QInput(_QInputBase):
+
+    html_tag = 'q-input'
+    slots = ['default_slot', 'before_slot', 'after_slot', 'error_slot', 'hint_slot', 'counter_slot', 'loading_slot',
+             'prepend_slot', 'append_slot']
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.prop_list = ['mask', 'fill-mask', 'unmasked-value', 'error', 'error-message', 'rules', 'lazy-rules',
                           'label', 'stack-label', 'hint', 'hide-hint', 'prefix', 'suffix', 'color', 'bg-color', 'dark',
                           'filled', 'outlined', 'borderless', 'standout', 'bottom-slots', 'rounded', 'square', 'dense',
                           'items-aligned', 'disable', 'readonly', 'value', 'type', 'debounce', 'counter', 'maxlength',
                           'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon']
 
+        self.allowed_events = ['input', 'focusin', 'focusout']  # Not different from focus and blur in documentation
 
 
-    def __setattr__(self, key, value):
-        if key in self.__class__.slots:
-            self.add_scoped_slot(key, value)
+@parse_dict
+class QSelect(_QInputBase):
+
+    html_tag = 'q-select'
+    slots = ['default_slot','before_slot', 'after_slot', 'error_slot', 'hint_slot', 'counter_slot', 'loading_slot',
+             'selected_slot', 'nooption_slot', 'selecteditem_slot', 'option_slot', 'prepend_slot', 'append_slot']
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.type = 'object'
+        self.value = kwargs.get('value', None)
+        self.prop_list = ['color', 'bg-color', 'dark', 'filled', 'outlined', 'borderless', 'standout', 'hide-bottom-space',
+                 'rounded','square', 'dense', 'popup-content-class', 'popup-content-style',
+                 'error', 'rules', 'lazy-rules', 'loading', 'clearable', 'autofocus', 'hide-dropdown-icon',
+                 'fill-input', 'new-value-mode', 'transition-show', 'transition-hide',
+                 'error-message', 'no-error-icon', 'label', 'stack-label', 'hint', 'hide-hint', 'prefix', 'suffix',
+                 'clear-icon', 'bottom-slots', 'counter', 'items-aligned', 'dropdown-icon', 'usr-input', 'input-debounce',
+                 'value', 'multiple', 'emit-value',
+                 'options', 'options-value', 'option-label', 'option-disable', 'options-dense', 'options-dark',
+                 'options-selected-class', 'options-cover', 'options-sanitize', 'map-options',
+                 'display-value', 'display-value-sanitize', 'hide-selected', 'max-values', 'use-chips',
+                 'disable', 'readonly']
+
+        self.allowed_events = ['input', 'remove', 'add', 'new_value', 'filter', 'filter_abort']
+
+
+@parse_dict
+class QOptionGroup(_QInputBase):
+
+    html_tag = 'q-option-group'
+    slots = []
+
+    def __init__(self, **kwargs):
+        self.options = []
+        super().__init__(**kwargs)
+        # Type: radio | checkbox | toggle https://quasar.dev/vue-components/option-group
+        if self.type == 'checkbox' or self.type == 'toggle':
+            self.value = kwargs.get('value', [])
         else:
-            self.__dict__[key] = value
+            self.type = 'radio'
+            self.value = kwargs.get('value', '')
+        self.prop_list = ['keep-color', 'type', 'left-label', 'inline', 'value', 'options', 'disable', 'color', 'dark', 'dense']
+        self.allowed_events = ['input']
 
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+
         d = super().convert_object_to_dict()
-        # d['input_type'] = 'text'     # Needed for vue component updated life hook and event handler
-        # d['value'] = str(self.value)
-        # d['attrs']['value'] = self.value
-        #
-        # self.events.extend(['input'])
-        #
-        # try:
-        #     d['attrs']['form'] = self.form.id
-        # except:
-        #     pass
+        d['events'] = ['before', 'input']
         return d
 
-_tag_class_dict['q-input'] = QInput
+
+@parse_dict
+class QBtnToggle(_QInputBase):
+
+    html_tag = 'q-btn-toggle'
+    slots = []   # Need to take care of this, or sepcify that it only works through add_coped_slot
+
+    def __init__(self, **kwargs):
+        self.options = []
+        super().__init__(**kwargs)
+        # Type: radio | checkbox | toggle https://quasar.dev/vue-components/option-group
+        self.type = 'object'
+        self.value = kwargs.get('value', None)
+        self.prop_list = ['spread', 'no-caps', 'no-wrap', 'stack', 'stretch', 'value', 'options', 'readonly', 'disable',
+                          'ripple', 'color', 'text-color', 'toggle-color', 'toggle-text-color', 'outline', 'flat',
+                          'unelevated', 'rounded', 'push', 'glossy', 'size', 'dense']
+        self.allowed_events = ['input']
 
 
+@parse_dict
+class QSlider(_QInputBase):
+    # TODO: Deal with label-value prop, for now use suffix
+    html_tag = 'q-slider'
+    slots = []
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.type = 'float'
+        self.value = kwargs.get('value', 0)
+        # The label suffix is a stop gap till full label-value prop implemented
+        self.label_suffix = kwargs.get('label_suffix', '')
+        self.prop_list = ['label-always', 'snap', 'label', 'label-value', 'label-always', 'markers', 'tabindex',
+                          'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'label-color', 'dark', 'dense']
+        self.allowed_events = ['input', 'change']
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        if self.label_suffix:
+            d['attrs']['label-value'] = str(self.value) + self.label_suffix
+        return d
+
+
+@parse_dict
+class QRange(_QInputBase):
+    # TODO: Deal with left-label-value  and right-label-value props, for now use suffix for both right and left
+
+    slots = []
+    html_tag = 'q-range'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.type = 'object'
+        self.value = kwargs.get('value', {'min': 0, 'max': 100})
+        # The label suffix is a stop gap till full label-value prop implemented
+        self.label_suffix = kwargs.get('label_suffix', '')
+        self.prop_list = ['drag-range', 'drag-range-only', 'left-label-color', 'right-label-color', 'left-label-value',
+                          'right-label-value',
+                          'label-always', 'snap', 'label', 'label-always', 'markers', 'tabindex',
+                          'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'dark', 'dense']
+        self.allowed_events = ['input', 'change']
+
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        if self.label_suffix:
+            d['attrs']['label-value'] = str(self.value) + self.label_suffix
+        return d
+
+
+@parse_dict
+class QRating(_QInputBase):
+
+    slots = []
+    html_tag = 'q-rating'
+
+    def __init__(self, **kwargs):
+        self.no_reset = False
+        super().__init__(**kwargs)
+        self.prop_list = ['icon', 'max', 'value', 'no-reset', 'readonly', 'disable', 'color', 'size']
+        self.allowed_events = ['input']
+
+    def before_event_handler(self, msg):
+        print('before ',self.type, msg.event_type, msg.input_type, msg)
+        if msg.event_type not in ['input']:
+            return
+
+        if hasattr(self, 'model'):
+            self.model[0].data[self.model[1]] = msg.value
+
+        if not self.no_reset and (self.value == msg.value):
+            self.value = 0
+        else:
+            self.value = msg.value
+
+        print('done before')
+
+
+@parse_dict
+class QTime(_QInputBase):
+
+    slots = []
+    html_tag = 'q-time'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Options prop not supported and left out from list. It is a function
+        self.prop_list = ['landscape', 'format24h', 'options', 'hour-options', 'minute-options', 'second-options',
+                          'with-seconds', 'now-btn', 'value', 'mask', 'locale', 'calendar', 'readonly', 'disable',
+                          'color', 'text-color', 'dark']
+        self.allowed_events = ['input']
+
+
+@parse_dict
+class QDate(_QInputBase):
+
+    slots = []
+    html_tag = 'q-date'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Options prop not supported and left out from list. It is a function
+        self.prop_list = ['landscape', 'title', 'subtitle', 'today-btn', 'minimal', 'readonly', 'disable',
+                          'color', 'text-color', 'dark', 'event-color', 'value', 'mask', 'locale', 'calendar',
+                          'emit-immediately', 'default-year-month', 'default-view',
+                          'events-date', 'options-date', # These are really events and options, need to take care of
+                          'first-day-of-week']
+        self.allowed_events = ['input']
+
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        try:
+            d['attrs']['events'] = self.events_date
+        except:
+            pass
+        try:
+            d['attrs']['options'] = self.options_date
+        except:
+            pass
+        return d
+
+
+@parse_dict
+class QCheckbox(_QInputBase):
+
+    slots = ['default_slot']
+    html_tag = 'q-checkbox'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.type = 'object'
+        self.value = kwargs.get('value', False)
+        self.prop_list = ['keep-color', 'indeterminate-value', 'toggle-indeterminate', 'tabindex', 'label',
+                          'left-label',
+                          'value', 'val', 'true-value', 'false-value', 'disable', 'color', 'dark', 'dense']
+        self.allowed_events = ['input']
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        return d
+
+
+@parse_dict
+class QToggle(_QInputBase):
+
+    slots = ['default_slot']
+    html_tag = 'q-toggle'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.type = 'object'
+        self.value = kwargs.get('value', False)
+        self.prop_list = ['keep-color', 'icon', 'checked-icon', 'unchecked-icon', 'tabindex',
+                          'label', 'left-label', 'value', 'val', 'true-value', 'false-value', 'disable', 'color',
+                          'dark', 'dense']
+        self.allowed_events = ['input']
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        return d
+
+
+@parse_dict
 class QAvatar(QDiv):
 
-    def __init__(self,  **kwargs):
+    # https://quasar.dev/vue-components/avatar
 
+    slots = ['default_slot']
+    html_tag = 'q-avatar'
+
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-avatar'
         self.prop_list = ['icon', 'size', 'font-size', 'color', 'text-color', 'square', 'rounded']
 
 
-_tag_class_dict['q-avatar'] = QAvatar
+@parse_dict
+class QAjaxBar(QDiv):
+
+    # https://quasar.dev/vue-components/ajax-bar
+    slots = []
+    html_tag = 'q-ajax-bar'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['skip-hijack', 'reverse', 'position', 'sixe', 'color']
+        self.allowed_events = ['start', 'stop']
 
 
+@parse_dict
 class QBadge(QDiv):
 
-    def __init__(self,  **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-badge'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-badge'
         self.prop_list = ['color', 'text-color', 'floating', 'transparent', 'multi-line', 'label', 'align']
 
 
-_tag_class_dict['q-badge'] = QBadge
-
-
+@parse_dict
 class QBanner(QDiv):
 
-    def __init__(self,  **kwargs):
+    slots = ['default_slot', 'avatar_slot', 'action_slot']
+    html_tag = 'q-banner'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-banner'
         self.prop_list = ['inline-actions', 'dense', 'rounded']
         # Slots: avatar, action
 
 
-_tag_class_dict['q-banner'] = QBanner
-
-
+@parse_dict
 class QBar(QDiv):
 
-    def __init__(self,  **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-bar'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-bar'
         self.prop_list = ['dense', 'dark']
-        # Slots: avatar, action
 
 
-_tag_class_dict['q-bar'] = QBar
+@parse_dict
+class QToolBar(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-toolbar'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['inset']
 
 
+@parse_dict
+class QToolBarTitle(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-toolbar-title'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['shrink']
+
+
+@parse_dict
 class QBreadcrumbs(QDiv):
 
+    #DOES NOT WORK
+    html_tag = 'q-breadcrumbs'
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-breadcrumbs'
         self.prop_list = ['separator', 'active-color', 'gutter', 'separator-color', 'align']
 
-_tag_class_dict['q-breadcrumbs'] = QBreadcrumbs
 
-
+@parse_dict
 class QBreadcrumbsEl(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = []
+    html_tag = 'q-breadcrumbs-el'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-breadcrumbs-el'
         self.prop_list = ['to', 'exact', 'append', 'replace', 'active-class', 'exact-active-class', 'label', 'icon']
 
-_tag_class_dict['q-breadcrumbs-el'] = QBreadcrumbsEl
 
+@parse_dict
+class QBtn(QDiv):
 
-class QButton(QDiv):
+    slots = ['default_slot', 'loading_slot']
+    html_tag = 'q-btn'
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
-        self.html_tag = 'q-btn'
         self.prop_list = ['ripple', 'type', 'to', 'replace', 'label', 'icon', 'icon-right', 'round', 'outline', 'flat',
                           'unelevated', 'rounded', 'push', 'glossy', 'size', 'fab', 'fab-mini', 'color', 'text-color',
                           'no-caps', 'no-wrap', 'dense', 'tabindex', 'align', 'stack', 'stretch', 'loading', 'disable',
                           'percentage', 'dark-percentage']
-        # Slots: loading
 
 
-_tag_class_dict['q-btn'] = QButton
+QButton = QBtn
 
-
+@parse_dict
 class QBtnGroup(QDiv):
 
-    def __init__(self, **kwargs):
+    slots= ['defualt_slot']
+    html_tag = 'q-btn-group'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-btn-group'
         self.prop_list = ['spread', 'stretch', 'outline', 'flat', 'unelevated', 'rounded', 'push', 'glossy']
 
-_tag_class_dict['q-btn-group'] = QBtnGroup
+
+@parse_dict
+class QBtnDropdown(_QInputBase):
 
 
-class QBtnDropdown(QDiv):
-#TODO: Finish this, need items to check
+    slots = ['default_slot', 'label_slot']
+    html_tag = 'q-btn-dropdown'
+
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
-        self.html_tag = 'q-btn-dropdown'
-        self.prop_list = ['spread', 'stretch', 'outline', 'flat', 'unelevated', 'rounded', 'push', 'glossy']
-        self.prop_list = ['ripple', 'type', 'to', 'replace', 'label', 'icon', 'icon-right', 'round', 'outline', 'flat',
-                          'unelevated', 'rounded', 'push', 'glossy', 'size', 'fab', 'fab-mini', 'color', 'text-color',
-                          'no-caps', 'no-wrap', 'dense', 'tabindex', 'align', 'stack', 'stretch', 'loading', 'disable',
-                          'percentage', 'dark-percentage']
+        self.type = 'boolean'
+        self.value = bool(self.value)
+        self.prop_list = ['loading', 'split', 'disable-main-btn', 'disable-dropdown', 'persistent', 'auto-close',
+                          'label', 'icon', 'icon-right', 'no-caps', 'no-wrap', 'align', 'stack', 'stretch',
+                          'type', 'tabindex', 'value', 'cover', 'menu-anchor', 'menu-self', 'to', 'replace', 'disable',
+                          'ripple', 'round', 'outline', 'flat', 'unelevated', 'rounded', 'push', 'size', 'fab',
+                          'fab-mini',
+                          'color', 'text-color', 'dense', 'content-style', 'content-class']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'click']
 
-_tag_class_dict['q-btn-dropdown'] = QBtnDropdown
+
+@parse_dict
+class QMenu(_QInputBase):
+
+    slots = ['default_slot']
+    html_tag = 'q-menu'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.type = 'boolean'
+        # self.value = True if self.value else False
+        self.value = bool(self.value)
+        self.prop_list = ['target', 'context-menu', 'fit', 'no-parent-event', 'touch-position', 'persistent',
+                          'auto-close',
+                          'no-focus', 'transition-show', 'transition-hide', 'value', 'cover', 'anchor', 'self',
+                          'offset',
+                          'content-class', 'content-style', 'square', 'max-height', 'max-width']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
 
 
+@parse_dict
 class QCard(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-card'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-card'
         self.prop_list = ['dark', 'square', 'flat', 'bordered']
 
-_tag_class_dict['q-card'] = QCard
 
-
+@parse_dict
 class QCardSection(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-card-section'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-card-section'
         self.prop_list = []
 
-_tag_class_dict['q-card-section'] = QCardSection
 
-
+@parse_dict
 class QCardActions(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-card-actions'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-card-actions'
         self.prop_list = ['align', 'vertical']
 
-_tag_class_dict['q-card-actions'] = QCardActions
 
+@parse_dict
+class QTabs(_QInputBase):
 
-class QTabs(QInput):
-
-    slots = []
+    slots = ['default_slot']
+    html_tag = 'q-tabs'
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
-        self.value = kwargs.get('value','')
-        # self.vue_type = 'quasar_component'
-        self.html_tag = 'q-tabs'
-        # self.directives = quasar_directives
+        self.value = kwargs.get('value', '')
         self.prop_list = ['breakpoint', 'vertical', 'align', 'left-icon', 'right-icon', 'shrink', 'switch-indicator',
                           'narrow-indicator', 'inline-label', 'no-caps', 'value', 'active-color', 'active-bg-color',
                           'indicator-color', 'dense']
+        self.allowed_events = ['input']
 
 
-
-_tag_class_dict['q-tabs'] = QTabs
-
-
+@parse_dict
 class QTab(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-tab'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-tab'
         self.prop_list = ['icon', 'label', 'alert', 'no-caps', 'name', 'tabindex', 'disable', 'ripple']
 
-_tag_class_dict['q-tab'] = QTab
 
-
-class QSplitter(QInput):
-
-
-    slots = ['before', 'after']
+@parse_dict
+class QTabPanels(_QInputBase):
+    # Does not work
+    slots = ['default_slot']
+    html_tag = 'q-tab-panels'
 
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.value = kwargs.get('value', '')
+        self.prop_list = ['keep-alive', 'animated', 'infinite', 'swipeable', 'transition-prev', 'transition-next', 'value']
+        self.allowed_events = ['input']
 
+
+@parse_dict
+class QTabPanel(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-tab-panel'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['name', 'disable']
+
+
+@parse_dict
+class QSplitter(_QInputBase):
+
+    slots = ['before_slot', 'after_slot']
+    html_tag = 'q-splitter'
+
+    def __init__(self, **kwargs):
         # self.limits =[10, 90]
         super().__init__(**kwargs)
         self.value = kwargs.get('value', 50.0)
+        self.limits = kwargs.get('limits', [0, 100])
         self.type = 'float'
-        # self.vue_type = 'quasar_component'
-        self.html_tag = 'q-splitter'
-        # self.directives = quasar_directives
         self.prop_list = ['horizontal', 'limits', 'value', 'disable', 'before-class', 'after-class', 'separator-class',
                           'separator-style', 'dark']
+        self.allowed_events = ['input']
 
 
-_tag_class_dict['q-splitter'] = QSplitter
+@parse_dict
+class QKnob(_QInputBase):
+
+    slots = ['default_slot']
+    html_tag = 'q-knob'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.value = kwargs.get('value', 0)
+        self.type = 'float'
+        self.prop_list = ['show-value', 'angle', 'tabindex', 'value', 'min', 'max', 'step', 'disable', 'readonly',
+                          'color', 'center-color', 'track-color', 'size', 'font-size', 'thickness']
+        self.allowed_events = ['input', 'change', 'drag_value']
 
 
+@parse_dict
+class QPagination(_QInputBase):
+
+    slots = []
+    html_tag = 'q-pagination'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.value = kwargs.get('value', 1)
+        self.type = 'float'
+        self.prop_list = ['input', 'boundary-links', 'direction-links', 'boundary-numbers', 'ellipses', 'value', 'min',
+                          'max', 'max-pages', 'disable', 'color', 'text-color', 'input-style', 'input-class', 'size']
+        self.allowed_events = ['input']
+
+
+@parse_dict
 class QChatMessage(QDiv):
+
+    slots = ['default_slot', 'avatar_slot']
+    html_tag = 'q-chat-message'
 
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
-        self.html_tag = 'q-chat-message'
         self.prop_list = ['label-sanitize', 'name-sanitize', 'text-sanitize', 'stamp-sanitize', 'sent', 'label',
                           'name', 'avatar', 'text', 'stamp', 'bg-color', 'text-color', 'size']
-        # slot: avatar
-        # Note that name is an attribute here, may cause problems
+
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
 
@@ -284,27 +650,24 @@ class QChatMessage(QDiv):
         return d
 
 
-_tag_class_dict['q-chat-message'] = QChatMessage
-
-
+@parse_dict
 class QChip(QDiv):
 
+    slots = ['default_slot']
+    html_tag = 'q-chip'
+
     def __init__(self, **kwargs):
-        self.selected = False
-        self.clickable = False
-        self.removable = False
+        self.selected = None
         super().__init__(**kwargs)
-        self.html_tag = 'q-chip'
         self.prop_list = ['icon', 'icon-right', 'label', 'tabindex', 'value', 'selected', 'clickable', 'removable',
                           'disable', 'ripple', 'dense', 'color', 'text-color', 'square', 'outline']
+        self.allowed_events = ['update:selected', 'click', 'remove']
 
-        # self.events = ['remove']
-        self.add_event('remove')
         def chip_remove(self, message):
             self.show = False
-        self.on('input', chip_remove)
-        self.on('remove', chip_remove)
+            self.value = False
 
+        self.on('remove', chip_remove)
 
     @staticmethod
     def chip_select(self, message):
@@ -313,150 +676,247 @@ class QChip(QDiv):
     def convert_object_to_dict(self):  # Every object needs to redefine this
 
         d = super().convert_object_to_dict()
-        if self.clickable:
-            self.on('click', self.chip_select)
+        if self.selected is not None:
+            self.on('update:selected', self.chip_select)
         else:
-            if 'click' in self.events:
-                self.events.remove('click')
-            d['attrs'].pop('clickable')
-        if not self.selected:
-            d['attrs'].pop('selected')
-        # Used by the Vue component
-        d['selected'] = self.selected
-        d['clickable'] = self.clickable
-        d['removable'] = self.removable
+            self.remove_event('update:selected')
         return d
 
-_tag_class_dict['q-chip'] = QChip
 
-
+@parse_dict
 class QCircularProgress(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-circular-progress'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-circular-progress'
-        self.prop_list = ['indeterminate', 'show-value', 'reverse', 'angle', 'value', 'min', 'max', 'color', 'center-color' ,
+        self.prop_list = ['indeterminate', 'show-value', 'reverse', 'angle', 'value', 'min', 'max', 'color',
+                          'center-color',
                           'track-color', 'size', 'font-size', 'thickness']
 
 
-_tag_class_dict['q-circular-progress'] = QCircularProgress
+@parse_dict
+class QLinearProgress(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-linear-progress'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['buffer', 'reverse', 'indeterminate', 'query', 'stripe', 'value', 'color', 'track-color',
+                          'dark', 'rounded']
 
 
-class QColor(QInput):
+@parse_dict
+class QColor(_QInputBase):
 
     slots = []
-
+    html_tag = 'q-color'
 
     def __init__(self, **kwargs):
         self.value = ''
         self.format_model = 'hex'
         super().__init__(**kwargs)
-        # self.vue_type = 'quasar_component'
-        self.html_tag = 'q-color'
-        # self.directives = quasar_directives
         self.prop_list = ['default-view', 'no-header', 'no-footer', 'value', 'default-value', 'format-model',
                           'disable', 'readonly', 'dark']
+        self.allowed_events = ['input', 'change']
 
 
+@parse_dict
+class QPopupProxy(_QInputBase):
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        # d['input_type'] = 'text'  # Needed for vue component updated life hook and event handler
-        # d['value'] = str(self.value)
-        # d['attrs']['value'] = self.value
-        # self.events.extend(['input'])
-        return d
+    html_tag = 'q-popup-proxy'
+    slots = ['default_slot']
 
-
-_tag_class_dict['q-color'] = QColor
-
-
-class QPopupProxy(QDiv):
-    # TODO: Need to add QMenu and QDialog props as they are passed through
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
-        self.html_tag = 'q-popup-proxy'
-        self.prop_list = ['target', 'context-menu', 'breakpoint']
+        self.value = kwargs.get('value', False)
+        # self.prop_list = ['target', 'context-menu', 'breakpoint', 'value']
+        # self.qdialog_prop_list = ['persistent', 'no-esc-dsimiss', 'no-backdrop-dismiss', 'no-route-dismiss',
+        #                           'auto-close',
+        #                           'transition-show', 'transition-hide', 'no-refocus', 'no-focus', 'seamless',
+        #                           'maximized',
+        #                           'full-width', 'full-height', 'position', 'value', 'content-class', 'content-style',
+        #                           'square']
+        # self.qmenu_prop_list = ['target', 'context-menu', 'fit', 'no-parent-event', 'touch-position', 'persistent',
+        #                         'auto-close', 'no-focus', 'transition-show', 'transition-hide', 'value', 'cover',
+        #                         'anchor', 'self',
+        #                         'offset', 'content-class', 'content-style', 'square', 'max-height', 'max-width']
+        # Union of all three. QDialog and QMenu props are passed through
+        self.prop_list = ['touch-position', 'context-menu', 'max-width', 'no-route-dismiss', 'content-style', 'full-width',
+             'max-height', 'no-esc-dsimiss', 'cover', 'no-parent-event', 'square', 'no-backdrop-dismiss', 'value',
+             'transition-hide', 'breakpoint', 'content-class', 'seamless', 'transition-show', 'fit', 'no-focus',
+             'auto-close', 'position', 'full-height', 'self', 'maximized', 'offset', 'anchor', 'no-refocus', 'target',
+             'persistent']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
 
-_tag_class_dict['q-popup-proxy'] = QPopupProxy
 
-
-class QDialog(QInput):
+@parse_dict
+class QDialog(_QInputBase):
 
     slots = []
+    html_tag = 'q-dialog'
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
 
         self.type = 'boolean'
-        if self.value:
-            self.value = True
-        else:
-            self.value = False
-        # self.vue_type = 'quasar_component'
-        # self.directives = quasar_directives
-        self.html_tag = 'q-dialog'
+        # self.value = True if self.value else False
+        self.value = bool(self.value)
         self.prop_list = ['persistent', 'no-esc-dsimiss', 'no-backdrop-dismiss', 'no-route-dismiss', 'auto-close',
                           'transition-show', 'transition-hide', 'no-refocus', 'no-focus', 'seamless', 'maximized',
                           'full-width', 'full-height', 'position', 'value', 'content-class', 'content-style', 'square']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
 
 
+@parse_dict
+class QTooltip(_QInputBase):
 
-_tag_class_dict['q-dialog'] = QDialog
+    slots = ['default_slot']
+    html_tag = 'q-tooltip'
+
+    def __init__(self, **kwargs):
+
+        self.disable_events = True  # For tooltips, events are disabeled by default othewise input event for every time tooltip shows.
+        super().__init__(**kwargs)
+
+        self.type = 'boolean'
+        self.value = bool(self.value)
+        self.prop_list = ['transition-show', 'transition-hide', 'target', 'delay', 'max-height', 'max-width', 'value',
+                          'anchor', 'self', 'offset', 'content-class', 'content-style']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide']
 
 
+@parse_dict
+class QStepper(_QInputBase):
+
+    # Not working
+    html_tag = 'q-stepper'
+
+    slots = ['default_slot', 'navigation_slot', 'message_slot']
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['keep-alive', 'animated', 'infinite', 'swipeable', 'transition-prev', 'transition-next',
+                               'vertical', 'header-nav', 'value', 'dark', 'flat', 'bordered',
+                               'alternative-labels', 'contracted', 'inactive-icon', 'inactive-color', 'done-icon', 'done-color',
+                               'active-icon', 'active-color', 'error-icon', 'error-color']
+        self.allowed_events = ['input', 'before-transition', 'transition']
+
+
+@parse_dict
+class QStep(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-step'
+
+    def __init__(self, **kwargs):
+        self.done = False
+        super().__init__(**kwargs)
+        self.prop_list = ['header-nav', 'name', 'disable', 'done', 'error', 'color', 'icon', 'title', 'caption', 'prefix',
+                          'done-icon', 'done-color', 'active-icon', 'active-color', 'error-icon', 'error-color']
+
+
+@parse_dict
+class QStepperNavigation(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-stepper-navigation'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = []
+
+
+@parse_dict
+class QSlideTransition(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-slide-transition'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['appear', 'duration']
+
+
+@parse_dict
+class QTimeline(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-timeline'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['side', 'layout', 'color', 'dark']
+
+
+@parse_dict
+class QTimelineEntry(QDiv):
+
+    slots = ['default_slot', 'title_slot', 'subtitle_slot']
+    html_tag = 'q-timeline-entry'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['color', 'heading', 'tag', 'icon', 'avatar', 'title', 'subtitle', 'body', 'side']
+
+
+@parse_dict
 class QEditor(QInput):
 
     slots = []
+    html_tag = 'q-editor'
 
     icon_set = Dict({'align': "format_align_left",
-                'bold': "format_bold",
-                'center': "format_align_center",
-                'code': "code",
-                'font': "font_download",
-                'fontSize': "format_size",
-                'formatting': "text_format",
-                'header': "format_size",
-                'hr': "remove",
-                'hyperlink': "link",
-                'indent': "format_indent_increase",
-                'italic': "format_italic",
-                'justify': "format_align_justify",
-                'left': "format_align_left",
-                'orderedList': "format_list_numbered",
-                'outdent': "format_indent_decrease",
-                'print': "print",
-                'quote': "format_quote",
-                'redo': "redo",
-                'removeFormat': "format_clear",
-                'right': "format_align_right",
-                'size': "format_size",
-                'strikethrough': "strikethrough_s",
-                'subscript': "vertical_align_bottom",
-                'superscript': "vertical_align_top",
-                'toggleFullscreen': "fullscreen",
-                'underline': "format_underlined",
-                'undo': "undo",
-                'unorderedList': "format_list_bulleted"})
+                     'bold': "format_bold",
+                     'center': "format_align_center",
+                     'code': "code",
+                     'font': "font_download",
+                     'fontSize': "format_size",
+                     'formatting': "text_format",
+                     'header': "format_size",
+                     'hr': "remove",
+                     'hyperlink': "link",
+                     'indent': "format_indent_increase",
+                     'italic': "format_italic",
+                     'justify': "format_align_justify",
+                     'left': "format_align_left",
+                     'orderedList': "format_list_numbered",
+                     'outdent': "format_indent_decrease",
+                     'print': "print",
+                     'quote': "format_quote",
+                     'redo': "redo",
+                     'removeFormat': "format_clear",
+                     'right': "format_align_right",
+                     'size': "format_size",
+                     'strikethrough': "strikethrough_s",
+                     'subscript': "vertical_align_bottom",
+                     'superscript': "vertical_align_top",
+                     'toggleFullscreen': "fullscreen",
+                     'underline': "format_underlined",
+                     'undo': "undo",
+                     'unorderedList': "format_list_bulleted"})
 
     lang = Dict({"url": "URL", "bold": "Bold", "italic": "Italic", "strikethrough": "Strikethrough",
-            "underline": "Underline", "unorderedList": "Unordered List", "orderedList": "Ordered List",
-            "subscript": "Subscript", "superscript": "Superscript", "hyperlink": "Hyperlink",
-            "toggleFullscreen": "Toggle Fullscreen", "quote": "Quote", "left": "Left align", "center": "Center align",
-            "right": "Right align", "justify": "Justify align", "print": "Print", "outdent": "Decrease indentation",
-            "indent": "Increase indentation", "removeFormat": "Remove formatting", "formatting": "Formatting",
-            "fontSize": "Font Size", "align": "Align", "hr": "Insert Horizontal Rule", "undo": "Undo", "redo": "Redo",
-            "header1": "Header 1", "header2": "Header 2", "header3": "Header 3", "header4": "Header 4",
-            "header5": "Header 5", "header6": "Header 6", "paragraph": "Paragraph", "code": "Code",
-            "size1": "Very small", "size2": "A bit small", "size3": "Normal", "size4": "Medium-large", "size5": "Big",
-            "size6": "Very big", "size7": "Maximum", "defaultFont": "Default Font"})
+                 "underline": "Underline", "unorderedList": "Unordered List", "orderedList": "Ordered List",
+                 "subscript": "Subscript", "superscript": "Superscript", "hyperlink": "Hyperlink",
+                 "toggleFullscreen": "Toggle Fullscreen", "quote": "Quote", "left": "Left align",
+                 "center": "Center align",
+                 "right": "Right align", "justify": "Justify align", "print": "Print",
+                 "outdent": "Decrease indentation",
+                 "indent": "Increase indentation", "removeFormat": "Remove formatting", "formatting": "Formatting",
+                 "fontSize": "Font Size", "align": "Align", "hr": "Insert Horizontal Rule", "undo": "Undo",
+                 "redo": "Redo",
+                 "header1": "Header 1", "header2": "Header 2", "header3": "Header 3", "header4": "Header 4",
+                 "header5": "Header 5", "header6": "Header 6", "paragraph": "Paragraph", "code": "Code",
+                 "size1": "Very small", "size2": "A bit small", "size3": "Normal", "size4": "Medium-large",
+                 "size5": "Big",
+                 "size6": "Very big", "size7": "Maximum", "defaultFont": "Default Font"})
 
     simple_options = [['left', 'center', 'right', 'justify'],
-        ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
-        ['hr', 'link'], ['undo', 'redo'], ['print', 'fullscreen']]
+                      ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
+                      ['hr', 'link'], ['undo', 'redo'], ['print', 'fullscreen']]
 
     fonts = {"arial": "Arial", "arial_black": "Arial Black", "comic_sans": "Comic Sans MS",
              "courier_new": "Courier New", "impact": "Impact", "lucida_grande": "Lucida Grande",
@@ -542,15 +1002,14 @@ class QEditor(QInput):
         self.kitchen_sink = False
         self.toolbar = QEditor.simple_options
         super().__init__(**kwargs)
-
-        # self.vue_type = 'quasar_component'
-        # self.directives = quasar_directives
-        self.html_tag = 'q-editor'
-        self.prop_list = ['fullscreen', 'value', 'readonly', 'disable', 'square', 'flat', 'dense', 'min-height', 'max-height',
-                          'height', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded', 'content-style', 'content-class',
-                          'definitions', 'fonts', 'toolbar', 'toolbar-color', 'toolbar-text-color', 'toolbar-toggle-color',
+        self.prop_list = ['fullscreen', 'value', 'readonly', 'disable', 'square', 'flat', 'dense', 'min-height',
+                          'max-height',
+                          'height', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded', 'content-style',
+                          'content-class',
+                          'definitions', 'fonts', 'toolbar', 'toolbar-color', 'toolbar-text-color',
+                          'toolbar-toggle-color',
                           'toolbar-bg', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded']
-
+        self.allowed_events = ['input']
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
         if self.kitchen_sink:
@@ -559,29 +1018,29 @@ class QEditor(QInput):
         d = super().convert_object_to_dict()
         return d
 
-_tag_class_dict['q-editor'] = QEditor
 
-
-class QExpansionItem(QInput):
+@parse_dict
+class QExpansionItem(_QInputBase):
 
     slots = ['default_slot', 'header_slot']
+    html_tag = 'q-expansion-item'
 
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
 
         self.type = 'boolean'
-        if self.value:
-            self.value = True
-        else:
-            self.value = False
-        # self.vue_type = 'quasar_component'
-        # self.directives = quasar_directives
-        self.html_tag = 'q-expansion-item'
-        self.prop_list = ['to', 'exact', 'append', 'replace', 'active-class', 'exact-active-class', 'duration', 'default-opened',
-                          'expand-icon-toggle', 'group', 'popup', 'icon', 'expand-icon', 'label', 'label-lines', 'caption',
-                          'caption-lines', 'header-inset-level', 'content-inset-level', 'expand-separator', 'switch-toggle-side',
-                          'value', 'disable', 'expand-icon-class', 'dark', 'dense', 'dense-toggle', 'header-style', 'header-class']
+        # self.value = True if self.value else False
+        self.value = bool(self.value)
+        self.prop_list = ['to', 'exact', 'append', 'replace', 'active-class', 'exact-active-class', 'duration',
+                          'default-opened',
+                          'expand-icon-toggle', 'group', 'popup', 'icon', 'expand-icon', 'label', 'label-lines',
+                          'caption',
+                          'caption-lines', 'header-inset-level', 'content-inset-level', 'expand-separator',
+                          'switch-toggle-side',
+                          'value', 'disable', 'expand-icon-class', 'dark', 'dense', 'dense-toggle', 'header-style',
+                          'header-class']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
@@ -593,89 +1052,93 @@ class QExpansionItem(QInput):
             pass
         return d
 
-_tag_class_dict['q-expansion-item'] = QExpansionItem
 
-
+@parse_dict
 class QImg(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['defualt_slot', 'loading_slot', 'error_slot']
+    html_tag = 'q-img'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-img'
         self.prop_list = ['transition', 'alt', 'basic', 'contain', 'position', 'ratio', 'src', 'srcset', 'sizes',
                           'placeholder-src', 'spinner-color', 'spinner-size']
         # Scoped slots: loading, error
-        # Events: loading, error
+        # Events: load, error
 
-_tag_class_dict['q-img'] = QImg
 
-#TODO Inifinte Scroll
-
+@parse_dict
 class QInnerLoading(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-inner-loading'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-inner-loading'
         self.prop_list = ['transition-show', 'transition-hide', 'showing', 'color', 'size', 'dark']
 
 
-_tag_class_dict['q-inner-loading'] = QInnerLoading
+@parse_dict
+class QParallax(QDiv):
 
-
-class Transition(QDiv):
+    slots = ['default_slot', 'media_slot', 'content_slot']
+    html_tag = 'q-parallax'
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
-        self.html_tag = 'transition'
+        self.prop_list = ['speed', 'src', 'height']
+
+
+@parse_dict
+class Transition(QDiv):
+
+    html_tag = 'transition'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.prop_list = ['appear', 'appear-class', 'appear-to-class', 'appear-active-class',
                           'enter-class', 'enter-active-class', 'enter-to-class', 'leave-class',
                           'leave-active-class', 'leave-to-class', 'duration', 'mode']
 
 
-_tag_class_dict['transition'] = Transition
-
-
+@parse_dict
 class TransitionGroup(QDiv):
 
-    def __init__(self, **kwargs):
+    html_tag = 'transition-group'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'transition-group'
         self.prop_list = ['appear', 'appear-class', 'appear-to-class', 'appear-active-class',
                           'enter-class', 'enter-active-class', 'enter-to-class', 'leave-class',
                           'leave-active-class', 'leave-to-class', 'duration', 'mode', 'tag', 'key']
 
 
-_tag_class_dict['transition-group'] = TransitionGroup
-
-
-
+@parse_dict
 class QIcon(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-icon'
 
+    def __init__(self, **kwargs):
+        # self.size = '1em'
         super().__init__(**kwargs)
-        self.html_tag = 'q-icon'
         self.prop_list = ['name', 'color', 'size', 'left', 'right']
 
-_tag_class_dict['q-icon'] = QIcon
 
-
+@parse_dict
 class QSpinner(QDiv):
 
     spinner_types = ['audio', 'ball', 'bars', 'comment', 'cube', 'dots', 'facebook', 'gears', 'grid', 'hearts', 'hourglass',
                      'infinity', 'ios', 'oval', 'pie', 'puff', 'radio', 'rings', 'tail']
+    html_tag = 'q-spinner'
+
     def __init__(self, **kwargs):
 
         self.size = '1em'
         self.color = 'primary'
         self.spinner_type = ''
         super().__init__(**kwargs)
-        self.html_tag = 'q-spinner'
         self.prop_list = ['size', 'color', 'thickness']
-
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
         if self.spinner_type in QSpinner.spinner_types:
@@ -685,75 +1148,503 @@ class QSpinner(QDiv):
         d = super().convert_object_to_dict()
         return d
 
-#TODO: Take care of all spinner types
-_tag_class_dict['q-spinner'] = QSpinner
 
+# TODO: Take care of all spinner types in parser
 
 # List and list items
 
+@parse_dict
 class QList(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-list'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-list'
         self.prop_list = ['separator', 'padding', 'bordered', 'dense', 'dark']
 
-_tag_class_dict['q-list'] = QList
 
-
+@parse_dict
 class QItem(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-item'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-item'
         self.prop_list = ['to', 'exact', 'append', 'replace', 'active-class', 'exact-active-class',
                           'inset-level', 'tag', 'tabindex', 'disable', 'active', 'clickable', 'manual-focus',
                           'focused', 'dark', 'dense']
 
-_tag_class_dict['q-item'] = QItem
 
-
+@parse_dict
 class QItemSection(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-item-section'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-item-section'
         self.prop_list = ['avatar', 'thumbnail', 'side', 'top', 'no-wrap']
 
-_tag_class_dict['q-item-section'] = QItemSection
 
-
+@parse_dict
 class QItemLabel(QDiv):
 
-    def __init__(self, **kwargs):
+    slots = ['default_slot']
+    html_tag = 'q-item-label'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-item-label'
         self.prop_list = ['lines', 'overline', 'caption', 'header', 'lines']
 
-_tag_class_dict['q-item-label'] = QItemLabel
+
+@parse_dict
+class QSlideItem(QDiv):
+
+    slots = ['default_slot', 'left_slot', 'right_slot']
+    html_tag = 'q-slide-item'
+
+    def __init__(self, **kwargs):
+
+        self.reset = False
+        super().__init__(**kwargs)
+        self.prop_list = ['left-color', 'right-color']
+        self.allowed_events = ['left', 'right', 'action']
+
+    def convert_object_to_dict(self):    # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+        d['reset'] = self.reset
+        return d
 
 
+@parse_dict
+class QInfiniteScroll(QDiv):
+    # https://quasar.dev/vue-components/infinite-scroll
+
+    # To work MUST add 'scroll' to classes of container that holds this component. Otherwise endless load events generated
+    # Also styling must be through style not color or size props because they disappear after first event
+
+    slots = ['default_slot', 'loading_slot']
+    html_tag = 'q-infinite-scroll'
+
+    def __init__(self, **kwargs):
+
+        self.done = False
+        self.initial = True
+        super().__init__(**kwargs)
+        self.prop_list = ['offset', 'scrollTarget', 'reverse', 'disable']
+        self.allowed_events = ['load']
+
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['done'] = self.done
+        return d
+
+
+@parse_dict
+class QScrollArea(QDiv):
+
+
+    slots = ['default_slot']
+    html_tag = 'q-scroll-area'
+
+    def __init__(self, **kwargs):
+
+        self.offset = None
+        self.duration = None
+        super().__init__(**kwargs)
+        # Offset and duration are added props to activate the setScrollPosition function
+        self.prop_list = ['delay', 'horizontal', 'thumb-style', 'content-style', 'content-active-style',
+                          'offset', 'duration']
+
+
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['offset'] = self.offset
+        d['duration'] = self.duration
+        return d
+
+
+@parse_dict
+class QScrollObserver(QDiv):
+
+    html_tag = 'q-scroll-observer'
+
+    def __init__(self, **kwargs):
+
+        self.debounce = 300
+        super().__init__(**kwargs)
+        self.prop_list = ['debounce', 'horizontal']
+        self.allowed_events = ['scroll']
+
+
+@parse_dict
+class QMarkupTable(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-markup-table'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        self.prop_list = ['separator', 'wrap-cells', 'dense', 'dark', 'flat', 'bordered', 'square']
+
+
+@parse_dict
 class QSeparator(QDiv):
 
-    def __init__(self, **kwargs):
+    html_tag = 'q-separator'
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'q-separator'
         self.prop_list = ['spaced', 'inset', 'vertical', 'dark', 'color']
 
-_tag_class_dict['q-separator'] = QSeparator
 
-
+@parse_dict
 class QSpace(QDiv):
+
+    html_tag = 'q-space'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = []
+
+
+@parse_dict
+class QVideo(QDiv):
+
+    html_tag = 'q-video'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['src']
+
+
+@parse_dict
+class QTree(QDiv):
+
+
+    slots = []
+    html_tag = 'q-tree'
+
+    def __init__(self, **kwargs):
+
+        self.ticked = []
+        self.expanded = []
+        self.selected = []
+        self.tick_strategy = 'none'   # none | strict | leaf | leaf-filtered
+        super().__init__(**kwargs)
+        self.attributes = ['tick-strategy', 'default-expand-all', 'accordion', 'nodes', 'node-key', 'label-key', 'icon',
+                           'no-nodes-label', 'no-results-label', 'filter', 'filter-method', 'ticked', 'expanded', 'selected',
+                           'color', 'control-color', 'text-color', 'selected-color', 'dark', 'duration']
+        self.allowed_events = ['before', 'after', 'update:expanded', 'lazy-load', 'update:ticked', 'update:selected']
+        self.events = ['update:expanded', 'update:ticked', 'update:selected']
+        def default_input(self, msg):
+            return self.before_event_handler(msg)
+        self.on('before', default_input)
+
+
+    def before_event_handler(self, msg):
+        print('QTREE before ', msg)
+        if msg.event_type == 'update:expanded':
+            self.expanded = msg.value
+        elif msg.event_type == 'update:selected':
+            self.selected = msg.value
+        elif msg.event_type == 'update:ticked':
+            self.ticked = msg.value
+        print('done before')
+
+
+    def model_update(self):
+        # update_value = self.model[0].data[self.model[1]]
+        pass
+
+
+    def convert_object_to_dict(self):    # Every object needs to redefine this
+        d = super().convert_object_to_dict()
+
+        # self.events = ['update:expanded', 'update:ticked', 'update:selected']
+        return d
+
+
+    def __setattr__(self, key, value):
+        if key == 'nodes':
+            if isinstance(value, str):
+                self.load_json(value)
+            else:
+                self.__dict__[key] = value
+        elif key in self.__class__.slots:
+            self.add_scoped_slot(key[:key.index('_')], value)
+        else:
+            self.__dict__[key] = value
+
+
+    def load_json(self, options_string):
+        self.nodes = demjson.decode(options_string.encode("ascii", "ignore"))
+        return self.nodes
+
+
+    def load_json_from_file(self, file_name):
+        with open(file_name,'r') as f:
+            self.nodes = demjson.decode(f.read().encode("ascii", "ignore"))
+        return self.nodes
+
+
+@parse_dict
+class QNotify(QDiv):
+
+    #TODO: Add handler for action that sends message back to server. Currently does not support actions
+
+    html_tag = 'q-notify'
+    # This is a special component that does nor wrap a quasar component but activate a quasar utility
+    # https://v1.quasar-framework.org/quasar-plugins/notify
+    # Add 'after' event to button that activates that sets 'notify' prop back to false. Otherwise, will appear every update
+
+    def __init__(self, **kwargs):
+        self.notify = False
+        # Possible position: top-left | top-right | bottom-left | bottom-right | top | bottom | left | right | center
+        self.position = 'bottom-right'
+        super().__init__(**kwargs)
+        self.prop_list = ['notify', 'color', 'textColor', 'message', 'html','icon', 'avatar', 'position', 'closeBtn',
+                          'timeout', 'actions', 'multiLine']
+
+
+    def convert_object_to_dict(self):  # Every object needs to redefine this
+
+        d = super().convert_object_to_dict()
+        d['notify'] = self.notify
+        return d
+
+
+@parse_dict
+class QTable(QDiv):
+
+    # Has also specific slots for column names body-cell-{name}
+    slots = ['item_slot', 'body_slot', 'body-cell_slot', 'top-row_slot', 'bottom-row_slot', 'bottom_slot', 'pagination_slot', 'header_slot',
+             'header-cell_slot', 'top-left_slot', 'top-right_slot', 'top-selection_slot']
+    html_tag = 'q-table'
+
+    def __init__(self, **kwargs):
+
+        self.pagination = False
+        self.selected = []
+        super().__init__(**kwargs)
+        self.attributes = ['fullscreen', 'losding', 'columns', 'visible-columns', 'title', 'hide-header', 'hide-bottom',
+                           'separator', 'wrap-cells', 'no-data-label', 'no-results-label', 'loading-label',
+                           'filter', 'filter-method', 'data', 'row-key', 'rows-per-page-label', 'pagination-label',
+                           'pagination', 'rows-per-page-options', 'selected-rows-label', 'selection', 'selected',
+                           'binary-state-sort', 'sort-method', 'color', 'grid', 'dense', 'dark', 'flat', 'bordered',
+                           'square', 'table-style', 'table-class', 'table-header-style', 'table-header-class',
+                           'card-style', 'card-class']
+        # Need to load: columns, data
+        # separator one of  horizontal | vertical | cell | none
+        self.allowed_events = ['before', 'after', 'request', 'selection', 'update:pagination', 'update:selected']
+        self.events = ['update:pagination', 'update:selected']
+        def default_input(self, msg):
+            return self.before_event_handler(msg)
+        self.on('before', default_input)
+
+
+    def before_event_handler(self, msg):
+        print('QTable before ', msg)
+        if msg.event_type == 'update:selected':
+            self.selected = msg.value
+        elif msg.event_type == 'update:pagination':
+            self.pagination = msg.value
+
+        print('done before')
+
+
+    def model_update(self):
+        # update_value = self.model[0].data[self.model[1]]
+        pass
+
+
+    def __setattr__(self, key, value):
+        if key in ['data', 'columns']:
+            if isinstance(value, str):
+                self.__dict__[key] = self.load_json(value)
+            else:
+                self.__dict__[key] = value
+        elif key in self.__class__.slots:
+            self.add_scoped_slot(key[:key.index('_')], value)
+        else:
+            self.__dict__[key] = value
+
+
+    def load_json(self, options_string):
+        self.nodes = demjson.decode(options_string.encode("ascii", "ignore"))
+        return self.nodes
+
+
+    def load_json_from_file(self, file_name):
+        with open(file_name,'r') as f:
+            self.nodes = demjson.decode(f.read().encode("ascii", "ignore"))
+        return self.nodes
+
+
+# Layout components  https://quasar.dev/layout/layout
+
+@parse_dict
+class QLayout(QDiv):
+
+    # To understand the 'view' prop read play with https://quasar.dev/layout-builder
+
+    slots = ['default_slot']
+    html_tag = 'q-layout'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['view', 'container']
+        self.allowed_events = ['resize', 'scroll', 'scroll-height']
+
+
+@parse_dict
+class QHeader(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-header'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['reveal', 'reveal-offset', 'value', 'bordered', 'elevated']
+        self.allowed_events = ['reveal']
+
+
+@parse_dict
+class QFooter(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-footer'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        self.prop_list = ['reveal', 'reveal-offset', 'value', 'bordered', 'elevated']
+        self.allowed_events = ['reveal']
+
+
+@parse_dict
+class QDrawer(QDiv):
+
+    slots = ['default_slot', 'mini_slot']
+    html_tag = 'q-drawer'
+
+    def __init__(self, **kwargs):
+
+        self.value = True   # Default is to show drawer
+        self.mini = False
+        super().__init__(**kwargs)
+        self.prop_list = ['side', 'overlay', 'mini', 'mini-to-overlay', 'breakpoint', 'behavior', 'persistent', 'show-if-above',
+                          'no-swipe-open', 'no-swipe-close', 'value', 'width', 'mini-width', 'bordered', 'elevated',
+                          'content-class', 'content-style']
+        self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'on-layout', 'click', 'mouseover', 'mouseout']
+
+    def model_update(self):
+        update_value = self.model[0].data[self.model[1]]
+        self.value = update_value
+
+
+@parse_dict
+class QPageContainer(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-page-container'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        self.prop_list = []
+
+
+@parse_dict
+class QPage(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-page'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        self.prop_list = ['padding', 'style-fn']
+
+
+@parse_dict
+class QPageSticky(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-page-sticky'
+
+    def __init__(self, **kwargs):
+
+
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['expand', 'position', 'offset']
+
+
+@parse_dict
+class QPageScroller(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-page-scroller'
+
+    def __init__(self, **kwargs):
+
+        self.duration = 300
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['expand', 'position', 'offset', 'scroll-offset', 'duration']
+        # Required in order not have have th evue update during the scroll
+        self.on('click', self.default_click)
+
+    @staticmethod
+    async def default_click(self, msg):
+            print('trying to sleep')
+            await asyncio.sleep(1 + self.duration/1000)
+
+
+@parse_dict
+class QFab(QDiv):
+
+    slots = ['default_slot', 'tooltip_slot']
+    html_tag = 'q-fab'
+
+    def __init__(self, **kwargs):
+
+        self.value = False   # Default is to show drawer
+        super().__init__(**kwargs)
+        # direction on of  up | right | down | left   , type one of  a | submit | button | reset
+        self.prop_list = ['direction', 'persistent', 'icon', 'active-icon', 'type', 'value', 'disable',
+                          'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
+        self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'click', 'mouseover', 'mouseout']
+
+    def model_update(self):
+        update_value = self.model[0].data[self.model[1]]
+        self.value = update_value
+
+
+@parse_dict
+class QFabAction(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-fab-action'
 
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
-        self.html_tag = 'q-space'
-        self.prop_list = []
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['icon', 'type', 'to', 'replace', 'disable', 'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
 
-_tag_class_dict['q-space'] = QSpace
+

@@ -113,11 +113,17 @@ Vue.component('html_component', {
                 eventHandler(this.$props, event, false);
             }
         }),
-        mountedFunction: (function (event) {
+        animateFunction: (function () {
+            var animation = this.$props.jp_props.animation;
+            var element = this.$el;
+                element.classList.add('animated', animation);
+            element.addEventListener('animationend', function() { element.classList.remove('animated', animation); });
 
         })
     },
     mounted() {
+
+        if (this.$props.jp_props.animation) this.animateFunction();
 
         if (this.$props.jp_props.input_type) {    //this.$props.jp_props.input_type
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
@@ -126,6 +132,10 @@ Vue.component('html_component', {
     },
     updated() {
         //console.log('in updated'); console.log(this.$props.jp_props);console.log(this.$props.jp_props.slide_down);
+
+        if (this.$props.jp_props.animation) this.animateFunction();
+
+
         if (this.$props.jp_props.input_type) {    //this.$props.jp_props.input_type
 
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;    //make sure that the input value is the correct one received from server

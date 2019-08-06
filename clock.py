@@ -8,20 +8,17 @@ clock_div = jp.Span(text='loading...', classes='text-5xl m-1 p-1 bg-gray-300 fon
 async def clock_counter():
     while True:
         clock_div.text = time.strftime("%a, %d %b %Y, %H:%M:%S", time.localtime())
-    # jp.JustPy.loop.create_task(wp.update())
         jp.run_task(wp.update())
         await asyncio.sleep(1)
-    # jp.JustPy.loop.create_task(clock_counter())
-    # jp.run_task(clock_counter())
 
-
+@jp.SetRoute('/clock')
 async def clock_test(request):
     jp.print_request(request)
     return wp
 
 
 async def clock_init():
-    jp.JustPy.loop.create_task(clock_counter())
+    jp.run_task(clock_counter())
 
 
 async def ajax_clock_counter():

@@ -347,11 +347,26 @@ async def my_shared_tooltip(self, msg):
     # await asyncio.sleep(0.2)
     websocket = get_websocket(msg)
     # await websocket.send_json({'type': 'tooltip_update', 'data': f'<span style="font-size:20px">Daniel {msg.series_name} {msg.x} {msg.y}</span>', 'id': msg.id})
-    print(return_string);
+    print(return_string)
     await websocket.send_json({'type': 'tooltip_update', 'data': return_string, 'id': msg.id})
     return True
 
-
+async def my_split_tooltip(self, msg):
+    # When split a list is returned. First item in list is the x axis tooltip. Then for each series
+    print(msg.points)
+    print(msg)
+    return_list = [f'Year: {msg.x}']
+    print('x', msg.x)
+    for point in msg.points:
+        s1 = f'<span style="color: {point.color}">&#129409;</span>'
+        s1 = f'<div style="font-size:12px"> {s1} {point.series_name}   {point.x} {point.y}</div>'
+        return_list.append(s1)
+    # await asyncio.sleep(0.2)
+    websocket = get_websocket(msg)
+    # await websocket.send_json({'type': 'tooltip_update', 'data': f'<span style="font-size:20px">Daniel {msg.series_name} {msg.x} {msg.y}</span>', 'id': msg.id})
+    print(return_list)
+    await websocket.send_json({'type': 'tooltip_update', 'data': return_list, 'id': msg.id})
+    return True
 
 
 def add_point(self, msg):
@@ -382,6 +397,7 @@ def chart_test(request):
 
     return wp
 
+@SetRoute('/tooltip')
 def tool_tip_demo(request):
     wp = WebPage()
     d = Div(classes='flex flex-wrap ', a=wp)
@@ -408,10 +424,14 @@ def tool_tip_demo(request):
         my_charts.append(my_chart)
         my_chart.load_json(chart)
 
-        # my_chart.on('tooltip', my_shared_tooltip)
+
     my_charts[0].options.tooltip.shared = False
+    my_charts[0].on('tooltip', my_tooltip)
+
     my_charts[1].options.tooltip.shared = True
+    my_charts[1].on('tooltip', my_shared_tooltip)
     my_charts[2].options.tooltip.split = True
+    my_charts[2].on('tooltip', my_split_tooltip)
     my_charts[0].options.title.text = 'Simple Tooltip - Formatter Example'
     my_charts[1].options.title.text = 'Shared Tooltip - Formatter Example'
     my_charts[2].options.title.text = 'Split Tooltip - Formatter Example'
@@ -419,6 +439,7 @@ def tool_tip_demo(request):
     return wp
 
 
+@SetRoute('/stock')
 async def stock_chart(request):
     wp = WebPage()
     d = Div(classes='flex flex-wrap', a=wp)
@@ -550,6 +571,7 @@ def file_load_test(request):
     print(co)
     return wp
 
+@SetRoute('/histogram')
 def test_histogram(request):
     wp = WebPage()
     data = [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6,

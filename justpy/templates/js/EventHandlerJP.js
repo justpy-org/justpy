@@ -1,9 +1,10 @@
 // {% raw %}
-function eventHandler(props, event, form_data) {
+function eventHandler(props, event, form_data, aux) {
     console.log('-------------------------');
         console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
     // console.log(JSON.stringify(props, null, 2));
     console.log( event);
+    console.log(props.jp_props);
     console.log('-------------------------');
         e = {
             'event_type': event.type,
@@ -19,10 +20,11 @@ function eventHandler(props, event, form_data) {
             'data': event.data,
             'value': event.target.value,
             'page_id': page_id,
-            'websocket_id': websocket_id,
-            'form_data':  form_data
+            'websocket_id': websocket_id
+            // 'form_data':  form_data
         };
-
+        if (form_data) e['form_data'] = form_data;
+        if (aux) e['aux'] = aux;
         if (event instanceof KeyboardEvent){
         // it is a keyboard event!
         // https://developer.mozilla.org/en-US/docs/Web/Events/keydown   keyup, keypress
@@ -42,6 +44,7 @@ function eventHandler(props, event, form_data) {
         if (use_websockets){
         if (websocket_ready)
             socket.send(JSON.stringify({'type': 'event'  ,'event_data': e}));
+        else { setTimeout(function(){ socket.send(JSON.stringify({'type': 'event'  ,'event_data': e})); }, 1000);}
             }
         else{
 
@@ -60,11 +63,14 @@ function eventHandler(props, event, form_data) {
         });
         }
     // Check for scrolling https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
     if (props.jp_props.scroll && (event.type=='click')) {
         event.preventDefault();
         c = document.getElementById(props.jp_props.scroll_to);
         c.scrollIntoView({
-            behavior: props.jp_props.scroll_option    // Default is 'smooth'
+            behavior: props.jp_props.scroll_option,    // Default is 'smooth'
+            block: props.jp_props.block_option,
+            inline: props.jp_props.inline_option,
         });
 
     }

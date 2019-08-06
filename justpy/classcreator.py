@@ -1,5 +1,4 @@
 
-
 html_global_attributes =['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                              'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
@@ -8,7 +7,7 @@ html_tags = {'main_root': ['html'],
              'document_metadata': ['base', 'head', 'link', 'meta', 'style', 'title'],
              'sectioning_root': ['body'],
              'content_sectioning': ['address', 'article', 'aside', 'div', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-                                    'hgroup', 'main', 'nav', 'section'],
+                                     'main', 'nav', 'section'],
              'text_content': ['blockquote', 'dd', 'dl', 'dt', 'figcaption', 'figure', 'hr', 'li',
                               'ol', 'p', 'pre', 'ul'],
              'inline_text_semantics': ['a', 'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em',
@@ -21,15 +20,28 @@ html_tags = {'main_root': ['html'],
              'table_content': ['caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr'],
              'forms': ['button', 'input', 'datalist', 'fieldset', 'form', 'label', 'legend', 'meter', 'optgroup',
                        'option', 'output', 'progress', 'select', 'textarea'],
-             # 'special': ['input'],  # Need special treatment
-             'interactive_elements': ['details', 'dialog', 'menu', 'menuitem', 'summary'],
-             'misc': ['template']
+             'interactive_elements': ['details', 'dialog', 'summary'], # 'menu', 'menuitem'
+             'misc': ['template']  # 'template'
 
              }
-no_create_list = [ 'input', 'form', 'label', 'output', 'select', 'textarea', 'a']
+
+no_create_list = ['div', 'input', 'form', 'label', 'output', 'select', 'textarea', 'a']
+
+# https://www.w3schools.com/tags/ref_byfunc.asp
+_tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'main', 'nav', 'section',
+                'blockquote', 'dd', 'dl', 'dt', 'figcaption', 'figure', 'hr', 'li', 'ol', 'p', 'pre', 'ul',
+                'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 'rb',
+                'rp', 'rt', 'rtc', 'ruby', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'u', 'var', 'wbr',
+                'area', 'audio', 'img', 'map', 'track', 'video',
+                'embed', 'iframe', 'object', 'param', 'picture', 'source',
+                'del', 'ins',
+                'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
+                'button', 'fieldset', 'legend', 'meter', 'optgroup', 'option', 'progress',  # datalist not supported
+                'details', 'summary' # dialog not supported
+               ]
 
 # Only tags that have unique attributes that are supported by HTML 5 are in this dict
-attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type'],
+_attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type'],
              'area': ['alt', 'coords', 'download', 'href', 'hreflang', 'media', 'rel', 'shape', 'target', 'type'],
              'audio': ['autoplay', 'controls', 'loop', 'muted', 'preload', 'src'], 'base': ['href', 'target'],
              'bdo': ['dir'], 'blockquote': ['cite'],
@@ -49,8 +61,6 @@ attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'targ
                        'required', 'size', 'src', 'step', 'type', 'value', 'width'], 'ins': ['cite', 'datetime'],
              'label': ['for', 'form'], 'li': ['value'],
              'link': ['crossorigin', 'href', 'hreflang', 'media', 'rel', 'sizes', 'type'], 'map': ['name'],
-             'menu': ['label', 'type'],
-             'menuitem': ['checked', 'command', 'default', 'disabled', 'icon', 'label', 'radiogroup', 'type'],
              'meta': ['charset', 'content', 'http-equiv', 'name'],
              'meter': ['form', 'high', 'low', 'max', 'min', 'optimum', 'value'],
              'object': ['data', 'form', 'height', 'name', 'type', 'usemap', 'width'],
@@ -66,6 +76,9 @@ attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'targ
              'th': ['abbr', 'colspan', 'headers', 'rowspan', 'scope', 'sorted'], 'time': ['datetime'],
              'track': ['default', 'kind', 'label', 'src', 'srclang'],
              'video': ['autoplay', 'controls', 'height', 'loop', 'muted', 'poster', 'preload', 'src', 'width']}
+
+
+
 
 # window.addEventListener("afterprint", function(event){...});
 # window.onafterprint = function(event){...};
@@ -120,4 +133,8 @@ def create_class_file():
 
     print('finished class import')
 
-create_class_file()
+# create_class_file()
+s = ''
+for tag in _tag_create_list:
+    s += tag.capitalize() + '='
+print(s)

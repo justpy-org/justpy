@@ -20,8 +20,8 @@ s = f'''
 
 def comp_test(request):
     wp = jp.WebPage()
-    # c = jp.parse_html(s, a=wp)
-    d = jp.get_tag('article', text='test', classes='m-1 p-1 text-xl text-red-400', a=wp)
+    c = jp.parse_html(s, a=wp)
+    # d = jp.get_tag('article', text='test', classes='m-1 p-1 text-xl text-red-400', a=wp)
 
     return wp
 

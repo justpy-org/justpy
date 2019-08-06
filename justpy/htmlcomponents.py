@@ -19,6 +19,13 @@ from .tailwind import Tailwind
 #TODO: Handle scroll event https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
 #Metaclasses: https://stackoverflow.com/questions/41215107/programmatically-defining-a-class-type-vs-types-new-class
 
+# Dict to translate from tag to class
+_tag_class_dict = {}
+
+def parse_dict(cls):
+    _tag_class_dict[cls.html_tag] = cls
+    return cls
+
 class JustPy:
     loop = None
     pass
@@ -48,6 +55,7 @@ class Folder:
         self.add_page(page)
 
 class WebPage:
+
     # Add page events like visibility. Do with templates?
     # TODO: Add page events like visibility. Do with templates? https://developer.mozilla.org/en-US/docs/Web/Events ad reload to page with seconds parameter
     # events: online, beforeunload, resize, scroll?, visibilitychange
@@ -80,6 +88,8 @@ class WebPage:
         #     self.url = self.name   # Url to serve the page, defaults to name of web page
         self.css = ''
         self.html = ''
+        self.body_style = ''
+        self.body_classes = ''
         self.reload_interval = None
         self.data = {}
         self.ui_framework = 'tailwind' # material etc.
@@ -91,6 +101,9 @@ class WebPage:
 
     def __repr__(self):
         return f'{self.__class__.__name__}(page_id: {self.page_id}, number of components: {len(self.components)}, reload interval: {self.reload_interval})'
+
+    def __len__(self):
+        return len(self.components)
 
     def add_component(self, component):
         self.components.append(component)
@@ -192,6 +205,7 @@ class WebPage:
 
 
 class JustpyBaseComponent(Tailwind):
+
     next_id = 0
     instances = {}
     # Set this to true if you want all components to be temporary by default
@@ -216,14 +230,19 @@ class JustpyBaseComponent(Tailwind):
         if not self.pages and self.delete_flag:
             JustpyBaseComponent.instances.pop(self.id, None)
 
+
     def on(self, event_type, func):
 
         if event_type in self.allowed_events:
             setattr(self, 'on_' + event_type, MethodType(func, self))
-            self.events.append(event_type)
+            if event_type not in self.events:
+                self.events.append(event_type)
         else:
             raise Exception('No event of type {} supported'.format(event_type))
 
+    def remove_event(self, event_type):
+        if event_type in self.events:
+            self.events.remove(event_type)
 
     def has_event_function(self, event_type):
         if getattr(self, 'on_' + event_type, None):
@@ -247,6 +266,14 @@ class JustpyBaseComponent(Tailwind):
                     print('Problem with websocket in component update, ignoring')
         return self
 
+    @staticmethod
+    def convert_dict_to_object(d):
+        obj = globals()[d['class_name']]()
+        for obj_prop in d['object_props']:
+            obj.add(JustpyBaseComponent.convert_dict_to_object(obj_prop))
+        for k, v in d.items():
+            obj.__dict__[k] = v
+        return obj
 
 
 # https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
@@ -258,11 +285,13 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     # https: // www.w3schools.com / tags / ref_standardattributes.asp
     # All components have these attributes + data-*
+    attributes = []
+    html_tag = 'div'
     html_global_attributes =['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                              'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
     attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
-                      'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html']
+                      'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
     not_initialized_attribute_list = ['accesskey', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden',
                              'lang', 'spellcheck', 'tabindex', 'title']
@@ -284,10 +313,12 @@ class HTMLBaseComponent(JustpyBaseComponent):
         super().__init__(**kwargs)  # Important, needed to give component a unique id
         self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
-        self.html_tag = 'div'  # HTML to use inside component definition
+        # self.html_tag = 'div'  # HTML to use inside component definition
+        self.html_tag = type(self).html_tag
         self.delete_flag = True
         self.attrs = {'id':  str(self.id)}    # Every component gets an ID in html
         self.inner_html = ''
+        self.animation = False
         self.pages = []  # pages the component is on
         self.show = True
         self.classes = ''
@@ -303,32 +334,44 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.events = []
         self.event_propagation = True   # Should events be propogated?
         self.tooltip = None
-        self.attributes = []
+        # self.attributes = []
+        self.attributes = type(self).attributes
         self.prop_list = []   # For components from libraries like quasar. Contains both props and directives
 
         for k, v in kwargs.items():
             self.__setattr__(k,v)
 
-        for e in self.allowed_events:   # Take care of events in keyword arguments. Either 'click' or 'onclick' or 'on_click' is fine
-            if e in kwargs.keys():
-                self.on(e, kwargs[e])
-            elif 'on' + e in kwargs.keys():
-                self.on(e, kwargs['on' + e])
-            elif 'on_' + e in kwargs.keys():
-                print(e,kwargs['on_' + e] )
-                self.on(e, kwargs['on_' + e])
+        for e in self.allowed_events:
+            for prefix in ['', 'on', 'on_']:
+                # print(kwargs.keys())
+                # print(prefix, prefix + e)
+                if prefix + e in kwargs.keys():
+                    fn = kwargs[prefix + e]
+                    if isinstance(fn, str):
+                        # code_lines = [x.strip() for x in fn.split(';')]
+                        # print(code_lines)
+                        # ident = '\n '
+                        fn_string = f'def onliner{self.id}(self, msg):\n {fn}'
+                        # for code_line in code_lines:
+                        #     fn_string = f'{fn_string}{ident}{code_line}'
+                        exec(fn_string)
+                        self.on(e, locals()[f'onliner{self.id}'])
+                    else:
+                        self.on(e, fn)
+                    break
 
         for com in ['a', 'add_to']:
             if com in kwargs.keys():
                 kwargs[com].add_component(self)
 
+    def __len__(self):
+        if hasattr(self, 'components'):
+            return len(self.components)
+        else:
+            return 0
 
     def __repr__(self):
-        if hasattr(self, 'components'):
-            num_components = len(self.components)
-        else:
-            num_components = 0
-        return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, vue_type: {self.vue_type}, number of components: {num_components})'
+        return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, vue_type: {self.vue_type}, number of components: {len(self)})'
 
     def delete(self):
         if not self.pages and self.delete_flag:
@@ -443,14 +486,17 @@ class HTMLBaseComponent(JustpyBaseComponent):
         return d
 
 
+
 class Div(HTMLBaseComponent):
 
     # A general purpose container
     # This is a component that other components can be added to
+    html_tag = 'div'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'div'
+        # self.html_tag = 'div'
+        # self.html_tag = type(self).html_tag
         self.components = []
 
 
@@ -543,18 +589,24 @@ class Div(HTMLBaseComponent):
         if hasattr(self, 'text'):
             d['text'] = self.text
             # Handle HTML entities. Warning, they should be in their own spnad or div etc. Setting inner_html erases all other stuff in container
-            if self.text[0] == '&':
+            if (len(self.text) > 0) and (self.text[0] == '&'):
                 d['inner_html'] = self.text
 
 
         return d
 
-DivJP = Div
+# DivJP = Div
 
 class Input(Div):
     # https://www.cssportal.com/style-input-range/   style an input range
     # Edge and Internet explorer do not support the input event for checkboxes and radio buttons. Need to use change instead
     # IMPORTANT: Scope of name of radio buttons is the whole page and not the form as is the standard unless form is sepcified
+
+    html_tag = 'input'
+    attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
+                  'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
+                  'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
+                  'required', 'size', 'src', 'step', 'type', 'value', 'width']
 
     def __init__(self, **kwargs):
 
@@ -567,12 +619,12 @@ class Input(Div):
         self.form = None
         # self.model = None   #[wp, 'search-text] or [d, 'search-text']
         super().__init__(**kwargs)
-        self.attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
-                       'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
-                       'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
-                       'required', 'size', 'src', 'step', 'type', 'value', 'width']
+        # self.attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
+        #                'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
+        #                'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
+        #                'required', 'size', 'src', 'step', 'type', 'value', 'width']
 
-        self.html_tag = 'input'
+        # self.html_tag = 'input'
         # self.events.extend(['input', 'change']) # Moved to convert object
         def default_input(self, msg):
             return self.before_event_handler(msg)
@@ -671,7 +723,7 @@ class Input(Div):
                 self.events.append('change')
             # self.events.extend(['change'])
         else:
-            if 'change' not in self.events:
+            if ('change' not in self.events) and ('change' in self.allowed_events):
                 self.events.append('change')
             if 'input' not in self.events:
                 self.events.append('input')
@@ -689,10 +741,13 @@ class Input(Div):
 
 class Form(Div):
 
+    html_tag = 'form'
+    attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'form'
-        self.attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
+        # self.html_tag = 'form'
+        # self.attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
         self.allowed_events += ['submit']
         def default_submit(self, msg):
             print('Form submitted ', msg)
@@ -702,12 +757,15 @@ class Form(Div):
 
 class Label(Div):
 
+    html_tag = 'label'
+    attributes = ['for', 'form']  # In Justpy these accept components, not ids of component like in HTML
+
     def __init__(self, **kwargs):
         self.for_component = None
         # self.form = None
         super().__init__(**kwargs)
-        self.html_tag = 'label'
-        self.attributes = ['for', 'form']  # In Justpy these accept components, not ids of component like in HTML
+        # self.html_tag = 'label'
+        # self.attributes = ['for', 'form']  # In Justpy these accept components, not ids of component like in HTML
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -725,6 +783,10 @@ class Label(Div):
 class TextArea(Input):
     # https://www.cssportal.com/style-input-range/   style an input range
 
+    html_tag = 'textarea'
+    attributes = ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name',
+                  'placeholder', 'readonly', 'required', 'rows', 'wrap', 'value']
+
     def __init__(self, **kwargs):
 
         self.rows = '4'
@@ -732,20 +794,22 @@ class TextArea(Input):
         super().__init__(**kwargs)
         self.type = 'textarea'
         self.input_type = 'text'
-        self.html_tag = 'textarea'
-        self.attributes = self.attributes = ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name',
-                                             'placeholder', 'readonly', 'required', 'rows', 'wrap', 'value']
+        # self.html_tag = 'textarea'
+        # self.attributes = ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name',
+        #                                      'placeholder', 'readonly', 'required', 'rows', 'wrap', 'value']
 
 
 
 
 class Select(Input):
 # Need to set value of select on creation, otherwise blank line will show on page update
+    html_tag = 'select'
+    attributes = ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size']
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.html_tag = 'select'
-        self.attributes = ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size']
+        # self.html_tag = 'select'
+        # self.attributes = ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size']
         self.type = 'select'
         # self.events = ['change']
         # print(self.events)
@@ -754,8 +818,10 @@ class Select(Input):
 
 
 
-class LinkJP(Div):
+class A(Div):
 
+    html_tag = 'a'
+    attributes = ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type']
 
     def __init__(self, **kwargs):
 
@@ -766,18 +832,22 @@ class LinkJP(Div):
         self.target = 'self'  # _blank, _self, _parent, _top, framename
         # Whether to scroll to link  One of "auto", "instant", or "smooth". Defaults to "auto". https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
         self.scroll = False
-        self.scroll_option = 'smooth'
-        self.attributes = ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type']
+        self.scroll_option = 'smooth'  # One of "auto" or "smooth".
+        self.block_option = 'start'   # One of "start", "center", "end", or "nearest". Defaults to "start".
+        self.inline_option = 'nearest' # One of "start", "center", "end", or "nearest". Defaults to "nearest".
+        # self.attributes = ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type']
         super().__init__(**kwargs)
-        self.html_tag = 'a'
-        # self.events = ['click']
+        # self.html_tag = 'a'
         self.events.append('click')
 
 
     def convert_object_to_dict(self):    # Every object needs to redefine this
         d = super().convert_object_to_dict()
+
         d['scroll'] = self.scroll
         d['scroll_option'] = self.scroll_option
+        d['block_option'] = self.block_option
+        d['inline_option'] = self.inline_option
 
         if self.url:
             if self.bookmark:
@@ -802,7 +872,7 @@ class LinkJP(Div):
 
         return d
 
-A = LinkJP
+Link = A
 
 class Icon(Div):
 
@@ -811,10 +881,10 @@ class Icon(Div):
 
         self.icon = 'dog'     # Default icon
         super().__init__(**kwargs)
-        # self.text = ''  # Default text is name of
 
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):
+        #TODO: Remove fa fa- befor adding it, classes just gets longer all the time
         self.classes += ' fa fa-' + self.icon
         d = super().convert_object_to_dict()
         return d
@@ -842,38 +912,7 @@ class EditorJP(TextArea):
 
 
 
-class TemplateJP(Div):
-
-    """
-        This component simply inserts html based on Jinja2 template.
-        Corresponding Vue file is htmljp.js
-    """
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-        self.template_string = ''   # The template string, input to Template function of Jinja2 pacakge
-
-    def make_template(self):
-        self.template = Template(self.template_string)  # Generate template
-
-    def render(self):
-    # Needs to be redefined for particular template
-    # d['inner_html'] = self.template.render(month=self.month, day=self.day, weekday=self.weekday, year=self.year)
-        pass
-
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        # Add read from file capability
-        # with open('template.html.jinja2') as file_:
-        #     template = Template(file_.read())
-        # self.template = Template(self.template_string)  # Generate template
-        # This needs to be called by user or redefined when class is inherited:
-        # d['inner_html'] = self.template.render(month=self.month, day=self.day, weekday=self.weekday, year=self.year)
-        return d
-
-class GridJP(HTMLBaseComponent):
+class Grid(HTMLBaseComponent):
 
     def __init__(self, **kwargs):
         # https://css-tricks.com/snippets/css/complete-guide-grid/
@@ -908,7 +947,7 @@ class GridJP(HTMLBaseComponent):
         c.style = f"""{c.style}; grid-column-start: {col+1}; grid-column-end: {col+1+num_cols};
                         grid-row-start: {row+1}; grid-row-end: {row+1+num_rows};
                     """
-        # d = DivJP(style=cell_style)
+        # d = Div(style=cell_style)
         # d.add_component(c)
         self.components[row][col] = c
         return c
@@ -937,142 +976,18 @@ class GridJP(HTMLBaseComponent):
         return d
 
 
-
-class ModalJP(Div):
-
-    # A flex container in the row direction
+class Space(Div):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.components = []
-        # content-start items-start
-        #self.classes ='z-50 fixed flex flex-wrap flex-row'
-        self.classes ='fixed flex items-center justify-center'
-        self.style = 'width: 100%; height: 100%;  background-color: rgba(0,0,0,0.4); z-index: 1; left: 0px; top: 0px'
-        self.show = False
-        # self.p = PJP()
-        self.p.text = 'My modal'
-        self.p.style = 'padding: 200px; transition: padding 2s;'
-        self.p.classes = 'w-1/3 h-32 bg-white z-50 border-2 animated fadeInDown fast'
-        self.add_component(self.p)
+        self.num = kwargs.get('num', 1)
+        self.html_tag = 'span'
+        self.attributes = []
+        self.temp = True
+        self.text = '&nbsp;' * self.num
 
 
-class CalendarDateJP(Div):
-
-
-    def __init__(self, **kwargs):
-
-        self.month = 'Jan'
-        self.year = '2010'
-        self.weekday = 'Sun'
-        self.day = '1'
-        super().__init__(**kwargs)
-        self.template_string = """
-        <div class="w-24 flex-no-shrink rounded-t overflow-hidden bg-white text-center m-2">
-            <div class="bg-red-500 text-white py-1">
-                {{ month }}
-            </div>
-            <div class="pt-1 border-l border-r">
-                <span class="text-4xl font-bold">{{ day }}</span>
-            </div>
-            <div class="pb-2 px-2 border-l border-r border-b rounded-b flex justify-between">
-                <span class="text-xs font-bold">{{ weekday }}</span>
-                <span class="text-xs font-bold">{{ year }}</span>
-            </div>
-        </div>
-        
-        """
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        # Add read from file capability
-        # with open('template.html.jinja2') as file_:
-        #     template = Template(file_.read())
-        self.template = Template(self.template_string)
-        d['inner_html'] = self.template.render(month=self.month, day=self.day, weekday=self.weekday, year=self.year)
-        return d
-
-
-class Card1JP(TemplateJP):
-
-    def __init__(self, **kwargs):
-        self.blogger_name = 'John Smith'
-        self.header = 'Can coffee make you a better developer?'
-        self.entry_date = 'Aug 18'
-        self.body_text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.'
-        super().__init__(**kwargs)
-        self.template_string = """ 
-<div class="max-w-md w-full lg:flex">
-  <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('https://tailwindcss.com/img/card-left.jpg')" title="Woman holding a mug">
-  </div>
-  <div class="border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-    <div class="mb-8">
-      <p class="text-sm text-grey-dark flex items-center">
-        <svg class="fill-current text-grey w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-          <path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
-        </svg>
-        Members only
-      </p>
-      <div name="coffee" class="text-black font-bold text-xl mb-2">{{ header }}</div>
-      <p class="text-grey-darker text-base">{{ body_text }}</p>
-    </div>
-    <div class="flex items-center">
-      <img class="w-10 h-10 rounded-full mr-4" src="https://pbs.twimg.com/profile_images/885868801232961537/b1F6H4KC_400x400.jpg" alt="Avatar of Jonathan Reinink">
-      <div class="text-sm">
-        <p class="text-black leading-none">{{ blogger_name }}</p>
-        <p class="text-grey-dark">{{ entry_date }}</p>
-      </div>
-    </div>
-  </div>
-            """
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        # Add read from file capability
-        # with open('template.html.jinja2') as file_:
-        #     template = Template(file_.read())
-        self.template = Template(self.template_string)
-        d['inner_html'] = self.template.render(header=self.header, entry_date=self.entry_date, body_text=self.body_text, blogger_name=self.blogger_name)
-        return d
-
-
-class Card2JP(TemplateJP):
-    # https://tailwindcss.com/docs/examples/cards Card with categories
-    def __init__(self, **kwargs):
-        self.header = 'The Coldest Sunset'
-        self.body_text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.'
-        # Container where categories are added
-        self.categories_list = ['Test']
-        super().__init__(**kwargs)
-        self.template_string = """ 
-<div class="max-w-sm rounded overflow-hidden shadow-lg">
-  <img class="w-full" src="https://tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains">
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">{{ header }}</div>
-    <p class="text-grey-darker text-base">
-      {{ body_text }}    </p>
-  </div>
-  <div class="px-6 py-4">
-    {% for item in categories_list %}
-   <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">#{{ item }}</span>
-    {% endfor %}
-  </div>
-</div>
-            """
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        # Add read from file capability
-        # with open('template.html.jinja2') as file_:
-        #     template = Template(file_.read())
-        self.template = Template(self.template_string)
-        d['inner_html'] = self.template.render(header=self.header, body_text=self.body_text, categories_list=self.categories_list)
-        return d
-
-
-_tag_class_dict = {}
-
-# Div = DivJP
+# Div = Div
 _tag_class_dict['div'] = Div
 _tag_class_dict['input'] = Input
 _tag_class_dict['form'] = Form
@@ -1081,883 +996,139 @@ _tag_class_dict['textarea'] = TextArea
 _tag_class_dict['label'] = Label
 _tag_class_dict['a'] = A
 
+# Non html components that are useful and should be standard
+
+class TabGroup(Div):
+    """
+    Displays a tab basedon its value. Has a dict of tabs whose keys is the value. A tab is any JustPy component.
+
+    format of dict: {'value1': {'tab': comp1, 'order': number}, 'value2': {'tab': comp2, 'order': number} ...}
+    self.tabs - tab dict
+    self.animation_next = 'slideInRight'    set animation for tab coming in
+    self.animation_prev = 'slideOutLeft'    set animation for tab going out
+    self.animation_speed = 'faster'  can be on of  '' | 'slow' | 'slower' | 'fast'  | 'faster'
+    self.value  value of group and tab to display
+    self.previous - previous tab, no need to change except to set to '' in order to dispay tab without animation which is default at first
+
+    """
+
+    wrapper_classes = ' '
+    wrapper_style = 'display: flex; position: absolute; width: 100%; height: 100%;  align-items: center; justify-content: center; background-color: #fff;'
+
+    def __init__(self,  **kwargs):
+
+        self.tabs = {}  # Dict with format 'value': {'tab': Div component, 'order': number} for each entry
+        self.value = ''
+        self.previous_value = ''
+        # https://github.com/daneden/animate.css
+        self.animation_next = 'slideInRight'
+        self.animation_prev = 'slideOutLeft'
+        self.animation_speed = 'faster'  # '' | 'slow' | 'slower' | 'fast'  | 'faster'
+
+        super().__init__(**kwargs)
+
+    def __setattr__(self, key, value):
+        if key == 'value':
+            try:
+                self.previous_value = self.value
+            except:
+                pass
+        self.__dict__[key] = value
+
+
+    def model_update(self):
+        self.value = self.model[0].data[self.model[1]]
+
+    def convert_object_to_dict(self):    # Every object needs to redefine this
+        self.components = []
+        self.wrapper_div_classes = self.animation_speed # Component in this will be centered
+
+        if self.previous_value:
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_next, temp=True, style=f'{self.__class__.wrapper_style} z-index: 50;', a=self )
+            self.wrapper_div.add(self.tabs[self.value]['tab'])
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_prev, temp=True, style=f'{self.__class__.wrapper_style} z-index: 0;', a=self)
+            self.wrapper_div.add(self.tabs[self.previous_value]['tab'])
+        else:
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, temp=True, a=self, style=self.__class__.wrapper_style)
+            self.wrapper_div.add(self.tabs[self.value]['tab'])
+
+        self.style = ' position: relative; overflow: hidden; ' + self.style  # overflow: hidden;
+        d = super().convert_object_to_dict()
+        return d
+
+
+# HTML tags for which corresponding classes will be created
+_tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'main', 'nav', 'section',
+                'blockquote', 'dd', 'dl', 'dt', 'figcaption', 'figure', 'hr', 'li', 'ol', 'p', 'pre', 'ul',
+                'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 'rb',
+                'rp', 'rt', 'rtc', 'ruby', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'u', 'var', 'wbr',
+                'area', 'audio', 'img', 'map', 'track', 'video',
+                'embed', 'iframe', 'object', 'param', 'picture', 'source',
+                'del', 'ins',
+                'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
+                'button', 'fieldset', 'legend', 'meter', 'optgroup', 'option', 'progress',  # datalist not supported
+                'details', 'summary' # dialog not supported
+               ]
+
+
+# Only tags that have unique attributes that are supported by HTML 5 are in this dict
+_attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type'],
+             'area': ['alt', 'coords', 'download', 'href', 'hreflang', 'media', 'rel', 'shape', 'target', 'type'],
+             'audio': ['autoplay', 'controls', 'loop', 'muted', 'preload', 'src'], 'base': ['href', 'target'],
+             'bdo': ['dir'], 'blockquote': ['cite'],
+             'button': ['autofocus', 'disabled', 'form', 'formaction', 'formenctype', 'formmethod',
+                        'formnovalidate', 'formtarget', 'name', 'type', 'value'], 'canvas': ['height', 'width'],
+             'col': ['span'], 'colgroup': ['span'], 'data': ['value'], 'del': ['cite', 'datetime'],
+             'details': ['open'], 'dialog': ['open'], 'embed': ['height', 'src', 'type', 'width'],
+             'fieldset': ['disabled', 'form', 'name'],
+             'form': ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate',
+                      'target'], 'html': ['xmlns'],
+             'iframe': ['height', 'name', 'sandbox', 'src', 'srcdoc', 'width'],
+             'img': ['alt', 'crossorigin', 'height', 'ismap', 'longdesc', 'sizes', 'src', 'srcset', 'usemap',
+                     'width'],
+             'input': ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
+                       'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
+                       'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
+                       'required', 'size', 'src', 'step', 'type', 'value', 'width'], 'ins': ['cite', 'datetime'],
+             'label': ['for', 'form'], 'li': ['value'],
+             'link': ['crossorigin', 'href', 'hreflang', 'media', 'rel', 'sizes', 'type'], 'map': ['name'],
+             'meta': ['charset', 'content', 'http-equiv', 'name'],
+             'meter': ['form', 'high', 'low', 'max', 'min', 'optimum', 'value'],
+             'object': ['data', 'form', 'height', 'name', 'type', 'usemap', 'width'],
+             'ol': ['reversed', 'start', 'type'], 'optgroup': ['disabled', 'label'],
+             'option': ['disabled', 'label', 'selected', 'value'], 'output': ['for', 'form', 'name'],
+             'param': ['name', 'value'], 'progress': ['max', 'value'], 'q': ['cite'],
+             'script': ['async', 'charset', 'defer', 'src', 'type'],
+             'select': ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size'],
+             'source': ['src', 'srcset', 'media', 'sizes', 'type'], 'style': ['media', 'type'],
+             'td': ['colspan', 'headers', 'rowspan'],
+             'textarea': ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name', 'placeholder',
+                          'readonly', 'required', 'rows', 'wrap'],
+             'th': ['abbr', 'colspan', 'headers', 'rowspan', 'scope', 'sorted'], 'time': ['datetime'],
+             'track': ['default', 'kind', 'label', 'src', 'srclang'],
+             'video': ['autoplay', 'controls', 'height', 'loop', 'muted', 'poster', 'preload', 'src', 'width']}
+
+
+# Name definition for static syntax analysers
+# Classes are defined dynamically below, this is just to assist code editors
+
+Address=Article=Aside=Footer=Header=H1=H2=H3=H4=H5=H6=Main=Nav=Section=Blockquote=Dd=Dl=Dt=Figcaption=Figure=Hr=Li=Ol=P=Pre=Ul=Abbr=B=Bdi=Bdo=Br=Cite=Code=Data=Dfn=Em=I=Kbd=Mark=Q=Rb=Rp=Rt=Rtc=Ruby=S=Samp=Small=Span=Strong=Sub=Sup=Time=Tt=U=Var=Wbr=Area=Audio=Img=Map=Track=Video=Embed=Iframe=Object=Param=Picture=Source=Del=Ins=Caption=Col=Colgroup=Table=Tbody=Td=Tfoot=Th=Thead=Tr=Button=Fieldset=Legend=Meter=Optgroup=Option=Progress=Details=Summary=None
+
+# Tag classes defined dynamically at runtime
+for tag in _tag_create_list:
+    globals()[tag.capitalize()] = type(tag.capitalize(), (Div,), {'html_tag': tag, 'attributes': _attr_dict.get(tag, [])})
 
-#********************************** Start created classes
-
-class Address(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'address'
-        self.attributes = []
-
-
-_tag_class_dict['address'] = Address
-
-
-class Article(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'article'
-        self.attributes = []
-
-
-_tag_class_dict['article'] = Article
-
-
-class Aside(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'aside'
-        self.attributes = []
-
-
-_tag_class_dict['aside'] = Aside
-
-
-_tag_class_dict['div'] = Div
-
-
-class Footer(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'footer'
-        self.attributes = []
-
-
-_tag_class_dict['footer'] = Footer
-
-
-class Header(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'header'
-        self.attributes = []
-
-
-_tag_class_dict['header'] = Header
-
-
-class H1(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'h1'
-        self.attributes = []
-
-
-_tag_class_dict['h1'] = H1
-
-
-class H2(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'h2'
-        self.attributes = []
-
-
-_tag_class_dict['h2'] = H2
-
-
-class H3(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'h3'
-        self.attributes = []
-
-
-_tag_class_dict['h3'] = H3
-
-
-class H4(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'h4'
-        self.attributes = []
-
-
-_tag_class_dict['h4'] = H4
-
-
-class H5(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'h5'
-        self.attributes = []
-
-
-_tag_class_dict['h5'] = H5
-
-
-class H6(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'h6'
-        self.attributes = []
-
-
-_tag_class_dict['h6'] = H6
-
-
-class Hgroup(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'hgroup'
-        self.attributes = []
-
-
-_tag_class_dict['hgroup'] = Hgroup
-
-
-class Main(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'main'
-        self.attributes = []
-
-
-_tag_class_dict['main'] = Main
-
-
-class Nav(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'nav'
-        self.attributes = []
-
-
-_tag_class_dict['nav'] = Nav
-
-
-class Section(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'section'
-        self.attributes = []
-
-
-_tag_class_dict['section'] = Section
-
-
-class Blockquote(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'blockquote'
-        self.attributes = ['cite']
-
-
-_tag_class_dict['blockquote'] = Blockquote
-
-
-class Dd(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'dd'
-        self.attributes = []
-
-
-_tag_class_dict['dd'] = Dd
-
-
-class Dl(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'dl'
-        self.attributes = []
-
-
-_tag_class_dict['dl'] = Dl
-
-
-class Dt(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'dt'
-        self.attributes = []
-
-
-_tag_class_dict['dt'] = Dt
-
-
-class Figcaption(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'figcaption'
-        self.attributes = []
-
-
-_tag_class_dict['figcaption'] = Figcaption
-
-
-class Figure(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'figure'
-        self.attributes = []
-
-
-_tag_class_dict['figure'] = Figure
-
-
-class Hr(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'hr'
-        self.attributes = []
-
-
-_tag_class_dict['hr'] = Hr
-
-
-class Li(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'li'
-        self.attributes = ['value']
-
-
-_tag_class_dict['li'] = Li
-
-
-class Ol(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'ol'
-        self.attributes = ['reversed', 'start', 'type']
-
-
-_tag_class_dict['ol'] = Ol
-
-
-class P(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'p'
-        self.attributes = []
-
-
-_tag_class_dict['p'] = P
-
-
-class Pre(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'pre'
-        self.attributes = []
-
-
-_tag_class_dict['pre'] = Pre
-
-
-class Ul(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'ul'
-        self.attributes = []
-
-
-_tag_class_dict['ul'] = Ul
-
-
-
-
-
-class Abbr(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'abbr'
-        self.attributes = []
-
-
-_tag_class_dict['abbr'] = Abbr
-
-
-class B(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'b'
-        self.attributes = []
-
-
-_tag_class_dict['b'] = B
-
-
-class Bdi(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'bdi'
-        self.attributes = []
-
-
-_tag_class_dict['bdi'] = Bdi
-
-
-class Bdo(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'bdo'
-        self.attributes = ['dir']
-
-
-_tag_class_dict['bdo'] = Bdo
-
-
-class Br(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'br'
-        self.attributes = []
-
-
-_tag_class_dict['br'] = Br
-
-
-class Cite(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'cite'
-        self.attributes = []
-
-
-_tag_class_dict['cite'] = Cite
-
-
-class Code(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'code'
-        self.attributes = []
-
-
-_tag_class_dict['code'] = Code
-
-
-class Data(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'data'
-        self.attributes = ['value']
-
-
-_tag_class_dict['data'] = Data
-
-
-class Dfn(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'dfn'
-        self.attributes = []
-
-
-_tag_class_dict['dfn'] = Dfn
-
-
-class Em(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'em'
-        self.attributes = []
-
-
-_tag_class_dict['em'] = Em
-
-
-class I(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'i'
-        self.attributes = []
-
-
-_tag_class_dict['i'] = I
-
-
-class Kbd(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'kbd'
-        self.attributes = []
-
-
-_tag_class_dict['kbd'] = Kbd
-
-
-class Mark(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'mark'
-        self.attributes = []
-
-
-_tag_class_dict['mark'] = Mark
-
-
-class Q(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'q'
-        self.attributes = ['cite']
-
-
-_tag_class_dict['q'] = Q
-
-
-class Rb(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'rb'
-        self.attributes = []
-
-
-_tag_class_dict['rb'] = Rb
-
-
-class Rp(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'rp'
-        self.attributes = []
-
-
-_tag_class_dict['rp'] = Rp
-
-
-class Rt(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'rt'
-        self.attributes = []
-
-
-_tag_class_dict['rt'] = Rt
-
-
-class Rtc(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'rtc'
-        self.attributes = []
-
-
-_tag_class_dict['rtc'] = Rtc
-
-
-class Ruby(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'ruby'
-        self.attributes = []
-
-
-_tag_class_dict['ruby'] = Ruby
-
-
-class S(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 's'
-        self.attributes = []
-
-
-_tag_class_dict['s'] = S
-
-
-class Samp(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'samp'
-        self.attributes = []
-
-
-_tag_class_dict['samp'] = Samp
-
-
-class Small(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'small'
-        self.attributes = []
-
-
-_tag_class_dict['small'] = Small
-
-
-class Span(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'span'
-        self.attributes = []
-
-
-_tag_class_dict['span'] = Span
-
-
-class Strong(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'strong'
-        self.attributes = []
-
-
-_tag_class_dict['strong'] = Strong
-
-
-class Sub(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'sub'
-        self.attributes = []
-
-
-_tag_class_dict['sub'] = Sub
-
-
-class Sup(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'sup'
-        self.attributes = []
-
-
-_tag_class_dict['sup'] = Sup
-
-
-class Time(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'time'
-        self.attributes = ['datetime']
-
-
-_tag_class_dict['time'] = Time
-
-
-class Tt(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'tt'
-        self.attributes = []
-
-
-_tag_class_dict['tt'] = Tt
-
-
-class U(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'u'
-        self.attributes = []
-
-
-_tag_class_dict['u'] = U
-
-
-class Var(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'var'
-        self.attributes = []
-
-
-_tag_class_dict['var'] = Var
-
-
-class Wbr(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'wbr'
-        self.attributes = []
-
-
-_tag_class_dict['wbr'] = Wbr
-
-
-class Button(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'button'
-        self.attributes = ['autofocus', 'disabled', 'form', 'formaction', 'formenctype', 'formmethod', 'formnovalidate',
-                           'formtarget', 'name', 'type', 'value']
-
-
-_tag_class_dict['button'] = Button
-
-
-class Datalist(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'datalist'
-        self.attributes = []
-
-
-_tag_class_dict['datalist'] = Datalist
-
-
-class Fieldset(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'fieldset'
-        self.attributes = ['disabled', 'form', 'name']
-
-
-_tag_class_dict['fieldset'] = Fieldset
-
-
-
-
-
-
-class Legend(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'legend'
-        self.attributes = []
-
-
-_tag_class_dict['legend'] = Legend
-
-
-class Meter(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'meter'
-        self.attributes = ['form', 'high', 'low', 'max', 'min', 'optimum', 'value']
-
-
-_tag_class_dict['meter'] = Meter
-
-
-class Optgroup(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'optgroup'
-        self.attributes = ['disabled', 'label']
-
-
-_tag_class_dict['optgroup'] = Optgroup
-
-
-class Option(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'option'
-        self.attributes = ['disabled', 'label', 'selected', 'value']
-
-
-_tag_class_dict['option'] = Option
-
-
-class Output(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'output'
-        self.attributes = ['for', 'form', 'name']
-
-
-_tag_class_dict['output'] = Output
-
-
-class Progress(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'progress'
-        self.attributes = ['max', 'value']
-
-
-_tag_class_dict['progress'] = Progress
-
-
-
-
-class Img(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'img'
-        self.attributes = ['alt', 'crossorigin', 'height', 'ismap', 'longdesc', 'sizes', 'src', 'srcset', 'usemap',
-                     'width']
-
-
-_tag_class_dict['img'] = Img
-
-
-class Caption(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'caption'
-        self.attributes = []
-
-
-_tag_class_dict['caption'] = Caption
-
-
-class Col(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'col'
-        self.attributes = ['span']
-
-
-_tag_class_dict['col'] = Col
-
-
-class Colgroup(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'colgroup'
-        self.attributes = ['span']
-
-
-_tag_class_dict['colgroup'] = Colgroup
-
-
-class Table(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'table'
-        self.attributes = []
-
-
-_tag_class_dict['table'] = Table
-
-
-class Tbody(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'tbody'
-        self.attributes = []
-
-
-_tag_class_dict['tbody'] = Tbody
-
-
-class Td(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'td'
-        self.attributes = ['colspan', 'headers', 'rowspan']
-
-
-_tag_class_dict['td'] = Td
-
-
-class Tfoot(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'tfoot'
-        self.attributes = []
-
-
-_tag_class_dict['tfoot'] = Tfoot
-
-
-class Th(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'th'
-        self.attributes = ['abbr', 'colspan', 'headers', 'rowspan', 'scope', 'sorted']
-
-
-_tag_class_dict['th'] = Th
-
-
-class Thead(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'thead'
-        self.attributes = []
-
-
-_tag_class_dict['thead'] = Thead
-
-
-class Tr(DivJP):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'tr'
-        self.attributes = []
-
-
-_tag_class_dict['tr'] = Tr
 
 #**********************************
 #SVG compoenents
-class Svg(DivJP):
+class Svg(Div):
+
+    attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display',
+                  'fill', 'fill-opacity', 'fill-rule', 'filter', 'mask', 'opacity', 'pointer-events', 'shape-rendering',
+                  'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
+                  'stroke-opacity', 'stroke-width', 'tabindex', 'transform', 'vector-effect', 'visibility',
+                  'x', 'y', 'xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio']
+    html_tag = 'svg'
 
     def __init__(self, **kwargs):
 
@@ -1965,20 +1136,18 @@ class Svg(DivJP):
         # self.viewBox = ''
         super().__init__(**kwargs)
         self.html_tag = 'svg'
-        self.specific_attributes = ['x', 'y','xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio' ]
-        self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-                          'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-                          'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-                          'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
+        # self.specific_attributes = ['x', 'y','xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio' ]
+        # self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
+        #                   'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
+        #                   'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
+        #                   'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
 
     def convert_object_to_dict(self):    # Every object needs to redefine this
         d = super().convert_object_to_dict()
         return d
 
-_tag_class_dict['svg'] = Svg
 
-
-class GJP(DivJP):
+class GJP(Div):
 
     def __init__(self, **kwargs):
 
@@ -1995,9 +1164,8 @@ class GJP(DivJP):
 
         return d
 
-_tag_class_dict['g'] = GJP
 
-class PolygonJP(DivJP):
+class PolygonJP(Div):
 
     def __init__(self, **kwargs):
 
@@ -2014,9 +1182,8 @@ class PolygonJP(DivJP):
 
         return d
 
-_tag_class_dict['polygon'] = PolygonJP
 
-class CircleJP(DivJP):
+class CircleJP(Div):
 
     def __init__(self, **kwargs):
 
@@ -2033,10 +1200,8 @@ class CircleJP(DivJP):
 
         return d
 
-_tag_class_dict['circle'] = CircleJP
 
-
-class StopJP(DivJP):
+class StopJP(Div):
 
     def __init__(self, **kwargs):
 
@@ -2048,28 +1213,18 @@ class StopJP(DivJP):
                           'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
                           'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
-        d = super().convert_object_to_dict()
 
-        return d
+class Path(Div):
 
-_tag_class_dict['stop'] = StopJP
-
-class Path(DivJP):
+    html_tag = 'path'
+    attributes = ['d', 'pathLength']
 
     def __init__(self, **kwargs):
 
         self.d = ''
         super().__init__(**kwargs)
-        self.html_tag = 'path'
+        # self.html_tag = 'path'
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        d['d'] = self.d
-        d['attrs']['d'] = self.d
-        return d
-
-_tag_class_dict['path'] = Path
 
 #*************************** end SVG compoents
 
@@ -2090,7 +1245,21 @@ class Hello(Div):
 
 
 def component_by_tag(tag, **kwargs):
+    tag = tag.lower()
+    if tag[0:2] == 'q-':
+        if tag in _tag_class_dict:
+            c = _tag_class_dict[tag](**kwargs)
+        else:
+            raise ValueError(f'Tag not defined: {tag}')
+    else:
+        tag_class_name = tag.capitalize()
+        try:
+            c = globals()[tag_class_name](**kwargs)
+        except:
+            raise ValueError(f'Tag not defined: {tag}')
+    return c
 
+def component_by_tag_old(tag, **kwargs):
     c = None
     tag = tag.lower()
     if tag in _tag_class_dict:
@@ -2099,15 +1268,15 @@ def component_by_tag(tag, **kwargs):
         raise ValueError(f'Tag not defined: {tag}')
     return c
 
+
 get_tag = component_by_tag
 
 class BasicHTMLParser(HTMLParser):
-    #to do: Deal with label tag parsing (for and form attributes)
-    # container_tags_simple = ['div','select','option','span','p','svg','a', 'form', 'label', 'fieldset', 'button'] + SimpleComponent.quasar_tag_dict.keys()
-    # quasar_tags = SimpleComponent.quasar_tag_dict.keys()
+    #TODO: Deal with label tag parsing (for and form attributes)
 
     # Void elements do not need closing tag
-    void_elements = 'area base br col embed hr img input keygen link menuitem meta param source track wbr'.split()  # + quasar_void_elements
+    void_elements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem', 'meta',
+                     'param', 'source', 'track', 'wbr']
 
     def __init__(self, **kwargs):
 
@@ -2115,11 +1284,14 @@ class BasicHTMLParser(HTMLParser):
         self.level = -1
         self.start_tag = True
         self.components = []
+        self.commands = ["root = jp.Div(name='root')"]    # List of command strings (justpy command to generate the element)
         self.name_dict = {}   # After parsing holds a dict with named components
-        self.root = DivJP(name='root', **kwargs)
+        self.root = Div(name='root', **kwargs)
+        self.root_name = f'c{self.root.id}'
         self.containers = []
         self.containers.append(self.root)
         self.endtag_required = True
+        self.command_prefix = kwargs.get('command_prefix', 'jp.')   # Prefix for commands generated, defaults to 'jp.'
 
     def parse_starttag(self, i):
         # This is the original library method with two changes to stop tags and attributes being lower case
@@ -2184,10 +1356,10 @@ class BasicHTMLParser(HTMLParser):
 
 
     def handle_starttag(self, tag, attrs):
-        #TODO: Handle kebab to snake conversion v-ripple only works if v_ripple
         self.level = self.level + 1
         # print(self.__starttag_text)
         c = component_by_tag(tag)
+        command_string = f''
         if c is None:
             print(tag, 'No such tag, Div being used instead *****************************************')
             c = Div()
@@ -2202,11 +1374,9 @@ class BasicHTMLParser(HTMLParser):
                 continue
             if attr[1] is None:
                 setattr(c, attr[0], True)
+                attr[1] = True
             else:
-                try:
-                    setattr(c, attr[0], float(attr[1]))
-                except:
-                    setattr(c, attr[0], attr[1])
+                setattr(c, attr[0], attr[1])
             # Add to name to dict of named components. Each entry is a list of components to support multiple components with same name
             if attr[0]=='name':
                 if attr[1] not in self.name_dict:
@@ -2214,13 +1384,29 @@ class BasicHTMLParser(HTMLParser):
                     self.name_dict[attr[1]]= c
                 else:
                     # self.name_dict[attr[1]].append(c)
-                    self.name_dict[attr[1]] = [self.name_dict[attr[1]]]
+                    if not isinstance(self.name_dict[attr[1]], (list,)):
+                        self.name_dict[attr[1]] = [self.name_dict[attr[1]]]
                     self.name_dict[attr[1]].append(c)
             if attr[0]=='class':
                 c.classes = attr[1]
+                attr[0] = 'classes'
+            if isinstance(attr[1], str):
+                command_string = f"{command_string}{attr[0]}='{attr[1]}', "
+            else:
+                command_string = f'{command_string}{attr[0]}={attr[1]}, '
 
+        if f'c{self.containers[-1].id}' == self.root_name:
+            command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
+        else:
+            command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].id})'
+
+
+        self.commands.append(command_string)
         self.containers[-1].add_component(c)
         self.containers.append(c)
+
+
+
         if tag in BasicHTMLParser.void_elements:
             self.handle_endtag(tag)
             self.endtag_required = False
@@ -2231,11 +1417,13 @@ class BasicHTMLParser(HTMLParser):
         self.level = self.level - 1
 
     def handle_data(self, data):
-        # d = data.strip()
-        # print('d: ', d, ' ', len(d))
-        # if len(d) == 0:
-        #     return
-        self.containers[-1].text = data
+        data = data.strip()
+        if data:
+            # print('data: ', data)
+            self.containers[-1].text = data
+            data = data.replace("'", "\\'")
+            self.commands[-1] = f"{self.commands[-1][:-1]}, text='{data}')"
+
         return
 
     def handle_comment(self, data):
@@ -2270,9 +1458,11 @@ def justPY_parser(html_string, **kwargs):
     if len(parser.root.components)==1:
         # If the root div has only one component, then return it instead of the root div
         parser.root.components[0].name_dict = parser.name_dict
+        parser.root.components[0].commands = parser.commands
         return parser.root.components[0]
     else:
         parser.root.name_dict = parser.name_dict
+        parser.root.commands = parser.commands
         return parser.root
 
 
@@ -2290,23 +1480,39 @@ async def parse_html_file_async(html_file, **kwargs):
     return justPY_parser(s, **kwargs)
 
 async def get(url):
-    """
-    Wrapper for requests get to simplify running a sync function in non blocking manner
-    :param url: Url to fetch
-    :return:
+    """Wrapper for requests get function to simplify running a sync function in non blocking manner
+
+    Parameters
+    ----------
+    url
+
+    Returns
+    -------
+    dict
     """
     result = await JustPy.loop.run_in_executor(None, requests.get, url)
     return result.json()
 
 def get_websocket(msg):
-    """
-    Gets websocket from event message
-    :param msg:
-    :return:
+    """Given msg, the second parameter supplied by the framework to an event, returns the websocket object
+    used to connect to the page on which event occured
+
+    Parameters
+    ----------
+    msg : Dict()
+
+    Returns
+    -------
+    websocket
+        instance of websocket class
+
     """
     websocket_dict = WebPage.sockets[msg.page.page_id]
     return websocket_dict[msg.websocket_id]
 
 def set_temp_flag(flag):
-    # Sets whether components are temporary ones by default
+    """Sets whether components are temporary ones by default"""
     JustpyBaseComponent.temp_flag = flag
+
+
+

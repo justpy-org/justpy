@@ -8,28 +8,19 @@
 {#    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">#}
 {#    <link href="css/form.css" rel="stylesheet">#}
 
-    <style>
-        .fade-enter-active, .fade-leave-active {
-            transition: opacity .75s
-        }
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
-        .fade-enter, .fade-leave-to {
-            opacity: 0
-        }
-
-        {% include 'css/form.css' %}
-
-    </style>
-
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
-          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/ionicons@^4.0.0/dist/css/ionicons.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@mdi/font@^3.0.0/css/materialdesignicons.min.css" rel="stylesheet">
 
-{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>#}
+<link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
+<style>
 
+    {{ page_options.css }}
 
+</style>
 
 {#    <script src="https://unpkg.com/ag-grid-enterprise@19.0.0/dist/ag-grid-enterprise.min.js"></script>#}
 
@@ -67,20 +58,23 @@
 {#    <script src={{ url_for('static', path='highchart_themes/sand-signika.js') }}></script>#}
 {% endif %}
 
+
 </head>
 
 
-<body class="bg-white" style="">
+<body class="" style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
 {% if html %}
 {{ html | safe }}
 {% else %}
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@quasar/extras/material-icons/material-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.min.css">
+{#<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@quasar/extras/material-icons/material-icons.css">#}
+{#    <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">#}
+{#<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.min.css">#}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.umd.min.js"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.umd.min.js"></script>#}
+    <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.5/dist/quasar.umd.min.js"></script>
+
 
 
 
@@ -100,19 +94,14 @@
     {% include 'js/graphjp.js' %}
     {% include 'js/gridbase.js' %}
     {% include 'js/editorjp.js' %}
-    
 
-    
-    //var b = {};
-    //var scope_counter = 0;
-    //var scoped_slots = {};
     var page_id = {{ page_id | safe }};
-    //var session_id = '{{ session_id | safe }}';
     var websocket_id = '';
     var use_websockets = JSON.parse('{{ use_websockets }}');
     var justpyComponents = {{ justpy_dict | safe }};
     var websocket_ready = false;
-
+    var storage_dict = {};
+    console.log('Quasar Version ' + Quasar.version);
     if (use_websockets) {
         console.log('Domain: ' + document.domain);
         if (location.port) {

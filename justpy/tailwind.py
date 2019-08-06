@@ -1,5 +1,6 @@
 
 # https://tailwindcss.com/docs/installation/
+# https://tailwind.run/new
 # https://nervous-knuth-fa9c3e.netlify.com/   additional form classes form-radio etc. Already added CSS
 class Tailwind:
 
@@ -545,7 +546,11 @@ class Tailwind:
     def set_classes(self, class_list):
         # Takes a string of tailwind classes and sets them all
         for c in class_list.split():
-            self.set_class(c)
+            c = c.split(':')
+            if len(c) > 1:
+                self.set_class(c[1], c[0])
+            else:
+                self.set_class(c[0])
 
 
 

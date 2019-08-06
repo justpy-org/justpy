@@ -1,9 +1,9 @@
 import justpy as jp
 import datetime, asyncio
-from justpy import WebPage, DivJP, Button, Input
+from justpy import WebPage, Div, Button, Input
 import requests
 from justpy.tailwind import Tailwind
-
+DivJP = Div
 def inp(self, msg):
     # print(self.parent.components)
     self.value = msg.value
@@ -390,6 +390,14 @@ s7 = '''
 </div>
 '''
 
+def parse_test():
+    l = [s, s1, s2, s3, s4, s5, s6, s7]
+    wp = WebPage()
+    for p in l:
+        c = jp.parse_html(p, a=wp)
+    return wp
+
+
 # https://stackoverflow.com/questions/17066875/how-to-inspect-formdata
 def radio_change(self, msg):
     print('Radio change', self.checked)
@@ -618,9 +626,9 @@ def form_test(request):
     b = Button(text='Click me now', a=f)
     return wp
 
-
+jp.justpy(parse_test)
 # jp.justpy(comp_update_test)
-jp.justpy(papillon_demo)
+# jp.justpy(papillon_demo)
 # jp.justpy(very_simple)
 # jp.justpy(form_test)
 # jp.justpy(simple, websockets=True)
