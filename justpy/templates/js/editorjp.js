@@ -5,11 +5,7 @@
 Vue.component('editorjp', {
 
   render: function (h) {
-        //console.log('in basejp render function');
-      //console.log(this.jp_props);
       var comps = [this.jp_props.text];
-
-
 
         var vnode = h(this.jp_props.html_tag,
             {
@@ -17,19 +13,12 @@ Vue.component('editorjp', {
                 style: this.jp_props.style,
                 attrs: this.jp_props.attrs,
                 on: {
-                    // click: this.eventFunction,
-                    // mouseenter: this.eventFunction,
-                    // mouseleave: this.eventFunction,
-                    // input: this.eventFunction,
                     change: this.eventFunction,
-                    // keydown: this.eventFunction,
-                    // keyup: this.eventFunction
                 },
                  directives: [
                     {
                         name: 'tooltip',    // https://www.npmjs.com/package/v-tooltip
                         content: 'hello there',
-                        //value: (this.jp_props.tooltip ? {content: this.jp_props.tooltip} : null),
                         value: (function(o) {
                             if (o.jp_props.tooltip) { return {content: o.jp_props.tooltip}} else {return null}
                                 })(this),

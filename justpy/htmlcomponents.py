@@ -28,7 +28,6 @@ def parse_dict(cls):
 
 class JustPy:
     loop = None
-    pass
 
 class Folder:
 
@@ -158,10 +157,8 @@ class WebPage:
             return self
         component_build = self.build_list()
         for websocket in websocket_dict.values():
-            # await websocket.send_json({'type': 'page_update', 'data': self.build_list()})
             try:
-                # await websocket.send_json({'type': 'page_update', 'data': component_build})  # Change to create task?
-                WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build})) # Change to create task?
+                WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build}))
             except:
                 print('Problem with websocket in page update, ignoring')
         return self
@@ -624,8 +621,6 @@ class Input(Div):
         #                'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
         #                'required', 'size', 'src', 'step', 'type', 'value', 'width']
 
-        # self.html_tag = 'input'
-        # self.events.extend(['input', 'change']) # Moved to convert object
         def default_input(self, msg):
             return self.before_event_handler(msg)
         self.on('before', default_input)
@@ -715,7 +710,6 @@ class Input(Div):
             d['value'] = str(self.value)
         else:
             d['value'] = self.value
-        # print('value', self.value)
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
         if self.type in ['radio', 'checkbox', 'select']:    # Ignore input event from radios, checkboxes and selects
@@ -882,11 +876,9 @@ class Icon(Div):
         self.icon = 'dog'     # Default icon
         super().__init__(**kwargs)
 
-
     def convert_object_to_dict(self):
-        #TODO: Remove fa fa- befor adding it, classes just gets longer all the time
-        self.classes += ' fa fa-' + self.icon
         d = super().convert_object_to_dict()
+        d['classes'] = self.classes + ' fa fa-' + self.icon
         return d
 
 
@@ -904,7 +896,7 @@ class EditorJP(TextArea):
             print('in change')
             print(msg)
             # self.value = msg['value']
-        self.on('change', default_change)
+        # self.on('change', default_change)
 
     def convert_object_to_dict(self):    # Every object needs to redefine this
         d = super().convert_object_to_dict()

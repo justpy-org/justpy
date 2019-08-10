@@ -3,8 +3,10 @@
 # https://tailwind.run/new
 # https://nervous-knuth-fa9c3e.netlify.com/   additional form classes form-radio etc. Already added CSS
 class Tailwind:
-
-    pseudo_classes = ['hover', 'focus', 'active', 'group-hover', 'focus-within']
+    #TODO: Add placehoder color classes <input class="text-gray-900 placeholder-gray-500 ..."> new in release 1.1 https://github.com/tailwindcss/tailwindcss/releases/tag/v1.1.0
+    #TODO: Support negative prefix for boxShadow and letterSpacing plugins (#992) new in release 1.1
+    pseudo_classes = ['hover', 'focus', 'active', 'group-hover', 'focus-within',
+                      'first', 'last', 'odd', 'even', 'disabled', 'visited']
 
     tw_dict = {'container': ['container'],
            'display': ['block', 'inline-block', 'inline', 'flex', 'inline-flex', 'table', 'table-row', 'table-cell',
@@ -105,7 +107,7 @@ class Tailwind:
                             'border-purple-900', 'border-pink-100', 'border-pink-200', 'border-pink-300',
                             'border-pink-400', 'border-pink-500', 'border-pink-600', 'border-pink-700',
                             'border-pink-800', 'border-pink-900'],
-           'border_style': ['border-solid', 'border-dashed', 'border-dotted', 'border-none'],
+           'border_style': ['border-solid', 'border-dashed', 'border-dotted', 'border-none', 'border-double'],
            'border_width': ['border', 'border-0', 'border-2', 'border-4', 'border-8', 'border-t', 'border-r',
                             'border-b', 'border-l', 'border-t-0', 'border-r-0', 'border-b-0', 'border-l-0',
                             'border-t-2', 'border-r-2', 'border-b-2', 'border-l-2', 'border-t-4', 'border-r-4',
@@ -367,7 +369,7 @@ class Tailwind:
                   'border-pink-500': 'border_color', 'border-pink-600': 'border_color',
                   'border-pink-700': 'border_color', 'border-pink-800': 'border_color',
                   'border-pink-900': 'border_color', 'border-solid': 'border_style', 'border-dashed': 'border_style',
-                  'border-dotted': 'border_style', 'border-none': 'border_style', 'border': 'border_width',
+                  'border-dotted': 'border_style', 'border-none': 'border_style', 'border-double': 'border_style','border': 'border_width',
                   'border-0': 'border_width', 'border-2': 'border_width', 'border-4': 'border_width',
                   'border-8': 'border_width', 'border-t': 'border_width', 'border-r': 'border_width',
                   'border-b': 'border_width', 'border-l': 'border_width', 'border-t-0': 'border_width',

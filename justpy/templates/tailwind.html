@@ -3,7 +3,9 @@
 <head>
     <title>JustPy</title>
     <link rel="shortcut icon" href={{ url_for('static', path='favicon-32x32.png') }}>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    {% if options.tailwind %}
+    <link href="https://unpkg.com/tailwindcss@^1.1/dist/tailwind.min.css" rel="stylesheet">
+    {% endif %}
     <!-- Vuetify -->
 {#    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">#}
 {#    <link href="css/form.css" rel="stylesheet">#}

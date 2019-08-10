@@ -461,7 +461,7 @@ def test_check(request):
 d = jp.Div(classes='m-2 h-1/2 border')
 
 async def comp_update_test(request):
-    global d
+    # global d
     wp = WebPage()
     jp.Div(text='Chat', classes='text-3xl', a=wp)
     in1 = jp.Input(placeholder='Enter text', a=wp, classes='m-2')
@@ -626,8 +626,9 @@ def form_test(request):
     b = Button(text='Click me now', a=f)
     return wp
 
-jp.justpy(parse_test)
-# jp.justpy(comp_update_test)
+
+# jp.justpy(parse_test)
+jp.justpy(comp_update_test)
 # jp.justpy(papillon_demo)
 # jp.justpy(very_simple)
 # jp.justpy(form_test)

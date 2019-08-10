@@ -35,10 +35,12 @@ LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
 PORT = config('PORT', cast=int, default=8000)
+TAILWIND = config('TAILWIND', cast=bool, default=True)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
 # HIGHCHARTS = False
 
 template_options = {}
+template_options['tailwind'] = TAILWIND
 template_options['highcharts'] = HIGHCHARTS
 
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
