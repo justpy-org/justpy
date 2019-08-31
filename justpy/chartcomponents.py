@@ -38,6 +38,7 @@ class HighCharts(JustpyBaseComponent):
         self.classes = ''
         self.style = ''
         self.show = True
+        self.pages = {}
         super().__init__(**kwargs)
         # self.html_tag = 'div'
         self.vue_type = 'chart'
@@ -64,7 +65,7 @@ class HighCharts(JustpyBaseComponent):
             self.__dict__[key] = value
 
 
-    async def update(self):
+    async def update_old(self):
         try:
             websocket_dict = WebPage.sockets[self.page_id]
         except:

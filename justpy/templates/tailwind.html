@@ -149,10 +149,10 @@
                 //need to test this
                 console.log('About to replace'); console.log(msg.data);
                 comp_replace(msg.data, app1.justpyComponents);
-                console.log('Done replacing');
+                console.log('Done repl6824acing');
                 break;
             case 'tooltip_update':
-                //https://github.com/highcharts/highcharts/issues/6824
+                //https://github.com/highcharts/highcharts/issues/
                 var chart_on = cached_graph_def['chart'+msg.id];
 
                                 if (chart_on.options.tooltip.split) {
@@ -181,19 +181,17 @@
         }
     });
 }
- else {
-      // Not sure code is needed here
- }
+
 
     function comp_replace(comp, comp_list) {
         var m_id = comp['id'];
         for (let i = 0; i < comp_list.length; i++) {
             if (comp_list[i]['id'] == m_id) {
                 var spliced = comp_list.splice(i, 1, comp);
-                return 1;
+               // return true;
             } else {
                 if (comp_list[i]['object_props']) {
-                    if (comp_replace(comp, comp_list[i]['object_props'])) return 1;
+                    comp_replace(comp, comp_list[i]['object_props']);
                 }
             }
         }

@@ -1,5 +1,5 @@
 from justpy import *
-import demjson
+# import demjson
 # from types import SimpleNamespace
 import numpy as np
 

@@ -18,7 +18,7 @@ from .chartcomponents import *
 from .quasarcomponents import *
 from .pandas import *
 from .routing import Route, SetRoute
-from .utilities import print_request, run_event_function, run_task
+from .utilities import print_request, run_event_function, run_task, set_model
 import uvicorn, datetime, logging, uuid, time
 #TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
 #TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
@@ -172,6 +172,7 @@ class JustpyEvents(WebSocketEndpoint):
     async def on_connect(self, websocket):
         await websocket.accept()
         websocket.id = JustpyEvents.socket_id
+        websocket.open = True
         logging.info(f'Websocket {str(JustpyEvents.socket_id)} connected')
         JustpyEvents.socket_id += 1
         #Send back socket_id for the tooltip event
@@ -206,11 +207,11 @@ class JustpyEvents(WebSocketEndpoint):
     async def on_disconnect(self, websocket, close_code):
         print(WebPage.sockets)
         pid = websocket.page_id
+        websocket.open = False
         WebPage.sockets[pid].pop(websocket.id)
         if not WebPage.sockets[pid]:
             WebPage.sockets.pop(pid)
-            # WebPage.instances[pid].components = []
-            # WebPage.instances.pop(pid)
+        await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
         # Need to add garbage collection, remove all webpages and components that will not be used amymore, probably background process
         # The WebPAge instance that was closed is still part of the WebPAage class instance list so the system will not remove it
         # WebPage.instances[self.page_id] = self
@@ -254,6 +255,7 @@ async def handle_event(data_dict, com_type=0):
         return
     event_data['page'] = p
     if event_data['event_type'] == 'page_update':
+        #TODO: Add event handler for page_update (add events to WebPage)
         build_list = p.build_list()
         return {'type': 'page_update', 'data': build_list}
     c = JustpyBaseComponent.instances[event_data['id']]

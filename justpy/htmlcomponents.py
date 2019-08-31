@@ -23,35 +23,23 @@ from .tailwind import Tailwind
 _tag_class_dict = {}
 
 def parse_dict(cls):
+    """
+    Decorator for component class definitions that updates _tag_class_dict so that the parser can recognize new component
+    Required for components not defined in this module only
+    Parameters
+    ----------
+    cls
+
+    Returns
+    -------
+
+    """
     _tag_class_dict[cls.html_tag] = cls
     return cls
 
 class JustPy:
     loop = None
 
-class Folder:
-
-    instances = []
-    next_folder_id = 0
-
-
-    def __init__(self,  **kwargs):
-
-        self.send_all = False
-        for k, v in kwargs.items():
-            self.__setattr__(k,v)
-        self.id = Folder.next_folder_id
-        Folder.next_folder_id += 1
-        self.pages = []  # list of pages in folder
-        Folder.instances.append(self)
-        # self.components = []
-
-    def add_page(self, page):
-        self.pages.append(page)
-        page.folders.append(self)
-
-    def add(self, page):
-        self.add_page(page)
 
 class WebPage:
 
@@ -77,14 +65,10 @@ class WebPage:
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.delete_flag = True
         self.template_file = 'tailwind.html'
-        # self.static_template_file = 'server_render.html'
         self.components = []  # list  of components on page
-        # self.sessions = []  # List of sessions page is on
         self.folders = []  # List of folders page is in
         self.graphs = []
         self.grids = []
-        # if hasattr(self, 'name'):
-        #     self.url = self.name   # Url to serve the page, defaults to name of web page
         self.css = ''
         self.html = ''
         self.body_style = ''
@@ -93,7 +77,6 @@ class WebPage:
         self.data = {}
         self.ui_framework = 'tailwind' # material etc.
         self.periodic_functions = []   # List of dicts {f: function, p: period_in_seconds)
-        # WebPage.instances.append(self)
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
             self.__setattr__(k,v)
@@ -108,6 +91,17 @@ class WebPage:
         self.components.append(component)
         return self     # Making adding to page implicit
 
+    async def on_disconnect(self, websocket=None):
+        pass
+
+    def remove_page(self):
+        """
+        Remove page from instance dict of WebPages
+        Returns
+        -------
+
+        """
+        WebPage.instances.pop(self.page_id)
 
     def delete(self):
         if self.delete_flag:
@@ -118,6 +112,7 @@ class WebPage:
     def add(self, *args):
         for component in args:
             self.add_component(component)
+        return self
 
     def __add__(self, other):
         # Check if list and then add each component in list
@@ -136,14 +131,6 @@ class WebPage:
     def remove(self, component):
         self.remove_component(component)
 
-
-    def add_grid(self, grid):
-        self.components.append(grid)
-        if not (self in grid.pages):
-            grid.pages.append(self)   # list of components the page is on
-        self.grids.append(grid)
-
-
     def get_components(self):
         return self.components
 
@@ -156,7 +143,7 @@ class WebPage:
         except:
             return self
         component_build = self.build_list()
-        for websocket in websocket_dict.values():
+        for websocket in list(websocket_dict.values()):
             try:
                 WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build}))
             except:
@@ -167,9 +154,6 @@ class WebPage:
     async def delayed_update(self, delay):
         await asyncio.sleep(delay)
         return await self.update()
-
-
-
 
     def to_html(self, indent=0, indent_step=0, format=True):
         block_indent = ' '*indent
@@ -200,10 +184,10 @@ class WebPage:
         return object_list
 
 
-
 class JustpyBaseComponent(Tailwind):
 
     next_id = 0
+    # Should instnaces be made a weakref.WeakValueDictionary? Would that help garbage collection?
     instances = {}
     # Set this to true if you want all components to be temporary by default
     temp_flag = False
@@ -224,8 +208,10 @@ class JustpyBaseComponent(Tailwind):
         self.allowed_events = []
 
     def delete(self):
-        if not self.pages and self.delete_flag:
-            JustpyBaseComponent.instances.pop(self.id, None)
+        if self.delete_flag:
+            if self.id != 'temp':
+                del JustpyBaseComponent.instances[self.id]
+
 
 
     def on(self, event_type, func):
@@ -235,7 +221,7 @@ class JustpyBaseComponent(Tailwind):
             if event_type not in self.events:
                 self.events.append(event_type)
         else:
-            raise Exception('No event of type {} supported'.format(event_type))
+            raise Exception(f'No event of type {event_type} supported')
 
     def remove_event(self, event_type):
         if event_type in self.events:
@@ -247,21 +233,34 @@ class JustpyBaseComponent(Tailwind):
         else:
             return False
 
-
-
     async def update(self):
         component_dict = self.convert_object_to_dict()
-        for page in self.pages:
+        # Question: Is there a better way to iterate over a dict that may change?
+        # Since the loop awaits updates, another coroutine may update the self.pages dict while the loop is running
+        # Therefore, a snapshot of self.pages values is taken. This is not memory efficient. Is there another way to do this?
+        pages_to_update = list(self.pages.values())
+        for page in pages_to_update:
             try:
                 websocket_dict = WebPage.sockets[page.page_id]
             except:
-                return self
-            for websocket in websocket_dict.values():
+                print('No websocket dict')
+                continue
+                # return self
+            for websocket in list(websocket_dict.values()):
                 try:
-                    await websocket.send_json({'type': 'component_update', 'data': component_dict})
+                    # Use await or schedule a task? Which is the better option here?
+                    # await websocket.send_json({'type': 'component_update', 'data': component_dict})
+                    WebPage.loop.create_task(websocket.send_json({'type': 'component_update', 'data': component_dict}))
                 except:
                     print('Problem with websocket in component update, ignoring')
         return self
+
+    def remove_page_from_pages(self, wp: WebPage):
+        self.pages.pop(wp.page_id)
+
+    def add_page_to_pages(self, wp: WebPage):
+        self.pages[wp.page_id] = wp
+
 
     @staticmethod
     def convert_dict_to_object(d):
@@ -271,7 +270,6 @@ class JustpyBaseComponent(Tailwind):
         for k, v in d.items():
             obj.__dict__[k] = v
         return obj
-
 
 # https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
 
@@ -284,6 +282,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
     # All components have these attributes + data-*
     attributes = []
     html_tag = 'div'
+    vue_type = 'html_component'  # VUE component name
+
     html_global_attributes =['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                              'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
@@ -306,17 +306,15 @@ class HTMLBaseComponent(JustpyBaseComponent):
                     'mouseenter', 'mouseleave']
 
     def __init__(self,  **kwargs): # c_name=None,
-
         super().__init__(**kwargs)  # Important, needed to give component a unique id
-        self.vue_type = 'html_component'   # VUE component name
+        # self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
-        # self.html_tag = 'div'  # HTML to use inside component definition
-        self.html_tag = type(self).html_tag
+        # self.html_tag = type(self).html_tag
         self.delete_flag = True
         self.attrs = {'id':  str(self.id)}    # Every component gets an ID in html
         self.inner_html = ''
         self.animation = False
-        self.pages = []  # pages the component is on
+        self.pages = {}  # pages the component is on, changed to dict
         self.show = True
         self.classes = ''
         self.slot = None
@@ -345,14 +343,9 @@ class HTMLBaseComponent(JustpyBaseComponent):
                 if prefix + e in kwargs.keys():
                     fn = kwargs[prefix + e]
                     if isinstance(fn, str):
-                        # code_lines = [x.strip() for x in fn.split(';')]
-                        # print(code_lines)
-                        # ident = '\n '
-                        fn_string = f'def onliner{self.id}(self, msg):\n {fn}'
-                        # for code_line in code_lines:
-                        #     fn_string = f'{fn_string}{ident}{code_line}'
+                        fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
                         exec(fn_string)
-                        self.on(e, locals()[f'onliner{self.id}'])
+                        self.on(e, locals()[f'oneliner{self.id}'])
                     else:
                         self.on(e, fn)
                     break
@@ -370,10 +363,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def __repr__(self):
         return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, vue_type: {self.vue_type}, number of components: {len(self)})'
 
-    def delete(self):
-        if not self.pages and self.delete_flag:
-            super().delete()
-            # JustpyBaseComponent.instances.pop(self.id, None)
 
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)
@@ -389,7 +378,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
             if event_type not in self.events:
                 self.events.append(event_type)
         else:
-            raise Exception('No event of type {} supported'.format(event_type))
+            raise Exception(f'No event of type {event_type} supported')
 
     def remove_event(self, event_type):
         if event_type in self.events:
@@ -401,15 +390,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
             return True
         else:
             return False
-
-    def trigger_event(self, event_type, *args):  #trigger event from python side
-        if event_type in self.allowed_events:
-            try:
-                getattr(self, 'on_' + event_type)(*args)
-            except:
-                raise Exception('No event of type {} callback provided'.format(event_type))  # Function was not defined
-        else:
-            raise Exception('No event of type {} supported'.format(event_type))
 
     def add_attribute(self, attr, value):
         self.attrs[attr] = value
@@ -449,7 +429,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     def convert_object_to_dict(self):    # Objects may need redefine this
         d = { }
-        # self.react(self.data)
         # HTMLBaseComponent.attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
         #                   'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html']
         for attr in HTMLBaseComponent.attribute_list:
@@ -492,8 +471,6 @@ class Div(HTMLBaseComponent):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.html_tag = 'div'
-        # self.html_tag = type(self).html_tag
         self.components = []
 
 
@@ -511,6 +488,8 @@ class Div(HTMLBaseComponent):
         for component in args:
             self.add_component(component)
 
+    def add_first(self, child):
+        self.add_component(child, 0)
 
     def remove_component(self, component):
         try:
@@ -522,7 +501,6 @@ class Div(HTMLBaseComponent):
     def remove(self, component):
         self.remove_component(component)
 
-
     def get_components(self):
         return self.components
 
@@ -531,6 +509,16 @@ class Div(HTMLBaseComponent):
 
     def last(self):
         return self.components[-1]
+
+    def delete(self):
+        if self.delete_flag:
+            if self.id != 'temp':
+                try:
+                    del JustpyBaseComponent.instances[self.id]
+                except:
+                    pass
+            for c in self.components:
+                c.delete()
 
 
     def to_html(self, indent=0, indent_step=0, format=True):
@@ -569,12 +557,10 @@ class Div(HTMLBaseComponent):
 
     def build_list(self):
         object_list = []
-        i = 0
-        for obj in self.components:
+        for i, obj in enumerate(self.components):
             obj.react(self.data)
             d = obj.convert_object_to_dict()
             d['running_id'] = i
-            i += 1
             object_list.append(d)
         return object_list
 
@@ -584,15 +570,12 @@ class Div(HTMLBaseComponent):
             self.model_update()
         d['object_props'] = self.build_list()
         if hasattr(self, 'text'):
+            self.text = str(self.text)
             d['text'] = self.text
-            # Handle HTML entities. Warning, they should be in their own spnad or div etc. Setting inner_html erases all other stuff in container
+            # Handle HTML entities. Warning, they should be in their own span or div etc. Setting inner_html overrides all else in container
             if (len(self.text) > 0) and (self.text[0] == '&'):
                 d['inner_html'] = self.text
-
-
         return d
-
-# DivJP = Div
 
 class Input(Div):
     # https://www.cssportal.com/style-input-range/   style an input range
@@ -637,9 +620,7 @@ class Input(Div):
             return
         if msg.input_type == 'checkbox':
             # The checked field is boolean
-            print(msg)
             self.checked = msg.checked
-            # self.value = msg.value
             if hasattr(self, 'model'):
                 self.model[0].data[self.model[1]] = msg.checked
         elif msg.input_type == 'radio':
@@ -688,20 +669,18 @@ class Input(Div):
     def model_update(self):
         update_value = self.model[0].data[self.model[1]]
         if self.type=='checkbox':
-            self.checked = update_value #self.model[0].data[self.model[1]]
+            self.checked = update_value
         elif self.type=='radio':
-            model_value = update_value #(self.model[0].data[self.model[1]])
+            model_value = update_value
             if self.form:
                 Input.radio_button_set_model_update(self, self.form, model_value)
             else:
                 Input.radio_button_set_model_update(self, self.model[0], model_value)
-            pass
-        elif self.type=='textarea':
+        # elif self.type=='textarea':
                 # self.text = update_value #(self.model[0].data[self.model[1]])     # Required for inital load
-                self.value = update_value #(self.model[0].data[self.model[1]])
+                # self.value = update_value #(self.model[0].data[self.model[1]])
         else:
-            # self.value = self.model[0].data[self.model[1]]
-            self.value = update_value #(self.model[0].data[self.model[1]])
+            self.value = update_value
 
     def convert_object_to_dict(self):    # Every object needs to redefine this
         d = super().convert_object_to_dict()
@@ -715,13 +694,11 @@ class Input(Div):
         if self.type in ['radio', 'checkbox', 'select']:    # Ignore input event from radios, checkboxes and selects
             if 'change' not in self.events:
                 self.events.append('change')
-            # self.events.extend(['change'])
         else:
             if ('change' not in self.events) and ('change' in self.allowed_events):
                 self.events.append('change')
             if 'input' not in self.events:
                 self.events.append('input')
-            # self.events.extend(['input', 'change'])
         if self.checked:
             d['attrs']['checked'] = True
         else:
@@ -740,13 +717,10 @@ class Form(Div):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.html_tag = 'form'
-        # self.attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
         self.allowed_events += ['submit']
         def default_submit(self, msg):
             print('Form submitted ', msg)
         self.on('submit', default_submit)
-
 
 
 class Label(Div):
@@ -788,11 +762,6 @@ class TextArea(Input):
         super().__init__(**kwargs)
         self.type = 'textarea'
         self.input_type = 'text'
-        # self.html_tag = 'textarea'
-        # self.attributes = ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name',
-        #                                      'placeholder', 'readonly', 'required', 'rows', 'wrap', 'value']
-
-
 
 
 class Select(Input):
@@ -802,12 +771,8 @@ class Select(Input):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.html_tag = 'select'
-        # self.attributes = ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size']
         self.type = 'select'
         # self.events = ['change']
-        # print(self.events)
-        # self.events.remove('input')
         # need to look at options and set selected appropriately
 
 
@@ -829,9 +794,7 @@ class A(Div):
         self.scroll_option = 'smooth'  # One of "auto" or "smooth".
         self.block_option = 'start'   # One of "start", "center", "end", or "nearest". Defaults to "start".
         self.inline_option = 'nearest' # One of "start", "center", "end", or "nearest". Defaults to "nearest".
-        # self.attributes = ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type']
         super().__init__(**kwargs)
-        # self.html_tag = 'a'
         self.events.append('click')
 
 
@@ -979,20 +942,11 @@ class Space(Div):
         self.text = '&nbsp;' * self.num
 
 
-# Div = Div
-_tag_class_dict['div'] = Div
-_tag_class_dict['input'] = Input
-_tag_class_dict['form'] = Form
-_tag_class_dict['select'] = Select
-_tag_class_dict['textarea'] = TextArea
-_tag_class_dict['label'] = Label
-_tag_class_dict['a'] = A
-
 # Non html components that are useful and should be standard
 
 class TabGroup(Div):
     """
-    Displays a tab basedon its value. Has a dict of tabs whose keys is the value. A tab is any JustPy component.
+    Displays a tab based on its value. Has a dict of tabs whose keys is the value. A tab is any JustPy component.
 
     format of dict: {'value1': {'tab': comp1, 'order': number}, 'value2': {'tab': comp2, 'order': number} ...}
     self.tabs - tab dict
@@ -1123,20 +1077,8 @@ class Svg(Div):
     html_tag = 'svg'
 
     def __init__(self, **kwargs):
-
-        # self.xmlns = 'http://www.w3.org/2000/svg'
-        # self.viewBox = ''
         super().__init__(**kwargs)
         self.html_tag = 'svg'
-        # self.specific_attributes = ['x', 'y','xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio' ]
-        # self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-        #                   'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-        #                   'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-        #                   'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
-
-    def convert_object_to_dict(self):    # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        return d
 
 
 class GJP(Div):
@@ -1145,7 +1087,6 @@ class GJP(Div):
 
         super().__init__(**kwargs)
         self.html_tag = 'g'
-        # self.attributes = ['fill', 'stroke', 'stroke-width']
         self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
                           'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
                           'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
@@ -1215,7 +1156,6 @@ class Path(Div):
 
         self.d = ''
         super().__init__(**kwargs)
-        # self.html_tag = 'path'
 
 
 #*************************** end SVG compoents
@@ -1226,7 +1166,7 @@ class Hello(Div):
 
         self.counter = 1
         super().__init__(**kwargs)
-        self.classes = 'm-1 p-1 text-2xl text-center text-white bg-blue-500 hover:bg-blue-800'
+        self.classes = 'm-1 p-1 text-2xl text-center text-white bg-blue-500 hover:bg-blue-800 cursor-pointer'
         self.text = 'Hello! (click me)'
 
         def click(self, msg):
@@ -1301,7 +1241,7 @@ class BasicHTMLParser(HTMLParser):
         match = tagfind_tolerant.match(rawdata, i + 1)
         assert match, 'unexpected call to parse_starttag()'
         k = match.end()
-        # self.lasttag = tag = match.group(1).lower() original
+        # self.lasttag = tag = match.group(1).lower() was the original
         self.lasttag = tag = match.group(1)
         while k < endpos:
             m = attrfind_tolerant.match(rawdata, k)
@@ -1315,7 +1255,7 @@ class BasicHTMLParser(HTMLParser):
                 attrvalue = attrvalue[1:-1]
             if attrvalue:
                 attrvalue = unescape(attrvalue)
-            # attrs.append((attrname.lower(), attrvalue)) original
+            # attrs.append((attrname.lower(), attrvalue)) was the original
             attrs.append((attrname, attrvalue))
             k = m.end()
 

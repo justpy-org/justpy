@@ -25,7 +25,6 @@ class RadioGroup(Div):
             in1.event_propagation = False
             self.radio_components.append(in1)
             temp_span = Span(classes=option['classes'], text=option['label'], a=item_label)
-        return
 
 
 
@@ -36,13 +35,13 @@ class RadioGroup(Div):
         if hasattr(radio_button.parent, 'model'):
             radio_button.parent.model[0].data[radio_button.parent.model[1]] = msg.value
         if radio_button.parent.has_event_function('change'):
-            event_function = getattr(radio_button.parent, 'on_' + 'change')
-            event_result = await event_function(msg)
+            event_result = await run_event_function(radio_button.parent, 'change', msg, True)
             return event_result
         else:
             logging.warning('%s', 'No event handler: "change" for RadioGroup ')  # Function was not defined
 
     def react(self, data):
+        return
         for c in self.radio_components:
             if c.value == self.value:
                 c.checked = True
@@ -60,7 +59,6 @@ class RadioGroup(Div):
 
 
     def convert_object_to_dict(self):    # Every object needs to redefine this
-
         d = super().convert_object_to_dict()
         return d
 

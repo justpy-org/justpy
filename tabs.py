@@ -2,7 +2,7 @@ from justpy import *
 
 
 
-class TabGroup(Div):
+class TabGroup1(Div):
     """
     Displays a tab basedon its value. Has a dict of tabs whose keys is the value. A tab is any JustPy component.
 
@@ -159,7 +159,7 @@ def animation_test(request):
         Div(animation=f'slideIn{random.choice(directions)}', text=v, classes='rounded-full bg-blue-500 text-white text-6xl slower', a=d)
     return wp
 
-# justpy(tab_test)
-justpy(animation_test)
+justpy(tab_test)
+# justpy(animation_test)
 # justpy(panels_tab_test)
 
