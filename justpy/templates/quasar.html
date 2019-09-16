@@ -40,24 +40,41 @@
     </style>
 
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
-{#    <script src="https://code.highcharts.com/stock/highcharts-more.js">/script>#}
     <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
     <script src="https://code.highcharts.com/stock/modules/histogram-bellcurve.js"></script>
     <script src="https://code.highcharts.com/modules/streamgraph.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/series-label.js"></script>
+{#    <script src="https://code.highcharts.com/stock/modules/series-label.js"></script>#}
     <script src="https://code.highcharts.com/modules/annotations.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src=https://code.highcharts.com/modules/offline-exporting.js></script>
     <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/stock/modules/boost.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+
+    <script src="https://code.highcharts.com/modules/sankey.js"></script>
+    <script src="https://code.highcharts.com/modules/dependency-wheel.js"></script>
+    <script src="https://code.highcharts.com/modules/item-series.js"></script>
+    <script src="https://code.highcharts.com/modules/organization.js"></script>
+    <script src="https://code.highcharts.com/modules/timeline.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/tilemap.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/coloraxis.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel3d.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
 {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
 {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
 {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/es-modules/themes/dark-unica.js"></script>#}
 {#    <script src={{ url_for('static', path='highchart_themes/dark-unica.js') }}></script>#}
 {#    <script src={{ url_for('static', path='highchart_themes/sand-signika.js') }}></script>#}
 {% endif %}
-
+<script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
 
 </head>
 
@@ -80,7 +97,7 @@
 
 
 
-<div id="components-demo">
+<div id="components">
 
 </div>
 
@@ -92,7 +109,7 @@
     {% include 'js/html_component.js' %}
     {% include 'js/quasar_component.js' %}
     {% include 'js/graphjp.js' %}
-    {% include 'js/gridbase.js' %}
+    {% include 'js/aggrid.js' %}
     {% include 'js/editorjp.js' %}
 
     var page_id = {{ page_id | safe }};
@@ -203,22 +220,17 @@
         });
 },1000 * {{ page_options.reload_interval }});
     {% endif %}
-    // socket.emit('close_event', {data: 'page closing', page_id: page_id, session_id: sessionStorage.getItem("session_id")});
-    // e.preventDefault();
-    // Chrome requires returnValue to be set.
-    // e.returnValue = null;
-    //});
+
 
     var app1 = new Vue({
-        el: '#components-demo',
-        //store,
+        el: '#components',
         data: {
             justpyComponents: justpyComponents
         },
         render: function (h) {
             var comps = [];
             for (var i = 0; i < this.justpyComponents.length; i++) {
-                if (this.justpyComponents[i].show) {  // (this.justpyComponents[i].show)
+                if (this.justpyComponents[i].show) {
                     comps.push(h(this.justpyComponents[i].vue_type, {
                         props: {
                             jp_props: this.justpyComponents[i]
@@ -226,11 +238,7 @@
                     }))
                 }
             }
-
-            //console.log(this.justpyComponents);
             return h('div', {class: ''}, comps);
-
-
         }
     });
 

@@ -77,9 +77,6 @@ s3 = """
     },
     plotOptions: {
         series: {
-            label: {
-                connectorAllowed: false
-            },
             pointStart: 2010
         }
     },
@@ -175,7 +172,6 @@ async def simple_tooltip(self, msg):
 
 
 async def shared_tooltip(self, msg):
-    print(msg)
     # await asyncio.sleep(0.2)  # Uncomment to simulate 200ms communication delay
     tooltip_div = Div(classes="text-white bg-blue-800 text-xs", temp=True)
     for point in msg.points:

@@ -32,11 +32,8 @@ def dog_test(request):
                 <q-btn flat round dense icon="menu"/>
                 <q-toolbar-title>Dog Pictures</q-toolbar-title>
                 <q-btn glossy label="Next Picture" classes="q-mr-sm" name="next_picture"></q-btn>
-
-
             </q-toolbar>
         </q-header>
-
         <q-drawer name="drawer" width=300 breakpoint=700 show-if-above elevated content-class="bg-white text-blue">
             <q-scroll-area class="fit">
                 <div class="q-pa-sm">
@@ -45,11 +42,9 @@ def dog_test(request):
                 </div>
             </q-scroll-area>
         </q-drawer>
-
         <q-footer class="bg-purple text-white">
             <div class="text-white q-pa-xs" style="height: 30px;" name="footer"></div>
         </q-footer>
-
         <q-page-container style="overflow: hidden;">
             <q-page padding name="main_page" style="overflow: hidden;">
                     
@@ -59,7 +54,6 @@ def dog_test(request):
         </q-tooltip>
                     </q-img>
             </q-page>
-
         </q-page-container>
     </q-layout>
 </div>

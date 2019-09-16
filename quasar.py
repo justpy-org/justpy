@@ -2405,7 +2405,7 @@ def table_test():
         }
       ]
     """
-    d = Div(classes='q-pa-md', a=wp, style='height: 300px')
+    d = Div(classes='q-pa-md', a=wp, style='height: 800px')
     t = QTable(title='Treats', data=data, columns=columns, row_key='name', a=d, dense=True, selection="single", fullscreen=False)
     def selection_event(self, msg):
         print('in selection EVENT')
@@ -3255,7 +3255,7 @@ def svg_test():
     """, a=wp)
     return wp
 
-justpy(get_routes)
+# justpy(get_routes)
 # justpy(q_test)
 # justpy(test_directives)
 # justpy(test_input)
@@ -3291,7 +3291,7 @@ justpy(get_routes)
 # justpy(parallax_test)
 # justpy(video_test)
 # justpy(icon_test)
-# justpy(table_test)
+justpy(table_test)
 # justpy(markup_table_test)
 # justpy(toolbar_test)
 # justpy(layout_test)

@@ -663,6 +663,21 @@ def pie_test():
     g.options.chart.width = 600
     return wp
 
+@SetRoute('/editor')
+def editor_chart():
+    wp = WebPage()
+    ed = TextArea(a=wp, style='width: 50%; height: 300px')
+    b = Button(text='Generate Chart', a=wp)
+    chart_div = Div(a=wp, classes='w-1/2')
+    b.chart_div = chart_div
+    b.ed = ed
+    def click_btn(self, msg):
+        print(self.ed.value)
+        c = HighCharts(options=self.ed.value, a=self.chart_div)
+        print(c.options)
+    b.on('click', click_btn)
+    return wp
+
 # justpy(chart_test)
 justpy(pie_test)
 # justpy(stock_chart)

@@ -1411,7 +1411,7 @@ async def parse_html_file_async(html_file, **kwargs):
         s = await f.read()
     return justPY_parser(s, **kwargs)
 
-async def get(url):
+async def get(url, format='json'):
     """Wrapper for requests get function to simplify running a sync function in non blocking manner
 
     Parameters
@@ -1423,7 +1423,10 @@ async def get(url):
     dict
     """
     result = await JustPy.loop.run_in_executor(None, requests.get, url)
-    return result.json()
+    if format == 'json':
+        return result.json()
+    else:
+        return result.text
 
 def get_websocket(msg):
     """Given msg, the second parameter supplied by the framework to an event, returns the websocket object

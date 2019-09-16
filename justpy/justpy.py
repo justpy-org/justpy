@@ -15,6 +15,7 @@ from itsdangerous import Signer
 import typing
 # from .htmlcomponents import *
 from .chartcomponents import *
+from .gridcomponents import *
 from .quasarcomponents import *
 from .pandas import *
 from .routing import Route, SetRoute
@@ -22,8 +23,9 @@ from .utilities import print_request, run_event_function, run_task, set_model
 import uvicorn, datetime, logging, uuid, time
 #TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
 #TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
-#TODO: https://github.com/kennethreitz/setup.py setup.py file
-#TODO: Dockerfile https://github.com/pypa/pipenv/blob/master/Dockerfile
+#TODO: https://github.com/kennethreitz/setup.py setup.py file https://github.com/pypa/sampleproject/blob/master/setup.py
+#TODO: https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-18-04-server
+#TODO: Get site on https, https://certbot.eff.org
 #TODO: Docker bitnami stacksmith digitalocean one click app
 
 config = Config('test.env')
@@ -35,6 +37,7 @@ LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
 PORT = config('PORT', cast=int, default=8000)
+TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default='justpy/templates')
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
 # HIGHCHARTS = False
@@ -45,7 +48,7 @@ template_options['highcharts'] = HIGHCHARTS
 
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
-templates = Jinja2Templates(directory='justpy/templates')
+templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 app = Starlette(debug=DEBUG)
 app.mount('/static', StaticFiles(directory='justpy/static'), name='static')
@@ -90,7 +93,7 @@ class Homepage(HTTPEndpoint):
         #     return PlainTextResponse('')
         # print_request(request)
         session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-        print('num routes:', len(Route.instances))
+        # print('num routes:', len(Route.instances))
         if SESSIONS:
             new_cookie = False
             if session_cookie:
@@ -126,6 +129,7 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run(request)
             else:
                 load_page = func_to_run()
+        assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css}
         if load_page.use_cache:

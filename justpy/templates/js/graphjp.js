@@ -3,9 +3,7 @@
 
 var cached_graph_def = {};
 var tooltip_timeout = null;
-var tooltip_timeout_flag  = true;
-var tooltip_counter  = 0;
-var tooltip_timeout_period  = 100;
+var tooltip_timeout_period = 100;
 Vue.component('chart', {
 
     template:
@@ -24,18 +22,17 @@ Vue.component('chart', {
             }
             var id = this.$props.jp_props.id;
             //var rid = this.$props.jp_props.running_id;
-            cached_graph_def['chart'+container] = c;
+            cached_graph_def['chart' + container] = c;
             var update_dict = {};
             if (this.$props.jp_props.events.indexOf('tooltip') >= 0) {
                 var point_array = [];
                 update_dict.tooltip = {
-                        useHTML: true,
-                        formatter: function (tooltip) {
+                    useHTML: true,
+                    formatter: function (tooltip) {
 
-                            var point = this.point;
-                            if (this.point != null) {
-                                // Tootltip not shared or split
-                                var e = {
+                        if (this.point != null) {
+                            // Tootltip not shared or split
+                            var e = {
                                 'event_type': 'tooltip',
                                 id: id,
                                 form_data: false,
@@ -50,91 +47,82 @@ Vue.component('chart', {
                                 'page_id': page_id,
                                 'websocket_id': websocket_id
                             };
+                        } else {
+                            // Tooltip shared or split
+                            for (var i = 0; i < this.points.length; i++) {
+                                var point = {};
+                                point.x = this.points[i].x;
+                                point.y = this.points[i].y;
+                                point.z = this.points[i].z;
+                                point.color = this.points[i].color;
+                                point.percentage = this.points[i].percentage;
+                                point.total = this.points[i].total;
+                                point.series_name = this.points[i].series.name;
+                                point_array.push(point);
                             }
-                            else {
-                                // Tooltip shared or split
-                                for (var i=0; i<this.points.length; i++) {
-                                    // console.log('shared point');
-                                    // console.log(this.points[i]);
-                                    var point = {};
-                                    point.x = this.points[i].x;
-                                    point.y = this.points[i].y;
-                                    point.z = this.points[i].z;
-                                    point.color = this.points[i].color;
-                                    point.percentage = this.points[i].percentage;
-                                    point.total = this.points[i].total;
-                                    point.series_name = this.points[i].series.name;
-                                    point_array.push(point);
+                            var e = {
+                                'event_type': 'tooltip',
+                                'x': this.x,
+                                id: id,
+                                form_data: false,
+                                'points': point_array,
+                                'page_id': page_id,
+                                'websocket_id': websocket_id
+                            };
+                        }
+
+                        if (use_websockets) {
+                            // Wait 100ms before sending tooltip information to server.
+                            // This allows new tooltip event delete old one if it arrives less than 100ms
+                            // after the previous one.
+                            clearTimeout(tooltip_timeout);
+                            tooltip_timeout = setTimeout(function () {
+                                    socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
                                 }
-                                var e = {
-                                    'event_type': 'tooltip',
-                                    'x': this.x,
-                                    id: id,
-                                    form_data: false,
-                                    'points': point_array,
-                                    'page_id': page_id,
-                                    'websocket_id': websocket_id
-                                };
-                            }
-
-                            if (use_websockets){
-
-
-                                // tooltip_timeout = setTimeout(() => socket.send(JSON.stringify({'type': 'event'  ,'event_data': e})), 100);
-                                clearTimeout(tooltip_timeout);
-                                     tooltip_timeout = setTimeout(function()
-                                {
-                                    socket.send(JSON.stringify({'type': 'event'  ,'event_data': e}));
-                                    }
                                 , tooltip_timeout_period);
-                                }
-
-                            point_array = [];
-
-
-
-                            if (tooltip.split) {
-                                var return_array = [];
-                                for (var i = 0; i < tooltip.chart.series.length + 1; i++) {
-                                    return_array.push('Loading...');
-                                }
-                                return return_array;
+                        }
+                        point_array = [];
+                        if (tooltip.split) {
+                            var return_array = [];
+                            for (var i = 0; i < tooltip.chart.series.length + 1; i++) {
+                                return_array.push('Loading...');
                             }
-                            else return 'Loading...';
-                        },
-                    }
+                            return return_array;
+                        } else return 'Loading...';
+                    },
+                }
             }
 
             if (this.$props.jp_props.events.indexOf('point_click') >= 0) {
                 update_dict.plotOptions = {
-                        series: {
-                            cursor: 'pointer',
-                            point: {
-                                events: {
-                                    click: function (e) {
-                                        // This handles click on point. Need to improve. Don't propogate. Only if activated
-                                        var p = {
-                                            'event_type': 'point_click',
-                                            id: id,
-                                            form_data: false,
-                                            x: e.point.x,
-                                            y: e.point.y,
-                                            z: e.point.z,
-                                            //running_id: rid,
-                                            type: e.type,
-                                            series_name: e.point.series.name,
-                                            page_id: page_id
-                                        };
-                                        console.log(p);
-                                        console.log(e);
-                                         if (use_websockets){
-                                socket.send(JSON.stringify({'type': 'event'  ,'event_data': p}));
-                            }
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function (e) {
+                                    // This handles click on point. Need to improve. Don't propogate. Only if activated
+                                    var p = {
+                                        'event_type': 'point_click',
+                                        id: id,
+                                        form_data: false,
+                                        x: e.point.x,
+                                        y: e.point.y,
+                                        z: e.point.z,
+                                        //running_id: rid,
+                                        type: e.type,
+                                        series_name: e.point.series.name,
+                                        page_id: page_id
+                                    };
+                                    console.log(p);
+                                    console.log(e);
+                                    if (use_websockets) {
+                                        socket.send(JSON.stringify({'type': 'event', 'event_data': p}));
                                     }
                                 }
                             }
                         }
                     }
+                }
             }
             // console.log(update_dict);
             c.update(update_dict);

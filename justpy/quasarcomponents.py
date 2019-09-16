@@ -1484,6 +1484,10 @@ class QTable(QDiv):
             self.nodes = demjson.decode(f.read().encode("ascii", "ignore"))
         return self.nodes
 
+    def load_pandas_frame(self, df):
+        self.columns = [Dict({'name': col, 'align': 'center', 'label': col, 'field': col, 'sortable': True}) for col in df.columns]
+        self.data = df.to_dict('records')
+
 
 # Layout components  https://quasar.dev/layout/layout
 
