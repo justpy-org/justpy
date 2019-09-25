@@ -11,6 +11,8 @@ class QuasarPage(WebPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.template_file = 'quasar.html'
+        self.quasar = True
+        self.tailwind = False
 
 
 class QDiv(Div):

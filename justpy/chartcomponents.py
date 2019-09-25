@@ -6,6 +6,7 @@ import itertools
 #TODO: May need to call chart.reflow() on resize
 #TODO: Handle formatter functions, for example in dataLabels and others.
 #TODO: Add support for events like drilldown
+#TODO: Add support for drawCrosshair https://api.highcharts.com/class-reference/Highcharts.Axis#drawCrosshair and tooltip refresh
 
 # If width of chart not specified it defaults to 600px
 # A JavaScript date is fundamentally specified as the number of milliseconds that have elapsed since midnight on January 1, 1970, UTC
@@ -55,23 +56,22 @@ class HighCharts(JustpyBaseComponent):
             self.__dict__[key] = value
 
 
-    async def update_old(self):
-        try:
-            websocket_dict = WebPage.sockets[self.page_id]
-        except:
-            return self
-        component_build = self.build_list()
-        for websocket in websocket_dict.values():
-            # await websocket.send_json({'type': 'page_update', 'data': self.build_list()})
-            try:
-                # await websocket.send_json({'type': 'page_update', 'data': component_build})  # Change to create task?
-                WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build})) # Change to create task?
-            except:
-                print('Problem with websocket in page update, ignoring')
-        return self
-
     async def tooltip_update(self, tooltip, websocket):
         await websocket.send_json({'type': 'tooltip_update', 'data': tooltip, 'id': self.id})
+        # So the page itself does not update, only the tooltip, return True not None
+        return True
+
+    async def draw_crosshair(self, point_list, websocket):
+        # data is list of od dict with keys id, series, point all integers
+        # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+        await websocket.send_json({'type': 'draw_crosshair', 'data': point_list})
+        # So the page itself does not update, only the tooltip, return True not None
+        return True
+
+    async def select_point(self, point_list, websocket):
+        # data is list of od dict with keys id, series, point all integers
+        # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+        await websocket.send_json({'type': 'select_point', 'data': point_list})
         # So the page itself does not update, only the tooltip, return True not None
         return True
 
@@ -119,188 +119,188 @@ class HighStock(HighCharts):
 
 class Histogram(HighCharts):
 
-    def __init__(self, data, **kwargs):
-        _s1 = """
-        {
-            chart: {
-                type: 'spline',
-                zoomType: 'xy'
-            },
+    _s1 = """
+{
+    title: {
+        text: 'Highcharts Histogram'
+    },
+    xAxis: [{
+        title: { text: 'Data' },
+        alignTicks: false
+    }, {
+        title: { text: 'Histogram' },
+        alignTicks: false,
+        opposite: true
+    }],
 
-            title: {
-                text: 'Histogram Chart'
-            },
+    yAxis: [{
+        title: { text: 'Data' }
+    }, {
+        title: { text: 'Histogram' },
+        opposite: true
+    }],
 
-            yAxis: {
-                title: {
-                    text: 'Y Axis Title'
-                }
-            },
-
-            xAxis: {
-                title: {
-                    text: 'X Axis Title'
-                }
-            },
-
-            legend: {
-                layout: 'proximate',
-                align: 'right'
-
-            },
-
-
-            series: [],
-
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-
+    series: [{
+        name: 'Histogram',
+        type: 'histogram',
+        xAxis: 1,
+        yAxis: 1,
+        baseSeries: 's1',
+        zIndex: -1
+    }, {
+        name: 'Data',
+        type: 'scatter',
+        data: [],
+        id: 's1',
+        marker: {
+            radius: 1.5
         }
+    }]
+}
 
-        """
+    """
+
+    def __init__(self, data, **kwargs):
         super().__init__(**kwargs)
         chart = self
-        chart.load_json(_s1)
-        c = Dict()
-        chart.options.legend.layout = 'horizontal'
-        chart.options.legend.align = 'center'
-        chart.options.xAxis = []
-        chart.options.xAxis.append(Dict({'title': {'text': 'Data'}, 'alignTicks': False}))
-        chart.options.xAxis.append(Dict({'title': {'text': 'Histogram'}, 'alignTicks': False, 'opposite': True}))
-        chart.options.yAxis = []
-        chart.options.yAxis.append(Dict({'title': {'text': 'Data'}}))
-        chart.options.yAxis.append(Dict({'title': {'text': 'Histogram'}, 'opposite': True}))
-        c.type = 'histogram'
-        c.name = 'Histogram'
-        c.xAxis = 1
-        c.yAxis = 1
-        c.baseSeries = 's1'
-        c.zIndex = -1
-        chart.options.series.append(c)
-        c = Dict()
-        c.id = 's1'
-        c.data = list(data)
-        c.type = 'scatter'
-        c.marker.radius = 1.5
-        c.name = 'Data'
-        chart.options.series.append(c)
+        chart.load_json(self._s1)
+        chart.options.series[1].data = list(data)
 
 
 class Pie(HighCharts):
 
-    def __init__(self, data, labels, **kwargs):
+    _s1 = """
+            {
+                chart: {
+                    title: {
+                        text: 'Pie Chart'
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            }
+                        }
+                    },
+                    series: []
+            }
+                """
 
-        _s1= """
-
-        {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                width: 600
-            },
-            title: {
-                text: 'Pie Chart'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-
-                    }
-                }
-            },
-            series: []
-        }
-        """
+    def __init__(self, data, **kwargs):
+        self.labels = []
         super().__init__(**kwargs)
         chart = self
-        chart.load_json(_s1)
+        chart.load_json(self._s1)
         series = Dict()
         series.type = 'pie'
-        series.name = kwargs.get('name', '')
         series_data = []
         series.data = series_data
         for i, value in enumerate(data):
-            print(i,value, labels[i])
             c = Dict()
-            c.name = labels[i]
+            try:
+                c.name = self.labels[i]
+            except:
+                c.name = str(value)
             c.y = value
             series_data.append(c)
         chart.options.series.append(series)
 
 class PieSemiCircle(HighCharts):
 
-    def __init__(self, data, labels, **kwargs):
-        _s1= """
+    _s1 = """
+            {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                },
+                title: {
+            text: 'SemiCircle Chart',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 40
+        },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: true,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white'
+                    }
+                },
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%'],
+                size: '110%'
+            }
+        },
+                series: []
+            }
+            """
 
-        {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                width: 600
-            },
-            title: {
-        text: 'SemiCircle Chart',
-        align: 'center',
-        verticalAlign: 'middle',
-        y: 40
-    },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-        pie: {
-            dataLabels: {
-                enabled: true,
-                distance: -50,
-                style: {
-                    fontWeight: 'bold',
-                    color: 'white'
-                }
-            },
-            startAngle: -90,
-            endAngle: 90,
-            center: ['50%', '75%'],
-            size: '110%'
-        }
-    },
-            series: []
-        }
-        """
-
+    def __init__(self, data, **kwargs):
         super().__init__(**kwargs)
         chart = self
-        chart.load_json(_s1)
+        chart.load_json(self._s1)
         series = Dict()
         series.type = 'pie'
-        series.name = kwargs.get('name', '')
         series.innerSize = '60%'
         series_data = []
         series.data = series_data
         for i, value in enumerate(data):
-            print(i,value, labels[i])
             c = Dict()
-            c.name = labels[i]
+            try:
+                c.name = self.labels[i]
+            except:
+                c.name = str(value)
             c.y = value
             series_data.append(c)
         chart.options.series.append(series)
+
+
+class Scatter(HighCharts):
+    _s1 = """
+    {
+    chart: {
+        type: 'scatter',
+        zoomType: 'xy'
+    },
+    title: {
+        text: 'Scatter Chart'
+    },
+     xAxis: {
+        title: {
+            enabled: true,
+            text: 'x'
+        },
+        startOnTick: false,
+        endOnTick: true,
+        showLastLabel: true
+    },
+    yAxis: {
+        title: {
+            text: 'y'
+        }
+    },
+    series:[]
+    }
+    """
+
+    def __init__(self, x, y, **kwargs):
+        super().__init__(**kwargs)
+        self.load_json(self._s1)
+        s = Dict()
+        s.data = list(zip(x,y))
+        self.options.series.append(s)

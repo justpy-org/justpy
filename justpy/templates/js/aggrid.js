@@ -41,6 +41,7 @@ Vue.component('grid', {
                 // console.log(event_name, event_obj);
                 if (events.includes(event_name)) {
                     console.log(event_name, event_obj);
+                    //getDataAsCsv
                     //console.log(JSON.stringify(event_obj));
                     var event_fields = ['data', 'rowIndex', 'type', 'value']; // for cellClicked and rowClicked
                     var e = {
@@ -54,7 +55,7 @@ Vue.component('grid', {
                         'page_id': page_id,
                         'websocket_id': websocket_id
                     };
-                    var more_properties = ['value', 'oldValue', 'newValue', 'context', 'rowIndex', 'data'];
+                    var more_properties = ['value', 'oldValue', 'newValue', 'context', 'rowIndex', 'data', 'toIndex'];
                     for (let i=0; i<more_properties.length; i++ ) {
                         let property = more_properties[i];
                         //if (event_obj.hasOwnProperty(property)) {
@@ -64,6 +65,9 @@ Vue.component('grid', {
                     }
                     if (!(typeof event_obj.column === "undefined")) {
                         e.colId = event_obj.column.colId;
+                    }
+                    if (['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd'].includes(event_name)) {
+                        e.data = grid_def.api.getDataAsCsv();
                     }
                     send_to_server(e);
                 }

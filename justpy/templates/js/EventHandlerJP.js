@@ -1,4 +1,6 @@
 // {% raw %}
+
+
 function eventHandler(props, event, form_data, aux) {
     console.log('-------------------------');
     console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);

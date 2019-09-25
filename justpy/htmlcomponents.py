@@ -65,11 +65,14 @@ class WebPage:
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.delete_flag = True
         self.template_file = 'tailwind.html'
+        # self.quasar = False
+        self.tailwind = True
         self.components = []  # list  of components on page
         self.folders = []  # List of folders page is in
         self.graphs = []
         self.grids = []
         self.css = ''
+        self.scripts = ''
         self.html = ''
         self.body_style = ''
         self.body_classes = ''

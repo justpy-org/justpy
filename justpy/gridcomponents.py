@@ -1,6 +1,12 @@
 from .htmlcomponents import *
 import demjson
 from addict import Dict
+import numpy as np
+import pandas as pd
+from pandas.api.types import is_numeric_dtype, is_datetime64_any_dtype
+from io import StringIO
+
+
 
 class AgGrid(JustpyBaseComponent):
 
@@ -8,15 +14,18 @@ class AgGrid(JustpyBaseComponent):
 
     vue_type = 'grid'
     default_grid_options = {
-        'defaultColDef': {'filter': True, 'sortable': True, 'resizable': True,
+        'animateRows': True,
+        'rowDragManaged': True,
+        'defaultColDef': {'filter': True, 'sortable': True, 'resizable': True, 'unSortIcon': True,
                           'cellStyle': {'textAlign': 'center'}, 'headerClass': 'font-bold'},
-        'columnDefs': [], 'rowData': []}
+        'columnDefs': [], 'rowData': []
+    }
 
 
     def __init__(self, **kwargs):
         self.options = Dict(self.default_grid_options)
         self.classes = ''
-        self.style = 'height: 500px; width:500px;'
+        self.style = 'height: 500px; width: 99%; margin: 0.25rem; padding: 0.25rem;'
         self.show = True
         self.pages = {}
         self.auto_size = True   # If True, automatically resizes columns after load to optimal fit
@@ -44,7 +53,8 @@ class AgGrid(JustpyBaseComponent):
             self.__dict__[key] = value
 
     def on(self, event_type, func):
-        # Ag-Grid supports so many events, so no check is made for allowed events.
+        # Ag-Grid supports many events, so no check is made for allowed events.
+        # https://www.ag-grid.com/javascript-grid-events/
         setattr(self, 'on_' + event_type, MethodType(func, self))
         if event_type not in self.events:
             self.events.append(event_type)
@@ -70,8 +80,19 @@ class AgGrid(JustpyBaseComponent):
         return self.options
 
     def load_pandas_frame(self, df):
-        self.options.columnDefs = [Dict({'field': i}) for i in df.columns]
-        self.options.rowData = df.to_dict('records')
+        self.options.columnDefs = []
+        for i in df.columns:
+            if is_numeric_dtype(df[i]):
+                col_filter = "agNumberColumnFilter"
+            elif is_datetime64_any_dtype(df[i]):
+                col_filter = "agDateColumnFilter"
+            else:
+                col_filter = True   # Use default filter
+            self.options.columnDefs.append(Dict({'field': i, 'filter': col_filter}))
+        # Change NaN and similar to None for JSON compatibility
+        # df = df.replace([np.inf, -np.inf], np.nan)
+        # col = col.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max])
+        self.options.rowData = df.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max]).where(pd.notnull(df), None).to_dict('records')
 
     def convert_object_to_dict(self):
 

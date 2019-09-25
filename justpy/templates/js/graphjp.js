@@ -28,8 +28,14 @@ Vue.component('chart', {
                 var point_array = [];
                 update_dict.tooltip = {
                     useHTML: true,
+                    shape: 'callout',
+                    positioner: function (boxWidth, boxHeight, point) {
+                        return {
+                            x: point.plotX + 0,
+                            y: point.plotY - 2 * boxHeight
+                        };
+                    },
                     formatter: function (tooltip) {
-
                         if (this.point != null) {
                             // Tootltip not shared or split
                             var e = {
@@ -42,32 +48,35 @@ Vue.component('chart', {
                                 'color': this.point.color,
                                 'percentage': this.point.percentage,
                                 'total': this.point.total,
+                                'point_index': this.point.index,
                                 'series_name': this.series.name,
-                                'series_id': this.series.options.id,
+                                'series_index': this.series.index,
                                 'page_id': page_id,
                                 'websocket_id': websocket_id
                             };
                         } else {
                             // Tooltip shared or split
-                            for (var i = 0; i < this.points.length; i++) {
-                                var point = {};
+                            for (let i = 0; i < this.points.length; i++) {
+                                let point = {};
                                 point.x = this.points[i].x;
                                 point.y = this.points[i].y;
                                 point.z = this.points[i].z;
                                 point.color = this.points[i].color;
                                 point.percentage = this.points[i].percentage;
                                 point.total = this.points[i].total;
+                                point.point_index = this.points[i].index;
                                 point.series_name = this.points[i].series.name;
+                                point.series_index = this.points[i].series.index;
                                 point_array.push(point);
                             }
                             var e = {
-                                'event_type': 'tooltip',
-                                'x': this.x,
+                                event_type: 'tooltip',
+                                x: this.x,
                                 id: id,
                                 form_data: false,
-                                'points': point_array,
-                                'page_id': page_id,
-                                'websocket_id': websocket_id
+                                points: point_array,
+                                page_id: page_id,
+                                websocket_id: websocket_id
                             };
                         }
 
@@ -77,7 +86,8 @@ Vue.component('chart', {
                             // after the previous one.
                             clearTimeout(tooltip_timeout);
                             tooltip_timeout = setTimeout(function () {
-                                    socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
+                                    //socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
+                                    send_to_server(e);
                                 }
                                 , tooltip_timeout_period);
                         }
@@ -100,24 +110,28 @@ Vue.component('chart', {
                         point: {
                             events: {
                                 click: function (e) {
-                                    // This handles click on point. Need to improve. Don't propogate. Only if activated
+                                    // May need to add additional fields to p
+                                    console.log(e);
                                     var p = {
-                                        'event_type': 'point_click',
+                                        event_type: 'point_click',
                                         id: id,
                                         form_data: false,
                                         x: e.point.x,
                                         y: e.point.y,
                                         z: e.point.z,
-                                        //running_id: rid,
+                                        color: e.point.color,
+                                        percentage: e.point.percentage,
+                                        total: e.point.total,
+                                        point_index: e.point.index,
                                         type: e.type,
                                         series_name: e.point.series.name,
-                                        page_id: page_id
+                                        series_index: e.point.series.index,
+                                        page_id: page_id,
+                                        websocket_id: websocket_id
                                     };
                                     console.log(p);
                                     console.log(e);
-                                    if (use_websockets) {
-                                        socket.send(JSON.stringify({'type': 'event', 'event_data': p}));
-                                    }
+                                    send_to_server(p);
                                 }
                             }
                         }
@@ -149,3 +163,26 @@ Vue.component('chart', {
 });
 
 //   {% endraw %}
+
+j = {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Pie Chart'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            }
+        }
+    },
+    series: []
+};

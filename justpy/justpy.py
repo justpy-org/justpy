@@ -21,6 +21,7 @@ from .pandas import *
 from .routing import Route, SetRoute
 from .utilities import print_request, run_event_function, run_task, set_model
 import uvicorn, datetime, logging, uuid, time
+#TODO: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html https://marketplace.digitalocean.com/vendors/getting-started-as-a-digitalocean-marketplace-vendor  easy deployment
 #TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
 #TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
 #TODO: https://github.com/kennethreitz/setup.py setup.py file https://github.com/pypa/sampleproject/blob/master/setup.py
@@ -39,12 +40,16 @@ HOST = config('HOST', cast=str, default='0.0.0.0')
 PORT = config('PORT', cast=int, default=8000)
 TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default='justpy/templates')
 TAILWIND = config('TAILWIND', cast=bool, default=True)
+QUASAR = config('QUASAR', cast=bool, default=False)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
+AGGRID = config('AGGRID', cast=bool, default=True)
 # HIGHCHARTS = False
 
 template_options = {}
 template_options['tailwind'] = TAILWIND
+template_options['quasar'] = QUASAR
 template_options['highcharts'] = HIGHCHARTS
+template_options['aggrid'] = AGGRID
 
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
@@ -131,7 +136,7 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run()
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
-                        'body_classes': load_page.body_classes, 'css': load_page.css}
+                        'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.scripts}
         if load_page.use_cache:
             page_dict = load_page.cache
         else:

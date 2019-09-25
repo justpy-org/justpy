@@ -3,247 +3,58 @@
 <head>
     <title>JustPy</title>
     <link rel="shortcut icon" href={{ url_for('static', path='favicon-32x32.png') }}>
-{#    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">#}
-    <!-- Vuetify -->
-{#    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">#}
-{#    <link href="css/form.css" rel="stylesheet">#}
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
+          type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
-<link href="https://cdn.jsdelivr.net/npm/ionicons@^4.0.0/dist/css/ionicons.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@mdi/font@^3.0.0/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/ionicons@^4.0.0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@^3.0.0/css/materialdesignicons.min.css" rel="stylesheet">
 
-<link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
- <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
-<style>
-
-    {{ page_options.css }}
-
-</style>
-
-{#    <script src="https://unpkg.com/ag-grid-enterprise@19.0.0/dist/ag-grid-enterprise.min.js"></script>#}
-
-{% if options.highcharts %}
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
     <style>
-{#need for exporting menu#}
-    hr {
-    display: block;
-    margin-before: 0.5em;
-    margin-after: 0.5em;
-    margin-start: auto;
-    margin-end: auto;
-    overflow: hidden;
-    border-style: inset;
-    border-width: 1px;
-}
+
+        {{ page_options.css }}
+
     </style>
 
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/histogram-bellcurve.js"></script>
-    <script src="https://code.highcharts.com/modules/streamgraph.js"></script>
-{#    <script src="https://code.highcharts.com/stock/modules/series-label.js"></script>#}
-    <script src="https://code.highcharts.com/modules/annotations.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-    <script src=https://code.highcharts.com/modules/offline-exporting.js></script>
-    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/boost.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
+{{ page_options.scripts }}
 
-    <script src="https://code.highcharts.com/modules/sankey.js"></script>
-    <script src="https://code.highcharts.com/modules/dependency-wheel.js"></script>
-    <script src="https://code.highcharts.com/modules/item-series.js"></script>
-    <script src="https://code.highcharts.com/modules/organization.js"></script>
-    <script src="https://code.highcharts.com/modules/timeline.js"></script>
-    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
-    <script src="https://code.highcharts.com/modules/tilemap.js"></script>
-    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-    <script src="https://code.highcharts.com/modules/coloraxis.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
-    <script src="https://code.highcharts.com/modules/funnel3d.js"></script>
-    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    {% if options.highcharts %}
+        {% include 'highcharts.html' %}
+    {% endif %}
 
-{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
-{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
-{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/es-modules/themes/dark-unica.js"></script>#}
-{#    <script src={{ url_for('static', path='highchart_themes/dark-unica.js') }}></script>#}
-{#    <script src={{ url_for('static', path='highchart_themes/sand-signika.js') }}></script>#}
-{% endif %}
-<script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+    {% if options.aggrid %}
+        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham-dark.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-material.css">
+    {% endif %}
 
 </head>
 
 
 <body class="" style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
 {% if html %}
-{{ html | safe }}
+    {{ html | safe }}
 {% else %}
-{#<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@quasar/extras/material-icons/material-icons.css">#}
-{#    <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">#}
-{#<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.min.css">#}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-{#    <script src="https://cdn.jsdelivr.net/npm/quasar/dist/quasar.umd.min.js"></script>#}
     <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.5/dist/quasar.umd.min.js"></script>
 
+    <div id="components">
 
+    </div>
 
+    <script>
+        console.log('Quasar Version ' + Quasar.version);
+    </script>
 
+    {% include 'main.html' %}
 
-
-<div id="components">
-
-</div>
-
-<script>
-
-
-
-    {% include 'js/EventHandlerJP.js' %}
-    {% include 'js/html_component.js' %}
-    {% include 'js/quasar_component.js' %}
-    {% include 'js/graphjp.js' %}
-    {% include 'js/aggrid.js' %}
-    {% include 'js/editorjp.js' %}
-
-    var page_id = {{ page_id | safe }};
-    var websocket_id = '';
-    var use_websockets = JSON.parse('{{ use_websockets }}');
-    var justpyComponents = {{ justpy_dict | safe }};
-    var websocket_ready = false;
-    var storage_dict = {};
-    console.log('Quasar Version ' + Quasar.version);
-    if (use_websockets) {
-        console.log('Domain: ' + document.domain);
-        if (location.port) {
-            var socket = new WebSocket('ws://' + document.domain + ':' + location.port);
-        }
-        else {
-            var socket = new WebSocket('ws://' + document.domain);
-        }
-
-        //var socket = new WebSocket('ws://127.0.0.1:8000');
-
-    socket.addEventListener('open', function (event) {
-        console.log('Webocket opened');
-        socket.send(JSON.stringify({'type': 'connect'  ,'page_id': page_id}));
-    });
-
-    socket.addEventListener('message', function (event) {
-        msg = JSON.parse(event.data);
-        console.log('Websocket message received: ',msg);
-        //console.log(event);
-
-        switch (msg.type) {
-            case 'page_update':
-                app1.justpyComponents = msg.data;
-                break;
-            case 'websocket_update':
-                websocket_id = msg.data;
-                websocket_ready = true;
-                break;
-            case 'component_update':
-                // update just specific components on the page
-                // msg format is {'id': id, 'dict': the json describing object}
-                //app1.justpyComponents = msg;
-                //need to test this
-                console.log('About to replace'); console.log(msg.data);
-                comp_replace(msg.data, app1.justpyComponents);
-                console.log('Done replacing');
-                break;
-            case 'tooltip_update':
-                //https://github.com/highcharts/highcharts/issues/6824
-                var chart_on = cached_graph_def['chart'+msg.id];
-
-                                if (chart_on.options.tooltip.split) {
-                                    chart_on.tooltip.tt.attr({
-                                    text: msg.data[0]
-                                });
-
-                                    var j = 1;
-                                    for (var i=0; i<chart_on.tooltip.chart.series.length; i++) {
-                                        if (chart_on.tooltip.chart.series[i].visible &&
-                                            (chart_on.tooltip.chart.series[i].tt != null)) {
-                                            chart_on.tooltip.chart.series[i].tt.attr({
-                                            text: msg.data[j++]
-                                        });
-
-                                        }
-                                    }
-
-                                }
-                                else {
-                                chart_on.tooltip.label.attr({
-                                    text: msg.data
-                                });
-                            }
-                break;
-        }
-    });
-}
-
-
- function comp_replace(comp, comp_list) {
-        var m_id = comp['id'];
-        for (let i = 0; i < comp_list.length; i++) {
-            if (comp_list[i]['id'] == m_id) {
-                var spliced = comp_list.splice(i, 1, comp);
-               // return true;
-            } else {
-                if (comp_list[i]['object_props']) {
-                    comp_replace(comp, comp_list[i]['object_props']);
-                }
-            }
-        }
-    }
-
-{% if page_options.reload_interval %}
- setInterval(function() {
-    //d = JSON.stringify({'type': 'event'  ,'event_data': e});
-            $.ajax({
-            type: "POST",
-            url: "/zzz_justpy_ajax",
-            data: JSON.stringify({'type': 'event'  ,'event_data': {'event_type': 'page_update', 'page_id': {{ page_id | safe }} }}),
-            success: function( msg ) {
-  //$( ".result" ).html( data );
-            console.log( "Ajax from RELOAD was performed." );
-            {#console.log(msg);#}
-            if (msg) app1.justpyComponents = msg.data;
-        },
-            dataType: 'json'
-        });
-},1000 * {{ page_options.reload_interval }});
-    {% endif %}
-
-
-    var app1 = new Vue({
-        el: '#components',
-        data: {
-            justpyComponents: justpyComponents
-        },
-        render: function (h) {
-            var comps = [];
-            for (var i = 0; i < this.justpyComponents.length; i++) {
-                if (this.justpyComponents[i].show) {
-                    comps.push(h(this.justpyComponents[i].vue_type, {
-                        props: {
-                            jp_props: this.justpyComponents[i]
-                        }
-                    }))
-                }
-            }
-            return h('div', {class: ''}, comps);
-        }
-    });
-
-
-</script>
 {% endif %}
 </body>
 </html>
