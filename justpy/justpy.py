@@ -29,15 +29,20 @@ import uvicorn, datetime, logging, uuid, time
 #TODO: Get site on https, https://certbot.eff.org
 #TODO: Docker bitnami stacksmith digitalocean one click app
 
-config = Config('test.env')
+config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
 SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
 SECRET_KEY = config('SECRET_KEY', default='$$$my_secret_string$$$')    # Make sure to change when deployed
 LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
+UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default=logging.WARNING)
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
+#TODO: Should the default be 80 or 8000?
 PORT = config('PORT', cast=int, default=8000)
+SSL_VERSION = config('SSL_VERSION', default='ssl.PROTOCOL_SSLv23')
+SSL_KEYFILE = config('SSL_KEYFILE', default='')
+SSL_CERTFILE = config('SSL_CERTFILE', default='')
 TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default='justpy/templates')
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
@@ -84,7 +89,7 @@ async def justpy_startup():
             await startup_func()
         else:
             startup_func()
-    print('JustPy ready to go on http://127.0.0.1:8000')
+    print(f'JustPy ready to go on http://127.0.0.1:{PORT}')
 
 # TODO: https://blog.garstasio.com/you-dont-need-jquery/ajax/ beforeunload event
 
@@ -317,9 +322,11 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
     Route("/{path:path}", func_to_run, last=True, name='default')
     # host = '0.0.0.0'
     if start_server:
-        uvicorn.run(app, host=host, port=port) #, log_level=log_level)
-        # host='198.199.81.28'  for droplet
-        #sudo apt-get install python3.6-dev apt-get install python3.6-venvpyt1
+        if SSL_KEYFILE and SSL_CERTFILE:
+            uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL,
+                        ssl_keyfile=SSL_KEYFILE, ssl_certfile=SSL_CERTFILE, ssl_version=SSL_VERSION)
+        else:
+            uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL)
     return func_to_run
 
 def convert_dict_to_object(d):
