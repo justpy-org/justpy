@@ -21,6 +21,7 @@ from .pandas import *
 from .routing import Route, SetRoute
 from .utilities import print_request, run_event_function, run_task, set_model
 import uvicorn, datetime, logging, uuid, time
+from ssl import PROTOCOL_SSLv23
 #TODO: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html https://marketplace.digitalocean.com/vendors/getting-started-as-a-digitalocean-marketplace-vendor  easy deployment
 #TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
 #TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
@@ -35,12 +36,12 @@ SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
 SECRET_KEY = config('SECRET_KEY', default='$$$my_secret_string$$$')    # Make sure to change when deployed
 LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
-UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default=logging.WARNING)
+UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default=logging.WARNING).lower()
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
 #TODO: Should the default be 80 or 8000?
 PORT = config('PORT', cast=int, default=8000)
-SSL_VERSION = config('SSL_VERSION', default='ssl.PROTOCOL_SSLv23')
+SSL_VERSION = config('SSL_VERSION', default=PROTOCOL_SSLv23)
 SSL_KEYFILE = config('SSL_KEYFILE', default='')
 SSL_CERTFILE = config('SSL_CERTFILE', default='')
 TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default='justpy/templates')
