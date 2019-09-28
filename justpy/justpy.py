@@ -6,6 +6,7 @@ from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
 from starlette.endpoints import HTTPEndpoint
 from starlette.middleware.gzip import GZipMiddleware
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 from starlette.config import Config
@@ -65,6 +66,9 @@ app = Starlette(debug=DEBUG)
 app.mount('/static', StaticFiles(directory='justpy/static'), name='static')
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
+if SSL_KEYFILE and SSL_CERTFILE:
+    app.add_middleware(HTTPSRedirectMiddleware)
+
 
 
 def initial_func(request):
