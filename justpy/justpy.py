@@ -36,7 +36,7 @@ SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
 SECRET_KEY = config('SECRET_KEY', default='$$$my_secret_string$$$')    # Make sure to change when deployed
 LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
-UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default=logging.WARNING).lower()
+UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default='WARNING').lower()
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
 #TODO: Should the default be 80 or 8000?
