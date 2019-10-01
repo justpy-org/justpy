@@ -1161,7 +1161,7 @@ class Path(Div):
         super().__init__(**kwargs)
 
 
-#*************************** end SVG compoents
+#*************************** end SVG components
 
 class Hello(Div):
 
@@ -1177,6 +1177,14 @@ class Hello(Div):
             self.counter += 1
 
         self.on('click', click)
+
+
+class QHello(Hello):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+        self.classes = 'text-h3 text-primary q-ma-md'
 
 
 def component_by_tag(tag, **kwargs):

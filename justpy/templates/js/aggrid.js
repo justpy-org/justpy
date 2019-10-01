@@ -79,12 +79,15 @@ Vue.component('grid', {
     },
     updated() {
         console.log('updated');
+        console.log(cached_grid_def);
         if (JSON.stringify(this.$props.jp_props.def) == cached_grid_def[this.$props.jp_props.id]) {
             console.log('Not updated because cache');
             return;
         }
         console.log('updating...');
-        grid_to_destroy = cached_graph_def['g' + this.$props.jp_props.id];
+        console.log('g' + this.$props.jp_props.id);
+        grid_to_destroy = cached_grid_def['g' + this.$props.jp_props.id];
+        console.log(grid_to_destroy);
         grid_to_destroy.api.destroy();
         this.grid_change(); // may need to change to check difference and update with api instead of redraw.
     },

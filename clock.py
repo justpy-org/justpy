@@ -77,5 +77,4 @@ def session_test(request):
 # Click on button to add events and open page in another tab or browser to add visits
 
 
-jp.justpy(clock_test, startup=clock_init)
 # jp.justpy(clock_test, startup=clock_init, host='198.199.81.28', port=80, websockets=True)

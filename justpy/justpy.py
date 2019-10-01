@@ -45,6 +45,7 @@ PORT = config('PORT', cast=int, default=8000)
 SSL_VERSION = config('SSL_VERSION', default=PROTOCOL_SSLv23)
 SSL_KEYFILE = config('SSL_KEYFILE', default='')
 SSL_CERTFILE = config('SSL_CERTFILE', default='')
+
 TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default='justpy/templates')
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
@@ -328,7 +329,7 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
     # host = '0.0.0.0'
     if start_server:
         if SSL_KEYFILE and SSL_CERTFILE:
-            uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL,
+            uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL, proxy_headers=True,
                         ssl_keyfile=SSL_KEYFILE, ssl_certfile=SSL_CERTFILE, ssl_version=SSL_VERSION)
         else:
             uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL)
