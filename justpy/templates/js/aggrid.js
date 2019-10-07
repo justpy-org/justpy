@@ -51,21 +51,35 @@ Vue.component('grid', {
                         'class_name': props.jp_props.class_name,
                         'html_tag': props.jp_props.html_tag,
                         'vue_type': props.jp_props.vue_type,
-                        'colId': (typeof event_obj.column === "undefined") ? null : event_obj.column.colId,
+                        // 'colId': (typeof event_obj.column === "undefined") ? null : event_obj.column.colId,
                         'page_id': page_id,
                         'websocket_id': websocket_id
                     };
-                    var more_properties = ['value', 'oldValue', 'newValue', 'context', 'rowIndex', 'data', 'toIndex'];
-                    for (let i=0; i<more_properties.length; i++ ) {
+                    console.log(event_obj.node);
+                    var more_properties = ['value', 'oldValue', 'newValue', 'context', 'rowIndex', 'data', 'toIndex',
+                    'firstRow', 'lastRow', 'clientWidth', 'clientHeight', 'started', 'finished', 'direction', 'top',
+                    'left', 'animate', 'keepRenderedRows', 'newData', 'newPage', 'source', 'visible', 'pinned',
+                    'filterInstance', 'rowPinned', 'forceBrowserFocus'];
+                    for (let i = 0; i < more_properties.length; i++) {
                         let property = more_properties[i];
-                        //if (event_obj.hasOwnProperty(property)) {
-                        if (!(typeof event_obj[property] === "undefined"))  {
+                        if (!(typeof event_obj[property] === "undefined")) {
                             e[property] = event_obj[property];
                         }
                     }
                     if (!(typeof event_obj.column === "undefined")) {
                         e.colId = event_obj.column.colId;
                     }
+                    if (!(typeof event_obj.node === "undefined")) {
+                        let node_properties = ['selected', 'rowHeight'];
+                        for (let i = 0; i < node_properties.length; i++) {
+                            let property = node_properties[i];
+                            if (!(typeof event_obj.node[property] === "undefined")) {
+                                e[property] = event_obj.node[property];
+                            }
+                        }
+                        e.selected = event_obj.node.selected;
+                    }
+
                     if (['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd'].includes(event_name)) {
                         e.data = grid_def.api.getDataAsCsv();
                     }

@@ -30,6 +30,10 @@ from ssl import PROTOCOL_SSLv23
 #TODO: https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-18-04-server
 #TODO: Get site on https, https://certbot.eff.org
 #TODO: Docker bitnami stacksmith digitalocean one click app
+import sys
+import os
+current_module = sys.modules[__name__]
+current_dir = os.path.dirname(current_module.__file__)
 
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
@@ -46,7 +50,8 @@ SSL_VERSION = config('SSL_VERSION', default=PROTOCOL_SSLv23)
 SSL_KEYFILE = config('SSL_KEYFILE', default='')
 SSL_CERTFILE = config('SSL_CERTFILE', default='')
 
-TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default='justpy/templates')
+TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default=current_dir + '/templates')
+STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=current_dir + '/static')
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
@@ -64,7 +69,8 @@ logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(mes
 templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 app = Starlette(debug=DEBUG)
-app.mount('/static', StaticFiles(directory='justpy/static'), name='static')
+# app.mount('/static', StaticFiles(directory='justpy/static'), name='static')
+app.mount('/static', StaticFiles(directory=STATIC_DIRECTORY), name='static')
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 if SSL_KEYFILE and SSL_CERTFILE:
@@ -274,6 +280,7 @@ async def handle_event(data_dict, com_type=0):
         logging.warning('No page to load')
         return
     event_data['page'] = p
+    event_data['websocket'] = WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
     if event_data['event_type'] == 'page_update':
         #TODO: Add event handler for page_update (add events to WebPage)
         build_list = p.build_list()

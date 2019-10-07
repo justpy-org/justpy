@@ -112,12 +112,13 @@ class QSelect(_QInputBase):
                  'error', 'rules', 'lazy-rules', 'loading', 'clearable', 'autofocus', 'hide-dropdown-icon',
                  'fill-input', 'new-value-mode', 'transition-show', 'transition-hide',
                  'error-message', 'no-error-icon', 'label', 'stack-label', 'hint', 'hide-hint', 'prefix', 'suffix',
-                 'clear-icon', 'bottom-slots', 'counter', 'items-aligned', 'dropdown-icon', 'usr-input', 'input-debounce',
+                 'clear-icon', 'bottom-slots', 'counter', 'items-aligned', 'dropdown-icon', 'use-input', 'input-debounce',
                  'value', 'multiple', 'emit-value',
                  'options', 'options-value', 'option-label', 'option-disable', 'options-dense', 'options-dark',
                  'options-selected-class', 'options-cover', 'options-sanitize', 'map-options',
                  'display-value', 'display-value-sanitize', 'hide-selected', 'max-values', 'use-chips',
-                 'disable', 'readonly']
+                 'disable', 'readonly', 'behavior', 'input-class', 'input-style',
+                  'virtual-scroll-slice-size', 'virtual-scroll-item-size', 'virtual-scroll-sticky-size-start', 'virtual-scroll-sticky-size-end']
 
         self.allowed_events = ['input', 'remove', 'add', 'new_value', 'filter', 'filter_abort']
 
@@ -255,7 +256,7 @@ class QTime(_QInputBase):
         # Options prop not supported and left out from list. It is a function
         self.prop_list = ['landscape', 'format24h', 'options', 'hour-options', 'minute-options', 'second-options',
                           'with-seconds', 'now-btn', 'value', 'mask', 'locale', 'calendar', 'readonly', 'disable',
-                          'color', 'text-color', 'dark']
+                          'color', 'text-color', 'dark', 'square', 'flat', 'bordered']
         self.allowed_events = ['input']
 
 
@@ -272,7 +273,7 @@ class QDate(_QInputBase):
                           'color', 'text-color', 'dark', 'event-color', 'value', 'mask', 'locale', 'calendar',
                           'emit-immediately', 'default-year-month', 'default-view',
                           'events-date', 'options-date', # These are really events and options, need to take care of
-                          'first-day-of-week']
+                          'first-day-of-week', 'square', 'flat', 'bordered']
         self.allowed_events = ['input']
 
 
@@ -472,7 +473,7 @@ class QBtnDropdown(_QInputBase):
         self.type = 'boolean'
         self.value = bool(self.value)
         self.prop_list = ['loading', 'split', 'disable-main-btn', 'disable-dropdown', 'persistent', 'auto-close',
-                          'label', 'icon', 'icon-right', 'no-caps', 'no-wrap', 'align', 'stack', 'stretch',
+                          'label', 'icon', 'icon-right', 'no-caps', 'no-wrap', 'align', 'stack', 'stretch','dropdown-icon',
                           'type', 'tabindex', 'value', 'cover', 'menu-anchor', 'menu-self', 'to', 'replace', 'disable',
                           'ripple', 'round', 'outline', 'flat', 'unelevated', 'rounded', 'push', 'size', 'fab',
                           'fab-mini',

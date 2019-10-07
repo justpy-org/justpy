@@ -4,7 +4,7 @@ from github import Github
 
 
 def list_repos():
-    g = Github("elimintz", "g89$#78FkGH")
+    g = Github("elimintz", "")
     for repo in g.get_user().get_repos():
         print(repo.name)
         contents = repo.get_contents("")

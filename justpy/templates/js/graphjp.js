@@ -164,25 +164,3 @@ Vue.component('chart', {
 
 //   {% endraw %}
 
-j = {
-    chart: {
-        type: 'pie'
-    },
-    title: {
-        text: 'Pie Chart'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-            }
-        }
-    },
-    series: []
-};

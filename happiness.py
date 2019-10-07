@@ -76,14 +76,13 @@ def create_corr_page():
             for i, point in enumerate(o.series[0].data):
                 data.append({'x': point[0], 'y': point[1], 'country': df['Country'][i]})
             o.series[0].data = data
-            # Compute linear regression coefficients
+            # Compute linear regression coefficients and add linear regression series (two points connected by line)
             m = (len(x) * np.sum(x * y) - np.sum(x) * np.sum(y)) / (len(x) * np.sum(x * x) - np.sum(x) ** 2)
             b = (np.sum(y) - m * np.sum(x)) / len(x)
             s = jp.Dict()
             s.type = 'line'
             s.marker.enabled = False
             s.enableMouseTracking = False
-            # s.states.hover.lineWidth = 0
             min = x.min()
             max = x.max()
             s.data = [[min, m*min + b], [max, m*max + b]]
@@ -91,7 +90,7 @@ def create_corr_page():
             o.series.append(s)
     corr_def = df[['Unexplained', 'GDP', 'Social_support', 'Health', 'Freedom', 'Generosity', 'Corruption']].corr().round(3)
     corr_def.insert(loc=0, column='Factors/Factors', value=corr_def.index)
-    g = corr_def.jp.ag_grid(a=wp)
+    g = corr_def.jp.ag_grid(a=wp, style='width: 90%; height: 250px', classes='m-2')
     return wp
 
 corr_page = create_corr_page()

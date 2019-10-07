@@ -1439,22 +1439,10 @@ async def get(url, format='json'):
     else:
         return result.text
 
-def get_websocket(msg):
-    """Given msg, the second parameter supplied by the framework to an event, returns the websocket object
-    used to connect to the page on which event occured
+def get_websocket(event_data):
+    return WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
 
-    Parameters
-    ----------
-    msg : Dict()
 
-    Returns
-    -------
-    websocket
-        instance of websocket class
-
-    """
-    websocket_dict = WebPage.sockets[msg.page.page_id]
-    return websocket_dict[msg.websocket_id]
 
 def set_temp_flag(flag):
     """Sets whether components are temporary ones by default"""

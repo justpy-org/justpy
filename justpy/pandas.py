@@ -8,7 +8,6 @@ from io import StringIO
 
 
 # https://pandas.pydata.org/pandas-docs/stable/development/extending.html
-# 1.7976931348623157e+308
 
 @pd.api.extensions.register_dataframe_accessor("jp")
 class JustPyAccessor:

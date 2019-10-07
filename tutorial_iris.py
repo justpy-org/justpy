@@ -12,7 +12,7 @@ for s in iris_species:
 
 async def click_point(self, msg):
     print(msg)
-    return await self.select_point([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list if self.id != chart_id], jp.get_websocket(msg))
+    return await self.select_point([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list if self.id != chart_id], msg.websocket)
 
 
 async def tooltip_formatter(self, msg):
@@ -22,9 +22,8 @@ async def tooltip_formatter(self, msg):
     <div>{self.col1}: {msg.x}</div>
     <div>{self.col2}: {msg.y}</div>
     """
-    await self.draw_crosshair([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list], jp.get_websocket(msg))
-    # await self.select_point([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list], jp.get_websocket(msg))
-    return await self.tooltip_update(tooltip_html, jp.get_websocket(msg))
+    await self.draw_crosshair([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list], msg.websocket)
+    return await self.tooltip_update(tooltip_html,  msg.websocket)
 
 
 def test_pd():

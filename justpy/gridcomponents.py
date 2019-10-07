@@ -28,7 +28,7 @@ class AgGrid(JustpyBaseComponent):
         self.style = 'height: 99vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
         self.show = True
         self.pages = {}
-        self.auto_size = True   # If True, automatically resizes columns after load to optimal fit
+        self.auto_size = True   # If True, automatically resize columns after load to optimal fit
         self.theme = 'ag-theme-balham'  # one of ag-theme-balham, ag-theme-balham-dark, ag-theme-material
         super().__init__(**kwargs)
         for k, v in kwargs.items():

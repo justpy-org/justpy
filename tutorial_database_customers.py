@@ -35,6 +35,7 @@ def db_test(request):
 def city_test():
     wp = jp.WebPage()
     g = pd.read_sql_query(f"SELECT DISTINCT city, country, customerid from customers ORDER BY country", con).jp.ag_grid(a=wp)
+    #g = pd.read_sql_query(f"SELECT *  from invoices  WHERE customerid = 1", con).jp.ag_grid(a=wp)
     g.style = 'height: 99vh; width: 450px; margin: 0.25rem; padding: 0.25rem;'
     return wp
 
