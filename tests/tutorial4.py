@@ -1,5 +1,12 @@
 import justpy as jp
 
+def hello_test():
+    wp = jp.WebPage()
+    jp.Hello(a=wp)
+    return wp
+
+jp.justpy(hello_test)
+
 class MyHello(jp.Hello):
 
     def __init__(self, **kwargs):
@@ -12,7 +19,7 @@ wp = jp.WebPage().add(*[MyHello() for i in range(5)])
 def hello_test():
     return wp
 
-jp.justpy(hello_test)
+# jp.justpy(hello_test)
 
 import random
 
