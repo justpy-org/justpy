@@ -2,8 +2,7 @@
 <html>
 <head>
     <title>JustPy</title>
-    <link rel="shortcut icon" href={{ url_for('static', path='favicon-32x32.png') }}>
-
+    {% include 'favicon.html' %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
           type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
@@ -19,18 +18,14 @@
 
     </style>
 
-{{ page_options.scripts }}
+    {{ page_options.scripts }}
 
     {% if options.highcharts %}
         {% include 'highcharts.html' %}
     {% endif %}
 
     {% if options.aggrid %}
-        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
-        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham-dark.css">
-        <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-material.css">
+        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     {% endif %}
 
 </head>

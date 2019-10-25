@@ -1036,7 +1036,7 @@ class QExpansionItem(_QInputBase):
         # self.value = True if self.value else False
         self.value = bool(self.value)
         self.prop_list = ['to', 'exact', 'append', 'replace', 'active-class', 'exact-active-class', 'duration',
-                          'default-opened',
+                          # 'default-opened',  Do not use, just set value to True: self.value = True
                           'expand-icon-toggle', 'group', 'popup', 'icon', 'expand-icon', 'label', 'label-lines',
                           'caption',
                           'caption-lines', 'header-inset-level', 'content-inset-level', 'expand-separator',
@@ -1044,6 +1044,11 @@ class QExpansionItem(_QInputBase):
                           'value', 'disable', 'expand-icon-class', 'dark', 'dense', 'dense-toggle', 'header-style',
                           'header-class']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
+
+    # def before_event_handler(self, msg):
+    #     super().before_event_handler(self, msg)
+    #     self.default_opened = False
+        # pass
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()

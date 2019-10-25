@@ -21,17 +21,11 @@ from .quasarcomponents import *
 from .pandas import *
 from .routing import Route, SetRoute
 from .utilities import print_request, run_event_function, run_task, set_model
-import uvicorn, datetime, logging, uuid, time
+import uvicorn, datetime, logging, uuid, time, sys, os
 from ssl import PROTOCOL_SSLv23
-#TODO: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html https://marketplace.digitalocean.com/vendors/getting-started-as-a-digitalocean-marketplace-vendor  easy deployment
-#TODO: https://www.mongodb.com/licensing/server-side-public-license/faq Use Mongo server side public license
-#TODO: CRUD demo using sqlite3 and sqlalchemy? web viewer for sqlite database https://sqlitebrowser.org/
 #TODO: https://github.com/kennethreitz/setup.py setup.py file https://github.com/pypa/sampleproject/blob/master/setup.py
 #TODO: https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-18-04-server
-#TODO: Get site on https, https://certbot.eff.org
-#TODO: Docker bitnami stacksmith digitalocean one click app
-import sys
-import os
+
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
 
@@ -44,33 +38,36 @@ LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
 UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default='WARNING').lower()
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
-#TODO: Should the default be 80 or 8000?
 PORT = config('PORT', cast=int, default=8000)
 SSL_VERSION = config('SSL_VERSION', default=PROTOCOL_SSLv23)
 SSL_KEYFILE = config('SSL_KEYFILE', default='')
 SSL_CERTFILE = config('SSL_CERTFILE', default='')
 
 TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default=current_dir + '/templates')
-STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=current_dir + '/static')
+# STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=current_dir + '/static')
+STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=os.getcwd())
+STATIC_ROUTE = config('STATIC_MOUNT', cast=str, default='/static')
+STATIC_NAME = config('STATIC_NAME', cast=str, default='static')
+print(current_dir, os.getcwd())
+FAVICON = config('FAVICON', cast=str, default='')  # If False gets value from https://elimintz.github.io/favicon.png
+# FAVICON = 'misc/faviconem.png'
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
 AGGRID = config('AGGRID', cast=bool, default=True)
-# HIGHCHARTS = False
 
-template_options = {}
-template_options['tailwind'] = TAILWIND
-template_options['quasar'] = QUASAR
-template_options['highcharts'] = HIGHCHARTS
-template_options['aggrid'] = AGGRID
-
+template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID,
+                    'static_name': STATIC_NAME}
+print(template_options)
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
 templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 app = Starlette(debug=DEBUG)
 # app.mount('/static', StaticFiles(directory='justpy/static'), name='static')
-app.mount('/static', StaticFiles(directory=STATIC_DIRECTORY), name='static')
+# app.mount('/static', StaticFiles(directory=STATIC_DIRECTORY), name='static')
+app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
+# app.mount('/', StaticFiles(directory=STATIC_DIRECTORY), name='static')
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 if SSL_KEYFILE and SSL_CERTFILE:
@@ -110,12 +107,7 @@ class Homepage(HTTPEndpoint):
 
 
     async def get(self, request):
-        # global func_to_run
-        # if request['path']=='/favicon.ico':     #Need to add option for favicon insertion
-        #     return PlainTextResponse('')
-        # print_request(request)
         session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-        # print('num routes:', len(Route.instances))
         if SESSIONS:
             new_cookie = False
             if session_cookie:
@@ -131,14 +123,11 @@ class Homepage(HTTPEndpoint):
                 request.session_id = request.state.session_id
                 new_cookie = True
                 logging.info(f'New session_id created: {request.session_id}')
-        # Number of parameters func_to_run has
         for route in Route.instances:
             func = route.matches(request['path'], request)
             if func:
                 func_to_run = func
                 break
-
-
         func_parameters = len(inspect.signature(func_to_run).parameters)
         assert func_parameters < 2, f"Function {func_to_run.__name__} cannot have more than one parameter"
         if inspect.iscoroutinefunction(func_to_run):
@@ -153,11 +142,13 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run()
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
-                        'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.scripts}
+                        'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.scripts,
+                        'display_url': load_page.display_url, 'favicon': load_page.favicon if load_page.favicon else FAVICON}
         if load_page.use_cache:
             page_dict = load_page.cache
         else:
             page_dict = load_page.build_list()
+        print(page_options)
         context = {'request': request, 'page_id': load_page.page_id, 'justpy_dict': json.dumps(page_dict),
                    'use_websockets': json.dumps(WebPage.use_websockets), 'options': template_options, 'page_options': page_options,
                    'html': load_page.html}
@@ -172,11 +163,14 @@ class Homepage(HTTPEndpoint):
 
     async def post(self, request):
         # Handles post method. Used in ajax mode for events when websockets disabled
-        #TODO: Add beforeunload event to ajax pages for garbage collection purposes
         if request['path']=='/zzz_justpy_ajax':
             data_dict = await request.json()
-            if data_dict['type']=='initial':
-                return JSONResponse('')
+            # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
+            if data_dict['event_data']['event_type']== 'beforeunload':
+                return await self.on_disconnect(data_dict['event_data']['page_id'])
+
+            # if data_dict['type']=='initial':
+            #     return JSONResponse('')
             session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
             if session_cookie:
                 session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
@@ -189,6 +183,11 @@ class Homepage(HTTPEndpoint):
             else:
                 return JSONResponse(False)
 
+    async def on_disconnect(self, page_id):
+        print('in disconnect')
+        await WebPage.instances[page_id].on_disconnect()  # Run the specific page disconnect function
+        print(WebPage.instances)
+        return JSONResponse(False)
 
 @app.websocket_route("/")
 class JustpyEvents(WebSocketEndpoint):
@@ -231,20 +230,12 @@ class JustpyEvents(WebSocketEndpoint):
 
 
     async def on_disconnect(self, websocket, close_code):
-        print(WebPage.sockets)
         pid = websocket.page_id
         websocket.open = False
         WebPage.sockets[pid].pop(websocket.id)
         if not WebPage.sockets[pid]:
             WebPage.sockets.pop(pid)
         await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
-        # Need to add garbage collection, remove all webpages and components that will not be used amymore, probably background process
-        # The WebPAge instance that was closed is still part of the WebPAage class instance list so the system will not remove it
-        # WebPage.instances[self.page_id] = self
-        #TODO:  Need flag if web page can be deleted. Same for all components? Improve garbage collection
-
-        print(close_code, 'close code')
-        print(WebPage.sockets)
         print(WebPage.instances)
 
 
@@ -273,14 +264,14 @@ async def handle_event(data_dict, com_type=0):
     connection_type = {0: 'websocket', 1: 'ajax'}
     logging.info('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
     event_data = data_dict['event_data']
-    # print('stam', event_data)
     try:
         p = WebPage.instances[event_data['page_id']]
     except:
         logging.warning('No page to load')
         return
     event_data['page'] = p
-    event_data['websocket'] = WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
+    if com_type==0:
+        event_data['websocket'] = WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
     if event_data['event_type'] == 'page_update':
         #TODO: Add event handler for page_update (add events to WebPage)
         build_list = p.build_list()
@@ -298,12 +289,13 @@ async def handle_event(data_dict, com_type=0):
         logging.info('%s %s', 'Event result:', event_result)
     except Exception as e:
         # raise Exception(e)
-        print(e)
+        print('Attempting to run event handler:', e)
         # logging.error(traceback.format_exc())
         event_result = None
         logging.info('%s %s', 'Event result:', 'No event function or error in function')
 
     # If page is not to be updated, the event_function should return anything but None
+
     if event_result is None:
         if com_type == 0:     # Websockets communication
             await p.update()
@@ -316,9 +308,6 @@ async def handle_event(data_dict, com_type=0):
     if com_type == 1 and event_result is None:
         return {'type': 'page_update', 'data': build_list}
 
-
-#TODO: Decorator and periodoc functions (see clock example, need to generalize?)
-#TODO: URL to bind to justpy add as parameter or decorator for function use starlette mechanism regular expression https://github.com/encode/starlette/blob/master/starlette/routing.py line 82
 
 def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, log_level=LOGGING_LEVEL):
     global func_to_run, startup_func

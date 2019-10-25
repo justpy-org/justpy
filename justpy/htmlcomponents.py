@@ -50,6 +50,7 @@ class WebPage:
     sockets = {}
     next_page_id = 0
     use_websockets = True
+    delete_flag = True
 
 
     def __init__(self, **kwargs):
@@ -63,8 +64,10 @@ class WebPage:
         self.static = False
         self.cache = None   # Holds the last result of build_list
         self.use_cache = False  # Determines whether the framework uses the cache or not
-        self.delete_flag = True
         self.template_file = 'tailwind.html'
+        self.display_url = None
+        self.redirect = None
+        self.favicon = None
         # self.quasar = False
         self.tailwind = True
         self.components = []  # list  of components on page
@@ -90,26 +93,25 @@ class WebPage:
     def __len__(self):
         return len(self.components)
 
+    def __del__(self):
+        print(f'Deleted {self}')
+
     def add_component(self, component):
         self.components.append(component)
         return self     # Making adding to page implicit
 
     async def on_disconnect(self, websocket=None):
-        pass
+        if self.delete_flag:
+            self.delete_components()
+            self.remove_page()
+
 
     def remove_page(self):
-        """
-        Remove page from instance dict of WebPages
-        Returns
-        -------
-
-        """
         WebPage.instances.pop(self.page_id)
 
-    def delete(self):
-        if self.delete_flag:
-            for c in self.components:
-                c.delete()
+    def delete_components(self):
+        for c in self.components:
+            c.delete()
         self.components = []
 
     def add(self, *args):
@@ -148,7 +150,8 @@ class WebPage:
         component_build = self.build_list()
         for websocket in list(websocket_dict.values()):
             try:
-                WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build}))
+                WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build,
+                            'page_options': {'display_url': self.display_url, 'redirect': self.redirect, 'favicon': self.favicon}}))
             except:
                 print('Problem with websocket in page update, ignoring')
         return self
@@ -194,6 +197,8 @@ class JustpyBaseComponent(Tailwind):
     instances = {}
     # Set this to true if you want all components to be temporary by default
     temp_flag = False
+    delete_flag = True
+
 
     def __init__(self,  **kwargs): # c_name=None,
 
@@ -210,10 +215,14 @@ class JustpyBaseComponent(Tailwind):
         self.events = []
         self.allowed_events = []
 
+
+    def __del__(self):
+        print(f'Deleted {self}')
+
     def delete(self):
         if self.delete_flag:
             if self.id != 'temp':
-                del JustpyBaseComponent.instances[self.id]
+                JustpyBaseComponent.instances.pop(self.id)
 
 
 
@@ -313,7 +322,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
         # self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
         # self.html_tag = type(self).html_tag
-        self.delete_flag = True
         self.attrs = {'id':  str(self.id)}    # Every component gets an ID in html
         self.inner_html = ''
         self.animation = False
@@ -476,6 +484,13 @@ class Div(HTMLBaseComponent):
         super().__init__(**kwargs)
         self.components = []
 
+    def delete(self):
+        if self.delete_flag:
+            for c in self.components:
+                c.delete()
+            if self.id != 'temp':
+                JustpyBaseComponent.instances.pop(self.id)
+            self.components = []
 
     def add_component(self, child, position=None, slot=None):
         if slot:
@@ -486,6 +501,10 @@ class Div(HTMLBaseComponent):
             self.components.insert(position, child)
         return self
 
+    def delete_components(self):
+        for c in self.components:
+            c.delete()
+        self.components = []
 
     def add(self, *args):
         for component in args:
@@ -512,16 +531,6 @@ class Div(HTMLBaseComponent):
 
     def last(self):
         return self.components[-1]
-
-    def delete(self):
-        if self.delete_flag:
-            if self.id != 'temp':
-                try:
-                    del JustpyBaseComponent.instances[self.id]
-                except:
-                    pass
-            for c in self.components:
-                c.delete()
 
 
     def to_html(self, indent=0, indent_step=0, format=True):
@@ -1013,7 +1022,7 @@ _tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2
                 'rp', 'rt', 'rtc', 'ruby', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'u', 'var', 'wbr',
                 'area', 'audio', 'img', 'map', 'track', 'video',
                 'embed', 'iframe', 'object', 'param', 'picture', 'source',
-                'del', 'ins',
+                'del', 'ins', 'title',
                 'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
                 'button', 'fieldset', 'legend', 'meter', 'optgroup', 'option', 'progress',  # datalist not supported
                 'details', 'summary' # dialog not supported
@@ -1084,21 +1093,18 @@ class Svg(Div):
         self.html_tag = 'svg'
 
 
-class GJP(Div):
+class G(Div):
+    html_tag = 'g'
+    attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
+                 'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
+                 'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
+                 'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split()
 
     def __init__(self, **kwargs):
-
+        self.d = ''
         super().__init__(**kwargs)
-        self.html_tag = 'g'
-        self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-                          'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-                          'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-                          'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split()
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
-        d = super().convert_object_to_dict()
 
-        return d
 
 
 class PolygonJP(Div):
@@ -1400,6 +1406,7 @@ def justPY_parser(html_string, **kwargs):
     parser.root.name_dict = parser.name_dict
     if len(parser.root.components)==1:
         # If the root div has only one component, then return it instead of the root div
+        # TODO: Also need to copy kwargs. Do not assign in command line is good workaround. Issue mainly with show.
         parser.root.components[0].name_dict = parser.name_dict
         parser.root.components[0].commands = parser.commands
         return parser.root.components[0]

@@ -1,4 +1,4 @@
-from justpy import Div, Input, Button, WebPage, justpy, run_event_function, set_model
+from justpy import Div, Input, Button, WebPage, justpy, run_event_function, set_model, QuasarPage
 
 class Calculator(Div):
 
@@ -64,18 +64,22 @@ class Calculator(Div):
     def model_update(self):
         pass
 
+import os
+
 
 def calculator_test():
     wp = WebPage(data={'value': 0})
+    # wp.favicon = 'misc/faviconem.png'
+    print(wp.favicon)
     Calculator(a=wp, classes='m-1 border inline-block', style='width: 250px', model=[wp, 'value'])
     for i in range(5):
         Div(classes='border m-2 p-1 w-64 text-xl', text='0', a=wp, model=[wp, 'value'])
     return wp
 
 justpy(calculator_test)
-
 def calculator_test1():
     wp = WebPage()
+
     for i in range(3):
         c = Calculator(a=wp, classes='m-1 border inline-block', style='width: 250px')
     return wp

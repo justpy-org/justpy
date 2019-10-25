@@ -9,6 +9,9 @@
     {% include 'js/aggrid.js' %}
     {% include 'js/editorjp.js' %}
 
+    {% if page_options.display_url is not none %}
+        window.history.pushState("", "", '{{ page_options.display_url }}');
+    {%endif %}
 
     var page_id = {{ page_id | safe }};
     var websocket_id = '';
@@ -19,7 +22,7 @@
 
 
     if (use_websockets) {
-        console.log(location.protocol+' Domain: ' + document.domain);
+        console.log(location.protocol + ' Domain: ' + document.domain);
         if (location.protocol === 'https:') {
             var protocol_string = 'wss://'
         } else {
@@ -44,6 +47,20 @@
 
             switch (msg.type) {
                 case 'page_update':
+                    console.log(msg.page_options);
+                    if (msg.page_options.redirect) {
+                        location.href = msg.page_options.redirect;
+                        break;
+                    }
+                    if (msg.page_options.display_url) window.history.pushState("", "", msg.page_options.display_url);
+                    if (msg.page_options.favicon) {
+                        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+                        link.type = 'image/x-icon';
+                        link.rel = 'shortcut icon';
+                        console.log('{{ url_for(options.static_name, path='/') }}');
+                        link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
+                        document.getElementsByTagName('head')[0].appendChild(link);
+                    }
                     app1.justpyComponents = msg.data;
                     break;
                 case 'websocket_update':
@@ -109,6 +126,14 @@
                     }
                     break;
             }
+        });
+    } else {
+        window.addEventListener('beforeunload', function (event) {
+            e = {
+                'event_type': 'beforeunload',
+                'page_id': page_id,
+            };
+            send_to_server(e);
         });
     }
 

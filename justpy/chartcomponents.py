@@ -32,6 +32,7 @@ class HighCharts(JustpyBaseComponent):
         self.classes = ''
         self.style = ''
         self.show = True
+
         self.pages = {}
         super().__init__(**kwargs)
         for k, v in kwargs.items():

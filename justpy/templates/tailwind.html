@@ -2,10 +2,9 @@
 <html>
 <head>
     <title>JustPy</title>
-    <link rel="shortcut icon" href={{ url_for('static', path='favicon-32x32.png') }}>
+    {% include 'favicon.html' %}
     {% if options.tailwind %}
         <link href="https://unpkg.com/tailwindcss@^1.1/dist/tailwind.min.css" rel="stylesheet">
-
     <style>
         {% include 'css/form.css' %}
     </style>
@@ -40,11 +39,7 @@
     {% endif %}
 
     {% if options.aggrid %}
-    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham-dark.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-material.css">
+        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     {% endif %}
 </head>
 
@@ -58,7 +53,7 @@
 
     </div>
 
-  {% include 'main.html' %}
+    {% include 'main.html' %}
 
 {% endif %}
 </body>
