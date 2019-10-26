@@ -8,6 +8,7 @@ function eventHandler(props, event, form_data, aux) {
     console.log(event);
     console.log(props.jp_props);
     console.log('-------------------------');
+     if (!websocket_id) return;
     e = {
         'event_type': event.type,
         'id': props.jp_props.id,

@@ -1,5 +1,5 @@
 // {% raw %}
-
+var storage_dict = {}
 
 Vue.component('quasar_component', {
 
