@@ -1,1 +1,1 @@
-recursive-include templates *
+graft justpy/templates
