@@ -55,12 +55,12 @@ def test_pd():
                 o.tooltip.headerFormat = '<b>{series.name}</b><br>'
                 o.series = []
                 for k, v in iris_species_frames.items():
-                    serie = jp.Dict()
-                    serie.name = k
-                    serie.allowPointSelect = True
-                    serie.marker.states.select.radius = 8
-                    serie.data = list(zip(v.iloc[:, j], v.iloc[:, i]))
-                    o.series.append(serie)
+                    s = jp.Dict()
+                    s.name = k
+                    s.allowPointSelect = True
+                    s.marker.states.select.radius = 8
+                    s.data = list(zip(v.iloc[:, j], v.iloc[:, i]))
+                    o.series.append(s)
             else:
                 chart = jp.Histogram(list(iris.iloc[:, j]),a=d2, style='width: 300px; height: 300px', classes='flex-grow m-1 p-3')
                 o = chart.options

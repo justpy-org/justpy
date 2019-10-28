@@ -3,6 +3,11 @@ import typing
 
 class Route:
 
+# Modified code from Starlette routing.py: https://github.com/encode/starlette/blob/master/starlette/routing.py
+# Copyright © 2018, Encode OSS Ltd. All rights reserved.
+# You may obtain a copy of the License at: https://github.com/encode/starlette/blob/master/LICENSE.md
+
+
     instances = []
     id = 0
 
@@ -20,8 +25,8 @@ class Route:
         else:
             Route.instances.insert(0, self)
 
-    def matches(self, path, request):
 
+    def matches(self, path, request):
         match = self.path_regex.match(path)
         if match:
             matched_params = match.groupdict()

@@ -1,3 +1,4 @@
+# git clone https://github.com/elimintz/TestPy.git
 # python3 setup.py sdist bdist_wheel
 # python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
@@ -21,10 +22,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=[
-        'starlette',
-        'addict',
+        'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0',
+        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'requests', 'aiofiles>=0.4.0'
     ],
-    # need to add package_data
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
@@ -35,3 +35,4 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License"
     ]
 )
+

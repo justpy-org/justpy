@@ -1,9 +1,14 @@
 from .htmlcomponents import *
 import demjson
 from addict import Dict
-import numpy as np
-import pandas as pd
-from pandas.api.types import is_numeric_dtype, is_datetime64_any_dtype
+try:
+    import numpy as np
+    import pandas as pd
+    from pandas.api.types import is_numeric_dtype, is_datetime64_any_dtype
+    _has_pandas = True
+except:
+    _has_pandas = False
+
 from io import StringIO
 
 
@@ -80,6 +85,7 @@ class AgGrid(JustpyBaseComponent):
         return self.options
 
     def load_pandas_frame(self, df):
+        assert _has_pandas, f"Pandas not installed, cannot load frame"
         self.options.columnDefs = []
         for i in df.columns:
             if is_numeric_dtype(df[i]):

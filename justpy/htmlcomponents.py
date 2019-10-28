@@ -1,26 +1,23 @@
 # https://dev.to/apcelent/deploying-flask-on-aws-lambda-4k42
 # https://serverless.com/framework/    https://www.zappa.io/  two good serverless options
-#Classes for components and the page_object https://qz.com/1408660/the-rise-of-python-as-seen-through-a-decade-of-stack-overflow/
+# Classes for components and the page_object https://qz.com/1408660/the-rise-of-python-as-seen-through-a-decade-of-stack-overflow/
 from types import MethodType
 import json, copy, inspect, sys, re
 from html.parser import HTMLParser, tagfind_tolerant, attrfind_tolerant
 from html.entities import name2codepoint
 from html import unescape
 from jinja2 import Template
-# from graphcomponents import *
-# from gridcomponents import *
-# import pandas as pd
-import asyncio   #https://www.aeracode.org/2018/02/19/python-async-simplified/
+import asyncio  # https://www.aeracode.org/2018/02/19/python-async-simplified/
 import aiofiles
 import requests
-# import aiohttp
 from .tailwind import Tailwind
 
-#TODO: Handle scroll event https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
-#Metaclasses: https://stackoverflow.com/questions/41215107/programmatically-defining-a-class-type-vs-types-new-class
+# TODO: Handle scroll event https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
+# Metaclasses: https://stackoverflow.com/questions/41215107/programmatically-defining-a-class-type-vs-types-new-class
 
 # Dict to translate from tag to class
 _tag_class_dict = {}
+
 
 def parse_dict(cls):
     """
@@ -37,12 +34,12 @@ def parse_dict(cls):
     _tag_class_dict[cls.html_tag] = cls
     return cls
 
+
 class JustPy:
     loop = None
 
 
 class WebPage:
-
     # Add page events like visibility. Do with templates?
     # TODO: Add page events like visibility. Do with templates? https://developer.mozilla.org/en-US/docs/Web/Events ad reload to page with seconds parameter
     # events: online, beforeunload, resize, scroll?, visibilitychange
@@ -51,7 +48,6 @@ class WebPage:
     next_page_id = 0
     use_websockets = True
     delete_flag = True
-
 
     def __init__(self, **kwargs):
         # self.dirty = False  # Indicates if page has changed
@@ -62,7 +58,7 @@ class WebPage:
         # Will add semi-static that can handle some events by activating listeners or rendering onclick and sending
         # message via websocket
         self.static = False
-        self.cache = None   # Holds the last result of build_list
+        self.cache = None  # Holds the last result of build_list
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.template_file = 'tailwind.html'
         self.display_url = None
@@ -81,11 +77,11 @@ class WebPage:
         self.body_classes = ''
         self.reload_interval = None
         self.data = {}
-        self.ui_framework = 'tailwind' # material etc.
-        self.periodic_functions = []   # List of dicts {f: function, p: period_in_seconds)
+        self.ui_framework = 'tailwind'  # material etc.
+        self.periodic_functions = []  # List of dicts {f: function, p: period_in_seconds)
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
-            self.__setattr__(k,v)
+            self.__setattr__(k, v)
 
     def __repr__(self):
         return f'{self.__class__.__name__}(page_id: {self.page_id}, number of components: {len(self.components)}, reload interval: {self.reload_interval})'
@@ -98,13 +94,12 @@ class WebPage:
 
     def add_component(self, component):
         self.components.append(component)
-        return self     # Making adding to page implicit
+        return self  # Making adding to page implicit
 
     async def on_disconnect(self, websocket=None):
         if self.delete_flag:
             self.delete_components()
             self.remove_page()
-
 
     def remove_page(self):
         WebPage.instances.pop(self.page_id)
@@ -151,18 +146,19 @@ class WebPage:
         for websocket in list(websocket_dict.values()):
             try:
                 WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build,
-                            'page_options': {'display_url': self.display_url, 'redirect': self.redirect, 'favicon': self.favicon}}))
+                                                              'page_options': {'display_url': self.display_url,
+                                                                               'redirect': self.redirect,
+                                                                               'favicon': self.favicon}}))
             except:
                 print('Problem with websocket in page update, ignoring')
         return self
-
 
     async def delayed_update(self, delay):
         await asyncio.sleep(delay)
         return await self.update()
 
     def to_html(self, indent=0, indent_step=0, format=True):
-        block_indent = ' '*indent
+        block_indent = ' ' * indent
         if format:
             ws = '\n'
         else:
@@ -182,7 +178,7 @@ class WebPage:
         i = 0
         for obj in self.components:
             obj.react(self.data)
-            d=obj.convert_object_to_dict()
+            d = obj.convert_object_to_dict()
             d['running_id'] = i
             i += 1
             object_list.append(d)
@@ -191,7 +187,6 @@ class WebPage:
 
 
 class JustpyBaseComponent(Tailwind):
-
     next_id = 0
     # Should instnaces be made a weakref.WeakValueDictionary? Would that help garbage collection?
     instances = {}
@@ -199,8 +194,7 @@ class JustpyBaseComponent(Tailwind):
     temp_flag = False
     delete_flag = True
 
-
-    def __init__(self,  **kwargs): # c_name=None,
+    def __init__(self, **kwargs):  # c_name=None,
 
         temp = kwargs.get('temp', JustpyBaseComponent.temp_flag)
         # If object is not a temporary one
@@ -215,7 +209,6 @@ class JustpyBaseComponent(Tailwind):
         self.events = []
         self.allowed_events = []
 
-
     def __del__(self):
         print(f'Deleted {self}')
 
@@ -223,8 +216,6 @@ class JustpyBaseComponent(Tailwind):
         if self.delete_flag:
             if self.id != 'temp':
                 JustpyBaseComponent.instances.pop(self.id)
-
-
 
     def on(self, event_type, func):
 
@@ -273,7 +264,6 @@ class JustpyBaseComponent(Tailwind):
     def add_page_to_pages(self, wp: WebPage):
         self.pages[wp.page_id] = wp
 
-
     @staticmethod
     def convert_dict_to_object(d):
         obj = globals()[d['class_name']]()
@@ -282,6 +272,7 @@ class JustpyBaseComponent(Tailwind):
         for k, v in d.items():
             obj.__dict__[k] = v
         return obj
+
 
 # https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
 
@@ -296,40 +287,39 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_tag = 'div'
     vue_type = 'html_component'  # VUE component name
 
-    html_global_attributes =['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
-                             'lang', 'spellcheck', 'style', 'tabindex', 'title']
+    html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
+                              'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
     attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
                       'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
     not_initialized_attribute_list = ['accesskey', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden',
-                             'lang', 'spellcheck', 'tabindex', 'title']
+                                      'lang', 'spellcheck', 'tabindex', 'title']
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-
 
     # window.addEventListener("afterprint", function(event){...});
     # window.onafterprint = function(event){...};
     windows_events = ['afterprint', 'beforeprint', 'beforeunload', 'error', 'hashchange', 'load',
-                              'message', 'offline', 'online', 'pagehide', 'pageshow', 'popstate',
-                              'resize', 'storage', 'unload']
+                      'message', 'offline', 'online', 'pagehide', 'pageshow', 'popstate',
+                      'resize', 'storage', 'unload']
     form_events = ['blur', 'change', 'contextmenu', 'focus', 'input', 'invalid', 'reset', 'search', 'select', 'submit']
     keyboard_events = ['keydown', 'keypress', 'keyup']
     mouse_events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'wheel',
                     'mouseenter', 'mouseleave']
 
-    def __init__(self,  **kwargs): # c_name=None,
+    def __init__(self, **kwargs):  # c_name=None,
         super().__init__(**kwargs)  # Important, needed to give component a unique id
         # self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
         # self.html_tag = type(self).html_tag
-        self.attrs = {'id':  str(self.id)}    # Every component gets an ID in html
+        self.attrs = {'id': str(self.id)}  # Every component gets an ID in html
         self.inner_html = ''
         self.animation = False
         self.pages = {}  # pages the component is on, changed to dict
         self.show = True
         self.classes = ''
         self.slot = None
-        self.scoped_slots = {}   # for Quasar initially
+        self.scoped_slots = {}  # for Quasar initially
         self.style = ''
         self.directives = []
         self.data = {}
@@ -338,14 +328,14 @@ class HTMLBaseComponent(JustpyBaseComponent):
                                'after', 'before', 'keydown', 'keyup', 'keypress']
         # self.events = False
         self.events = []
-        self.event_propagation = True   # Should events be propogated?
+        self.event_propagation = True  # Should events be propogated?
         self.tooltip = None
         # self.attributes = []
         self.attributes = type(self).attributes
-        self.prop_list = []   # For components from libraries like quasar. Contains both props and directives
+        self.prop_list = []  # For components from libraries like quasar. Contains both props and directives
 
         for k, v in kwargs.items():
-            self.__setattr__(k,v)
+            self.__setattr__(k, v)
 
         for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
@@ -374,7 +364,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def __repr__(self):
         return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, vue_type: {self.vue_type}, number of components: {len(self)})'
 
-
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)
 
@@ -394,7 +383,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def remove_event(self, event_type):
         if event_type in self.events:
             self.events.remove(event_type)
-
 
     def has_event_function(self, event_type):
         if getattr(self, 'on_' + event_type, None):
@@ -419,7 +407,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.scoped_slots[slot] = c
 
     def to_html(self, indent=0, indent_step=0, format=True):
-        block_indent = ' '*indent
+        block_indent = ' ' * indent
         if format:
             ws = '\n'
         else:
@@ -438,26 +426,26 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def react(self, data):
         return
 
-    def convert_object_to_dict(self):    # Objects may need redefine this
-        d = { }
+    def convert_object_to_dict(self):  # Objects may need redefine this
+        d = {}
         # HTMLBaseComponent.attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
         #                   'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html']
         for attr in HTMLBaseComponent.attribute_list:
             d[attr] = getattr(self, attr)
         d['directives'] = {}
         for i in self.directives:
-            if i[0:2]=='v-':    #It is a directive
+            if i[0:2] == 'v-':  # It is a directive
                 try:
-                    d['directives'][i[2:]] = getattr(self, i.replace('-','_'))
+                    d['directives'][i[2:]] = getattr(self, i.replace('-', '_'))
                 except:
                     pass
-        for i in self.prop_list+self.attributes:
+        for i in self.prop_list + self.attributes:
             try:
                 d['attrs'][i] = getattr(self, i)
             except:
                 pass
             if '-' in i:
-                s = i.replace('-','_')   # kebab case to snake case
+                s = i.replace('-', '_')  # kebab case to snake case
                 try:
                     d['attrs'][i] = getattr(self, s)
                 except:
@@ -473,9 +461,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         return d
 
 
-
 class Div(HTMLBaseComponent):
-
     # A general purpose container
     # This is a component that other components can be added to
     html_tag = 'div'
@@ -532,9 +518,8 @@ class Div(HTMLBaseComponent):
     def last(self):
         return self.components[-1]
 
-
     def to_html(self, indent=0, indent_step=0, format=True):
-        block_indent = ' '*indent
+        block_indent = ' ' * indent
         if format:
             ws = '\n'
         else:
@@ -562,7 +547,6 @@ class Div(HTMLBaseComponent):
         s = f'{s}{block_indent}</{self.html_tag}>{ws}'
         return s
 
-
     def model_update(self):
         # [wp, 'text-data'] for example
         self.text = str(self.model[0].data[self.model[1]])
@@ -576,7 +560,7 @@ class Div(HTMLBaseComponent):
             object_list.append(d)
         return object_list
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
         if hasattr(self, 'model'):
             self.model_update()
@@ -588,6 +572,7 @@ class Div(HTMLBaseComponent):
             if (len(self.text) > 0) and (self.text[0] == '&'):
                 d['inner_html'] = self.text
         return d
+
 
 class Input(Div):
     # https://www.cssportal.com/style-input-range/   style an input range
@@ -611,6 +596,7 @@ class Input(Div):
         self.form = None
         # self.model = None   #[wp, 'search-text] or [d, 'search-text']
         super().__init__(**kwargs)
+
         # self.attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
         #                'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
         #                'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
@@ -618,8 +604,8 @@ class Input(Div):
 
         def default_input(self, msg):
             return self.before_event_handler(msg)
-        self.on('before', default_input)
 
+        self.on('before', default_input)
 
     def __repr__(self):
         num_components = len(self.components)
@@ -627,7 +613,7 @@ class Input(Div):
 
     def before_event_handler(self, msg):
         # TODO: Handle select. Works currently but may need to play with option tag children
-        print('before ',self.type, msg.event_type, msg.input_type, msg)
+        print('before ', self.type, msg.event_type, msg.input_type, msg)
         if msg.event_type not in ['input', 'change', 'select']:
             return
         if msg.input_type == 'checkbox':
@@ -652,8 +638,6 @@ class Input(Div):
             self.value = msg.value
         print('done before')
 
-
-
     @staticmethod
     def radio_button_set(radio_button, container):
         # Set all radio buttons in container with same name as radio_button to unchecked
@@ -677,33 +661,32 @@ class Input(Div):
                         c.checked = False
             Input.radio_button_set_model_update(radio_button, c, model_value)
 
-
     def model_update(self):
         update_value = self.model[0].data[self.model[1]]
-        if self.type=='checkbox':
+        if self.type == 'checkbox':
             self.checked = update_value
-        elif self.type=='radio':
+        elif self.type == 'radio':
             model_value = update_value
             if self.form:
                 Input.radio_button_set_model_update(self, self.form, model_value)
             else:
                 Input.radio_button_set_model_update(self, self.model[0], model_value)
         # elif self.type=='textarea':
-                # self.text = update_value #(self.model[0].data[self.model[1]])     # Required for inital load
-                # self.value = update_value #(self.model[0].data[self.model[1]])
+        # self.text = update_value #(self.model[0].data[self.model[1]])     # Required for inital load
+        # self.value = update_value #(self.model[0].data[self.model[1]])
         else:
             self.value = update_value
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
-        d['input_type'] = self.type     # Needed for vue component updated life hook and event handler
+        d['input_type'] = self.type  # Needed for vue component updated life hook and event handler
         if self.type in ['text', 'textarea']:
             d['value'] = str(self.value)
         else:
             d['value'] = self.value
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
-        if self.type in ['radio', 'checkbox', 'select']:    # Ignore input event from radios, checkboxes and selects
+        if self.type in ['radio', 'checkbox', 'select']:  # Ignore input event from radios, checkboxes and selects
             if 'change' not in self.events:
                 self.events.append('change')
         else:
@@ -723,20 +706,20 @@ class Input(Div):
 
 
 class Form(Div):
-
     html_tag = 'form'
     attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.allowed_events += ['submit']
+
         def default_submit(self, msg):
             print('Form submitted ', msg)
+
         self.on('submit', default_submit)
 
 
 class Label(Div):
-
     html_tag = 'label'
     attributes = ['for', 'form']  # In Justpy these accept components, not ids of component like in HTML
 
@@ -768,7 +751,6 @@ class TextArea(Input):
                   'placeholder', 'readonly', 'required', 'rows', 'wrap', 'value']
 
     def __init__(self, **kwargs):
-
         self.rows = '4'
         self.cols = '50'
         super().__init__(**kwargs)
@@ -777,7 +759,7 @@ class TextArea(Input):
 
 
 class Select(Input):
-# Need to set value of select on creation, otherwise blank line will show on page update
+    # Need to set value of select on creation, otherwise blank line will show on page update
     html_tag = 'select'
     attributes = ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size']
 
@@ -788,9 +770,7 @@ class Select(Input):
         # need to look at options and set selected appropriately
 
 
-
 class A(Div):
-
     html_tag = 'a'
     attributes = ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type']
 
@@ -799,18 +779,17 @@ class A(Div):
         self.url = None  # The url to go to
         self.bookmark = None  # The component on page to jump to or scroll to
         self.title = ''
-        self.download = None # If attribute is set, file is downloaded, only works html 5  https://www.w3schools.com/tags/att_a_download.asp
+        self.download = None  # If attribute is set, file is downloaded, only works html 5  https://www.w3schools.com/tags/att_a_download.asp
         self.target = 'self'  # _blank, _self, _parent, _top, framename
         # Whether to scroll to link  One of "auto", "instant", or "smooth". Defaults to "auto". https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
         self.scroll = False
         self.scroll_option = 'smooth'  # One of "auto" or "smooth".
-        self.block_option = 'start'   # One of "start", "center", "end", or "nearest". Defaults to "start".
-        self.inline_option = 'nearest' # One of "start", "center", "end", or "nearest". Defaults to "nearest".
+        self.block_option = 'start'  # One of "start", "center", "end", or "nearest". Defaults to "start".
+        self.inline_option = 'nearest'  # One of "start", "center", "end", or "nearest". Defaults to "nearest".
         super().__init__(**kwargs)
         self.events.append('click')
 
-
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
 
         d['scroll'] = self.scroll
@@ -820,7 +799,8 @@ class A(Div):
 
         if self.url:
             if self.bookmark:
-                self.href = self.url + '#' + str(self.bookmark.id)   # Each component id is set to it class id which is anumber given in order of creation
+                self.href = self.url + '#' + str(
+                    self.bookmark.id)  # Each component id is set to it class id which is anumber given in order of creation
             else:
                 self.href = self.url
         elif self.bookmark:
@@ -829,7 +809,8 @@ class A(Div):
             self.href = '#'
 
         if self.bookmark:
-            self.scroll_to = str(self.bookmark.id)        # id of element to scroll to, required by the scroll to function in EventHandler
+            self.scroll_to = str(
+                self.bookmark.id)  # id of element to scroll to, required by the scroll to function in EventHandler
 
         if d['scroll']:
             d['scroll_to'] = self.scroll_to
@@ -841,14 +822,14 @@ class A(Div):
 
         return d
 
+
 Link = A
+
 
 class Icon(Div):
 
-
     def __init__(self, **kwargs):
-
-        self.icon = 'dog'     # Default icon
+        self.icon = 'dog'  # Default icon
         super().__init__(**kwargs)
 
     def convert_object_to_dict(self):
@@ -857,26 +838,24 @@ class Icon(Div):
         return d
 
 
-
 class EditorJP(TextArea):
     # https://www.cssportal.com/style-input-range/   style an input range
-#TODO: EditorJP, use as an example of wrapping javascript component (need to take care of javascript)
+    # TODO: EditorJP, use as an example of wrapping javascript component (need to take care of javascript)
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.input_type = 'textarea'
         self.vue_type = 'editorjp'
         self.html_tag = 'textarea'
+
         def default_change(self, msg):
             print('in change')
             print(msg)
             # self.value = msg['value']
         # self.on('change', default_change)
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
         return d
-
 
 
 class Grid(HTMLBaseComponent):
@@ -888,11 +867,11 @@ class Grid(HTMLBaseComponent):
         self.column_gap = 0
         self.row_gap = 0
         # Alignemnt of items inside grid
-        self.justify_items = 'stretch' # one of start, end, center, stretch    stretch is default  alignment on x axis
-        self.align_items = 'stretch' # one of start, end, center, stretch    stretch is default alignment on y axis
+        self.justify_items = 'stretch'  # one of start, end, center, stretch    stretch is default  alignment on x axis
+        self.align_items = 'stretch'  # one of start, end, center, stretch    stretch is default alignment on y axis
         # Alignment if the whole grid inside its container
-        self.justify_content = 'stetch' # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on x axis
-        self.align_content = 'stretch' # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on y axis
+        self.justify_content = 'stetch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on x axis
+        self.align_content = 'stretch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on y axis
 
         super().__init__(**kwargs)
         self.html_tag = 'div'
@@ -905,14 +884,13 @@ class Grid(HTMLBaseComponent):
                     justify-items: {self.justify_items}; align-items: {self.align_items}; 
                     justify-content: {self.justify_content}; align-content: {self.align_content}; height: 800px;
                     """
-        self.style.replace('\n','')
-        self.style.replace('\t','')
+        self.style.replace('\n', '')
+        self.style.replace('\t', '')
         # print(self.components)
 
-
     def add_cell(self, c, row=0, col=0, num_rows=0, num_cols=0):
-        c.style = f"""{c.style}; grid-column-start: {col+1}; grid-column-end: {col+1+num_cols};
-                        grid-row-start: {row+1}; grid-row-end: {row+1+num_rows};
+        c.style = f"""{c.style}; grid-column-start: {col + 1}; grid-column-end: {col + 1 + num_cols};
+                        grid-row-start: {row + 1}; grid-row-end: {row + 1 + num_rows};
                     """
         # d = Div(style=cell_style)
         # d.add_component(c)
@@ -937,7 +915,7 @@ class Grid(HTMLBaseComponent):
                 object_list.append(d)
         return object_list
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
         d['object_props'] = self.build_list()
         return d
@@ -973,7 +951,7 @@ class TabGroup(Div):
     wrapper_classes = ' '
     wrapper_style = 'display: flex; position: absolute; width: 100%; height: 100%;  align-items: center; justify-content: center; background-color: #fff;'
 
-    def __init__(self,  **kwargs):
+    def __init__(self, **kwargs):
 
         self.tabs = {}  # Dict with format 'value': {'tab': Div component, 'order': number} for each entry
         self.value = ''
@@ -993,21 +971,23 @@ class TabGroup(Div):
                 pass
         self.__dict__[key] = value
 
-
     def model_update(self):
         self.value = self.model[0].data[self.model[1]]
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         self.components = []
-        self.wrapper_div_classes = self.animation_speed # Component in this will be centered
+        self.wrapper_div_classes = self.animation_speed  # Component in this will be centered
 
         if self.previous_value:
-            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_next, temp=True, style=f'{self.__class__.wrapper_style} z-index: 50;', a=self )
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_next, temp=True,
+                                   style=f'{self.__class__.wrapper_style} z-index: 50;', a=self)
             self.wrapper_div.add(self.tabs[self.value]['tab'])
-            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_prev, temp=True, style=f'{self.__class__.wrapper_style} z-index: 0;', a=self)
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_prev, temp=True,
+                                   style=f'{self.__class__.wrapper_style} z-index: 0;', a=self)
             self.wrapper_div.add(self.tabs[self.previous_value]['tab'])
         else:
-            self.wrapper_div = Div(classes=self.wrapper_div_classes, temp=True, a=self, style=self.__class__.wrapper_style)
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, temp=True, a=self,
+                                   style=self.__class__.wrapper_style)
             self.wrapper_div.add(self.tabs[self.value]['tab'])
 
         self.style = ' position: relative; overflow: hidden; ' + self.style  # overflow: hidden;
@@ -1016,74 +996,75 @@ class TabGroup(Div):
 
 
 # HTML tags for which corresponding classes will be created
-_tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'main', 'nav', 'section',
-                'blockquote', 'dd', 'dl', 'dt', 'figcaption', 'figure', 'hr', 'li', 'ol', 'p', 'pre', 'ul',
-                'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 'rb',
-                'rp', 'rt', 'rtc', 'ruby', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'u', 'var', 'wbr',
-                'area', 'audio', 'img', 'map', 'track', 'video',
-                'embed', 'iframe', 'object', 'param', 'picture', 'source',
-                'del', 'ins', 'title',
-                'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
-                'button', 'fieldset', 'legend', 'meter', 'optgroup', 'option', 'progress',  # datalist not supported
-                'details', 'summary' # dialog not supported
-               ]
-
+_tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'main',
+                    'nav', 'section',
+                    'blockquote', 'dd', 'dl', 'dt', 'figcaption', 'figure', 'hr', 'li', 'ol', 'p', 'pre', 'ul',
+                    'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 'rb',
+                    'rp', 'rt', 'rtc', 'ruby', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'u',
+                    'var', 'wbr',
+                    'area', 'audio', 'img', 'map', 'track', 'video',
+                    'embed', 'iframe', 'object', 'param', 'picture', 'source',
+                    'del', 'ins', 'title',
+                    'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
+                    'button', 'fieldset', 'legend', 'meter', 'optgroup', 'option', 'progress',  # datalist not supported
+                    'details', 'summary'  # dialog not supported
+                    ]
 
 # Only tags that have unique attributes that are supported by HTML 5 are in this dict
 _attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type'],
-             'area': ['alt', 'coords', 'download', 'href', 'hreflang', 'media', 'rel', 'shape', 'target', 'type'],
-             'audio': ['autoplay', 'controls', 'loop', 'muted', 'preload', 'src'], 'base': ['href', 'target'],
-             'bdo': ['dir'], 'blockquote': ['cite'],
-             'button': ['autofocus', 'disabled', 'form', 'formaction', 'formenctype', 'formmethod',
-                        'formnovalidate', 'formtarget', 'name', 'type', 'value'], 'canvas': ['height', 'width'],
-             'col': ['span'], 'colgroup': ['span'], 'data': ['value'], 'del': ['cite', 'datetime'],
-             'details': ['open'], 'dialog': ['open'], 'embed': ['height', 'src', 'type', 'width'],
-             'fieldset': ['disabled', 'form', 'name'],
-             'form': ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate',
-                      'target'], 'html': ['xmlns'],
-             'iframe': ['height', 'name', 'sandbox', 'src', 'srcdoc', 'width'],
-             'img': ['alt', 'crossorigin', 'height', 'ismap', 'longdesc', 'sizes', 'src', 'srcset', 'usemap',
-                     'width'],
-             'input': ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
-                       'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
-                       'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
-                       'required', 'size', 'src', 'step', 'type', 'value', 'width'], 'ins': ['cite', 'datetime'],
-             'label': ['for', 'form'], 'li': ['value'],
-             'link': ['crossorigin', 'href', 'hreflang', 'media', 'rel', 'sizes', 'type'], 'map': ['name'],
-             'meta': ['charset', 'content', 'http-equiv', 'name'],
-             'meter': ['form', 'high', 'low', 'max', 'min', 'optimum', 'value'],
-             'object': ['data', 'form', 'height', 'name', 'type', 'usemap', 'width'],
-             'ol': ['reversed', 'start', 'type'], 'optgroup': ['disabled', 'label'],
-             'option': ['disabled', 'label', 'selected', 'value'], 'output': ['for', 'form', 'name'],
-             'param': ['name', 'value'], 'progress': ['max', 'value'], 'q': ['cite'],
-             'script': ['async', 'charset', 'defer', 'src', 'type'],
-             'select': ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size'],
-             'source': ['src', 'srcset', 'media', 'sizes', 'type'], 'style': ['media', 'type'],
-             'td': ['colspan', 'headers', 'rowspan'],
-             'textarea': ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name', 'placeholder',
-                          'readonly', 'required', 'rows', 'wrap'],
-             'th': ['abbr', 'colspan', 'headers', 'rowspan', 'scope', 'sorted'], 'time': ['datetime'],
-             'track': ['default', 'kind', 'label', 'src', 'srclang'],
-             'video': ['autoplay', 'controls', 'height', 'loop', 'muted', 'poster', 'preload', 'src', 'width']}
-
+              'area': ['alt', 'coords', 'download', 'href', 'hreflang', 'media', 'rel', 'shape', 'target', 'type'],
+              'audio': ['autoplay', 'controls', 'loop', 'muted', 'preload', 'src'], 'base': ['href', 'target'],
+              'bdo': ['dir'], 'blockquote': ['cite'],
+              'button': ['autofocus', 'disabled', 'form', 'formaction', 'formenctype', 'formmethod',
+                         'formnovalidate', 'formtarget', 'name', 'type', 'value'], 'canvas': ['height', 'width'],
+              'col': ['span'], 'colgroup': ['span'], 'data': ['value'], 'del': ['cite', 'datetime'],
+              'details': ['open'], 'dialog': ['open'], 'embed': ['height', 'src', 'type', 'width'],
+              'fieldset': ['disabled', 'form', 'name'],
+              'form': ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate',
+                       'target'], 'html': ['xmlns'],
+              'iframe': ['height', 'name', 'sandbox', 'src', 'srcdoc', 'width'],
+              'img': ['alt', 'crossorigin', 'height', 'ismap', 'longdesc', 'sizes', 'src', 'srcset', 'usemap',
+                      'width'],
+              'input': ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
+                        'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
+                        'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
+                        'required', 'size', 'src', 'step', 'type', 'value', 'width'], 'ins': ['cite', 'datetime'],
+              'label': ['for', 'form'], 'li': ['value'],
+              'link': ['crossorigin', 'href', 'hreflang', 'media', 'rel', 'sizes', 'type'], 'map': ['name'],
+              'meta': ['charset', 'content', 'http-equiv', 'name'],
+              'meter': ['form', 'high', 'low', 'max', 'min', 'optimum', 'value'],
+              'object': ['data', 'form', 'height', 'name', 'type', 'usemap', 'width'],
+              'ol': ['reversed', 'start', 'type'], 'optgroup': ['disabled', 'label'],
+              'option': ['disabled', 'label', 'selected', 'value'], 'output': ['for', 'form', 'name'],
+              'param': ['name', 'value'], 'progress': ['max', 'value'], 'q': ['cite'],
+              'script': ['async', 'charset', 'defer', 'src', 'type'],
+              'select': ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size'],
+              'source': ['src', 'srcset', 'media', 'sizes', 'type'], 'style': ['media', 'type'],
+              'td': ['colspan', 'headers', 'rowspan'],
+              'textarea': ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name', 'placeholder',
+                           'readonly', 'required', 'rows', 'wrap'],
+              'th': ['abbr', 'colspan', 'headers', 'rowspan', 'scope', 'sorted'], 'time': ['datetime'],
+              'track': ['default', 'kind', 'label', 'src', 'srclang'],
+              'video': ['autoplay', 'controls', 'height', 'loop', 'muted', 'poster', 'preload', 'src', 'width']}
 
 # Name definition for static syntax analysers
 # Classes are defined dynamically below, this is just to assist code editors
 
-Address=Article=Aside=Footer=Header=H1=H2=H3=H4=H5=H6=Main=Nav=Section=Blockquote=Dd=Dl=Dt=Figcaption=Figure=Hr=Li=Ol=P=Pre=Ul=Abbr=B=Bdi=Bdo=Br=Cite=Code=Data=Dfn=Em=I=Kbd=Mark=Q=Rb=Rp=Rt=Rtc=Ruby=S=Samp=Small=Span=Strong=Sub=Sup=Time=Tt=U=Var=Wbr=Area=Audio=Img=Map=Track=Video=Embed=Iframe=Object=Param=Picture=Source=Del=Ins=Caption=Col=Colgroup=Table=Tbody=Td=Tfoot=Th=Thead=Tr=Button=Fieldset=Legend=Meter=Optgroup=Option=Progress=Details=Summary=None
+Address = Article = Aside = Footer = Header = H1 = H2 = H3 = H4 = H5 = H6 = Main = Nav = Section = Blockquote = Dd = Dl = Dt = Figcaption = Figure = Hr = Li = Ol = P = Pre = Ul = Abbr = B = Bdi = Bdo = Br = Cite = Code = Data = Dfn = Em = I = Kbd = Mark = Q = Rb = Rp = Rt = Rtc = Ruby = S = Samp = Small = Span = Strong = Sub = Sup = Time = Tt = U = Var = Wbr = Area = Audio = Img = Map = Track = Video = Embed = Iframe = Object = Param = Picture = Source = Del = Ins = Caption = Col = Colgroup = Table = Tbody = Td = Tfoot = Th = Thead = Tr = Button = Fieldset = Legend = Meter = Optgroup = Option = Progress = Details = Summary = None
 
 # Tag classes defined dynamically at runtime
 for tag in _tag_create_list:
-    globals()[tag.capitalize()] = type(tag.capitalize(), (Div,), {'html_tag': tag, 'attributes': _attr_dict.get(tag, [])})
+    globals()[tag.capitalize()] = type(tag.capitalize(), (Div,),
+                                       {'html_tag': tag, 'attributes': _attr_dict.get(tag, [])})
 
 
-#**********************************
-#SVG compoenents
+# **********************************
+# SVG compoenents
 class Svg(Div):
-
     attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display',
                   'fill', 'fill-opacity', 'fill-rule', 'filter', 'mask', 'opacity', 'pointer-events', 'shape-rendering',
-                  'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
+                  'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin',
+                  'stroke-miterlimit',
                   'stroke-opacity', 'stroke-width', 'tabindex', 'transform', 'vector-effect', 'visibility',
                   'x', 'y', 'xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio']
     html_tag = 'svg'
@@ -1095,22 +1076,20 @@ class Svg(Div):
 
 class G(Div):
     html_tag = 'g'
-    attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-                 'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-                 'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-                 'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split()
+
+    attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display', 'fill',
+         'fill-opacity', 'fill-rule', 'filter', 'mask', 'opacity', 'pointer-events', 'shape-rendering', 'stroke',
+         'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
+         'stroke-opacity', 'stroke-width', 'tabindex', 'transform', 'vector-effect', 'visibility']
 
     def __init__(self, **kwargs):
         self.d = ''
         super().__init__(**kwargs)
 
 
-
-
 class PolygonJP(Div):
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.html_tag = 'polygon'
         self.specific_attributes = ['points', 'pathLength']
@@ -1119,7 +1098,7 @@ class PolygonJP(Div):
                           'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
                           'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
 
         return d
@@ -1128,16 +1107,15 @@ class PolygonJP(Div):
 class CircleJP(Div):
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.html_tag = 'circle'
-        self.specific_attributes = ['cx', 'cy', 'r' ,'pathLength']
+        self.specific_attributes = ['cx', 'cy', 'r', 'pathLength']
         self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
                           'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
                           'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
                           'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
 
         return d
@@ -1146,7 +1124,6 @@ class CircleJP(Div):
 class StopJP(Div):
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.html_tag = 'stop'
         self.specific_attributes = ['offset', 'stop-color', 'stop-opacity']
@@ -1157,22 +1134,19 @@ class StopJP(Div):
 
 
 class Path(Div):
-
     html_tag = 'path'
     attributes = ['d', 'pathLength']
 
     def __init__(self, **kwargs):
-
         self.d = ''
         super().__init__(**kwargs)
 
 
-#*************************** end SVG components
+# *************************** end SVG components
 
 class Hello(Div):
 
     def __init__(self, **kwargs):
-
         self.counter = 1
         super().__init__(**kwargs)
         self.classes = 'm-1 p-1 text-2xl text-center text-white bg-blue-500 hover:bg-blue-800 cursor-pointer'
@@ -1188,7 +1162,6 @@ class Hello(Div):
 class QHello(Hello):
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.classes = 'text-h3 text-primary q-ma-md'
 
@@ -1208,6 +1181,7 @@ def component_by_tag(tag, **kwargs):
             raise ValueError(f'Tag not defined: {tag}')
     return c
 
+
 def component_by_tag_old(tag, **kwargs):
     c = None
     tag = tag.lower()
@@ -1220,8 +1194,9 @@ def component_by_tag_old(tag, **kwargs):
 
 get_tag = component_by_tag
 
+
 class BasicHTMLParser(HTMLParser):
-    #TODO: Deal with label tag parsing (for and form attributes)
+    # TODO: Deal with label tag parsing (for and form attributes)
 
     # Void elements do not need closing tag
     void_elements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem', 'meta',
@@ -1233,14 +1208,15 @@ class BasicHTMLParser(HTMLParser):
         self.level = -1
         self.start_tag = True
         self.components = []
-        self.commands = ["root = jp.Div(name='root')"]    # List of command strings (justpy command to generate the element)
-        self.name_dict = {}   # After parsing holds a dict with named components
+        self.commands = [
+            "root = jp.Div(name='root')"]  # List of command strings (justpy command to generate the element)
+        self.name_dict = {}  # After parsing holds a dict with named components
         self.root = Div(name='root', **kwargs)
         self.root_name = f'c{self.root.id}'
         self.containers = []
         self.containers.append(self.root)
         self.endtag_required = True
-        self.command_prefix = kwargs.get('command_prefix', 'jp.')   # Prefix for commands generated, defaults to 'jp.'
+        self.command_prefix = kwargs.get('command_prefix', 'jp.')  # Prefix for commands generated, defaults to 'jp.'
 
     def parse_starttag(self, i):
         # This is the original library method with two changes to stop tags and attributes being lower case
@@ -1303,7 +1279,6 @@ class BasicHTMLParser(HTMLParser):
         else:
             self.endtag_required = True
 
-
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
         # print(self.__starttag_text)
@@ -1319,7 +1294,7 @@ class BasicHTMLParser(HTMLParser):
                 # attr = list(attr)
                 attr[0] = attr[0][1:]
                 attr[1] = eval(attr[1])
-            if attr[0]=='id':
+            if attr[0] == 'id':
                 continue
             if attr[1] is None:
                 setattr(c, attr[0], True)
@@ -1327,16 +1302,16 @@ class BasicHTMLParser(HTMLParser):
             else:
                 setattr(c, attr[0], attr[1])
             # Add to name to dict of named components. Each entry is a list of components to support multiple components with same name
-            if attr[0]=='name':
+            if attr[0] == 'name':
                 if attr[1] not in self.name_dict:
                     # self.name_dict[attr[1]]= [c]
-                    self.name_dict[attr[1]]= c
+                    self.name_dict[attr[1]] = c
                 else:
                     # self.name_dict[attr[1]].append(c)
                     if not isinstance(self.name_dict[attr[1]], (list,)):
                         self.name_dict[attr[1]] = [self.name_dict[attr[1]]]
                     self.name_dict[attr[1]].append(c)
-            if attr[0]=='class':
+            if attr[0] == 'class':
                 c.classes = attr[1]
                 attr[0] = 'classes'
             if isinstance(attr[1], str):
@@ -1349,12 +1324,9 @@ class BasicHTMLParser(HTMLParser):
         else:
             command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].id})'
 
-
         self.commands.append(command_string)
         self.containers[-1].add_component(c)
         self.containers.append(c)
-
-
 
         if tag in BasicHTMLParser.void_elements:
             self.handle_endtag(tag)
@@ -1393,6 +1365,7 @@ class BasicHTMLParser(HTMLParser):
     def handle_decl(self, data):
         print("Decl     :", data)
 
+
 def justPY_parser(html_string, **kwargs):
     '''
     Returns root component of the parser with the name_dict as attribute.
@@ -1404,7 +1377,7 @@ def justPY_parser(html_string, **kwargs):
     parser = BasicHTMLParser(**kwargs)
     parser.feed(html_string)
     parser.root.name_dict = parser.name_dict
-    if len(parser.root.components)==1:
+    if len(parser.root.components) == 1:
         # If the root div has only one component, then return it instead of the root div
         # TODO: Also need to copy kwargs. Do not assign in command line is good workaround. Issue mainly with show.
         parser.root.components[0].name_dict = parser.name_dict
@@ -1424,10 +1397,12 @@ def parse_html_file(html_file, **kwargs):
     with open(html_file, encoding="utf-8") as f:
         return justPY_parser(f.read(), **kwargs)
 
+
 async def parse_html_file_async(html_file, **kwargs):
     async with aiofiles.open(html_file, encoding="utf-8") as f:
         s = await f.read()
     return justPY_parser(s, **kwargs)
+
 
 async def get(url, format='json'):
     """Wrapper for requests get function to simplify running a sync function in non blocking manner
@@ -1446,14 +1421,11 @@ async def get(url, format='json'):
     else:
         return result.text
 
+
 def get_websocket(event_data):
     return WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
-
 
 
 def set_temp_flag(flag):
     """Sets whether components are temporary ones by default"""
     JustpyBaseComponent.temp_flag = flag
-
-
-

@@ -125,7 +125,7 @@ def create_class_file():
        tag_list = html_tags['table_content']
        for tag in tag_list:
            try:
-               tag_attributes = attr_dict[tag]
+               tag_attributes = _attr_dict[tag]
                print(tag, tag_attributes)
            except:
                tag_attributes = []
