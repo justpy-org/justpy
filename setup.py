@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="justpy-test",
     python_requires=">=3.6",
-    version="5.0.1",
+    version="5.0.2",
     license="Apache",
     author="Eliezer Mintz",
     author_email="eli.mintz@gmail.com",
