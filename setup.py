@@ -2,7 +2,7 @@
 # python3 setup.py sdist bdist_wheel
 # python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
-# python3 -m pip install -i https://test.pypi.org/simple/ justpy-test==5.0.0
+# python3 -m pip install -i https://test.pypi.org/simple/ justpy-test==5.0.2
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="justpy-test",
     python_requires=">=3.6",
-    version="5.0.2",
+    version="5.0.3",
     license="Apache",
     author="Eliezer Mintz",
     author_email="eli.mintz@gmail.com",

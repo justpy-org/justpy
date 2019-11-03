@@ -246,7 +246,7 @@ class JustpyBaseComponent(Tailwind):
             try:
                 websocket_dict = WebPage.sockets[page.page_id]
             except:
-                print('No websocket dict')
+                # print('No websocket dict')
                 continue
                 # return self
             for websocket in list(websocket_dict.values()):

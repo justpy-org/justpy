@@ -1,6 +1,7 @@
 import justpy as jp
 
 users = {}
+
 login_form_html = """
 <div class="w-full max-w-xs">
   <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -26,16 +27,6 @@ login_form_html = """
   <p class="text-center text-gray-500 text-xs">
     Example from https://tailwindcss.com/components/forms
   </p>
-</div>
-"""
-
-alert1_html = """
-<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative m-1 p-1 w-1/2" role="alert">
-  <strong class="font-bold mr-1">Incorrect password entered!</strong>
-  <span class="block sm:inline">Please enter correct password</span>
-  <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-    <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-  </span>
 </div>
 """
 
@@ -94,16 +85,15 @@ def login_page(request):
             session_div.text = request.session_id + ' logged in succesfuly'
             return login_successful(wp, request.session_id)
         else:
-            session_div.text = request.session_id + ' logged in not successful'
+            session_div.text = request.session_id + ' login not successful'
     sign_in_btn.on('click', sign_in_click)
     return wp
 
 def login_successful(wp, s_id):
-    print('in login sucess')
     wp.delete_components()
     users[s_id]['logged_in'] = True
     wp.display_url = 'login_succesful'
-    jp.Div(text='Login successfull. You are now logged in', classes='m-1 p-1 text-2xl', a=wp)
+    jp.Div(text='Login successful. You are now logged in', classes='m-1 p-1 text-2xl', a=wp)
 
 
 jp.justpy(login_test)

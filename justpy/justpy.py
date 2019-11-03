@@ -87,10 +87,6 @@ cookie_signer = Signer(str(SECRET_KEY))
 
 @app.on_event('startup')
 async def justpy_startup():
-    """
-    Starlette calls this routing initially. Will add initial function to run here
-    :return:
-    """
     WebPage.loop = asyncio.get_event_loop()
     JustPy.loop = WebPage.loop
     if startup_func:
@@ -98,7 +94,7 @@ async def justpy_startup():
             await startup_func()
         else:
             startup_func()
-    print(f'JustPy ready to go on http://127.0.0.1:{PORT}')
+    print(f'JustPy ready to go on http://127.0.0.1:{PORT} or http://localhost:{PORT}')
 
 # TODO: https://blog.garstasio.com/you-dont-need-jquery/ajax/ beforeunload event
 
