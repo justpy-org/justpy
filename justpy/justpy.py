@@ -1,4 +1,3 @@
-import traceback
 from starlette.applications import Starlette
 from starlette.responses import Response
 from starlette.responses import JSONResponse
@@ -34,7 +33,8 @@ DEBUG = config('DEBUG', cast=bool, default=True)
 SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
 SECRET_KEY = config('SECRET_KEY', default='$$$my_secret_string$$$')    # Make sure to change when deployed
-LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.INFO)
+LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.WARNING)
+JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default='WARNING').lower()
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='0.0.0.0')
@@ -58,7 +58,6 @@ AGGRID = config('AGGRID', cast=bool, default=True)
 
 template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID,
                     'static_name': STATIC_NAME}
-print(template_options)
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
 templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
@@ -72,7 +71,6 @@ app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAM
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 if SSL_KEYFILE and SSL_CERTFILE:
     app.add_middleware(HTTPSRedirectMiddleware)
-
 
 
 def initial_func(request):
@@ -118,7 +116,7 @@ class Homepage(HTTPEndpoint):
                 request.state.session_id = str(uuid.uuid4().hex)
                 request.session_id = request.state.session_id
                 new_cookie = True
-                logging.info(f'New session_id created: {request.session_id}')
+                logging.debug(f'New session_id created: {request.session_id}')
         for route in Route.instances:
             func = route.matches(request['path'], request)
             if func:
@@ -144,7 +142,6 @@ class Homepage(HTTPEndpoint):
             page_dict = load_page.cache
         else:
             page_dict = load_page.build_list()
-        print(page_options)
         context = {'request': request, 'page_id': load_page.page_id, 'justpy_dict': json.dumps(page_dict),
                    'use_websockets': json.dumps(WebPage.use_websockets), 'options': template_options, 'page_options': page_options,
                    'html': load_page.html}
@@ -180,9 +177,9 @@ class Homepage(HTTPEndpoint):
                 return JSONResponse(False)
 
     async def on_disconnect(self, page_id):
-        print('in disconnect')
+        logging.debug(f'In disconnect Homepage')
         await WebPage.instances[page_id].on_disconnect()  # Run the specific page disconnect function
-        print(WebPage.instances)
+        logging.debug(WebPage.instances)
         return JSONResponse(False)
 
 @app.websocket_route("/")
@@ -194,7 +191,7 @@ class JustpyEvents(WebSocketEndpoint):
         await websocket.accept()
         websocket.id = JustpyEvents.socket_id
         websocket.open = True
-        logging.info(f'Websocket {str(JustpyEvents.socket_id)} connected')
+        logging.debug(f'Websocket {str(JustpyEvents.socket_id)} connected')
         JustpyEvents.socket_id += 1
         #Send back socket_id for the tooltip event
         await websocket.send_json({'type': 'websocket_update', 'data': websocket.id})
@@ -207,7 +204,7 @@ class JustpyEvents(WebSocketEndpoint):
         :return:
         """
 
-        logging.info('%s %s',f'Socket {str(websocket.id)} data received:', data)
+        logging.debug('%s %s',f'Socket {str(websocket.id)} data received:', data)
         data_dict = json.loads(data)
         msg_type = data_dict['type']
         if msg_type == 'connect':
@@ -236,7 +233,7 @@ class JustpyEvents(WebSocketEndpoint):
 
 
     async def _connect(self, websocket, data_dict):
-        # Webpage.sockets is a dictionary of dictionaries
+        # WebPage.sockets is a dictionary of dictionaries
         # First dictionary key is page id
         # Second dictionary key is socket id
         page_key = data_dict['page_id']
@@ -258,7 +255,7 @@ class JustpyEvents(WebSocketEndpoint):
 async def handle_event(data_dict, com_type=0):
     # com_type 0: websocket, con_type 1: ajax
     connection_type = {0: 'websocket', 1: 'ajax'}
-    logging.info('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
+    logging.debug('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
     event_data = data_dict['event_data']
     try:
         p = WebPage.instances[event_data['page_id']]
@@ -273,7 +270,6 @@ async def handle_event(data_dict, com_type=0):
         build_list = p.build_list()
         return {'type': 'page_update', 'data': build_list}
     c = JustpyBaseComponent.instances[event_data['id']]
-    # before_result = await run_event_function(c, 'before', event_data, True)
     try:
         before_result = await run_event_function(c, 'before', event_data, True)
     except:
@@ -282,13 +278,11 @@ async def handle_event(data_dict, com_type=0):
     # event_result = await run_event_function(c, event_data['event_type'], event_data, True)
     try:
         event_result = await run_event_function(c, event_data['event_type'], event_data, True)
-        logging.info('%s %s', 'Event result:', event_result)
+        logging.debug('%s %s', 'Event result:', event_result)
     except Exception as e:
         # raise Exception(e)
-        print('Attempting to run event handler:', e)
-        # logging.error(traceback.format_exc())
         event_result = None
-        logging.info('%s %s', 'Event result:', 'No event function or error in function')
+        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
 
     # If page is not to be updated, the event_function should return anything but None
 

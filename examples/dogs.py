@@ -62,7 +62,7 @@ def dog_test(request):
         </q-page-container>
     </q-layout>
 </div>
-    """, a=wp)
+    """, a=wp, name='yossi')
     main_image = bp.name_dict['image']
     l = Link(url='https://v1.quasar-framework.org/', text='Quasar', target='blank', classes="text-white")
     bp.name_dict['footer'].add(l)

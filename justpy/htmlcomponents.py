@@ -11,6 +11,7 @@ import asyncio  # https://www.aeracode.org/2018/02/19/python-async-simplified/
 import aiofiles
 import requests
 from .tailwind import Tailwind
+import logging
 
 # TODO: Handle scroll event https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
 # Metaclasses: https://stackoverflow.com/questions/41215107/programmatically-defining-a-class-type-vs-types-new-class
@@ -37,6 +38,7 @@ def parse_dict(cls):
 
 class JustPy:
     loop = None
+    LOGGING_LEVEL = logging.DEBUG
 
 
 class WebPage:
@@ -48,6 +50,7 @@ class WebPage:
     next_page_id = 0
     use_websockets = True
     delete_flag = True
+
 
     def __init__(self, **kwargs):
         # self.dirty = False  # Indicates if page has changed
@@ -89,8 +92,9 @@ class WebPage:
     def __len__(self):
         return len(self.components)
 
-    def __del__(self):
-        print(f'Deleted {self}')
+    if JustPy.LOGGING_LEVEL==logging.DEBUG:
+        def __del__(self):
+            print(f'Deleted {self}')
 
     def add_component(self, component):
         self.components.append(component)
@@ -188,7 +192,6 @@ class WebPage:
 
 class JustpyBaseComponent(Tailwind):
     next_id = 0
-    # Should instnaces be made a weakref.WeakValueDictionary? Would that help garbage collection?
     instances = {}
     # Set this to true if you want all components to be temporary by default
     temp_flag = False
@@ -209,8 +212,10 @@ class JustpyBaseComponent(Tailwind):
         self.events = []
         self.allowed_events = []
 
-    def __del__(self):
-        print(f'Deleted {self}')
+
+    if JustPy.LOGGING_LEVEL == logging.DEBUG:
+        def __del__(self):
+            print(f'Deleted {self}')
 
     def delete(self):
         if self.delete_flag:
@@ -290,11 +295,15 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
+
     attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
                       'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
-    not_initialized_attribute_list = ['accesskey', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden',
-                                      'lang', 'spellcheck', 'tabindex', 'title']
+    not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize', 'spellcheck',
+                                  'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
+    # Additions to global attributes to add to attrs dict apart from id.
+    used_global_attributes = ['contenteditable', 'dir', 'tabindex', 'title', 'accesskey', 'draggable', 'lang', 'hidden']
+
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 
     # window.addEventListener("afterprint", function(event){...});
@@ -334,6 +343,10 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.attributes = type(self).attributes
         self.prop_list = []  # For components from libraries like quasar. Contains both props and directives
 
+        self.initialize(**kwargs)
+
+
+    def initialize(self, **kwargs):
         for k, v in kwargs.items():
             self.__setattr__(k, v)
 
@@ -354,6 +367,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         for com in ['a', 'add_to']:
             if com in kwargs.keys():
                 kwargs[com].add_component(self)
+
 
     def __len__(self):
         if hasattr(self, 'components'):
@@ -422,7 +436,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
             s = f'{s}/>{ws}'
         return s
 
-    # OBjects that inherit this will overwrite
+    # Objects that inherit this will overwrite
     def react(self, data):
         return
 
@@ -439,11 +453,16 @@ class HTMLBaseComponent(JustpyBaseComponent):
                     d['directives'][i[2:]] = getattr(self, i.replace('-', '_'))
                 except:
                     pass
-        for i in self.prop_list + self.attributes:
+        for i in self.prop_list + self.attributes + HTMLBaseComponent.used_global_attributes:
             try:
                 d['attrs'][i] = getattr(self, i)
             except:
                 pass
+            if i in ['in', 'from']:   #list of attributes that are also python reserved words
+                try:
+                    d['attrs'][i] = getattr(self, '_' + i)
+                except:
+                    pass
             if '-' in i:
                 s = i.replace('-', '_')  # kebab case to snake case
                 try:
@@ -465,6 +484,7 @@ class Div(HTMLBaseComponent):
     # A general purpose container
     # This is a component that other components can be added to
     html_tag = 'div'
+
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -613,7 +633,9 @@ class Input(Div):
 
     def before_event_handler(self, msg):
         # TODO: Handle select. Works currently but may need to play with option tag children
-        print('before ', self.type, msg.event_type, msg.input_type, msg)
+        # print('before ', self.type, msg.event_type, msg.input_type, msg)
+        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        # print('before ', self.type, msg.event_type, msg.input_type, msg)
         if msg.event_type not in ['input', 'change', 'select']:
             return
         if msg.input_type == 'checkbox':
@@ -636,7 +658,6 @@ class Input(Div):
             if hasattr(self, 'model'):
                 self.model[0].data[self.model[1]] = msg.value
             self.value = msg.value
-        print('done before')
 
     @staticmethod
     def radio_button_set(radio_button, container):
@@ -766,7 +787,6 @@ class Select(Input):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.type = 'select'
-        # self.events = ['change']
         # need to look at options and set selected appropriately
 
 
@@ -777,10 +797,12 @@ class A(Div):
     def __init__(self, **kwargs):
 
         self.url = None  # The url to go to
+        self.href = '#'
         self.bookmark = None  # The component on page to jump to or scroll to
         self.title = ''
+        self.rel = "noopener noreferrer"
         self.download = None  # If attribute is set, file is downloaded, only works html 5  https://www.w3schools.com/tags/att_a_download.asp
-        self.target = 'self'  # _blank, _self, _parent, _top, framename
+        self.target = '_self'  # _blank, _self, _parent, _top, framename
         # Whether to scroll to link  One of "auto", "instant", or "smooth". Defaults to "auto". https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
         self.scroll = False
         self.scroll_option = 'smooth'  # One of "auto" or "smooth".
@@ -806,7 +828,8 @@ class A(Div):
         elif self.bookmark:
             self.href = '#' + str(self.bookmark.id)
         else:
-            self.href = '#'
+            pass
+            # self.href = '#'
 
         if self.bookmark:
             self.scroll_to = str(
@@ -816,14 +839,14 @@ class A(Div):
             d['scroll_to'] = self.scroll_to
 
         d['attrs']['href'] = self.href
-        d['attrs']['target'] = '_' + self.target
+        d['attrs']['target'] = self.target
         if self.download is not None:
             d['attrs']['download'] = self.download
 
         return d
 
 
-Link = A
+Link = A   # The 'Link' name is more descriptive and can be used instead
 
 
 class Icon(Div):
@@ -1051,6 +1074,7 @@ _attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'tar
 # Classes are defined dynamically below, this is just to assist code editors
 
 Address = Article = Aside = Footer = Header = H1 = H2 = H3 = H4 = H5 = H6 = Main = Nav = Section = Blockquote = Dd = Dl = Dt = Figcaption = Figure = Hr = Li = Ol = P = Pre = Ul = Abbr = B = Bdi = Bdo = Br = Cite = Code = Data = Dfn = Em = I = Kbd = Mark = Q = Rb = Rp = Rt = Rtc = Ruby = S = Samp = Small = Span = Strong = Sub = Sup = Time = Tt = U = Var = Wbr = Area = Audio = Img = Map = Track = Video = Embed = Iframe = Object = Param = Picture = Source = Del = Ins = Caption = Col = Colgroup = Table = Tbody = Td = Tfoot = Th = Thead = Tr = Button = Fieldset = Legend = Meter = Optgroup = Option = Progress = Details = Summary = None
+Animate = AnimateMotion = AnimateTransform = Circle = ClipPath = Defs = Desc = Discard = Ellipse = FeBlend = FeColorMatrix = FeComponentTransfer = FeComposite = FeConvolveMatrix = FeDiffuseLighting = FeDisplacementMap = FeDistantLight = FeDropShadow = FeFlood = FeFuncA = FeFuncB = FeFuncG = FeFuncR = FeGaussianBlur = FeImage = FeMerge = FeMergeNode = FeMorphology = FeOffset = FePointLight = FeSpecularLighting = FeSpotLight = FeTile = FeTurbulence = Filter = ForeignObject = G = Image = Line = LinearGradient = Marker = Mask = Metadata = Mpath = Path = Pattern = Polygon = Polyline = RadialGradient = Rect = Set = Stop = Svg = Switch = Symbol = Text = TextPath = Tspan = Use = View = None
 
 # Tag classes defined dynamically at runtime
 for tag in _tag_create_list:
@@ -1059,14 +1083,154 @@ for tag in _tag_create_list:
 
 
 # **********************************
-# SVG compoenents
-class Svg(Div):
+# SVG components
+# https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
+
+# in, in2, mode
+svg_tags = ['a', 'animate', 'animateMotion', 'animateTransform', 'audio', 'canvas', 'circle', 'clipPath', 'defs',
+            'desc', 'discard', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite',
+            'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood',
+            'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode',
+            'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence',
+            'filter', 'foreignObject', 'g', 'iframe', 'image', 'line', 'linearGradient', 'marker', 'mask', 'metadata',
+            'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'script', 'set', 'stop',
+            'style', 'svg', 'switch', 'symbol', 'text', 'textPath', 'title', 'tspan', 'unknown', 'use', 'video', 'view']
+
+svg_tags_use = ['animate', 'animateMotion', 'animateTransform', 'circle', 'clipPath', 'defs',
+            'desc', 'discard', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite',
+            'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood',
+            'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode',
+            'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence',
+            'filter', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'marker', 'mask', 'metadata',
+            'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'set', 'stop',
+            'svg', 'switch', 'symbol', 'text', 'textPath', 'tspan', 'use', 'view']
+
+
+svg_presentation_attributes = ['alignment-baseline', 'baseline-shift', 'clip', 'clip-path', 'clip-rule', 'color',
+                               'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering',
+                               'cursor', 'direction', 'display', 'dominant-baseline', 'enable-background', 'fill',
+                               'fill-opacity', 'fill-rule', 'filter', 'flood-color', 'flood-opacity', 'font-family',
+                               'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant',
+                               'font-weight', 'glyph-orientation-horizontal', 'glyph-orientation-vertical',
+                               'image-rendering', 'kerning', 'letter-spacing', 'lighting-color', 'marker-end',
+                               'marker-mid', 'marker-start', 'mask', 'opacity', 'overflow', 'pointer-events',
+                               'shape-rendering', 'stop-color', 'stop-opacity', 'stroke', 'stroke-dasharray',
+                               'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
+                               'stroke-opacity', 'stroke-width', 'text-anchor', 'transform', 'text-decoration',
+                               'text-rendering', 'unicode-bidi', 'vector-effect', 'visibility', 'word-spacing',
+                               'writing-mode',
+                               'cx', 'cy', 'r', 'rx', 'ry', 'd', 'fill', 'transform']
+
+svg_filter_attributes = ['height', 'result', 'width', 'x', 'y', 'type', 'tableValues', 'slope', 'intercept',
+                         'amplitude', 'exponent', 'offset']
+
+svg_animation_attributes = ['attributeType', 'attributeName', 'begin', 'dur', 'end', 'min', 'max', 'restart',
+                            'repeatCount', 'repeatDur', 'fill', 'calcMode', 'values', 'keyTimes', 'keySplines', 'from',
+                            'to', 'by', 'additive', 'accumulate']
+
+svg_attr_dict = {'a': ['download', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'animate': ['accumulate', 'additive', 'attributeName', 'begin', 'by', 'calcMode', 'dur', 'end', 'fill',
+                             'from', 'href', 'keySplines', 'keyTimes', 'max', 'min', 'repeatCount', 'repeatDur',
+                             'requiredExtensions', 'restart', 'systemLanguage', 'to', 'values'],
+                 'animateMotion': ['accumulate', 'additive', 'begin', 'by', 'calcMode', 'dur', 'end', 'fill', 'from',
+                                   'href', 'keyPoints', 'keySplines', 'keyTimes', 'max', 'min', 'origin', 'path',
+                                   'repeatCount', 'repeatDur', 'requiredExtensions', 'restart', 'rotate',
+                                   'systemLanguage', 'to', 'values'],
+                 'animateTransform': ['accumulate', 'additive', 'attributeName', 'begin', 'by', 'calcMode', 'dur',
+                                      'end', 'fill', 'from', 'href', 'keySplines', 'keyTimes', 'max', 'min',
+                                      'repeatCount', 'repeatDur', 'requiredExtensions', 'restart', 'systemLanguage',
+                                      'to', 'type', 'values'],
+                 'audio': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'canvas': ['preserveAspectRatio', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'circle': ['pathLength', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'clipPath': ['clipPathUnits', 'requiredExtensions', 'systemLanguage'],
+                 'discard': ['begin', 'href', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'ellipse': ['pathLength', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'feBlend': ['height', 'in', 'in2', 'mode', 'result', 'width', 'x', 'y'],
+                 'feColorMatrix': ['height', 'in', 'result', 'type', 'values', 'width', 'x', 'y'],
+                 'feComponentTransfer': ['height', 'in', 'result', 'width', 'x', 'y'],
+                 'feComposite': ['height', 'in', 'in2', 'k1', 'k2', 'k3', 'k4', 'operator', 'result', 'width', 'x',
+                                 'y'],
+                 'feConvolveMatrix': ['bias', 'divisor', 'edgeMode', 'height', 'in', 'kernelMatrix', 'kernelUnitLength',
+                                      'order', 'preserveAlpha', 'result', 'targetX', 'targetY', 'width', 'x', 'y'],
+                 'feDiffuseLighting': ['diffuseConstant', 'height', 'in', 'kernelUnitLength', 'result', 'surfaceScale',
+                                       'width', 'x', 'y'],
+                 'feDisplacementMap': ['height', 'in', 'in2', 'result', 'scale', 'width', 'x', 'xChannelSelector', 'y',
+                                       'yChannelSelector'], 'feDistantLight': ['azimuth', 'elevation'],
+                 'feDropShadow': ['dx', 'dy', 'height', 'in', 'result', 'stdDeviation', 'width', 'x', 'y'],
+                 'feFlood': ['height', 'result', 'width', 'x', 'y'],
+                 'feFuncA': ['amplitude', 'exponent', 'intercept', 'offset', 'slope', 'tableValues', 'type'],
+                 'feFuncB': ['amplitude', 'exponent', 'intercept', 'offset', 'slope', 'tableValues', 'type'],
+                 'feFuncG': ['amplitude', 'exponent', 'intercept', 'offset', 'slope', 'tableValues', 'type'],
+                 'feFuncR': ['amplitude', 'exponent', 'intercept', 'offset', 'slope', 'tableValues', 'type'],
+                 'feGaussianBlur': ['edgeMode', 'height', 'in', 'result', 'stdDeviation', 'width', 'x', 'y'],
+                 'feImage': ['crossorigin', 'height', 'href', 'preserveAspectRatio', 'result', 'width', 'x', 'y'],
+                 'feMerge': ['height', 'result', 'width', 'x', 'y'], 'feMergeNode': ['in'],
+                 'feMorphology': ['height', 'in', 'operator', 'radius', 'result', 'width', 'x', 'y'],
+                 'feOffset': ['dx', 'dy', 'height', 'in', 'result', 'width', 'x', 'y'], 'fePointLight': ['x', 'y', 'z'],
+                 'feSpecularLighting': ['height', 'in', 'kernelUnitLength', 'result', 'specularConstant',
+                                        'specularExponent', 'surfaceScale', 'width', 'x', 'y'],
+                 'feSpotLight': ['limitingConeAngle', 'pointsAtX', 'pointsAtY', 'pointsAtZ', 'specularExponent', 'x',
+                                 'y', 'z'], 'feTile': ['height', 'in', 'result', 'width', 'x', 'y'],
+                 'feTurbulence': ['baseFrequency', 'height', 'numOctaves', 'result', 'seed', 'stitchTiles', 'type',
+                                  'width', 'x', 'y'],
+                 'filter': ['filterUnits', 'height', 'primitiveUnits', 'width', 'x', 'y'],
+                 'foreignObject': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'g': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'iframe': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'image': ['crossorigin', 'href', 'preserveAspectRatio', 'requiredExtensions', 'role',
+                           'systemLanguage'],
+                 'line': ['pathLength', 'requiredExtensions', 'role', 'systemLanguage', 'x1', 'x2', 'y1', 'y2'],
+                 'linearGradient': ['gradientTransform', 'gradientUnits', 'href', 'spreadMethod', 'x1', 'x2', 'y1',
+                                    'y2'],
+                 'marker': ['markerHeight', 'markerUnits', 'markerWidth', 'orient', 'preserveAspectRatio', 'refX',
+                            'refY', 'viewBox'],
+                 'mask': ['height', 'maskContentUnits', 'maskUnits', 'requiredExtensions', 'systemLanguage', 'width',
+                          'x', 'y'], 'mpath': ['href'],
+                 'path': ['pathLength', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'pattern': ['height', 'href', 'patternContentUnits', 'patternTransform', 'patternUnits',
+                             'preserveAspectRatio', 'viewBox', 'width', 'x', 'y'],
+                 'polygon': ['pathLength', 'points', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'polyline': ['pathLength', 'points', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'radialGradient': ['cx', 'cy', 'fr', 'fx', 'fy', 'gradientTransform', 'gradientUnits', 'href', 'r',
+                                    'spreadMethod'],
+                 'rect': ['pathLength', 'requiredExtensions', 'role', 'systemLanguage'], 'script': ['href'],
+                 'set': ['attributeName', 'begin', 'dur', 'end', 'fill', 'href', 'max', 'min', 'repeatCount',
+                         'repeatDur', 'requiredExtensions', 'restart', 'systemLanguage', 'to'], 'stop': ['offset'],
+                 'style': ['media'],
+                 'svg': ['playbackorder', 'preserveAspectRatio', 'requiredExtensions', 'role', 'systemLanguage',
+                         'timelinebegin', 'transform', 'viewBox', 'zoomAndPan', 'xmlns'],
+                 'switch': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'symbol': ['preserveAspectRatio', 'refX', 'refY', 'role', 'viewBox'],
+                 'text': ['dx', 'dy', 'lengthAdjust', 'requiredExtensions', 'role', 'rotate', 'systemLanguage',
+                          'textLength', 'x', 'y'],
+                 'textPath': ['href', 'lengthAdjust', 'method', 'path', 'requiredExtensions', 'role', 'side', 'spacing',
+                              'startOffset', 'systemLanguage', 'textLength'],
+                 'tspan': ['dx', 'dy', 'lengthAdjust', 'requiredExtensions', 'role', 'rotate', 'systemLanguage',
+                           'textLength', 'x', 'y'], 'unknown': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'use': ['href', 'requiredExtensions', 'role', 'systemLanguage'],
+                 'video': ['requiredExtensions', 'role', 'systemLanguage'],
+                 'view': ['preserveAspectRatio', 'role', 'viewBox', 'zoomAndPan']}
+
+
+for tag in svg_tags_use:
+    c_tag = tag[0].capitalize() + tag[1:]
+    globals()[c_tag] = type(c_tag, (Div,),
+                                       {'html_tag': tag,
+                                        'attributes': svg_attr_dict.get(tag, []) + svg_presentation_attributes + svg_filter_attributes})
+
+
+class Svg1(Div):
+    special_attributes = ['xmlns', 'viewBox', 'preserveAspectRatio']
+
+    attributes = svg_presentation_attributes + svg_filter_attributes + special_attributes
     attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display',
                   'fill', 'fill-opacity', 'fill-rule', 'filter', 'mask', 'opacity', 'pointer-events', 'shape-rendering',
                   'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin',
                   'stroke-miterlimit',
                   'stroke-opacity', 'stroke-width', 'tabindex', 'transform', 'vector-effect', 'visibility',
                   'x', 'y', 'xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio']
+    special_attributes = ['xmlns', 'viewBox', 'preserveAspectRatio']
     html_tag = 'svg'
 
     def __init__(self, **kwargs):
@@ -1074,7 +1238,7 @@ class Svg(Div):
         self.html_tag = 'svg'
 
 
-class G(Div):
+class G1(Div):
     html_tag = 'g'
 
     attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display', 'fill',
@@ -1087,7 +1251,7 @@ class G(Div):
         super().__init__(**kwargs)
 
 
-class PolygonJP(Div):
+class Polygon1(Div):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -1104,7 +1268,7 @@ class PolygonJP(Div):
         return d
 
 
-class CircleJP(Div):
+class Circle1(Div):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -1121,7 +1285,7 @@ class CircleJP(Div):
         return d
 
 
-class StopJP(Div):
+class Stop1(Div):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -1133,7 +1297,7 @@ class StopJP(Div):
                           'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
 
 
-class Path(Div):
+class Path1(Div):
     html_tag = 'path'
     attributes = ['d', 'pathLength']
 
@@ -1167,14 +1331,14 @@ class QHello(Hello):
 
 
 def component_by_tag(tag, **kwargs):
-    tag = tag.lower()
+    # tag = tag.lower()
     if tag[0:2] == 'q-':
         if tag in _tag_class_dict:
             c = _tag_class_dict[tag](**kwargs)
         else:
             raise ValueError(f'Tag not defined: {tag}')
     else:
-        tag_class_name = tag.capitalize()
+        tag_class_name = tag[0].capitalize() + tag[1:]
         try:
             c = globals()[tag_class_name](**kwargs)
         except:
@@ -1211,7 +1375,8 @@ class BasicHTMLParser(HTMLParser):
         self.commands = [
             "root = jp.Div(name='root')"]  # List of command strings (justpy command to generate the element)
         self.name_dict = {}  # After parsing holds a dict with named components
-        self.root = Div(name='root', **kwargs)
+        # self.root = Div(name='root', **kwargs)
+        self.root = Div(name='root')
         self.root_name = f'c{self.root.id}'
         self.containers = []
         self.containers.append(self.root)
@@ -1281,7 +1446,6 @@ class BasicHTMLParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
-        # print(self.__starttag_text)
         c = component_by_tag(tag)
         command_string = f''
         if c is None:
@@ -1334,7 +1498,6 @@ class BasicHTMLParser(HTMLParser):
 
     def handle_endtag(self, tag):
         self.containers.pop()
-        # print('Level: ',self.level, "End tag  :", tag)
         self.level = self.level - 1
 
     def handle_data(self, data):
@@ -1353,17 +1516,18 @@ class BasicHTMLParser(HTMLParser):
 
     def handle_entityref(self, name):
         c = chr(name2codepoint[name])
-        print("Named ent:", c)
+        # print("Named ent:", c)
 
     def handle_charref(self, name):
         if name.startswith('x'):
             c = chr(int(name[1:], 16))
         else:
             c = chr(int(name))
-        print("Num ent  :", c)
+        # print("Num ent  :", c)
 
     def handle_decl(self, data):
-        print("Decl     :", data)
+        pass
+        # print("Decl     :", data)
 
 
 def justPY_parser(html_string, **kwargs):
@@ -1376,17 +1540,15 @@ def justPY_parser(html_string, **kwargs):
     '''
     parser = BasicHTMLParser(**kwargs)
     parser.feed(html_string)
-    parser.root.name_dict = parser.name_dict
     if len(parser.root.components) == 1:
-        # If the root div has only one component, then return it instead of the root div
-        # TODO: Also need to copy kwargs. Do not assign in command line is good workaround. Issue mainly with show.
-        parser.root.components[0].name_dict = parser.name_dict
-        parser.root.components[0].commands = parser.commands
-        return parser.root.components[0]
+        parser_result = parser.root.components[0]
     else:
-        parser.root.name_dict = parser.name_dict
-        parser.root.commands = parser.commands
-        return parser.root
+        parser_result = parser.root
+    parser_result.name_dict = parser.name_dict
+    parser_result.commands = parser.commands
+    parser_result.initialize(**kwargs)
+    return parser_result
+
 
 
 def parse_html(html_string, **kwargs):
@@ -1405,16 +1567,7 @@ async def parse_html_file_async(html_file, **kwargs):
 
 
 async def get(url, format='json'):
-    """Wrapper for requests get function to simplify running a sync function in non blocking manner
-
-    Parameters
-    ----------
-    url
-
-    Returns
-    -------
-    dict
-    """
+    #Wrapper for requests get function to simplify running a sync function in non blocking manner
     result = await JustPy.loop.run_in_executor(None, requests.get, url)
     if format == 'json':
         return result.json()

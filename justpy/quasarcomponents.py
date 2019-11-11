@@ -226,11 +226,10 @@ class QRating(_QInputBase):
     def __init__(self, **kwargs):
         self.no_reset = False
         super().__init__(**kwargs)
-        self.prop_list = ['icon', 'max', 'value', 'no-reset', 'readonly', 'disable', 'color', 'size']
+        self.prop_list = ['icon', 'max', 'value', 'no-reset', 'readonly', 'disable', 'color', 'size', 'icon-selected']
         self.allowed_events = ['input']
 
     def before_event_handler(self, msg):
-        print('before ',self.type, msg.event_type, msg.input_type, msg)
         if msg.event_type not in ['input']:
             return
 
@@ -242,7 +241,7 @@ class QRating(_QInputBase):
         else:
             self.value = msg.value
 
-        print('done before')
+
 
 
 @parse_dict
