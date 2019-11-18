@@ -3,93 +3,116 @@
  *
  * License: www.highcharts.com/license
  *
- * Dark blue theme for Highcharts JS
+ * Gray theme for Highcharts JS
  * @author Torstein Honsi
  */
-'use strict';
+
 
 Highcharts.theme = {
-    colors: ['#DDDF0D', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee',
+    colors: ['#DDDF0D', '#7798BF', '#55BF3B', '#DF5353', '#aaeeee',
         '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
     chart: {
         backgroundColor: {
-            linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-                [0, 'rgb(48, 48, 96)'],
-                [1, 'rgb(0, 0, 0)']
+                [0, 'rgb(96, 96, 96)'],
+                [1, 'rgb(16, 16, 16)']
             ]
         },
-        borderColor: '#000000',
-        borderWidth: 2,
-        className: 'dark-container',
-        plotBackgroundColor: 'rgba(255, 255, 255, .1)',
-        plotBorderColor: '#CCCCCC',
-        plotBorderWidth: 1
+        borderWidth: 0,
+        borderRadius: 0,
+        plotBackgroundColor: null,
+        plotShadow: false,
+        plotBorderWidth: 0
     },
     title: {
         style: {
-            color: '#C0C0C0',
-            font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+            color: '#FFF',
+            font: '16px Lucida Grande, Lucida Sans Unicode,' +
+                ' Verdana, Arial, Helvetica, sans-serif'
         }
     },
     subtitle: {
         style: {
-            color: '#666666',
-            font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+            color: '#DDD',
+            font: '12px Lucida Grande, Lucida Sans Unicode,' +
+                ' Verdana, Arial, Helvetica, sans-serif'
         }
     },
     xAxis: {
-        gridLineColor: '#333333',
-        gridLineWidth: 1,
+        gridLineWidth: 0,
+        lineColor: '#999',
+        tickColor: '#999',
         labels: {
             style: {
-                color: '#A0A0A0'
+                color: '#999',
+                fontWeight: 'bold'
             }
         },
-        lineColor: '#A0A0A0',
-        tickColor: '#A0A0A0',
         title: {
             style: {
-                color: '#CCC',
-                fontWeight: 'bold',
-                fontSize: '12px',
-                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
-
+                color: '#AAA',
+                font: 'bold 12px Lucida Grande, Lucida Sans Unicode,' +
+                ' Verdana, Arial, Helvetica, sans-serif'
             }
         }
     },
     yAxis: {
-        gridLineColor: '#333333',
+        alternateGridColor: null,
+        minorTickInterval: null,
+        gridLineColor: 'rgba(255, 255, 255, .1)',
+        minorGridLineColor: 'rgba(255,255,255,0.07)',
+        lineWidth: 0,
+        tickWidth: 0,
         labels: {
             style: {
-                color: '#A0A0A0'
+                color: '#999',
+                fontWeight: 'bold'
             }
         },
-        lineColor: '#A0A0A0',
-        minorTickInterval: null,
-        tickColor: '#A0A0A0',
-        tickWidth: 1,
         title: {
             style: {
-                color: '#CCC',
-                fontWeight: 'bold',
-                fontSize: '12px',
-                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                color: '#AAA',
+                font: 'bold 12px Lucida Grande, Lucida Sans Unicode,' +
+                ' Verdana, Arial, Helvetica, sans-serif'
             }
+        }
+    },
+    legend: {
+        itemStyle: {
+            color: '#CCC'
+        },
+        itemHoverStyle: {
+            color: '#FFF'
+        },
+        itemHiddenStyle: {
+            color: '#333'
+        }
+    },
+    labels: {
+        style: {
+            color: '#CCC'
         }
     },
     tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        backgroundColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+                [0, 'rgba(96, 96, 96, .8)'],
+                [1, 'rgba(16, 16, 16, .8)']
+            ]
+        },
+        borderWidth: 0,
         style: {
-            color: '#F0F0F0'
+            color: '#FFF'
         }
     },
-    toolbar: {
-        itemStyle: {
-            color: 'silver'
-        }
-    },
+
+
     plotOptions: {
+        series: {
+            nullColor: '#444444'
+        },
         line: {
             dataLabels: {
                 color: '#CCC'
@@ -112,25 +135,9 @@ Highcharts.theme = {
             lineColor: 'white'
         }
     },
-    legend: {
+
+    toolbar: {
         itemStyle: {
-            font: '9pt Trebuchet MS, Verdana, sans-serif',
-            color: '#A0A0A0'
-        },
-        itemHoverStyle: {
-            color: '#FFF'
-        },
-        itemHiddenStyle: {
-            color: '#444'
-        }
-    },
-    credits: {
-        style: {
-            color: '#666'
-        }
-    },
-    labels: {
-        style: {
             color: '#CCC'
         }
     },
@@ -222,8 +229,8 @@ Highcharts.theme = {
         barBackgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-                    [0.4, '#888'],
-                    [0.6, '#555']
+                [0.4, '#888'],
+                [0.6, '#555']
             ]
         },
         barBorderColor: '#CCC',
@@ -231,8 +238,8 @@ Highcharts.theme = {
         buttonBackgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-                    [0.4, '#888'],
-                    [0.6, '#555']
+                [0.4, '#888'],
+                [0.6, '#555']
             ]
         },
         buttonBorderColor: '#CCC',
@@ -247,11 +254,11 @@ Highcharts.theme = {
         trackBorderColor: '#666'
     },
 
-    // special colors for some of the
-    legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-    background2: 'rgb(35, 35, 70)',
+    // special colors for some of the demo examples
+    legendBackgroundColor: 'rgba(48, 48, 48, 0.8)',
+    background2: 'rgb(70, 70, 70)',
     dataLabelsColor: '#444',
-    textColor: '#C0C0C0',
+    textColor: '#E0E0E0',
     maskColor: 'rgba(255,255,255,0.3)'
 };
 

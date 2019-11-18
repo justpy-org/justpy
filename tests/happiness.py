@@ -58,7 +58,7 @@ def happiness_plot():
 
 def create_corr_page():
     score_factors = ['Unexplained', 'GDP', 'Social_support', 'Health', 'Freedom', 'Generosity', 'Corruption']
-    wp = jp.WebPage()
+    wp = jp.WebPage(delete_flag=False)
     d = jp.Div(a=wp, classes='flex flex-wrap')
     for x_col in score_factors:
         for y_col in score_factors[score_factors.index(x_col)+1:]:

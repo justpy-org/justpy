@@ -2,6 +2,7 @@ from justpy import *
 # import demjson
 # from types import SimpleNamespace
 import numpy as np
+import datetime
 
 s3 = """
 {
@@ -438,10 +439,10 @@ def tool_tip_demo(request):
 
     return wp
 
-
 @SetRoute('/stock')
 async def stock_chart(request):
     wp = WebPage()
+    wp.highcharts_theme = 'grid-light'
     d = Div(classes='flex flex-wrap', a=wp)
     tickers = request.query_params.get('ticker', 'aapl')
     print(tickers)

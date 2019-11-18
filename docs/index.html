@@ -20,7 +20,11 @@
     },
         subMaxLevel: 3,
         logo: 'https://elimintz.github.io/favicon.png',
-        search: 'auto',
+        search: {
+            paths: 'auto',
+            maxAge: 10000,
+            depth: 6
+        },
         name: 'JustPy',
         notFoundPage: 'README.md',
         auto2top: true,

@@ -26,9 +26,12 @@ def series_change(self, msg):
                            stacking=msg.page.stacking, temp=True)
     msg.page.c.options = c.options
 
-def happiness_plot():
+def happiness_plot(request):
     # ['Country', 'Rank', 'Score', 'Unexplained', 'GDP', 'Social_support', 'Health', 'Freedom', 'Generosity', Corruption']
     wp = jp.QuasarPage()
+    chart_theme = request.query_params.get('theme', 8)  # Default is 'grid'
+    themes = ['high-contrast-dark', 'high-contrast-light','avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray', 'grid-light', 'grid', 'sand-signika', 'skies', 'sunset']
+    wp.highcharts_theme = themes[int(chart_theme)]
     wp.stacking = ''
     wp.cols_to_plot = [3,4,5,6,7,8,9]
     wp.df = df
@@ -96,7 +99,7 @@ def create_corr_page():
 corr_page = create_corr_page()
 
 @jp.SetRoute('/corr')
-def corr_test(request):
+def corr_test():
     return(corr_page)
 
 jp.justpy(happiness_plot)

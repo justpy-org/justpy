@@ -79,9 +79,8 @@ The program uses the component EditorJP. This JustPy component was built around 
 Since the program renders wp, the same WebPage instance to all pages, they all share the same EditorJP instance. EditorJP inherits from Input and therefore each key pressed is sent to the server which in turn sets the value of the EditorJP instance (e in our case) and then updates wp using the update method. Since wp is rendered in all browser tabs, they are all updated.
 
 ## Simple Message Board
-JustPy allows updating just specific components, not the whole page. Here is an implementation of a simple message board in which just the Div with the message board is shared and updated. Again, try running in different browser tabs and see the functionality.
 
-<div style="">
+JustPy allows updating just specific elements on the page and not the whole page. Here is an implementation of a simple message board in which just the Div with the message board is shared and updated. Again, load a page in different browser tabs and see the functionality (a message sent from one tab will show up in all the others).
 
 ```python
 
@@ -99,6 +98,7 @@ button_text = jp.Div(text='Send', classes='text-sm', delete_flag=False)
 message_icon = jp.Icon(icon='comments', classes='text-2xl text-green-600', delete_flag=False)
 
 def message_initialize():
+    # Called once on startup
     d = jp.Div(a=shared_div, classes='flex m-2 border')
     time_stamp = jp.P(text=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), classes='text-xs ml-2 flex-shrink-0')
     p = jp.Pre(text='Welcome to the simple message board!', classes=message_classes)
@@ -123,7 +123,7 @@ def message_demo():
     send_button = jp.Button(a=d, click=send_message, classes=button_classes)
     send_button.add(button_icon, button_text)
     outer_div.add(shared_div)
-    shared_div.add_page_to_pages(wp)
+    shared_div.add_page(wp)
     send_button.message = message
     return wp
 
@@ -133,11 +133,18 @@ jp.justpy(message_demo, startup=message_initialize)
 ```
 </div>
 
-At the top of the program we define combinations of Tailwind classes to make our UI a little nicer. This technique, of defining classes in a global manner can be used to create templates for JustPy applications. Next, we create global components that will be shared by all web pages. We introduce the Icon component which is used to display icons from the free Fontawesome collection (https://fontawesome.com/). 
-Take a look at the third function we define, `message_demo`. This is our request handler. All requests will be handled by this function. Each time it is called it creates a new WebPage instance, wp. It adds a Div to it (outer_div). To this Div we add the predefined header component and another Div which holds the message box and the button used to send messages. The button itself has two child components, the plane icon and the Div with the 'Send' text. We then add the shared message div to outer_div.
-The next line, shared_div.pages.append(wp), is important. We need to add wp to the list of pages shared_div is on. When we call update on shared_div, it will use this list to send an update to the appropriate pages. JustPy does not keep track automatically of which page a component is on. This would have introduced a lot of overhead since often, as in our case also, a component is indirectly added to a page by being added to a component that has been or will be added to the page.
-Let's take a closer look at `send_message`, the event handler that gets called when send_button is clicked. If the message box is not empty, the function creates a Div to which it adds an icon, a time stamp and the text of the message. It then adds the Div as the first element in shared_div.  It clears the message box and then awaits the update method of shared_div. Only shared_div will be updated in all the WebPages it is on. All the other components on the WebPage instance will not be updated.
-Notice the `send_message` is a coroutine defined using the `async` keyword. This is the case because we need to await update from within send_message.  
+At the top of the program we define combinations of Tailwind classes to make our UI a little nicer. This technique, of defining classes in a global manner can be used to create templates for JustPy applications. Next, we create global components that will be shared by all web pages. We introduce the `Icon` component which is used to display icons from the free [Fontawesome](https://fontawesome.com/) collection (https://fontawesome.com/). 
+
+Take a look at `message_demo`, the third function we define. All requests will be handled by this function. Each time it is called, it creates a new `WebPage` instance, `wp`. It adds a Div to it (`outer_div`). To this Div we add the predefined `header` Div and another Div which holds the message box and the button used to send messages. The button itself has two child components, the plane icon and the Div with the 'Send' text. We then add the shared message div to `outer_div`.
+
+he next line, `shared_div.add_page(wp)`, is important. We need to add `wp` to the dictionary of pages shared_div is on. When we call the `update` method of `shared_div`, it will use this dictionary to update the appropriate browser tabs. JustPy does not keep track automatically of which page an element is on. This would have introduced a lot of overhead since often, as in our case also, an element is indirectly added to a page by being added to an element that has been or will be added to a page.
+
+Let's take a closer look at `send_message`, the event handler that gets called when `send_button` is clicked. If the message box is not empty, the function creates a Div to which it adds an icon, a time stamp and the text of the message. It then adds the Div as the first element in `shared_div`.  It clears the message box and then awaits the update method of `shared_div`. Only `shared_div` will be updated in all the WebPages it is on. All the other elements on the page will not be updated.
+
+Notice the `send_message` is a coroutine defined using the `async` keyword. This is the case because we need to await `update` from within `send_message`.  
+
+## The Final Countdown
+
 It is often required to call update several times within one event handler. For example, you may want to display a loading method while information is being retrieved from a database. Here is an exaggerated example:
 
 ```python
@@ -145,13 +152,13 @@ import justpy as jp
 import asyncio
 
 button_classes = 'm-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none'
-bomb_icon = jp.Icon(icon='bomb', classes='inline-block')
 
 async def count_down(self, msg):
     self.show = False
     if hasattr(msg.page, 'd'):
         msg.page.remove(msg.page.d)
-    msg.page.add(bomb_icon)
+    # msg.page.add(bomb_icon)
+    bomb_icon = jp.Icon(icon='bomb', classes='inline-block text-5xl ml-1 mt-1', a=msg.page)
     d = jp.Div(classes='text-center m-4 p-4 text-6xl text-red-600 bg-blue-500 faster', a=msg.page, animation=self.count_animation)
     msg.page.d = d
     for i in range(self.start_num, 0 , -1):
@@ -159,7 +166,9 @@ async def count_down(self, msg):
         await msg.page.update()
         await asyncio.sleep(1)
     d.text = 'Boom!'
+    d.animation = ''
     d.set_classes('text-red-500 bg-white')
+    bomb_icon.set_class('text-red-700')
     self.show = True
 
 def count_test(request):
@@ -174,9 +183,13 @@ def count_test(request):
 jp.justpy(count_test)
 ```
 
-When you press the countdown button, a countdown begins in which the page is updated every second. 
-Each component has a show attribute. If it is set to False, the component is not rendered. The first line in the count_down event handler sets the button's show attribute to False  so that it is not rendered during the countdown (in this way the user cannot accidentally initiate another countdown while one is going on). Then we remove from the page the Div with the current countdown (we check if the Div is stored on the page to handle the first countdown ). We create the Div add it to the page and also store a reference to it under the d attribute of the page so we can later have easy access to it for removal.
-Then we loop from the countdown start number down to zero. In each loop iteration with set the text of d, update the page, and sleep 1 second.
-After the countdown loop has ended, we set the text of d to 'Boom!', change some of d's classes and make the button visible again. Remember, that if an event handler returns None as in our case (the default in Python when no return statement is encountered), the framework updates the page. So when count_down terminates the page is updated again and that is why we see the button and 'Boom!'.
-JustPy supports animation using the animate.css library (https://daneden.github.io/animate.css/). Just set the animation attribute of any component to a valid animation name. The default animation we use above is 'flip'. Try http://127.0.0.1:8000/?animation=bounceIn for example. You can test different animations using query parameters. You can set the animation speed by adding one of the classes slow, slower, fast, faster to the classes of the component. In this case we used 'faster' so that the animation takes less than 1 second. 
+When you press the countdown button, a countdown begins and the page is updated every second. 
+
+Every JustPy component has a `show` attribute. If it is set to `False`, the component is not rendered. The first line in the `count_down` event handler sets the button's `show` attribute to `False` and it is not rendered during the countdown (in this way the user cannot accidentally initiate another countdown while one is going on). Then we remove from the page the `Div` with the current countdown (we check if the `Div` is stored on the page to handle the first countdown ). We create the `Div` and add it to the page and also store a reference to it under the `d` attribute of the page so we can later have easy access to it for removal.
+
+Then we loop from the countdown start number down to zero. In each loop iteration we set the text of `d`, update the page, and sleep 1 second. The sleep is done using the asyncio library so as not to block countdowns on other pages. You can verify this by loading the page in different tabs or browsers.
+
+After the countdown loop has ended, we set the text of d to 'Boom!', change some of `d`'s classes and make the button visible again. Remember, that if an event handler returns `None` as in our case (the default in Python when no return statement is encountered), the framework updates the page. So when count_down terminates the page is updated again and that is why we see the button and 'Boom!'.
+
+JustPy supports animation using the [animate.css](https://daneden.github.io/animate.css/) library. Just set the animation attribute of any component to a valid animation name. The default animation we use above is 'flip'. Try http://127.0.0.1:8000/?animation=bounceIn for example. You can test different animations using query parameters. You can set the animation speed by adding one of the classes slow, slower, fast, faster to the classes of the component. In this case we used 'faster' so that the animation takes less than 1 second. 
 

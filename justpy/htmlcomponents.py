@@ -23,14 +23,7 @@ _tag_class_dict = {}
 def parse_dict(cls):
     """
     Decorator for component class definitions that updates _tag_class_dict so that the parser can recognize new component
-    Required for components not defined in this module only
-    Parameters
-    ----------
-    cls
-
-    Returns
-    -------
-
+    Required only for components not defined in this module
     """
     _tag_class_dict[cls.html_tag] = cls
     return cls
@@ -50,16 +43,14 @@ class WebPage:
     next_page_id = 0
     use_websockets = True
     delete_flag = True
+    highcharts_theme = None
+    # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
+    #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
 
 
     def __init__(self, **kwargs):
-        # self.dirty = False  # Indicates if page has changed
-        # self.name = name
         self.page_id = WebPage.next_page_id
         WebPage.next_page_id += 1
-        # Determines whether to use VUE or just load html of page. Static cannot handle events
-        # Will add semi-static that can handle some events by activating listeners or rendering onclick and sending
-        # message via websocket
         self.static = False
         self.cache = None  # Holds the last result of build_list
         self.use_cache = False  # Determines whether the framework uses the cache or not
@@ -67,21 +58,17 @@ class WebPage:
         self.display_url = None
         self.redirect = None
         self.favicon = None
-        # self.quasar = False
         self.tailwind = True
         self.components = []  # list  of components on page
-        self.folders = []  # List of folders page is in
-        self.graphs = []
-        self.grids = []
         self.css = ''
         self.scripts = ''
+        # If html attribute is not empty, sets html of page directly
         self.html = ''
         self.body_style = ''
         self.body_classes = ''
         self.reload_interval = None
+        self.dark = False    # Set to True for Quasar dark mode (use for other dark modes also)
         self.data = {}
-        self.ui_framework = 'tailwind'  # material etc.
-        self.periodic_functions = []  # List of dicts {f: function, p: period_in_seconds)
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
             self.__setattr__(k, v)
@@ -92,9 +79,9 @@ class WebPage:
     def __len__(self):
         return len(self.components)
 
-    if JustPy.LOGGING_LEVEL==logging.DEBUG:
-        def __del__(self):
-            print(f'Deleted {self}')
+
+    def __del__(self):
+        print(f'Deleted {self}')
 
     def add_component(self, component):
         self.components.append(component)
@@ -213,9 +200,9 @@ class JustpyBaseComponent(Tailwind):
         self.allowed_events = []
 
 
-    if JustPy.LOGGING_LEVEL == logging.DEBUG:
-        def __del__(self):
-            print(f'Deleted {self}')
+
+    def __del__(self):
+        print(f'Deleted {self}')
 
     def delete(self):
         if self.delete_flag:
@@ -265,6 +252,9 @@ class JustpyBaseComponent(Tailwind):
 
     def remove_page_from_pages(self, wp: WebPage):
         self.pages.pop(wp.page_id)
+
+    def add_page(self, wp: WebPage):
+        self.pages[wp.page_id] = wp
 
     def add_page_to_pages(self, wp: WebPage):
         self.pages[wp.page_id] = wp
@@ -796,8 +786,7 @@ class A(Div):
 
     def __init__(self, **kwargs):
 
-        self.url = None  # The url to go to
-        self.href = '#'
+        self.href = None
         self.bookmark = None  # The component on page to jump to or scroll to
         self.title = ''
         self.rel = "noopener noreferrer"
@@ -813,36 +802,20 @@ class A(Div):
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
         d = super().convert_object_to_dict()
-
         d['scroll'] = self.scroll
         d['scroll_option'] = self.scroll_option
         d['block_option'] = self.block_option
         d['inline_option'] = self.inline_option
-
-        if self.url:
-            if self.bookmark:
-                self.href = self.url + '#' + str(
-                    self.bookmark.id)  # Each component id is set to it class id which is anumber given in order of creation
-            else:
-                self.href = self.url
-        elif self.bookmark:
+        print(self.bookmark)
+        if self.bookmark is not None:
             self.href = '#' + str(self.bookmark.id)
-        else:
-            pass
-            # self.href = '#'
-
-        if self.bookmark:
-            self.scroll_to = str(
-                self.bookmark.id)  # id of element to scroll to, required by the scroll to function in EventHandler
-
+            self.scroll_to = str(self.bookmark.id)
         if d['scroll']:
             d['scroll_to'] = self.scroll_to
-
         d['attrs']['href'] = self.href
         d['attrs']['target'] = self.target
         if self.download is not None:
             d['attrs']['download'] = self.download
-
         return d
 
 
@@ -889,16 +862,16 @@ class Grid(HTMLBaseComponent):
         self.columns = 4
         self.column_gap = 0
         self.row_gap = 0
-        # Alignemnt of items inside grid
+        # Alignment of items inside grid
         self.justify_items = 'stretch'  # one of start, end, center, stretch    stretch is default  alignment on x axis
         self.align_items = 'stretch'  # one of start, end, center, stretch    stretch is default alignment on y axis
         # Alignment if the whole grid inside its container
-        self.justify_content = 'stetch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on x axis
+        self.justify_content = 'stretch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on x axis
         self.align_content = 'stretch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on y axis
 
         super().__init__(**kwargs)
         self.html_tag = 'div'
-        # Components is a two dimenstional matrix
+        # Components is a two dimensional matrix
         self.components = [[Div() for x in range(self.columns)] for y in range(self.rows)]
 
         self.set_class('grid')
@@ -1316,9 +1289,10 @@ class Hello(Div):
         self.classes = 'm-1 p-1 text-2xl text-center text-white bg-blue-500 hover:bg-blue-800 cursor-pointer'
         self.text = 'Hello! (click me)'
 
-        def click(self, msg):
+        async def click(self, msg):
             self.text = f'Hello! I was clicked {self.counter} times'
             self.counter += 1
+            asyncio.sleep(50/1000)
 
         self.on('click', click)
 

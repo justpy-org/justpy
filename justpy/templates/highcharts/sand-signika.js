@@ -5,7 +5,6 @@
  *
  * License: www.highcharts.com/license
  */
-'use strict';
 
 		Highcharts.createElement('link', {
 		    href: 'https://fonts.googleapis.com/css?family=Signika:400,700',

@@ -41,6 +41,15 @@
 <script src="https://code.highcharts.com/modules/venn.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script src="https://code.highcharts.com/modules/treemap.js"></script>
+<script>
+
+    {% if page_options.highcharts_theme is not none %}
+        {% set theme_file = 'highcharts/' + page_options.highcharts_theme + '.js' %}
+        {% include theme_file %}
+    {%endif %}
+
+
+</script>
 
 {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}
 {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/css/themes/dark-unica.css" />#}

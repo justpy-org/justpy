@@ -46,6 +46,9 @@
 
     <script>
         console.log('Quasar Version ' + Quasar.version);
+        {% if page_options.dark %}
+        Quasar.Dark.set(true);
+        {% endif %}
     </script>
 
     {% include 'main.html' %}

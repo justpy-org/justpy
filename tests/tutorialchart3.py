@@ -40,7 +40,7 @@ def convert_date(date_string):
 
 
 async def stock_test(request):
-    wp = jp.QuasarPage()
+    wp = jp.QuasarPage(highcharts_theme='grid')
     ticker = request.query_params.get('ticker', 'MSFT').upper()
     try:
         data = await jp.JustPy.loop.run_in_executor(None, pd.read_csv, f'https://elimintz.github.io/stocks/{ticker}.csv')
@@ -58,17 +58,7 @@ async def stock_test(request):
     return wp
 
 
-jp.justpy(stock_test)
-# f = pd.read_csv(f'https://elimintz.github.io/stocks/MSFT.csv').round(2)
-# wp = jp.QuasarPage()
-# quasar_table = jp.QTable(title='MSFT', data=f.to_dict('records'), columns=create_columns_def(f), row_key='name', a=wp, dense=True, bordered=True, style='margin: 0.25rem; padding: 0.5rem; width: 800px;')
-# simple_table = jp.Div(inner_html=f.to_html(classes='', justify='center', col_space="100px"), a=wp)
-# Index(['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], dtype='object')
-def test_pd():
-    return wp
-
-# jp.justpy(test_pd)
-
+@jp.SetRoute('/sine')
 def sine_test():
     wp = jp.WebPage()
     chart = jp.HighCharts(a=wp, classes='border m-2 p-2 w-3/4')
@@ -85,5 +75,6 @@ def sine_test():
         o.series.append(s)
     return wp
 
+jp.justpy(stock_test)
 
 # jp.justpy(sine_test)

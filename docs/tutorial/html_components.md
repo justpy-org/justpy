@@ -170,11 +170,45 @@ jp.justpy(html_comps)
 
 ## HTML Links
 
-In JudyPy you create hyperlinks using the `A` component which corresponds to the [a HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
+In JudyPy you create hyperlinks using the `A` component which corresponds to the [`a` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
 
-The `A` component is identical to the `Link` component. You may use the name you find more intuitive.
+The `A` component is also named `Link` (in case you want to use a more descriptive name).
 
-xxx
+```python
+import justpy as jp
+
+def link_demo():
+    wp = jp.WebPage()
+    jp.A(text='Python Org', href='https://python.org', a=wp, classes='m-2 p-2 text-xl text-white bg-blue-500 hover:bg-blue-700')
+    return wp
+
+jp.justpy(link_demo)
+
+```
+
+The link above goes to the Python.org web page. If you want the link to open in a new window, set the `target` attribute of the `A` component instance to '_blank' 
+
+If you want to link to an element on the page, use the `bookmark` attribute and assign to it the element you want to link to. If you want to scroll to the element, instead of jumping instantly, set the `scroll` attribute to `True`. 
+
+```python
+import justpy as jp
+
+def link_demo():
+    wp = jp.WebPage()
+    link = jp.A(text='Python Org', a=wp, classes='inline-block m-2 p-2 text-xl text-white bg-blue-500 hover:bg-blue-700')
+    # jp.Br(a=wp)
+    for i in range(50):
+        jp.P(text=f'{i+1} Not a target', classes='m-1 p-1 text-white bg-blue-300', a=wp)
+    target = jp.A(text=f'This is the target - it is linked to first link, click to jump there', classes='inline-block m-1 p-1 text-white bg-red-500', a=wp)
+    link.bookmark = target
+    link.scroll = True
+    target.bookmark = link
+    for i in range(50):
+        jp.P(text=f'{i+50} Not a target', classes='m-1 p-1 text-white bg-blue-300', a=wp)
+    return wp
+
+jp.justpy(link_demo)
+```
 
 ## Lists
 
@@ -246,7 +280,6 @@ jp.justpy(show_demo)
 ```
 
 ## SVG Elements
-
 
 
 !> All h1-h6 elements are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#6-explicitly-style-any-headings).

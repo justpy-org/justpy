@@ -3274,7 +3274,7 @@ class My_expansion(QExpansionItem):
 
 @SetRoute('/expansion')
 def pics(request):
-    wp = QuasarPage()
+    wp = QuasarPage(dark=False)
     d = Div(classes="q-pa-md ", style="max-width: 500px", a=wp)
     Link(url='https://v1.quasar-framework.org/', text='Quasar', target='blank', classes="text-h5 q-mb-md", a=d, style='display: block;')
     add_btn = QButton(label='Add Image', classes="q-mb-md", color='primary', a=d)

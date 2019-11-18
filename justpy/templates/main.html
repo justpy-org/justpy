@@ -1,5 +1,6 @@
 <script>
 
+
     var websocket_ready = false;
 
     {% include 'js/EventHandlerJP.js' %}
@@ -183,9 +184,7 @@
                     'event_data': {'event_type': 'page_update', 'page_id': {{ page_id | safe }}}
                 }),
                 success: function (msg) {
-                    //$( ".result" ).html( data );
-                    console.log("Ajax from RELOAD was performed.");
-                    {#console.log(msg);#}
+                    console.log("Ajax based on reload_interval was performed.");
                     if (msg) app1.justpyComponents = msg.data;
                 },
                 dataType: 'json'
@@ -209,7 +208,8 @@
                     }))
                 }
             }
-            return h('div', {class: ''}, comps);
+            //return h('div', {class: ''}, comps);
+            return h('div', { }, comps);
         }
     });
 

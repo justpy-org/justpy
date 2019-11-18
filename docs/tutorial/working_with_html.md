@@ -1,7 +1,7 @@
-# Working with HTML
+# Parsing HTML and SVG
 
 
-## The parse_html Function
+## The <span style="color: red;">parse_html</span> Function
 Sometimes it is convenient to take regular HTML and convert it to JustPy elements. In order to do so we use the function `parse_html`.
 ```python
 import justpy as jp
@@ -32,7 +32,10 @@ The printout shows that `c` is a `Div` component that has 3 child components tha
  
 There are several way to access the child components. For example, in our specific case the first paragraph is the first child of `c` and therefore can be accessed as `c.components[0]`.
 
-A more general way is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. Here is an example:
+### The <span style="color: red;">name_dict</span> dictionary
+
+A more general way to access parsed elements is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. Here is an example:
+
 ```python
 import justpy as jp
 
@@ -56,11 +59,17 @@ jp.justpy(parse_demo)
 
 If you click the second paragraph, its text will change. Notice that we added `name="p2"` to the HTML of the second paragraph. When the parser sees the name attribute it creates an entry in `name_dict` with the name as the key and the component as the value.
 
+If more than one element is given the same name in the HTML text, the dictionary value is a list with all the elements with that name.
+
+### Additional parsing function
 Along with parse_html there are two additional functions in JustPy to parse HTML: `parse_html_file` parses a file instead of a string and `parse_html_file_async` is a co-routine that does the same asynchronously.  
 
-Each component in JustPy also supports the `to_html()` method. It converts a component to its HTML representation including all its child components. You can think of it as the inverse of `parse_html()`.
+### Converting to HTML
+Each component in JustPy also supports the `to_html()` method. It returns a string with the HTML representation of the element including all its child elements. You can think of it as the inverse of `parse_html()`.
 
-##  The inner_html Attribute
+### The <span style="color: red;">commands</span> attribute
+
+##  The <span style="color: red;">inner_html</span> Attribute
 
 If we want to just insert HTML onto the page, we can do so using the `inner_html` attribute of any JustPy component.
 ```python

@@ -1,54 +1,51 @@
-/**
- * (c) 2010-2017 Torstein Honsi
+/* *
  *
- * License: www.highcharts.com/license
+ *  (c) 2010-2019 Highsoft AS
  *
- * Dark theme for Highcharts JS
- * @author Torstein Honsi
- */
-
-'use strict';
-
-Highcharts.createElement('link', {
-    href: 'https://fonts.googleapis.com/css?family=Unica+One',
-    rel: 'stylesheet',
-    type: 'text/css'
-}, null, document.getElementsByTagName('head')[0]);
-
+ *  Author: Øystein Moseng
+ *
+ *  License: www.highcharts.com/license
+ *
+ *  Accessible high-contrast dark theme for Highcharts. Specifically tailored
+ *  towards 3:1 contrast against black/off-black backgrounds. Neighboring
+ *  colors are tested for color blindness.
+ *
+ *  !!!!!!! SOURCE GETS TRANSPILED BY TYPESCRIPT. EDIT TS FILE ONLY. !!!!!!!
+ *
+ * */
+var textBright = '#F0F0F3';
 Highcharts.theme = {
-    colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066',
-        '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+    colors: [
+        '#a6f0ff',
+        '#70d49e',
+        '#e898a5',
+        '#007faa',
+        '#f9db72',
+        '#f45b5b',
+        '#1e824c',
+        '#e7934c',
+        '#dadfe1',
+        '#a0618b'
+    ],
     chart: {
-        backgroundColor: {
-            linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-            stops: [
-                [0, '#2a2a2b'],
-                [1, '#3e3e40']
-            ]
-        },
-        style: {
-            fontFamily: '\'Unica One\', sans-serif'
-        },
+        backgroundColor: '#1f1f20',
         plotBorderColor: '#606063'
     },
     title: {
         style: {
-            color: '#E0E0E3',
-            textTransform: 'uppercase',
-            fontSize: '20px'
+            color: textBright
         }
     },
     subtitle: {
         style: {
-            color: '#E0E0E3',
-            textTransform: 'uppercase'
+            color: textBright
         }
     },
     xAxis: {
         gridLineColor: '#707073',
         labels: {
             style: {
-                color: '#E0E0E3'
+                color: textBright
             }
         },
         lineColor: '#707073',
@@ -56,8 +53,7 @@ Highcharts.theme = {
         tickColor: '#707073',
         title: {
             style: {
-                color: '#A0A0A3'
-
+                color: textBright
             }
         }
     },
@@ -65,29 +61,28 @@ Highcharts.theme = {
         gridLineColor: '#707073',
         labels: {
             style: {
-                color: '#E0E0E3'
+                color: textBright
             }
         },
         lineColor: '#707073',
         minorGridLineColor: '#505053',
         tickColor: '#707073',
-        tickWidth: 1,
         title: {
             style: {
-                color: '#A0A0A3'
+                color: textBright
             }
         }
     },
     tooltip: {
         backgroundColor: 'rgba(0, 0, 0, 0.85)',
         style: {
-            color: '#F0F0F0'
+            color: textBright
         }
     },
     plotOptions: {
         series: {
             dataLabels: {
-                color: '#B0B0B3'
+                color: textBright
             },
             marker: {
                 lineColor: '#333'
@@ -101,22 +96,31 @@ Highcharts.theme = {
         },
         errorbar: {
             color: 'white'
+        },
+        map: {
+            nullColor: '#353535'
         }
     },
     legend: {
+        backgroundColor: 'transparent',
         itemStyle: {
-            color: '#E0E0E3'
+            color: textBright
         },
         itemHoverStyle: {
             color: '#FFF'
         },
         itemHiddenStyle: {
             color: '#606063'
+        },
+        title: {
+            style: {
+                color: '#D0D0D0'
+            }
         }
     },
     credits: {
         style: {
-            color: '#666'
+            color: textBright
         }
     },
     labels: {
@@ -124,16 +128,14 @@ Highcharts.theme = {
             color: '#707073'
         }
     },
-
     drilldown: {
         activeAxisLabelStyle: {
-            color: '#F0F0F3'
+            color: textBright
         },
         activeDataLabelStyle: {
-            color: '#F0F0F3'
+            color: textBright
         }
     },
-
     navigation: {
         buttonOptions: {
             symbolStroke: '#DDDDDD',
@@ -142,28 +144,26 @@ Highcharts.theme = {
             }
         }
     },
-
-    // scroll charts
     rangeSelector: {
         buttonTheme: {
             fill: '#505053',
             stroke: '#000000',
             style: {
-                color: '#CCC'
+                color: '#eee'
             },
             states: {
                 hover: {
                     fill: '#707073',
                     stroke: '#000000',
                     style: {
-                        color: 'white'
+                        color: textBright
                     }
                 },
                 select: {
-                    fill: '#000003',
-                    stroke: '#000000',
+                    fill: '#303030',
+                    stroke: '#101010',
                     style: {
-                        color: 'white'
+                        color: textBright
                     }
                 }
             }
@@ -171,20 +171,19 @@ Highcharts.theme = {
         inputBoxBorderColor: '#505053',
         inputStyle: {
             backgroundColor: '#333',
-            color: 'silver'
+            color: textBright
         },
         labelStyle: {
-            color: 'silver'
+            color: textBright
         }
     },
-
     navigator: {
         handles: {
             backgroundColor: '#666',
             borderColor: '#AAA'
         },
         outlineColor: '#CCC',
-        maskFill: 'rgba(255,255,255,0.1)',
+        maskFill: 'rgba(180,180,255,0.2)',
         series: {
             color: '#7798BF',
             lineColor: '#A6C7ED'
@@ -193,7 +192,6 @@ Highcharts.theme = {
             gridLineColor: '#505053'
         }
     },
-
     scrollbar: {
         barBackgroundColor: '#808083',
         barBorderColor: '#808083',
@@ -203,16 +201,7 @@ Highcharts.theme = {
         rifleColor: '#FFF',
         trackBackgroundColor: '#404043',
         trackBorderColor: '#404043'
-    },
-
-    // special colors for some of the
-    legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-    background2: '#505053',
-    dataLabelsColor: '#B0B0B3',
-    textColor: '#C0C0C0',
-    contrastTextColor: '#F0F0F3',
-    maskColor: 'rgba(255,255,255,0.3)'
+    }
 };
-
 // Apply the theme
 Highcharts.setOptions(Highcharts.theme);

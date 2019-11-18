@@ -5,7 +5,6 @@
  *
  * License: www.highcharts.com/license
  */
-'use strict';
 
 
 		Highcharts.theme = {

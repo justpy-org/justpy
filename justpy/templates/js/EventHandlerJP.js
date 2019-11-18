@@ -7,8 +7,10 @@ function eventHandler(props, event, form_data, aux) {
     // console.log(JSON.stringify(props, null, 2));
     console.log(event);
     console.log(props.jp_props);
+    console.log(websocket_ready);
+    console.log(use_websockets);
     console.log('-------------------------');
-     if (!websocket_ready) return;
+     if (!websocket_ready && use_websockets) return;
     e = {
         'event_type': event.type,
         'id': props.jp_props.id,
@@ -50,6 +52,7 @@ function eventHandler(props, event, form_data, aux) {
     if (props.jp_props.scroll && (event.type == 'click')) {
         event.preventDefault();
         c = document.getElementById(props.jp_props.scroll_to);
+
         c.scrollIntoView({
             behavior: props.jp_props.scroll_option,    // Default is 'smooth'
             block: props.jp_props.block_option,

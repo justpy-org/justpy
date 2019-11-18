@@ -30,6 +30,9 @@ current_dir = os.path.dirname(current_module.__file__)
 
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
+LATENCY = config('LATENCY', cast=int, default=0)
+if LATENCY:
+    print(f'Simulating latency of {LATENCY} ms')
 SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
 SECRET_KEY = config('SECRET_KEY', default='$$$my_secret_string$$$')    # Make sure to change when deployed
@@ -50,7 +53,6 @@ STATIC_ROUTE = config('STATIC_MOUNT', cast=str, default='/static')
 STATIC_NAME = config('STATIC_NAME', cast=str, default='static')
 print(current_dir, os.getcwd())
 FAVICON = config('FAVICON', cast=str, default='')  # If False gets value from https://elimintz.github.io/favicon.png
-# FAVICON = 'misc/faviconem.png'
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
@@ -63,10 +65,7 @@ logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(mes
 templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 app = Starlette(debug=DEBUG)
-# app.mount('/static', StaticFiles(directory='justpy/static'), name='static')
-# app.mount('/static', StaticFiles(directory=STATIC_DIRECTORY), name='static')
 app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
-# app.mount('/', StaticFiles(directory=STATIC_DIRECTORY), name='static')
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 if SSL_KEYFILE and SSL_CERTFILE:
@@ -94,7 +93,6 @@ async def justpy_startup():
             startup_func()
     print(f'JustPy ready to go on http://127.0.0.1:{PORT} or http://localhost:{PORT}')
 
-# TODO: https://blog.garstasio.com/you-dont-need-jquery/ajax/ beforeunload event
 
 @app.route("/{path:path}")
 class Homepage(HTTPEndpoint):
@@ -137,7 +135,9 @@ class Homepage(HTTPEndpoint):
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.scripts,
-                        'display_url': load_page.display_url, 'favicon': load_page.favicon if load_page.favicon else FAVICON}
+                        'display_url': load_page.display_url, 'dark': load_page.dark,
+                        'highcharts_theme': load_page.highcharts_theme,
+                        'favicon': load_page.favicon if load_page.favicon else FAVICON}
         if load_page.use_cache:
             page_dict = load_page.cache
         else:
@@ -151,11 +151,13 @@ class Homepage(HTTPEndpoint):
             cookie_value = cookie_signer.sign(request.state.session_id)
             cookie_value = cookie_value.decode("utf-8")
             response.set_cookie(SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True)
+        if LATENCY:
+            await asyncio.sleep(LATENCY/1000)
         return response
 
 
     async def post(self, request):
-        # Handles post method. Used in ajax mode for events when websockets disabled
+        # Handles post method. Used in Ajax mode for events when websockets disabled
         if request['path']=='/zzz_justpy_ajax':
             data_dict = await request.json()
             # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
@@ -172,6 +174,8 @@ class Homepage(HTTPEndpoint):
             # data_dict['event_data']['session'] = request.session
             result = await handle_event(data_dict, com_type=1)
             if result:
+                if LATENCY:
+                    await asyncio.sleep(LATENCY / 1000)
                 return JSONResponse(result)
             else:
                 return JSONResponse(False)
@@ -288,6 +292,8 @@ async def handle_event(data_dict, com_type=0):
 
     if event_result is None:
         if com_type == 0:     # Websockets communication
+            if LATENCY:
+                await asyncio.sleep(LATENCY / 1000)
             await p.update()
         elif com_type == 1:   # Ajax communication
             build_list = p.build_list()

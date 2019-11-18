@@ -7,7 +7,6 @@
  * @author Torstein Honsi
  */
 
-'use strict';
 
 Highcharts.theme = {
     colors: ['#DDDF0D', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee',

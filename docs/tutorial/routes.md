@@ -15,7 +15,7 @@ jp.Route('/hello', hello_function)
 
 jp.justpy()
 ```
-Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. What JustPy does is check if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as a parameter to `justpy.` If no parameter is provided to `justpy`, the framework shows the 'Page not found' message. 
+Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument `justpy.` If no argument is provided to `justpy`, the framework shows the 'Page not found' message. 
 
 Try running the following program:
 ```python
