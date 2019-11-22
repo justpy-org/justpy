@@ -342,8 +342,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
         for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
-                # print(kwargs.keys())
-                # print(prefix, prefix + e)
                 if prefix + e in kwargs.keys():
                     fn = kwargs[prefix + e]
                     if isinstance(fn, str):
@@ -623,9 +621,7 @@ class Input(Div):
 
     def before_event_handler(self, msg):
         # TODO: Handle select. Works currently but may need to play with option tag children
-        # print('before ', self.type, msg.event_type, msg.input_type, msg)
         logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
-        # print('before ', self.type, msg.event_type, msg.input_type, msg)
         if msg.event_type not in ['input', 'change', 'select']:
             return
         if msg.input_type == 'checkbox':
@@ -652,8 +648,6 @@ class Input(Div):
     @staticmethod
     def radio_button_set(radio_button, container):
         # Set all radio buttons in container with same name as radio_button to unchecked
-        # print(radio_button, container)
-        # print('in set radio', radio_button, radio_button.name, radio_button.id, container, container.components)
         for c in container.components:
             if hasattr(c, 'name'):
                 if c.name == radio_button.name and not radio_button.id == c.id:
@@ -664,7 +658,6 @@ class Input(Div):
     def radio_button_set_model_update(radio_button, container, model_value):
         for c in container.components:
             if hasattr(c, 'name'):
-                # print(c.name, c.id, c) #, c.id, c.value, c.name)
                 if c.name == radio_button.name:
                     if c.value == model_value:
                         c.checked = True
@@ -682,9 +675,6 @@ class Input(Div):
                 Input.radio_button_set_model_update(self, self.form, model_value)
             else:
                 Input.radio_button_set_model_update(self, self.model[0], model_value)
-        # elif self.type=='textarea':
-        # self.text = update_value #(self.model[0].data[self.model[1]])     # Required for inital load
-        # self.value = update_value #(self.model[0].data[self.model[1]])
         else:
             self.value = update_value
 
@@ -732,14 +722,14 @@ class Form(Div):
 
 class Label(Div):
     html_tag = 'label'
-    attributes = ['for', 'form']  # In Justpy these accept components, not ids of component like in HTML
+    attributes = ['for', 'form']  # In JustPy these accept components, not ids of component like in HTML
 
     def __init__(self, **kwargs):
         self.for_component = None
         # self.form = None
         super().__init__(**kwargs)
         # self.html_tag = 'label'
-        # self.attributes = ['for', 'form']  # In Justpy these accept components, not ids of component like in HTML
+        # self.attributes = ['for', 'form']  # In JustPy these accept components, not ids of component like in HTML
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -806,7 +796,6 @@ class A(Div):
         d['scroll_option'] = self.scroll_option
         d['block_option'] = self.block_option
         d['inline_option'] = self.inline_option
-        print(self.bookmark)
         if self.bookmark is not None:
             self.href = '#' + str(self.bookmark.id)
             self.scroll_to = str(self.bookmark.id)
@@ -843,15 +832,6 @@ class EditorJP(TextArea):
         self.vue_type = 'editorjp'
         self.html_tag = 'textarea'
 
-        def default_change(self, msg):
-            print('in change')
-            print(msg)
-            # self.value = msg['value']
-        # self.on('change', default_change)
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-        return d
 
 
 class Grid(HTMLBaseComponent):
@@ -882,7 +862,6 @@ class Grid(HTMLBaseComponent):
                     """
         self.style.replace('\n', '')
         self.style.replace('\t', '')
-        # print(self.components)
 
     def add_cell(self, c, row=0, col=0, num_rows=0, num_cols=0):
         c.style = f"""{c.style}; grid-column-start: {col + 1}; grid-column-end: {col + 1 + num_cols};

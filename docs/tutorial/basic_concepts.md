@@ -14,7 +14,7 @@ p = jp.P()
 p.text = 'Hello!'
 ``` 
 
-In the example above, `p` is an instance of the class `P`. It's text attribute is set to 'Hello!'.
+In the example above, `p` is an instance of the class `P`. Its text attribute is set to 'Hello!'.
 The above is equivalent to the HTML element:
 ```html
 <p>Hello!</p>

@@ -14,6 +14,18 @@ class QuasarPage(WebPage):
         self.quasar = True
         self.tailwind = False
 
+    async def set_dark_mode(self, flag):
+        try:
+            websocket_dict = WebPage.sockets[self.page_id]
+        except:
+            return self
+        for websocket in list(websocket_dict.values()):
+            try:
+                WebPage.loop.create_task(websocket.send_json({'type': 'page_mode_update', 'dark': flag}))
+            except:
+                print('Problem with websocket in page update, ignoring')
+        return self
+
 
 class QDiv(Div):
 
@@ -153,7 +165,7 @@ class QOptionGroup(_QInputBase):
 class QBtnToggle(_QInputBase):
 
     html_tag = 'q-btn-toggle'
-    slots = []   # Need to take care of this, or sepcify that it only works through add_coped_slot
+    slots = []
 
     def __init__(self, **kwargs):
         self.options = []
@@ -163,7 +175,7 @@ class QBtnToggle(_QInputBase):
         self.value = kwargs.get('value', None)
         self.prop_list = ['spread', 'no-caps', 'no-wrap', 'stack', 'stretch', 'value', 'options', 'readonly', 'disable',
                           'ripple', 'color', 'text-color', 'toggle-color', 'toggle-text-color', 'outline', 'flat',
-                          'unelevated', 'rounded', 'push', 'glossy', 'size', 'dense']
+                          'unelevated', 'rounded', 'push', 'glossy', 'size', 'dense', 'clearable']
         self.allowed_events = ['input']
 
 
@@ -1354,14 +1366,12 @@ class QTree(QDiv):
 
 
     def before_event_handler(self, msg):
-        print('QTREE before ', msg)
         if msg.event_type == 'update:expanded':
             self.expanded = msg.value
         elif msg.event_type == 'update:selected':
             self.selected = msg.value
         elif msg.event_type == 'update:ticked':
             self.ticked = msg.value
-        print('done before')
 
 
     def model_update(self):
@@ -1455,13 +1465,10 @@ class QTable(QDiv):
 
 
     def before_event_handler(self, msg):
-        print('QTable before ', msg)
         if msg.event_type == 'update:selected':
             self.selected = msg.value
         elif msg.event_type == 'update:pagination':
             self.pagination = msg.value
-
-        print('done before')
 
 
     def model_update(self):
@@ -1617,12 +1624,11 @@ class QPageScroller(QDiv):
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['expand', 'position', 'offset', 'scroll-offset', 'duration']
-        # Required in order not have have th evue update during the scroll
+        # Required in order not have have the vue update during the scroll
         self.on('click', self.default_click)
 
     @staticmethod
     async def default_click(self, msg):
-            print('trying to sleep')
             await asyncio.sleep(1 + self.duration/1000)
 
 
@@ -1657,5 +1663,19 @@ class QFabAction(QDiv):
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['icon', 'type', 'to', 'replace', 'disable', 'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
+
+
+class ToggleDarkModeBtn(QBtn):
+
+    def __init__(self, **kwargs):
+        self.label = 'Toggle Dark Mode'
+        super().__init__(**kwargs)
+        self.on('click', self.toggle_dark_mode)
+
+    @staticmethod
+    async def toggle_dark_mode(self, msg):
+        msg.page.dark = not msg.page.dark
+        await msg.page.set_dark_mode(msg.page.dark)
+
 
 

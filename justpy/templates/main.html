@@ -58,11 +58,13 @@
                         var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
                         link.type = 'image/x-icon';
                         link.rel = 'shortcut icon';
-                        console.log('{{ url_for(options.static_name, path='/') }}');
                         link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
                         document.getElementsByTagName('head')[0].appendChild(link);
                     }
                     app1.justpyComponents = msg.data;
+                    break;
+                case 'page_mode_update':
+                    Quasar.Dark.set(msg.dark);
                     break;
                 case 'websocket_update':
                     websocket_id = msg.data;

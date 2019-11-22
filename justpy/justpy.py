@@ -234,6 +234,10 @@ class JustpyEvents(WebSocketEndpoint):
             WebPage.sockets.pop(pid)
         await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
         print(WebPage.instances)
+        print('************************')
+        print(len(JustpyBaseComponent.instances),JustpyBaseComponent.instances)
+        print(WebPage.instances)
+        print('************************')
 
 
     async def _connect(self, websocket, data_dict):

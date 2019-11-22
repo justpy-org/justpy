@@ -1,6 +1,4 @@
-import sys, os
-print(os.getcwd())
-# sys.path.insert(1, '/root/TP3')
+# import sys, os
 
 from justpy import *
 
