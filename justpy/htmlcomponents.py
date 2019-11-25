@@ -57,6 +57,7 @@ class WebPage:
         self.template_file = 'tailwind.html'
         self.display_url = None
         self.redirect = None
+        self.open = None
         self.favicon = None
         self.tailwind = True
         self.components = []  # list  of components on page
@@ -138,7 +139,7 @@ class WebPage:
             try:
                 WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build,
                                                               'page_options': {'display_url': self.display_url,
-                                                                               'redirect': self.redirect,
+                                                                               'redirect': self.redirect, 'open': self.open,
                                                                                'favicon': self.favicon}}))
             except:
                 print('Problem with websocket in page update, ignoring')
@@ -230,21 +231,14 @@ class JustpyBaseComponent(Tailwind):
 
     async def update(self):
         component_dict = self.convert_object_to_dict()
-        # Question: Is there a better way to iterate over a dict that may change?
-        # Since the loop awaits updates, another coroutine may update the self.pages dict while the loop is running
-        # Therefore, a snapshot of self.pages values is taken. This is not memory efficient. Is there another way to do this?
         pages_to_update = list(self.pages.values())
         for page in pages_to_update:
             try:
                 websocket_dict = WebPage.sockets[page.page_id]
             except:
-                # print('No websocket dict')
                 continue
-                # return self
             for websocket in list(websocket_dict.values()):
                 try:
-                    # Use await or schedule a task? Which is the better option here?
-                    # await websocket.send_json({'type': 'component_update', 'data': component_dict})
                     WebPage.loop.create_task(websocket.send_json({'type': 'component_update', 'data': component_dict}))
                 except:
                     print('Problem with websocket in component update, ignoring')

@@ -1,6 +1,6 @@
 # Updating Charts
 
-In some applications, we would like charts to update as the underlying data changes. The following program updates the two series on the chart every second and then updates all the browser tabs the page is open in. The program is very similar to the [clock](tutorial/pushing_data?id=clock) example in the general tutorial.
+In some applications, we would like charts to update as the underlying data changes. The following program updates the two series on a chart every second and then updates all the browser tabs the page is open in. The program is similar to the [clock](tutorial/pushing_data?id=clock) example in the general tutorial.
 
 ```python
 import justpy as jp
@@ -38,10 +38,10 @@ async def chart_test():
 jp.justpy(chart_test, startup=chart_init)
 ```
 
-We use chart_dict to define the chart including two series of 50 random integers. One series is of type scatter and the other is of type column.
+We use `chart_dict` to define the chart including two series of 50 random integers. One series is of type scatter and the other is of type column.
 
-The same global WebPage instance is returned following all requests. 
+The same global WebPage instance is returned following all requests and therefore we set `delete_flag` to `False`. 
 
 The function `chart_updater` removes the first value in the two series and adds a random value at their end. Then, the page is updated and the procedure repeats itself after a 1 second non-blocking delay.
  
-Notice that in the definition of the series in `chart_dict` we set the animation to False. Experiment by setting this to True to see the difference. 
+Notice that in the definition of the series in `chart_dict` we set the `animation` to `False`. Experiment by setting this to `True` to see the difference.

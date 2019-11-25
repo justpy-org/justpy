@@ -38,12 +38,25 @@ class HighCharts(JustpyBaseComponent):
         self.classes = ''
         self.style = ''
         self.show = True
-
         self.pages = {}
+        self.tooltip_fixed = False
+        self.tooltip_x = -40
+        self.tooltip_y = 40
         super().__init__(**kwargs)
         for k, v in kwargs.items():
             self.__setattr__(k,v)
         self.allowed_events = ['tooltip', 'point_click']
+        for e in self.allowed_events:
+            for prefix in ['', 'on', 'on_']:
+                if prefix + e in kwargs.keys():
+                    fn = kwargs[prefix + e]
+                    if isinstance(fn, str):
+                        fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
+                        exec(fn_string)
+                        self.on(e, locals()[f'oneliner{self.id}'])
+                    else:
+                        self.on(e, fn)
+                    break
         if type(self.options) != Dict:
             self.options = Dict(self.options)
         for com in ['a', 'add_to']:
@@ -113,6 +126,9 @@ class HighCharts(JustpyBaseComponent):
         d['style'] = self.style
         d['def'] = self.options
         d['events'] = self.events
+        d['tooltip_fixed'] = self.tooltip_fixed
+        d['tooltip_x'] = self.tooltip_x
+        d['tooltip_y'] = self.tooltip_y
         return d
 
 
@@ -311,3 +327,20 @@ class Scatter(HighCharts):
         s = Dict()
         s.data = list(zip(x,y))
         self.options.series.append(s)
+
+
+class ScatterWithRegression(Scatter):
+
+    def __init__(self, x, y, **kwargs):
+        super().__init__(**kwargs)
+        m = (len(x) * np.sum(x * y) - np.sum(x) * np.sum(y)) / (len(x) * np.sum(x * x) - np.sum(x) ** 2)
+        b = (np.sum(y) - m * np.sum(x)) / len(x)
+        s = jp.Dict()
+        s.type = 'line'
+        s.marker.enabled = False
+        s.enableMouseTracking = False
+        min = x.min()
+        max = x.max()
+        s.data = [[min, m * min + b], [max, m * max + b]]
+        s.name = f'Regression, m: {round(m, 3)}, b: {round(b, 3)}'
+        o.series.append(s)

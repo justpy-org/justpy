@@ -51,13 +51,17 @@ It is important to remember that the update method is a coroutine and must run i
 If the previous paragraph reads like gibberish to you, I apologize. Explaining Python's asyncio is beyond the scope of this tutorial. If you don't need to develop applications that scale, don't worry about it. Just use the examples as templates. 
 
 Let's review the program in detail. First, we create `wp` and `clock_div` as global variables.
-Then we define the coroutine `clock_counter`. It runs an infinite loop. The first line of the loop sets the text attribute of clock_div to be the current time and date (formatted to look a little nicer). The second line uses the JustPy helper utility run_task to run the coroutine update (it in fact schedules the coroutine to run as soon as possible). The third line causes clock_counter to suspend running for 1 second in a non-blocking way (all other coroutines can run while clock_counter sleeps).
-Next, we define the coroutine `clock_init` (it could be just a regular function since it does not await any coroutine in this specific case). We will see in a second how this function will be used. All it does is run clock_counter once the server loop  is up and running.
-The last coroutine we define is `clock_test`. This is the function that handles all web requests. It just returns wp (it doesn’t need to be a coroutine in this case, it would work as a regular function since it does not await any coroutines). 
-The last line is the call to `justpy`. The keyword parameter `startup` allows us to designate a function to run once the server loop has been initiated. We cannot designate clock_counter as the startup function because the server is locked until the startup function terminates and clock_counter never terminates. 
-When a JustPy event handler  finishes running and returns `None`, JustPy calls update on the WebPage instance in which the event occurred. Now you know why the content in browser tabs gets updated after events automatically. If you don't want the page to update, return True or anything else from the event handler. Because the update function is so versatile, it allows writing collaborative web pages quite easily.
+Then we define the coroutine `clock_counter`. It runs an infinite loop. The first line of the loop sets the text attribute of `clock_div` to be the current time and date (formatted to look a little nicer). The second line uses the JustPy helper utility `run_task` to run the coroutine update (it in fact schedules the coroutine to run as soon as possible). The third line causes `clock_counter` to suspend running for 1 second in a non-blocking way (all other coroutines can run while `clock_counter` sleeps).
 
-## Editor
+Next, we define the coroutine `clock_init` (it could be just a regular function since it does not await any coroutine in this specific case). We will see in a second how this function will be used. All it does is run `clock_counter` once the server loop  is up and running.
+
+The last coroutine we define is `clock_test`. This is the function that handles all web requests. It just returns `wp` (it doesn’t need to be a coroutine in this case, it would work as a regular function since it does not await any coroutines). 
+
+The last line is the call to `justpy`. The keyword parameter `startup` allows us to designate a function to run once the server loop has been initiated. We cannot designate `clock_counter` as the startup function because the server is locked until the startup function terminates and `clock_counter` never terminates. 
+
+!> When a JustPy event handler finishes running and returns `None`, JustPy calls update on the WebPage instance in which the event occurred. That is why the content in browser tabs gets updated after events automatically. If you don't want the page to update, return `True` or anything else from the event handler. 
+
+## Collaborative Editor
 Run the following program:
 
 ```python
@@ -75,12 +79,13 @@ jp.justpy(edit_test)
 ```
 
 This program allows joint editing of a markdown document. Open several browser tabs or different browsers on your local machine and start editing the document. Any changes you make in one browser tab, is reflected immediately in all others. 
-The program uses the component EditorJP. This JustPy component was built around the simpleMDE Markdown Editor (https://simplemde.com/). How to do this will be the subject of another tutorial. Now that the component exists, adding a Markdown editor to any page is very simple. 
-Since the program renders wp, the same WebPage instance to all pages, they all share the same EditorJP instance. EditorJP inherits from Input and therefore each key pressed is sent to the server which in turn sets the value of the EditorJP instance (e in our case) and then updates wp using the update method. Since wp is rendered in all browser tabs, they are all updated.
+The program uses the component EditorJP. This JustPy component was built around the [simpleMDE Markdown Editor](https://simplemde.com/). How to do this will be the subject of another tutorial. Now that the component exists, adding a Markdown editor to any page is simple.
+ 
+Since the program renders `wp`, the same WebPage instance to all pages, they all share the same EditorJP instance. EditorJP inherits from [Input](tutorial/Input) and therefore each key pressed is sent to the server which in turn sets the value of the EditorJP instance (`e` in our case) and then updates `wp` using the update method. Since `wp` is rendered in all browser tabs, they are all updated.
 
 ## Simple Message Board
 
-JustPy allows updating just specific elements on the page and not the whole page. Here is an implementation of a simple message board in which just the Div with the message board is shared and updated. Again, load a page in different browser tabs and see the functionality (a message sent from one tab will show up in all the others).
+JustPy allows updating just specific elements on the page and not the whole page. Here is an implementation of a simple message board in which just the Div with the messages is shared and updated. Load pages in different browser tabs and see the functionality (a message sent from one tab will show up in all the others).
 
 ```python
 
@@ -131,15 +136,16 @@ jp.justpy(message_demo, startup=message_initialize)
 
 
 ```
-</div>
 
-At the top of the program we define combinations of Tailwind classes to make our UI a little nicer. This technique, of defining classes in a global manner can be used to create templates for JustPy applications. Next, we create global components that will be shared by all web pages. We introduce the `Icon` component which is used to display icons from the free [Fontawesome](https://fontawesome.com/) collection (https://fontawesome.com/). 
+At the top of the program we define combinations of Tailwind classes to make our UI a little nicer. This technique, of defining classes in a global manner can be used to create templates for JustPy applications. Next, we create global components that will be shared by all web pages. We introduce the `Icon` component which is used to display icons from the free [Fontawesome](https://fontawesome.com/) collection. 
 
 Take a look at `message_demo`, the third function we define. All requests will be handled by this function. Each time it is called, it creates a new `WebPage` instance, `wp`. It adds a Div to it (`outer_div`). To this Div we add the predefined `header` Div and another Div which holds the message box and the button used to send messages. The button itself has two child components, the plane icon and the Div with the 'Send' text. We then add the shared message div to `outer_div`.
 
-he next line, `shared_div.add_page(wp)`, is important. We need to add `wp` to the dictionary of pages shared_div is on. When we call the `update` method of `shared_div`, it will use this dictionary to update the appropriate browser tabs. JustPy does not keep track automatically of which page an element is on. This would have introduced a lot of overhead since often, as in our case also, an element is indirectly added to a page by being added to an element that has been or will be added to a page.
+The next line, `shared_div.add_page(wp)`, is important. We need to add `wp` to the dictionary of pages `shared_div` is on. When we call the `update` method of `shared_div`, it will use this dictionary to update the appropriate browser tabs. 
 
-Let's take a closer look at `send_message`, the event handler that gets called when `send_button` is clicked. If the message box is not empty, the function creates a Div to which it adds an icon, a time stamp and the text of the message. It then adds the Div as the first element in `shared_div`.  It clears the message box and then awaits the update method of `shared_div`. Only `shared_div` will be updated in all the WebPages it is on. All the other elements on the page will not be updated.
+!> JustPy does not keep track automatically of which page an element is on. This would have introduced a lot of overhead since often, as in our case also, an element is indirectly added to a page by being added to an element that has been or will be added to a page.
+
+Let's take a closer look at `send_message`, the event handler that gets called when `send_button` is clicked. If the message box is not empty, the function creates a Div to which it adds an icon, a time stamp and the text of the message. It then adds the Div as the first element in `shared_div`.  It clears the message box and then awaits the `update` method of `shared_div`. Only `shared_div` will be updated in all the WebPages it is on. All the other elements on the page will not be updated.
 
 Notice the `send_message` is a coroutine defined using the `async` keyword. This is the case because we need to await `update` from within `send_message`.  
 
@@ -157,7 +163,6 @@ async def count_down(self, msg):
     self.show = False
     if hasattr(msg.page, 'd'):
         msg.page.remove(msg.page.d)
-    # msg.page.add(bomb_icon)
     bomb_icon = jp.Icon(icon='bomb', classes='inline-block text-5xl ml-1 mt-1', a=msg.page)
     d = jp.Div(classes='text-center m-4 p-4 text-6xl text-red-600 bg-blue-500 faster', a=msg.page, animation=self.count_animation)
     msg.page.d = d
@@ -187,9 +192,9 @@ When you press the countdown button, a countdown begins and the page is updated 
 
 Every JustPy component has a `show` attribute. If it is set to `False`, the component is not rendered. The first line in the `count_down` event handler sets the button's `show` attribute to `False` and it is not rendered during the countdown (in this way the user cannot accidentally initiate another countdown while one is going on). Then we remove from the page the `Div` with the current countdown (we check if the `Div` is stored on the page to handle the first countdown ). We create the `Div` and add it to the page and also store a reference to it under the `d` attribute of the page so we can later have easy access to it for removal.
 
-Then we loop from the countdown start number down to zero. In each loop iteration we set the text of `d`, update the page, and sleep 1 second. The sleep is done using the asyncio library so as not to block countdowns on other pages. You can verify this by loading the page in different tabs or browsers.
+Then we loop from the countdown start number down to zero. In each loop iteration we set the text of `d`, update the page, and sleep 1 second using the asyncio library so as not to block countdowns on other pages. You can verify this by loading the page in different tabs or browsers.
 
-After the countdown loop has ended, we set the text of d to 'Boom!', change some of `d`'s classes and make the button visible again. Remember, that if an event handler returns `None` as in our case (the default in Python when no return statement is encountered), the framework updates the page. So when count_down terminates the page is updated again and that is why we see the button and 'Boom!'.
+After the countdown loop has ended, we set the text of `d` to 'Boom!', change some of `d`'s classes and make the button visible again. Remember, that if an event handler returns `None` as in our case (the default in Python when no return statement is encountered), the framework updates the page. Therefore when count_down terminates the page is updated again and that is why we see the button and 'Boom!'.
 
 JustPy supports animation using the [animate.css](https://daneden.github.io/animate.css/) library. Just set the animation attribute of any component to a valid animation name. The default animation we use above is 'flip'. Try http://127.0.0.1:8000/?animation=bounceIn for example. You can test different animations using query parameters. You can set the animation speed by adding one of the classes slow, slower, fast, faster to the classes of the component. In this case we used 'faster' so that the animation takes less than 1 second. 
 

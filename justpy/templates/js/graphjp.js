@@ -21,6 +21,7 @@ Vue.component('chart', {
                 var c = Highcharts.chart(container, this.$props.jp_props.def);
             }
             var id = this.$props.jp_props.id;
+            var props = this.$props.jp_props;
             //var rid = this.$props.jp_props.running_id;
             cached_graph_def['chart' + container] = c;
             var update_dict = {};
@@ -29,15 +30,21 @@ Vue.component('chart', {
                 update_dict.tooltip = {
                     useHTML: true,
                     shape: 'callout',
-                    positioner: function (boxWidth, boxHeight, point) {
+                   positioner: function (boxWidth, boxHeight, point) {
+                        var yf = props.tooltip_y;  // 40 is default
+                        var xf = props.tooltip_x;  // 40 is default
+                        if (props.tooltip_fixed) return {
+                            x: xf,//0 + 0.5*c.plotLeft,
+                            y: yf// hf*boxHeight //2 * boxHeight
+                        };
                         return {
-                            x: point.plotX + 0,
-                            y: point.plotY - 2 * boxHeight
+                            x: point.plotX + c.plotLeft + xf,//0 + 0.5*c.plotLeft,
+                            y: point.plotY + c.plotTop - yf// hf*boxHeight //2 * boxHeight
                         };
                     },
                     formatter: function (tooltip) {
                         if (this.point != null) {
-                            // Tootltip not shared or split
+                            // Tooltip not shared or split
                             var e = {
                                 'event_type': 'tooltip',
                                 id: id,
@@ -45,6 +52,7 @@ Vue.component('chart', {
                                 'x': this.point.x,
                                 'y': this.point.y,
                                 'z': this.point.z,
+                                'category': this.key,
                                 'color': this.point.color,
                                 'percentage': this.point.percentage,
                                 'total': this.point.total,
@@ -58,9 +66,10 @@ Vue.component('chart', {
                             // Tooltip shared or split
                             for (let i = 0; i < this.points.length; i++) {
                                 let point = {};
-                                point.x = this.points[i].x;
+                                point.x = this.points[i].point.x; // Just .x instead of point.x returns the category
                                 point.y = this.points[i].y;
                                 point.z = this.points[i].z;
+                                point.category = this.points[i].key;
                                 point.color = this.points[i].color;
                                 point.percentage = this.points[i].percentage;
                                 point.total = this.points[i].total;

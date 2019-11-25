@@ -1,4 +1,5 @@
 import justpy as jp
+import asyncio
 
 def h_test():
     wp = jp.QuasarPage()
@@ -7,11 +8,16 @@ def h_test():
     b.counter = 0
     return wp
 
-def my_click(self, msg):
+async def my_click(self, msg):
     self.counter += 1
     self.text = f'I was clicked {self.counter} times'
-    # msg.page.redirect = '/test'
     msg.page.display_url = f'/{self.counter}/{self.counter}'
+    for i in range(4):
+        msg.page.open = 'http://example.com'
+        await asyncio.sleep(0.5)
+        await msg.page.update()
+    return True
+
 
 @jp.SetRoute('/test')
 def change_page():

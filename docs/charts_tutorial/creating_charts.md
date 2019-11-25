@@ -84,9 +84,8 @@ The Highcharts library is a JavaScript library and the the chart examples are al
 Please go to https://api.highcharts.com/highcharts/chart.type and follow the link under "Try it" labeled ["Bar"](https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/chart/type-bar/). In the Highcharts documentation and in other discussions of Highcharts it is common to link to a JavaScript [jsfiddle](https://jsfiddle.net) or [codepen](https://codepen.io) working example. In this case, a jsfiddle window opens. Look at the JavaScript window in the lower left of the page. The second argument to `Highcharts.chart` is the JavaScript object that defines the chart. Let's copy this object and assign it to a Python string and try replicating this chart.
 
 If you simply copy the object like I did  below, you will get an error. Run the program and see for yourself there is an issue.
+
 ```python
-
-
 import justpy as jp
 
 my_chart_def = """

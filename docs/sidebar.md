@@ -15,16 +15,16 @@
     - [Sessions](tutorial/sessions.md "Pushing Data to Web Pages")
     - [Configuration](tutorial/configuration.md "Configuration")
     - [Custom Components](tutorial/custom_components.md "Custom Components")
-- Chart Tutorial
+- <span style="color: red;">Chart Tutorial</span>
     - [Introduction](charts_tutorial/introduction.md "Introduction")
     - [Creating Charts](charts_tutorial/creating_charts.md "Creating Charts")
     - [Using Pandas to Create Charts](charts_tutorial/pandas.md "Pandas")
     - [Stock Charts](charts_tutorial/stock_charts.md "Stock Charts")
     - [Updating Charts](charts_tutorial/updating_charts.md "Updating Charts")
     - [Tooltips](charts_tutorial/tooltips.md "Tooltips")
+    - [Chart Components](charts_tutorial/chart_components.md "Tooltips")
 - Reference
     - [WebPage class](reference/webpage.md "WebPage Class")
 
- *Links*
 
 
