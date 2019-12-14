@@ -3,7 +3,7 @@
 
 
 > The WebSocket API is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply.  
-[Mozzila.org](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+ <span>-</span> [Mozzila.org](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 
 JustPy uses this technology in order allow the server to "push" data to web pages. 
 Here is an example of a program that implements a clock. Every second, the server pushes the updated time to all open web pages.
@@ -32,7 +32,8 @@ async def clock_test():
 jp.justpy(clock_test, startup=clock_init)
 ```
 
-The program first creates a WebPage instance called `wp` and `Span `instance called `clock_div` which is added to `wp`. Then we define a function called `clock_counter`. This function implements an infinite loop that changes the text of clock_div to the current time, updates wp and sleeps (in a non-blocking way) for one second. Every second, this loop is repeated. 
+The program first creates a WebPage instance called `wp` and `Span `instance called `clock_div` which is added to `wp`. Then we define a function called `clock_counter`. This function implements an infinite loop that changes the text of `clock_div` to the current time, updates `wp` and sleeps (in a non-blocking way) for one second. Every second, this loop is repeated. 
+
 The `WebPage` instance `wp` is updated using the method `update()`. 
 In order to understand what is happening, we need to make several distinctions.
 
@@ -41,27 +42,29 @@ In order to understand what is happening, we need to make several distinctions.
 3.	However, each user has their own browser tab open. Also, the same user may have several browser tabs and windows open.
 4.	There is therefore a one to many relation between `wp` and browser tabs and windows. `wp` may be rendered in many different tabs and windows (this is true for any instance of the class `WebPage`).
 5.	Each time an instance of `WebPage` is rendered in a browser tab, JustPy creates a websocket connection (channel) between the tab and the sever. Therefore, an instance of `WebPage`, such as `wp`, may have many different websockets associated with it, one for every open tab that has `wp` rendered in it. JustPy keeps track of all open websockets
-6.	The `update()` method when applied to the page, retrieves all open websockets associated with the specific WebPage instance and uses them to change the specific browser tab they connect with.  `wp.update()` therefore updates all browser tabs that were rendered using wp.
+6.	The `update()` method when applied to the page, retrieves all open websockets associated with the specific WebPage instance and uses them to change the specific browser tab they connect with.  `wp.update()` updates all browser tabs that were rendered using `wp`.
 
 In JustPy, all the above is done by the framework without any need for developer intervention. What you need to remember is simply this: If requests from any number of users were returned the same instance of `WebPage`, any update to this instance will change the content for all these users.
+
 In our case, calling `wp.update()` will update all users since all requests result in wp being rendered (the function clock_test always returns `wp`).  
 
-It is important to remember that the update method is a coroutine and must run in the asyncio loop that the server runs on and therefore user functions that await this method must also be coroutines and defined using async. Once `justpy` has been called, the loop the server is running on can be accessed via `JustPy.loop` in case you need to do something more complex. Also `asyncio.get_event_loop()` should work if you haven’t initiated other loops.
+It is important to remember that the update method is a coroutine and must run in the asyncio loop that the server runs on and therefore user functions that await this method must also be coroutines and defined using async. Once `justpy` has been called, the loop the server is running on can be accessed via `JustPy.loop` in case you need to do something more complex. Also `asyncio.get_event_loop()` will work if you haven’t initiated other loops.
 
 If the previous paragraph reads like gibberish to you, I apologize. Explaining Python's asyncio is beyond the scope of this tutorial. If you don't need to develop applications that scale, don't worry about it. Just use the examples as templates. 
 
 Let's review the program in detail. First, we create `wp` and `clock_div` as global variables.
 Then we define the coroutine `clock_counter`. It runs an infinite loop. The first line of the loop sets the text attribute of `clock_div` to be the current time and date (formatted to look a little nicer). The second line uses the JustPy helper utility `run_task` to run the coroutine update (it in fact schedules the coroutine to run as soon as possible). The third line causes `clock_counter` to suspend running for 1 second in a non-blocking way (all other coroutines can run while `clock_counter` sleeps).
 
-Next, we define the coroutine `clock_init` (it could be just a regular function since it does not await any coroutine in this specific case). We will see in a second how this function will be used. All it does is run `clock_counter` once the server loop  is up and running.
+Next, we define the coroutine `clock_init` (it could be just a regular function since it does not await any coroutine in this specific case). We will see in a second how this function will be used. All it does is run `clock_counter` once the server loop is up and running.
 
 The last coroutine we define is `clock_test`. This is the function that handles all web requests. It just returns `wp` (it doesn’t need to be a coroutine in this case, it would work as a regular function since it does not await any coroutines). 
 
 The last line is the call to `justpy`. The keyword parameter `startup` allows us to designate a function to run once the server loop has been initiated. We cannot designate `clock_counter` as the startup function because the server is locked until the startup function terminates and `clock_counter` never terminates. 
 
-!> When a JustPy event handler finishes running and returns `None`, JustPy calls update on the WebPage instance in which the event occurred. That is why the content in browser tabs gets updated after events automatically. If you don't want the page to update, return `True` or anything else from the event handler. 
+!> When a JustPy event handler finishes running and returns `None`, JustPy calls the `update` method of the WebPage instance in which the event occurred. That is the reason that content in browser tabs gets updated after events automatically. If you don't want the page to update, return `True` or anything except for `None`. 
 
 ## Collaborative Editor
+
 Run the following program:
 
 ```python
@@ -69,8 +72,8 @@ import justpy as jp
 
 jp.template_options['tailwind'] = False
 
-wp = jp.WebPage()
-e = jp.EditorJP(a=wp)
+wp = jp.WebPage(delete_flag=False)
+e = jp.EditorJP(a=wp, debounce=300)
 
 def edit_test(request):
     return wp
@@ -78,7 +81,8 @@ def edit_test(request):
 jp.justpy(edit_test)
 ```
 
-This program allows joint editing of a markdown document. Open several browser tabs or different browsers on your local machine and start editing the document. Any changes you make in one browser tab, is reflected immediately in all others. 
+This program allows joint editing of a markdown document. Open several browser tabs or different browsers on your local machine and start editing the document. Any change you make in one browser tab, is reflected immediately in all others. 
+
 The program uses the component EditorJP. This JustPy component was built around the [simpleMDE Markdown Editor](https://simplemde.com/). How to do this will be the subject of another tutorial. Now that the component exists, adding a Markdown editor to any page is simple.
  
 Since the program renders `wp`, the same WebPage instance to all pages, they all share the same EditorJP instance. EditorJP inherits from [Input](tutorial/Input) and therefore each key pressed is sent to the server which in turn sets the value of the EditorJP instance (`e` in our case) and then updates `wp` using the update method. Since `wp` is rendered in all browser tabs, they are all updated.

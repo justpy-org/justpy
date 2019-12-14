@@ -1,20 +1,210 @@
 # import sys, os
 
 from justpy import *
-
-
-def dog_test(request):
-    breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'basenji', 'beagle', 'bluetick',
-              'borzoi', 'bouvier', 'boxer', 'brabancon', 'briard', 'bulldog-boston', 'bulldog-french',
+# https://dog.ceo/api/breeds/list/all    dict of all breeds under
+breeds = {
+    "affenpinscher": [],
+    "african": [],
+    "airedale": [],
+    "akita": [],
+    "appenzeller": [],
+    "basenji": [],
+    "beagle": [],
+    "bluetick": [],
+    "borzoi": [],
+    "bouvier": [],
+    "boxer": [],
+    "brabancon": [],
+    "briard": [],
+    "buhund": [
+        "norwegian"
+    ],
+    "bulldog": [
+        "boston",
+        "english",
+        "french"
+    ],
+    "bullterrier": [
+        "staffordshire"
+    ],
+    "cairn": [],
+    "cattledog": [
+        "australian"
+    ],
+    "chihuahua": [],
+    "chow": [],
+    "clumber": [],
+    "cockapoo": [],
+    "collie": [
+        "border"
+    ],
+    "coonhound": [],
+    "corgi": [
+        "cardigan"
+    ],
+    "cotondetulear": [],
+    "dachshund": [],
+    "dalmatian": [],
+    "dane": [
+        "great"
+    ],
+    "deerhound": [
+        "scottish"
+    ],
+    "dhole": [],
+    "dingo": [],
+    "doberman": [],
+    "elkhound": [
+        "norwegian"
+    ],
+    "entlebucher": [],
+    "eskimo": [],
+    "frise": [
+        "bichon"
+    ],
+    "germanshepherd": [],
+    "greyhound": [
+        "italian"
+    ],
+    "groenendael": [],
+    "hound": [
+        "afghan",
+        "basset",
+        "blood",
+        "english",
+        "ibizan",
+        "walker"
+    ],
+    "husky": [],
+    "keeshond": [],
+    "kelpie": [],
+    "komondor": [],
+    "kuvasz": [],
+    "labrador": [],
+    "leonberg": [],
+    "lhasa": [],
+    "malamute": [],
+    "malinois": [],
+    "maltese": [],
+    "mastiff": [
+        "bull",
+        "english",
+        "tibetan"
+    ],
+    "mexicanhairless": [],
+    "mix": [],
+    "mountain": [
+        "bernese",
+        "swiss"
+    ],
+    "newfoundland": [],
+    "otterhound": [],
+    "papillon": [],
+    "pekinese": [],
+    "pembroke": [],
+    "pinscher": [
+        "miniature"
+    ],
+    "pitbull": [],
+    "pointer": [
+        "german",
+        "germanlonghair"
+    ],
+    "pomeranian": [],
+    "poodle": [
+        "miniature",
+        "standard",
+        "toy"
+    ],
+    "pug": [],
+    "puggle": [],
+    "pyrenees": [],
+    "redbone": [],
+    "retriever": [
+        "chesapeake",
+        "curly",
+        "flatcoated",
+        "golden"
+    ],
+    "ridgeback": [
+        "rhodesian"
+    ],
+    "rottweiler": [],
+    "saluki": [],
+    "samoyed": [],
+    "schipperke": [],
+    "schnauzer": [
+        "giant",
+        "miniature"
+    ],
+    "setter": [
+        "english",
+        "gordon",
+        "irish"
+    ],
+    "sheepdog": [
+        "english",
+        "shetland"
+    ],
+    "shiba": [],
+    "shihtzu": [],
+    "spaniel": [
+        "blenheim",
+        "brittany",
+        "cocker",
+        "irish",
+        "japanese",
+        "sussex",
+        "welsh"
+    ],
+    "springer": [
+        "english"
+    ],
+    "stbernard": [],
+    "terrier": [
+        "american",
+        "australian",
+        "bedlington",
+        "border",
+        "dandie",
+        "fox",
+        "irish",
+        "kerryblue",
+        "lakeland",
+        "norfolk",
+        "norwich",
+        "patterdale",
+        "russell",
+        "scottish",
+        "sealyham",
+        "silky",
+        "tibetan",
+        "toy",
+        "westhighland",
+        "wheaten",
+        "yorkshire"
+    ],
+    "vizsla": [],
+    "waterdog": [
+        "spanish"
+    ],
+    "weimaraner": [],
+    "whippet": [],
+    "wolfhound": [
+        "irish"
+    ]
+}
+breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'basenji', 'beagle', 'bluetick',
+              'borzoi', 'bouvier', 'boxer', 'brabancon', 'briard',
               'bullterrier-staffordshire', 'cairn', 'cattledog-australian', 'chihuahua', 'chow', 'clumber', 'cockapoo',
-              'collie-border', 'coonhound', 'corgi-cardigan', 'cotondetulear', 'dachshund', 'dalmatian', 'dane-great',
+              'collie-border', 'coonhound', 'corgi-cardigan', 'cotondetulear', 'dachshund', 'dalmatian',
               'deerhound-scottish', 'dhole', 'dingo', 'doberman', 'elkhound-norwegian', 'entlebucher', 'eskimo',
-              'frise-bichon', 'germanshepherd', 'greyhound-italian', 'groenendael', 'hound-afghan', 'hound-basset',
+              'frise-bichon', 'germanshepherd', 'greyhound-italian', 'groenendael',
               'hound-blood', 'hound-english', 'hound-ibizan', 'hound-walker', 'husky', 'keeshond', 'kelpie',
               'komondor', 'kuvasz', 'labrador', 'leonberg', 'lhasa', 'malamute', 'malinois', 'maltese', 'mastiff-bull',
               'mastiff-tibetan', 'mexicanhairless', 'mix', 'mountain-bernese', 'mountain-swiss', 'newfoundland',
               'otterhound', 'papillon', 'pekinese', 'pembroke', 'pinscher-miniature', 'pointer-german',
-              'pointer-germanlonghair', 'pomeranian', 'poodle-miniature', 'poodle-standard', 'poodle-toy', 'pug',
+              'pomeranian',    'pug',
               'puggle', 'pyrenees', 'redbone', 'retriever-chesapeake', 'retriever-curly', 'retriever-flatcoated',
               'retriever-golden', 'ridgeback-rhodesian', 'rottweiler', 'saluki', 'samoyed', 'schipperke',
               'schnauzer-giant', 'schnauzer-miniature', 'setter-english', 'setter-gordon', 'setter-irish',
@@ -25,6 +215,8 @@ def dog_test(request):
               'terrier-norwich', 'terrier-patterdale', 'terrier-russell', 'terrier-scottish', 'terrier-sealyham',
               'terrier-silky', 'terrier-tibetan', 'terrier-toy', 'terrier-westhighland', 'terrier-wheaten',
               'terrier-yorkshire', 'vizsla', 'weimaraner', 'whippet', 'wolfhound-irish']
+
+def dog_test(request):
     wp = QuasarPage()
     wp.body_style = 'overflow: hidden'
     bp = parse_html("""
@@ -60,13 +252,13 @@ def dog_test(request):
         </q-page-container>
     </q-layout>
 </div>
-    """, a=wp, name='yossi')
+    """, a=wp)
     main_image = bp.name_dict['image']
-    l = Link(url='https://v1.quasar-framework.org/', text='Quasar', target='blank', classes="text-white")
+    l = Link(href='https://quasar.dev', text='Quasar', target='blank', classes="text-white")
     bp.name_dict['footer'].add(l)
     bp.name_dict['tooltip'].disable_events = True
     main_image.breed = 'papillon'
-    breed_select = QBtnDropdown(auto_close=True, split=True, glossy=True, label='Select Breed', icon='fas fa-dog', a=bp.name_dict['toolbar'])
+    breed_select = QBtnDropdown(auto_close=True, split=False, glossy=True, label='Select Breed', icon='fas fa-dog', a=bp.name_dict['toolbar'])
     breed_list = QList(separator=True, dense=True, a=breed_select)
     def change_breed(self, msg):
         main_image.breed = self.breed
@@ -111,6 +303,7 @@ def dog_test(request):
 
 
     def change_pic(self, msg):
+        # https://dog.ceo/api/breed/bulldog/french/images/random
         r = (requests.get(f'https://dog.ceo/api/breed/{self.breed}/images/random')).json()
         self.src = r['message']
         add_thumbnail(self, msg)

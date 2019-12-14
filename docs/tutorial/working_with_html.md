@@ -1,5 +1,4 @@
-# Parsing HTML and SVG
-
+# Parsing and Using HTML
 
 ## The <span style="color: red;">parse_html</span> Function
 Sometimes it is convenient to take regular HTML and convert it to JustPy elements. In order to do so we use the function `parse_html`.
@@ -32,7 +31,7 @@ The printout shows that `c` is a `Div` component that has 3 child components tha
  
 There are several way to access the child components. For example, in our specific case the first paragraph is the first child of `c` and therefore can be accessed as `c.components[0]`.
 
-### The <span style="color: red;">name_dict</span> dictionary
+## The <span style="color: red;">name_dict</span> dictionary
 
 A more general way to access parsed elements is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. Here is an example:
 
@@ -61,19 +60,75 @@ If you click the second paragraph, its text will change. Notice that we added `n
 
 If more than one element is given the same name in the HTML text, the dictionary value is a list with all the elements with that name.
 
-### Additional parsing function
+## Additional parsing function
 Along with parse_html there are two additional functions in JustPy to parse HTML: `parse_html_file` parses a file instead of a string and `parse_html_file_async` is a co-routine that does the same asynchronously.  
 
-### Converting to HTML
+## Converting to HTML
 Each component in JustPy also supports the `to_html()` method. It returns a string with the HTML representation of the element including all its child elements. You can think of it as the inverse of `parse_html()`.
 
-### The <span style="color: red;">commands</span> attribute
+## The <span style="color: red;">commands</span> attribute
+
+The `commands` attribute is created by `parse_html` and includes a list of the Python commands (represented as strings) needed to create the element in the JustPy framework. 
+
+ ```python
+import justpy as jp
+
+def commands_demo():
+    wp = jp.WebPage()
+    c = jp.parse_html("""
+        <div>
+        <p class="m-2 p-2 text-red-500 text-xl">Paragraph 1</p>
+        <p class="m-2 p-2 text-blue-500 text-xl">Paragraph 2</p>
+        <p class="m-2 p-2 text-green-500 text-xl">Paragraph 3</p>
+        </div>
+        """, a=wp)
+    for i in c.commands:
+        print(i)
+        jp.Div(text=i, classes='font-mono ml-2', a=wp)
+    print()
+    c = jp.parse_html("""
+            <div>
+            <p class="m-2 p-2 text-red-500 text-xl">Paragraph 1</p>
+            <p class="m-2 p-2 text-blue-500 text-xl">Paragraph 2</p>
+            <p class="m-2 p-2 text-green-500 text-xl">Paragraph 3</p>
+            </div>
+            """, a=wp, command_prefix='justpy.')
+    for i in c.commands:
+        print(i)
+        jp.Div(text=i, classes='font-mono ml-2', a=wp)
+    return wp
+
+jp.justpy(commands_demo)
+```
+
+The `command_prefix` keyword argument allows specifying the prefix for the commands. The default is 'jp.'
+
+!> All non blank prefixes should have the '.' (period) as their last character
+
+We can then use the commands to generate the output we need without parsing HTML:
+
+```python
+import justpy as jp
+
+def commands_demo():
+    wp = jp.WebPage()
+    root = jp.Div(a=wp)
+    c1 = jp.Div(a=root)
+    c2 = jp.P(classes='m-2 p-2 text-red-500 text-xl', a=c1, text='Paragraph 1')
+    c3 = jp.P(classes='m-2 p-2 text-blue-500 text-xl', a=c1, text='Paragraph 2')
+    c4 = jp.P(classes='m-2 p-2 text-green-500 text-xl', a=c1, text='Paragraph 3')
+    return wp
+
+jp.justpy(commands_demo)
+```
+
+The only change needed to the commands is to add `root` to the page.
 
 ##  The <span style="color: red;">inner_html</span> Attribute
 
-If we want to just insert HTML onto the page, we can do so using the `inner_html` attribute of any JustPy component.
+You can set the content of an element by assigning a HTML string to the element's `inner_html` attribute.
+
 ```python
-import asyncio
 import justpy as jp
 
 my_html = """
@@ -96,6 +151,23 @@ def inner_demo():
 jp.justpy(inner_demo)
 ```
 
-Be aware that if you set inner_html, it will override any other content of your component. 
+!> if you set `inner_html`, it will override any other content of your component. 
 
-Add: HTML at the page level
+## Inserting HTML at the WebPage level
+
+You can inject HTML directly into the page by setting the `html` attribute of a WebPage instance.
+
+```python
+import justpy as jp
+
+def html_demo():
+    wp = jp.WebPage()
+    jp.Div(text='This will not be shown', a=wp)
+    wp.html = '<p class="text-2xl m-2 m-1 text-red-500">Hello world!<p>'
+    jp.Div(text='This will not be shown', a=wp)
+    return wp
+
+jp.justpy(html_demo)
+```
+
+If the `html` attribute is set, all other additions to the page will be ignored.

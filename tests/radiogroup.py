@@ -35,7 +35,7 @@ class RadioGroup(Div):
         if hasattr(radio_button.parent, 'model'):
             radio_button.parent.model[0].data[radio_button.parent.model[1]] = msg.value
         if radio_button.parent.has_event_function('change'):
-            event_result = await run_event_function(radio_button.parent, 'change', msg, True)
+            event_result = await radio_button.parent.run_event_function('change', msg, True)
             return event_result
         else:
             logging.warning('%s', 'No event handler: "change" for RadioGroup ')  # Function was not defined

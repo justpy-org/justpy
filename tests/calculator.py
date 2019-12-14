@@ -1,4 +1,4 @@
-from justpy import Div, Input, Button, WebPage, justpy, run_event_function, set_model, QuasarPage
+from justpy import Div, Input, Button, WebPage, justpy, QuasarPage
 
 class Calculator(Div):
 
@@ -51,7 +51,7 @@ class Calculator(Div):
             except:
                 pass
         if changed:
-            set_model(calc, calc.value)
+            calc.set_model(calc.value)
             if calc.has_event_function('change'):
                 calc_msg = msg
                 calc_msg.event_type = 'change'
@@ -59,7 +59,7 @@ class Calculator(Div):
                 calc_msg.button_text = self.text
                 calc_msg.value = calc.value
                 calc_msg.class_name = calc.__class__.__name__
-                return await run_event_function(calc, 'change', calc_msg)
+                return await calc.run_event_function('change', calc_msg)
 
     def model_update(self):
         pass

@@ -1,14 +1,17 @@
 <script>
 
-
     var websocket_ready = false;
 
     {% include 'js/EventHandlerJP.js' %}
     {% include 'js/html_component.js' %}
     {% include 'js/quasar_component.js' %}
-    {% include 'js/graphjp.js' %}
+    {% include 'js/chartjp.js' %}
     {% include 'js/aggrid.js' %}
     {% include 'js/editorjp.js' %}
+
+    {% if page_options.title is not none %}
+        document.title = '{{ page_options.title }}';
+    {%endif %}
 
     {% if page_options.display_url is not none %}
         window.history.pushState("", "", '{{ page_options.display_url }}');
@@ -48,7 +51,6 @@
 
             switch (msg.type) {
                 case 'page_update':
-                    console.log(msg.page_options);
                     if (msg.page_options.redirect) {
                         location.href = msg.page_options.redirect;
                         break;
@@ -213,7 +215,6 @@
                     }))
                 }
             }
-            //return h('div', {class: ''}, comps);
             return h('div', { }, comps);
         }
     });

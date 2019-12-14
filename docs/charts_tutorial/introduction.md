@@ -1,8 +1,8 @@
-# Introduction
+# Introduction - Highcharts Tutorial
 
 !> It is recommended to go through the general [tutorial](tutorial/getting_started.md) first. 
 
-JustPy makes it simple to add charts to Web pages by being integrated with the [Highcharts](https://www.highcharts.com/) JavaScript charting library. Highcharts is a product of Highsoft. 
+JustPy makes it simple to create charts using [Highcharts](https://www.highcharts.com/) JavaScript charting library. Highcharts is a product of Highsoft. 
 
 There are several JavaScript charting libraries available, but my personal favorite is Highcharts. It is not too difficult to integrate other charting libraries with JustPy, so perhaps more charting libraries will be supported in the future.
 
@@ -17,4 +17,4 @@ The Non-Commercial License is offered for:
 - individuals using the software for personal use, testing and demonstration 
 
 
-A Highcharts chart in JustPy is a component. It is represented by a Python class, just like any other component. Because Highcharts is a JavaScript library it uses a JavaScript object structure to define the options or settings of a chart. In JustPy, charts use a dictionary that allows values to be set using the dot notation. However, to facilitate using chart examples written in JavaScript, the chart options in JustPy can also be a Python string of a subset of JavaScript objects. This will become clearer when we look at some examples.
+A Highcharts chart in JustPy is a component. It is represented by a Python class, just like any other component. Because Highcharts is a JavaScript library it uses a JavaScript object structure to define the options or settings of a chart. In JustPy, charts use a dictionary that allows values to be set using the dot notation. However, to facilitate using chart examples written in JavaScript, the chart options in JustPy can also be a Python string representing a subset of JavaScript objects. This will become clearer when we look at some examples.

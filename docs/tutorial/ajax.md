@@ -4,7 +4,7 @@
 
 By default, JustPy uses [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) as the communication protocol between the frontend and the backend. The advantage of WebSockets is that it allows the server to "push" data to the browser. 
 
-There may be applications where either you do not want to or cannot use WebSockets (due to hosting limitations for example). In the `justpy` command if the `websockets` keyword argument is set to `False`, web pages will not attempt to establish a WebSockets connection with the server. Instead, events and pertinent data will be sent to the backend using Ajax. Your program will still be able to respond to UI events in the browser but will not be able to push data to browsers so you will not be able to implement chat like applications.
+There may be applications where either you do not want to or cannot use WebSockets (due to hosting limitations for example). In the `justpy` command if the `websockets` keyword argument is set to `False`, web pages will not attempt to establish a WebSockets connection with the server. Instead, events and pertinent data will be sent to the backend using Ajax. Your program will still be able to respond to UI events in the browser but will not be able to push data to browsers (you will not be able to implement chat like applications for example).
 
 ```python
 import justpy as jp
@@ -18,13 +18,13 @@ def hello_test():
 jp.justpy(hello_test, websockets=False)
 ``` 
 
-The program above will use Ajax to handle clicks on the Hello elements. You van verify this by using the debugging tools of your browser (in Chrome press CTRL+Shift+I and go to "Network" tab)
+The program above will use Ajax to handle clicks on the Hello elements. You van verify this by using the debugging tools of your browser (in Chrome press CTRL+Shift+I and go to the "Network" tab)
 
-!> In most cases, users will not notice any difference in the performance of the application if you use Ajax instead of WebSockets, so if your hosting solution does not support WebSockets, give the Ajax option a try.
+!> In most cases, users will not notice any difference in the performance of the application if you use Ajax instead of WebSockets. If your hosting solution does not support WebSockets, give the Ajax option a try.
 
 ## Ajax Page Reload
 
-There may be cases where you do not want to use WebSockets but still want the content on the users' pages to refresh periodically. This is done in JustPy by setting the `relaod_interval` attribute of the page to the number of seconds between each reload. The page does not reload in the strictest sense of that word, it just refreshes its content using an Ajax call to the server as you would do in a single page application. 
+There may be cases where you do not want to use WebSockets but still want the content on the users' pages to refresh periodically. This is done in JustPy by setting the `reload_interval` attribute of the page to the number of seconds between each reload. The page does not reload in the strictest sense of that word, it just refreshes its content using an Ajax call to the server as you would do in a single page application. 
 
 For example, this feature is useful for implementing dashboards. Below is a very simple dashboard that includes just one element that is updated by a background task every second while users' browser tabs poll the updated content every 2.5 seconds. 
 

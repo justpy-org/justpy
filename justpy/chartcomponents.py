@@ -6,7 +6,6 @@ import itertools
 #TODO: May need to call chart.reflow() on resize
 #TODO: Handle formatter functions, for example in dataLabels and others.
 #TODO: Add support for events like drilldown
-#TODO: Add support for drawCrosshair https://api.highcharts.com/class-reference/Highcharts.Axis#drawCrosshair and tooltip refresh
 
 # If width of chart not specified it defaults to 600px
 # A JavaScript date is fundamentally specified as the number of milliseconds that have elapsed since midnight on January 1, 1970, UTC
@@ -35,9 +34,11 @@ class HighCharts(JustpyBaseComponent):
     def __init__(self, **kwargs):
         self.options = Dict()
         self.stock = False
+        self.use_cache = True
         self.classes = ''
         self.style = ''
         self.show = True
+        self.event_propagation = True
         self.pages = {}
         self.tooltip_fixed = False
         self.tooltip_x = -40
@@ -45,7 +46,8 @@ class HighCharts(JustpyBaseComponent):
         super().__init__(**kwargs)
         for k, v in kwargs.items():
             self.__setattr__(k,v)
-        self.allowed_events = ['tooltip', 'point_click']
+        self.allowed_events = ['tooltip', 'point_click', 'point_select', 'point_unselect', 'series_hide',
+                               'series_show', 'series_click']
         for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
                 if prefix + e in kwargs.keys():
@@ -59,6 +61,8 @@ class HighCharts(JustpyBaseComponent):
                     break
         if type(self.options) != Dict:
             self.options = Dict(self.options)
+        if 'series' not in self.options:
+            self.options.series = []
         for com in ['a', 'add_to']:
             if com in kwargs.keys():
                 kwargs[com].add_component(self)
@@ -89,7 +93,7 @@ class HighCharts(JustpyBaseComponent):
         return True
 
     async def select_point(self, point_list, websocket):
-        # data is list of od dict with keys id, series, point all integers
+        # data is list of dict with keys id, series, point all integers
         # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
         await websocket.send_json({'type': 'select_point', 'data': point_list})
         # So the page itself does not update, only the tooltip, return True not None
@@ -121,9 +125,11 @@ class HighCharts(JustpyBaseComponent):
         d['vue_type'] = self.vue_type
         d['id'] = self.id
         d['stock'] = self.stock
+        d['use_cache'] = self.use_cache
         d['show'] = self.show
         d['classes'] = self.classes
         d['style'] = self.style
+        d['event_propagation'] = self.event_propagation
         d['def'] = self.options
         d['events'] = self.events
         d['tooltip_fixed'] = self.tooltip_fixed
@@ -329,18 +335,32 @@ class Scatter(HighCharts):
         self.options.series.append(s)
 
 
-class ScatterWithRegression(Scatter):
+# --------------------------------------------------------------------
+# matplotlib related objects
+try:
+    import matplotlib.pyplot as plt
+    _has_matplotlib = True
+    import io
+except:
+    _has_matplotlib = False
 
-    def __init__(self, x, y, **kwargs):
-        super().__init__(**kwargs)
-        m = (len(x) * np.sum(x * y) - np.sum(x) * np.sum(y)) / (len(x) * np.sum(x * x) - np.sum(x) ** 2)
-        b = (np.sum(y) - m * np.sum(x)) / len(x)
-        s = jp.Dict()
-        s.type = 'line'
-        s.marker.enabled = False
-        s.enableMouseTracking = False
-        min = x.min()
-        max = x.max()
-        s.data = [[min, m * min + b], [max, m * max + b]]
-        s.name = f'Regression, m: {round(m, 3)}, b: {round(b, 3)}'
-        o.series.append(s)
+if _has_matplotlib:
+
+    class Matplotlib(Div):
+
+        def __init__(self, **kwargs):
+            self.figure = plt.gcf()
+            super().__init__(**kwargs)
+            self.set_figure(self.figure)
+
+        def set_figure(self, fig=None):
+            if not fig:
+                fig = self.figure
+            plt.figure(fig.number)
+            output = io.StringIO()
+            plt.savefig(output, format="svg")
+            # The 'white-space:pre' causes problems in placement of chart on page
+            self.inner_html = output.getvalue().replace('*{stroke-linecap:butt;stroke-linejoin:round;white-space:pre;}',
+                                                        '*{stroke-linecap:butt;stroke-linejoin:round;}')
+            output.close()
+            return self.inner_html

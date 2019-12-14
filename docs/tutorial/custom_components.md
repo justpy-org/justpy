@@ -440,6 +440,8 @@ We define a new component called `MyHello` which inherits from `Hello`. By runni
 
 ## Calculator Component
 
+### Base component
+
 In this part of the tutorial we will build a calculator component in stages. First, we will build a component that does not handle events or the model attribute. Please run the following example.
 ```python
 
@@ -500,7 +502,7 @@ JustPy components are Python classes. The Calculator component is therefore a Py
 
 The class constructor first calls the class constructor of the super class (in this case Div). If a class inherits from another JustPy component, you must run the `__init__` of the super class. It then sets the value attribute to 0 and adds two Input components, one for the tape and one for the result. The two Inputs are assigned to instance attributes for future reference and added to self (which is a Div and therefore other components can be added to it). The Inputs are also designated readonly so that the user cannot type in them.
 
-After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each list each represents a line of buttons. Each button is assigned the same click event handler, `self.calculator_click` which is a static method of the Calculator class (we could have defined the event handler inside the __init_ function instead). We also assign to the button `calc` attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.
+After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, `self.calculator_click` which is a static method of the Calculator class (we could have defined the event handler inside the `__init__ `function instead). We also assign to the button `calc` attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.
 
 In this example, for the sake of brevity, we implemented a very simple state machine for the calculator, and it is not perfect (for example, it does not handle 0 in front of a number). But for our purposes, it will do. The state machine is inside the click event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on `self.text` which is unique for each button.
  
@@ -509,7 +511,7 @@ In this example, for the sake of brevity, we implemented a very simple state mac
 As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like: 
 
 ```python
-from justpy import Div, Input, Button, WebPage, justpy, run_event_function
+from justpy import Div, Input, Button, WebPage, justpy
 
 class Calculator(Div):
 
@@ -569,7 +571,7 @@ class Calculator(Div):
                 calc_msg.button_text = self.text
                 calc_msg.value = calc.value
                 calc_msg.class_name = calc.__class__.__name__
-                return await run_event_function(calc, 'change', calc_msg)
+                return await calc.run_event_function('change', calc_msg)
 
 
 def calc_change(self, msg):
@@ -587,20 +589,26 @@ def calculator_test():
 justpy(calculator_test)
 ```
 
-Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do. Inside the click event handler, if a change occurs, we check if there is a change event handler and if it does, we run the Calculator event handler using the JustPy provided function `run_event_function`. 
+Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do. 
 
-This function takes three arguments. The first argument is the element we want to run the event handler for. The second is the event type. The third, is the dictionary we want to be passed as the second positional argument to the event handler. This is what we usually designate as msg in our event handlers.
+In the click event handler we use a flag called `changed` that is set to `True` by the state machine logic if an operation that changes the value of the calculator occurs.
+
+At the end of the event handler, we check if `changed` is `True`. If it is, we check whether the instance has a change event handler. We do this by using the method `has_event_function` which is a basic method of all JustPy components.
+
+If there is a change event handler and if it does, we run the Calculator event handler using the `run_event_function` method. 
+
+This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want to be passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handlers.
  
- Before calling run_event_function we modify some values in msg to make it more informative. In general, you would create the appropriate msg for how you believe the component will be used. In our case we have added the button_text key which stores the text of the last button that was clicked and that generated the change event.
+ Before calling `run_event_function` we modify some values in `msg` to make it more informative. In general, you would create the appropriate `msg` for how you believe the component will be used. In our case we have added the `button_text` key which stores the text of the last button that was clicked and that generated the change event.
 
-Please note that `run_event_function` is an async function and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
+Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
 
-### Adding model attribute
+### Adding a <span style="color: red">model</span> attribute
 
-To make Calculator complete, we will also add handling of the model attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the `model_update` method from the example below and see what happens.
+To make Calculator complete, we will also add handling of the `model` attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the `model_update` method from the example below and see what happens.
 
 ```python
-from justpy import Div, Input, Button, WebPage, justpy, run_event_function, set_model
+from justpy import Div, Input, Button, WebPage, justpy
 
 class Calculator(Div):
 
@@ -653,7 +661,7 @@ class Calculator(Div):
             except:
                 pass
         if changed:
-            set_model(calc, calc.value)  #******************** updates model 
+            calc.set_model(calc.value)  #******************** updates model 
             if calc.has_event_function('change'):
                 calc_msg = msg
                 calc_msg.event_type = 'change'
@@ -661,7 +669,7 @@ class Calculator(Div):
                 calc_msg.button_text = self.text
                 calc_msg.value = calc.value
                 calc_msg.class_name = calc.__class__.__name__
-                return await run_event_function(calc, 'change', calc_msg)
+                return await calc.run_event_function('change', calc_msg)
 
     def model_update(self):
         pass
@@ -676,12 +684,242 @@ def calculator_test():
 justpy(calculator_test)
 ```
 
-Notice that we have added a call to the JustPy utility function `set_model` in the click event handler. This function checks if the component provided as its first positional argument has a model attribute and if so, sets it to the second positional argument.  The function set_model is defined as follows:
+Notice that we have added a call to the method `set_model` in the click event handler. This method checks if the component has a model attribute and if so, sets it to the method's argument.  
+
+The `set_model` method is defined as follows:
 
 ```python
-def set_model(c, value):
-    if hasattr(c, 'model'):
-        c.model[0].data[c.model[1]] = value
+def set_model(self, value):
+    if hasattr(self, 'model'):
+        self.model[0].data[self.model[1]] = value
 ```
 
-The `model` attribute, as we defined it above is one directional. The component only sets `model` value but does not change any of its other attribute values based on changes in `model`.  
+The `model` attribute, as we defined it above is one directional. The component only sets `model` value but does not change any of its other attribute values based on changes in `model`. 
+
+## Tab Group Component
+
+This component allows inserting content in tabs and displaying it based on the tab selected.
+
+If the `animation` attribute is set to `True`, the transition between tabs is animated. The type of animation and its speed can also be set.
+
+A tab is added by calling the `add_tab` method. This method accepts three arguments (in addition to self). The first is the id of the tab. When the tab is selected, its value will become the id of the tab selected. Converesely, when the `value` attribute is set, if a tab with a corresponding id exists, it will be shown.
+
+The second argument is the label to display for the tab's selection. 
+
+The third argument is the content of the tab.  Typically it would be a container element such as a Div instance that contains other elements.
+
+In this component, the method `convert_object_to_dict`, is overridden. This is the method that executes each time an instance of the component is rendered. It is simpler in this case than using the `react` method that is called by the super class `convert_object_to_dict`. It also allows the flexibility of overriding the `react` method in components that inherit from the Tabs component.
+
+Below we also define another component, TabPills, that inherits from Tabs and just changes the appearance of the tabs label line. It does so by just changing a few class variables. 
+
+!> When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design. 
+
+ In the example below we use three tab components to display charts and pictures of dogs.
+ 
+ ```python
+from justpy import Div, WebPage, Ul, Li, HighCharts, A, justpy
+import justpy as jp
+
+
+class Tabs(Div):
+
+    tab_label_classes = 'overflow-hidden cursor-pointer bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold'
+    tab_label_classes_selected = 'overflow-hidden cursor-pointer bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold'
+    item_classes = 'flex-shrink mr-1'
+    item_classes_selected = 'flex-shrink -mb-px mr-1'
+    wrapper_style = 'display: flex; position: absolute; width: 100%; height: 100%;  align-items: center; justify-content: center; background-color: #fff;'
+
+    def __init__(self, **kwargs):
+
+        self.tabs = []  # list of {'id': id, 'label': label, 'content': content}
+        self.value = None  # The value of the tabs component is the id of the selected tab
+        self.content_height = 500
+        self.last_rendered_value = None
+        self.animation = False
+        self.animation_next = 'slideInRight'
+        self.animation_prev = 'slideOutLeft'
+        self.animation_speed = 'faster'  # '' | 'slow' | 'slower' | 'fast'  | 'faster'
+
+        super().__init__(**kwargs)
+
+        self.tab_list = Ul(classes="flex flex-wrap border-b", a=self)
+        self.content_div = Div(a=self)
+
+
+    def __setattr__(self, key, value):
+        if key == 'value':
+            try:
+                self.previous_value = self.value
+            except:
+                pass
+        self.__dict__[key] = value
+
+    def add_tab(self, id, label, content):
+        self.tabs.append({'id': id, 'label': label, 'content': content})
+        if not self.value:
+            self.value = id
+
+    def get_tab_by_id(self, id):
+        for tab in self.tabs:
+            if tab['id'] == id:
+                return tab
+        return None
+
+    def set_content_div(self, tab):
+        self.content_div.add(tab['content'])
+        self.content_div.set_classes('relative overflow-hidden border')
+        self.content_div.style = f'height: {self.content_height}px'
+
+    def set_content_animate(self, tab):
+        self.wrapper_div_classes = self.animation_speed  # Component in this will be centered
+
+        if self.previous_value:
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_next, temp=True,
+                                   style=f'{self.wrapper_style} z-index: 50;', a=self.content_div)
+            self.wrapper_div.add(tab['content'])
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_prev, temp=True,
+                                   style=f'{self.wrapper_style} z-index: 0;', a=self.content_div)
+            self.wrapper_div.add(self.get_tab_by_id(self.previous_value)['content'])
+        else:
+            self.wrapper_div = Div(classes=self.wrapper_div_classes, temp=True, a=self.content_div,
+                                   style=self.wrapper_style)
+            self.wrapper_div.add(tab['content'])
+
+        self.content_div.set_classes('relative overflow-hidden border')
+        self.content_div.style = f'height: {self.content_height}px'
+
+
+    def model_update(self):
+        val = self.model[0].data[self.model[1]]
+        if self.get_tab_by_id(val):
+            self.value = val
+
+    def delete(self):
+        if self.delete_flag:
+            for tab in self.tabs:
+                tab['content'].delete()
+                tab['content'] = None
+        super().delete()
+
+    @staticmethod
+    async def tab_click(self, msg):
+        if self.tabs.value != self.tab_id:
+            previous_tab = self.tabs.value
+            self.tabs.value = self.tab_id
+            if hasattr(self.tabs, 'model'):
+                self.tabs.model[0].data[self.tabs.model[1]] = self.tabs.value
+            # Run change if it exists
+            if self.tabs.has_event_function('change'):
+                msg.previous_tab = previous_tab
+                msg.new_tab = self.tabs.value
+                msg.id = self.tabs.id
+                msg.value = self.tabs.value
+                msg.class_name = self.tabs.__class__.__name__
+                return await self.tabs.run_event_function('change', msg)
+        else:
+            return True  # No need to update page
+
+    def convert_object_to_dict(self):
+        if hasattr(self, 'model'):
+            self.model_update()
+        self.set_classes('flex flex-col')
+        self.tab_list.delete_components()
+        self.content_div.components = []
+        for tab in self.tabs:
+            if tab['id'] != self.value:
+                tab_li = Li(a=self.tab_list, classes=self.item_classes)
+                li_item = A(text=tab['label'], classes=self.tab_label_classes, a=tab_li)
+            else:
+                tab_li = Li(a=self.tab_list, classes=self.item_classes_selected)
+                li_item = A(text=tab['label'], classes=self.tab_label_classes_selected, a=tab_li)
+                if self.animation and (self.value != self.last_rendered_value):
+                    self.set_content_animate(tab)
+                else:
+                    self.set_content_div(tab)
+            li_item.tab_id = tab['id']
+            li_item.tabs = self
+            li_item.on('click', self.tab_click)
+        self.last_rendered_value = self.value
+        d = super().convert_object_to_dict()
+
+        return d
+
+
+class TabsPills(Tabs):
+    tab_label_classes = 'cursor-pointer inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3'
+    tab_label_classes_selected = 'cursor-pointer inline-block border border-blue-500 rounded py-1 px-3 bg-blue-500 text-white'
+    item_classes = 'flex-shrink mr-3'
+    item_classes_selected = 'flex-shrink -mb-px mr-3'
+
+
+my_chart_def = """
+{
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4],
+            animation: false
+        }, {
+            name: 'John',
+            data: [5, 7, 3],
+            animation: false
+        }]
+}
+"""
+
+# https://dog.ceo/api/breed/papillon/images/random
+pics_french_bulldogs = ['5458', '7806', '5667', '4860']
+pics_papillons = ['5037', '2556', '7606', '8241']
+
+def tab_change(self, msg):
+    print('In change event handler:', msg)
+
+def tab_comp_test():
+    wp = jp.WebPage(data={'tab': 'id2556'})
+
+    t = Tabs(a=wp, classes='w-3/4 m-4', style='', animation=True, content_height=550)
+    for chart_type in ['bar', 'column', 'line', 'spline']:
+        d = jp.Div(style=Tabs.wrapper_style, delete_flag=True)
+        my_chart = jp.HighCharts(a=d, classes='m-2 p-2 border', style='width: 1000px;', options=my_chart_def, use_cache=False)
+        my_chart.options.chart.type = chart_type
+        my_chart.options.title.text = f'Chart of Type {chart_type.capitalize()}'
+        my_chart.options.subtitle.text = f'Subtitle {chart_type.capitalize()}'
+        t.add_tab(f'id{chart_type}', f'{chart_type}', d)
+
+    d_flex = Div(classes='flex', a=wp)  # Container for the two dog pictures tabs
+
+    t = Tabs(a=d_flex, classes=' w-1/2 m-4', animation=True, content_height=550, model=[wp, 'tab'], change=tab_change)
+    for pic_id in pics_papillons:
+        d = jp.Div(style=Tabs.wrapper_style)
+        jp.Img(src=f'https://images.dog.ceo/breeds/papillon/n02086910_{pic_id}.jpg', a=d)
+        t.add_tab(f'id{pic_id}', f'Pic {pic_id}', d)
+
+    t = TabsPills(a=d_flex, classes='w-1/2 m-4', animation=True, content_height=550, change=tab_change)
+    for pic_id in pics_french_bulldogs:
+        d = jp.Div(style=Tabs.wrapper_style)
+        jp.Img(src=f'https://images.dog.ceo/breeds/bulldog-french/n02108915_{pic_id}.jpg', a=d)
+        t.add_tab(f'id{pic_id}', f'Pic {pic_id}', d)
+
+    input_classes = "w-1/3 m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
+
+    in1 = jp.Input(classes=input_classes, model=[wp, 'tab'], a=wp)
+
+    return wp
+
+
+justpy(tab_comp_test)
+```
+ 

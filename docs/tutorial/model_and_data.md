@@ -1,4 +1,7 @@
 # The Model and Data Attributes
+
+## Introduction and Examples
+
 The model attribute is a special one in JustPy. You don't need to use it, but if you do, it may make your code more concise and readable. It is an elegant and simple way to share data between independent components (it was inspired by the [`v-model`](https://vuejs.org/v2/api/#v-model) directive in Vue.js and works in a similar manner).
 
 Try running the following program and typing into the input field in the browser:
@@ -41,7 +44,9 @@ async def input_demo(request):
 
 jp.justpy(input_demo)
 ```
+
 Since all Div instances have the same model, they change when we type. Without the model attribute, implementing this would be more verbose.
+
 Now let's duplicate the Inputs. Let's have five Inputs instead of one:
 ```python
 import justpy as jp
@@ -155,7 +160,7 @@ def model_update(self):
 
 In `MyDiv`'s `model_update` we check first if the value to set the `text` attribute is the empty string, and if so, assign to it the string "Nothing typed yet". It creates the functionality we were looking for.
 
-### More complex model_update methods
+## More complex model_update methods
 
 We can put more functionality into the the `model_update` function.
 

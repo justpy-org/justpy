@@ -20,6 +20,10 @@ Vue.component('html_component', {
             }
         }
 
+        if (this.jp_props.attrs.id == 'temp') {
+            delete this.jp_props.attrs.id
+        }
+
         description_object  = {
             // class: this.jp_props.classes,
             style: this.jp_props.style,
@@ -35,22 +39,7 @@ Vue.component('html_component', {
                 // change: this.eventFunction,
                 // keyup: this.eventFunction
             },
-            directives: [
-                {
-                    name: 'tooltip',    // https://www.npmjs.com/package/v-tooltip
-                    content: 'hello there',
-                    //value: (this.jp_props.tooltip ? {content: this.jp_props.tooltip} : null),
-                    value: (function (o) {
-                        if (o.jp_props.tooltip) {
-                            return {content: o.jp_props.tooltip}
-                        } else {
-                            return null
-                        }
-                    })(this),
-                    placement: 'auto'
-
-                }
-            ],
+            directives: [],
             slot: this.jp_props.slot,
             ref: 'r' + this.jp_props.id
         };
@@ -76,16 +65,13 @@ Vue.component('html_component', {
     methods: {
 
         eventFunction: (function (event) {
-            // console.log('In component eventFunction');
-            // console.log(event);
             if (!this.$props.jp_props.event_propagation) {
                 event.stopPropagation();
             }
             if (event.type=='submit') {
                 var form_reference = this.$el;
                 var props = this.$props;
-                event.preventDefault();    //stop form from submitting
-                console.log('In submit ' + ' id ' + form_reference.id);
+                event.preventDefault();    //stop form from being submitted
                 var form_elements_list = [];
                 var formData = new FormData(form_reference);
                 var form_elements = form_reference.elements;
@@ -103,10 +89,6 @@ Vue.component('html_component', {
                     attr_dict['id'] = form_elements[i].id;
                     form_elements_list.push(attr_dict);
                 }
-
-                // console.log(event);
-                console.log(form_elements_list);
-                // var form_data = {'form_data': form_elements_list};
                 eventHandler(props, event, form_elements_list);
             }
             else {
@@ -142,8 +124,7 @@ Vue.component('html_component', {
 
             if (this.$props.jp_props.input_type=='radio') {
                 if (this.$props.jp_props.checked) {
-                  // if (!this.$refs['r' + this.$props.jp_props.id].checked) this.$refs['r' + this.$props.jp_props.id].focus();
-                  this.$refs['r' + this.$props.jp_props.id].checked = true;  // This unchecks other radio buttons in group also
+                  this.$refs['r' + this.$props.jp_props.id].checked = true;  // This un-checks other radio buttons in group also
                 }
                 else {
                     this.$refs['r' + this.$props.jp_props.id].checked = false;
@@ -156,13 +137,6 @@ Vue.component('html_component', {
             }
         }
 
-        if (this.$props.jp_props.slide_down) {   // Use the jquery slide up and slide down if required
-            $('#' + this.$props.jp_props.id).slideDown();
-        }
-
-        if (this.$props.jp_props.slide_up) {
-            $('#' + this.$props.jp_props.id).slideUp();
-        }
     },
     props: {
         jp_props: Object,

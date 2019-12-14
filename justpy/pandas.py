@@ -24,6 +24,9 @@ if _has_pandas:
         def _validate(obj):
             pass
 
+        @staticmethod
+        def make_pairs_list(x_data, y_data):
+            return list(map(list, itertools.zip_longest(x_data, y_data)))
 
         def _get_column(self, col_spec):
             if isinstance(col_spec, int):
@@ -38,6 +41,7 @@ if _has_pandas:
         def plot(self, x, y, **kwargs):
             kind = kwargs.get('kind', 'column')
             chart = HighCharts(**kwargs)
+            categories = kwargs.get('categories', True)
             o = chart.options
             o.chart.type = kind
             o.chart.zoomType = 'xy'
@@ -46,13 +50,17 @@ if _has_pandas:
             o.title.text = kwargs.get('title', '')
             o.subtitle.text = kwargs.get('subtitle', '')
             o.plotOptions.series.stacking = kwargs.get('stacking', '')  # either normal or percent
-            if kind != 'scatter':
+            if kind not in ['scatter'] and categories:
                 o.xAxis.categories = list(self._get_column(x))
             o.series = []
             for col in y:
                 s = Dict()
-                s.data = list(self._get_column(col)) if kind != 'scatter' else list(zip(self._get_column(x),self._get_column(col)))
+                if kind not in ['scatter'] and categories:
+                    s.data = list(self._get_column(col))
+                else:
+                    s.data = self.make_pairs_list(self._get_column(x),self._get_column(col))
                 s.name = self.df.columns[col] if isinstance(col, int) else col
+                s.type = kind
                 o.series.append(s)
             return chart
 

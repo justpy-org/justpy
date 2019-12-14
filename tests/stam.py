@@ -15,7 +15,7 @@ def histogram_test(request):
     chart.options.title.text = 'Normal Distribution Histogram'
     return wp
 
-jp.justpy(histogram_test)
+# jp.justpy(histogram_test)
 
 class MyPie(jp.HighCharts):
 
@@ -71,4 +71,4 @@ def pie_test(request):
     chart.options.title.text = 'Fruit Distribution'
     return wp
 
-# jp.justpy(pie_test)
+jp.justpy(pie_test)

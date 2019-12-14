@@ -115,9 +115,9 @@ def test_model():
     in2 = QInput(a=d1, color="orange", label='Second one', clearable=True, model=[d1, 'text'], type="text", prefix='$')
     in2.add_scoped_slot('prepend', icon1)
     in3 = parse_html("""
-    <q-input standout v-model="email"  prefix="Email:" suffix="@gmail.com" hint="email"></q-input>
+    <q-input standout   prefix="Email:" suffix="@gmail.com" hint="email"></q-input>
     """, a=d1)
-    in3.mask = "###/##"
+    # in3.mask = "###/##"
     in3.add_scoped_slot('prepend', QIcon(name='mail'))
     in3.add_scoped_slot('after', Div(text='hello'))
     d2 = Div(classes="q-pa-md", style="max-width: 500px")
@@ -2605,7 +2605,8 @@ def toolbar_test():
 @SetRoute('/layout')
 def layout_test():
     wp = QuasarPage()
-    c = parse_html("""
+    lorem = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?'
+    c = parse_html(f"""
     <div class="q-pa-md">
     <q-layout view="lhh LpR lff" container style="height: 300px" class="shadow-2 rounded-borders">
       <q-header reveal class="bg-black">
@@ -2617,51 +2618,9 @@ def layout_test():
 
       <q-page-container>
         <q-page padding>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-            <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
+          <p>{lorem}</p><p>{lorem}</p><p>{lorem}</p><p>{lorem}</p><p>{lorem}</p><p>{lorem}</p>
+          <p>{lorem}</p><p>{lorem}</p><p>{lorem}</p><p>{lorem}</p><p>{lorem}</p><p>{lorem}</p>
+       
           <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-fab
               icon="add"

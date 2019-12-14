@@ -1,29 +1,37 @@
-- [<span style="font-size: 15px; font-weight: 700">Introduction</span>](/)
-- Tutorial
+- [<span class="section-header">What is JustPy?</span>](/)
+- <span class="section-header">Tutorial</span>
     - [Getting Started](tutorial/getting_started.md "Getting Started")
     - [Basic Concepts](tutorial/basic_concepts.md "Basic Concepts")
     - [Handling Events](tutorial/handling_events.md "Handling Events")
     - [HTML Components](tutorial/html_components.md "HTML Components")
     - [Routes](tutorial/routes.md "Routes")
     - [The Request Object](tutorial/request_object.md "The Request Object")
-    - [Input Component](tutorial/Input.md "Input")
+    - [Input Component](tutorial/Input.md "Input Component")
     - [Intermezzo 1 - Tailwind](tutorial/intermezzo_1.md "Tailwind")
-    - [Working with HTML](tutorial/working_with_html.md "Working with HTML")
+    - [Parsing and Using HTML](tutorial/working_with_html.md "Parsing and Using HTML")
+    - [SVG Components](tutorial/svg_components.md "SVG Components")
+    - [Matplotlib Charting](tutorial/matplotlib.md "Matplotlib Charting")
     - [Pushing Data to Web Pages](tutorial/pushing_data.md "Pushing Data to Web Pages")
-    - [Ajax vs. WebSockets](tutorial/ajax.md "Ajax")
-    - [The model and data attributes](tutorial/model_and_data.md "Pushing Data to Web Pages")
-    - [Sessions](tutorial/sessions.md "Pushing Data to Web Pages")
+    - [Ajax vs. WebSockets](tutorial/ajax.md "Ajax vs. WebSockets")
+    - [The model and data attributes](tutorial/model_and_data.md "The model and data attributes")
+    - [Sessions](tutorial/sessions.md "Sessions")
     - [Configuration](tutorial/configuration.md "Configuration")
     - [Custom Components](tutorial/custom_components.md "Custom Components")
-- <span style="color: red;">Chart Tutorial</span>
-    - [Introduction](charts_tutorial/introduction.md "Introduction")
+- <span class="section-header" >Highcharts Tutorial</span>
+    - [Introduction - Highcharts](charts_tutorial/introduction.md "Introduction")
     - [Creating Charts](charts_tutorial/creating_charts.md "Creating Charts")
-    - [Using Pandas to Create Charts](charts_tutorial/pandas.md "Pandas")
+    - [Using Pandas to Create Charts](charts_tutorial/pandas.md "Pandas and Charts")
     - [Stock Charts](charts_tutorial/stock_charts.md "Stock Charts")
     - [Updating Charts](charts_tutorial/updating_charts.md "Updating Charts")
     - [Tooltips](charts_tutorial/tooltips.md "Tooltips")
-    - [Chart Components](charts_tutorial/chart_components.md "Tooltips")
-- Reference
+    - [Iris Dataset Visualization](charts_tutorial/iris.md "Iris Dataset")
+    - [Chart Components](charts_tutorial/chart_components.md "Chart Components")
+- <span class="section-header">ag-Grid Tutorial</span>
+    - [Introduction - ag-Grid](grids_tutorial/introduction.md "Introduction")
+    - [Creating Grids](grids_tutorial/creating_grids.md "Creating Grids")
+    - [Using Pandas to Create Grids](grids_tutorial/pandas.md "Pandas and Grids")
+    - [Grid Events](grids_tutorial/grid_events.md "Grid Events")
+- <span class="section-header">Reference</span>
     - [WebPage class](reference/webpage.md "WebPage Class")
 
 

@@ -9,8 +9,11 @@ function eventHandler(props, event, form_data, aux) {
     console.log(props.jp_props);
     console.log(websocket_ready);
     console.log(use_websockets);
+    console.log('debounce');
+    console.log(props.jp_props.debounce);
     console.log('-------------------------');
-     if (!websocket_ready && use_websockets) return;
+    if (!websocket_ready && use_websockets) return;
+
     e = {
         'event_type': event.type,
         'id': props.jp_props.id,
@@ -45,9 +48,18 @@ function eventHandler(props, event, form_data, aux) {
         }
     }
 
-    send_to_server(e);
+    //send_to_server(e);
+    if (props.jp_props.debounce) {
+        clearTimeout(props.timeout);
+        props.timeout = setTimeout(function () {
+                send_to_server(e);
+            }
+            , props.jp_props.debounce);
+    }
+    else {
+        send_to_server(e);
+    }
 
-    // Check for scrolling https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
     if (props.jp_props.scroll && (event.type == 'click')) {
         event.preventDefault();

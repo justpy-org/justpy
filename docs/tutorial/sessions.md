@@ -22,9 +22,11 @@ SECRET_KEY = "my_very_secret_key_that_only_I_know"
 
 When a request is received and sessions are enabled, JustPy checks if a session cookie already exits. If not, a new unique session id is generated (using [uuid4](https://docs.python.org/3/library/uuid.html)).
 
-The value of the JustPy cookie is signed using the python package [`itsdangerous`](https://palletsprojects.com/p/itsdangerous/).  To do so a secret key needs to be provided. Set the secret key by setting the value of `SECRET_KEY` in the configuration file justpy.env. JustPy comes with a default value ("$$$my_secret_string$$$") but be sure to change this for production. 
+The value of the JustPy cookie is signed using the python package [`itsdangerous`](https://palletsprojects.com/p/itsdangerous/).  In order to do so, a secret key needs to be provided. Set the secret key by setting the value of `SECRET_KEY` in the configuration file justpy.env. JustPy comes with a default value ("$$$my_secret_string$$$") but be sure to change this for production. 
 
-The advantage of signing the cookie is that cookie tampering  can be detected. If JustPy detects that the cookie was tampered with, a  **Bad Cookie** response is returned to the browser. If you get this response while debugging, it may mean that you changed your password and your cookie is signed with the previous one. Just erase the cookie in your browser and try again. 
+The advantage of signing the cookie is that cookie tampering  can be detected. If JustPy detects that the cookie was tampered with, a  **Bad Cookie** response is returned to the browser. 
+
+!> If you get a **Bad Cookie** response while testing you site, it may mean that you changed your secret key and your cookie is signed with the previous one. Just erase the cookie in your browser and try again. 
 
 If the cookie is validated, the session inserts the session id into the `request` object as `request.session_id`.
 
@@ -34,10 +36,10 @@ If the cookie is validated, the session inserts the session id into the `request
 
 ## Example
 
-The session id can be used as an index or key to store information about a session. In the example below we define a dictionary call `session_dict` and hold the information there. If you need the session data to persist between
+The session id can be used as an index or key to store information about a session. In the example below we define a dictionary called `session_dict` and hold the information there. If you need the session data to persist between
 server restarts, you would use a permanent data store like a a shelve or database to hold session data.
 
-For each session, a tally is kept of the number of visits and the number of clicks.
+In this example, for each session, a tally is kept of the number of visits and the number of clicks.
 JustPy provides the session id as part of the information that event handlers receive. If the standard `msg` argument is used, then the session id can be found in `msg.session_id`.
 
 ```python
@@ -67,3 +69,5 @@ def session_test(request):
 
 jp.justpy(session_test)
 ```
+
+Run the program above. Close, open and reload browser tabs and click the button. The session information persists.

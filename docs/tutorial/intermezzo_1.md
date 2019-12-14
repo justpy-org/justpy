@@ -1,12 +1,16 @@
 # Intermezzo 1 - Tailwind
 
+## Why Tailwind?
+
 If you are not interested in CSS or design issues of web sites, you can safely skip this section and move ahead with the tutorial.
 
 [Tailwind](https://tailwindcss.com/) is a "a utility-first CSS framework for rapidly building custom designs".
 
-Tailwind is a great companion for JustPy because "instead of opinionated pre-designed components, Tailwind provides low-level utility classes that let you build completely custom designs without ever leaving your HTML". In practical terms, using Tailwind makes it easier to associate design with JustPy components. 
+Tailwind is a great companion for JustPy because "instead of opinionated pre-designed components, Tailwind provides low-level utility classes that let you build completely custom designs without ever leaving your HTML". In practical terms, using Tailwind makes it easier to associate design with JustPy components and does not couple design with JavaScript. 
 
-Of course, you need not use Tailwind, but it is worth your while evaluating it. 
+Of course, you need not use Tailwind, but it is worth your while evaluating it.  
+
+## The Tailwind class dictionaries
 
 The JustPy `Tailwind` class has two dictionaries: `tw_dict` and `tw_reverse_dict`
 
@@ -28,3 +32,19 @@ jp.justpy(text_colors)
 ```
 
 This program shows the names and colors of all Tailwind text colors.
+
+## Headers in Tailwind
+
+!> All h1-h6 elements are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#6-explicitly-style-any-headings).
+
+## Lists in Tailwind
+
+!> All lists are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#7-explicitly-style-any-lists-that-should-have-bullets-numbers).
+
+## Disabling Tailwind
+
+To disable Tailwind add the following line to the configuration file justpy.env:
+```python
+TAILWIND = False
+```
+

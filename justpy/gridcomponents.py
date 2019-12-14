@@ -60,6 +60,10 @@ class AgGrid(JustpyBaseComponent):
     def on(self, event_type, func):
         # Ag-Grid supports many events, so no check is made for allowed events.
         # https://www.ag-grid.com/javascript-grid-events/
+        cls = JustpyBaseComponent
+        # Moved here for testing
+        cls.instances[self.id] = self
+        self.needs_deletion = True
         setattr(self, 'on_' + event_type, MethodType(func, self))
         if event_type not in self.events:
             self.events.append(event_type)

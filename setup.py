@@ -23,7 +23,7 @@ setuptools.setup(
     include_package_data=True,
     install_requires=[
         'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0',
-        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'requests', 'aiofiles>=0.4.0'
+        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'requests'
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

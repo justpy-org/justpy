@@ -58,7 +58,7 @@ Try for example, changing the text of the chart title in `my_chart_def` and runn
 
 ## Chart Types
 
-Let's do something a little more complex. Change chart_test in the above example to the following:
+Let's do something a little more complex. Change `chart_test` in the above example to the following:
 ```python
 def chart_test():
     wp = jp.WebPage()
@@ -70,9 +70,9 @@ def chart_test():
     return wp
 ```
 
-Four charts are created and put on the page, each one of a different type. We do this by iterating over a list with four different chart types that Highcharts supports (the reference for the Highcharts chart options can be found at https://api.highcharts.com/highcharts/). When we create each chart, we load the same options (via a keyword argument) to all of them. 
+Four charts are created and put on the page, each one of a different type. We accomplish this by iterating over a list with four different chart types that Highcharts supports (the reference for the Highcharts chart options can be found at https://api.highcharts.com/highcharts/). When we create each chart, we load the same options (via a keyword argument) to all of them. 
 
-However, we then proceed to change the options. Using the dot notation, we assign different values to o`ptions.chart.type`, `options.title.text` and `options.subtitle.text`. Notice that options.subtitle was not specified in `my_chart_def`. The [addict](https://github.com/mewwts/addict) library `Dict` structure creates sub dictionaries automatically when required. 
+However, we then proceed to change the options. Using the dot notation, we assign different values to `options.chart.type`, `options.title.text` and `options.subtitle.text`. Notice that `options.subtitle` was not specified in `my_chart_def`. The [addict](https://github.com/mewwts/addict) library `Dict` structure creates sub dictionaries automatically when required. 
 
 
 ## Using Highcharts Online Examples
@@ -169,9 +169,12 @@ This time, there is no error. When you copy a JavaScript object, make sure that 
 
 ## Chart Series
 
-Notice that we have added two lines to `chart_test`.  The first of these lines gives the series a name and makes the legend more informative. The Dicts that describe the series of a chart are held in a list so the first series is options.series[0]
+Notice that we have added two lines to `chart_test`.  The first of these lines gives the series a name and makes the legend more informative. The Dicts that describe the series of a chart are held in a list so the first series is `options.series[0]`
 
 Here is an example of how you create a chart with multiple series.
+
+!> numpy needs to be installed for this example to work
+
 ```python
 import justpy as jp
 import numpy as np
@@ -198,9 +201,9 @@ jp.justpy(sine_test)
 
 This example uses numpy to generate sines with different frequencies and adds them as separate series to a chart (numpy needs to be installed for this example to work).
 
-This and other examples will use the Python standard library function zip, so it you are not familiar with it, please read about it (https://docs.python.org/3/library/functions.html#zip). Using zip, it is very simple to create lists of x, y pairs which is one data format Highcharts supports for its series (it supports other formats also such as dictionaries).  
+This and other examples will use the Python standard library function `zip`. Using `zip`, it is very simple to create lists of x, y pairs which is one data format Highcharts supports for its series (it supports other formats also such as dictionaries).  
 
-Try moving the mouse over different areas of the graph to see its interactive features. For example, when you hover over a series name in the legend, it highlights the series. When you click the series name in the legend, it is disabled.
+Try moving the mouse over different areas of the chart to see its interactive features. For example, when you hover over a series name in the legend, it highlights the series. When you click the series name in the legend, it is disabled.
 
 ## Sharing Charts
 

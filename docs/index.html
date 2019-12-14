@@ -9,6 +9,9 @@
     <link rel="shortcut icon" href='https://elimintz.github.io/favicon.png'>
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
 
+<style>
+    .section-header {color: white; background-color: #33A8FF; padding: 3px; border-radius: .5rem; padding-right: 1rem; padding-left: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem;}
+</style>
 </head>
 <body>
 <div id="app"></div>
@@ -19,8 +22,10 @@
         alias: {
       '/.*/sidebar.md': '/sidebar.md'
     },
+        //autoHeader: true,
+        themeColor: '#33A8FF',
         subMaxLevel: 3,
-        logo: 'https://elimintz.github.io/favicon.png',
+        //logo: 'https://elimintz.github.io/favicon.png',
         search: {
             paths: 'auto',
             maxAge: 10000,
@@ -29,6 +34,7 @@
         name: 'JustPy',
         notFoundPage: 'README.md',
         auto2top: true,
+        //mergeNavbar: true,
         repo: 'https://github.com/elimintz/TestPy',
         pagination: {
         crossChapter: true

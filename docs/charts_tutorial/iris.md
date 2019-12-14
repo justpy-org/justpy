@@ -1,3 +1,19 @@
+# Iris Flower Dataset Visualization
+
+## Introduction
+
+The [Iris flower dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) is used as a test case in machine learning.
+
+> The data set consists of 50 samples from each of three species of Iris (Iris setosa, Iris virginica and Iris versicolor). Four features were measured from each sample: the length and the width of the sepals and petals, in centimeters. Based on the combination of these four features, Fisher developed a linear discriminant model to distinguish the species from each other.  
+ <span>-</span> [Wikipedia](https://en.wikipedia.org/wiki/Iris_flower_data_set)
+ 
+ The idea for this visualization comes from [seaborn](https://seaborn.pydata.org/) which uses the Iris dataset to demonstrate its [pairplot](https://seaborn.pydata.org/generated/seaborn.pairplot.html) and [PairGrid](https://seaborn.pydata.org/generated/seaborn.PairGrid.html#seaborn.PairGrid) features.
+ 
+ ## The Visualization
+ 
+ Please run the program below:
+ 
+ ```python
 import justpy as jp
 import pandas as pd
 
@@ -5,9 +21,9 @@ iris = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/maste
 iris_stats = iris.describe().round(3)
 iris_stats.insert(loc=0, column='stats', value=iris_stats.index)
 iris_species = list(iris['species'].unique())
+iris_species_frames = {}
 
 # Create a dictionary of frames per iris species
-iris_species_frames = {}
 for s in iris_species:
     iris_species_frames[s] = iris.loc[iris['species'] == s]
 
@@ -28,15 +44,15 @@ async def tooltip_formatter(self, msg):
 
 
 def iris_data():
-    wp = jp.WebPage(highcharts_theme='gray', title='Iris Dataset')
+    wp = jp.WebPage(highcharts_theme='gray')
     jp.Div(text='Iris Dataset', classes='text-3xl m-2 p-2 font-medium tracking-wider text-yellow-300 bg-gray-800 text-center', a=wp)
-    d1 = jp.Div(classes='m-2 p-2 border-2', a=wp)
+    d1 = jp.Div(classes='m-1 p-1 border-2', a=wp)
     chart_list = []
     for i, col1 in enumerate(iris.columns[:4]):
         d2 = jp.Div(classes='flex', a=d1)
         for j, col2 in enumerate(iris.columns[:4]):
             if i != j:     # Not on the diagonal
-                chart = jp.HighCharts(a=d2, style='width: 300px; height: 300px', classes='flex-grow m-1')
+                chart = jp.HighCharts(a=d2, style='', classes='flex-grow m-1 p-1')
                 chart_list.append(chart.id)
                 chart.chart_list = chart_list
                 chart.on('tooltip', tooltip_formatter)
@@ -49,19 +65,19 @@ def iris_data():
                 o.chart.zoomType = 'xy'
                 o.title.text = ''
                 o.legend.enabled = False
-                o.credits.enabled = False if i<3 or j<3 else True # https://api.highcharts.com/highcharts/credits.enabled
+                o.credits.enabled = False if i<3 or j<3 else True
                 o.xAxis.title.text = col2 if i==3 else ''
                 o.yAxis.title.text = col1 if j==0 else ''
                 o.xAxis.crosshair = o.yAxis.crosshair = True
                 for k, v in iris_species_frames.items():
                     s = jp.Dict()
                     s.name = k
-                    s.allowPointSelect = True  # https://api.highcharts.com/highcharts/series.scatter.allowPointSelect
+                    s.allowPointSelect = True
                     s.marker.states.select.radius = 8
                     s.data = list(zip(v.iloc[:, j], v.iloc[:, i]))
                     o.series.append(s)
             else:
-                chart = jp.Histogram(list(iris.iloc[:, j]),a=d2, style='width: 300px; height: 300px', classes='flex-grow m-1')
+                chart = jp.Histogram(list(iris.iloc[:, j]),a=d2, style='width: 300px; height: 300px', classes='flex-grow m-1 p-3')
                 o = chart.options
                 o.title.text = ''
                 o.legend.enabled = False
@@ -77,3 +93,44 @@ def iris_data():
     return wp
 
 jp.justpy(iris_data)
+```  
+ 
+On the page you will see 16 charts. The charts show the pairwise scatter plots between the four features in the dataset (the length and the width of the sepals and petals in centimeters) except for the charts on the diagonal which are histograms of each feature.
+
+When you mouse over one of the pairwise charts, you will see a tooltip with information about the point the mouse is over. Also, you will see crosshairs in the other pariwise charts highlighting the same point on those charts. If you click a point, it will also be shown as selected in the other charts.
+
+The program uses pandas' capabilities to read CSV files and manipulate the data.
+
+This code could be used as a basis for a component that could be reused with different data sets.  
+
+
+## draw_crosshair Method
+ 
+ 
+ ## point_click Event and select_point Method
+ 
+ Let's look into the event handler `click_point` above.
+ ```python
+async def click_point(self, msg):
+    print(msg)
+    return await self.select_point([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list if self.id != chart_id], msg.websocket)
+```
+ 
+The event handler is bound to the point_click event of the chart, the event that occurs when a point is clicked.
+
+JustPy adds the following fields to `msg` when event handlers for point_click are activated:
+- `msg.x` - the x value of the point
+- `msg.y` - the y value of the point
+- `msg.category` - the category value of the point
+- `msg.color` - the point's color
+- `msg.series_name` - the name of the series the point is in
+- `msg.series_index` - the index of the series the point is in
+- `msg.point_index` - the index of the point in the series
+
+
+
+ 
+## select_point Method
+
+## Series events https://api.highcharts.com/highcharts/plotOptions.series.events
+

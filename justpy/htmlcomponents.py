@@ -2,13 +2,13 @@
 # https://serverless.com/framework/    https://www.zappa.io/  two good serverless options
 # Classes for components and the page_object https://qz.com/1408660/the-rise-of-python-as-seen-through-a-decade-of-stack-overflow/
 from types import MethodType
+from addict import Dict
 import json, copy, inspect, sys, re
 from html.parser import HTMLParser, tagfind_tolerant, attrfind_tolerant
 from html.entities import name2codepoint
 from html import unescape
 from jinja2 import Template
 import asyncio  # https://www.aeracode.org/2018/02/19/python-async-simplified/
-import aiofiles
 import requests
 from .tailwind import Tailwind
 import logging
@@ -55,6 +55,7 @@ class WebPage:
         self.cache = None  # Holds the last result of build_list
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.template_file = 'tailwind.html'
+        self.title = None
         self.display_url = None
         self.redirect = None
         self.open = None
@@ -184,6 +185,7 @@ class JustpyBaseComponent(Tailwind):
     # Set this to true if you want all components to be temporary by default
     temp_flag = False
     delete_flag = True
+    needs_deletion = False
 
     def __init__(self, **kwargs):  # c_name=None,
 
@@ -191,7 +193,8 @@ class JustpyBaseComponent(Tailwind):
         # If object is not a temporary one
         if not temp:
             cls = JustpyBaseComponent
-            cls.instances[cls.next_id] = self
+            # Moved to on method
+            # cls.instances[cls.next_id] = self
             self.id = cls.next_id
             cls.next_id += 1
         # object is temporary and is not added to instance list
@@ -201,18 +204,21 @@ class JustpyBaseComponent(Tailwind):
         self.allowed_events = []
 
 
-
     def __del__(self):
         print(f'Deleted {self}')
 
     def delete(self):
-        if self.delete_flag:
-            if self.id != 'temp':
+        # print(self.id, self)
+        if self.needs_deletion:
+            if self.delete_flag:
                 JustpyBaseComponent.instances.pop(self.id)
+                self.needs_deletion = False
 
     def on(self, event_type, func):
 
         if event_type in self.allowed_events:
+            JustpyBaseComponent.instances[self.id] = self
+            self.needs_deletion = True
             setattr(self, 'on_' + event_type, MethodType(func, self))
             if event_type not in self.events:
                 self.events.append(event_type)
@@ -252,6 +258,22 @@ class JustpyBaseComponent(Tailwind):
 
     def add_page_to_pages(self, wp: WebPage):
         self.pages[wp.page_id] = wp
+
+    def set_model(self, value):
+        if hasattr(self, 'model'):
+            self.model[0].data[self.model[1]] = value
+
+    async def run_event_function(self, event_type, event_data, create_namespace_flag=True):
+        event_function = getattr(self, 'on_' + event_type)
+        if create_namespace_flag:
+            function_data = Dict(event_data)
+        else:
+            function_data = event_data
+        if inspect.iscoroutinefunction(event_function):
+            event_result = await event_function(function_data)
+        else:
+            event_result = event_function(function_data)
+        return event_result
 
     @staticmethod
     def convert_dict_to_object(d):
@@ -305,7 +327,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         # self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
         # self.html_tag = type(self).html_tag
-        self.attrs = {'id': str(self.id)}  # Every component gets an ID in html
+        self.attrs = {'id': str(self.id)}  # Every component gets an ID which is a number or 'temp'
         self.inner_html = ''
         self.animation = False
         self.pages = {}  # pages the component is on, changed to dict
@@ -321,7 +343,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
                                'after', 'before', 'keydown', 'keyup', 'keypress']
         # self.events = False
         self.events = []
-        self.event_propagation = True  # Should events be propogated?
+        self.event_propagation = True  # Should events be propagated?
         self.tooltip = None
         # self.attributes = []
         self.attributes = type(self).attributes
@@ -366,25 +388,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def add_to(self, *args):
         for c in args:
             c.add_component(self)
-
-    def on(self, event_type, func):
-
-        if event_type in self.allowed_events:
-            setattr(self, 'on_' + event_type, MethodType(func, self))
-            if event_type not in self.events:
-                self.events.append(event_type)
-        else:
-            raise Exception(f'No event of type {event_type} supported')
-
-    def remove_event(self, event_type):
-        if event_type in self.events:
-            self.events.remove(event_type)
-
-    def has_event_function(self, event_type):
-        if getattr(self, 'on_' + event_type, None):
-            return True
-        else:
-            return False
 
     def add_attribute(self, attr, value):
         self.attrs[attr] = value
@@ -465,8 +468,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
 class Div(HTMLBaseComponent):
     # A general purpose container
     # This is a component that other components can be added to
-    html_tag = 'div'
 
+    html_tag = 'div'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -476,9 +479,10 @@ class Div(HTMLBaseComponent):
         if self.delete_flag:
             for c in self.components:
                 c.delete()
-            if self.id != 'temp':
+            if self.needs_deletion:
                 JustpyBaseComponent.instances.pop(self.id)
             self.components = []
+
 
     def add_component(self, child, position=None, slot=None):
         if slot:
@@ -562,7 +566,7 @@ class Div(HTMLBaseComponent):
             object_list.append(d)
         return object_list
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         if hasattr(self, 'model'):
             self.model_update()
@@ -591,6 +595,7 @@ class Input(Div):
 
         self.value = ''
         self.checked = False
+        self.debounce = 50  # 50 millisecond default debounce for events as keyboard repeat is usually 30Hz
         # Types for input element:
         # ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image',
         # 'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text', 'time', 'url', 'week']
@@ -598,11 +603,6 @@ class Input(Div):
         self.form = None
         # self.model = None   #[wp, 'search-text] or [d, 'search-text']
         super().__init__(**kwargs)
-
-        # self.attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
-        #                'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
-        #                'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
-        #                'required', 'size', 'src', 'step', 'type', 'value', 'width']
 
         def default_input(self, msg):
             return self.before_event_handler(msg)
@@ -672,8 +672,9 @@ class Input(Div):
         else:
             self.value = update_value
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
+        d['debounce'] = self.debounce
         d['input_type'] = self.type  # Needed for vue component updated life hook and event handler
         if self.type in ['text', 'textarea']:
             d['value'] = str(self.value)
@@ -697,6 +698,7 @@ class Input(Div):
             d['attrs']['form'] = self.form.id
         except:
             pass
+
         return d
 
 
@@ -709,7 +711,7 @@ class Form(Div):
         self.allowed_events += ['submit']
 
         def default_submit(self, msg):
-            print('Form submitted ', msg)
+            print('Form submitted ', msg.form_data)
 
         self.on('submit', default_submit)
 
@@ -782,9 +784,14 @@ class A(Div):
         self.block_option = 'start'  # One of "start", "center", "end", or "nearest". Defaults to "start".
         self.inline_option = 'nearest'  # One of "start", "center", "end", or "nearest". Defaults to "nearest".
         super().__init__(**kwargs)
-        self.events.append('click')
+        # self.events.append('click')
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+        def default_click(self, msg):
+            return True
+
+        self.on('click', default_click)
+
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         d['scroll'] = self.scroll
         d['scroll_option'] = self.scroll_option
@@ -884,7 +891,7 @@ class Grid(HTMLBaseComponent):
                 object_list.append(d)
         return object_list
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         d['object_props'] = self.build_list()
         return d
@@ -913,7 +920,7 @@ class TabGroup(Div):
     self.animation_prev = 'slideOutLeft'    set animation for tab going out
     self.animation_speed = 'faster'  can be on of  '' | 'slow' | 'slower' | 'fast'  | 'faster'
     self.value  value of group and tab to display
-    self.previous - previous tab, no need to change except to set to '' in order to dispay tab without animation which is default at first
+    self.previous - previous tab, no need to change except to set to '' in order to display tab without animation which is default at first
 
     """
 
@@ -943,7 +950,7 @@ class TabGroup(Div):
     def model_update(self):
         self.value = self.model[0].data[self.model[1]]
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         self.components = []
         self.wrapper_div_classes = self.animation_speed  # Component in this will be centered
 
@@ -976,7 +983,7 @@ _tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2
                     'del', 'ins', 'title',
                     'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr',
                     'button', 'fieldset', 'legend', 'meter', 'optgroup', 'option', 'progress',  # datalist not supported
-                    'details', 'summary'  # dialog not supported
+                    'details', 'summary', 'style'  # dialog not supported
                     ]
 
 # Only tags that have unique attributes that are supported by HTML 5 are in this dict
@@ -1068,7 +1075,7 @@ svg_presentation_attributes = ['alignment-baseline', 'baseline-shift', 'clip', '
                                'cx', 'cy', 'r', 'rx', 'ry', 'd', 'fill', 'transform']
 
 svg_filter_attributes = ['height', 'result', 'width', 'x', 'y', 'type', 'tableValues', 'slope', 'intercept',
-                         'amplitude', 'exponent', 'offset']
+                         'amplitude', 'exponent', 'offset', 'xlink:href']
 
 svg_animation_attributes = ['attributeType', 'attributeName', 'begin', 'dur', 'end', 'min', 'max', 'restart',
                             'repeatCount', 'repeatDur', 'fill', 'calcMode', 'values', 'keyTimes', 'keySplines', 'from',
@@ -1145,7 +1152,7 @@ svg_attr_dict = {'a': ['download', 'requiredExtensions', 'role', 'systemLanguage
                          'repeatDur', 'requiredExtensions', 'restart', 'systemLanguage', 'to'], 'stop': ['offset'],
                  'style': ['media'],
                  'svg': ['playbackorder', 'preserveAspectRatio', 'requiredExtensions', 'role', 'systemLanguage',
-                         'timelinebegin', 'transform', 'viewBox', 'zoomAndPan', 'xmlns'],
+                         'timelinebegin', 'transform', 'viewBox', 'zoomAndPan', 'xmlns', 'version'],
                  'switch': ['requiredExtensions', 'role', 'systemLanguage'],
                  'symbol': ['preserveAspectRatio', 'refX', 'refY', 'role', 'viewBox'],
                  'text': ['dx', 'dy', 'lengthAdjust', 'requiredExtensions', 'role', 'rotate', 'systemLanguage',
@@ -1165,93 +1172,6 @@ for tag in svg_tags_use:
                                        {'html_tag': tag,
                                         'attributes': svg_attr_dict.get(tag, []) + svg_presentation_attributes + svg_filter_attributes})
 
-
-class Svg1(Div):
-    special_attributes = ['xmlns', 'viewBox', 'preserveAspectRatio']
-
-    attributes = svg_presentation_attributes + svg_filter_attributes + special_attributes
-    attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display',
-                  'fill', 'fill-opacity', 'fill-rule', 'filter', 'mask', 'opacity', 'pointer-events', 'shape-rendering',
-                  'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin',
-                  'stroke-miterlimit',
-                  'stroke-opacity', 'stroke-width', 'tabindex', 'transform', 'vector-effect', 'visibility',
-                  'x', 'y', 'xmlns', 'viewBox', 'height', 'width', 'preserveAspectRatio']
-    special_attributes = ['xmlns', 'viewBox', 'preserveAspectRatio']
-    html_tag = 'svg'
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'svg'
-
-
-class G1(Div):
-    html_tag = 'g'
-
-    attributes = ['clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-rendering', 'cursor', 'display', 'fill',
-         'fill-opacity', 'fill-rule', 'filter', 'mask', 'opacity', 'pointer-events', 'shape-rendering', 'stroke',
-         'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
-         'stroke-opacity', 'stroke-width', 'tabindex', 'transform', 'vector-effect', 'visibility']
-
-    def __init__(self, **kwargs):
-        self.d = ''
-        super().__init__(**kwargs)
-
-
-class Polygon1(Div):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'polygon'
-        self.specific_attributes = ['points', 'pathLength']
-        self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-                          'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-                          'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-                          'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-
-        return d
-
-
-class Circle1(Div):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'circle'
-        self.specific_attributes = ['cx', 'cy', 'r', 'pathLength']
-        self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-                          'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-                          'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-                          'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
-
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-
-        return d
-
-
-class Stop1(Div):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.html_tag = 'stop'
-        self.specific_attributes = ['offset', 'stop-color', 'stop-opacity']
-        self.attributes = 'clip-path clip-rule color color-interpolation color-rendering cursor display ' \
-                          'fill fill-opacity fill-rule filter mask opacity pointer-events shape-rendering ' \
-                          'stroke stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit ' \
-                          'stroke-opacity stroke-width tabindex transform vector-effect visibility'.split() + self.specific_attributes
-
-
-class Path1(Div):
-    html_tag = 'path'
-    attributes = ['d', 'pathLength']
-
-    def __init__(self, **kwargs):
-        self.d = ''
-        super().__init__(**kwargs)
-
-
 # *************************** end SVG components
 
 class Hello(Div):
@@ -1265,7 +1185,6 @@ class Hello(Div):
         async def click(self, msg):
             self.text = f'Hello! I was clicked {self.counter} times'
             self.counter += 1
-            asyncio.sleep(50/1000)
 
         self.on('click', click)
 
@@ -1319,8 +1238,6 @@ class BasicHTMLParser(HTMLParser):
         self.level = -1
         self.start_tag = True
         self.components = []
-        self.commands = [
-            "root = jp.Div(name='root')"]  # List of command strings (justpy command to generate the element)
         self.name_dict = {}  # After parsing holds a dict with named components
         # self.root = Div(name='root', **kwargs)
         self.root = Div(name='root')
@@ -1329,6 +1246,9 @@ class BasicHTMLParser(HTMLParser):
         self.containers.append(self.root)
         self.endtag_required = True
         self.command_prefix = kwargs.get('command_prefix', 'jp.')  # Prefix for commands generated, defaults to 'jp.'
+        self.commands = [f"root = {self.command_prefix}Div(name='root')"]  # List of command strings (justpy command to generate the element)
+        self.keep_id = kwargs.get('keep_id', False)  # If True, keeps the same id in text instead of generating one
+        self.all_temp = kwargs.get('all_temp', False)  # If True, keeps the same id in text instead of generating one
 
     def parse_starttag(self, i):
         # This is the original library method with two changes to stop tags and attributes being lower case
@@ -1393,7 +1313,7 @@ class BasicHTMLParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
-        c = component_by_tag(tag)
+        c = component_by_tag(tag, temp=self.all_temp)
         command_string = f''
         if c is None:
             print(tag, 'No such tag, Div being used instead *****************************************')
@@ -1406,6 +1326,13 @@ class BasicHTMLParser(HTMLParser):
                 attr[0] = attr[0][1:]
                 attr[1] = eval(attr[1])
             if attr[0] == 'id':
+                if self.keep_id:
+                    # if c.id != 'temp':
+                    #     pass
+                        # JustpyBaseComponent.instances.pop(c.id)
+                    c.id = 'temp'
+                    # setattr(c, attr[0], 'temp')
+                    c.attrs['id'] = attr[1]
                 continue
             if attr[1] is None:
                 setattr(c, attr[0], True)
@@ -1425,6 +1352,10 @@ class BasicHTMLParser(HTMLParser):
             if attr[0] == 'class':
                 c.classes = attr[1]
                 attr[0] = 'classes'
+            if attr[0] in ['in', 'from']:
+                # list of attributes that are also python reserved words
+                attr[0] = '_' + attr[0]
+
             if isinstance(attr[1], str):
                 command_string = f"{command_string}{attr[0]}='{attr[1]}', "
             else:
@@ -1489,6 +1420,7 @@ def justPY_parser(html_string, **kwargs):
     parser.feed(html_string)
     if len(parser.root.components) == 1:
         parser_result = parser.root.components[0]
+        # JustpyBaseComponent.instances.pop(parser.root.id)
     else:
         parser_result = parser.root
     parser_result.name_dict = parser.name_dict
@@ -1507,10 +1439,20 @@ def parse_html_file(html_file, **kwargs):
         return justPY_parser(f.read(), **kwargs)
 
 
-async def parse_html_file_async(html_file, **kwargs):
-    async with aiofiles.open(html_file, encoding="utf-8") as f:
-        s = await f.read()
-    return justPY_parser(s, **kwargs)
+try:
+    import aiofiles
+    _has_aiofiles = True
+except:
+    _has_aiofiles = False
+
+if _has_aiofiles:
+    async def parse_html_file_async(html_file, **kwargs):
+        async with aiofiles.open(html_file, encoding="utf-8") as f:
+            s = await f.read()
+        return justPY_parser(s, **kwargs)
+else:
+    async def parse_html_file_async(html_file, **kwargs):
+        raise Exception('aiofiles not installed')
 
 
 async def get(url, format='json'):

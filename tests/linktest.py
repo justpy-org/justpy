@@ -1,22 +1,18 @@
 import justpy as jp
 
-def click_me(self, msg):
-    print(msg)
-
-def link_test(request) -> jp.WebPage:
+def link_demo():
     wp = jp.WebPage()
-    h = jp.Hello(a=wp)
-    l = jp.Link(text='my link', a=wp, classes='text-red-500 text-2xl')
-    l.scroll_option = 'smooth'
-    l.block_option = 'center'
-    d = []
-    for i in range(100):
-        d.append(jp.Div(text=f'{i}) Div', classes=h.classes, a=wp))
-    l.bookmark = d[30]
-    l.scroll = True
-    # l.on('click', click_me)
+    link = jp.A(text='Scroll to target', a=wp, classes='inline-block m-2 p-2 text-xl text-white bg-blue-500 hover:bg-blue-700')
+    # jp.Br(a=wp)
+    for i in range(50):
+        jp.P(text=f'{i+1} Not a target', classes='m-1 p-1 text-white bg-blue-300', a=wp)
+    target = jp.A(text=f'This is the target - it is linked to first link, click to jump there', classes='inline-block m-1 p-1 text-white bg-red-500', a=wp)
+    link.bookmark = target
+    link.scroll = True
+    target.bookmark = link
+    for i in range(50):
+        jp.P(text=f'{i+50} Not a target', classes='m-1 p-1 text-white bg-blue-300', a=wp)
     return wp
 
-
-jp.justpy(link_test)
+jp.justpy(link_demo)
 

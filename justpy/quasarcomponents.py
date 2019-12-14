@@ -1415,9 +1415,10 @@ class QNotify(QDiv):
     #TODO: Add handler for action that sends message back to server. Currently does not support actions
 
     html_tag = 'q-notify'
-    # This is a special component that does nor wrap a quasar component but activate a quasar utility
-    # https://v1.quasar-framework.org/quasar-plugins/notify
+    # This is a special component that does not wrap a quasar component but activates a quasar utility
+    # https://quasar.dev/quasar-plugins/notify
     # Add 'after' event to button that activates that sets 'notify' prop back to false. Otherwise, will appear every update
+    # Or, await page update in event and then set notify to false
 
     def __init__(self, **kwargs):
         self.notify = False
@@ -1425,11 +1426,10 @@ class QNotify(QDiv):
         self.position = 'bottom-right'
         super().__init__(**kwargs)
         self.prop_list = ['notify', 'color', 'textColor', 'message', 'html','icon', 'avatar', 'position', 'closeBtn',
-                          'timeout', 'actions', 'multiLine']
+                          'timeout', 'actions', 'multiLine', 'caption', 'reply']
 
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
-
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         d['notify'] = self.notify
         return d

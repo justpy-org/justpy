@@ -1,6 +1,6 @@
 # Tooltips
 
-The tooltip is the popup that is shown when you hover over a point on the chart and is one of the advantages of using interactive charts as it makes the chart more informative.
+The tooltip is the popup that is shown when you hover over a point on the chart. It is one of the advantages of using interactive charts as it makes the chart more informative.
 
 Highcharts allows defining a tooltip using a very versatile formatting function (in JavaScript). JustPy allows writing tooltip formatters for Highcharts charts in Python just like any other event handler. Let's look at a concrete example.
 
@@ -43,9 +43,9 @@ def chart_test():
 jp.justpy(chart_test)
 ```
 
-In this example we put two charts on the page. They are identical except for their subtitle and the fact that that the second on has a custom tooltip formatter. 
+In this example we put two charts on the page. They are identical except for their subtitle and the fact that that the second one has a custom tooltip formatter. 
 
-The tooltip formatting function (or the handler for the tooltip event if you prefer) is called `tooltip_formatter` and has one line in it:
+The tooltip formatting function (the handler for the tooltip event) is called `tooltip_formatter` and has one line in it:
 
 ```python
 return await self.tooltip_update('<div>My tooltip!</div>', msg.websocket)

@@ -1,6 +1,6 @@
-# HTMl and SVG Components
+# HTMl Components
 
-Out of the box, JustPY supports components corresponding to HTML and SVG tags. The name of the component is the same as the name of the HTML tag with the first letter capitalized. For example, we already saw the `Div` and `P` components that correspond to the the `div` and `p` HTML tags. JustPy supports all tags that put elements on the page and are not deprecated in HTML 5. 
+JustPY supports components corresponding to HTML and SVG tags. The name of the component is the same as the name of the HTML tag with the first letter capitalized. For example, we already saw the `Div` and `P` components that correspond to the the `div` and `p` HTML tags. JustPy supports all tags that put elements on the page and are not deprecated in HTML 5. 
 
 Here is a simple example with three HTML components. 
 
@@ -94,7 +94,7 @@ def html_comps():
 jp.justpy(html_comps)
 ```
 
-The text in each P element is made editable by setting `contenteditable` to `True` (using the keyword argument method). We set `dir` to "rtl" (right-to-left) and `lang` to "he" (the language code for Hebrew). We do so by setting the attribute directly though we could have used the keyword argument method also.
+The text in each P element is made editable by setting `contenteditable` to `True` (using a keyword argument). We set `dir` to "rtl" (right-to-left) and `lang` to "he" (the language code for Hebrew). We do so by setting the attribute directly though we could have used a keyword argument.
 
 Run the program and try editing some text. You will see also that the Hebrew text is rendered right to left.
 
@@ -142,7 +142,7 @@ The program then sets the `degree` attribute of the image to the loop variable. 
 
 !>`degree` is a different kind of attribute than `src`, `height`, and `width`. It is a user defined attribute that is not part of the HTML specification. In the JustPy component definitions, attributes that are part of the HTML specification are explicitly identified and handled accordingly.
 
-The mouse event handlers change the `style` and `class` attributes of the element as needed using the `degree` attribute of the image if required. For clarity, the event handlers are defined inside the loop, but they could be defined just once outside the loop our outside the request handler. We could also set the attributes as keyword arguments and the result is the following:
+The mouse event handlers change the `style` and `class` attributes of the element as needed using the `degree` attribute of the image if required. For clarity, the event handlers are defined inside the loop, but they could be defined just once outside the loop or outside the request handler. We could also set the attributes as keyword arguments and the result is the following:
 
 ```python
 import justpy as jp
@@ -170,7 +170,7 @@ jp.justpy(html_comps)
 
 ## HTML Links
 
-In JudyPy you create hyperlinks using the `A` component which corresponds to the [`a` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
+In JustPy you create hyperlinks using the `A` component which corresponds to the [`a` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
 
 The `A` component is also named `Link` (in case you want to use a more descriptive name).
 
@@ -195,7 +195,7 @@ import justpy as jp
 
 def link_demo():
     wp = jp.WebPage()
-    link = jp.A(text='Python Org', a=wp, classes='inline-block m-2 p-2 text-xl text-white bg-blue-500 hover:bg-blue-700')
+    link = jp.A(text='Scroll to target', a=wp, classes='inline-block m-2 p-2 text-xl text-white bg-blue-500 hover:bg-blue-700')
     # jp.Br(a=wp)
     for i in range(50):
         jp.P(text=f'{i+1} Not a target', classes='m-1 p-1 text-white bg-blue-300', a=wp)
@@ -279,10 +279,4 @@ def show_demo():
 jp.justpy(show_demo)
 ```
 
-## SVG Elements
-
-
-!> All h1-h6 elements are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#6-explicitly-style-any-headings).
-
-Put stuff using inner_html attribute. 
 

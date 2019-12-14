@@ -1,3 +1,5 @@
+import psutil, gc
+MEMORY_DEBUG = True
 from starlette.applications import Starlette
 from starlette.responses import Response
 from starlette.responses import JSONResponse
@@ -19,7 +21,7 @@ from .gridcomponents import *
 from .quasarcomponents import *
 from .pandas import *
 from .routing import Route, SetRoute
-from .utilities import print_request, run_event_function, run_task, set_model
+from .utilities import run_task, create_delayed_task, print_request
 import uvicorn, logging, uuid, sys, os
 from ssl import PROTOCOL_SSLv23
 #TODO: https://github.com/kennethreitz/setup.py setup.py file https://github.com/pypa/sampleproject/blob/master/setup.py
@@ -135,7 +137,7 @@ class Homepage(HTTPEndpoint):
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.scripts,
-                        'display_url': load_page.display_url, 'dark': load_page.dark,
+                        'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
                         'highcharts_theme': load_page.highcharts_theme,
                         'favicon': load_page.favicon if load_page.favicon else FAVICON}
         if load_page.use_cache:
@@ -233,11 +235,15 @@ class JustpyEvents(WebSocketEndpoint):
         if not WebPage.sockets[pid]:
             WebPage.sockets.pop(pid)
         await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
-        print(WebPage.instances)
-        print('************************')
-        print(len(JustpyBaseComponent.instances),JustpyBaseComponent.instances)
-        print(WebPage.instances)
-        print('************************')
+        if MEMORY_DEBUG:
+            print('************************')
+            print(len(JustpyBaseComponent.instances),JustpyBaseComponent.instances)
+            print(WebPage.instances)
+            print(len(WebPage.sockets), WebPage.sockets)
+            # gc.collect()
+            process = psutil.Process(os.getpid())
+            print(f'Memory used: {process.memory_info().rss:,}')
+            print('************************')
 
 
     async def _connect(self, websocket, data_dict):
@@ -263,7 +269,7 @@ class JustpyEvents(WebSocketEndpoint):
 async def handle_event(data_dict, com_type=0):
     # com_type 0: websocket, con_type 1: ajax
     connection_type = {0: 'websocket', 1: 'ajax'}
-    logging.debug('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
+    logging.info('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
     event_data = data_dict['event_data']
     try:
         p = WebPage.instances[event_data['page_id']]
@@ -279,13 +285,13 @@ async def handle_event(data_dict, com_type=0):
         return {'type': 'page_update', 'data': build_list}
     c = JustpyBaseComponent.instances[event_data['id']]
     try:
-        before_result = await run_event_function(c, 'before', event_data, True)
+        # before_result = await run_event_function(c, 'before', event_data, True)
+        before_result = await c.run_event_function('before', event_data, True)
     except:
         pass
-    # async def run_event_function(component, event_type, event_data, create_namespace):
-    # event_result = await run_event_function(c, event_data['event_type'], event_data, True)
     try:
-        event_result = await run_event_function(c, event_data['event_type'], event_data, True)
+        # event_result = await run_event_function(c, event_data['event_type'], event_data, True)
+        event_result = await c.run_event_function(event_data['event_type'], event_data, True)
         logging.debug('%s %s', 'Event result:', event_result)
     except Exception as e:
         # raise Exception(e)
@@ -295,21 +301,22 @@ async def handle_event(data_dict, com_type=0):
     # If page is not to be updated, the event_function should return anything but None
 
     if event_result is None:
-        if com_type == 0:     # Websockets communication
+        if com_type == 0:     # WebSockets communication
             if LATENCY:
                 await asyncio.sleep(LATENCY / 1000)
             await p.update()
         elif com_type == 1:   # Ajax communication
             build_list = p.build_list()
     try:
-        after_result = await run_event_function(c, 'after', event_data, True)
+        # after_result = await run_event_function(c, 'after', event_data, True)
+        after_result = await c.run_event_function('after', event_data, True)
     except:
         pass
     if com_type == 1 and event_result is None:
         return {'type': 'page_update', 'data': build_list}
 
 
-def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, log_level=LOGGING_LEVEL):
+def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs):
     global func_to_run, startup_func
     if func:
         func_to_run = func
@@ -322,6 +329,9 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
     else:
         WebPage.use_websockets = False
     Route("/{path:path}", func_to_run, last=True, name='default')
+    for k, v in kwargs.items():
+        template_options[k.lower()] = v
+
     # host = '0.0.0.0'
     if start_server:
         if SSL_KEYFILE and SSL_CERTFILE:
@@ -329,6 +339,7 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
                         ssl_keyfile=SSL_KEYFILE, ssl_certfile=SSL_CERTFILE, ssl_version=SSL_VERSION)
         else:
             uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL)
+
     return func_to_run
 
 def convert_dict_to_object(d):
