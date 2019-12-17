@@ -43,6 +43,7 @@ class HighCharts(JustpyBaseComponent):
         self.tooltip_fixed = False
         self.tooltip_x = -40
         self.tooltip_y = 40
+        kwargs['temp'] = False
         super().__init__(**kwargs)
         for k, v in kwargs.items():
             self.__setattr__(k,v)

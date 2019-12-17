@@ -58,7 +58,9 @@
                     if (msg.page_options.open) {
                         window.open(msg.page_options.open, '_blank');
                     }
-                    if (msg.page_options.display_url) window.history.pushState("", "", msg.page_options.display_url);
+                    if (msg.page_options.display_url !== null)
+                        window.history.pushState("", "", msg.page_options.display_url);
+                    document.title = msg.page_options.title;
                     if (msg.page_options.favicon) {
                         var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
                         link.type = 'image/x-icon';

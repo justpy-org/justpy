@@ -88,16 +88,15 @@ There is another way to create the HTML string used to update the tooltip. Try u
 ```python
 async def tooltip_formatter(self, msg):
     print(msg)
-    d1 = jp.Div(text=msg.series_name, style=f'color: {msg.color};', temp=True)
-    d2 = jp.Div(text=msg.category, temp=True)
-    d3 = jp.Div(text=f'x: {msg.x} y: {msg.y}', temp=True)
+    d1 = jp.Div(text=msg.series_name, style=f'color: {msg.color};')
+    d2 = jp.Div(text=msg.category)
+    d3 = jp.Div(text=f'x: {msg.x} y: {msg.y}')
     tooltip_html = d1.to_html() + d2.to_html() + d3.to_html()
     return await self.tooltip_update(tooltip_html, msg.websocket)
 ```
 
 This time we create JustPy components and then use the `to_html()` method to convert them to HTML. Both methods work well and you should use the one you are most comfortable with.
 
-!> When creating JustPy component instances inside a tooltip formatter **always** set  their`temp` attribute to `True`. Otherwise, the garbage collection will never reclaim them. 
 
 ## Tooltip Positioning
 
@@ -395,23 +394,23 @@ async def simple_tooltip_formatter(self, msg):
 
 
 async def shared_tooltip_formatter(self, msg):
-    tooltip_div = jp.Div(classes="text-white bg-blue-400", temp=True)
-    jp.Span(text=f'Year: {msg.x}', classes='text-lg', a=tooltip_div, temp=True)
+    tooltip_div = jp.Div(classes="text-white bg-blue-400")
+    jp.Span(text=f'Year: {msg.x}', classes='text-lg', a=tooltip_div)
     for point in msg.points:
-        point_div = jp.Div(a=tooltip_div, temp=True)
-        jp.Span(text=f'&#x25CF; {point.series_name}', classes='bg-white', style=f'color: {point.color}', a=point_div, temp=True)
-        jp.Span(text=f'Number of employees: {"{:,}".format(point.y)}', a=point_div, temp=True)
+        point_div = jp.Div(a=tooltip_div)
+        jp.Span(text=f'&#x25CF; {point.series_name}', classes='bg-white', style=f'color: {point.color}', a=point_div)
+        jp.Span(text=f'Number of employees: {"{:,}".format(point.y)}', a=point_div)
     return await self.tooltip_update(tooltip_div.to_html(), msg.websocket)
 
 
 async def split_tooltip_formatter(self, msg):
     tooltip_array = [f'The x value is {msg.x}']
     for point in msg.points:
-        point_div = jp.Div(temp=True)
-        jp.Span(text='&#x25CF;', classes='bg-white', style=f'color: {point.color}', a=point_div, temp=True)
-        jp.Span(text=f'{point.series_name}', a=point_div, temp=True)
-        jp.Span(text=f'Year: {point.x}', a=point_div, temp=True)
-        jp.Span(text=f'Number of employees: {"{:,}".format(point.y)}', a=point_div, temp=True)
+        point_div = jp.Div()
+        jp.Span(text='&#x25CF;', classes='bg-white', style=f'color: {point.color}', a=point_div)
+        jp.Span(text=f'{point.series_name}', a=point_div)
+        jp.Span(text=f'Year: {point.x}', a=point_div)
+        jp.Span(text=f'Number of employees: {"{:,}".format(point.y)}', a=point_div)
         tooltip_array.append(point_div.to_html())
     return await self.tooltip_update(tooltip_array, msg.websocket)
 

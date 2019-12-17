@@ -20,9 +20,9 @@ Vue.component('html_component', {
             }
         }
 
-        if (this.jp_props.attrs.id == 'temp') {
-            delete this.jp_props.attrs.id
-        }
+        // if (this.jp_props.attrs.id == 'temp') {
+        //     delete this.jp_props.attrs.id
+        // }
 
         description_object  = {
             // class: this.jp_props.classes,

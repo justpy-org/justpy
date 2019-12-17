@@ -22,7 +22,7 @@ _tag_class_dict = {}
 
 def parse_dict(cls):
     """
-    Decorator for component class definitions that updates _tag_class_dict so that the parser can recognize new component
+    Decorator for component class definitions that updates _tag_class_dict so that the parser can recognize new components
     Required only for components not defined in this module
     """
     _tag_class_dict[cls.html_tag] = cls
@@ -51,19 +51,18 @@ class WebPage:
     def __init__(self, **kwargs):
         self.page_id = WebPage.next_page_id
         WebPage.next_page_id += 1
-        self.static = False
+        # self.static = False
         self.cache = None  # Holds the last result of build_list
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.template_file = 'tailwind.html'
-        self.title = None
+        self.title = 'JustPy'
         self.display_url = None
         self.redirect = None
         self.open = None
         self.favicon = None
-        self.tailwind = True
         self.components = []  # list  of components on page
         self.css = ''
-        self.scripts = ''
+        self.head_html = ''
         # If html attribute is not empty, sets html of page directly
         self.html = ''
         self.body_style = ''
@@ -85,9 +84,12 @@ class WebPage:
     def __del__(self):
         print(f'Deleted {self}')
 
-    def add_component(self, component):
-        self.components.append(component)
-        return self  # Making adding to page implicit
+    def add_component(self, child, position=None):
+        if position is None:
+            self.components.append(child)
+        else:
+            self.components.insert(position, child)
+        return self
 
     async def on_disconnect(self, websocket=None):
         if self.delete_flag:
@@ -108,11 +110,12 @@ class WebPage:
         return self
 
     def __add__(self, other):
-        # Check if list and then add each component in list
         self.add_component(other)
+        return self
 
     def __iadd__(self, other):
         self.add_component(other)
+        return self
 
     def remove_component(self, component):
         try:
@@ -140,6 +143,7 @@ class WebPage:
             try:
                 WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build,
                                                               'page_options': {'display_url': self.display_url,
+                                                                               'title': self.title,
                                                                                'redirect': self.redirect, 'open': self.open,
                                                                                'favicon': self.favicon}}))
             except:
@@ -168,22 +172,18 @@ class WebPage:
     def build_list(self):
         object_list = []
         self.react()
-        i = 0
-        for obj in self.components:
+        for i, obj in enumerate(self.components):
             obj.react(self.data)
             d = obj.convert_object_to_dict()
             d['running_id'] = i
-            i += 1
             object_list.append(d)
-        self.cache = object_list
         return object_list
 
 
 class JustpyBaseComponent(Tailwind):
-    next_id = 0
+    next_id = 1
     instances = {}
-    # Set this to true if you want all components to be temporary by default
-    temp_flag = False
+    temp_flag = True
     delete_flag = True
     needs_deletion = False
 
@@ -193,13 +193,12 @@ class JustpyBaseComponent(Tailwind):
         # If object is not a temporary one
         if not temp:
             cls = JustpyBaseComponent
-            # Moved to on method
-            # cls.instances[cls.next_id] = self
             self.id = cls.next_id
             cls.next_id += 1
         # object is temporary and is not added to instance list
         else:
-            self.id = 'temp'
+            # self.id = 'temp'
+            self.id = None
         self.events = []
         self.allowed_events = []
 
@@ -214,10 +213,14 @@ class JustpyBaseComponent(Tailwind):
                 JustpyBaseComponent.instances.pop(self.id)
                 self.needs_deletion = False
 
-    def on(self, event_type, func):
 
+    def on(self, event_type, func):
         if event_type in self.allowed_events:
-            JustpyBaseComponent.instances[self.id] = self
+            cls = JustpyBaseComponent
+            if not self.id:
+                self.id = cls.next_id
+                cls.next_id += 1
+            cls.instances[self.id] = self
             self.needs_deletion = True
             setattr(self, 'on_' + event_type, MethodType(func, self))
             if event_type not in self.events:
@@ -302,7 +305,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
 
-    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
+    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
                       'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
     not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize', 'spellcheck',
@@ -327,7 +330,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         # self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
         # self.html_tag = type(self).html_tag
-        self.attrs = {'id': str(self.id)}  # Every component gets an ID which is a number or 'temp'
+        # self.attrs = {'id': str(self.id)}  # Every component gets an ID which is a number or 'temp'
         self.inner_html = ''
         self.animation = False
         self.pages = {}  # pages the component is on, changed to dict
@@ -427,8 +430,12 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     def convert_object_to_dict(self):  # Objects may need redefine this
         d = {}
-        # HTMLBaseComponent.attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'attrs',
+        # HTMLBaseComponent.attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
         #                   'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html']
+        if self.id:
+            d['attrs'] = {'id': str(self.id)}
+        else:
+            d['attrs'] = {}
         for attr in HTMLBaseComponent.attribute_list:
             d[attr] = getattr(self, attr)
         d['directives'] = {}
@@ -501,6 +508,14 @@ class Div(HTMLBaseComponent):
     def add(self, *args):
         for component in args:
             self.add_component(component)
+
+    def __add__(self, child):
+        self.add_component(child)
+        return self
+
+    def __iadd__(self, child):
+        self.add_component(child)
+        return self
 
     def add_first(self, child):
         self.add_component(child, 0)
@@ -595,7 +610,7 @@ class Input(Div):
 
         self.value = ''
         self.checked = False
-        self.debounce = 50  # 50 millisecond default debounce for events as keyboard repeat is usually 30Hz
+        self.debounce = 200  # 200 millisecond default debounce for events as keyboard repeat is usually 30Hz
         # Types for input element:
         # ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image',
         # 'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text', 'time', 'url', 'week']
@@ -828,6 +843,7 @@ class EditorJP(TextArea):
     # https://www.cssportal.com/style-input-range/   style an input range
     # TODO: EditorJP, use as an example of wrapping javascript component (need to take care of javascript)
     def __init__(self, **kwargs):
+        self.debounce = 300
         super().__init__(**kwargs)
         self.input_type = 'textarea'
         self.vue_type = 'editorjp'
@@ -1247,8 +1263,7 @@ class BasicHTMLParser(HTMLParser):
         self.endtag_required = True
         self.command_prefix = kwargs.get('command_prefix', 'jp.')  # Prefix for commands generated, defaults to 'jp.'
         self.commands = [f"root = {self.command_prefix}Div(name='root')"]  # List of command strings (justpy command to generate the element)
-        self.keep_id = kwargs.get('keep_id', False)  # If True, keeps the same id in text instead of generating one
-        self.all_temp = kwargs.get('all_temp', False)  # If True, keeps the same id in text instead of generating one
+        self.all_temp = kwargs.get('all_temp', True)  # If True, keeps the same id in text instead of generating one
 
     def parse_starttag(self, i):
         # This is the original library method with two changes to stop tags and attributes being lower case
@@ -1326,13 +1341,7 @@ class BasicHTMLParser(HTMLParser):
                 attr[0] = attr[0][1:]
                 attr[1] = eval(attr[1])
             if attr[0] == 'id':
-                if self.keep_id:
-                    # if c.id != 'temp':
-                    #     pass
-                        # JustpyBaseComponent.instances.pop(c.id)
-                    c.id = 'temp'
-                    # setattr(c, attr[0], 'temp')
-                    c.attrs['id'] = attr[1]
+                c.id = attr[1]
                 continue
             if attr[1] is None:
                 setattr(c, attr[0], True)

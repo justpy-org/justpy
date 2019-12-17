@@ -2828,6 +2828,8 @@ def layout_test():
     """, a=wp)
     return wp
 
+# ***Example
+@SetRoute('/drawer1')
 def drawer_test():
     wp = QuasarPage()
     c = parse_html("""
@@ -2990,7 +2992,7 @@ def drawer_test():
     return wp
 
 @SetRoute('/drawer')
-def drawer1_test():
+async def drawer1_test():
     wp = QuasarPage()
     c = parse_html("""
     <div class="q-pa-md">
@@ -3121,10 +3123,19 @@ def drawer1_test():
     def toggle_drawer(self, msg):
         self.drawer.value = not self.drawer.value
     hb.on('click', toggle_drawer)
-    def mini_false(self, msg):
+    async def mini_false(self, msg):
         self.mini = False
-    def mini_true(self, msg):
+        await msg.page.update()
+        # self.on('mouseout', mini_true)
+        return True
+        # await asyncio.sleep(0.5)
+    async def mini_true(self, msg):
         self.mini = True
+        await msg.page.update()
+        # self.on('mouseout', mini_true)
+        return True
+        # await asyncio.sleep(0.5)
+
     drawer.on('mouseover', mini_false)
     drawer.on('mouseout', mini_true)
     return wp

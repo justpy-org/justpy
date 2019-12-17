@@ -2,7 +2,7 @@
 
 ## Introduction and Examples
 
-The model attribute is a special one in JustPy. You don't need to use it, but if you do, it may make your code more concise and readable. It is an elegant and simple way to share data between independent components (it was inspired by the [`v-model`](https://vuejs.org/v2/api/#v-model) directive in Vue.js and works in a similar manner).
+The `model` attribute is a special one in JustPy. You don't need to use it, but if you do, it may make your code more concise and readable. It is an elegant and simple way to share data between independent components (it was inspired by the [`v-model`](https://vuejs.org/v2/api/#v-model) directive in Vue.js and works in a similar manner).
 
 Try running the following program and typing into the input field in the browser:
 ```python
@@ -27,6 +27,7 @@ This tells the Input instance that it will model itself based on the value under
 !>It is important to understand that in the case of Input, `model` has a two way influence. It gets its value from the appropriate data attribute and when an input event occurs it changes the appropriate data attribute.
 
 In the case of a Div element the relation is only one way. Its text attribute is rendered according to the model attribute but it does not change the data dictionary.
+
 If an element has an input event, the model attribute works in two directions, otherwise just in one. For two directional elements the attribute changed is value while for one directional ones the attribute changed is text.
 
 How is this useful? Let's put three divs on the page instead of just one:
@@ -64,14 +65,18 @@ jp.justpy(input_demo)
 ```
 
 Type into any one of the five Input fields and see what happens. Since all elements share the same model, they all change in tandem. We didn't need to write any event handler.
+
 Let's make a small modification to the program and add a reset button that will clear all the elements on the page:
 ```python
 import justpy as jp
 
+def reset_all(self, msg):
+    msg.page.data['text'] = ''
+
 async def input_demo(request):
     wp = jp.WebPage(data={'text': 'Initial text'})
     button_classes = 'w-32 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-    b = jp.Button(text='Reset', click="msg.page.data['text'] = '' ", a=wp, classes=button_classes)
+    b = jp.Button(text='Reset', click=reset_all, a=wp, classes=button_classes)
     jp.Hr(a=wp)  # Add horizontal like to page
     input_classes = "m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
     for i in range(5):
@@ -83,11 +88,13 @@ async def input_demo(request):
 jp.justpy(input_demo)
 ```
 
-When the button is clicked, the following command is executed: `msg.page.data['text'] = ''`
-Since all the Inputs and Divs are modeled after this dictionary entry, they are all reset to the empty string when the button is clicked. 
-Any element, a Div for example, may have a data attribute and be used in a model attribute, not just a WebPage.
+When the button is clicked, the following command in `reset_all` is executed: `msg.page.data['text'] = ''`
 
-With the `model` and `data` attributes you can easily propagate a change in one element to others that are not nearby.
+Since all the Inputs and Divs are modeled after this dictionary entry, they are all reset to the empty string when the button is clicked. 
+
+?> Any element, a Div for example, may have a data attribute and be used in a model attribute, not just a WebPage.
+
+With the `model` and `data` attributes you can easily propagate a change in one element to others.
 
 ## Advanced use of the model attribute
 
@@ -198,5 +205,5 @@ jp.justpy(model_demo)
 
  We add the two attributes `repeat` and `initial_text` to `MyDiv`. The first, `repeat` determines how many time the model value will be repeated in the text. We give each corner a different value. 
  
- Using `model` and custom `model_update` methods you can easily disseminate data to different areas and elements on the page and design specific functionality.
+ Using `model` and custom `model_update` methods you can disseminate data to different areas and elements on the page and design specific functionality.
 

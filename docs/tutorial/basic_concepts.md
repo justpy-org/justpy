@@ -43,7 +43,7 @@ Let's create an element and add it to the page:
 import justpy as jp
 wp = jp.WebPage()
 p = jp.P(text='Hello World!')
-wp.add(p)
+wp.add(p)  # Same as p.add_to(wp), wp = wp + p, wp += p
 ```
 
 In the example above, we create a web page. Then we create a `p` element and add it to the page using the `add` method.
@@ -55,7 +55,7 @@ wp = jp.WebPage()
 p = jp.P(text='Hello World!', a=wp)
 ```
 
-Both code snippets have identical functionality.
+This code snippet has the same functionality as the one above it.
 
 ## JustPy Requests
 

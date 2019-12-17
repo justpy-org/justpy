@@ -24,6 +24,7 @@
     - [Stock Charts](charts_tutorial/stock_charts.md "Stock Charts")
     - [Updating Charts](charts_tutorial/updating_charts.md "Updating Charts")
     - [Tooltips](charts_tutorial/tooltips.md "Tooltips")
+    - [Chart Events](charts_tutorial/chart_events.md "Chart Events")
     - [Iris Dataset Visualization](charts_tutorial/iris.md "Iris Dataset")
     - [Chart Components](charts_tutorial/chart_components.md "Chart Components")
 - <span class="section-header">ag-Grid Tutorial</span>

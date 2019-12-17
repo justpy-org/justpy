@@ -18,9 +18,9 @@ Vue.component('quasar_component', {
             }
         }
 
-        if (this.jp_props.attrs.id == 'temp') {
-            delete this.jp_props.attrs.id
-        }
+        // if (this.jp_props.attrs.id == 'temp') {
+        //     delete this.jp_props.attrs.id
+        // }
 
         description_object = {
             style: this.jp_props.style,

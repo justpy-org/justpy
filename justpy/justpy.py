@@ -136,7 +136,7 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run()
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
-                        'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.scripts,
+                        'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.head_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
                         'highcharts_theme': load_page.highcharts_theme,
                         'favicon': load_page.favicon if load_page.favicon else FAVICON}

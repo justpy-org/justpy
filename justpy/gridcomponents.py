@@ -35,6 +35,7 @@ class AgGrid(JustpyBaseComponent):
         self.pages = {}
         self.auto_size = True   # If True, automatically resize columns after load to optimal fit
         self.theme = 'ag-theme-balham'  # one of ag-theme-balham, ag-theme-balham-dark, ag-theme-material
+        kwargs['temp'] = False
         super().__init__(**kwargs)
         for k, v in kwargs.items():
             self.__setattr__(k,v)
@@ -60,7 +61,15 @@ class AgGrid(JustpyBaseComponent):
     def on(self, event_type, func):
         # Ag-Grid supports many events, so no check is made for allowed events.
         # https://www.ag-grid.com/javascript-grid-events/
+        self.allowed_events.append(event_type)
+        super().on(event_type, func)
+        return
         cls = JustpyBaseComponent
+        if not self.id:
+            cls = JustpyBaseComponent
+            self.id = cls.next_id
+            cls.next_id += 1
+
         # Moved here for testing
         cls.instances[self.id] = self
         self.needs_deletion = True

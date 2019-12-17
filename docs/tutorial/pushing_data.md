@@ -73,7 +73,7 @@ import justpy as jp
 jp.template_options['tailwind'] = False
 
 wp = jp.WebPage(delete_flag=False)
-e = jp.EditorJP(a=wp, debounce=300)
+e = jp.EditorJP(a=wp)
 
 def edit_test(request):
     return wp

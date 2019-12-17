@@ -1027,7 +1027,7 @@ test_html = """
 
 def test_ui():
     wp = jp.WebPage()
-    t = jp.parse_html(test_html, a=wp, keep_id=True)
+    t = jp.parse_html(test_html, a=wp)
     return wp
 
 
