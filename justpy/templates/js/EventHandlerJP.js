@@ -4,7 +4,6 @@
 function eventHandler(props, event, form_data, aux) {
     console.log('-------------------------');
     console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
-    // console.log(JSON.stringify(props, null, 2));
     console.log(event);
     console.log(props.jp_props);
     console.log(websocket_ready);

@@ -6,7 +6,7 @@
     - [HTML Components](tutorial/html_components.md "HTML Components")
     - [Routes](tutorial/routes.md "Routes")
     - [The Request Object](tutorial/request_object.md "The Request Object")
-    - [Input Component](tutorial/Input.md "Input Component")
+    - [Input Component](tutorial/input.md "Input Component")
     - [The model and data attributes](tutorial/model_and_data.md "The model and data attributes")
     - [Intermezzo 1 - Tailwind](tutorial/intermezzo_1.md "Tailwind")
     - [Parsing and Using HTML](tutorial/working_with_html.md "Parsing and Using HTML")
