@@ -11,7 +11,7 @@ Vue.component('html_component', {
 
         //console.log(this.jp_props);
         for (var i = 0; i < this.jp_props.object_props.length; i++) {
-            if (this.jp_props.object_props[i].show) {   // (this.jp_props.show)
+            if (this.jp_props.object_props[i].show) {
                 comps.push(h(this.jp_props.object_props[i].vue_type, {
                     props: {
                         jp_props: this.jp_props.object_props[i]
@@ -20,12 +20,7 @@ Vue.component('html_component', {
             }
         }
 
-        // if (this.jp_props.attrs.id == 'temp') {
-        //     delete this.jp_props.attrs.id
-        // }
-
         description_object  = {
-            // class: this.jp_props.classes,
             style: this.jp_props.style,
             attrs: this.jp_props.attrs,
             domProps: {
@@ -48,7 +43,7 @@ Vue.component('html_component', {
             description_object['class'] = this.jp_props.classes;
         }
 
-        event_description = {};
+        var event_description = {};
         for (i = 0; i < this.jp_props.events.length; i++) {
             event_description[this.jp_props.events[i]] = this.eventFunction
         }
@@ -72,6 +67,7 @@ Vue.component('html_component', {
                 var form_reference = this.$el;
                 var props = this.$props;
                 event.preventDefault();    //stop form from being submitted
+                event.stopPropagation();
                 var form_elements_list = [];
                 var formData = new FormData(form_reference);
                 var form_elements = form_reference.elements;

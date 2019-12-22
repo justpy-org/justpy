@@ -272,6 +272,13 @@ Vue.component('quasar_component', {
                     });
                 }
                 break;
+            case 'q-tree1':
+                if (true) {
+                    this.$nextTick(() => {
+                        this.$refs['r' + this.$props.jp_props.id].expandAll();
+                    });
+                }
+                break;
             case 'q-scroll-area':
                 if (this.$props.jp_props.offset) {
                     this.$nextTick(() => {

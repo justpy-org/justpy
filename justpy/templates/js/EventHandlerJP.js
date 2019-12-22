@@ -12,7 +12,8 @@ function eventHandler(props, event, form_data, aux) {
     console.log('debounce');
     console.log(props.jp_props.debounce);
     console.log('-------------------------');
-    if (!websocket_ready && use_websockets) return;
+
+    if (!websocket_ready && use_websockets) {return;}
 
     e = {
         'event_type': event.type,

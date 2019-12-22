@@ -98,7 +98,7 @@ With the `model` and `data` attributes you can easily propagate a change in one 
 
 ## Advanced use of the model attribute
 
-This part of the tutorial will use custom components so you may want to review that part of the tutorial first and then return to this section.
+!> This part of the tutorial will use custom components. I recommend skippng this section initially and returning to it after having completed the [Custom Components](tutorial/custom_components.md) part of the tutorial
 
 The following program is the base one we will expand on. It uses `model` in the same way as examples above.
 
@@ -205,5 +205,5 @@ jp.justpy(model_demo)
 
  We add the two attributes `repeat` and `initial_text` to `MyDiv`. The first, `repeat` determines how many time the model value will be repeated in the text. We give each corner a different value. 
  
- Using `model` and custom `model_update` methods you can disseminate data to different areas and elements on the page and design specific functionality.
+ 
 

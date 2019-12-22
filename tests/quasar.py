@@ -1912,7 +1912,7 @@ def panel_test():
 
     return wp
 
-
+@SetRoute('/tree')
 def tree_test():
     wp = QuasarPage()
     d = Div(classes="q-pa-md q-gutter-sm", a=wp)
@@ -1965,9 +1965,9 @@ def tree_test():
           'label': 'Satisfied customers (with avatar)',
           'avatar': 'https://cdn.quasar.dev/img/boy-avatar.png',
           'children': node}]
-    tree = QTree(a=d, node_key='label', nodes=node, tick_strategy="leaf")
+    tree = QTree(a=d, node_key='label', nodes=node_string, tick_strategy="leaf", no_connectors=False, default_expand_all=False)
     # tree = QTree(a=d, node_key='label', nodes=node_string, tick_strategy="leaf")
-    print(tree.nodes)
+    print(tree.events)
     d1 = Div(text='stam', a=d)
     def my_updated(self, msg):
         print('in my updated')

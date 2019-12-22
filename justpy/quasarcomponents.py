@@ -1357,7 +1357,7 @@ class QTree(QDiv):
         super().__init__(**kwargs)
         self.attributes = ['tick-strategy', 'default-expand-all', 'accordion', 'nodes', 'node-key', 'label-key', 'icon',
                            'no-nodes-label', 'no-results-label', 'filter', 'filter-method', 'ticked', 'expanded', 'selected',
-                           'color', 'control-color', 'text-color', 'selected-color', 'dark', 'duration']
+                           'color', 'control-color', 'text-color', 'selected-color', 'dark', 'duration', 'no-connectors']
         self.allowed_events = ['before', 'after', 'update:expanded', 'lazy-load', 'update:ticked', 'update:selected']
         self.events = ['update:expanded', 'update:ticked', 'update:selected']
         def default_input(self, msg):

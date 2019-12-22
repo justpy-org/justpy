@@ -14,15 +14,25 @@
 </style>
 </head>
 <body>
+<nav>
+    <a href="#/">What is JustPy</a>
+    <a href="#/tutorial/getting_started.md">Tutorial</a>
+    <a href="#/charts_tutorial/introduction.md">Highcharts Tutorial</a>
+    <br>
+    <a href="#/grids_tutorial/introduction.md">ag-Grid Tutorial</a>
+    <a href="#/reference/webpage.md">Reference</a>
+  </nav>
 <div id="app"></div>
 <script>
+    console.log(window.screen.width);
     window.$docsify = {
         loadSidebar: 'sidebar.md',
-        loadNavbar: 'sidebar.md',
+        loadNavbar: window.screen.width > 768? 'sidebar.md' : false,
         alias: {
       '/.*/sidebar.md': '/sidebar.md'
     },
         //autoHeader: true,
+        mergeNavbar: true,
         themeColor: '#33A8FF',
         subMaxLevel: 3,
         //logo: 'https://elimintz.github.io/favicon.png',
@@ -34,7 +44,6 @@
         name: 'JustPy',
         notFoundPage: 'README.md',
         auto2top: true,
-        //mergeNavbar: true,
         repo: 'https://github.com/elimintz/TestPy',
         pagination: {
         crossChapter: true

@@ -90,7 +90,7 @@ Since `plot` returns a HighChart instance, we just modify its options to customi
 ## Modifying a Series
 
 By default, all series on the chart created by `plot` are of the same kind. We can modify this after the chart is created.
-For example add the following line at the end of `women_majors` amd re-run:
+For example add the following line at the end of `women_majors` (just before `return wp` ) amd re-run:
 ```python
 o.series[3].type = 'column'
 ```
@@ -145,7 +145,7 @@ The form of a series' data in JustPy mirrors that of the [series](https://www.hi
 
 In our specific case, the data of each series is a list of lists of pairs, each pair representing the x and y of each point respectively. It is simple to create such lists in Python using the `zip` and `list` functions. 
 
-In this example, we used the itertools library function `zip_longes`t to make sure missing values are handled correctly. Since the zip family of functions returns tuples, we need to convert them to lists (this is not strictly true since the standard library `json.dumps` function converts python tuples to JavaScript arrays). All this is done in the function `make_pairs_list` above.
+In this example, we used the itertools library function `zip_longest` to make sure missing values are handled correctly. Since the zip family of functions returns tuples, we need to convert them to lists (this is not strictly true since the standard library `json.dumps` function converts python tuples to JavaScript arrays). All this is done in the function `make_pairs_list` above.
 
 !> JustPy comes with several Highcharts themes. The theme of all charts on a page must be the same and therefore `highcharts_theme` is a WebPage attribute. In this example we set the theme to 'grid'. 
 

@@ -1,4 +1,4 @@
-# QExpansion - Exapnsion Items
+# QExpansion - Expansion Items
 
 
 ```python

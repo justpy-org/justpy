@@ -242,8 +242,9 @@ def dog_test(request):
         </q-footer>
         <q-page-container style="overflow: hidden;">
             <q-page padding name="main_page" style="overflow: hidden;">
-                    
-                        <q-img src="https://images.dog.ceo/breeds/papillon/n02086910_6087.jpg" class="cursor-pointer" name="image" style="height: 400px; width: 700px">
+                    <div style="height: 400px; width: 600px">
+                        <q-img src="https://images.dog.ceo/breeds/papillon/n02086910_6087.jpg" class="cursor-pointer" name="image" >
+                       </div>
                        <q-tooltip content-class="bg-purple" content-style="font-size: 13px" transition-show="scale" transition-hide="scale" anchor="top middle"  name="tooltip">
           Click image for next picture
         </q-tooltip>
@@ -260,6 +261,7 @@ def dog_test(request):
     main_image.breed = 'papillon'
     breed_select = QBtnDropdown(auto_close=True, split=False, glossy=True, label='Select Breed', icon='fas fa-dog', a=bp.name_dict['toolbar'])
     breed_list = QList(separator=True, dense=True, a=breed_select)
+
     def change_breed(self, msg):
         main_image.breed = self.breed
         change_pic(main_image, msg)
@@ -288,7 +290,6 @@ def dog_test(request):
         list_item = parse_html(list_item_html)
         list_item.breed = self.breed
         list_item.src = self.src
-        # list_item.delete = list_item.name_dict['delete']
 
         list_item.name_dict['delete'].list = bp.name_dict['thumbnail_list']
         list_item.name_dict['delete'].list_item = list_item
@@ -304,7 +305,11 @@ def dog_test(request):
 
     def change_pic(self, msg):
         # https://dog.ceo/api/breed/bulldog/french/images/random
-        r = (requests.get(f'https://dog.ceo/api/breed/{self.breed}/images/random')).json()
+        if '-' in self.breed:
+            b = self.breed.split('-')
+            r = (requests.get(f'https://dog.ceo/api/breed/{b[0]}/{b[1]}/images/random')).json()
+        else:
+            r = (requests.get(f'https://dog.ceo/api/breed/{self.breed}/images/random')).json()
         self.src = r['message']
         add_thumbnail(self, msg)
 

@@ -45,4 +45,3 @@ def db_test():
 
 
 jp.justpy(db_test)
-jp.QBtnDropdown()

@@ -212,3 +212,27 @@ jp.justpy(event_demo)
 
 Instead of just changing the text in `message`, `button_click` creates a `p` element with the text message and adds the element to `message` using the `add_component` method. It is different from `add` because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the `message` div so that most recent messages show up first. Also, in `event_demo` we changed `message` to a div element and added the first message as a p element with text. 
 
+## Inline Event Handlers
+
+In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess using these functions sometimes for one or two line event handlers.
+
+The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are `self` and `msg`. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of `self`. 
+
+```python
+import justpy as jp
+
+
+def comp_test():
+    wp = jp.WebPage()
+    d = jp.Div(text='hello1',
+            click='self.text="clicked"',
+            mouseenter='self.text="entered"; self.set_class("text-5xl"); msg.page.add(Div(text=f"{len(msg.page)} Additional Div"))',
+            mouseleave='self.text="left"; self.set_class("text-xl")',
+            classes='text-2xl border p-2 m-2', a=wp )
+    d = jp.Div(text='hello2', click='self.text="clicked"', mouseenter='self.text="entered"', classes='text-2xl border p-2 m-2', a=wp )
+    d = jp.Div(text='hello3', click='self.text="clicked"', mouseenter='self.text="entered"', classes='text-2xl border p-2 m-2', a=wp )
+    return wp
+
+
+jp.justpy(comp_test)
+```

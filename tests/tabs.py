@@ -25,6 +25,7 @@ class Tabs(Div):
 
         self.tab_list = Ul(classes="flex flex-wrap border-b", a=self)
         self.content_div = Div(a=self)
+        self.delete_list = []
 
 
     def __setattr__(self, key, value):
@@ -76,6 +77,11 @@ class Tabs(Div):
             self.value = val
 
     def delete(self):
+        for c in self.delete_list:
+            c.delete_flag = True
+            c.delete()
+            c.needs_deletion = False
+
         if self.delete_flag:
             for tab in self.tabs:
                 tab['content'].delete()
@@ -109,10 +115,12 @@ class Tabs(Div):
         for tab in self.tabs:
             if tab['id'] != self.value:
                 tab_li = Li(a=self.tab_list, classes=self.item_classes)
-                li_item = A(text=tab['label'], classes=self.tab_label_classes, a=tab_li)
+                li_item = A(text=tab['label'], classes=self.tab_label_classes, a=tab_li, delete_flag=False)
+                self.delete_list.append(li_item)
             else:
                 tab_li = Li(a=self.tab_list, classes=self.item_classes_selected)
-                li_item = A(text=tab['label'], classes=self.tab_label_classes_selected, a=tab_li)
+                li_item = A(text=tab['label'], classes=self.tab_label_classes_selected, a=tab_li, delete_flag=False)
+                self.delete_list.append(li_item)
                 if self.animation and (self.value != self.last_rendered_value):
                     self.set_content_animate(tab)
                 else:

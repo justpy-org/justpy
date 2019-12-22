@@ -1,4 +1,4 @@
-# Introduction - Grid Tutorial
+# Introduction - ag-Grid Tutorial
 
 JustPy comes with a grid component based on [ag-Grid Community](https://www.ag-grid.com/) which is completely [free](https://www.ag-grid.com/license-pricing.php) under the MIT license. 
 

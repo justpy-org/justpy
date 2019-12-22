@@ -28,7 +28,7 @@ html_string = """
 """
 ```
 
-As previously discussed, we will use `parse_html` to easily convert this to JustPy commands.
+We will use [`parse_html`](tutorial/working_with_html?id=the-parse_html-function) to easily convert this to JustPy commands.
 
 Run the following program. As it does not start a web server, there is no need to load a web page. We will be interested only in the printout. 
 
@@ -396,7 +396,7 @@ class Hello(Div):
 
 Again, JustPy components are Python classes. In our case, `Hello` inherits from `Div` and only changes `Div`'s `__init__` (the class constructor).
 
-In the constructor we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class constructor, in our case the constructor of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class constructor after having provided a default value to the counter attribute, we can change it with a keyword argument. Try running the following:
+In the constructor we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class constructor, in our case the constructor of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class constructor after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
 
 ```python
 import justpy as jp
@@ -744,6 +744,7 @@ class Tabs(Div):
 
         self.tab_list = Ul(classes="flex flex-wrap border-b", a=self)
         self.content_div = Div(a=self)
+        self.delete_list = []
 
 
     def __setattr__(self, key, value):
@@ -795,6 +796,11 @@ class Tabs(Div):
             self.value = val
 
     def delete(self):
+        for c in self.delete_list:
+            c.delete_flag = True
+            c.delete()
+            c.needs_deletion = False
+
         if self.delete_flag:
             for tab in self.tabs:
                 tab['content'].delete()
@@ -828,10 +834,12 @@ class Tabs(Div):
         for tab in self.tabs:
             if tab['id'] != self.value:
                 tab_li = Li(a=self.tab_list, classes=self.item_classes)
-                li_item = A(text=tab['label'], classes=self.tab_label_classes, a=tab_li)
+                li_item = A(text=tab['label'], classes=self.tab_label_classes, a=tab_li, delete_flag=False)
+                self.delete_list.append(li_item)
             else:
                 tab_li = Li(a=self.tab_list, classes=self.item_classes_selected)
-                li_item = A(text=tab['label'], classes=self.tab_label_classes_selected, a=tab_li)
+                li_item = A(text=tab['label'], classes=self.tab_label_classes_selected, a=tab_li, delete_flag=False)
+                self.delete_list.append(li_item)
                 if self.animation and (self.value != self.last_rendered_value):
                     self.set_content_animate(tab)
                 else:
@@ -879,13 +887,12 @@ my_chart_def = """
         }]
 }
 """
-
 # https://dog.ceo/api/breed/papillon/images/random
 pics_french_bulldogs = ['5458', '7806', '5667', '4860']
 pics_papillons = ['5037', '2556', '7606', '8241']
 
 def tab_change(self, msg):
-    print('In change event handler:', msg)
+    print('in change', msg)
 
 def tab_comp_test():
     wp = jp.WebPage(data={'tab': 'id2556'})

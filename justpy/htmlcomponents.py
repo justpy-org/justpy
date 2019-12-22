@@ -195,19 +195,17 @@ class JustpyBaseComponent(Tailwind):
             cls = JustpyBaseComponent
             self.id = cls.next_id
             cls.next_id += 1
-        # object is temporary and is not added to instance list
+        # object is temporary and is not added to instance dictionary
         else:
-            # self.id = 'temp'
             self.id = None
         self.events = []
         self.allowed_events = []
 
 
-    def __del__(self):
-        print(f'Deleted {self}')
+    # def __del__(self):
+    #     print(f'Deleted {self}')
 
     def delete(self):
-        # print(self.id, self)
         if self.needs_deletion:
             if self.delete_flag:
                 JustpyBaseComponent.instances.pop(self.id)
@@ -364,8 +362,13 @@ class HTMLBaseComponent(JustpyBaseComponent):
                 if prefix + e in kwargs.keys():
                     fn = kwargs[prefix + e]
                     if isinstance(fn, str):
+                        cls = JustpyBaseComponent
+                        if not self.id:
+                            self.id = cls.next_id
+                            cls.next_id += 1
                         fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
                         exec(fn_string)
+                        # self.on(e, locals()[f'oneliner{self.id}'])
                         self.on(e, locals()[f'oneliner{self.id}'])
                     else:
                         self.on(e, fn)
@@ -611,18 +614,19 @@ class Input(Div):
         self.value = ''
         self.checked = False
         self.debounce = 200  # 200 millisecond default debounce for events as keyboard repeat is usually 30Hz
+        self.no_events = False
         # Types for input element:
         # ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image',
         # 'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text', 'time', 'url', 'week']
         self.type = 'text'
         self.form = None
-        # self.model = None   #[wp, 'search-text] or [d, 'search-text']
         super().__init__(**kwargs)
 
         def default_input(self, msg):
             return self.before_event_handler(msg)
 
-        self.on('before', default_input)
+        if not self.no_events:
+            self.on('before', default_input)
 
     def __repr__(self):
         num_components = len(self.components)
@@ -697,14 +701,16 @@ class Input(Div):
             d['value'] = self.value
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
-        if self.type in ['radio', 'checkbox', 'select']:  # Ignore input event from radios, checkboxes and selects
-            if 'change' not in self.events:
-                self.events.append('change')
-        else:
-            if ('change' not in self.events) and ('change' in self.allowed_events):
-                self.events.append('change')
-            if 'input' not in self.events:
-                self.events.append('input')
+        if not self.no_events:
+            if self.type in ['radio', 'checkbox', 'select']:  # Ignore input event from radios, checkboxes and selects
+                if 'change' not in self.events:
+                    self.events.append('change')
+            else:
+                if ('change' not in self.events) and ('change' in self.allowed_events):
+                    pass
+                    # self.events.append('change')
+                if 'input' not in self.events:
+                    self.events.append('input')
         if self.checked:
             d['attrs']['checked'] = True
         else:
@@ -727,6 +733,8 @@ class Form(Div):
 
         def default_submit(self, msg):
             print('Form submitted ', msg.form_data)
+            return True
+
 
         self.on('submit', default_submit)
 
@@ -1252,11 +1260,12 @@ class BasicHTMLParser(HTMLParser):
 
         super().__init__()
         self.level = -1
+        self.parse_id = 0
         self.start_tag = True
         self.components = []
         self.name_dict = {}  # After parsing holds a dict with named components
         # self.root = Div(name='root', **kwargs)
-        self.root = Div(name='root')
+        self.root = Div(name='root', temp=False)
         self.root_name = f'c{self.root.id}'
         self.containers = []
         self.containers.append(self.root)
@@ -1328,7 +1337,9 @@ class BasicHTMLParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
+        self.parse_id += 1
         c = component_by_tag(tag, temp=self.all_temp)
+        c.parse_id = self.parse_id
         command_string = f''
         if c is None:
             print(tag, 'No such tag, Div being used instead *****************************************')
@@ -1370,10 +1381,15 @@ class BasicHTMLParser(HTMLParser):
             else:
                 command_string = f'{command_string}{attr[0]}={attr[1]}, '
 
+        # if f'c{self.containers[-1].id}' == self.root_name:
+        #     command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
+        # else:
+        #     command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].id})'
+
         if f'c{self.containers[-1].id}' == self.root_name:
-            command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
+            command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
         else:
-            command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].id})'
+            command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].parse_id})'
 
         self.commands.append(command_string)
         self.containers[-1].add_component(c)
@@ -1384,7 +1400,8 @@ class BasicHTMLParser(HTMLParser):
             self.endtag_required = False
 
     def handle_endtag(self, tag):
-        self.containers.pop()
+        c = self.containers.pop()
+        del c.parse_id
         self.level = self.level - 1
 
     def handle_data(self, data):
@@ -1480,3 +1497,15 @@ def get_websocket(event_data):
 def set_temp_flag(flag):
     """Sets whether components are temporary ones by default"""
     JustpyBaseComponent.temp_flag = flag
+
+class Styles:
+
+    button_simple = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+    button_pill = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
+    button_outline = 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+    button_bordered = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+    button_disabled = 'bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'
+    button_3d = 'bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded'
+    button_elevated = 'bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
+
+

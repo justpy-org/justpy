@@ -1,6 +1,5 @@
 import justpy as jp
 
-users = {}
 
 login_form_html = """
 <div class="w-full max-w-xs">
@@ -9,7 +8,7 @@ login_form_html = """
       <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
         Username
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" name="user_name">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="text" placeholder="Username" name="user_name">
     </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -41,13 +40,15 @@ alert_html = """
 </div>
 """
 
+users = {}
+
 def login_test(request):
     wp = jp.WebPage()
     session_id = request.session_id
-    d = jp.Div(a=wp, text=f'Your session id is: {session_id}', classes='m-1 p-1 text-xl')
     if session_id in users:
         if users[session_id]['logged_in']:
-            d = jp.Div(a=wp, text=f'You are already logged in...', classes='m-1 p-1 text-2l')
+            jp.Div(a=wp, text=f'Your session id is: {session_id}', classes='m-1 p-1 text-xl ')
+            jp.Div(a=wp, text=f'You are already logged in...', classes='m-1 p-1 text-2l')
             logged_in = True
         else:
             logged_in = False
@@ -56,7 +57,6 @@ def login_test(request):
         users[session_id]['logged_in'] = False
         logged_in = False
     if not logged_in:
-        # login_form = jp.parse_html(login_form_html, a=wp)
         return login_page(request)
     return wp
 
@@ -69,7 +69,8 @@ def login_page(request):
         pass
     wp = jp.WebPage()
     wp.display_url = 'login_page'  # Sets the url to display in browser without reloading page
-    login_form = jp.parse_html(login_form_html, a=wp, classes='m-2 p-2')
+    jp.Div(text='Please login', a=wp, classes='m-2 p-2 w-1/4 text-xl font-semibold')
+    login_form = jp.parse_html(login_form_html, a=wp, classes='m-2 p-2 w-1/4')
     alert = jp.parse_html(alert_html)
     wp.add(alert)
     alert.show = False
@@ -78,21 +79,23 @@ def login_page(request):
     sign_in_btn.user_name = login_form.name_dict['user_name']
     sign_in_btn.session_id = request.session_id
     sign_in_btn.alert = alert
+
     def sign_in_click(self, msg):
-        # self.alert.show = not self.alert.show
-        alert.show = not alert.show
         if login_form.name_dict['password'].value == 'password':
-            session_div.text = request.session_id + ' logged in succesfuly'
+            session_div.text = request.session_id + ' logged in successfully'
+            self.alert.show = False
             return login_successful(wp, request.session_id)
         else:
             session_div.text = request.session_id + ' login not successful'
+            self.alert.show = True
     sign_in_btn.on('click', sign_in_click)
+
     return wp
 
 def login_successful(wp, s_id):
     wp.delete_components()
     users[s_id]['logged_in'] = True
-    wp.display_url = 'login_succesful'
+    wp.display_url = 'login_successful'
     jp.Div(text='Login successful. You are now logged in', classes='m-1 p-1 text-2xl', a=wp)
 
 
