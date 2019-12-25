@@ -24,7 +24,8 @@ class HighCharts(JustpyBaseComponent):
     # but is set at the WebPage level. All charts on same page have the same theme.
     # Example: wp.highcharts_theme = 'grid'
 
-    vue_type = 'chart'
+    vue_type = 'chart' # The corresponding Vue component
+
     chart_types = ['columnrange', 'cylinder', 'dependencywheel', 'errorbar', 'funnel', 'funnel3d', 'gauge', 'heatmap',
                    'histogram', 'item', 'line', 'networkgraph', 'organization', 'packedbubble', 'pareto', 'pie',
                    'polygon', 'pyramid', 'pyramid3d', 'sankey', 'scatter', 'scatter3d', 'solidgauge',

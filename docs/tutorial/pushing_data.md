@@ -175,7 +175,7 @@ async def count_down(self, msg):
         await msg.page.update()
         await asyncio.sleep(1)
     d.text = 'Boom!'
-    d.animation = ''
+    d.animation = 'zoomIn'
     d.set_classes('text-red-500 bg-white')
     bomb_icon.set_class('text-red-700')
     self.show = True

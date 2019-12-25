@@ -38,7 +38,8 @@ class QDiv(Div):
         # self.attributes.append('key')  # For group transition
 
     def __setattr__(self, key, value):
-        if key in self.__class__.slots:
+        # if key in self.__class__.slots:
+        if key in self.slots:
             self.add_scoped_slot(key[:key.index('_')], value)
         else:
             self.__dict__[key] = value
@@ -62,7 +63,7 @@ class _QInputBase(Input):
                 self.load_json(value)
             else:
                 self.__dict__[key] = value
-        elif key in self.__class__.slots:
+        elif key in self.slots:
             self.add_scoped_slot(key[:key.index('_')], value)
         else:
             self.__dict__[key] = value
@@ -456,7 +457,7 @@ class QBtn(QDiv):
         self.prop_list = ['ripple', 'type', 'to', 'replace', 'label', 'icon', 'icon-right', 'round', 'outline', 'flat',
                           'unelevated', 'rounded', 'push', 'glossy', 'size', 'fab', 'fab-mini', 'color', 'text-color',
                           'no-caps', 'no-wrap', 'dense', 'tabindex', 'align', 'stack', 'stretch', 'loading', 'disable',
-                          'percentage', 'dark-percentage']
+                          'percentage', 'dark-percentage', 'href', 'target']
 
 
 QButton = QBtn
@@ -1392,7 +1393,7 @@ class QTree(QDiv):
                 self.load_json(value)
             else:
                 self.__dict__[key] = value
-        elif key in self.__class__.slots:
+        elif key in self.slots:
             self.add_scoped_slot(key[:key.index('_')], value)
         else:
             self.__dict__[key] = value
@@ -1482,7 +1483,7 @@ class QTable(QDiv):
                 self.__dict__[key] = self.load_json(value)
             else:
                 self.__dict__[key] = value
-        elif key in self.__class__.slots:
+        elif key in self.slots:
             self.add_scoped_slot(key[:key.index('_')], value)
         else:
             self.__dict__[key] = value

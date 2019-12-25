@@ -158,7 +158,7 @@ wp.head_html ="""
  * Type: `string`
  * Default: `''` (the empty string)
  
-If not the empty string, overrides everything else and set the HTML on the page to this value.
+If not the empty string, overrides everything else and sets the HTML on the page to this value.
  
 ### body_style
  

@@ -15,7 +15,7 @@ JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifie
 
 JustPy supports visualization using [matplotlib](tutorial/matplotlib.md) and [Highcharts](charts_tutorial/introduction.md).
 
-!> One time only marketing pitch: **Experimenting with JustPy is worth your time. It has made me an order of magnitude more productive. You will be surprised how little code is required to develop sophisticated web sites**
+!> One time only marketing pitch: **Experimenting with JustPy is worth your time. You will be surprised how little code is required to develop interactive web sites.**
 
 Hopefully, JustPy will enable teaching web development in introductory Python courses by reducing the complexity of web development.
 
@@ -34,7 +34,25 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
-That's it. The program above activates a web server that returns a web page with 'Hello world!' for any request. Locally, you would direct your browser to to http://localhost:8000/ or http://127.0.0.1:8000 to see the result.
+The program above activates a web server that returns a web page with 'Hello world!' for any request. Locally, you would direct your browser to to http://localhost:8000/ or http://127.0.0.1:8000 to see the result.
+
+Here is a slightly modified version in which 'Hello world!' changes to 'I was clicked!' when it is clicked.
+
+```python
+import justpy as jp
+
+def my_click(self, msg):
+    self.text = 'I was clicked!'
+
+def hello_world():
+    wp = jp.WebPage()
+    d = jp.Div(text='Hello world!')
+    d.on('click', my_click)
+    wp.add(d)
+    return wp
+
+jp.justpy(hello_world)
+```
    
 
 ## Under the Hood

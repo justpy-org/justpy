@@ -109,6 +109,8 @@ Vue.component('quasar_component', {
         for (const directive_name in this.jp_props.directives) {
             directives.push({name: directive_name, value: this.jp_props.directives[directive_name]});
         }
+        console.log('directives *********');
+        console.log(directives);
         description_object['directives'] = directives;
 
         var scoped_slots = {};

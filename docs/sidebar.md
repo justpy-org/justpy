@@ -36,6 +36,7 @@
     - [Grid Events](grids_tutorial/grid_events.md "Grid Events")
 - <span class="section-header">Reference</span>
     - [WebPage class](reference/webpage.md "WebPage Class")
+    - [HTML Components](reference/htmlcomponent.md "HTML Components")
 
 
 

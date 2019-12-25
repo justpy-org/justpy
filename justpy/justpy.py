@@ -135,6 +135,8 @@ class Homepage(HTTPEndpoint):
             else:
                 load_page = func_to_run()
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
+        assert len(load_page) > 0, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
+        #'\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.head_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
@@ -280,7 +282,6 @@ async def handle_event(data_dict, com_type=0):
     if com_type==0:
         event_data['websocket'] = WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
     if event_data['event_type'] == 'page_update':
-        #TODO: Add event handler for page_update (add events to WebPage)
         build_list = p.build_list()
         return {'type': 'page_update', 'data': build_list}
     c = JustpyBaseComponent.instances[event_data['id']]

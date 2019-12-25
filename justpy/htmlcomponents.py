@@ -175,7 +175,7 @@ class WebPage:
         for i, obj in enumerate(self.components):
             obj.react(self.data)
             d = obj.convert_object_to_dict()
-            d['running_id'] = i
+            # d['running_id'] = i
             object_list.append(d)
         return object_list
 
@@ -190,20 +190,18 @@ class JustpyBaseComponent(Tailwind):
     def __init__(self, **kwargs):  # c_name=None,
 
         temp = kwargs.get('temp', JustpyBaseComponent.temp_flag)
-        # If object is not a temporary one
-        if not temp:
+        if temp:
+            self.id = None
+        else:
             cls = JustpyBaseComponent
             self.id = cls.next_id
             cls.next_id += 1
-        # object is temporary and is not added to instance dictionary
-        else:
-            self.id = None
         self.events = []
         self.allowed_events = []
 
 
-    # def __del__(self):
-    #     print(f'Deleted {self}')
+    def __del__(self):
+        print(f'Deleted {self}')
 
     def delete(self):
         if self.needs_deletion:
@@ -302,9 +300,9 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
-
+    # removed tooltip
     attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
-                      'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html', 'animation']
+                      'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
     not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize', 'spellcheck',
                                   'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
@@ -345,7 +343,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         # self.events = False
         self.events = []
         self.event_propagation = True  # Should events be propagated?
-        self.tooltip = None
+        # self.tooltip = None
         # self.attributes = []
         self.attributes = type(self).attributes
         self.prop_list = []  # For components from libraries like quasar. Contains both props and directives
@@ -399,12 +397,10 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.attrs[attr] = value
 
     def add_event(self, event_type):
-        # Adds an allowed event
         if event_type not in self.allowed_events:
             self.allowed_events.append(event_type)
 
     def add_allowed_event(self, event_type):
-        # Adds an allowed event
         if event_type not in self.allowed_events:
             self.allowed_events.append(event_type)
 
@@ -427,11 +423,10 @@ class HTMLBaseComponent(JustpyBaseComponent):
             s = f'{s}/>{ws}'
         return s
 
-    # Objects that inherit this will overwrite
     def react(self, data):
         return
 
-    def convert_object_to_dict(self):  # Objects may need redefine this
+    def convert_object_to_dict(self):
         d = {}
         # HTMLBaseComponent.attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
         #                   'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html']
@@ -580,7 +575,7 @@ class Div(HTMLBaseComponent):
         for i, obj in enumerate(self.components):
             obj.react(self.data)
             d = obj.convert_object_to_dict()
-            d['running_id'] = i
+            # d['running_id'] = i
             object_list.append(d)
         return object_list
 
@@ -910,7 +905,7 @@ class Grid(HTMLBaseComponent):
         for row in self.components:
             for obj in row:
                 d = obj.convert_object_to_dict()
-                d['running_id'] = i
+                # d['running_id'] = i
                 i += 1
                 object_list.append(d)
         return object_list
@@ -1197,6 +1192,19 @@ for tag in svg_tags_use:
                                         'attributes': svg_attr_dict.get(tag, []) + svg_presentation_attributes + svg_filter_attributes})
 
 # *************************** end SVG components
+
+class Entity(Span):
+# Render HTML Entities
+
+    def __init__(self, **kwargs):
+        self.entity = ''
+        super().__init__(**kwargs)
+
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['inner_html'] = self.entity
+        return d
+
 
 class Hello(Div):
 
