@@ -14,14 +14,14 @@ First, make sure that the version of `python3` you have is 3.6 or higher:
 If not, upgrade your Python interpreter.
 
 It is probably best to run the programs in this tutorial in a virtual environment so that your system wide Python interpreter is not affected, though this is not a requirement.
-The following commands create a directory for this tutorial, then create a virtual environment named jp and activate it and finally install JustPy:
+The following commands create a directory for this tutorial, then create a virtual environment named jp and activate it and finally install JustPy and its dependencies:
 
 ```
 $ mkdir jptutorial
 $ cd jptutorial
 $ python3 -m venv jp
 $ source jp/bin/activate
-(jp) $ pip install justpy
+(jp) $ pip install justpy[full]
 ```
 
 On Microsoft Windows, the activation command for the virtual environment is `jp\Scripts\activate` instead of the source command above.
@@ -49,7 +49,7 @@ To run the program execute the following command:
 $ python3 test.py
 ```
 
-Then, direct your browser to http://localhost:8000/ or http://127.0.0.1:8000  (this refers to port 8000 on the local machine, one of these should work no matter your operating system). You should see 'Hello!' in your browser.  Click it a few times also. It should report the number of times it has been clicked. 
+Then, direct your browser to http://localhost:8000/ or http://127.0.0.1:8000  (this refers to port 8000 on the local machine; one of these should work in all environments). You should see 'Hello!' in your browser.  Click it a few times also. It should report the number of times it has been clicked. 
 
 In this tutorial, when asked to "run the program", follow the two steps above (there is no need to name the file "test.py", you can use any name you like). 
 

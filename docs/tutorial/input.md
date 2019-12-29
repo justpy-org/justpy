@@ -1,6 +1,6 @@
 # Input Component
 
-## Bssic Use
+## Basic Use
 
 Many web applications require users to fill forms. HTML forms are based on the [input HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input).
 
@@ -20,9 +20,9 @@ async def input_demo(request):
 jp.justpy(input_demo)
 ```
 
-## The input event
+## The input Event
 
-The program above is quite boring, it does nothing except allow you to type text into the input field. To make it more more interesting, let's have what we type reflected in a paragraph on the page. For this, we need to introduce the `input` event. When you type, each character typed into the input field generates an `input` event (yes, the tag and the event are called the same name, don't blame me). 
+The program above is quite boring, it does nothing except allow you to type text into the input field. To make it more interesting, let's have what we type reflected in a paragraph on the page. For this, we need to introduce the `input` event. When you type, each character typed into the input field generates an `input` event (yes, the tag and the event are called the same name). 
 
 Run the following program:
 
@@ -45,11 +45,17 @@ async def input_demo(request):
 jp.justpy(input_demo)
 ```
 
-The function input_demo creates a web page and adds an input element called `in1` to it (ignore the classes, they are there just to make the input element look nicer and do not affect the functionality of the program). Notice the `placeholder` attribute of `in1`. Before any text is typed into the input field or when it is emptied, the placeholder text is displayed in the field. We then define a div element that is added to the page (using the `a` keyword argument) and assigned to an attribute of in1. We saw this technique before. It simplifies event handling as we shall see in a second. Next, we bind the input event of `in1` to the function `my_input` (we could have omitted this line by adding `input=my_input` as a keyword argument when we created in1). `my_input` is therefore now the input event handler for `in1`.
+The function `input_demo` creates a web page and adds an input element called `in1` to it (ignore the classes, they are there just to make the input element look nicer and do not affect the functionality of the program). 
 
-The input event occurs each and every time a character is typed into an input element. After every keystroke this function is run, and it updates the text of the div to be the value of the input field.  By assigning the div to an `in1` attribute, we have access to all the variables we need in the event handler.
+Notice the `placeholder` attribute of `in1`. Before any text is typed into the input field or when it is emptied, the placeholder text is displayed in the field. We then define a div element that is added to the page (using the `a` keyword argument) and assigned to an attribute of `in1`. We saw this technique before. It simplifies event handling as we shall see in a second. 
 
-You may have noticed that there is a delay in the updating of the Div. That is because the component by default sets the `debounce` attribute of the input event to 200ms. This means an input event is generated only after a key has not been pressed for 200ms. Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
+Next, we bind the input event of `in1` to the function `my_input` (we could have omitted this line by adding `input=my_input` as a keyword argument when we created `in1`). `my_input` is now the input event handler for `in1`.
+
+The input event occurs each and every time a character is typed into an input element. After every keystroke this function is run, and it changes the text of the div to the value of the input field.  By assigning the div to an `in1` attribute, we have access to all the variables we need in the event handler.
+
+You may have noticed that there is a delay in the updating of the Div. That is because the component by default sets the `debounce` attribute of the input event to 200ms. This means an input event is generated only after a key has not been pressed for 200ms. 
+
+Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
 
 ## The Type Attribute
 

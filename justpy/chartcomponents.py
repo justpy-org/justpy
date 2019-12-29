@@ -88,14 +88,24 @@ class HighCharts(JustpyBaseComponent):
         return True
 
     async def draw_crosshair(self, point_list, websocket):
-        # data is list of od dict with keys id, series, point all integers
+        # data is list of of dictionaries  whose keys are:
+        # 'id': the chart id
+        # 'series': the series index
+        # 'point': the point index
+        #  Values are  all integers
+        # Example:
         # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
         await websocket.send_json({'type': 'draw_crosshair', 'data': point_list})
         # So the page itself does not update, only the tooltip, return True not None
         return True
 
     async def select_point(self, point_list, websocket):
-        # data is list of dict with keys id, series, point all integers
+        # data is list of of dictionaries  whose keys are:
+        # 'id': the chart id
+        # 'series': the series index
+        # 'point': the point index
+        #  Values are  all integers
+        # Example:
         # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
         await websocket.send_json({'type': 'select_point', 'data': point_list})
         # So the page itself does not update, only the tooltip, return True not None

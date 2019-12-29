@@ -98,7 +98,7 @@ With the `model` and `data` attributes you can easily propagate a change in one 
 
 ## Advanced use of the model attribute
 
-!> This part of the tutorial will use custom components. I recommend skippng this section initially and returning to it after having completed the [Custom Components](tutorial/custom_components.md) part of the tutorial
+!> This part of the tutorial will use custom components. I recommend skipping this section initially and returning to it after having completed the first few sections of the [Creating Custom Components](tutorial/custom_components.md) part of the tutorial
 
 The following program is the base one we will expand on. It uses `model` in the same way as examples above.
 

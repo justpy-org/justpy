@@ -173,7 +173,7 @@ jp.justpy(plot_test)
 
 ## Multiple charts on a page
 
-The program below is very similar to the example above except that it puts the same chart element twenty times on the page. Since it is the same element, the event handlers modify all the charts.
+The program below is very similar to the example above except that it puts the same chart element several times on the page. Since it is the same element, the event handlers modify all the charts.
 
 ```python
 import justpy as jp
@@ -190,7 +190,7 @@ def plot_test():
     plt.ylabel('y data')
     d = jp.Div(classes='flex flex-wrap', a=wp)
     chart = jp.Matplotlib(classes='m-1 p-2')
-    for i in range(20):
+    for i in range(5):
         d.add(chart)
 
     chart.num_points = 4
@@ -271,7 +271,7 @@ def plot_test():
     plt.ylabel('y data')
     d = jp.Div(classes='flex flex-wrap', a=wp)
     chart_list = []
-    for i in range(20):
+    for i in range(5):
         chart = jp.Matplotlib(a=d, classes='m-1 p-2')
         chart.num_points = 4
         chart_list.append(chart)

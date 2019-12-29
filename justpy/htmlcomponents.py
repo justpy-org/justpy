@@ -13,9 +13,6 @@ import requests
 from .tailwind import Tailwind
 import logging
 
-# TODO: Handle scroll event https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Determine_if_an_element_has_been_totally_scrolled
-# Metaclasses: https://stackoverflow.com/questions/41215107/programmatically-defining-a-class-type-vs-types-new-class
-
 # Dict to translate from tag to class
 _tag_class_dict = {}
 
@@ -35,9 +32,7 @@ class JustPy:
 
 
 class WebPage:
-    # Add page events like visibility. Do with templates?
-    # TODO: Add page events like visibility. Do with templates? https://developer.mozilla.org/en-US/docs/Web/Events ad reload to page with seconds parameter
-    # events: online, beforeunload, resize, scroll?, visibilitychange
+    # TODO: Add page events like online, beforeunload, resize, visibilitychange
     instances = {}
     sockets = {}
     next_page_id = 0
@@ -81,8 +76,8 @@ class WebPage:
         return len(self.components)
 
 
-    def __del__(self):
-        print(f'Deleted {self}')
+    # def __del__(self):
+    #     print(f'Deleted {self}')
 
     def add_component(self, child, position=None):
         if position is None:
@@ -200,8 +195,8 @@ class JustpyBaseComponent(Tailwind):
         self.allowed_events = []
 
 
-    def __del__(self):
-        print(f'Deleted {self}')
+    # def __del__(self):
+    #     print(f'Deleted {self}')
 
     def delete(self):
         if self.needs_deletion:
@@ -291,8 +286,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     Base Component for all HTML components
     """
 
-    # https: // www.w3schools.com / tags / ref_standardattributes.asp
-    # All components have these attributes + data-*
     attributes = []
     html_tag = 'div'
     vue_type = 'html_component'  # VUE component name
@@ -300,52 +293,43 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
-    # removed tooltip
     attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
                       'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
-    not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize', 'spellcheck',
-                                  'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
-    # Additions to global attributes to add to attrs dict apart from id.
+    # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize', 'spellcheck',
+    #                               'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
+
+    # Additions to global attributes to add to attrs dict apart from id and style.
     used_global_attributes = ['contenteditable', 'dir', 'tabindex', 'title', 'accesskey', 'draggable', 'lang', 'hidden']
 
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 
-    # window.addEventListener("afterprint", function(event){...});
-    # window.onafterprint = function(event){...};
-    windows_events = ['afterprint', 'beforeprint', 'beforeunload', 'error', 'hashchange', 'load',
-                      'message', 'offline', 'online', 'pagehide', 'pageshow', 'popstate',
-                      'resize', 'storage', 'unload']
-    form_events = ['blur', 'change', 'contextmenu', 'focus', 'input', 'invalid', 'reset', 'search', 'select', 'submit']
-    keyboard_events = ['keydown', 'keypress', 'keyup']
-    mouse_events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'wheel',
-                    'mouseenter', 'mouseleave']
+    # windows_events = ['afterprint', 'beforeprint', 'beforeunload', 'error', 'hashchange', 'load',
+    #                   'message', 'offline', 'online', 'pagehide', 'pageshow', 'popstate',
+    #                   'resize', 'storage', 'unload']
+    # form_events = ['blur', 'change', 'contextmenu', 'focus', 'input', 'invalid', 'reset', 'search', 'select', 'submit']
+    # keyboard_events = ['keydown', 'keypress', 'keyup']
+    # mouse_events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'wheel',
+    #                 'mouseenter', 'mouseleave']
 
     def __init__(self, **kwargs):  # c_name=None,
         super().__init__(**kwargs)  # Important, needed to give component a unique id
-        # self.vue_type = 'html_component'   # VUE component name
         self.class_name = type(self).__name__
-        # self.html_tag = type(self).html_tag
-        # self.attrs = {'id': str(self.id)}  # Every component gets an ID which is a number or 'temp'
         self.inner_html = ''
         self.animation = False
-        self.pages = {}  # pages the component is on, changed to dict
+        self.pages = {}  # pages the component is on. Not managed by framework.
         self.show = True
         self.classes = ''
         self.slot = None
-        self.scoped_slots = {}  # for Quasar initially
+        self.scoped_slots = {}  # for Quasar and other Vue.js based components
         self.style = ''
         self.directives = []
         self.data = {}
-        # self.name = 'c' + str(self.id)
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
                                'after', 'before', 'keydown', 'keyup', 'keypress']
-        # self.events = False
         self.events = []
         self.event_propagation = True  # Should events be propagated?
-        # self.tooltip = None
-        # self.attributes = []
-        self.attributes = type(self).attributes
+        # self.attributes = type(self).attributes
         self.prop_list = []  # For components from libraries like quasar. Contains both props and directives
 
         self.initialize(**kwargs)
@@ -594,7 +578,6 @@ class Div(HTMLBaseComponent):
 
 
 class Input(Div):
-    # https://www.cssportal.com/style-input-range/   style an input range
     # Edge and Internet explorer do not support the input event for checkboxes and radio buttons. Need to use change instead
     # IMPORTANT: Scope of name of radio buttons is the whole page and not the form as is the standard unless form is sepcified
 
@@ -608,7 +591,7 @@ class Input(Div):
 
         self.value = ''
         self.checked = False
-        self.debounce = 200  # 200 millisecond default debounce for events as keyboard repeat is usually 30Hz
+        self.debounce = 200  # 200 millisecond default debounce for events
         self.no_events = False
         # Types for input element:
         # ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image',
@@ -628,7 +611,6 @@ class Input(Div):
         return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, input_type: {self.type}, vue_type: {self.vue_type}, value: {self.value}, checked: {self.checked}, number of components: {num_components})'
 
     def before_event_handler(self, msg):
-        # TODO: Handle select. Works currently but may need to play with option tag children
         logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
         if msg.event_type not in ['input', 'change', 'select']:
             return
@@ -697,13 +679,10 @@ class Input(Div):
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
         if not self.no_events:
-            if self.type in ['radio', 'checkbox', 'select']:  # Ignore input event from radios, checkboxes and selects
+            if self.type in ['radio', 'checkbox', 'select']:
                 if 'change' not in self.events:
                     self.events.append('change')
             else:
-                if ('change' not in self.events) and ('change' in self.allowed_events):
-                    pass
-                    # self.events.append('change')
                 if 'input' not in self.events:
                     self.events.append('input')
         if self.checked:
@@ -719,6 +698,7 @@ class Input(Div):
 
 
 class Form(Div):
+
     html_tag = 'form'
     attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
 
@@ -735,15 +715,13 @@ class Form(Div):
 
 
 class Label(Div):
+
     html_tag = 'label'
-    attributes = ['for', 'form']  # In JustPy these accept components, not ids of component like in HTML
+    attributes = ['for', 'form']  # In JustPy these are components, not ids of component like in HTML
 
     def __init__(self, **kwargs):
         self.for_component = None
-        # self.form = None
         super().__init__(**kwargs)
-        # self.html_tag = 'label'
-        # self.attributes = ['for', 'form']  # In JustPy these accept components, not ids of component like in HTML
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -759,7 +737,6 @@ class Label(Div):
 
 
 class TextArea(Input):
-    # https://www.cssportal.com/style-input-range/   style an input range
 
     html_tag = 'textarea'
     attributes = ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name',
@@ -781,10 +758,10 @@ class Select(Input):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.type = 'select'
-        # need to look at options and set selected appropriately
 
 
 class A(Div):
+
     html_tag = 'a'
     attributes = ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type']
 
@@ -796,13 +773,12 @@ class A(Div):
         self.rel = "noopener noreferrer"
         self.download = None  # If attribute is set, file is downloaded, only works html 5  https://www.w3schools.com/tags/att_a_download.asp
         self.target = '_self'  # _blank, _self, _parent, _top, framename
-        # Whether to scroll to link  One of "auto", "instant", or "smooth". Defaults to "auto". https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-        self.scroll = False
+        # https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+        self.scroll = False  # If True, scrolling is enabled
         self.scroll_option = 'smooth'  # One of "auto" or "smooth".
         self.block_option = 'start'  # One of "start", "center", "end", or "nearest". Defaults to "start".
         self.inline_option = 'nearest'  # One of "start", "center", "end", or "nearest". Defaults to "nearest".
         super().__init__(**kwargs)
-        # self.events.append('click')
 
         def default_click(self, msg):
             return True
@@ -853,81 +829,18 @@ class EditorJP(TextArea):
         self.html_tag = 'textarea'
 
 
-
-class Grid(HTMLBaseComponent):
-
-    def __init__(self, **kwargs):
-        # https://css-tricks.com/snippets/css/complete-guide-grid/
-        self.rows = 2
-        self.columns = 4
-        self.column_gap = 0
-        self.row_gap = 0
-        # Alignment of items inside grid
-        self.justify_items = 'stretch'  # one of start, end, center, stretch    stretch is default  alignment on x axis
-        self.align_items = 'stretch'  # one of start, end, center, stretch    stretch is default alignment on y axis
-        # Alignment if the whole grid inside its container
-        self.justify_content = 'stretch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on x axis
-        self.align_content = 'stretch'  # one of start, end, center, stretch, space-around, space-between, space-evenly    stretch is default alignment on y axis
-
-        super().__init__(**kwargs)
-        self.html_tag = 'div'
-        # Components is a two dimensional matrix
-        self.components = [[Div() for x in range(self.columns)] for y in range(self.rows)]
-
-        self.set_class('grid')
-        self.style = f"""display: grid; grid-template-columns: repeat({self.columns},1fr); grid-template-rows: repeat({self.rows},1fr); 
-                    grid-column-gap: {self.column_gap}px; grid-row-gap: {self.row_gap}px;
-                    justify-items: {self.justify_items}; align-items: {self.align_items}; 
-                    justify-content: {self.justify_content}; align-content: {self.align_content}; height: 800px;
-                    """
-        self.style.replace('\n', '')
-        self.style.replace('\t', '')
-
-    def add_cell(self, c, row=0, col=0, num_rows=0, num_cols=0):
-        c.style = f"""{c.style}; grid-column-start: {col + 1}; grid-column-end: {col + 1 + num_cols};
-                        grid-row-start: {row + 1}; grid-row-end: {row + 1 + num_rows};
-                    """
-        # d = Div(style=cell_style)
-        # d.add_component(c)
-        self.components[row][col] = c
-        return c
-
-    def insert_pd_frame(self, pf, headers=True, index=False, cell_classes=''):
-        r, c = pf.shape
-        for row in range(r):
-            for col in range(c):
-                cell = Div(text=str(pf.iloc[row, col]), classes=cell_classes)
-                self.add_cell(cell, row, col)
-
-    def build_list(self):
-        object_list = []
-        i = 0
-        for row in self.components:
-            for obj in row:
-                d = obj.convert_object_to_dict()
-                # d['running_id'] = i
-                i += 1
-                object_list.append(d)
-        return object_list
-
-    def convert_object_to_dict(self):
-        d = super().convert_object_to_dict()
-        d['object_props'] = self.build_list()
-        return d
-
-
 class Space(Div):
+
+# Creates a span with hard spaces.
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.num = kwargs.get('num', 1)
         self.html_tag = 'span'
-        self.attributes = []
-        self.temp = True
         self.text = '&nbsp;' * self.num
 
 
-# Non html components that are useful and should be standard
+# Non html components
 
 class TabGroup(Div):
     """
@@ -1005,7 +918,7 @@ _tag_create_list = ['address', 'article', 'aside', 'footer', 'header', 'h1', 'h2
                     'details', 'summary', 'style'  # dialog not supported
                     ]
 
-# Only tags that have unique attributes that are supported by HTML 5 are in this dict
+# Only tags that have non-gloabal  attributes that are supported by HTML 5 are in this dict
 _attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'target', 'type'],
               'area': ['alt', 'coords', 'download', 'href', 'hreflang', 'media', 'rel', 'shape', 'target', 'type'],
               'audio': ['autoplay', 'controls', 'loop', 'muted', 'preload', 'src'], 'base': ['href', 'target'],
@@ -1050,7 +963,7 @@ Animate = AnimateMotion = AnimateTransform = Circle = ClipPath = Defs = Desc = D
 
 # Tag classes defined dynamically at runtime
 for tag in _tag_create_list:
-    globals()[tag.capitalize()] = type(tag.capitalize(), (Div,),
+    globals()[tag.capitalize()] = type(tag.capitalize(), (Div, ),
                                        {'html_tag': tag, 'attributes': _attr_dict.get(tag, [])})
 
 
@@ -1244,16 +1157,6 @@ def component_by_tag(tag, **kwargs):
     return c
 
 
-def component_by_tag_old(tag, **kwargs):
-    c = None
-    tag = tag.lower()
-    if tag in _tag_class_dict:
-        c = _tag_class_dict[tag](**kwargs)
-    else:
-        raise ValueError(f'Tag not defined: {tag}')
-    return c
-
-
 get_tag = component_by_tag
 
 
@@ -1272,9 +1175,9 @@ class BasicHTMLParser(HTMLParser):
         self.start_tag = True
         self.components = []
         self.name_dict = {}  # After parsing holds a dict with named components
-        # self.root = Div(name='root', **kwargs)
-        self.root = Div(name='root', temp=False)
-        self.root_name = f'c{self.root.id}'
+        self.root = Div(name='root')
+        # self.root_name = f'c{self.root.id}'
+        # self.root_name = 'root'
         self.containers = []
         self.containers.append(self.root)
         self.endtag_required = True
@@ -1356,7 +1259,6 @@ class BasicHTMLParser(HTMLParser):
             attr = list(attr)
             attr[0] = attr[0].replace('-', '_')
             if attr[0][0] == ':':
-                # attr = list(attr)
                 attr[0] = attr[0][1:]
                 attr[1] = eval(attr[1])
             if attr[0] == 'id':
@@ -1390,11 +1292,11 @@ class BasicHTMLParser(HTMLParser):
                 command_string = f'{command_string}{attr[0]}={attr[1]}, '
 
         # if f'c{self.containers[-1].id}' == self.root_name:
-        #     command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
+        #     command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
         # else:
-        #     command_string = f'c{c.id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].id})'
+        #     command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].parse_id})'
 
-        if f'c{self.containers[-1].id}' == self.root_name:
+        if id(self.containers[-1]) == id(self.root):
             command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
         else:
             command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].parse_id})'
@@ -1454,7 +1356,6 @@ def justPY_parser(html_string, **kwargs):
     parser.feed(html_string)
     if len(parser.root.components) == 1:
         parser_result = parser.root.components[0]
-        # JustpyBaseComponent.instances.pop(parser.root.id)
     else:
         parser_result = parser.root
     parser_result.name_dict = parser.name_dict

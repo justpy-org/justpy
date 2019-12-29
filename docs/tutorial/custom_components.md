@@ -1,14 +1,87 @@
-# Custom Components
+# Creating Your Own Components
 
-The idea behind component programming is simple and compelling: Build a component once, and then reuse it in different applications. 
+The idea behind component programming is simple and compelling: Build a component once, and then reuse it either in the same application or in different applications. 
 
-In JustPy, components are Python classes and so are custom components. Developing a component in JustPy means in most cases declaring a new Python class. Why only in most cases? In some cases, developing complex JustPy components requires also developing a [Vue.js](https://vuejs.org/) component. For example, the `HighCharts` charting component required developing a Vue.js component. For JustPy to support [Quasar](https://quasar.dev/) components, a Vue.js component was also required. It turns out that all Quasar components can be supported with one Vue.js component and that simplified matters considerably.
+In JustPy, components are Python classes and so are custom components. Creating a component in JustPy means in most cases declaring a new Python class. In some cases, developing complex JustPy components requires also developing a [Vue.js](https://vuejs.org/) component. For example, the `HighCharts` charting component required developing a Vue.js component. For JustPy to support [Quasar](https://quasar.dev/) components, a Vue.js component was also required. It turns out that all Quasar components can be supported with one Vue.js component and that simplified matters considerably.
 
 However, let's start with the basics. Most components require only writing a Python class and no knowledge of Vue.js or JavaScript is required.
 
+Some components described here have features that are covered in other parts of the tutorial. Don't feel the need to finish this section in one go. If you find you need to go to other sections and return later, please do so. 
+
+## Pill Button Component
+
+Our first component is a very simple one. It is a Button that is formatted to look like a [pill](https://tailwindcss.com/components/buttons#pill).
+
+```python
+import justpy as jp
+
+class PillButton(jp.Button):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_classes('bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full')
+
+
+def comp_test():
+    wp = jp.WebPage()
+    for i in range(5):
+        PillButton(text='Pill Button', click='self.text="I was clicked"', a=wp, classes='m-2')
+    return wp
+
+jp.justpy(comp_test)
+```
+
+Our new component, PillButton, inherits from Button and therefore will have all the attributes and functionality of Button.
+
+The only change we make is to redefine `__init__`, the method that is called when an instance is created. In this case the method calls the `__init__` of the super class (Button in our case) and then sets the classes that format the button.
+
+!> The line `super().__init__(**kwargs)` is a **MUST** in component's `__init__`  
+Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it. 
+
+Let's add a custom attribute to the component that will determine the background color of the button.
+
+
+```python
+import justpy as jp
+
+class PillButton(jp.Button):
+
+    def __init__(self, **kwargs):
+        self.bg_color = 'blue'
+        super().__init__(**kwargs)
+        self.set_classes(f'bg-{self.bg_color}-500 hover:bg-{self.bg_color}-700 text-white font-bold py-2 px-4 rounded-full')
+
+def comp_test():
+    wp = jp.WebPage()
+    for color in ['blue', 'red', 'orange', 'pink']:
+        PillButton(bg_color=color, text='Pill Button', click='self.text="I was clicked"', a=wp, classes='m-2')
+    return wp
+
+jp.justpy(comp_test)
+```
+
+When we create the PillButton instances we set the attribute `bg_color`. Each of the four PillButton instances will have a different background color.
+
+Notice that the default for `bg_color` is 'blue' and it is set before the line `super().__init__(**kwargs)`. This allows it to be overwritten by the keyword arguments. Try moving the line setting the default after the line calling the super and see what happens.
+
+Instead of setting the defaults for your attributes in `__init__` you can set a class attribute like so:
+```python
+class PillButton(jp.Button):
+
+    bg_color = 'blue'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_classes(f'bg-{self.bg_color}-500 hover:bg-{self.bg_color}-700 text-white font-bold py-2 px-4 rounded-full')
+
+```
+
+Both methods work the same as Python uses the class attribute if it does not find an instance attribute.
+
+
 ## Alert Component
 
-Our first component is based on this [example](https://tailwindcss.com/components/alerts/#top-accent-border) from the Tailwind documentation.
+This component is based on this [example](https://tailwindcss.com/components/alerts/#top-accent-border) from the Tailwind documentation.
 
 The HTML the component is based on looks like this:
 ```python
@@ -106,11 +179,13 @@ jp.justpy(alert_test)
 !> The line `super().__init__(**kwargs)` is a **MUST** in custom component's `__init__`  
 Without it, the instances of the components will not be created correctly. Only default values for keyword arguments should precede it.
 
-When you run the program above, notice that the title of the MyAlert instance is rendered as 'Hello' instead of 'Shalom' even though the line `d.title_text = 'Shalom'` is executed after it is created. To fix this bug we need to assign the attributes `title_text` and `body_text` to the text of the appropriate elements when the instance is rendered, not when it is created.
+When you run the program above, notice that the title of the MyAlert instance is rendered as 'Hello' instead of 'Shalom' even though the line `d.title_text = 'Shalom'` is executed after it is created (this problem also exists with the PillButton component we defined above). To fix this bug we need to assign the attributes `title_text` and `body_text` to the text of the appropriate elements when the instance is rendered, not when it is created.
+
+?> As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the `convert_object_to_dict` method that each component class has.
 
 ## The <span style="color: red">react</span> Method
 
-Every JustPy component supports the `react` method. It is run just before an element is rendered. It receives two arguments, the instance and the `data` attribute of its parent element or that of the `WebPage` if it has no parent. In base JustPy elements, `react` does nothing. It is there to be overridden in custom components.
+Every JustPy component supports the `react` method. It is run just just before a class instance is converted to a dictionary. It receives two arguments, the instance and the `data` attribute of its parent element or that of the `WebPage` if it has no parent. In base JustPy elements, `react` does nothing. It is there to be overridden in user defined components.
 
 The modified program looks like this:
 
@@ -224,11 +299,11 @@ def comp_test():
 jp.justpy(comp_test)
 ```
 
-In this custom component we are using the template like features of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component `Div`. It changes only the `__init__` method and inherits all the others. 
+In this custom component we are using the template like behavior of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component `Div`. It changes only the `__init__` method and inherits all the others. 
 
 Notice the `super().__init__(**kwargs)` line in `__init__`. It is required to take care of all the plumbing that goes along with a JustPy component. This line executes the `__init__` of `Div`.  We define the defaults for the component specific attributes before this line so as not to overwrite keyword arguments that the user has provided and are assigned to attributes in the superclass `__init__`. 
 
-This component works well enough but has a flaw. The `inner_html` attribute is set in `__init__` when the instance is created. If for example, the instance's `day` attribute would change after `__init__` has run, it would not be reflected in the inner html and the component will not be rendered correctly. 
+This component works well enough but has a flaw. The `inner_html` attribute is set in `__init__` when the instance is created. If for example, the instance's `day` attribute is changed after `__init__` has run, it would not be reflected in the inner html and the component will not be rendered correctly. 
 
 To solve this problem, we need to move setting `inner_html` from the time the instance was created to the time it is rendered. Every JustPy component has a method called `react` that is called each time before the object is converted to a dict. The example above can therefore be written as follows:
 
@@ -280,7 +355,7 @@ jp.justpy(comp_test)
 
 The `react` method accepts an additional argument to self. The argument `data` is the `data` attribute of the element's direct parent. If the element has no parent, it is the `data` attribute of the page. Using `react` we can have child elements change their behavior when rendered based on the `data` attribute of their parent or the page they are on. 
 
-For example, let's make the color of the component dependent on the `data` attribute of their parent Div.
+For example, let's make the color of the component dependent on the `data` attribute of their parent container.
 
 ```python
 import justpy as jp
@@ -396,7 +471,7 @@ class Hello(Div):
 
 Again, JustPy components are Python classes. In our case, `Hello` inherits from `Div` and only changes `Div`'s `__init__` (the class constructor).
 
-In the constructor we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class constructor, in our case the constructor of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class constructor after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
+In the constructor we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class `__init__`, in our case the `__init__` of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class constructor after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
 
 ```python
 import justpy as jp
@@ -442,7 +517,7 @@ We define a new component called `MyHello` which inherits from `Hello`. By runni
 
 ### Base component
 
-In this part of the tutorial we will build a calculator component in stages. First, we will build a component that does not handle events or the model attribute. Please run the following example.
+We will build a calculator component in stages. First, we will create a component that does not handle events or the model attribute. Please run the following example.
 ```python
 
 from justpy import Div, Input, Button, WebPage, justpy
@@ -504,7 +579,7 @@ The class constructor first calls the class constructor of the super class (in t
 
 After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, `self.calculator_click` which is a static method of the Calculator class (we could have defined the event handler inside the `__init__ `function instead). We also assign to the button `calc` attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.
 
-In this example, for the sake of brevity, we implemented a very simple state machine for the calculator, and it is not perfect (for example, it does not handle 0 in front of a number). But for our purposes, it will do. The state machine is inside the click event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on `self.text` which is unique for each button.
+In this example, for the sake of brevity, we implemented a very simple state machine for the calculator that is not perfect (for example, it does not handle 0 in front of a number), but for our purposes, it will do. The state machine is inside the `calculator_click` event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on `self.text` which is unique for each button.
  
 ### Handling the change event
 
@@ -595,13 +670,13 @@ In the click event handler we use a flag called `changed` that is set to `True` 
 
 At the end of the event handler, we check if `changed` is `True`. If it is, we check whether the instance has a change event handler. We do this by using the method `has_event_function` which is a basic method of all JustPy components.
 
-If there is a change event handler and if it does, we run the Calculator event handler using the `run_event_function` method. 
+If there is a change event handler, we run the event handler using the `run_event_function` method which is also a basic method of all JustPy components.
 
-This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want to be passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handlers.
+This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handlers.
  
  Before calling `run_event_function` we modify some values in `msg` to make it more informative. In general, you would create the appropriate `msg` for how you believe the component will be used. In our case we have added the `button_text` key which stores the text of the last button that was clicked and that generated the change event.
 
-Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
+!> Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
 
 ### Adding a <span style="color: red">model</span> attribute
 
@@ -714,7 +789,7 @@ Below we also define another component, TabPills, that inherits from Tabs and ju
 
 !> When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design. 
 
- In the example below we use three tab components to display charts and pictures of dogs.
+ In the example below we use three tab components to display charts and pictures.
  
  ```python
 from justpy import Div, WebPage, Ul, Li, HighCharts, A, justpy

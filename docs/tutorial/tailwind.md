@@ -1,4 +1,4 @@
-# Intermezzo 1 - Tailwind
+# Tailwind
 
 ## Why Tailwind?
 

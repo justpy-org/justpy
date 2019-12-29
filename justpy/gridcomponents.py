@@ -9,8 +9,6 @@ try:
 except:
     _has_pandas = False
 
-from io import StringIO
-
 
 
 class AgGrid(JustpyBaseComponent):
@@ -63,20 +61,6 @@ class AgGrid(JustpyBaseComponent):
         # https://www.ag-grid.com/javascript-grid-events/
         self.allowed_events.append(event_type)
         super().on(event_type, func)
-        return
-        cls = JustpyBaseComponent
-        if not self.id:
-            cls = JustpyBaseComponent
-            self.id = cls.next_id
-            cls.next_id += 1
-
-        # Moved here for testing
-        cls.instances[self.id] = self
-        self.needs_deletion = True
-        setattr(self, 'on_' + event_type, MethodType(func, self))
-        if event_type not in self.events:
-            self.events.append(event_type)
-
 
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)

@@ -6,6 +6,7 @@ Out of the box, JustPy comes with many components. You can use the available Jus
 and also build more complex components using other components as building blocks.
 
 In JustPy, components are implemented as Python classes. When you define a new component, you do so by defining a new Python class. 
+
 A JustPy element is an instance of a component class.
 
 ```python
@@ -15,7 +16,7 @@ p.text = 'Hello!'
 ``` 
 
 In the example above, `p` is an instance of the class `P`. Its text attribute is set to 'Hello!'.
-The above is equivalent to the HTML element:
+The above is similar to the HTML element:
 ```html
 <p>Hello!</p>
 ```

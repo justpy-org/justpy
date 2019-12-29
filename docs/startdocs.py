@@ -19,7 +19,7 @@ tutorial_files = ['getting_started.md', 'basic_concepts.md', 'handling_events.md
                   'ajax.md', 'model_and_data.md', 'sessions.md', 'configuration.md', 'custom_components.md'
                   ]
 
-combine_docs(tutorial_files, 'tutorial')
+# combine_docs(tutorial_files, 'tutorial')
 
 PORT = 8080
 
