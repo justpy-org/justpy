@@ -1,5 +1,3 @@
-# import sys, os
-
 from justpy import *
 # https://dog.ceo/api/breeds/list/all    dict of all breeds under
 

@@ -21,7 +21,7 @@ $ mkdir jptutorial
 $ cd jptutorial
 $ python3 -m venv jp
 $ source jp/bin/activate
-(jp) $ pip install justpy[full]
+(jp) $ pip install justpy
 ```
 
 On Microsoft Windows, the activation command for the virtual environment is `jp\Scripts\activate` instead of the source command above.

@@ -1,5 +1,5 @@
-import psutil, gc
-MEMORY_DEBUG = True
+# import psutil, gc
+MEMORY_DEBUG = False
 from starlette.applications import Starlette
 from starlette.responses import Response
 from starlette.responses import JSONResponse
@@ -11,11 +11,8 @@ from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 from starlette.config import Config
-# from starlette.routing import Router, Mount
-# from starlette.datastructures import CommaSeparatedStrings, Secret
 from itsdangerous import Signer
-import typing
-# from .htmlcomponents import *
+from .htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
@@ -24,8 +21,6 @@ from .routing import Route, SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, uuid, sys, os
 from ssl import PROTOCOL_SSLv23
-#TODO: https://github.com/kennethreitz/setup.py setup.py file https://github.com/pypa/sampleproject/blob/master/setup.py
-#TODO: https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-18-04-server
 
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
@@ -49,7 +44,6 @@ SSL_KEYFILE = config('SSL_KEYFILE', default='')
 SSL_CERTFILE = config('SSL_CERTFILE', default='')
 
 TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default=current_dir + '/templates')
-# STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=current_dir + '/static')
 STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=os.getcwd())
 STATIC_ROUTE = config('STATIC_MOUNT', cast=str, default='/static')
 STATIC_NAME = config('STATIC_NAME', cast=str, default='static')

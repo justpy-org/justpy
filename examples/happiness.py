@@ -60,6 +60,7 @@ def happiness_plot(request):
 
 
 def create_corr_page():
+    # creates a page showing correlation between factors
     score_factors = ['Unexplained', 'GDP', 'Social_support', 'Health', 'Freedom', 'Generosity', 'Corruption']
     wp = jp.WebPage(delete_flag=False)
     d = jp.Div(a=wp, classes='flex flex-wrap')
