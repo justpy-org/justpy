@@ -1403,10 +1403,6 @@ def get_websocket(event_data):
     return WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
 
 
-def set_temp_flag(flag):
-    """Sets whether components are temporary ones by default"""
-    JustpyBaseComponent.temp_flag = flag
-
 class Styles:
 
     button_simple = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'

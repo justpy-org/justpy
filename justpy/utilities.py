@@ -1,5 +1,4 @@
 import asyncio
-from addict import Dict
 
 
 def print_request(request):
@@ -18,16 +17,14 @@ def print_request(request):
             print(field, request[field])
         except:
             print(field, getattr(request, field))
-    # print(dir(request.state))
     print(request.url.path, request.url.port, request.url.scheme, dir(request.url))
     for i,j in request.query_params.items():
         print(i,j)
-    print('URL stuff -------')
+    print('URL related -------')
     for j in ['components', 'fragment', 'hostname', 'is_secure', 'netloc', 'password', 'path', 'port', 'query', 'replace', 'scheme', 'username']:
         print(j, getattr(request.url, j))
     for j in (getattr(request.url, 'components')):
         print(j)
-    # print(dict(getattr(request.url, 'components')))
     print('*************************************')
 
 
@@ -40,6 +37,7 @@ def run_task(task):
 async def create_delayed_task(task, delay, loop):
     await asyncio.sleep(delay)
     loop.create_task(task)
+
 
 
 

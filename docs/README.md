@@ -1,3 +1,6 @@
+# JustPy
+---
+[JustPY tutorial](tutorial/getting_started.md)
 
 ## Introduction
 
@@ -9,7 +12,7 @@ When developing with JustPy, there is no front-end/back-end distinction. All pro
 
 In JustPy, elements on the web page are instances of component classes. A component in JustPy is a Python class. Customized, reusable components can be created from other components. Out of the box, JustPy comes with support for HTML and SVG components as well as more complex components such as charts and grids.  It also supports most of the components and the functionality of the [Quasar](https://quasar.dev/) library of [Material Design 2.0](https://material.io/) components.
 
-JustPy encourages creating your own custom components and reusing them in different projects (and, if applicable, sharing these components with others). 
+JustPy encourages creating your own components and reusing them in different projects (and, if applicable, sharing these components with others). 
 
 JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. 
 
@@ -70,4 +73,4 @@ The way JustPy removes the frontend/backend distinction is by intercepting the r
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-Copyright (c) 2018-present, Eliezer Mintz
+Copyright (c) 2019, Eliezer Mintz

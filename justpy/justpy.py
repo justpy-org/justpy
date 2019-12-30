@@ -21,7 +21,7 @@ from .gridcomponents import *
 from .quasarcomponents import *
 from .pandas import *
 from .routing import Route, SetRoute
-from .utilities import run_task, create_delayed_task, print_request
+from .utilities import run_task, create_delayed_task
 import uvicorn, logging, uuid, sys, os
 from ssl import PROTOCOL_SSLv23
 #TODO: https://github.com/kennethreitz/setup.py setup.py file https://github.com/pypa/sampleproject/blob/master/setup.py
@@ -136,7 +136,6 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run()
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         assert len(load_page) > 0, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
-        #'\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.head_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
