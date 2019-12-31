@@ -27,7 +27,9 @@ import justpy as jp
 jp.Div(text='hello', classes='text-red-500')
 ```
 
-They can also be set anytime after the element is created
+They can also be set anytime after the element is created (except for `delete_flag` which needs to be set at creation).
+
+
 ```python
 import justpy as jp
 
@@ -202,7 +204,7 @@ def animate(self, msg):
     for letter in self.text_to_animate.value:
         letter = '&nbsp;' if letter == ' ' else letter  # Hard space for HTML, otherwise space ignored
         jp.Div(animation=f'fadeIn{random.choice(directions)}', text=letter,
-               classes='rounded-full bg-blue-500 text-white text-6xl', a=self.d, temp=True)
+               classes='rounded-full bg-blue-500 text-white text-6xl', a=self.d)
 
 
 def animation_test():
@@ -214,7 +216,7 @@ def animation_test():
     animate_btn.d = d
     return wp
 
-jp.justpy(animation_test, websockets=False
+jp.justpy(animation_test)
 ```
 
 

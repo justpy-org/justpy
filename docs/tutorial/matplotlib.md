@@ -263,7 +263,6 @@ def subtract_point(self, msg):
 
 def plot_test():
     wp = jp.WebPage()
-    print(f'start {plt.get_fignums()}')
     f = plt.figure(figsize=(2, 2))
     plt.plot([0, 1, 4, 9], marker='*', markersize=20, markeredgecolor='red')
     plt.title('Matplotlib Example')

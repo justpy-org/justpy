@@ -12,12 +12,12 @@ for s in iris_species:
     iris_species_frames[s] = iris.loc[iris['species'] == s]
 
 async def click_point(self, msg):
-    print(msg)
+    # print(msg)
     return await self.select_point([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list if self.id != chart_id], msg.websocket)
 
 
 async def tooltip_formatter(self, msg):
-    print(msg)
+    # print(msg)
     tooltip_html = f"""
     <div style="color: {msg.color}"><span>&#x25CF;</span> {msg.series_name}</div>
     <div style="color: {msg.color}">{self.col1}: {msg.x}</div>

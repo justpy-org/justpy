@@ -185,7 +185,8 @@ class JustpyBaseComponent(Tailwind):
     def __init__(self, **kwargs):  # c_name=None,
 
         temp = kwargs.get('temp', JustpyBaseComponent.temp_flag)
-        if temp:
+        delete_flag = kwargs.get('delete_flag', JustpyBaseComponent.delete_flag)
+        if temp and delete_flag:
             self.id = None
         else:
             cls = JustpyBaseComponent

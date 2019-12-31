@@ -8,7 +8,7 @@ JustPy supports most of the Quasar components and their features. In JustPy, Qua
 
 The Quasar documentation is excellent and includes many examples. You will need to consult it for the specifics of each component.
 
-There are many Quasar components. I suggest browsing the documentation to see what is available.
+As there are many Quasar components, I suggest browsing the documentation to see what is available.
 
 The name of the Quasar component and the JustPy component is the same. If the Quasar component is called QMenu for example, the corresponding JustPy class is called QMenu also.  
 
@@ -46,10 +46,12 @@ jp.justpy(quasar_example)
 
 The program uses the JustPy QBtn component which is based on the [Quasar QBtn component](https://quasar.dev/vue-components/button). Click the buttons and notice the ripple effect which is part of the Material specification.
 
-The JustPy component usually support all the Quasar component options (in the Quasar docs these are called `props`). In JustPy these are designated by setting the attributes of the element. This can be done at creation using keywords or later using standard attribute assignment. 
+The JustPy component usually supports all the Quasar component options (in the Quasar docs these are called `props`). In JustPy these are designated by setting the attributes of the element. This can be done at creation using keywords or later using standard attribute assignment. 
 
 Quasar props are in kebab case: `icon-right` 
 In JustPy the attribute names are in snake case: `icon_right`
+
+Quasar components have also scoped slots which will be discussed further on in this tutorial.
 
 
 ## Parsing Quasar Tags
@@ -168,6 +170,8 @@ JustPy supports the following Quasar Vue directives:
 
 !> In JustPy the directives are specified in snake case: `v_close_popup` instead of `v-close-popup`
 
+!> Use QDiv instead of Div if you want to apply directives on an element.
+
 ```python
 import justpy as jp
 
@@ -182,6 +186,6 @@ def quasar_example():
 jp.justpy(quasar_example)
 ```
 
-!> Use QDiv instead of Div if you want to apply directives on an element.
+
 
 

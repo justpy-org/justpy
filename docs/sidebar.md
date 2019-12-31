@@ -35,6 +35,11 @@
     - [Creating Grids](grids_tutorial/creating_grids.md "Creating Grids")
     - [Using Pandas to Create Grids](grids_tutorial/pandas.md "Pandas and Grids")
     - [Grid Events](grids_tutorial/grid_events.md "Grid Events")
+- <span class="section-header">Quasar Tutorial</span>
+    - [Introduction - Quasar](quasar_tutorial/introduction.md "Introduction")
+    - [Notifications](quasar_tutorial/notify.md "Notifications")
+    - [QExpansionItem](quasar_tutorial/QExpansionItem.md "QExpansionItem")
+    - [QSplitter](quasar_tutorial/QSplitter.md "QSplitter")
 - <span class="section-header">Reference</span>
     - [WebPage class](reference/webpage.md "WebPage Class")
     - [HTML Components](reference/htmlcomponent.md "HTML Components")

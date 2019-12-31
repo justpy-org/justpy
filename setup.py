@@ -1,22 +1,24 @@
-# git clone https://github.com/elimintz/TestPy.git
+# git clone https://github.com/elimintz/justpy.git
 # python3 setup.py sdist bdist_wheel
 # python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+# python3 -m twine upload  dist/*
 
 # python3 -m pip install -i https://test.pypi.org/simple/ justpy-test==5.0.5
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+def get_long_description():
+    with open("README.md", encoding="utf8") as f:
+        return f.read()
 
 setuptools.setup(
     name="justpy",
     python_requires=">=3.6",
-    version="0.0.1",
+    version="0.0.2",
     license="Apache",
     author="Eliezer Mintz",
     author_email="eli.mintz@gmail.com",
     description="An object oriented high-level Python Web Framework that requires no front-end programming",
-    long_description=long_description,
+    long_description=get_long_description(),
     long_description_content_type="text/markdown",
     url="https://github.com/elimintz/justpy",
     packages=setuptools.find_packages(),

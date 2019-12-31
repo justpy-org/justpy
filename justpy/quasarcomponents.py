@@ -598,7 +598,7 @@ class QTabPanel(QDiv):
 @parse_dict
 class QSplitter(_QInputBase):
 
-    slots = ['before_slot', 'after_slot']
+    slots = ['before_slot', 'after_slot', 'separator_slot']
     html_tag = 'q-splitter'
 
     def __init__(self, **kwargs):
