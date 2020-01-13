@@ -1,9 +1,9 @@
-from justpy import *
+import justpy as jp
 
-wp = QuasarPage()
-editor = QEditor(a=wp, kitchen_sink=True, height='100vh')
+wp = jp.QuasarPage(delete_flag=False)
+editor = jp.QEditor(a=wp, kitchen_sink=True, height='94vh')
 
 def joint_edit():
     return wp
 
-justpy(joint_edit)
+jp.justpy(joint_edit)

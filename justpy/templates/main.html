@@ -68,7 +68,9 @@
                         link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
                         document.getElementsByTagName('head')[0].appendChild(link);
                     }
+
                     app1.justpyComponents = msg.data;
+
                     break;
                 case 'page_mode_update':
                     Quasar.Dark.set(msg.dark);
@@ -78,16 +80,8 @@
                     websocket_ready = true;
                     break;
                 case 'component_update':
-                    // update just specific components on the page
-                    // msg format is {'id': id, 'dict': the json describing object}
-                    //app1.justpyComponents = msg;
-                    //need to test this
-                    console.log('About to replace');
-                    console.log(msg.data);
-                    console.log(app1.justpyComponents);
+                    // update just specific component on the page
                     comp_replace(msg.data, app1.justpyComponents);
-                    console.log('Done repl6824acing');
-                    console.log(app1.justpyComponents);
                     break;
                 case 'draw_crosshair':
                     // Remove previous crosshairs
@@ -175,7 +169,6 @@
         for (let i = 0; i < comp_list.length; i++) {
             if (comp_list[i]['id'] == m_id) {
                 var spliced = comp_list.splice(i, 1, comp);
-                // return true;
             } else {
                 if (comp_list[i]['object_props']) {
                     comp_replace(comp, comp_list[i]['object_props']);
@@ -219,7 +212,7 @@
                     }))
                 }
             }
-            return h('div', { }, comps);
+            return h('div', {}, comps);
         }
     });
 

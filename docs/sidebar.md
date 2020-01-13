@@ -20,7 +20,7 @@
     - [Static Files](tutorial/static.md "Static Files")
     - [Configuration](tutorial/configuration.md "Configuration")
     - [Deployment](tutorial/deployment.md "Deployment")
-- <span class="section-header" >Highcharts Tutorial</span>
+- <span class="section-header" >Highcharts Guide</span>
     - [Introduction - Highcharts](charts_tutorial/introduction.md "Introduction")
     - [Creating Charts](charts_tutorial/creating_charts.md "Creating Charts")
     - [Using Pandas to Create Charts](charts_tutorial/pandas.md "Pandas and Charts")
@@ -30,12 +30,12 @@
     - [Chart Events](charts_tutorial/chart_events.md "Chart Events")
     - [Iris Dataset Visualization](charts_tutorial/iris.md "Iris Dataset")
     - [Chart Components](charts_tutorial/chart_components.md "Chart Components")
-- <span class="section-header">ag-Grid Tutorial</span>
+- <span class="section-header">ag-Grid Guide</span>
     - [Introduction - ag-Grid](grids_tutorial/introduction.md "Introduction")
     - [Creating Grids](grids_tutorial/creating_grids.md "Creating Grids")
     - [Using Pandas to Create Grids](grids_tutorial/pandas.md "Pandas and Grids")
     - [Grid Events](grids_tutorial/grid_events.md "Grid Events")
-- <span class="section-header">Quasar Tutorial</span>
+- <span class="section-header">Quasar Guide</span>
     - [Introduction - Quasar](quasar_tutorial/introduction.md "Introduction")
     - [Notifications](quasar_tutorial/notify.md "Notifications")
     - [QExpansionItem](quasar_tutorial/QExpansionItem.md "QExpansionItem")

@@ -104,9 +104,10 @@ class QInput(_QInputBase):
                           'label', 'stack-label', 'hint', 'hide-hint', 'prefix', 'suffix', 'color', 'bg-color', 'dark',
                           'filled', 'outlined', 'borderless', 'standout', 'bottom-slots', 'rounded', 'square', 'dense',
                           'items-aligned', 'disable', 'readonly', 'value', 'type', 'debounce', 'counter', 'maxlength',
-                          'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon']
+                          'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon',
+                          'placeholder']
 
-        self.allowed_events = ['input', 'focusin', 'focusout']  # Not different from focus and blur in documentation
+        self.allowed_events = ['keypress', 'input', 'focusin', 'focusout']  # Not different from focus and blur in documentation
 
 
 @parse_dict
@@ -153,6 +154,13 @@ class QOptionGroup(_QInputBase):
             self.value = kwargs.get('value', '')
         self.prop_list = ['keep-color', 'type', 'left-label', 'inline', 'value', 'options', 'disable', 'color', 'dark', 'dense']
         self.allowed_events = ['input']
+
+
+    def before_event_handler(self, msg):
+        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        if hasattr(self, 'model'):
+            self.model[0].data[self.model[1]] = msg.value
+        self.value = msg.value
 
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
@@ -531,7 +539,7 @@ class QCardSection(QDiv):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.prop_list = []
+        self.prop_list = ['horizontal']
 
 
 @parse_dict
@@ -777,7 +785,6 @@ class QDialog(_QInputBase):
         super().__init__(**kwargs)
 
         self.type = 'boolean'
-        # self.value = True if self.value else False
         self.value = bool(self.value)
         self.prop_list = ['persistent', 'no-esc-dsimiss', 'no-backdrop-dismiss', 'no-route-dismiss', 'auto-close',
                           'transition-show', 'transition-hide', 'no-refocus', 'no-focus', 'seamless', 'maximized',
@@ -793,9 +800,8 @@ class QTooltip(_QInputBase):
 
     def __init__(self, **kwargs):
 
-        self.disable_events = True  # For tooltips, events are disabeled by default othewise input event for every time tooltip shows.
+        self.disable_events = True  # For tooltips, events are disabeled by default otherwise input event for every time tooltip shows.
         super().__init__(**kwargs)
-
         self.type = 'boolean'
         self.value = bool(self.value)
         self.prop_list = ['transition-show', 'transition-hide', 'target', 'delay', 'max-height', 'max-width', 'value',
@@ -1027,6 +1033,7 @@ class QEditor(QInput):
         self.allowed_events = ['input']
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
+        self.debounce = 0   # Component has its own debounce mechanism
         if self.kitchen_sink:
             self.toolbar = QEditor.kitchen_sink
             self.fonts = QEditor.fonts
@@ -1339,7 +1346,7 @@ class QVideo(QDiv):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.prop_list = ['src']
+        self.prop_list = ['src', 'ratio']
 
 
 @parse_dict
@@ -1664,6 +1671,42 @@ class QFabAction(QDiv):
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['icon', 'type', 'to', 'replace', 'disable', 'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
+
+@parse_dict
+class QSkeleton(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-skeleton'
+
+    def __init__(self, **kwargs):
+        self.type = 'rect'
+        self.tag = 'div'
+        super().__init__(**kwargs)
+        self.prop_list = ['tag', 'type', 'dark', 'animation', 'square', 'bordered', 'size', 'width', 'height']
+
+
+@parse_dict
+class QPopupEdit(_QInputBase):
+# Work in progress
+# 'cancel' and 'save' events not working
+    html_tag = 'q-popup-edit'
+    slots = ['default_slot', 'title_slot']
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['touch-position', 'persistent', 'separate-close-popup',
+                          'title', 'buttons', 'label-set', 'label-cancel', 'value', 'validate',
+                          'fit', 'cover', 'anchor', 'self', 'disable',
+                          'content-class', 'content-style', 'color', 'offset', 'square', 'max-height', 'max-width']
+
+        self.allowed_events = ['input', 'cancel', 'save']
+
+        def default_event_handler(self, msg):
+            print(msg)
+
+        self.on('save', default_event_handler)
+        self.on('cancel', default_event_handler)
+
 
 
 class ToggleDarkModeBtn(QBtn):

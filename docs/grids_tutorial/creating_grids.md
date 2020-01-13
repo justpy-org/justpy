@@ -80,4 +80,4 @@ def grid_test():
     return wp
 ```
 
-Ag_Grid is very rich in features, very few which are covered here. For a detailed description of the grid features, please look at its the[documentation](https://www.ag-grid.com/documentation-main/documentation.php). 
+Ag_Grid is very rich in features, very few which are covered here. For a detailed description of the grid features, please look at its [documentation](https://www.ag-grid.com/documentation-main/documentation.php). 

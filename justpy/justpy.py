@@ -37,7 +37,7 @@ LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.WARNING)
 JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default='WARNING').lower()
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
-HOST = config('HOST', cast=str, default='0.0.0.0')
+HOST = config('HOST', cast=str, default='127.0.0.1')
 PORT = config('PORT', cast=int, default=8000)
 SSL_VERSION = config('SSL_VERSION', default=PROTOCOL_SSLv23)
 SSL_KEYFILE = config('SSL_KEYFILE', default='')
@@ -62,8 +62,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 app = Starlette(debug=DEBUG)
 app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
-
-app.add_middleware(GZipMiddleware, minimum_size=1000)
+app.add_middleware(GZipMiddleware)
 if SSL_KEYFILE and SSL_CERTFILE:
     app.add_middleware(HTTPSRedirectMiddleware)
 
@@ -87,7 +86,7 @@ async def justpy_startup():
             await startup_func()
         else:
             startup_func()
-    print(f'JustPy ready to go on http://127.0.0.1:{PORT} or http://localhost:{PORT}')
+    print(f'JustPy ready to go on http://{HOST}:{PORT}')
 
 
 @app.route("/{path:path}")
@@ -129,7 +128,7 @@ class Homepage(HTTPEndpoint):
             else:
                 load_page = func_to_run()
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
-        assert len(load_page) > 0, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
+        assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.head_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
@@ -139,10 +138,10 @@ class Homepage(HTTPEndpoint):
             page_dict = load_page.cache
         else:
             page_dict = load_page.build_list()
+        template_options['tailwind'] = load_page.tailwind
         context = {'request': request, 'page_id': load_page.page_id, 'justpy_dict': json.dumps(page_dict),
                    'use_websockets': json.dumps(WebPage.use_websockets), 'options': template_options, 'page_options': page_options,
                    'html': load_page.html}
-        # response = templates.TemplateResponse('tailwind.html', context)
         response = templates.TemplateResponse(load_page.template_file, context)
         if SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)
@@ -310,7 +309,7 @@ async def handle_event(data_dict, com_type=0):
         return {'type': 'page_update', 'data': build_list}
 
 
-def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs):
+def justpy(func=None, *, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs):
     global func_to_run, startup_func
     if func:
         func_to_run = func
@@ -326,7 +325,6 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
     for k, v in kwargs.items():
         template_options[k.lower()] = v
 
-    # host = '0.0.0.0'
     if start_server:
         if SSL_KEYFILE and SSL_CERTFILE:
             uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL, proxy_headers=True,
@@ -337,11 +335,13 @@ def justpy(func=None, start_server=True, websockets=True, host=HOST, port=PORT, 
     return func_to_run
 
 def convert_dict_to_object(d):
-    obj = globals()[d['class_name']](temp=True)
+    obj = globals()[d['class_name']]()
     for obj_prop in d['object_props']:
         obj.add(convert_dict_to_object(obj_prop))
-    for k,v in d.items():
-        obj.__dict__[k] = v
+    # combine the dictionaries
+    for k,v in {**d, **d['attrs']}.items():
+        if k != 'id':
+            obj.__dict__[k] = v
     return obj
 
 

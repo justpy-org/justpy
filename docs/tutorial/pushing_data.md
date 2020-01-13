@@ -70,22 +70,20 @@ Run the following program:
 ```python
 import justpy as jp
 
-jp.template_options['tailwind'] = False
+wp = jp.QuasarPage(delete_flag=False)
+editor = jp.QEditor(a=wp, kitchen_sink=True, height='94vh')
 
-wp = jp.WebPage(delete_flag=False)
-e = jp.EditorJP(a=wp)
-
-def edit_test(request):
+def joint_edit():
     return wp
 
-jp.justpy(edit_test)
+jp.justpy(joint_edit)
 ```
 
-This program allows joint editing of a markdown document. Open several browser tabs or different browsers on your local machine and start editing the document. Any change you make in one browser tab, is reflected immediately in all others. 
+This program allows joint editing of a document. Open several browser tabs or different browsers on your local machine and start editing the document. Any change you make in one browser tab, is reflected immediately in all others. 
 
-The program uses the component EditorJP. This JustPy component was built around the [simpleMDE Markdown Editor](https://simplemde.com/). How to do this will be the subject of another tutorial. Now that the component exists, adding a Markdown editor to any page is simple.
+The program uses the component QEditor. This JustPy component was built using the [Quasar QEditor Component](https://quasar.dev/vue-components/editor) (Quasar based JustPy components are described [here](quasar_tutorial/introduction.md)).  
  
-Since the program renders `wp`, the same WebPage instance to all pages, they all share the same EditorJP instance. EditorJP inherits from [Input](tutorial/Input) and therefore each key pressed is sent to the server which in turn sets the value of the EditorJP instance (`e` in our case) and then updates `wp` using the update method. Since `wp` is rendered in all browser tabs, they are all updated.
+Since the program renders `wp`, the same WebPage instance to all pages, they all share the same QEditor instance. QEditor supports the input event and therefore the keys pressed are sent to the server which in turn sets the value of the QEditor instance (`editor` in our case) and then updates `wp` using the update method. Since `wp` is rendered in all browser tabs, they are all updated by JustPy.
 
 ## Simple Message Board
 

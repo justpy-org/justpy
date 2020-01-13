@@ -51,11 +51,11 @@ Notice the `placeholder` attribute of `in1`. Before any text is typed into the i
 
 Next, we bind the input event of `in1` to the function `my_input` (we could have omitted this line by adding `input=my_input` as a keyword argument when we created `in1`). `my_input` is now the input event handler for `in1`.
 
-The input event occurs each and every time a character is typed into an input element. After every keystroke this function is run, and it changes the text of the div to the value of the input field.  By assigning the div to an `in1` attribute, we have access to all the variables we need in the event handler.
+The input event occurs each and every time a character is typed into an input element. After every keystroke this function is run (if the debounce period has expired - see below), and it changes the text of the div to the value of the input field.  By assigning the div to an `in1` attribute, we have access to all the variables we need in the event handler.
 
 You may have noticed that there is a delay in the updating of the Div. That is because the component by default sets the `debounce` attribute of the input event to 200ms. This means an input event is generated only after a key has not been pressed for 200ms. 
 
-Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
+Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer in ms, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
 
 ## The Type Attribute
 
@@ -142,9 +142,15 @@ jp.justpy(radio_test)
 
 ```
 
-Radio buttons respond to the 'change' event. When one is checked, JustPy automatically un-checks the other radio buttons in the group.
+Radio buttons generate the 'change' event on all browsers. They generate the 'input' event just on some. When one is checked the 'change' event is generated.
+ 
+ When one radio button is checked, JustPy automatically un-checks the other radio buttons in the group.
+ 
+ Radio buttons are grouped according to their `name` attribute and the value of their `form` attribute if one is assigned. Buttons with the same name on different assigned forms, will be in different groups. All radio buttons not in any form but with the same name, will be in one group.
+ 
+ !> You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page. 
 
-In the example below, the result of clicking a radio button are shown using the event handler `radio_changed`. Notice that the value of the radio button is always the same. What changes is its `checked` property. The value of a group of radio buttons is the value of the radio button in the group that is checked.
+In the example below, the results of clicking a radio button are shown using the event handler `radio_changed`. Notice that the value of the radio button is always the same. What changes is its `checked` property. The value of a group of radio buttons is the value of the radio button in the group that is checked.
 
 To make all the radio buttons in the group available to the event handler, when we create them, we also create a list that holds all the radio buttons in the group. We assign this list to an attribute of each radio button element (in our case `btn_list`). In the event handler we iterate over this list to report which radio button is pressed.
 
@@ -202,7 +208,7 @@ jp.justpy(radio_test)
 
 ### Checkbox Example
 
-Below is an example of a checkbox and a textbox connected using the `model` attribute
+Below is an example of a checkbox and a textbox connected using the `model` attribute (you may skip this for now and return to this example after completing the chapter describing the `model` attribute in this tutorial).
 
 ```python
 import justpy as jp
@@ -221,9 +227,58 @@ jp.justpy(check_test)
 
 See what happens when you clear the text input element.
 
+## Changing Focus using Keyboard Events
+
+In the example below, Input elements respond to the Esc and Enter keys. When Esc is pressed, the field value is set to the empty string. When Enter is pressed, focus moves to the next field down unless it is the last field in which case focus is moved to the first.
+
+To make the example work, an event handler for the 'blur' event is required. When one of the input elements loses focus, the blur event occurs and the focus field of the element is set to false so that the correct element will have focus.
+
+By setting the `focus` attribute of an element to `True`, you transfer the focus to it. If the attribute is `True` for multiple elements on the page, the results are unpredictable and therefore the blur event handler is required to make sure the attribute is `True` for only one element.
+
+```python
+import justpy as jp
+
+def my_blur(self, msg):
+        self.focus = False
+
+def key_down(self, msg):
+    # print(msg.key_data)
+    key = msg.key_data.key
+    if key=='Escape':
+        self.value=''
+        return
+    if key=='Enter':
+        self.focus = False
+        try:
+            next_to_focus = self.input_list[self.num + 1]
+        except:
+            next_to_focus = self.input_list[0]
+        next_to_focus.focus = True
+        return
+    return True  # Don't update the page
+
+
+def focus_test():
+    wp = jp.WebPage()
+    d = jp.Div(classes='flex flex-col  m-2', a=wp, style='width: 600 px')
+    input_list = []
+    number_of_fields = 5
+    for i in range(1, number_of_fields + 1):
+        label = jp.Label( a=d, classes='m-2 p-2')
+        jp.Span(text=f'Field {i}', a=label)
+        in1 = jp.Input(classes=jp.Styles.input_classes, placeholder=f'{i} Type here', a=label, keydown=key_down, spellcheck="false")
+        in1.on('blur', my_blur)
+        in1.input_list = input_list
+        in1.num = i - 1
+        input_list.append(in1)
+    return wp
+
+jp.justpy(focus_test)
+```
+
 ## Your First Component
 
-JustPy allows building your own reusable components. We will have a lot more to say about this later, but just to start easing into the subject, let's suppose we want to encapsulate the functionality above into one component. The program would look like this:
+JustPy allows building your own reusable components. We will have a lot more to say about this later, but just to start easing into the subject, let's suppose we want to encapsulate the functionality of an Input coupled to a Div into one component (like in one of the first examples above). The program would look like this:
 
 ```python
 import justpy as jp
@@ -242,7 +297,7 @@ class InputWithDiv(jp.Div):
         self.in1.div = jp.Div(text='What you type will show up here', classes='m-2 p-2 h-32 text-xl border-2', a=self)
 
 
-async def input_demo(request):
+def input_demo(request):
     wp = jp.WebPage()
     for i in range(10):
         InputWithDiv(a=wp)
@@ -255,4 +310,5 @@ Try running the program. It will put on the page 10 pairs of input and div eleme
 
 JustPy components are Python classes that inherit from JustPy classes. In the example above, we define the class `InputWithDiv` which inherits from the JustPy class `Div`. The class constructor adds an input element and another div to the basic div, with the appropriate functionality. Now, we have a component, `InputWithDiv`, that we can reuse as we please in any project. 
 
-If you don't completely understand what is going on, don't worry. We will revisit this in much more detail later. The take home message at this stage is that the way you build complex applications in JustPy is by building components with isolated functionality. Hopefully, if  JustPy gains popularity, there will be many components that the community will develop and share. 
+If you don't completely understand what is going on, don't worry. We will revisit this in much more detail later. The take home message at this stage is that the way you build complex applications in JustPy is by building components with isolated functionality. Hopefully, if JustPy gains popularity, there will be many components that the community will develop and share. 
+

@@ -55,7 +55,16 @@ This line returns the result of running the method `tooltip_update` of the HighC
 
 !> Since the method `tooltip_update` is a coroutine, it needs be awaited and the tooltip event handler needs to be defined with the keyword async.
 
-!> If you quickly mouseover several points on charts with user defined formatters, you will see the "Loading…" inscription instead of the information you expect. Only when no new tooltip event occurs for 100ms (0.1 second), JustPy notifies its backend that a tooltip event has happened. This prevents the server from being inundated with irrelevant tooltip requests as the user moves the mouse over the chart. 
+## Tooltip Debouncing
+
+If you quickly mouseover several points on charts with user defined formatters, you will see the "Loading…" inscription instead of the information you expect. Only when no new tooltip event occurs for 100ms (0.1 second), JustPy notifies its backend that a tooltip event has happened. This prevents the server from being inundated with irrelevant tooltip requests as the user moves the mouse over the chart.
+
+The debouncing delay can be changed by setting the attribute `tooltip_debounce` which is by default 100ms. The following command changes the debounce period to 500ms:
+
+ ```python
+chart2.tooltip_debounce = 500  # Assign value of debounce period in ms
+```
+ 
 
 ## Using Point Data to Format Tooltip
 

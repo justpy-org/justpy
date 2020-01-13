@@ -4,7 +4,7 @@
 
 Static resources are those that are not generated dynamically by the application. An image is an example of a static resource.
 
-By default, all static resources for JustPy can be found under the `static/` URL (this can be changed using the configuration file). 
+By default, all static resources for JustPy can be found under the `/static` route (this can be changed using the configuration file). 
  
 Let's look at a concrete example.
 
@@ -19,7 +19,7 @@ import justpy as jp
 
 def static_test():
     wp = jp.WebPage()
-    jp.Img(src='static/papillon.jpg', a=wp, classes='m-2 p-2')
+    jp.Img(src='/static/papillon.jpg', a=wp, classes='m-2 p-2')
     return wp
 
 jp.justpy(static_test)
@@ -27,11 +27,13 @@ jp.justpy(static_test)
 
 You should see the picture on the web page.
 
+If you enter the URL http://127.0.0.1:8000/static/papillon.jpg you will get the picture also.
+
 If want to keep your static resources in a separate directory, the simplest thing to do is to create a subdirectory in the directory your program is in. If you call the directory "my_pictures" for example, and put the image there, you would need to set the `src` attribute of the image to "static/my_pictures/papillon.jpg".
 
 The line in the code would look like this:
 ```python
-    jp.Img(src='static/my_pictures/papillon.jpg', a=wp, classes='m-2 p-2')
+    jp.Img(src='/static/my_pictures/papillon.jpg', a=wp, classes='m-2 p-2')
 ```
 
 ## Advanced Configuration
@@ -50,4 +52,6 @@ app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAM
 
 ```
 
-If you want to change JustPy's defaults, change the settings in justpy.env, the configuration file. 
+If you want to change JustPy's defaults, change the settings in justpy.env, the configuration file.
+
+!> STATIC_NAME is used inside JustPy's templates so there is probably no reason to change it in any application unless you change the template files also. 

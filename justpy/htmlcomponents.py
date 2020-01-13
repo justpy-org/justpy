@@ -38,6 +38,7 @@ class WebPage:
     next_page_id = 0
     use_websockets = True
     delete_flag = True
+    tailwind = True
     highcharts_theme = None
     # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
@@ -47,7 +48,7 @@ class WebPage:
         self.page_id = WebPage.next_page_id
         WebPage.next_page_id += 1
         # self.static = False
-        self.cache = None  # Holds the last result of build_list
+        self.cache = None  # Set this attribute if you want to use the cache.
         self.use_cache = False  # Determines whether the framework uses the cache or not
         self.template_file = 'tailwind.html'
         self.title = 'JustPy'
@@ -170,7 +171,6 @@ class WebPage:
         for i, obj in enumerate(self.components):
             obj.react(self.data)
             d = obj.convert_object_to_dict()
-            # d['running_id'] = i
             object_list.append(d)
         return object_list
 
@@ -277,10 +277,10 @@ class JustpyBaseComponent(Tailwind):
             obj.add(JustpyBaseComponent.convert_dict_to_object(obj_prop))
         for k, v in d.items():
             obj.__dict__[k] = v
+        for k, v in d['attrs'].items():
+            obj.__dict__[k] = v
         return obj
 
-
-# https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
 
 class HTMLBaseComponent(JustpyBaseComponent):
     """
@@ -294,14 +294,14 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
-    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
+    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'focus',
                       'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation']
 
-    # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize', 'spellcheck',
+    # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize',
     #                               'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
 
     # Additions to global attributes to add to attrs dict apart from id and style.
-    used_global_attributes = ['contenteditable', 'dir', 'tabindex', 'title', 'accesskey', 'draggable', 'lang', 'hidden']
+    used_global_attributes = ['contenteditable', 'dir', 'tabindex', 'title', 'accesskey', 'draggable', 'lang', 'hidden', 'spellcheck']
 
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 
@@ -312,6 +312,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
     # keyboard_events = ['keydown', 'keypress', 'keyup']
     # mouse_events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'wheel',
     #                 'mouseenter', 'mouseleave']
+    # allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
+    #                   'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur']
 
     def __init__(self, **kwargs):  # c_name=None,
         super().__init__(**kwargs)  # Important, needed to give component a unique id
@@ -320,6 +322,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.animation = False
         self.pages = {}  # pages the component is on. Not managed by framework.
         self.show = True
+        self.focus = False
         self.classes = ''
         self.slot = None
         self.scoped_slots = {}  # for Quasar and other Vue.js based components
@@ -327,7 +330,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.directives = []
         self.data = {}
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
-                               'after', 'before', 'keydown', 'keyup', 'keypress']
+                               'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit']
         self.events = []
         self.event_propagation = True  # Should events be propagated?
         # self.attributes = type(self).attributes
@@ -339,7 +342,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def initialize(self, **kwargs):
         for k, v in kwargs.items():
             self.__setattr__(k, v)
-
         for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
                 if prefix + e in kwargs.keys():
@@ -462,6 +464,7 @@ class Div(HTMLBaseComponent):
     html_tag = 'div'
 
     def __init__(self, **kwargs):
+        self.html_entity = False
         super().__init__(**kwargs)
         self.components = []
 
@@ -560,7 +563,6 @@ class Div(HTMLBaseComponent):
         for i, obj in enumerate(self.components):
             obj.react(self.data)
             d = obj.convert_object_to_dict()
-            # d['running_id'] = i
             object_list.append(d)
         return object_list
 
@@ -572,15 +574,15 @@ class Div(HTMLBaseComponent):
         if hasattr(self, 'text'):
             self.text = str(self.text)
             d['text'] = self.text
-            # Handle HTML entities. Warning, they should be in their own span or div etc. Setting inner_html overrides all else in container
-            if (len(self.text) > 0) and (self.text[0] == '&'):
+            # Handle HTML entities. Warning: They should be in their own span or div. Setting inner_html overrides all else in container
+            if self.html_entity:
                 d['inner_html'] = self.text
         return d
 
-
 class Input(Div):
-    # Edge and Internet explorer do not support the input event for checkboxes and radio buttons. Need to use change instead
-    # IMPORTANT: Scope of name of radio buttons is the whole page and not the form as is the standard unless form is sepcified
+
+    # Edge and Internet explorer do not support the input event for checkboxes and radio buttons. Use change instead
+    # IMPORTANT: Scope of name of radio buttons is the whole page and not the form as is the standard unless form is specified
 
     html_tag = 'input'
     attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
@@ -680,7 +682,7 @@ class Input(Div):
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
         if not self.no_events:
-            if self.type in ['radio', 'checkbox', 'select']:
+            if self.type in ['radio', 'checkbox', 'select'] or self.type == 'file':  #Not all browsers create input event
                 if 'change' not in self.events:
                     self.events.append('change')
             else:
@@ -704,15 +706,17 @@ class Form(Div):
     attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
 
     def __init__(self, **kwargs):
+
         super().__init__(**kwargs)
-        self.allowed_events += ['submit']
 
         def default_submit(self, msg):
-            print('Form submitted ', msg.form_data)
+            print('Default form submit', msg.form_data)
             return True
 
+        if not self.has_event_function('submit'):
+            # If not event handler is assigned, the front end cannot stop the default page request that happens when a form is submitted
+            self.on('submit', default_submit)
 
-        self.on('submit', default_submit)
 
 
 class Label(Div):
@@ -838,7 +842,7 @@ class Space(Div):
         super().__init__(**kwargs)
         self.num = kwargs.get('num', 1)
         self.html_tag = 'span'
-        self.text = '&nbsp;' * self.num
+        self.inner_html = '&nbsp;' * self.num
 
 
 # Non html components
@@ -1107,7 +1111,7 @@ for tag in svg_tags_use:
 
 # *************************** end SVG components
 
-class Entity(Span):
+class HTMLEntity(Span):
 # Render HTML Entities
 
     def __init__(self, **kwargs):
@@ -1176,15 +1180,18 @@ class BasicHTMLParser(HTMLParser):
         self.start_tag = True
         self.components = []
         self.name_dict = {}  # After parsing holds a dict with named components
+        self.dict_attribute = kwargs.get('dict_attribute','name')
         self.root = Div(name='root')
-        # self.root_name = f'c{self.root.id}'
-        # self.root_name = 'root'
         self.containers = []
         self.containers.append(self.root)
         self.endtag_required = True
+        self.create_commands = kwargs.get('create_commands', True)  # Prefix for commands generated, defaults to 'jp.'
         self.command_prefix = kwargs.get('command_prefix', 'jp.')  # Prefix for commands generated, defaults to 'jp.'
-        self.commands = [f"root = {self.command_prefix}Div(name='root')"]  # List of command strings (justpy command to generate the element)
-        self.all_temp = kwargs.get('all_temp', True)  # If True, keeps the same id in text instead of generating one
+        if self.create_commands:
+            self.commands = [f"root = {self.command_prefix}Div()"]  # List of command strings (justpy command to generate the element)
+        else:
+            self.commands = ''
+        # self.all_temp = kwargs.get('all_temp', True)  # If True, keeps the same id in text instead of generating one
 
     def parse_starttag(self, i):
         # This is the original library method with two changes to stop tags and attributes being lower case
@@ -1250,7 +1257,7 @@ class BasicHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
         self.parse_id += 1
-        c = component_by_tag(tag, temp=self.all_temp)
+        c = component_by_tag(tag) #, temp=self.all_temp)
         c.parse_id = self.parse_id
         command_string = f''
         if c is None:
@@ -1271,12 +1278,11 @@ class BasicHTMLParser(HTMLParser):
             else:
                 setattr(c, attr[0], attr[1])
             # Add to name to dict of named components. Each entry is a list of components to support multiple components with same name
-            if attr[0] == 'name':
+            # if attr[0] == 'name':
+            if attr[0] == self.dict_attribute:
                 if attr[1] not in self.name_dict:
-                    # self.name_dict[attr[1]]= [c]
                     self.name_dict[attr[1]] = c
                 else:
-                    # self.name_dict[attr[1]].append(c)
                     if not isinstance(self.name_dict[attr[1]], (list,)):
                         self.name_dict[attr[1]] = [self.name_dict[attr[1]]]
                     self.name_dict[attr[1]].append(c)
@@ -1291,11 +1297,6 @@ class BasicHTMLParser(HTMLParser):
                 command_string = f"{command_string}{attr[0]}='{attr[1]}', "
             else:
                 command_string = f'{command_string}{attr[0]}={attr[1]}, '
-
-        # if f'c{self.containers[-1].id}' == self.root_name:
-        #     command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
-        # else:
-        #     command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].parse_id})'
 
         if id(self.containers[-1]) == id(self.root):
             command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
@@ -1349,9 +1350,6 @@ def justPY_parser(html_string, **kwargs):
     '''
     Returns root component of the parser with the name_dict as attribute.
     If root component has only one child, returns the child
-    :param html_string:
-    :param kwargs:
-    :return:
     '''
     parser = BasicHTMLParser(**kwargs)
     parser.feed(html_string)
@@ -1413,5 +1411,12 @@ class Styles:
     button_disabled = 'bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'
     button_3d = 'bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded'
     button_elevated = 'bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
+
+    input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
+
+    # https://www.lipsum.com /
+    lorem_ipsum = """
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    """
 
 

@@ -2,7 +2,17 @@ import justpy as jp
 import random
 import numpy
 
+def q_test():
+    wp = jp.QuasarPage()
+    wp.tailwind = True
+    for i in ['blue', 'pink', 'teal', 'red']:
+        jp.Div(text=i, classes=f'bg-{i} text-white text-xl', a=wp)
+        jp.Div(text=i, classes=f'bg-{i}-500 text-white text-xl', a=wp)
+    jp.Div(text='hello', classes='text-h1', a=wp)
+    jp.H1(text='blah hello', a=wp)
+    return wp
 
+jp.justpy(q_test)
 
 def histogram_test(request):
     wp = jp.WebPage()
@@ -71,4 +81,4 @@ def pie_test(request):
     chart.options.title.text = 'Fruit Distribution'
     return wp
 
-jp.justpy(pie_test)
+# jp.justpy(pie_test)

@@ -45,22 +45,32 @@ d.classes= 'text-red-500'
  
 The `text` attribute will always be rendered as the first child of the component. If you want a Div (or any container component) instance to render multiple texts in different locations, encompass the text in another container component and add that component to the Div at the location you want.
 
-If you want to render an [HTML Entity](https://developer.mozilla.org/en-US/docs/Glossary/Entity) make sure it is the only text set in that container element. Otherwise, it will not be rendered correctly. The simplest way to handle entities correctly, is to use the Entity component:
+If you want to render an [HTML Entity](https://developer.mozilla.org/en-US/docs/Glossary/Entity) use the HTMLEntity component or set the `html_enity` attribute to `True`.
 
 ```python
 import justpy as jp
 
-
 def entity_test():
     wp = jp.WebPage()
-    jp.Entity(entity='a&#768;',a=wp, classes='text-lg')
-    jp.Entity(entity='a&#769',a=wp, classes='text-xl')
-    jp.Entity(entity='&#8707;',a=wp, classes='text-2xl')
-    jp.Entity(entity='&copy;',a=wp, classes='text-3xl')
+    jp.Space(num=3, a=wp)
+    jp.HTMLEntity(entity='a&#768;',a=wp, classes='text-lg')
+    jp.Span(text='a&#768;',a=wp, classes='text-lg', html_entity=True)
+    jp.Space(num=5, a=wp)
+    jp.HTMLEntity(entity='a&#769',a=wp, classes='text-xl')
+    jp.Span(text='a&#769',a=wp, classes='text-xl', html_entity=True)
+    jp.Space(num=5, a=wp)
+    jp.HTMLEntity(entity='&#8707;',a=wp, classes='text-2xl')
+    jp.Span(text='&#8707;',a=wp, classes='text-2xl', html_entity=True)
+    jp.Space(num=5, a=wp)
+    jp.HTMLEntity(entity='&copy;', a=wp, classes='text-3xl')
+    jp.Span(text='&copy;', a=wp, classes='text-3xl', html_entity=True)
+    jp.Space(num=5, a=wp)
     return wp
 
 jp.justpy(entity_test)
 ```
+
+?> The Space component can be used to insert spaces. It creates a Span with `num` repeats of the html entity '&nbsp;'.
 
 #### classes
 
@@ -138,7 +148,7 @@ When an element is bound to an event, the event name (of type string) is added t
 #### allowed_events
  
  * Type: `list`
- * Default: `['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change', 'after', 'before', 'keydown', 'keyup', 'keypress']`
+ * Default: `['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change', 'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur']`
 
 If an event name is not in `allowed_events`, JustPy will generate an error if you try to bind to that event.
 You can use the `add_event` method to add an allowed event to the list.
@@ -171,6 +181,39 @@ jp.justpy(inner_html_test)
  * Default: `True`
  
 If set to `False`, the element is not rendered. See [here](tutorial/html_components?id=showing-and-hiding-elements)
+
+
+#### focus
+
+ * Type: `boolean`
+ * Default: `False`
+ 
+If set to `True`, the element will have focus when the page is rendered.
+
+!> If multiple elements have the `focus` attribute set to `True`, the results will be unpredictable. The last element to be rendered by Vue will have focus. 
+
+```python
+import justpy as jp
+
+# Try not using this event handler and see what happens
+def my_blur(self, msg):
+        self.focus = False
+
+def focus_test():
+    wp = jp.WebPage()
+    in1 = jp.Input(classes=jp.Styles.input_classes, placeholder='Input 1', a=wp, blur=my_blur)
+    in2 = jp.Input(classes=jp.Styles.input_classes, placeholder='Input 2', a=wp, blur=my_blur)
+    in3 = jp.Input(classes=jp.Styles.input_classes, placeholder='Input 3', a=wp, blur=my_blur)
+    in4 = jp.Input(classes=jp.Styles.input_classes, placeholder='Input 4', a=wp, blur=my_blur)
+
+    # Set focus on third Input element
+    in3.focus = True
+
+    return wp
+
+jp.justpy(focus_test)
+
+```
 
 
 #### animation
@@ -220,14 +263,14 @@ jp.justpy(animation_test)
 ```
 
 
-#### id and name
+#### id
  
  * Type: `string`
  * Default: Nothing assigned
  
- If you need to identify an element use the `name` attribute, NOT the `id` attribute. JustPy assigns a unique id to elements that are associated with events and uses it to identify which event handler to run.
+ If you need to identify an element use the `name` attribute (or any other attribute you choose), NOT the `id` attribute. JustPy assigns a unique id to elements that are associated with events and uses it to identify which event handler to run.
  
- !> It is advised no to change an element's `id` or assign it an id. Use `name` instead. 
+ !> It is advised not to change an element's `id` or assign it an id.
  
 
 #### delete_flag
@@ -301,84 +344,84 @@ Div supports some HTML global attributes. Please review the  [Common Attributes]
 
 ### Methods
 
-def delete(self):
+def delete(self)
 
-def on(self, event_type, func):
+def on(self, event_type, func)
 
-def remove_event(self, event_type):
+def remove_event(self, event_type)
 
-def has_event_function(self, event_type):
+def has_event_function(self, event_type)
 
-async def update(self):
+async def update(self)
 
-remove_page_from_pages(self, wp: WebPage):
+remove_page_from_pages(self, wp: WebPage)
 
-def add_page(self, wp: WebPage):   def add_page_to_pages(self, wp: WebPage):
+def add_page(self, wp: WebPage)  
 
-def set_model(self, value):
+def add_page_to_pages(self, wp: WebPage)
 
+def set_model(self, value)
 
-async def run_event_function(self, event_type, event_data, create_namespace_flag=True):
+async def run_event_function(self, event_type, event_data, create_namespace_flag=True)
 
-@staticmethod
-    def convert_dict_to_object(d):
+@staticmethod def convert_dict_to_object(d)
 
 HTML Base Component
 
-def initialize(self, **kwargs):
+def initialize(self, **kwargs)
 
-def __len__(self):
+def __len__(self)
 
-def __repr__(self):
+def __repr__(self)
 
-def add_to_page(self, wp: WebPage):
+def add_to_page(self, wp: WebPage)
 
     def add_to(self, *args):
         for c in args:
             c.add_component(self)
 
-def add_attribute(self, attr, value):
+def add_attribute(self, attr, value)
 
-def add_event(self, event_type):  def add_allowed_event(self, event_type):
+def add_event(self, event_type):  def add_allowed_event(self, event_type)
 
-def add_scoped_slot(self, slot, c):
+def add_scoped_slot(self, slot, c)
 
-def to_html(self, indent=0, indent_step=0, format=True):
+def to_html(self, indent=0, indent_step=0, format=True)
 
-def react(self, data):
+def react(self, data)
 
-def convert_object_to_dict(self):  # Objects may need redefine this
+def convert_object_to_dict(self)
 
 
 Div component
 
-def delete(self):
+def delete(self)
 
-def add_component(self, child, position=None, slot=None):
+def add_component(self, child, position=None, slot=None)
 
-def delete_components(self):
-
-
-def add(self, *args):
-
-def add_first(self, child):
+def delete_components(self)
 
 
-def remove_component(self, component):
+def add(self, *args)
 
-def get_components(self):
-
-
-def first(self):
-
-def last(self):
-
-def to_html(self, indent=0, indent_step=0, format=True):
+def add_first(self, child)
 
 
-def model_update(self):
+def remove_component(self, component)
 
-def convert_object_to_dict(self):
+def get_components(self)
+
+
+def first(self)
+
+def last(self)
+
+def to_html(self, indent=0, indent_step=0, format=True)
+
+
+def model_update(self)
+
+def convert_object_to_dict(self)
 
 
 

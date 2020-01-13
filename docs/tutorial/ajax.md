@@ -32,7 +32,7 @@ For example, this feature is useful for implementing dashboards. Below is a very
 import justpy as jp
 import asyncio
 
-wp = jp.WebPage()
+wp = jp.WebPage(delete_flag=False)
 wp.reload_interval = 2.5
 count_div = jp.Div(a=wp, classes='text-center m-4 p-4 text-white bg-blue-500', style='font-size: 200px')
 

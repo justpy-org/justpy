@@ -1,4 +1,4 @@
-# git clone https://github.com/elimintz/justpy.git
+# git clone https://github.com/elimintz/justpy.git [directory]
 # python3 setup.py sdist bdist_wheel
 # python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 # python3 -m twine upload  dist/*

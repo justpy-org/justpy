@@ -1,5 +1,5 @@
 // {% raw %}
-var storage_dict = {}
+var storage_dict = {};
 
 Vue.component('quasar_component', {
 
@@ -18,9 +18,6 @@ Vue.component('quasar_component', {
             }
         }
 
-        // if (this.jp_props.attrs.id == 'temp') {
-        //     delete this.jp_props.attrs.id
-        // }
 
         description_object = {
             style: this.jp_props.style,
@@ -94,6 +91,15 @@ Vue.component('quasar_component', {
                     fn = this.scrollEvent;
                     break;
 
+                // For QPopupEdit
+                case 'save':
+                    fn = this.saveEvent;
+                    break;
+                case 'cancel':
+                    fn = this.cancelEvent;
+                    break;
+
+
                 default:
                     fn = this.defaultEvent;
             }
@@ -109,8 +115,6 @@ Vue.component('quasar_component', {
         for (const directive_name in this.jp_props.directives) {
             directives.push({name: directive_name, value: this.jp_props.directives[directive_name]});
         }
-        console.log('directives *********');
-        console.log(directives);
         description_object['directives'] = directives;
 
         var scoped_slots = {};
@@ -137,11 +141,11 @@ Vue.component('quasar_component', {
             new_event.currentTarget = {};
             new_event.target.value = event;
             if (aux) new_event.aux = aux;
-            //this.$props.jp_props.input_type = 'text';
             eventHandler(this.$props, new_event, false, aux);
         }),
         defaultEvent: (function (event) {
             this.eventFunction(event, event.type);
+            // this.eventFunction(event.target, event.type);
         }),
         inputEvent: (function (event) {
             if (arguments.length == 1) {
@@ -181,6 +185,12 @@ Vue.component('quasar_component', {
         }),
         removeEvent: (function (event) {
             this.eventFunction(event, 'remove');
+        }),
+        saveEvent: (function (event) {
+            this.eventFunction(event, 'save');
+        }),
+        cancelEvent: (function (event, event1) {
+            this.eventFunction(event, 'cancel');
         }),
         leftEvent: (function (event) {
             storage_dict['r' + this.$props.jp_props.id] = event;
@@ -230,7 +240,8 @@ Vue.component('quasar_component', {
                 event.stopPropagation();
             }
 
-            if (event != null && event.hasOwnProperty('type')) {
+            // if (event != null && event.hasOwnProperty('type')) {
+            if (event instanceof Event) {
                 eventHandler(this.$props, event, false);
             } else {
                 this.createEvent(event, event_type, aux);
@@ -248,12 +259,15 @@ Vue.component('quasar_component', {
             var attr_list = ['message', 'position', 'icon', 'color', 'textColor', 'timeout', 'avatar',
                 'caption', 'closeBtn', 'html'];
             var notify_object = {};
-            for (let i=0; i<attr_list.length; i++) {
+            for (let i = 0; i < attr_list.length; i++) {
                 notify_object[attr_list[i]] = this.jp_props.attrs[attr_list[i]];
             }
             if (this.jp_props.attrs.reply) {
                 // Todo: Add actions
-                notify_object.actions = [{ label: 'reply', handler: () => {  } }];
+                notify_object.actions = [{
+                    label: 'reply', handler: () => {
+                    }
+                }];
             }
             app1.$q.notify(notify_object);
         })
@@ -294,8 +308,12 @@ Vue.component('quasar_component', {
         }
 
 
-        if (this.$props.jp_props.input_type) {
+        if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
+        }
+
+        if (this.$props.jp_props.focus) {
+            this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
         }
     },
     updated() {
@@ -333,7 +351,7 @@ Vue.component('quasar_component', {
         }
 
 
-        if (this.$props.jp_props.input_type) {
+        if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
 
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;    //make sure that the input value is the correct one received from server
 
@@ -348,6 +366,10 @@ Vue.component('quasar_component', {
             if (this.$props.jp_props.input_type == 'checkbox') {
                 this.$refs['r' + this.$props.jp_props.id].checked = this.$props.jp_props.checked;
             }
+        }
+
+        if (this.$props.jp_props.focus) {
+            this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
         }
     },
     props: {

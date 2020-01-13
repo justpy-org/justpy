@@ -44,6 +44,7 @@ class HighCharts(JustpyBaseComponent):
         self.tooltip_fixed = False
         self.tooltip_x = -40
         self.tooltip_y = 40
+        self.tooltip_debounce = 100  # Default is 100 ms
         kwargs['temp'] = False
         super().__init__(**kwargs)
         for k, v in kwargs.items():
@@ -121,6 +122,11 @@ class HighCharts(JustpyBaseComponent):
     def react(self, data):
         pass
 
+    def load_json_alternative(self, options_string):
+        self.options = Dict(self.string_to_json(options_string))
+        return self.options
+
+
     def load_json(self, options_string):
         self.options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
         return self.options
@@ -130,6 +136,55 @@ class HighCharts(JustpyBaseComponent):
         with open(file_name,'r') as f:
             self.options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
         return self.options
+
+    @staticmethod
+    def strip_white_spaces(s):
+        s_list = s.split("'")
+        for i, item in enumerate(s_list):
+            if not i % 2:
+                s_list[i] = re.sub("\s+", "", item)
+        return "'".join(s_list)
+
+    @staticmethod
+    def create_dict_for_colons(s):
+        d = {}
+        handle_flag = True
+        for i, c in enumerate(s):
+            if c == ':':
+                d[i] = handle_flag
+            elif c == '"':
+                handle_flag = not handle_flag
+        return d
+
+    def string_to_json(self, chart_def):
+        s = self.strip_white_spaces(chart_def.replace('\n', ' ').encode("ascii", "ignore").decode('utf-8'))
+        s = s.replace('"', '|||')
+        s = s.replace("'", '"')
+        d = self.create_dict_for_colons(s)
+        ns = []
+        print(s)
+        pos = 0
+        inserted_chars = 0
+        for i, c in enumerate(s):
+            ns.append(c)
+            # if c==':' and s[i-1] not in ['"', "'"]:
+            if c == ':' and d[i]:
+                pos = i
+                # raise error if pos is 0
+                while s[pos] not in [',', '{', '(', '[']:
+                    pos -= 1
+                ns.insert(pos + 1 + inserted_chars, '"')
+                inserted_chars += 1
+                ns.insert(i + inserted_chars, '"')
+                inserted_chars += 1
+        print('The result:')
+        print(ns)
+        print(''.join(ns))
+        result = ''.join(ns).replace('|||', "'")
+        print(result)
+        result = json.loads(result)
+        print(result)
+        return result
 
     def convert_object_to_dict(self):
 
@@ -147,6 +202,7 @@ class HighCharts(JustpyBaseComponent):
         d['tooltip_fixed'] = self.tooltip_fixed
         d['tooltip_x'] = self.tooltip_x
         d['tooltip_y'] = self.tooltip_y
+        d['tooltip_debounce'] = self.tooltip_debounce
         return d
 
 

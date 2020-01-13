@@ -49,7 +49,11 @@ To run the program execute the following command:
 $ python3 test.py
 ```
 
-Then, direct your browser to http://localhost:8000/ or http://127.0.0.1:8000  (this refers to port 8000 on the local machine; one of these should work in all environments). You should see 'Hello!' in your browser.  Click it a few times also. It should report the number of times it has been clicked. 
+Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ 
+
+This refers to port 8000 on the local machine and should work in most environments. 
+
+You should see 'Hello!' in your browser. Click it a few times also. It should report the number of times it has been clicked. 
 
 In this tutorial, when asked to "run the program", follow the two steps above (there is no need to name the file "test.py", you can use any name you like). 
 

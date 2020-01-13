@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Deployment is a complex issue and contributions to making this easier to explain and do would be appreciated.
+Deployment can get complicated and contributions to making this easier to explain and do would be appreciated.
 Hosting instructions for other platforms and vendors would be appreciated as well.
 
 For reference, the uvicorn deployment instructions can be found [here](https://www.uvicorn.org/deployment/).
@@ -39,6 +39,7 @@ Install the required packages:
 # pip3 install -r requirements.txt
 ```
 
+
 Run a JustPy test:
 ```python
 # cat > hello.py
@@ -47,12 +48,16 @@ def hello_world():
     wp = jp.WebPage()
     p = jp.P(text='Hello World!', a=wp)
     return wp
-jp.justpy(hello_world)
+jp.justpy(hello_world, host='<droplet IP address>')
 <Ctrl-D>
 
 # python3 hello.py
 ```
 
+Alternatively, instead of specifying the `host` keyword in the `justpy` command, you can create a justpy.env file and insert the line:
+```python
+HOST = '<droplet IP address>' 
+```
 
 Open a browser, navigate to http://<droplet IP address>:8000
 

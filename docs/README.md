@@ -1,6 +1,6 @@
 # JustPy
 ---
-[JustPy Docs and Tutorials](https://elimintz.github.io/justpy)
+<!--- [JustPy Docs and Tutorials](https://elimintz.github.io/justpy) -->
 
 ## Introduction
 
@@ -37,7 +37,7 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
-The program above activates a web server that returns a web page with 'Hello world!' for any request. Locally, you would direct your browser to to http://localhost:8000/ or http://127.0.0.1:8000 to see the result.
+The program above activates a web server that returns a web page with 'Hello world!' for any request. Locally, you would direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ to see the result.
 
 Here is a slightly modified version in which 'Hello world!' changes to 'I was clicked!' when it is clicked.
 

@@ -46,13 +46,59 @@ jp.justpy(quasar_example)
 
 The program uses the JustPy QBtn component which is based on the [Quasar QBtn component](https://quasar.dev/vue-components/button). Click the buttons and notice the ripple effect which is part of the Material specification.
 
+## props of Quasar components
+
 The JustPy component usually supports all the Quasar component options (in the Quasar docs these are called `props`). In JustPy these are designated by setting the attributes of the element. This can be done at creation using keywords or later using standard attribute assignment. 
 
 Quasar props are in kebab case: `icon-right` 
 In JustPy the attribute names are in snake case: `icon_right`
 
-Quasar components have also scoped slots which will be discussed further on in this tutorial.
+If a quasar prop is set just by specifying it, in JustPy you set the corresponding attribute to `True`.
 
+For example, if a Quasar button is defined like this:
+```html
+<q-btn round color="primary" icon="shopping_cart" />
+```
+
+In JustPy it would look like this:
+```python
+import justpy as jp
+jp.QBtn(round=True, color='primary', icon='shopping_cart') # round is set to True
+```
+
+
+## Slots
+
+Quasar components have also slots in addition to props. JustPy supports most of the slots.
+
+Slots differ from attributes at they contain content in the form of an element as their value.
+
+In the example below we add an icon to several QInput slots.
+
+```python
+import justpy as jp
+
+def input_test(request):
+    wp = jp.QuasarPage()
+    c1 = jp.Div(classes='q-pa-md', a=wp)
+    c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
+    icon1 = jp.QIcon(name='event', color='blue')
+    icon2 = jp.QIcon(name='place', color='red')
+    for slot in ['append', 'prepend', 'before']:
+        in1 = jp.QInput(label=slot, filled=True, hint=f'Icon is in slot "{slot}" and "after"', a=c2, after_slot=icon2)
+        setattr(in1, slot + '_slot', icon1)
+    return wp
+
+jp.justpy(input_test)
+
+```
+
+To insert content into a slot use the regular attribute assignment syntax. To insert element `e` in slot `append` of element `in1`  you could write:
+```python
+in1.append_slot = e
+```
+
+Just add '_slot' to the slot name and treat it as an instance attribute.
 
 ## Parsing Quasar Tags
 

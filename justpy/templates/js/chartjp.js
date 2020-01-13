@@ -3,7 +3,7 @@
 
 var cached_graph_def = {};
 var tooltip_timeout = null;
-var tooltip_timeout_period = 100;
+// var tooltip_timeout_period = 100;
 Vue.component('chart', {
 
     template:
@@ -18,6 +18,7 @@ Vue.component('chart', {
                 var c = Highcharts.chart(container, this.$props.jp_props.def);
             }
             var id = this.$props.jp_props.id;
+            var tooltip_timeout_period = this.$props.jp_props.tooltip_debounce;
             var props = this.$props.jp_props;
             cached_graph_def['chart' + container] = c;
             var update_dict = {};

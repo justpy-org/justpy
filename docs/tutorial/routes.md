@@ -15,7 +15,7 @@ jp.Route('/hello', hello_function)
 
 jp.justpy()
 ```
-Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument `justpy.` If no argument is provided to `justpy`, the framework shows the 'Page not found' message. 
+Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument of `justpy.` If no argument is provided to `justpy`, the framework shows the 'Page not found' message. 
 
 Try running the following program:
 ```python
@@ -42,7 +42,7 @@ Type different URLs into the browser and see what happens. Unless the path is ex
 
 ## Using Decorators
 
-It is common in Python web frameworks to use decorators to assign functions to routes because it is quite convenient and makes the code more readable. JustPy also supports assigning routes using decorators:
+It is common in Python web frameworks to use decorators to assign functions to routes because it is convenient and makes the code more readable. JustPy also supports assigning routes using decorators:
 
 ```python
 import justpy as jp

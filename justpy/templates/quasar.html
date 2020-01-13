@@ -2,6 +2,15 @@
 <html>
 <head>
     <title>JustPy</title>
+
+    {% if options.tailwind %}
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        {% include 'css/form.css' %}
+    </style>
+
+    {% endif %}
+
     {% include 'favicon.html' %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
           type="text/css">
@@ -12,6 +21,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
+
+
+
+
     <style>
 
         {{ page_options.css }}

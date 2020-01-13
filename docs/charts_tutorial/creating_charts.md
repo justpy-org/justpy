@@ -2,7 +2,7 @@
 
 ## Your First Chart
 
-To begin, we'll use the Highchart's documentation ["Your First Chart"](https://www.highcharts.com/docs/getting-started/your-first-chart) example. 
+To begin, we'll use the Highchart's documentation [Your First Chart](https://www.highcharts.com/docs/getting-started/your-first-chart) example. 
 
 In JustPy this example would look like this:
 ```python
@@ -46,7 +46,7 @@ jp.justpy(chart_test)
 
 Run the program above as explained [here](tutorial/getting_started.md).
 
-We create a chart using the JustPy HighCharts class. Like other JustPy components it recognizes keyword arguments like `classes`, `style` and `a`.
+We create a chart using the JustPy HighCharts class. Like other JustPy components, it recognizes keyword arguments like `classes`, `style` and `a`.
 
 In this example the variable `my_chart_def` defines the chart's options (settings). It is a string which can be converted directly to a valid JavaScript object. This JavaScript object is not however a valid Python dictionary because the keys of the object (for example `chart` and `title`) do not have single quotes or double quotes around them and therefore are not valid Python keys. 
 
@@ -70,9 +70,13 @@ def chart_test():
     return wp
 ```
 
-Four charts are created and put on the page, each one of a different type. We accomplish this by iterating over a list with four different chart types that Highcharts supports (the reference for the Highcharts chart options can be found at https://api.highcharts.com/highcharts/). When we create each chart, we load the same options (via a keyword argument) to all of them. 
+Four charts are created and put on the page, each one of a different type. We accomplish this by iterating over a list with four different chart types that Highcharts supports. When we create each chart, we load the same options (via a keyword argument) to all of them. 
 
-However, we then proceed to change the options. Using the dot notation, we assign different values to `options.chart.type`, `options.title.text` and `options.subtitle.text`. Notice that `options.subtitle` was not specified in `my_chart_def`. The [addict](https://github.com/mewwts/addict) library `Dict` structure creates sub dictionaries automatically when required. 
+?> The reference for the Highcharts chart options can be found at https://api.highcharts.com/highcharts/
+
+However, we then proceed to change the options. Using the dot notation, we assign different values to [`options.chart.type`](https://api.highcharts.com/highcharts/chart.type), [`options.title.text`](https://api.highcharts.com/highcharts/title.text) and [`options.subtitle.text`](https://api.highcharts.com/highcharts/subtitle.text). 
+
+?> Notice that `options.subtitle` was not specified in `my_chart_def`. The [addict](https://github.com/mewwts/addict) library `Dict` structure creates sub dictionaries automatically when required. 
 
 
 ## Using Highcharts Online Examples
@@ -163,13 +167,17 @@ def chart_test():
 jp.justpy(chart_test)
 ```
 
-This time, there is no error. When you copy a JavaScript object, make sure that it does not include function definitions or uses JavaScript language functions to compute values. These will cause errors. JustPy can only parse JavaScript objects that look like a Python dictionary except for the missing quotes around the dictionary keys.
+This time, there is no error. When you copy a JavaScript object, make sure that it does not include function definitions or uses JavaScript language functions to compute values. These will cause errors. 
 
-!> It is very likely someone has already created a chart like that one you need and put it online. Use that chart as a stepping stone to create yours. Eventually, you may need to make use of the excellent Highcharts [docs](https://www.highcharts.com/docs/index)
+!> JustPy can only parse JavaScript objects that look like a Python dictionary except for the missing quotes around the dictionary keys. Also, mixing single and double quotes in the JavaScript object may cause problems. Use only single quotes as is the norm with most Highcharts examples.
+
+?> It is very likely someone has already created a chart like that one you need and put it online. Use that chart as a stepping stone to create yours. Eventually, you may need to make use of the excellent Highcharts [docs](https://www.highcharts.com/docs/index)
 
 ## Chart Series
 
-Notice that we have added two lines to `chart_test`.  The first of these lines gives the series a name and makes the legend more informative. The Dicts that describe the series of a chart are held in a list so the first series is `options.series[0]`
+Notice that we have added two lines to `chart_test` above.  The first of these lines gives the series a name and makes the legend more informative. 
+
+!> The Dicts that describe the series of a chart are held in a list so the first series is `options.series[0]`
 
 Here is an example of how you create a chart with multiple series.
 
@@ -186,7 +194,6 @@ def sine_test():
     o = chart.options
     o.title.text = 'Sines Galore'
     x = np.linspace(-np.pi, np.pi, 201)
-    o.series = []
     for frequency in range(1,11):
         y = np.sin(frequency * x)
         s = jp.Dict()
@@ -230,6 +237,6 @@ async def chart_test(request):
 jp.justpy(chart_test)
 ```
 
-The program above fetches chart definitions from a static page server (my github account in this case) based on the URL. Checkout the different charts for a small taste of what Highcharts can do (these are all taken from the Highcharts website where there are many more examples). You could deploy the program above and have others accessing the charts via the appropriate URLs. The chart definitions can be found [here](https://github.com/elimintz/elimintz.github.io/tree/master/charts).
+The program above fetches chart definitions from a static page server (a github repository in this case) based on the URL. Take a look at the different charts for a small taste of what Highcharts can do (these are all taken from the Highcharts website where there are many more examples). You could deploy the program above and have others accessing the charts via the appropriate URLs. The chart definitions can be found [here](https://github.com/elimintz/elimintz.github.io/tree/master/charts).
 
 Another option is to send people the code snippet above to run by themselves. Of course, they would need to have the appropriate environment installed on their computer. The advantage of reading the chart definition remotely is that you can change these remote files without needing to resend or restart your program.

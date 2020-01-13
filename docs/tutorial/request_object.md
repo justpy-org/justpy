@@ -4,11 +4,11 @@ JustPy request handlers (functions that handle requests) can receive an optional
 
 ## URL Parameters
 
-To start let's look at a concrete example. URLs may include a [query string](https://en.wikipedia.org/wiki/Query_string) with parameters: www.example.com/?num=4&name=Joe
+URLs may include a [query string](https://en.wikipedia.org/wiki/Query_string) with parameters: www.example.com/?num=4&name=Joe
 In this example the URL includes two parameters, `num` and `name` with values of 4 and 'Joe'.
 
 The request object includes (among other things) information about the URL parameters. 
-Here is a simple program that displays a page with the parameters in the URL:
+Below is a simple program that displays a page with the parameters in the URL. Try http://127.0.0.1:8000/?number=5&name=Smith for example. 
 ```python
 import justpy as jp
 
@@ -24,7 +24,7 @@ def demo_function(request):
 jp.justpy(demo_function)
 ```
 
-Try entering http://127.0.0.1:8000/?number=5&name=Smith for example. The request object has several attributes. One of them is the Python dictionary `request.query_params` which as its name implies, includes the keys and values of the URL parameters. In the program above we iterate over this dict and add to the page all the keys and their corresponding values.
+The request object has several attributes. One of them is the Python dictionary `request.query_params` which includes the keys and values of the URL parameters. In the program above we iterate over this dictionary and add to the page all the keys and their corresponding values.
 
 ## Dog Example
 
@@ -48,7 +48,7 @@ After a few seconds, you should see a picture of a [papillon](https://www.akc.or
 
 Let's examine the program. First, notice how we define `dog_pic` as an `async` function (if you don't know what `async` functions are in Python just skip this paragraph and the next). JustPy uses [starlette.io](https://www.starlette.io/), "a lightweight ASGI framework/toolkit, which is ideal for building high performance asyncio services".  To shield users from the complexities of async programming in Python, JustPy allows both functions that handle requests and functions that handle events to be either `async` or not. The framework checks if a function is a coroutine and runs it accordingly. 
 
-When a request or event handler require I/O operations over the internet (or to access a local database or even file), it is recommended that they be of type `async` and that all I/O and database operations be non-blocking (this means they are run as a coroutine or in another thread). Otherwise, the application will not scale. To help with the simple case of using an API with the HTTP GET method, JustPy provides a helper function conveniently called `get`. The function asynchronously retrieves information which it assumes is in JSON format and converts it to a Python dictionary.
+When a request or event handler require I/O operations over the internet (or to access a local database or even file), it is recommended that they be of type `async` and that all I/O and database operations be non-blocking (this means they are run as a coroutine or in another thread). Otherwise, the application will not scale. To help with the simple case of using an API with the HTTP GET method, JustPy provides a helper function conveniently called `get`. The function asynchronously retrieves information which (by default in JSON format) and converts it to a Python dictionary.
  
 In the program above we call the `get` function with the appropriate URL. We are requesting the URL for a random image of dog with a certain breed. That URL can be found under the 'message' key in the dictionary `r`. We then add an image to the page using the `Img` class which corresponds to the HTML img tag. The `src` attribute is then set to the URL of the image. Finally, we return the page which the framework will then render. 
 
@@ -80,7 +80,7 @@ We added the function `get_image` and assigned the image's click event to it . W
 
 ## Path Parameters
 
-Thanks to [starlette.io](https://www.starlette.io/), JustPy also supports path parameters in addition to URL query parameters. Let's change the example above so that the breed is determined by the path in the URL:
+JustPy also supports [path parameters](https://www.starlette.io/routing/#path-parameters) in addition to URL query parameters. Let's change the example above so that the breed is determined by the path in the URL:
 
 ```python
 import justpy as jp

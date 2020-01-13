@@ -42,7 +42,7 @@ The `plot` function also accepts several keyword arguments:
 - `title`:  &nbsp;&nbsp;&nbsp; The title of the chart, default is the empty string
 - `subtitle`:  &nbsp;&nbsp;&nbsp; The subtitle of the chart, default is the empty string
 - `categories`: &nbsp;&nbsp;&nbsp;  Boolean indicating whether to treat x values as categories or numbers, default is `True`
-- `stacking`:  &nbsp;&nbsp;&nbsp; One of "", "normal", "percent", default is "" meaning no stacking of series
+- `stacking`:  &nbsp;&nbsp;&nbsp; One of  "",  "normal",  "percent". The default is "" (the empty string) meaning no stacking of series
 - All the other keyword arguments HighCharts accepts
 
 ## Customizing the Chart
