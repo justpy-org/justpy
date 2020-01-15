@@ -237,6 +237,9 @@ async def chart_test(request):
 jp.justpy(chart_test)
 ```
 
-The program above fetches chart definitions from a static page server (a github repository in this case) based on the URL. Take a look at the different charts for a small taste of what Highcharts can do (these are all taken from the Highcharts website where there are many more examples). You could deploy the program above and have others accessing the charts via the appropriate URLs. The chart definitions can be found [here](https://github.com/elimintz/elimintz.github.io/tree/master/charts).
+The program above fetches chart definitions from a static page server (a github repository in this case) based on the URL. Take a look at the different charts for a small taste of what Highcharts can do (these are all taken from the Highcharts website where there are many more examples). You could deploy the program above and have others accessing the charts via the appropriate URLs. 
+The chart definitions can be found [here](https://github.com/elimintz/elimintz.github.io/tree/master/charts).
 
-Another option is to send people the code snippet above to run by themselves. Of course, they would need to have the appropriate environment installed on their computer. The advantage of reading the chart definition remotely is that you can change these remote files without needing to resend or restart your program.
+Another option is to send people the code snippet above to run by themselves. Of course, they would need to have the appropriate environment installed on their computer. 
+
+The advantage of reading the chart definition remotely is that you can change these remote files and additional files without needing to resend or restart your program. 

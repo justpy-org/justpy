@@ -344,84 +344,115 @@ Div supports some HTML global attributes. Please review the  [Common Attributes]
 
 ### Methods
 
-def delete(self)
+`def delete(self)`
 
-def on(self, event_type, func)
+Remove references to the object from JustPy internal data structures to allow garbage collection
 
-def remove_event(self, event_type)
+`def on(self, event_type, func)`
 
-def has_event_function(self, event_type)
+Bind a function to an event
 
-async def update(self)
+`def remove_event(self, event_type)`
 
-remove_page_from_pages(self, wp: WebPage)
+Remove and event from the element's allowed events
 
-def add_page(self, wp: WebPage)  
+`def has_event_function(self, event_type)`
 
-def add_page_to_pages(self, wp: WebPage)
+Returns `True` if the element has the specified event
 
-def set_model(self, value)
+`async def update(self)`
 
-async def run_event_function(self, event_type, event_data, create_namespace_flag=True)
+Updates just the element, not the whole page. The element is updated on all pages specified in the attribute `pages`.
+See [Simple Message Board](tutorial/pushing_data?id=simple-message-board)  
 
-@staticmethod def convert_dict_to_object(d)
+`remove_page_from_pages(self, wp: WebPage)`
 
-HTML Base Component
+Remove a page from `pages`
 
-def initialize(self, **kwargs)
+`def add_page(self, wp: WebPage)` and `def add_page_to_pages(self, wp: WebPage)`
 
-def __len__(self)
+Add a page to `pages`
 
-def __repr__(self)
+`def set_model(self, value)`
 
-def add_to_page(self, wp: WebPage)
+Set the model value
 
-    def add_to(self, *args):
-        for c in args:
-            c.add_component(self)
+`async def run_event_function(self, event_type, event_data, create_namespace_flag=True)`
 
-def add_attribute(self, attr, value)
+Run an event function
 
-def add_event(self, event_type):  def add_allowed_event(self, event_type)
+`@staticmethod def convert_dict_to_object(d)`
 
-def add_scoped_slot(self, slot, c)
+Takes the dictionary created by `convert_object_to_dict` and returns an object. Can be used to make independent copies of objects.
 
-def to_html(self, indent=0, indent_step=0, format=True)
+`def __len__(self)`
 
-def react(self, data)
+`len(c)` returns the number of direct children the element `c` has
 
-def convert_object_to_dict(self)
+`def add_to_page(self, wp: WebPage)`
 
+Adds the element to a page
 
-Div component
+`def add_attribute(self, attr, value)`
 
-def delete(self)
+Adds an attribute that will be part of the dictionary created by `convert_object_to_dict`
 
-def add_component(self, child, position=None, slot=None)
+`def add_event(self, event_type)` and  `def add_allowed_event(self, event_type)`
 
-def delete_components(self)
+Add an allowed event to the element
 
+`def add_scoped_slot(self, slot, c)`
 
-def add(self, *args)
+Relevant to Quasar
 
-def add_first(self, child)
+`def to_html(self, indent=0, indent_step=0, format=True)`
 
+Returns an HTML representation of the element
 
-def remove_component(self, component)
+`def react(self, data)`
 
-def get_components(self)
+Executes just before the element is rendered. It is just `pass` for Div
 
+`def convert_object_to_dict(self)`
 
-def first(self)
-
-def last(self)
-
-def to_html(self, indent=0, indent_step=0, format=True)
+Converts the element to a dictionary in the format the can be sent to the frontend to be rendered.
 
 
-def model_update(self)
+`def add_component(self, child, position=None, slot=None)`
 
-def convert_object_to_dict(self)
+Add a component at the specified position.
+
+`def delete_components(self)`
+
+Use to empty a container element like Div. Does not delete the `text` attribute
+
+`def add(self, *args)`
+
+Add all arguments as child elements after the current child elements
+
+`def add_first(self, child)`
+
+Add a child element before all other child elements
+
+`def remove_component(self, component)`
+
+Remove a child element
+
+`def get_components(self)`
+
+Get child elements as a list
+
+`def first(self)`
+
+Get first child element
+
+`def last(self)`
+
+Get last child element
+
+`def model_update(self)`
+
+Override as necessary
 
 
 

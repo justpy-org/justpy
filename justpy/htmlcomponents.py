@@ -823,12 +823,12 @@ class Icon(Div):
         return d
 
 
-class EditorJP(TextArea):
+class EditorMD(TextArea):
     # https://www.cssportal.com/style-input-range/   style an input range
-    # TODO: EditorJP, use as an example of wrapping javascript component (need to take care of javascript)
+    # Set the page's tailwind attribute to False for preview to work
     def __init__(self, **kwargs):
-        self.debounce = 300
         super().__init__(**kwargs)
+        self.debounce = 0
         self.input_type = 'textarea'
         self.vue_type = 'editorjp'
         self.html_tag = 'textarea'

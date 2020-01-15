@@ -32,6 +32,5 @@ Highcharts.theme = {
         }
     }
 };
-console.log('in avocado');
 // Apply the theme
 Highcharts.setOptions(Highcharts.theme);

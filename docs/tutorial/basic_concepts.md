@@ -68,7 +68,7 @@ When you type a URL into your browser's [Address Bar](https://en.wikipedia.org/w
 the browser generates a request; it requests data from the server the URL you entered points to. 
 
 When a request comes from a browser, the JustPy framework runs a user defined function. 
-This function must return a web page which is then rendered in the browser that sent the request. All that you as a developer needs to do is write the function that takes a request and returns a web page.
+This function must return a web page which is then rendered in the browser that sent the request. All that you as a developer need to do is write the function that takes a request and returns a web page.
 The framework takes care of the rest.
 
 ## Hello World

@@ -109,16 +109,9 @@ Vue.component('html_component', {
                             });
                         }
                         for (let j = 0; j < num_files; j++) {
-                            console.log(file_list[j]);
                             file_readers[j].onload = function (e) {
-                                console.log(e.target.result);
-                                console.log(e);
-                                // attr_dict['file_content'] = e.target.result;
-                                // file_content[j] = e.target.result.replace(/^data:.+;base64,/, '');
                                 file_content[j] = e.target.result.substring(e.target.result.indexOf(",") + 1);
                                 reader_ready[j] = true;
-                                console.log('file_content in onload ((((((((((((((((');
-                                console.log(file_content);
                             };
                             file_readers[j].readAsDataURL(file_list[j]);
                         }

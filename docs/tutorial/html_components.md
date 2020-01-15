@@ -100,7 +100,7 @@ Run the program and try editing some text. You will see also that the Hebrew tex
 
 ## Specific Attributes
 
-Some components have specific attributes. For example [img tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) has the `src` attribute that specifies the URL for the image.
+Some components have specific attributes. For example, the   [img HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) has the `src` attribute that specifies the URL for the image.
 Run the following program:
 ```python
 import justpy as jp

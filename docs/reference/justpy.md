@@ -1,4 +1,4 @@
-# The justpy command
+# The justpy Command
 
 The `justpy` command starts the web sever and the async loop in which the application runs. Unless the `justpy` command is executed, no web pages will be served.No other command in the file after the `justpy` command will be executed so it should be the last command in the program file. 
 
@@ -8,7 +8,7 @@ The `justpy` command starts the web sever and the async loop in which the applic
 
 All other arguments are keyword arguments.
 
-`start_server` - If `False`, the server is not started.
+`start_server` - If `False`, the server is not started. Use this if you want to run justpy while the server is already running or you want to deploy with a server other than uvicorn (not tested yet).
 
 `websockets` - If `False`, all pages in the application will use Ajax instead of Websockets by default.
 

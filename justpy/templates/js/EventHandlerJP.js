@@ -3,19 +3,14 @@
 var files_chosen = {};
 
 function eventHandler(props, event, form_data, aux) {
-    console.log('-------------------------');
-    console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
-    console.log(event);
-    console.log(props.jp_props);
-    console.log('-------------------------');
 
-    // if ((event instanceof Event) && (event.target.type == 'file')) {
-    //
-    //     console.log('input of type file **********');
-    //     files_chosen[event.target.id] = event.target.files;
-    //     console.log(files_chosen);
-    // }
-
+    if (props.jp_props.debug) {
+        console.log('-------------------------');
+        console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
+        console.log(event);
+        console.log(props.jp_props);
+        console.log('-------------------------');
+    }
     if (!websocket_ready && use_websockets) {
         return;
     }
@@ -37,11 +32,9 @@ function eventHandler(props, event, form_data, aux) {
     };
     if ((event instanceof Event) && (event.target.type == 'file')) {
 
-        console.log('input of type file **********');
         files_chosen[event.target.id] = event.target.files;
-        console.log(files_chosen);
         var files = [];
-        for (let i=0; i<event.target.files.length; i++) {
+        for (let i = 0; i < event.target.files.length; i++) {
             const fi = event.target.files[i];
             files.push({name: fi.name, size: fi.size, type: fi.type, lastModified: fi.lastModified});
         }
@@ -72,11 +65,11 @@ function eventHandler(props, event, form_data, aux) {
     if (props.jp_props.debounce) {
         clearTimeout(props.timeout);
         props.timeout = setTimeout(function () {
-                send_to_server(e);
+                send_to_server(e, props.jp_props.debug);
             }
             , props.jp_props.debounce);
     } else {
-        send_to_server(e);
+        send_to_server(e, props.jp_props.debug);
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
@@ -93,11 +86,14 @@ function eventHandler(props, event, form_data, aux) {
     }
 }
 
-function send_to_server(e) {
+function send_to_server(e, debug_flag) {
+    if (debug_flag) {
+                console.log('Sending message to server:');
+                console.log({'type': 'event', 'event_data': e});
+            }
     if (use_websockets) {
         if (websocket_ready) {
-            console.log('Sending message:');
-            console.log({'type': 'event', 'event_data': e});
+
             socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
         } else {
             setTimeout(function () {

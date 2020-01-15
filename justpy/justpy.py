@@ -24,6 +24,8 @@ from ssl import PROTOCOL_SSLv23
 
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
+print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
+
 
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
@@ -47,7 +49,6 @@ TEMPLATES_DIRECTORY = config('TEMPLATES_DIRECTORY', cast=str, default=current_di
 STATIC_DIRECTORY = config('STATIC_DIRECTORY', cast=str, default=os.getcwd())
 STATIC_ROUTE = config('STATIC_MOUNT', cast=str, default='/static')
 STATIC_NAME = config('STATIC_NAME', cast=str, default='static')
-print(current_dir, os.getcwd())
 FAVICON = config('FAVICON', cast=str, default='')  # If False gets value from https://elimintz.github.io/favicon.png
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)

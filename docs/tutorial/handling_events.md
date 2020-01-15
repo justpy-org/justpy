@@ -115,7 +115,9 @@ In the first line of `event_demo`, the number of buttons is set (try changing th
 
 The fourth line defines the classes that will be used to format all the buttons. Don't worry if you don't understand what all the Tailwind classes do at this stage, it is not important. The fifth line creates the `message` element and adds it to the page. This element displays information about the button that is clicked.
 
-On the sixth line  the loop that creates all the buttons starts. For each iteration of the loop, a button is created and added to `button_div`. Since `button_div` was previously added to the web page, the buttons will also be displayed on the page. A button in JustPy is just an instance of the `Button `class, and therefore we can assign additional attributes to the instance. That is what we do in the next two lines. We assign to the `message` attribute the `message` element and initialize the `num_clicked` attribute to 0 (these attributes will be used in the `button_click` function as we shall see shortly).
+On the sixth line  the loop that creates all the buttons starts. For each iteration of the loop, a button is created and added to `button_div`. Since `button_div` was previously added to the web page, the buttons will also be displayed on the page. 
+
+A button in JustPy is just an instance of the `Button `class, and therefore we can assign additional attributes to the instance. That is what we do in the next two lines. We assign to the `message` attribute the `message` element and initialize the `num_clicked` attribute to 0 (these attributes will be used in the `button_click` function as we shall see shortly).
 
 After the loop, the web page is returned, and the framework renders it to the user's browser.
 It may seem that the loop is erasing previous buttons by redefining the variable `b`. That is not the case because each time through the loop a new button is created and is added to the component list of `button_div` (using the keyword argument notation: `a=button_div`). At the end of the loop, `button_div` has 25 distinct child component instances. You can verify this by adding the following two lines just before the `return` statement of `event_demo` and re-running the program:
@@ -203,7 +205,7 @@ def event_demo():
         b.message = message
         b.num_clicked = 0
         button_list.append(b)
-    wp.button_list = button_list   # The list will now be stored in the WebPage instance
+    wp.button_list = button_list   # The list will now be referenced by the WebPage instance attribute
     return wp
 
 jp.justpy(event_demo)

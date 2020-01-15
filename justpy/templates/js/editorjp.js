@@ -41,9 +41,6 @@ Vue.component('editorjp', {
         p.cached_value = simplemde.value();
 
         simplemde.codemirror.on("change", function (event) {
-            console.log('in change of editor e handler.');
-            console.log(event);
-            console.log(simplemde.value());
             p.updated = !p.updated;
             if (p.updated) {
                 return;

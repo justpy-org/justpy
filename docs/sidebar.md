@@ -19,6 +19,7 @@
     - [Sessions](tutorial/sessions.md "Sessions")
     - [Static Files](tutorial/static.md "Static Files")
     - [Configuration](tutorial/configuration.md "Configuration")
+    - [Downloading and Uploading Files](tutorial/uploading_files.md "Sownloading and Uploading Files")
     - [Deployment](tutorial/deployment.md "Deployment")
 - <span class="section-header" >Highcharts Guide</span>
     - [Introduction - Highcharts](charts_tutorial/introduction.md "Introduction")

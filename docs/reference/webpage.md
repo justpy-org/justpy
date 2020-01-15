@@ -222,7 +222,7 @@ Removes a component from the page if it is there. If not, raises an exception.
 
 ### `get_components(self)`
 
-Returns a list of all the elements on the page. This method returns `self.components` so if you prefer, tou can access that attribute directly.
+Returns a list of all the elements on the page. 
 
 ### `last(self)`
 
