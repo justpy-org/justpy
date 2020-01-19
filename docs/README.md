@@ -6,7 +6,7 @@
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming.  
 
-When developing with JustPy, there is no front-end/back-end distinction. All programming is done on the back-end allowing a simpler and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. This is a major difference from other frameworks that is hard to describe in words but will become evident when you see some concrete examples. 
+When developing with JustPy, there is no front-end/back-end distinction. All programming is done on the back-end allowing a simpler and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. This is a major difference from other frameworks that will become evident once you see some concrete examples. 
 
 !> The best way to understand JustPy is to follow the [tutorial](tutorial/getting_started.md). 
 
@@ -17,8 +17,6 @@ JustPy encourages creating your own components and reusing them in different pro
 JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. 
 
 JustPy supports visualization using [matplotlib](tutorial/matplotlib.md) and [Highcharts](charts_tutorial/introduction.md).
-
-!> One time only marketing pitch: **Experimenting with JustPy is worth your time. You will be surprised how little code is required to develop interactive web sites.**
 
 Hopefully, JustPy will enable teaching web development in introductory Python courses by reducing the complexity of web development.
 
