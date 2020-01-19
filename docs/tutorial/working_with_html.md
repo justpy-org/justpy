@@ -27,7 +27,7 @@ Div(id: 1, html_tag: div, vue_type: html_component, number of components: 3)
 [P(id: 2, html_tag: p, vue_type: html_component, number of components: 0), P(id: 3, html_tag: p, vue_type: html_component, number of components: 0), P(id: 4, html_tag: p, vue_type: html_component, number of components: 0)]
 ```
 
-The printout shows that `c` is a `Div` component that has 3 child components that are `P` components. The parsing function takes HTML and creates JustPy elements with the right relationships between them. It returns the topmost component if there is only one. If there are two or more siblings at the top level, it wraps them with a Div and returns the div. You can think of parse_html as returning the element at the base of the HTML tree.
+The printout shows that `c` is a `Div` component that has 3 child components that are `P` components. The parsing function takes HTML and creates JustPy elements with the right relationships between them. It returns the topmost component if there is only one. If there are two or more siblings at the top level, it wraps them with a Div and returns the div. You can think of `parse_html` as returning the element at the base of the HTML tree.
  
 There are several way to access the child components. For example, in our specific case the first paragraph is the first child of `c` and therefore can be accessed as `c.components[0]`.
 

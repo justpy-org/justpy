@@ -6,7 +6,7 @@
     - [HTML Components](tutorial/html_components.md "HTML Components")
     - [Routes](tutorial/routes.md "Routes")
     - [Input Component](tutorial/input.md "Input Component")
-    - [The model and data attributes](tutorial/model_and_data.md "The model and data attributes")
+    - [The model and data Attributes](tutorial/model_and_data.md "The model and data attributes")
     - [Parsing and Using HTML](tutorial/working_with_html.md "Parsing and Using HTML")
     - [Pushing Data to Web Pages](tutorial/pushing_data.md "Pushing Data to Web Pages")
     - [Creating Your Own Components](tutorial/custom_components.md "Custom Components")
@@ -35,15 +35,23 @@
     - [Introduction - ag-Grid](grids_tutorial/introduction.md "Introduction")
     - [Creating Grids](grids_tutorial/creating_grids.md "Creating Grids")
     - [Using Pandas to Create Grids](grids_tutorial/pandas.md "Pandas and Grids")
+    - [Displaying Database Tables and Query Results](grids_tutorial/databases.md "Displaying Database Tables and Query Results")
     - [Grid Events](grids_tutorial/grid_events.md "Grid Events")
 - <span class="section-header">Quasar Guide</span>
     - [Introduction - Quasar](quasar_tutorial/introduction.md "Introduction")
     - [Notifications](quasar_tutorial/notify.md "Notifications")
+    - [QDialog](quasar_tutorial/QDialog.md "QDialog")
+    - [QInput](quasar_tutorial/QInput.md "QInput")
+    - [QDate and QTime](quasar_tutorial/QDate.md "QDate and QTime")
+    - [QOptionGroup](quasar_tutorial/QOptionGroup.md "QOptionGroup")
+    - [QBtnToggle](quasar_tutorial/QBtnToggle.md "QBtnToggle")
     - [QExpansionItem](quasar_tutorial/QExpansionItem.md "QExpansionItem")
     - [QSplitter](quasar_tutorial/QSplitter.md "QSplitter")
+    - [Components not Working](quasar_tutorial/not_working.md "Components not Working")
 - <span class="section-header">Reference</span>
     - [WebPage class](reference/webpage.md "WebPage Class")
     - [HTML Components](reference/htmlcomponent.md "HTML Components")
+    - [The justpy Command](reference/justpy.md "The justpy Command")
 
 
 

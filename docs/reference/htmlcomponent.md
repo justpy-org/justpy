@@ -327,16 +327,16 @@ The Vue component to couple with the Python class. Used by the front end of the 
  * Type: `string`
  * Default: `'div'`
  
-The HTML tag that corresponds to the component. If you change it, the component may no render correctly.
+The HTML tag that corresponds to the component. If you change it, the component may not render correctly.
 
-!> If you change this, the component will not be rendered correctly.
+!> If you change this, the component may not be rendered correctly.
 
 #### class_name
 
  * Type: `string`
  * Default: `'Div'`
  
-The class (component) name of the element.
+The class (component) name of the element. Should be considered read only
  
 #### Global HTML attributes
 

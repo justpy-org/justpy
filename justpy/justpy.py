@@ -1,5 +1,3 @@
-# import psutil, gc
-MEMORY_DEBUG = False
 from starlette.applications import Starlette
 from starlette.responses import Response
 from starlette.responses import JSONResponse
@@ -29,6 +27,9 @@ print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
 
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
+MEMORY_DEBUG = config('MEMORY_DEBUG', cast=bool, default=False)
+if MEMORY_DEBUG:
+    import psutil
 LATENCY = config('LATENCY', cast=int, default=0)
 if LATENCY:
     print(f'Simulating latency of {LATENCY} ms')
@@ -158,13 +159,11 @@ class Homepage(HTTPEndpoint):
         if request['path']=='/zzz_justpy_ajax':
             data_dict = await request.json()
             # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
-            if data_dict['event_data']['event_type']== 'beforeunload':
+            if data_dict['event_data']['event_type'] == 'beforeunload':
                 return await self.on_disconnect(data_dict['event_data']['page_id'])
 
-            # if data_dict['type']=='initial':
-            #     return JSONResponse('')
             session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-            if session_cookie:
+            if SESSIONS and session_cookie:
                 session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
                 data_dict['event_data']['session_id'] = session_id
 
@@ -214,9 +213,8 @@ class JustpyEvents(WebSocketEndpoint):
             return
         if msg_type == 'event':
             # Message sent when an event occurs in the browser
-            # data_dict['event_data']['session'] = websocket.session
             session_cookie = websocket.cookies.get(SESSION_COOKIE_NAME)
-            if session_cookie:
+            if SESSIONS and session_cookie:
                 session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
                 data_dict['event_data']['session_id'] = session_id
             await self._event(data_dict)
@@ -233,9 +231,8 @@ class JustpyEvents(WebSocketEndpoint):
         if MEMORY_DEBUG:
             print('************************')
             print(len(JustpyBaseComponent.instances),JustpyBaseComponent.instances)
-            print(WebPage.instances)
+            print(len(WebPage.instances),WebPage.instances)
             print(len(WebPage.sockets), WebPage.sockets)
-            # gc.collect()
             process = psutil.Process(os.getpid())
             print(f'Memory used: {process.memory_info().rss:,}')
             print('************************')
@@ -279,12 +276,10 @@ async def handle_event(data_dict, com_type=0):
         return {'type': 'page_update', 'data': build_list}
     c = JustpyBaseComponent.instances[event_data['id']]
     try:
-        # before_result = await run_event_function(c, 'before', event_data, True)
         before_result = await c.run_event_function('before', event_data, True)
     except:
         pass
     try:
-        # event_result = await run_event_function(c, event_data['event_type'], event_data, True)
         event_result = await c.run_event_function(event_data['event_type'], event_data, True)
         logging.debug('%s %s', 'Event result:', event_result)
     except Exception as e:

@@ -1,6 +1,6 @@
 # The justpy Command
 
-The `justpy` command starts the web sever and the async loop in which the application runs. Unless the `justpy` command is executed, no web pages will be served.No other command in the file after the `justpy` command will be executed so it should be the last command in the program file. 
+The `justpy` command starts the web sever and the async loop in which the application runs. Unless the `justpy` command is executed, no web pages will be served. No other command in the file after the `justpy` command will be executed (unless the `start_server` option is `False`) so it should be the last command in the program file. 
 
 `def justpy(func=None, *, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs)`
 
@@ -8,11 +8,24 @@ The `justpy` command starts the web sever and the async loop in which the applic
 
 All other arguments are keyword arguments.
 
-`start_server` - If `False`, the server is not started. Use this if you want to run justpy while the server is already running or you want to deploy with a server other than uvicorn (not tested yet).
+`start_server` - If `False`, the uvicorn server is not started. 
+
+Use this if you want to run the uvicorn server from the command line:
+```
+uvicorn --host 0.0.0.0 --port 8000 test:app
+```
+You need to explicitly specify the host and port (as well as any other uvicorn option you require) since the configuration file values are not used in this case.
+
+If test.py is your main program file where you import justpy then for the above to run you need to add the following line to it after importing justpy:
+```python
+app = jp.app # assuming import justpy as jp
+```
+
+This exposes the starlette app to uvicorn 
 
 `websockets` - If `False`, all pages in the application will use Ajax instead of Websockets by default.
 
-`host` - Set to the configuration file HOST setting by default. If not specified in configuration file, it is `0.0.0.0'
+`host` - Set to the configuration file HOST setting by default. If not specified in configuration file, it is `127.0.0.1'
 
 `port` - Set to the configuration file PORT setting by default. If not specified in configuration file, it is 8000
 

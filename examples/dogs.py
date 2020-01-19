@@ -23,7 +23,7 @@ breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'basen
               'terrier-silky', 'terrier-tibetan', 'terrier-toy', 'terrier-westhighland', 'terrier-wheaten',
               'terrier-yorkshire', 'vizsla', 'weimaraner', 'whippet', 'wolfhound-irish']
 
-def dog_test(request):
+async def dog_test(request):
     wp = QuasarPage()
     wp.body_style = 'overflow: hidden'
     bp = parse_html("""
@@ -69,9 +69,9 @@ def dog_test(request):
     breed_select = QBtnDropdown(auto_close=True, split=False, glossy=True, label='Select Breed', icon='fas fa-dog', a=bp.name_dict['toolbar'])
     breed_list = QList(separator=True, dense=True, a=breed_select)
 
-    def change_breed(self, msg):
+    async def change_breed(self, msg):
         main_image.breed = self.breed
-        change_pic(main_image, msg)
+        await change_pic(main_image, msg)
         breed_select.label=self.breed
 
     for breed in breeds:
@@ -110,23 +110,23 @@ def dog_test(request):
         list_item.name_dict['delete'].on('click',delete_list_item)
 
 
-    def change_pic(self, msg):
+    async def change_pic(self, msg):
         # https://dog.ceo/api/breed/bulldog/french/images/random
         if '-' in self.breed:
             b = self.breed.split('-')
-            r = (requests.get(f'https://dog.ceo/api/breed/{b[0]}/{b[1]}/images/random')).json()
+            r = await get(f'https://dog.ceo/api/breed/{b[0]}/{b[1]}/images/random')
         else:
-            r = (requests.get(f'https://dog.ceo/api/breed/{self.breed}/images/random')).json()
+            r = await get(f'https://dog.ceo/api/breed/{self.breed}/images/random')
         self.src = r['message']
         add_thumbnail(self, msg)
 
 
-    def next_pic(self, msg):
-        change_pic(main_image, msg)
+    async def next_pic(self, msg):
+        return await change_pic(main_image, msg)
 
     main_image.on('click', change_pic)
     bp.name_dict['next_picture'].on('click', next_pic)
-    change_pic(main_image, {})
+    await change_pic(main_image, {})
     return wp
 
 justpy(dog_test)

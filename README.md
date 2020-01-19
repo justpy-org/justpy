@@ -1,6 +1,6 @@
 # JustPy
 ---
-[JustPy Docs and Tutorials](https://elimintz.github.io/justpy)
+[JustPy Docs and Tutorials](https://justpy.io)
 
 ## Introduction
 

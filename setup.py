@@ -1,9 +1,4 @@
-# git clone https://github.com/elimintz/justpy.git [directory]
-# python3 setup.py sdist bdist_wheel
-# python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-# python3 -m twine upload  dist/*
 
-# python3 -m pip install -i https://test.pypi.org/simple/ justpy-test==5.0.5
 import setuptools
 
 def get_long_description():
@@ -26,7 +21,7 @@ setuptools.setup(
     zip_safe=False,
     install_requires=[
         'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0',
-        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'requests', 'aiofiles'
+        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'httpx>=0.11.0', 'aiofiles'
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",

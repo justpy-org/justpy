@@ -1,5 +1,7 @@
 # Routes
 
+## The Basics
+
 In all the examples above, any [URL](https://en.wikipedia.org/wiki/URL) typed into the browser would render the same page. Usually, when we develop a web application, we want different URLs to load different pages. In other words, we want to define different request handlers to handle different URLs. In this part of the tutorial we will show how to do this using JustPy. 
 
 Please run the following program:

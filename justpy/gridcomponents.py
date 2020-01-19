@@ -93,8 +93,6 @@ class AgGrid(JustpyBaseComponent):
                 col_filter = True   # Use default filter
             self.options.columnDefs.append(Dict({'field': i, 'filter': col_filter}))
         # Change NaN and similar to None for JSON compatibility
-        # df = df.replace([np.inf, -np.inf], np.nan)
-        # col = col.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max])
         self.options.rowData = df.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max]).where(pd.notnull(df), None).to_dict('records')
 
     def convert_object_to_dict(self):

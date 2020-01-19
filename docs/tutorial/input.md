@@ -148,7 +148,7 @@ Radio buttons generate the 'change' event on all browsers. They generate the 'in
  
  Radio buttons are grouped according to their `name` attribute and the value of their `form` attribute if one is assigned. Buttons with the same name on different assigned forms, will be in different groups. All radio buttons not in any form but with the same name, will be in one group.
  
- !> You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page. 
+!> You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page. 
 
 In the example below, the results of clicking a radio button are shown using the event handler `radio_changed`. Notice that the value of the radio button is always the same. What changes is its `checked` property. The value of a group of radio buttons is the value of the radio button in the group that is checked.
 
@@ -276,6 +276,8 @@ def focus_test():
 jp.justpy(focus_test)
 ```
 
+As a rule of thumb, try to limit the usage of keyboard events to a minimum since they don't work well for mobile users.
+
 ## Your First Component
 
 JustPy allows building your own reusable components. We will have a lot more to say about this later, but just to start easing into the subject, let's suppose we want to encapsulate the functionality of an Input coupled to a Div into one component (like in one of the first examples above). The program would look like this:
@@ -285,6 +287,8 @@ import justpy as jp
 
 class InputWithDiv(jp.Div):
 
+    input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
+
     @staticmethod
     def input_handler(self, msg):
         self.div.text = self.value
@@ -292,8 +296,7 @@ class InputWithDiv(jp.Div):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
-        self.in1 = jp.Input(a=self, classes=input_classes, placeholder='Please type here', input=self.input_handler)
+        self.in1 = jp.Input(a=self, classes=self.input_classes, placeholder='Please type here', input=self.input_handler)
         self.in1.div = jp.Div(text='What you type will show up here', classes='m-2 p-2 h-32 text-xl border-2', a=self)
 
 

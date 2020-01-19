@@ -6,12 +6,12 @@ In the program below, two examples are implemented.
 
 When a Dialog is closed by the user, it generates an input event.
 
-`v-close-popup` directive closes the dialog automatically when the associated button is clicked. Use `v_close_popup` in JustPy commands.
+The `v-close-popup` directive closes the dialog automatically when the associated button is clicked. Use `v_close_popup` in JustPy commands.
 
 ```python
 import justpy as jp
 
-html_string = """
+alert_dialog_html = """
 <div class="q-pa-md q-gutter-sm">
     <q-btn label="Alert" color="primary" name="alert_button" />
     <q-dialog name="alert_dialog" persistent>
@@ -32,7 +32,7 @@ html_string = """
 </div>
 """
 
-html_string1 = """
+seamless_dialog_html = """
 <div class="q-pa-md q-gutter-sm">
     <q-btn label="Open seamless Dialog" color="primary" name="seamless_button" />
 
@@ -64,11 +64,11 @@ def open_dialog(self, msg):
 def dialog_test():
     wp = jp.QuasarPage()
 
-    c = jp.parse_html(html_string, a=wp)
+    c = jp.parse_html(alert_dialog_html, a=wp)
     c.name_dict["alert_button"].dialog = c.name_dict["alert_dialog"]
     c.name_dict["alert_button"].on('click', open_dialog)
 
-    c = jp.parse_html(html_string1, a=wp)
+    c = jp.parse_html(seamless_dialog_html, a=wp)
     c.name_dict["seamless_button"].dialog = c.name_dict["seamless_dialog"]
     c.name_dict["seamless_button"].on('click', open_dialog)
 

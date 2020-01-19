@@ -1,4 +1,4 @@
-# The Model and Data Attributes
+# The model and data Attributes
 
 ## Introduction and Examples
 

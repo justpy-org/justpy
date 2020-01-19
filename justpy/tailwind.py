@@ -2,7 +2,7 @@
 # https://tailwind.run/new
 # https://nervous-knuth-fa9c3e.netlify.com/   additional form classes form-radio etc. Already added CSS
 class Tailwind:
-    # TODO: Support negative prefix for boxShadow and letterSpacing plugins (#992) new in release 1.1
+    # TODO: Customization - https://tailwindcss.com/docs/configuration
     pseudo_classes = ['hover', 'focus', 'active', 'group-hover', 'focus-within',
                       'first', 'last', 'odd', 'even', 'disabled', 'visited',
                       'sm', 'md', 'lg', 'xl']

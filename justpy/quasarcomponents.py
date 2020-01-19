@@ -40,7 +40,9 @@ class QDiv(Div):
     def __setattr__(self, key, value):
         # if key in self.__class__.slots:
         if key in self.slots:
-            self.add_scoped_slot(key[:key.index('_')], value)
+            q_slot = key[:key.index('_slot')].replace('_', '-')
+            # self.add_scoped_slot(key[:key.index('_slot')], value)
+            self.add_scoped_slot(q_slot, value)
         else:
             self.__dict__[key] = value
 
@@ -241,13 +243,15 @@ class QRange(_QInputBase):
 @parse_dict
 class QRating(_QInputBase):
 
-    slots = []
+    slots = []   # Add slots for QTooltTip
     html_tag = 'q-rating'
 
     def __init__(self, **kwargs):
         self.no_reset = False
         super().__init__(**kwargs)
-        self.prop_list = ['icon', 'max', 'value', 'no-reset', 'readonly', 'disable', 'color', 'size', 'icon-selected']
+        self.debounce = 30
+        self.prop_list = ['icon', 'max', 'value', 'no-reset', 'readonly', 'disable', 'color', 'size', 'icon-selected',
+                          'icon-half', 'no-dimming', 'color-selected', 'color-half']
         self.allowed_events = ['input']
 
     def before_event_handler(self, msg):
@@ -800,8 +804,8 @@ class QTooltip(_QInputBase):
 
     def __init__(self, **kwargs):
 
-        self.disable_events = True  # For tooltips, events are disabeled by default otherwise input event for every time tooltip shows.
         super().__init__(**kwargs)
+        self.disable_events = True  # For tooltips, events are disabeled by default otherwise input event for every time tooltip shows.
         self.type = 'boolean'
         self.value = bool(self.value)
         self.prop_list = ['transition-show', 'transition-hide', 'target', 'delay', 'max-height', 'max-width', 'value',
@@ -1154,6 +1158,7 @@ class QIcon(QDiv):
 
 @parse_dict
 class QSpinner(QDiv):
+    # TODO: Take care of all spinner types in parser
 
     spinner_types = ['audio', 'ball', 'bars', 'comment', 'cube', 'dots', 'facebook', 'gears', 'grid', 'hearts', 'hourglass',
                      'infinity', 'ios', 'oval', 'pie', 'puff', 'radio', 'rings', 'tail']
@@ -1176,7 +1181,6 @@ class QSpinner(QDiv):
         return d
 
 
-# TODO: Take care of all spinner types in parser
 
 # List and list items
 

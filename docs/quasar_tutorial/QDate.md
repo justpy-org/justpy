@@ -1,5 +1,7 @@
 # QDate and QTime
 
+The [Date Picker](https://quasar.dev/vue-components/date) and [Time Picker](https://quasar.dev/vue-components/time) components can be used to input date and time.
+
 ```python
 import justpy as jp
 
@@ -22,13 +24,15 @@ html_string = """
 
 def date_time_test():
     wp = jp.QuasarPage(data={'date': '2020-01-01 07:00'})
-    # d = jp.QDate(a=wp, today_btn=True, model=[wp, 'date'])
     d = jp.parse_html(html_string, a=wp)
     for c in ['badge', 'date', 'time']:
         d.name_dict[c].model = [wp, 'date']
-    # add input example
     return wp
 
 jp.justpy(date_time_test)
 
 ```
+
+## Date and Time as QInput slots
+
+Coming soon

@@ -69,5 +69,12 @@ if _has_pandas:
             grid.load_pandas_frame(self.df)
             return grid
 
+        def table(self, **kwargs):
+            headers = list(self.df.columns)
+            table_data = self.df.to_numpy().tolist()
+            table_data.insert(0, headers)
+            return(AutoTable(values=table_data, **kwargs))
+
+
     def read_csv_from_string(csv_string, *args):
         return pd.read_csv(StringIO(csv_string), *args)

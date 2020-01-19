@@ -9,9 +9,10 @@ from html.entities import name2codepoint
 from html import unescape
 from jinja2 import Template
 import asyncio  # https://www.aeracode.org/2018/02/19/python-async-simplified/
-import requests
 from .tailwind import Tailwind
 import logging
+import httpx
+
 
 # Dict to translate from tag to class
 _tag_class_dict = {}
@@ -1162,11 +1163,46 @@ def component_by_tag(tag, **kwargs):
     return c
 
 
+class AutoTable(Table):
+    """
+    Creates an HTML table from a list of lists
+    First list is used as headers
+    """
+    td_classes = 'border px-4 py-2 text-center'
+    tr_even_classes = 'bg-gray-100 '
+    tr_odd_classes = ''
+    th_classes = 'px-4 py-2'
+
+
+    def __init__(self, **kwargs):
+        self.values = []
+        super().__init__(**kwargs)
+
+
+    def react(self,data):
+        self.set_class('table-auto')
+        #First row of values is header
+        if self.values:
+            headers = self.values[0]
+            thead = Thead(a=self)
+            tr = Tr(a=thead)
+            for item in headers:
+                Th(text=item, classes=self.th_classes, a=tr)
+            tbody = Tbody(a=self)
+            for i, row in enumerate(self.values[1:]):
+                if i % 2 == 1:
+                    tr = Tr(classes=self.tr_even_classes, a=tbody)
+                else:
+                    tr = Tr(classes=self.tr_odd_classes, a=tbody)
+                for item in row:
+                    Td(text=item, classes=self.td_classes, a=tr)
+
+
+
 get_tag = component_by_tag
 
 
 class BasicHTMLParser(HTMLParser):
-    # TODO: Deal with label tag parsing (for and form attributes)
 
     # Void elements do not need closing tag
     void_elements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem', 'meta',
@@ -1390,8 +1426,8 @@ else:
 
 
 async def get(url, format='json'):
-    #Wrapper for requests get function to simplify running a sync function in non blocking manner
-    result = await JustPy.loop.run_in_executor(None, requests.get, url)
+    async with httpx.AsyncClient() as client:
+        result = await client.get(url)
     if format == 'json':
         return result.json()
     else:
