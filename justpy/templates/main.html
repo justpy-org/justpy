@@ -46,8 +46,10 @@
 
         socket.addEventListener('message', function (event) {
             msg = JSON.parse(event.data);
+            {% if page_options.debug %}
             console.log('Message received from server ', msg);
             console.log(event);
+            {%endif %}
 
             switch (msg.type) {
                 case 'page_update':
@@ -91,22 +93,22 @@
                     crosshairs = [];
                     for (let i = 0; i < msg.data.length; i++) {
                         const m = msg.data[i];
-                        ind = document.getElementById(m.id.toString()).getAttribute('data-highcharts-chart');
-                        var chart = Highcharts.charts[ind];
-                        var point = chart.series[m.series].data[m.point];
+                        const chart_index = document.getElementById(m.id.toString()).getAttribute('data-highcharts-chart');
+                        const chart = Highcharts.charts[chart_index];
+                        const point = chart.series[m.series].data[m.point];
                         draw_crosshair(chart, chart.series[m.series], point);
                     }
                     break;
                 case 'select_point':
                     for (let i = 0; i < msg.data.length; i++) {
                         const m = msg.data[i];
-                        ind = document.getElementById(m.id.toString()).getAttribute('data-highcharts-chart');
-                        var chart = Highcharts.charts[ind];
+                        const chart_index = document.getElementById(m.id.toString()).getAttribute('data-highcharts-chart');
+                        const chart = Highcharts.charts[chart_index];
                         chart.series[m.series].data[m.point].select();
                     }
                     break;
                 case 'tooltip_update':
-                    //https://github.com/highcharts/highcharts/issues/6824
+                    // https://github.com/highcharts/highcharts/issues/6824
                     var chart_on = cached_graph_def['chart' + msg.id];
 
                     if (chart_on.options.tooltip.split) {
@@ -133,7 +135,9 @@
                     break;
             }
         });
-    } else {
+    }
+    // No websockets
+    else {
         window.addEventListener('beforeunload', function (event) {
             e = {
                 'event_type': 'beforeunload',
@@ -179,7 +183,6 @@
 
     {% if page_options.reload_interval %}
         setInterval(function () {
-            //d = JSON.stringify({'type': 'event'  ,'event_data': e});
             $.ajax({
                 type: "POST",
                 url: "/zzz_justpy_ajax",
@@ -188,7 +191,6 @@
                     'event_data': {'event_type': 'page_update', 'page_id': {{ page_id | safe }}}
                 }),
                 success: function (msg) {
-                    console.log("Ajax based on reload_interval was performed.");
                     if (msg) app1.justpyComponents = msg.data;
                 },
                 dataType: 'json'

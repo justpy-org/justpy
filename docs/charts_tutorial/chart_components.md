@@ -10,7 +10,7 @@ import justpy as jp
 
 class MyPie(jp.HighCharts):
 
-    _s1 = """
+    _options = """
 {
     chart: {
         type: 'pie'
@@ -36,10 +36,9 @@ class MyPie(jp.HighCharts):
     """
 
     def __init__(self, data, **kwargs):
-        labels = []
+        self.labels = []
         super().__init__(**kwargs)
-        chart = self
-        chart.load_json(self._s1)
+        self.load_json(self._options)
         pie_series = jp.Dict()
         pie_series.data = []
         for i, value in enumerate(data):
@@ -50,7 +49,7 @@ class MyPie(jp.HighCharts):
                 c.name = str(value)
             c.y = value
             pie_series.data.append(c)
-        chart.options.series.append(pie_series)
+        self.options.series.append(pie_series)
 
 
 def pie_test(request):
@@ -61,9 +60,10 @@ def pie_test(request):
     return wp
 
 jp.justpy(pie_test)
+
 ```
 
-Since the constructor of the class returns a chart instance, it can be further modified by changing its options. In the example above we change the chart title and the name of the series.
+The chart instance that is created can be further modified by changing its options. In the example above we change the chart title and the name of the series.
 
 ## Histogram Component
 
@@ -78,7 +78,7 @@ import numpy
 
 class Histogram(jp.HighCharts):
 
-    _s1 = """
+    _options = """
 {
     title: {
         text: 'Highcharts Histogram'
@@ -121,9 +121,8 @@ class Histogram(jp.HighCharts):
 
     def __init__(self, data, **kwargs):
         super().__init__(**kwargs)
-        chart = self
-        chart.load_json(self._s1)
-        chart.options.series[1].data = list(data)
+        self.load_json(self._options)
+        self.options.series[1].data = list(data)
 
 def histogram_test(request):
     wp = jp.WebPage()
@@ -138,11 +137,12 @@ def histogram_test(request):
     return wp
 
 jp.justpy(histogram_test)
+
  ```
 
-The Histogram class is quite simple and relies on a [chart definition](https://www.highcharts.com/docs/chart-and-series-types/histogram-series) from the Highcharts documentation.
+The Histogram class relies on a [chart definition](https://www.highcharts.com/docs/chart-and-series-types/histogram-series) from the Highcharts documentation.
  
-Encompassing the chart definition in a class simplifies its use. If you build such classes for your favorite charts, please send them to me to include in JustPy. Once the Histogram class (component) is defined, reusing it is simple and does not require remembering the specifics of the Highcharts API. Since the class constructor returns an instance of HighCharts, it can be further modified. In the example above, we change the chart titles after the chart has been created.
+Encompassing the chart definition in a class simplifies its use. If you build such classes for your favorite charts, please send them to me to include in JustPy. Once the Histogram class (component) is defined, reusing it is simple and does not require remembering the specifics of the Highcharts API. The instance of HighCharts can be further modified. In the example above, we change the chart titles after the chart has been created.
 
 ## Scatter with Regression
 

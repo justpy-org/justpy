@@ -88,9 +88,9 @@ function eventHandler(props, event, form_data, aux) {
 
 function send_to_server(e, debug_flag) {
     if (debug_flag) {
-                console.log('Sending message to server:');
-                console.log({'type': 'event', 'event_data': e});
-            }
+        console.log('Sending message to server:');
+        console.log({'type': 'event', 'event_data': e});
+    }
     if (use_websockets) {
         if (websocket_ready) {
 

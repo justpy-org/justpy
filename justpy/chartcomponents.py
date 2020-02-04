@@ -5,7 +5,7 @@ import itertools
 
 #TODO: May need to call chart.reflow() on resize
 #TODO: Handle formatter functions, for example in dataLabels and others.
-#TODO: Add support for events like drilldown
+#TODO: Add support for more events like drilldown
 
 # If width of chart not specified it defaults to 600px
 # A JavaScript date is fundamentally specified as the number of milliseconds that have elapsed since midnight on January 1, 1970, UTC
@@ -24,7 +24,7 @@ class HighCharts(JustpyBaseComponent):
     # but is set at the WebPage level. All charts on same page have the same theme.
     # Example: wp.highcharts_theme = 'grid'
 
-    vue_type = 'chart' # The corresponding Vue component
+    vue_type = 'chart'  # The corresponding Vue component
 
     chart_types = ['columnrange', 'cylinder', 'dependencywheel', 'errorbar', 'funnel', 'funnel3d', 'gauge', 'heatmap',
                    'histogram', 'item', 'line', 'networkgraph', 'organization', 'packedbubble', 'pareto', 'pie',
@@ -89,27 +89,31 @@ class HighCharts(JustpyBaseComponent):
         return True
 
     async def draw_crosshair(self, point_list, websocket):
-        # data is list of of dictionaries  whose keys are:
-        # 'id': the chart id
-        # 'series': the series index
-        # 'point': the point index
-        #  Values are  all integers
-        # Example:
-        # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+        """
+        point_list is list of of dictionaries  whose keys are:
+        'id': the chart id
+        'series': the series index
+        'point': the point index
+        Values are  all integers
+        Example:
+         {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+        """
         await websocket.send_json({'type': 'draw_crosshair', 'data': point_list})
-        # So the page itself does not update, only the tooltip, return True not None
+        # Return True not None so that the page does not update
         return True
 
     async def select_point(self, point_list, websocket):
-        # data is list of of dictionaries  whose keys are:
-        # 'id': the chart id
-        # 'series': the series index
-        # 'point': the point index
-        #  Values are  all integers
-        # Example:
-        # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+        """
+        point_list is list of of dictionaries  whose keys are:
+        'id': the chart id
+        'series': the series index
+        'point': the point index
+        Values are  all integers
+        Example:
+         {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+        """
         await websocket.send_json({'type': 'select_point', 'data': point_list})
-        # So the page itself does not update, only the tooltip, return True not None
+        # Return True not None so that the page does not update
         return True
 
     def add_to_page(self, wp: WebPage):
@@ -122,69 +126,14 @@ class HighCharts(JustpyBaseComponent):
     def react(self, data):
         pass
 
-    def load_json_alternative(self, options_string):
-        self.options = Dict(self.string_to_json(options_string))
-        return self.options
-
-
     def load_json(self, options_string):
         self.options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
         return self.options
-
 
     def load_json_from_file(self, file_name):
         with open(file_name,'r') as f:
             self.options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
         return self.options
-
-    @staticmethod
-    def strip_white_spaces(s):
-        s_list = s.split("'")
-        for i, item in enumerate(s_list):
-            if not i % 2:
-                s_list[i] = re.sub("\s+", "", item)
-        return "'".join(s_list)
-
-    @staticmethod
-    def create_dict_for_colons(s):
-        d = {}
-        handle_flag = True
-        for i, c in enumerate(s):
-            if c == ':':
-                d[i] = handle_flag
-            elif c == '"':
-                handle_flag = not handle_flag
-        return d
-
-    def string_to_json(self, chart_def):
-        s = self.strip_white_spaces(chart_def.replace('\n', ' ').encode("ascii", "ignore").decode('utf-8'))
-        s = s.replace('"', '|||')
-        s = s.replace("'", '"')
-        d = self.create_dict_for_colons(s)
-        ns = []
-        print(s)
-        pos = 0
-        inserted_chars = 0
-        for i, c in enumerate(s):
-            ns.append(c)
-            # if c==':' and s[i-1] not in ['"', "'"]:
-            if c == ':' and d[i]:
-                pos = i
-                # raise error if pos is 0
-                while s[pos] not in [',', '{', '(', '[']:
-                    pos -= 1
-                ns.insert(pos + 1 + inserted_chars, '"')
-                inserted_chars += 1
-                ns.insert(i + inserted_chars, '"')
-                inserted_chars += 1
-        print('The result:')
-        print(ns)
-        print(''.join(ns))
-        result = ''.join(ns).replace('|||', "'")
-        print(result)
-        result = json.loads(result)
-        print(result)
-        return result
 
     def convert_object_to_dict(self):
 
@@ -216,7 +165,7 @@ class HighStock(HighCharts):
 
 class Histogram(HighCharts):
 
-    _s1 = """
+    _options = """
 {
     title: {
         text: 'Highcharts Histogram'
@@ -259,14 +208,13 @@ class Histogram(HighCharts):
 
     def __init__(self, data, **kwargs):
         super().__init__(**kwargs)
-        chart = self
-        chart.load_json(self._s1)
-        chart.options.series[1].data = list(data)
+        self.load_json(self._options)
+        self.options.series[1].data = list(data)
 
 
 class Pie(HighCharts):
 
-    _s1 = """
+    _options = """
             {
                 chart: {
                     title: {
@@ -293,8 +241,7 @@ class Pie(HighCharts):
     def __init__(self, data, **kwargs):
         self.labels = []
         super().__init__(**kwargs)
-        chart = self
-        chart.load_json(self._s1)
+        self.load_json(self._options)
         series = Dict()
         series.type = 'pie'
         series_data = []
@@ -307,11 +254,12 @@ class Pie(HighCharts):
                 c.name = str(value)
             c.y = value
             series_data.append(c)
-        chart.options.series.append(series)
+        self.options.series.append(series)
+
 
 class PieSemiCircle(HighCharts):
 
-    _s1 = """
+    _options = """
             {
                 chart: {
                     plotBackgroundColor: null,
@@ -348,9 +296,9 @@ class PieSemiCircle(HighCharts):
             """
 
     def __init__(self, data, **kwargs):
+        self.labels = []
         super().__init__(**kwargs)
-        chart = self
-        chart.load_json(self._s1)
+        self.load_json(self._options)
         series = Dict()
         series.type = 'pie'
         series.innerSize = '60%'
@@ -364,11 +312,12 @@ class PieSemiCircle(HighCharts):
                 c.name = str(value)
             c.y = value
             series_data.append(c)
-        chart.options.series.append(series)
+        self.options.series.append(series)
 
 
 class Scatter(HighCharts):
-    _s1 = """
+
+    _options = """
     {
     chart: {
         type: 'scatter',
@@ -397,7 +346,7 @@ class Scatter(HighCharts):
 
     def __init__(self, x, y, **kwargs):
         super().__init__(**kwargs)
-        self.load_json(self._s1)
+        self.load_json(self._options)
         s = Dict()
         s.data = list(zip(x,y))
         self.options.series.append(s)
@@ -405,6 +354,7 @@ class Scatter(HighCharts):
 
 # --------------------------------------------------------------------
 # matplotlib related objects
+
 try:
     import matplotlib.pyplot as plt
     _has_matplotlib = True

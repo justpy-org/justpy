@@ -33,11 +33,11 @@ async def click_point(self, msg):
 
 
 async def tooltip_formatter(self, msg):
-    print(msg)
+    # print(msg)
     tooltip_html = f"""
     <div style="color: {msg.color}"><span>&#x25CF;</span> {msg.series_name}</div>
-    <div style="color: {msg.color}">{self.col1}: {msg.x}</div>
-    <div style="color: {msg.color}">{self.col2}: {msg.y}</div>
+    <div style="color: {msg.color}">{self.col2}: {msg.x}</div>
+    <div style="color: {msg.color}">{self.col1}: {msg.y}</div>
     """
     await self.draw_crosshair([{'id': chart_id, 'series': msg.series_index, 'point': msg.point_index} for chart_id in self.chart_list], msg.websocket)
     return await self.tooltip_update(tooltip_html,  msg.websocket)

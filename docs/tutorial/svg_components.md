@@ -75,8 +75,6 @@ jp.justpy(svg_demo)
 
 ## Advanced parse_html example
 
-This problem can be solved using [`name_dict`](tutorial/working_with_html?id=the-name_dict-dictionary) to access specific elements of the SVG definition.
-
 Please run the following program and click on any middle circle. 
 
 ```python
@@ -111,7 +109,7 @@ svg_html = """
 </svg>
 """
 
-def my_click(self, msg):
+def circle_click(self, msg):
     if self.stop.stop_color == 'orange':
         self.stop.stop_color = self.original_color
     else:
@@ -122,11 +120,11 @@ def svg_demo():
     colors = ['pink', 'red', 'blue', 'green', 'teal', 'yellow']
     for color in colors:
         g = jp.parse_html(svg_html.replace('id="myGradient"', f'id="{color}"'), a=wp)
-        gradient = g.name_dict["gradient"]
         g.name_dict["gradient_circle"].original_color = color
+        gradient = g.name_dict["gradient"]
         g.name_dict["gradient_circle"].fill = f'url(#{gradient.id})'
         g.name_dict["gradient_circle"].stop = g.name_dict["stop"]
-        g.name_dict["gradient_circle"].on('click', my_click)
+        g.name_dict["gradient_circle"].on('click', circle_click)
         g.name_dict["stop"].stop_color = color
         g.name_dict["simple_circle"].fill = color
     return wp

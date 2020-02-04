@@ -33,13 +33,14 @@ class JustPy:
 
 
 class WebPage:
-    # TODO: Add page events like online, beforeunload, resize, visibilitychange
+    # TODO: Add page events such as online, beforeunload, resize, visibilitychange
     instances = {}
     sockets = {}
     next_page_id = 0
     use_websockets = True
     delete_flag = True
     tailwind = True
+    debug = False
     highcharts_theme = None
     # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
@@ -57,7 +58,7 @@ class WebPage:
         self.redirect = None
         self.open = None
         self.favicon = None
-        self.components = []  # list  of components on page
+        self.components = []  # list of direct children components on page
         self.css = ''
         self.head_html = ''
         # If html attribute is not empty, sets html of page directly
@@ -76,7 +77,6 @@ class WebPage:
 
     def __len__(self):
         return len(self.components)
-
 
     # def __del__(self):
     #     print(f'Deleted {self}')
@@ -184,13 +184,12 @@ class JustpyBaseComponent(Tailwind):
     needs_deletion = False
 
     def __init__(self, **kwargs):  # c_name=None,
-
-        temp = kwargs.get('temp', JustpyBaseComponent.temp_flag)
-        delete_flag = kwargs.get('delete_flag', JustpyBaseComponent.delete_flag)
+        cls = JustpyBaseComponent
+        temp = kwargs.get('temp', cls.temp_flag)
+        delete_flag = kwargs.get('delete_flag', cls.delete_flag)
         if temp and delete_flag:
             self.id = None
         else:
-            cls = JustpyBaseComponent
             self.id = cls.next_id
             cls.next_id += 1
         self.events = []

@@ -469,9 +469,9 @@ class Hello(Div):
         self.on('click', click)
 ```
 
-Again, JustPy components are Python classes. In our case, `Hello` inherits from `Div` and only changes `Div`'s `__init__` (the class constructor).
+Again, JustPy components are Python classes. In our case, `Hello` inherits from `Div` and only changes `Div`'s `__init__`.
 
-In the constructor we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class `__init__`, in our case the `__init__` of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class constructor after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
+In `__init__` we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class `__init__`, in our case the `__init__` of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class `__init__` after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
 
 ```python
 import justpy as jp
@@ -486,7 +486,7 @@ jp.justpy(hello_test)
 ```
 
 
-Since `counter` is initialized to 100, the components will start counting from 100. The call to the super class constructor takes care of assigning the keyword arguments. If we had put the initialization of `counter` after the call to the super class constructor, the keyword argument would have had no effect.
+Since `counter` is initialized to 100, the components will start counting from 100. The call to the super class `__init__` takes care of assigning the keyword arguments. If we had put the initialization of `counter` after the call to the super class `__init__`, the keyword argument would have had no effect.
  
 Next, in the definition of `Hello`, we set the classes of the component to give it some basic design and we set the text. Then we define the click event handler and assign it to the instance. That's it.
 
@@ -573,9 +573,9 @@ justpy(calculator_test)
 
 First let's look at the function `calculator_test`. This function creates a WebPage and adds ten instances of the Calculator component to it. Try changing the number of calculators on the page by changing the argument to range. Once a JustPy component has been defined, it is simple to reuse it. The Calculator component can be used now in multiple projects.
 
-JustPy components are Python classes. The Calculator component is therefore a Python class. The Calculator class inherits from Div so Calculator is endowed from the start will all the features and capabilities of the Div component. These features are used in  `__init__`, the class constructor, in order to add the other components needed to implement the calculator.
+JustPy components are Python classes. The Calculator component is therefore a Python class. The Calculator class inherits from Div so Calculator is endowed from the start will all the features and capabilities of the Div component. These features are used in  `__init__`, in order to add the other components needed to implement the calculator.
 
-The class constructor first calls the class constructor of the super class (in this case Div). If a class inherits from another JustPy component, you must run the `__init__` of the super class. It then sets the value attribute to 0 and adds two Input components, one for the tape and one for the result. The two Inputs are assigned to instance attributes for future reference and added to self (which is a Div and therefore other components can be added to it). The Inputs are also designated readonly so that the user cannot type in them.
+The class `__init__` first calls the class `__init__` of the super class (in this case Div). If a class inherits from another JustPy component, you must run the `__init__` of the super class. It then sets the value attribute to 0 and adds two Input components, one for the tape and one for the result. The two Inputs are assigned to instance attributes for future reference and added to self (which is a Div and therefore other components can be added to it). The Inputs are also designated readonly so that the user cannot type in them.
 
 After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, `self.calculator_click` which is a static method of the Calculator class (we could have defined the event handler inside the `__init__ `function instead). We also assign to the button `calc` attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.
 

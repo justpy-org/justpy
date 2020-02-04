@@ -1,6 +1,8 @@
 # Tooltips
 
-The tooltip is the popup that is shown when you hover over a point on the chart. It is one of the advantages of using interactive charts as it makes the chart more informative.
+## Basic Use
+
+The tooltip is the popup that is shown when you hover over a point on the chart. It provides one of the advantages of using interactive charts as it makes the chart more informative.
 
 Highcharts allows defining a tooltip using a very versatile formatting function (in JavaScript). JustPy allows writing tooltip formatters for Highcharts charts in Python just like any other event handler. Let's look at a concrete example.
 
@@ -70,7 +72,7 @@ chart2.tooltip_debounce = 500  # Assign value of debounce period in ms
 
 So far, the tooltip we return for all points is the same. That is not very interesting. We would like the tooltip to be much more descriptive.
 
-The second argumnet to the tooltip formatter (`msg` in our case) has values specific to tooltip events to assist us with this. In addition to the usual fields it contains the fields:
+The second argument to the tooltip formatter (`msg` in our case) has values specific to tooltip events to assist us with this. In addition to the usual fields it contains the fields:
 - `msg.x` - The x coordinate of the point
 - `msg.category` - If the x value is not a number, for example 'Jan' or 'Feb', it will show up here
 - `msg.y` - The y coordinate of the point
@@ -86,7 +88,7 @@ async def tooltip_formatter(self, msg):
     tooltip_html = f"""
     <div style="color: {msg.color};">{msg.series_name}</div>
     <div>{msg.category}</div>
-    <div>x: {msg.x} y: {msg.y}</div>
+    <div>x: {msg.x}, y: {msg.y}</div>
     """
     return await self.tooltip_update(tooltip_html, msg.websocket)
 ```
@@ -96,10 +98,9 @@ We use the Python f-string template like features to create a tooltip that inclu
 There is another way to create the HTML string used to update the tooltip. Try using the following `tooltip_formatter` instead of the one above:
 ```python
 async def tooltip_formatter(self, msg):
-    print(msg)
     d1 = jp.Div(text=msg.series_name, style=f'color: {msg.color};')
     d2 = jp.Div(text=msg.category)
-    d3 = jp.Div(text=f'x: {msg.x} y: {msg.y}')
+    d3 = jp.Div(text=f'x: {msg.x}, y: {msg.y}')
     tooltip_html = d1.to_html() + d2.to_html() + d3.to_html()
     return await self.tooltip_update(tooltip_html, msg.websocket)
 ```
@@ -230,6 +231,8 @@ The lines that make the difference are:
 
 ## Shared and Split Tooltips
 
+### Default Tooltips
+
 Highcharts supports shared and split tooltips in addition to the regular tooltip. To see the difference between the three, run the example below which includes the same chart three times, each time with a different kind of tooltip. This is how the Highcharts default tooltip looks like.
 
 ```python
@@ -300,7 +303,9 @@ def tool_tip_demo():
 jp.justpy(tool_tip_demo)
 ```
 
-We now add three additional charts with custom tooltips to the page. In total, there are now six charts on the page. The first three use the default Highcharts tooltip and the second three use custom tooltips. The first custom tooltip is of type single, the second is of type shared and the third is a split tooltip.
+### Custom Tooltips
+
+In the example below we add three additional charts with custom tooltips to the page. In total, there are now six charts on the page. The first three use the default Highcharts tooltip and the second three use custom tooltips. The first custom tooltip is of type single, the second is of type shared and the third is a split tooltip.
 
 For single and shared tooltip handlers the first argument ofthe  `tooltip_update` is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.
 

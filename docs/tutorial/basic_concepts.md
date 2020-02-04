@@ -114,7 +114,7 @@ jp.justpy(hello_world)
 Run the program above and look at the result in your browser.
  
 !> **Don't forget to terminate the previous program first.**  
-Two JustPy servers cannot run at the same time on one machine.
+Two JustPy servers cannot run at the same time on the same port. 
 
 The P instances are created inside a loop with the loop index being used to give each paragraph some different text and a different font size.
 

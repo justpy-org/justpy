@@ -344,114 +344,86 @@ Div supports some HTML global attributes. Please review the  [Common Attributes]
 
 ### Methods
 
-`def delete(self)`
+`def delete(self)`  
+Remove references to the object from JustPy internal data structures to allow garbage collection.
 
-Remove references to the object from JustPy internal data structures to allow garbage collection
-
-`def on(self, event_type, func)`
-
+`def on(self, event_type, func)`  
 Bind a function to an event
 
-`def remove_event(self, event_type)`
-
+`def remove_event(self, event_type)`  
 Remove and event from the element's allowed events
 
-`def has_event_function(self, event_type)`
-
+`def has_event_function(self, event_type)`  
 Returns `True` if the element has the specified event
 
-`async def update(self)`
-
+`async def update(self)`  
 Updates just the element, not the whole page. The element is updated on all pages specified in the attribute `pages`.
 See [Simple Message Board](tutorial/pushing_data?id=simple-message-board)  
 
-`remove_page_from_pages(self, wp: WebPage)`
-
+`remove_page_from_pages(self, wp: WebPage)`  
 Remove a page from `pages`
 
-`def add_page(self, wp: WebPage)` and `def add_page_to_pages(self, wp: WebPage)`
-
+`def add_page(self, wp: WebPage)` and `def add_page_to_pages(self, wp: WebPage)`  
 Add a page to `pages`
 
-`def set_model(self, value)`
-
+`def set_model(self, value)`  
 Set the model value
 
-`async def run_event_function(self, event_type, event_data, create_namespace_flag=True)`
-
+`async def run_event_function(self, event_type, event_data)`  
 Run an event function
 
-`@staticmethod def convert_dict_to_object(d)`
-
+`@staticmethod def convert_dict_to_object(d)`  
 Takes the dictionary created by `convert_object_to_dict` and returns an object. Can be used to make independent copies of objects.
 
-`def __len__(self)`
-
+`def __len__(self)`  
 `len(c)` returns the number of direct children the element `c` has
 
-`def add_to_page(self, wp: WebPage)`
-
+`def add_to_page(self, wp: WebPage)`  
 Adds the element to a page
 
-`def add_attribute(self, attr, value)`
-
+`def add_attribute(self, attr, value)`  
 Adds an attribute that will be part of the dictionary created by `convert_object_to_dict`
 
-`def add_event(self, event_type)` and  `def add_allowed_event(self, event_type)`
-
+`def add_event(self, event_type)` and  `def add_allowed_event(self, event_type)`  
 Add an allowed event to the element
 
-`def add_scoped_slot(self, slot, c)`
+`def add_scoped_slot(self, slot, c)`  
+Relevant to Quasar and other Vue based frameworks or components.
 
-Relevant to Quasar
-
-`def to_html(self, indent=0, indent_step=0, format=True)`
-
+`def to_html(self, indent=0, indent_step=0, format=True)`  
 Returns an HTML representation of the element
 
-`def react(self, data)`
+`def react(self, data)`  
+Executes just before the element is rendered. It is just `pass` for Div and is meant to be overridden by components that inherit from Div
 
-Executes just before the element is rendered. It is just `pass` for Div
-
-`def convert_object_to_dict(self)`
-
+`def convert_object_to_dict(self)`  
 Converts the element to a dictionary in the format the can be sent to the frontend to be rendered.
 
-
-`def add_component(self, child, position=None, slot=None)`
-
+`def add_component(self, child, position=None, slot=None)`  
 Add a component at the specified position.
 
-`def delete_components(self)`
-
+`def delete_components(self)`  
 Use to empty a container element like Div. Does not delete the `text` attribute
 
-`def add(self, *args)`
-
+`def add(self, *args)`  
 Add all arguments as child elements after the current child elements
 
-`def add_first(self, child)`
-
+`def add_first(self, child)`  
 Add a child element before all other child elements
 
-`def remove_component(self, component)`
-
+`def remove_component(self, component)`  
 Remove a child element
 
-`def get_components(self)`
-
+`def get_components(self)`  
 Get child elements as a list
 
-`def first(self)`
-
+`def first(self)`  
 Get first child element
 
-`def last(self)`
-
+`def last(self)`  
 Get last child element
 
-`def model_update(self)`
-
+`def model_update(self)`  
 Override as necessary
 
 

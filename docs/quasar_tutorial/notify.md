@@ -8,6 +8,7 @@ The following is based on [this](https://quasar.dev/quasar-plugins/notify#positi
 
 ```python
 import justpy as jp
+import datetime
 
 
 page_html = """
@@ -88,6 +89,7 @@ directions = ['top-left', 'top', 'top-right',
 
 def btn_click(self, msg):
     self.notification.notify = True
+    self.notification.caption = f'Time: {datetime.datetime.now().strftime("%H:%M:%S, %Y-%m-%d")}'
 
 def btn_after(self, msg):
     self.notification.notify = False
@@ -99,10 +101,10 @@ def notify_test():
         btn = c.name_dict[direction]
         btn.on('click', btn_click)
         btn.on('after', btn_after)
-        btn.notification = jp.QNotify(message=f'Notification in/on {direction}', a=wp, position=direction,
-                                      closeBtn='Close', caption='Several seconds ago')
+        btn.notification = jp.QNotify(message=f'Notification in/on {direction}', a=wp, position=direction, closeBtn='Close')
     return wp
 
 
 jp.justpy(notify_test)
+
 ```

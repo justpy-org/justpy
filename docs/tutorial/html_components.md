@@ -21,7 +21,7 @@ jp.justpy(html_comps)
 * The [br](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br) HTML tag produces a line break. 
 * The [strong](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong) HTML tag is typically rendered in bold type. 
 
-The JustPy function `get_tag`, creates an instance of a component based on the HTML tag. Its first argument is a string with the tag and the rest of the arguments are the identical optional keyword arguments for the class constructor. The program below is equivalent to the one above:
+The JustPy function `get_tag`, creates an instance of a component based on the HTML tag. Its first argument is a string with the tag and the rest of the arguments are the identical optional keyword arguments for the class `__init__` method. The program below is equivalent to the one above:
 
 ```python
 import justpy as jp

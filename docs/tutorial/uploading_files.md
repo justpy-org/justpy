@@ -129,10 +129,10 @@ class ThumbNail(jp.A):
 
 def pic_submit(self, msg):
     # If directory for session does not exist, create one
-    # The names of the directory is the session_id
+    # The name of the directory is the session_id
     if not os.path.isdir(msg.session_id):
         os.mkdir(msg.session_id)
-    # Find the files in in form_data
+    # Find the element in the form data that contains the file information
     for c in msg.form_data:
         if c.type == 'file':
             break

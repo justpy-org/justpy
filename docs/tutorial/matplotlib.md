@@ -35,7 +35,7 @@ The Matplotlib component is a modified Div component whose `inner_html` attribut
 
 If a matplotlib figure is not specified explicitly when a Matplotlib instance is created (like in the example above), Matplotlib uses the current figure. If you want to put some other figure on the page use the `figure` keyword when creating the instance or use the `set_figure(figure)` method of the component after creation.
 
-!> Don't forget to close matplotlib figures that are not in use. This will not affect any JustPy Matplotlib instances as the SVG representation that was created from the figure is distinct from the figure and will not be erased. 
+!> Don't forget to close matplotlib figures that are not in use. This will not affect any JustPy Matplotlib instances as the SVG representation that was created from the figure is distinct from the figure and will not be deleted. 
 
 In the example below, the first chart created is displayed second and the second chart created is displayed first.
 

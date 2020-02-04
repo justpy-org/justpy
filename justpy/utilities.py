@@ -29,6 +29,9 @@ def print_request(request):
 
 
 def run_task(task):
+    """
+    Helper function to facilitate running a task in the async loop
+    """
     loop = asyncio.get_event_loop()
     loop.create_task(task)
 

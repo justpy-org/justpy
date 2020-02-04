@@ -12,7 +12,7 @@ As there are many Quasar components, I suggest browsing the documentation to see
 
 The name of the Quasar component and the JustPy component is the same. If the Quasar component is called QMenu for example, the corresponding JustPy class is called QMenu also.  
 
-I will be adding examples to this tutorial over time.
+This guide/tutorial is far from complete and I will be adding examples to it over time.
 
 !> Quasar uses its own [classes](https://quasar.dev/style/typography) to style elements on the page, so do not use Tailwind classes on Quasar pages.
 

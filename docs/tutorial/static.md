@@ -29,7 +29,7 @@ You should see the picture on the web page.
 
 If you enter the URL http://127.0.0.1:8000/static/papillon.jpg you will get the picture also.
 
-If want to keep your static resources in a separate directory, the simplest thing to do is to create a subdirectory in the directory your program is in. If you call the directory "my_pictures" for example, and put the image there, you would need to set the `src` attribute of the image to "static/my_pictures/papillon.jpg".
+If want to keep your static resources in a separate directory, the simplest thing to do is to create a subdirectory in the directory your program is in. If you call the directory "my_pictures" for example, and put the image there, you would need to set the `src` attribute of the image to "/static/my_pictures/papillon.jpg".
 
 The line in the code would look like this:
 ```python

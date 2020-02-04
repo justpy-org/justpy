@@ -1,8 +1,10 @@
-# Introduction - Highcharts Tutorial
+# Highcharts Introduction
 
 !> It is recommended to go through the general [tutorial](tutorial/getting_started.md) first. 
 
 JustPy makes it simple to create charts using the [Highcharts](https://www.highcharts.com/) JavaScript charting library.
+
+?> JustPy also supports [matplotlib charts](tutorial/matplotlib.md)
 
 There are several JavaScript charting libraries available, but my personal favorite is Highcharts. It is not too difficult to integrate other charting libraries with JustPy, so perhaps more charting libraries will be supported in the future.
 

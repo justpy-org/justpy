@@ -46,7 +46,7 @@ jp.justpy(grid_test)
 
 The JustPy functionality is added to pandas under the namespace "jp". The `ag_grid` method creates a grid based on the frame's data and returns an instance of AgGrid.
 
-The grid can be further modified after it is constructed:
+The grid can be further modified after it is created:
 
 ```python
 import justpy as jp

@@ -75,10 +75,11 @@ Run the program above. Close, open and reload browser tabs and click the button.
 
 ## Login Example
 
-The example below shows how you could implement a very simple login mechanism. 
+The example below shows how you could implement a very simple login/logout mechanism. 
 
 ```python
 import justpy as jp
+import asyncio
 
 login_form_html = """
 <div class="w-full max-w-xs">
@@ -121,13 +122,22 @@ alert_html = """
 
 users = {}
 
-def login_test(request):
+async def login_test(request):
     wp = jp.WebPage()
     session_id = request.session_id
     if session_id in users:
         if users[session_id]['logged_in']:
             jp.Div(a=wp, text=f'Your session id is: {session_id}', classes='m-1 p-1 text-xl ')
             jp.Div(a=wp, text=f'You are already logged in...', classes='m-1 p-1 text-2l')
+            log_out_btn = jp.Button(text='Logout', classes=jp.Styles.button_bordered + ' m-1 p-1', a=wp)
+            log_out_btn.s_id = session_id
+
+            def log_out(self, msg):
+                users[self.s_id]['logged_in'] = False
+                msg.page.redirect = '/login_test'
+
+            log_out_btn.on('click', log_out)
+
             logged_in = True
         else:
             logged_in = False
@@ -136,48 +146,50 @@ def login_test(request):
         users[session_id]['logged_in'] = False
         logged_in = False
     if not logged_in:
-        return login_page(request)  # Return different page if not logged in
+        return await login_page(request)  # Return different page if not logged in
     return wp
 
 @jp.SetRoute('/login')
-def login_page(request):
+async def login_page(request):
     try:
         if users[request.session_id]['logged_in']:
-            return login_test(request)
+            return await login_test(request)
     except:
         pass
     wp = jp.WebPage()
     wp.display_url = 'login_page'  # Sets the url to display in browser without reloading page
     jp.Div(text='Please login', a=wp, classes='m-2 p-2 w-1/4 text-xl font-semibold')
     login_form = jp.parse_html(login_form_html, a=wp, classes='m-2 p-2 w-1/4')
-    alert = jp.parse_html(alert_html)
-    wp.add(alert)
-    alert.show = False
+    alert = jp.parse_html(alert_html, show=False, a=wp)
     session_div = jp.Div(text='Session goes here', classes='m-1 p-1 text-xl', a=wp)
     sign_in_btn = login_form.name_dict['sign_in_btn']
     sign_in_btn.user_name = login_form.name_dict['user_name']
     sign_in_btn.session_id = request.session_id
     sign_in_btn.alert = alert
 
-    def sign_in_click(self, msg):
+    async def sign_in_click(self, msg):
         if login_form.name_dict['password'].value == 'password':
             session_div.text = request.session_id + ' logged in successfully'
             self.alert.show = False
-            return login_successful(wp, request.session_id)
+            return await login_successful(wp, request.session_id)
         else:
             session_div.text = request.session_id + ' login not successful'
             self.alert.show = True
-    
+
     sign_in_btn.on('click', sign_in_click)
 
     return wp
 
-def login_successful(wp, s_id):
+async def login_successful(wp, s_id):
     wp.delete_components()
     users[s_id]['logged_in'] = True
     wp.display_url = 'login_successful'
     jp.Div(text='Login successful. You are now logged in', classes='m-1 p-1 text-2xl', a=wp)
+    await wp.update()
+    await asyncio.sleep(3)
+    wp.redirect = '/login_test'
 
 
 jp.justpy(login_test)
+
 ```

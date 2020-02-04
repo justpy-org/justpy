@@ -208,59 +208,45 @@ Place the cache content in this attribute
 
 ## Methods
 
-### `add_component(self, child, position=None)`
-
+`add_component(self, child, position=None)`  
 Adds a child component at the specified position. If position is `None` or not specified, adds component as the last child.
 
-### `add(self, *args)`
-
+`add(self, *args)`  
 Adds all arguments as child elements at last position.
 
-### `remove_component(self, component)` or `remove(self, component)`
-
+`remove_component(self, component)` or `remove(self, component)`  
 Removes a component from the page if it is there. If not, raises an exception.
 
-### `get_components(self)`
-
+`get_components(self)`  
 Returns a list of all the elements on the page. 
 
-### `last(self)`
-
+`last(self)`  
 Returns the last element on the page (`self.components[-1]`)
 
-### `__len__(self)`
+`__len__(self)`  
+`len(wp)` returns the number of direct children elements the page has.
 
-`len(wp)` returns the number of direct children elements the page has
+`delete_components(self)`
+Deletes all the components on the page. This calls all the components' `delete` functions. This removes any reference to them from the internal JustPy data structures and allows garbage collection
 
-### `delete_components(self)`
-
-Deletes all the components on the page 
-
-### `remove_page(self)`
-
+`remove_page(self)`  
 Removes the reference to the page for the page directory. If there was no other reference to the page, the Python garbage collector will eventually reclaim the memory used by the page.
 
-### `to_html(self, indent=0, indent_step=0, format=True)`
+`to_html(self, indent=0, indent_step=0, format=True)`  
+Returns an HTML string representing the page. Set `indent_step` to an integer larger than 0 to make output human readable.
 
-Returns an HTML string representing the page. 
-
-### `build_list(self)`
-
+`build_list(self)`  
 This is the method JustPy calls to render the page. This method converts all elements on the page to dictionaries and creates a list with these dictionaries. The result of `build_list` is the input to the Vue app that renders the page in the browser.
 
-### `react(self)`
-
+`react(self)`  
 This method does nothing in the original class. It is is called by `build_list` just before the list is actually built. If you want to preform some action just before the page is rendered, write a new page class that inherits from WebPage and overrides `react`.
 
-### `async def update(self)`
-
+`async def update(self)`  
 This method updates all browser tabs that the page is rendered on.  JustPy keeps track of all the websocket connections to the rendered pages and uses them to update the page.
 
-### `async def delayed_update(self, delay)`
-
+`async def delayed_update(self, delay)`  
 Same as `update` but with a delay. The argument specifies the delay in seconds.
 
-### `on_disconnect(self, websocket=None)`
-
+`on_disconnect(self, websocket=None)`  
 Override if you want to do something special when one of the tabs the page is rendered on closes.
 

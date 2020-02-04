@@ -3,6 +3,8 @@ from .htmlcomponents import _tag_class_dict, parse_dict
 from addict import Dict
 import demjson
 
+# Tested version 1.7.4
+
 quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog']
 
 
@@ -41,7 +43,6 @@ class QDiv(Div):
         # if key in self.__class__.slots:
         if key in self.slots:
             q_slot = key[:key.index('_slot')].replace('_', '-')
-            # self.add_scoped_slot(key[:key.index('_slot')], value)
             self.add_scoped_slot(q_slot, value)
         else:
             self.__dict__[key] = value
@@ -66,7 +67,8 @@ class _QInputBase(Input):
             else:
                 self.__dict__[key] = value
         elif key in self.slots:
-            self.add_scoped_slot(key[:key.index('_')], value)
+            q_slot = key[:key.index('_slot')].replace('_', '-')
+            self.add_scoped_slot(q_slot, value)
         else:
             self.__dict__[key] = value
 
@@ -154,7 +156,8 @@ class QOptionGroup(_QInputBase):
         else:
             self.type = 'radio'
             self.value = kwargs.get('value', '')
-        self.prop_list = ['keep-color', 'type', 'left-label', 'inline', 'value', 'options', 'disable', 'color', 'dark', 'dense']
+        self.prop_list = ['keep-color', 'type', 'left-label', 'inline', 'value', 'options', 'disable',
+                          'size', 'color', 'dark', 'dense']
         self.allowed_events = ['input']
 
 
@@ -326,7 +329,7 @@ class QCheckbox(_QInputBase):
         self.value = kwargs.get('value', False)
         self.prop_list = ['keep-color', 'indeterminate-value', 'toggle-indeterminate', 'tabindex', 'label',
                           'left-label',
-                          'value', 'val', 'true-value', 'false-value', 'disable', 'color', 'dark', 'dense']
+                          'value', 'val', 'true-value', 'false-value', 'disable', 'color', 'dark', 'dense', 'size']
         self.allowed_events = ['input']
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
@@ -342,11 +345,12 @@ class QToggle(_QInputBase):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.debounce = 50
         self.type = 'object'
         self.value = kwargs.get('value', False)
         self.prop_list = ['keep-color', 'icon', 'checked-icon', 'unchecked-icon', 'tabindex',
                           'label', 'left-label', 'value', 'val', 'true-value', 'false-value', 'disable', 'color',
-                          'dark', 'dense']
+                          'dark', 'dense', 'size']
         self.allowed_events = ['input']
 
     def convert_object_to_dict(self):  # Every object needs to redefine this
@@ -1153,7 +1157,7 @@ class QIcon(QDiv):
     def __init__(self, **kwargs):
         # self.size = '1em'
         super().__init__(**kwargs)
-        self.prop_list = ['name', 'color', 'size', 'left', 'right']
+        self.prop_list = ['name', 'color', 'size', 'left', 'right', 'tag']
 
 
 @parse_dict

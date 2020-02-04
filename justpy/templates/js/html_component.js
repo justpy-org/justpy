@@ -26,11 +26,6 @@ Vue.component('html_component', {
             },
             on: {
                 // click: this.eventFunction,
-                // mouseenter: this.eventFunction,
-                // mouseleave: this.eventFunction,
-                // input: this.eventFunction,
-                // change: this.eventFunction,
-                // keyup: this.eventFunction
             },
             directives: [],
             slot: this.jp_props.slot,
@@ -67,7 +62,6 @@ Vue.component('html_component', {
                 event.preventDefault();    //stop form from being submitted
                 event.stopPropagation();
                 var form_elements_list = [];
-                // var formData = new FormData(form_reference);
                 var form_elements = form_reference.elements;
                 var reader = new FileReader();
                 var file_readers = [];

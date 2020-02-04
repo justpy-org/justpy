@@ -126,7 +126,7 @@ def message_demo():
     outer_div = jp.Div(classes='flex flex-col h-screen', a=wp)
     outer_div.add(header)
     d = jp.Div(classes='flex', a=outer_div)
-    message = jp.TextArea(placeholder='Enter message here', a=d, classes=input_classes)
+    message = jp.TextArea(placeholder='Enter message here', a=d, classes=input_classes, debounce=500)
     send_button = jp.Button(a=d, click=send_message, classes=button_classes)
     send_button.add(button_icon, button_text)
     outer_div.add(shared_div)

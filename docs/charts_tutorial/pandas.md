@@ -72,7 +72,7 @@ def women_majors():
     wm_chart = wm.jp.plot(0, wm_under_20, kind='spline', a=wp, categories=False,
                           title='The gender gap is transitory - even for extreme cases',
                           subtitle='Percentage of Bachelors conferred to women form 1970 to 2011 in the US for extreme cases where the percentage was less than 20% in 1970',
-                          classes='m-2 p-2 w-3/4', style='height: 700px')
+                          classes='m-2 p-2 w-3/4 border', style='height: 700px')
     o = wm_chart.options
     o.title.align = 'left'
     o.title.style.fontSize = '24px'

@@ -36,6 +36,7 @@ if _has_pandas:
             else:
                 raise TypeError('Column specification for plotting must be integer or string')
             col = col.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max])
+            # Convert nan to None
             return col.where((pd.notnull(col)), None)
 
         def plot(self, x, y, **kwargs):

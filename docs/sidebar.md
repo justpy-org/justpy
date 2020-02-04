@@ -10,6 +10,7 @@
     - [Parsing and Using HTML](tutorial/working_with_html.md "Parsing and Using HTML")
     - [Pushing Data to Web Pages](tutorial/pushing_data.md "Pushing Data to Web Pages")
     - [Creating Your Own Components](tutorial/custom_components.md "Custom Components")
+    - [The before and after Events](tutorial/before_after_events.md "The before and after Events")
     - [The Request Object](tutorial/request_object.md "The Request Object")
     - [Forms](tutorial/form.md "Forms")
     - [Tailwind](tutorial/tailwind.md "Tailwind")
@@ -19,7 +20,7 @@
     - [Sessions](tutorial/sessions.md "Sessions")
     - [Static Files](tutorial/static.md "Static Files")
     - [Configuration](tutorial/configuration.md "Configuration")
-    - [Downloading and Uploading Files](tutorial/uploading_files.md "Sownloading and Uploading Files")
+    - [Downloading and Uploading Files](tutorial/uploading_files.md "Downloading and Uploading Files")
     - [Deployment](tutorial/deployment.md "Deployment")
 - <span class="section-header" >Highcharts Guide</span>
     - [Introduction - Highcharts](charts_tutorial/introduction.md "Introduction")
@@ -35,7 +36,7 @@
     - [Introduction - ag-Grid](grids_tutorial/introduction.md "Introduction")
     - [Creating Grids](grids_tutorial/creating_grids.md "Creating Grids")
     - [Using Pandas to Create Grids](grids_tutorial/pandas.md "Pandas and Grids")
-    - [Displaying Database Tables and Query Results](grids_tutorial/databases.md "Displaying Database Tables and Query Results")
+    - [Displaying Database Tables and Query Results](grids_tutorial/database.md "Displaying Database Tables and Query Results")
     - [Grid Events](grids_tutorial/grid_events.md "Grid Events")
 - <span class="section-header">Quasar Guide</span>
     - [Introduction - Quasar](quasar_tutorial/introduction.md "Introduction")

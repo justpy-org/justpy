@@ -1,5 +1,5 @@
 from starlette.applications import Starlette
-from starlette.responses import Response
+# from starlette.responses import Response
 from starlette.responses import JSONResponse
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
@@ -23,7 +23,6 @@ from ssl import PROTOCOL_SSLv23
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
 print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
-
 
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
@@ -92,10 +91,11 @@ async def justpy_startup():
 
 
 @app.route("/{path:path}")
+
 class Homepage(HTTPEndpoint):
 
-
     async def get(self, request):
+        # Handle web requests
         session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
         if SESSIONS:
             new_cookie = False
@@ -134,7 +134,7 @@ class Homepage(HTTPEndpoint):
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.head_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
-                        'highcharts_theme': load_page.highcharts_theme,
+                        'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug,
                         'favicon': load_page.favicon if load_page.favicon else FAVICON}
         if load_page.use_cache:
             page_dict = load_page.cache
@@ -152,7 +152,6 @@ class Homepage(HTTPEndpoint):
         if LATENCY:
             await asyncio.sleep(LATENCY/1000)
         return response
-
 
     async def post(self, request):
         # Handles post method. Used in Ajax mode for events when websockets disabled
@@ -179,8 +178,8 @@ class Homepage(HTTPEndpoint):
     async def on_disconnect(self, page_id):
         logging.debug(f'In disconnect Homepage')
         await WebPage.instances[page_id].on_disconnect()  # Run the specific page disconnect function
-        logging.debug(WebPage.instances)
         return JSONResponse(False)
+
 
 @app.websocket_route("/")
 class JustpyEvents(WebSocketEndpoint):
@@ -191,20 +190,17 @@ class JustpyEvents(WebSocketEndpoint):
         await websocket.accept()
         websocket.id = JustpyEvents.socket_id
         websocket.open = True
-        logging.debug(f'Websocket {str(JustpyEvents.socket_id)} connected')
+        logging.debug(f'Websocket {JustpyEvents.socket_id} connected')
         JustpyEvents.socket_id += 1
-        #Send back socket_id for the tooltip event
+        #Send back socket_id to page
         await websocket.send_json({'type': 'websocket_update', 'data': websocket.id})
 
     async def on_receive(self, websocket, data):
         """
-        Routine to accept and act on data received from websocket
-        :param websocket:
-        :param data: Data sent through websocket
-        :return:
+        Method to accept and act on data received from websocket
         """
 
-        logging.debug('%s %s',f'Socket {str(websocket.id)} data received:', data)
+        logging.debug('%s %s',f'Socket {websocket.id} data received:', data)
         data_dict = json.loads(data)
         msg_type = data_dict['type']
         if msg_type == 'connect':
@@ -220,7 +216,6 @@ class JustpyEvents(WebSocketEndpoint):
             await self._event(data_dict)
             return
 
-
     async def on_disconnect(self, websocket, close_code):
         pid = websocket.page_id
         websocket.open = False
@@ -230,13 +225,12 @@ class JustpyEvents(WebSocketEndpoint):
         await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
         if MEMORY_DEBUG:
             print('************************')
-            print(len(JustpyBaseComponent.instances),JustpyBaseComponent.instances)
-            print(len(WebPage.instances),WebPage.instances)
-            print(len(WebPage.sockets), WebPage.sockets)
+            print('Elements: ', len(JustpyBaseComponent.instances), JustpyBaseComponent.instances)
+            print('WebPages: ', len(WebPage.instances), WebPage.instances)
+            print('Sockets: ', len(WebPage.sockets), WebPage.sockets)
             process = psutil.Process(os.getpid())
             print(f'Memory used: {process.memory_info().rss:,}')
             print('************************')
-
 
     async def _connect(self, websocket, data_dict):
         # WebPage.sockets is a dictionary of dictionaries
@@ -249,13 +243,10 @@ class JustpyEvents(WebSocketEndpoint):
         else:
             WebPage.sockets[page_key] = {websocket.id: websocket}
 
-
     async def _event(self, data_dict):
         # com_type 0: websocket, com_type 1: ajax
         await handle_event(data_dict, com_type=0)
         return
-
-
 
 
 async def handle_event(data_dict, com_type=0):
@@ -271,6 +262,7 @@ async def handle_event(data_dict, com_type=0):
     event_data['page'] = p
     if com_type==0:
         event_data['websocket'] = WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
+    # The page_update event is generated by the reload_interval Ajax call
     if event_data['event_type'] == 'page_update':
         build_list = p.build_list()
         return {'type': 'page_update', 'data': build_list}
@@ -297,7 +289,6 @@ async def handle_event(data_dict, com_type=0):
         elif com_type == 1:   # Ajax communication
             build_list = p.build_list()
     try:
-        # after_result = await run_event_function(c, 'after', event_data, True)
         after_result = await c.run_event_function('after', event_data, True)
     except:
         pass
@@ -329,6 +320,7 @@ def justpy(func=None, *, start_server=True, websockets=True, host=HOST, port=POR
             uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL)
 
     return func_to_run
+
 
 def convert_dict_to_object(d):
     obj = globals()[d['class_name']]()

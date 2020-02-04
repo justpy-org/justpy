@@ -91,7 +91,7 @@ A simple way to see which properties are available is to print `msg`. Another wa
 
 In the case of an event being one of `['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']` all the data in the gird after sorting and filtering is put into `msg.data` in CSV format.
 
-!> When working with websockets, the size of each message is limited to 1 MByte after compression when using uvicorn, so if your tables are larger, use Ajax by setting the `websockets` key word argument of the `justpy` command to `False`.
+!> When working with websockets, the size of each message is limited to 1 MByte when using uvicorn, so if your tables are larger, use Ajax by setting the `websockets` key word argument of the `justpy` command to `False`.
 
 
   

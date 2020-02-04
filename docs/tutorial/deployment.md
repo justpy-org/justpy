@@ -1,88 +1,46 @@
 # Deployment
 
-## Introduction
+## Simple Deployment
 
-Deployment can get complicated and contributions to making this easier to explain and do would be appreciated.
-Hosting instructions for other platforms and vendors would be appreciated as well.
+Launch a Linux Virtual Machine on your preferred cloud service.
 
-For reference, the uvicorn deployment instructions can be found [here](https://www.uvicorn.org/deployment/).
+If you are not a superuser, become one. 
 
+Update your machine and install pip3:
 
-## Hosting instructions for a DigitalOcean droplet
-
-Create: Ubuntu 18.04.3 (LTS) x64, Standard plan, $5/month (1Gb/25Gb/1Tb), no block storage authentication with one-time password. Pick a location closest to you or your users.  (If using SSH keys instead of one-time password, follow Digital Ocean's instructions and modify step 2 below accordingly).
-
-Once the email with the IP address and root password is received, ssh into the droplet and follow the prompts to change the root password.
-
-Once in root prompt confirm availability of python3:
 ```
-# python3 --version
-Python 3.6.8
+apt update
+apt install python3-pip
 ```
 
-If the output is “Command ‘python3’ not found…”, then “something went wrong”
 
-Install pip3:
+Follow the [getting started](tutorial/getting_started.md) instructions. This will prepare your VM to run your JustPY program.
+
+Then, set the `HOST` parameter in the configuration file justpy.env to the public IP address of the VM or to '0.0.0.0' (one should work). If you want to use the default port, set the `PORT` parameter to 80 (otherwise port 8000 will be used). In some cloud services only port 80 is supported by default. In some cloud services, if you are not logged in as root by default, you will need to run the program with sudo.
+
+For example you may add the following two lines to justpy.env:
 ```python
-# apt update
-# apt install python3-pip
+HOST = '0.0.0.0'
+PORT = 80
 ```
 
-!> `apt` will want to install/update multiple packages, answer Y
+Alternatively, you can use the `host` and `port` parameter in the `justpy` command.
 
-Clone the repository:
-`# git clone https://github.com/elimintz/TestPy.git`
+Now, point your browser to your VM using the IP address and port and you should be good to go. If your VM is assigned a domain name, you can use that. 
 
-Install the required packages:
+
+## More Complex Deployment
+
+For more complex deployments please look at the [uvicorn deployment instructions](https://www.uvicorn.org/deployment/).
+
+Make sure to set the `start_server` keyword argument of the [`justpy`](reference/justpy.md) command to`False`, so that uvicorn server is not started.
+
+You also need to expose the starlette app to unvicorn. If test.py is your main program file where you import justpy then you need to add the following line to it after importing justpy:
 ```python
-# cd TestPy
-# pip3 install -r requirements.txt
-```
-
-
-Run a JustPy test:
-```python
-# cat > hello.py
 import justpy as jp
-def hello_world():
-    wp = jp.WebPage()
-    p = jp.P(text='Hello World!', a=wp)
-    return wp
-jp.justpy(hello_world, host='<droplet IP address>')
-<Ctrl-D>
-
-# python3 hello.py
+app = jp.app
 ```
 
-Alternatively, instead of specifying the `host` keyword in the `justpy` command, you can create a justpy.env file and insert the line:
-```python
-HOST = '<droplet IP address>' 
-```
-
-Open a browser, navigate to http://<droplet IP address>:8000
+!> The JustPy configuration file is not applicable in this case. You will need to specify the required configuration in the command line or in the Gunicorn configuration file.
 
 
-## Adding HTTPS
-
-It is possible to conduct local HTTPS development and testing using self-issued certificates ([see for example](https://woile.github.io/posts/local-https-development-in-python-with-mkcert/)). Remote browsers don’t like this however, so the instructions below concentrate on using a proper host/domain name and a certificate issued by Let’s Encrypt https://letsencrypt.org/ .
-
-If a new domain name is needed, consider [freenom.com](https://freenom.com) . It provides domains such as .tk, .ml, .ga for free.
-
-Follow [Digital Ocean instructions](https://www.digitalocean.com/docs/networking/dns/how-to/add-domains/) to add a fully qualified domain name (FQDN) to your droplet . Make sure you’re able to invoke your JustPy app with http://<droplet FQDN>:8000 . 
-
-Follow [LetsEncrypt instructions for certbot](https://certbot.eff.org/lets-encrypt/ubuntubionic-other) to create your certificate: 
-
-In the root TestPy directory, create a JustPy config file to specify the paths to the key file and the certificate file. Optionally, change the port setting.
- ```
-# cd TestPy
-# cat > justpy.env
-SSL_KEYFILE="/path/to/letsencrypt/live/<hostname>/privkey.pem"
-SSL_CERTFILE="/home/justpy/letsencrypt/live/<hostname>/cert.pem"
-PORT=8443
-```
- 
-
-Re-run the JustPy test:
-`# python3 hello.py`
-
-Open a browser, navigate to https://<droplet FQDN>:8443
