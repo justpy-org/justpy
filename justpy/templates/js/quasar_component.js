@@ -145,7 +145,6 @@ Vue.component('quasar_component', {
         }),
         defaultEvent: (function (event) {
             this.eventFunction(event, event.type);
-            // this.eventFunction(event.target, event.type);
         }),
         inputEvent: (function (event) {
             if (arguments.length == 1) {
@@ -240,7 +239,6 @@ Vue.component('quasar_component', {
                 event.stopPropagation();
             }
 
-            // if (event != null && event.hasOwnProperty('type')) {
             if (event instanceof Event) {
                 eventHandler(this.$props, event, false);
             } else {

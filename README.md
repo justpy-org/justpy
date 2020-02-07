@@ -6,19 +6,19 @@
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming.  
 
-Unlike other web frameworks, JustPy has no front-end/back-end distinction. All programming is done on the back-end allowing a simpler and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. 
+Unlike other web frameworks, JustPy has no front-end/back-end distinction. All programming is done on the back-end allowing a simpler, more productive, and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. 
 
 In JustPy, elements on the web page are instances of component classes. A component in JustPy is a Python class that allows you to instantiate reusable custom elements whose functionality and design is encapsulated away from the rest of your code. 
 
-Custom components can be created using other components as building blocks. Out of the box, JustPy comes with support for [HTML](tutorial/html_components.md) and [SVG](tutorial/svg_components.md) components as well as more complex components such as [charts](charts_tutorial/introduction.md) and [grids](grids_tutorial/introduction.md).  It also supports most of the components and the functionality of the [Quasar](https://quasar.dev/) library of [Material Design 2.0](https://material.io/) components.
+Custom components can be created using other components as building blocks. Out of the box, JustPy comes with support for [HTML](https://justpy.io/#/tutorial/html_components) and [SVG](https://justpy.io/#/tutorial/svg_components) components as well as more complex components such as [charts](https://justpy.io/#/charts_tutorial/introduction) and [grids](https://justpy.io/#/grids_tutorial/introduction).  It also supports most of the components and the functionality of the [Quasar](https://quasar.dev/) library of [Material Design 2.0](https://material.io/) components.
 
 JustPy encourages creating your own components and reusing them in different projects (and, if applicable, sharing these components with others). 
 
-JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. 
+JustPy supports visualization using [matplotlib](https://justpy.io/#/tutorial/matplotlib) and [Highcharts](https://justpy.io/#/charts_tutorial/introduction).
 
-JustPy supports visualization using [matplotlib](tutorial/matplotlib.md) and [Highcharts](charts_tutorial/introduction.md).
+JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. JustPy comes with a [pandas extension](https://justpy.io/#/charts_tutorial/pandas?id=using-the-pandas-extension) that makes it simple to create interactive charts and grids from pandas data structures.
 
-?> For updates and news please go to the [JustPy Twitter account](https://twitter.com/justpyframework)
+For updates and news please follow the [JustPy Twitter account](https://twitter.com/justpyframework)
 
 ## Hello World!
 
@@ -53,6 +53,8 @@ def hello_world():
 
 jp.justpy(hello_world)
 ```
+
+Many other examples can be found in the [tutorial](https://justpy.io/#/tutorial/getting_started)
 
 ## Under the Hood
 

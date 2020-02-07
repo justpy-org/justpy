@@ -1,6 +1,6 @@
 # The Request Object
 
-JustPy request handlers (functions that handle requests) can receive an optional argument, the request object. JustPy checks if the request handler it needs to run is defined with an argument, and if so, executes the request handler with that argument.
+JustPy request handlers (functions that handle requests) can receive an optional argument, the [request object](https://www.starlette.io/requests/). Whenever JustPy needs to run a request handler, it checks first if it is defined with an argument and if that is the case, JustPy provides the request object as the argument.
 
 ## URL Parameters
 

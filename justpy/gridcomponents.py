@@ -57,7 +57,6 @@ class AgGrid(JustpyBaseComponent):
             self.__dict__[key] = value
 
     def on(self, event_type, func):
-        # Ag-Grid supports many events, so no check is made for allowed events.
         # https://www.ag-grid.com/javascript-grid-events/
         self.allowed_events.append(event_type)
         super().on(event_type, func)

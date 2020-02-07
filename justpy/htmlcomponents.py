@@ -1,6 +1,3 @@
-# https://dev.to/apcelent/deploying-flask-on-aws-lambda-4k42
-# https://serverless.com/framework/    https://www.zappa.io/  two good serverless options
-# Classes for components and the page_object https://qz.com/1408660/the-rise-of-python-as-seen-through-a-decade-of-stack-overflow/
 from types import MethodType
 from addict import Dict
 import json, copy, inspect, sys, re
@@ -8,13 +5,13 @@ from html.parser import HTMLParser, tagfind_tolerant, attrfind_tolerant
 from html.entities import name2codepoint
 from html import unescape
 from jinja2 import Template
-import asyncio  # https://www.aeracode.org/2018/02/19/python-async-simplified/
+import asyncio
 from .tailwind import Tailwind
 import logging
 import httpx
 
 
-# Dict to translate from tag to class
+# Dictionary for translating from tag to class
 _tag_class_dict = {}
 
 
@@ -49,9 +46,8 @@ class WebPage:
     def __init__(self, **kwargs):
         self.page_id = WebPage.next_page_id
         WebPage.next_page_id += 1
-        # self.static = False
         self.cache = None  # Set this attribute if you want to use the cache.
-        self.use_cache = False  # Determines whether the framework uses the cache or not
+        self.use_cache = False  # Determines whether the page uses the cache or not
         self.template_file = 'tailwind.html'
         self.title = 'JustPy'
         self.display_url = None
@@ -77,9 +73,6 @@ class WebPage:
 
     def __len__(self):
         return len(self.components)
-
-    # def __del__(self):
-    #     print(f'Deleted {self}')
 
     def add_component(self, child, position=None):
         if position is None:
@@ -183,7 +176,7 @@ class JustpyBaseComponent(Tailwind):
     delete_flag = True
     needs_deletion = False
 
-    def __init__(self, **kwargs):  # c_name=None,
+    def __init__(self, **kwargs):
         cls = JustpyBaseComponent
         temp = kwargs.get('temp', cls.temp_flag)
         delete_flag = kwargs.get('delete_flag', cls.delete_flag)
@@ -195,16 +188,11 @@ class JustpyBaseComponent(Tailwind):
         self.events = []
         self.allowed_events = []
 
-
-    # def __del__(self):
-    #     print(f'Deleted {self}')
-
     def delete(self):
         if self.needs_deletion:
             if self.delete_flag:
                 JustpyBaseComponent.instances.pop(self.id)
                 self.needs_deletion = False
-
 
     def on(self, event_type, func):
         if event_type in self.allowed_events:
@@ -289,7 +277,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     attributes = []
     html_tag = 'div'
-    vue_type = 'html_component'  # VUE component name
+    vue_type = 'html_component'  # Vue.js component name
 
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
@@ -315,26 +303,25 @@ class HTMLBaseComponent(JustpyBaseComponent):
     # allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
     #                   'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur']
 
-    def __init__(self, **kwargs):  # c_name=None,
-        super().__init__(**kwargs)  # Important, needed to give component a unique id
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.class_name = type(self).__name__
         self.inner_html = ''
         self.animation = False
-        self.pages = {}  # pages the component is on. Not managed by framework.
+        self.pages = {}  # Dictionary of pages the component is on. Not managed by framework.
         self.show = True
         self.focus = False
         self.classes = ''
         self.slot = None
-        self.scoped_slots = {}  # for Quasar and other Vue.js based components
+        self.scoped_slots = {}  # For Quasar and other Vue.js based components
         self.style = ''
         self.directives = []
         self.data = {}
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
                                'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit']
         self.events = []
-        self.event_propagation = True  # Should events be propagated?
-        # self.attributes = type(self).attributes
-        self.prop_list = []  # For components from libraries like quasar. Contains both props and directives
+        self.event_propagation = True  # If True events are propagated
+        self.prop_list = []  # For components from libraries like quasar
 
         self.initialize(**kwargs)
 
@@ -353,7 +340,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
                             cls.next_id += 1
                         fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
                         exec(fn_string)
-                        # self.on(e, locals()[f'oneliner{self.id}'])
                         self.on(e, locals()[f'oneliner{self.id}'])
                     else:
                         self.on(e, fn)
@@ -388,8 +374,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
             self.allowed_events.append(event_type)
 
     def add_allowed_event(self, event_type):
-        if event_type not in self.allowed_events:
-            self.allowed_events.append(event_type)
+        self.add_event(event_type)
 
     def add_scoped_slot(self, slot, c):
         self.scoped_slots[slot] = c
@@ -415,8 +400,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     def convert_object_to_dict(self):
         d = {}
-        # HTMLBaseComponent.attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style',
-        #                   'html_tag', 'tooltip', 'class_name', 'event_propagation', 'inner_html']
         if self.id:
             d['attrs'] = {'id': str(self.id)}
         else:
@@ -435,7 +418,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
                 d['attrs'][i] = getattr(self, i)
             except:
                 pass
-            if i in ['in', 'from']:   #list of attributes that are also python reserved words
+            if i in ['in', 'from']:   # Attributes that are also python reserved words
                 try:
                     d['attrs'][i] = getattr(self, '_' + i)
                 except:
@@ -476,7 +459,6 @@ class Div(HTMLBaseComponent):
                 JustpyBaseComponent.instances.pop(self.id)
             self.components = []
 
-
     def add_component(self, child, position=None, slot=None):
         if slot:
             child.slot = slot
@@ -510,7 +492,7 @@ class Div(HTMLBaseComponent):
         try:
             self.components.remove(component)
         except:
-            raise Exception('Component cannot be removed because it is not contained')
+            raise Exception('Component cannot be removed because it is not contained in element')
         return self
 
     def remove(self, component):
@@ -541,7 +523,6 @@ class Div(HTMLBaseComponent):
             s = f'{s}class="{self.classes}">{ws}'
         else:
             s = f'{s}>{ws}'
-        # Add the text in the beginning if exists, need to test
         if self.inner_html:
             s = f'{s}{self.inner_html}</{self.html_tag}>{ws}'
             return s
@@ -555,7 +536,7 @@ class Div(HTMLBaseComponent):
         return s
 
     def model_update(self):
-        # [wp, 'text-data'] for example
+        # [wp, 'text'] for example
         self.text = str(self.model[0].data[self.model[1]])
 
     def build_list(self):
@@ -582,7 +563,7 @@ class Div(HTMLBaseComponent):
 class Input(Div):
 
     # Edge and Internet explorer do not support the input event for checkboxes and radio buttons. Use change instead
-    # IMPORTANT: Scope of name of radio buttons is the whole page and not the form as is the standard unless form is specified
+    # IMPORTANT: Scope of name of radio buttons is the whole page and not the form unless form is specified
 
     html_tag = 'input'
     attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
@@ -623,7 +604,7 @@ class Input(Div):
             if hasattr(self, 'model'):
                 self.model[0].data[self.model[1]] = msg.checked
         elif msg.input_type == 'radio':
-            # If a radio field, all other radios with same name need to have value changed
+            # If a radio field, all other radio buttons with same name need to have value changed
             # If form is specified, the scope is that form. If not, it is the whole page
             self.checked = True
             if self.form:
@@ -714,7 +695,7 @@ class Form(Div):
             return True
 
         if not self.has_event_function('submit'):
-            # If not event handler is assigned, the front end cannot stop the default page request that happens when a form is submitted
+            # If an event handler is not  assigned, the front end cannot stop the default page request that happens when a form is submitted
             self.on('submit', default_submit)
 
 
@@ -961,7 +942,7 @@ _attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'tar
               'video': ['autoplay', 'controls', 'height', 'loop', 'muted', 'poster', 'preload', 'src', 'width']}
 
 # Name definition for static syntax analysers
-# Classes are defined dynamically below, this is just to assist code editors
+# Classes are defined dynamically right after, this is just to assist code editors
 
 Address = Article = Aside = Footer = Header = H1 = H2 = H3 = H4 = H5 = H6 = Main = Nav = Section = Blockquote = Dd = Dl = Dt = Figcaption = Figure = Hr = Li = Ol = P = Pre = Ul = Abbr = B = Bdi = Bdo = Br = Cite = Code = Data = Dfn = Em = I = Kbd = Mark = Q = Rb = Rp = Rt = Rtc = Ruby = S = Samp = Small = Span = Strong = Sub = Sup = Time = Tt = U = Var = Wbr = Area = Audio = Img = Map = Track = Video = Embed = Iframe = Object = Param = Picture = Source = Del = Ins = Caption = Col = Colgroup = Table = Tbody = Td = Tfoot = Th = Thead = Tr = Button = Fieldset = Legend = Meter = Optgroup = Option = Progress = Details = Summary = None
 Animate = AnimateMotion = AnimateTransform = Circle = ClipPath = Defs = Desc = Discard = Ellipse = FeBlend = FeColorMatrix = FeComponentTransfer = FeComposite = FeConvolveMatrix = FeDiffuseLighting = FeDisplacementMap = FeDistantLight = FeDropShadow = FeFlood = FeFuncA = FeFuncB = FeFuncG = FeFuncR = FeGaussianBlur = FeImage = FeMerge = FeMergeNode = FeMorphology = FeOffset = FePointLight = FeSpecularLighting = FeSpotLight = FeTile = FeTurbulence = Filter = ForeignObject = G = Image = Line = LinearGradient = Marker = Mask = Metadata = Mpath = Path = Pattern = Polygon = Polyline = RadialGradient = Rect = Set = Stop = Svg = Switch = Symbol = Text = TextPath = Tspan = Use = View = None
@@ -1208,25 +1189,23 @@ class BasicHTMLParser(HTMLParser):
                      'param', 'source', 'track', 'wbr']
 
     def __init__(self, **kwargs):
-
         super().__init__()
         self.level = -1
         self.parse_id = 0
         self.start_tag = True
         self.components = []
         self.name_dict = {}  # After parsing holds a dict with named components
-        self.dict_attribute = kwargs.get('dict_attribute','name')
+        self.dict_attribute = kwargs.get('dict_attribute','name')  # Use another attribute than name
         self.root = Div(name='root')
         self.containers = []
         self.containers.append(self.root)
         self.endtag_required = True
-        self.create_commands = kwargs.get('create_commands', True)  # Prefix for commands generated, defaults to 'jp.'
+        self.create_commands = kwargs.get('create_commands', True)  # If True, create the justpy command list
         self.command_prefix = kwargs.get('command_prefix', 'jp.')  # Prefix for commands generated, defaults to 'jp.'
         if self.create_commands:
             self.commands = [f"root = {self.command_prefix}Div()"]  # List of command strings (justpy command to generate the element)
         else:
             self.commands = ''
-        # self.all_temp = kwargs.get('all_temp', True)  # If True, keeps the same id in text instead of generating one
 
     def parse_starttag(self, i):
         # This is the original library method with two changes to stop tags and attributes being lower case
@@ -1292,7 +1271,7 @@ class BasicHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
         self.parse_id += 1
-        c = component_by_tag(tag) #, temp=self.all_temp)
+        c = component_by_tag(tag)
         c.parse_id = self.parse_id
         command_string = f''
         if c is None:
@@ -1312,8 +1291,7 @@ class BasicHTMLParser(HTMLParser):
                 attr[1] = True
             else:
                 setattr(c, attr[0], attr[1])
-            # Add to name to dict of named components. Each entry is a list of components to support multiple components with same name
-            # if attr[0] == 'name':
+            # Add to name to dict of named components. Each entry can be a list of components to allow multiple components with same name
             if attr[0] == self.dict_attribute:
                 if attr[1] not in self.name_dict:
                     self.name_dict[attr[1]] = c
@@ -1324,21 +1302,23 @@ class BasicHTMLParser(HTMLParser):
             if attr[0] == 'class':
                 c.classes = attr[1]
                 attr[0] = 'classes'
+            # Handle attributes that are also python reserved words
             if attr[0] in ['in', 'from']:
-                # list of attributes that are also python reserved words
                 attr[0] = '_' + attr[0]
 
-            if isinstance(attr[1], str):
-                command_string = f"{command_string}{attr[0]}='{attr[1]}', "
+            if self.create_commands:
+                if isinstance(attr[1], str):
+                    command_string = f"{command_string}{attr[0]}='{attr[1]}', "
+                else:
+                    command_string = f'{command_string}{attr[0]}={attr[1]}, '
+
+        if self.create_commands:
+            if id(self.containers[-1]) == id(self.root):
+                command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
             else:
-                command_string = f'{command_string}{attr[0]}={attr[1]}, '
+                command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].parse_id})'
+            self.commands.append(command_string)
 
-        if id(self.containers[-1]) == id(self.root):
-            command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=root)'
-        else:
-            command_string = f'c{c.parse_id} = {self.command_prefix}{c.class_name}({command_string}a=c{self.containers[-1].parse_id})'
-
-        self.commands.append(command_string)
         self.containers[-1].add_component(c)
         self.containers.append(c)
 
@@ -1354,31 +1334,26 @@ class BasicHTMLParser(HTMLParser):
     def handle_data(self, data):
         data = data.strip()
         if data:
-            # print('data: ', data)
             self.containers[-1].text = data
             data = data.replace("'", "\\'")
-            self.commands[-1] = f"{self.commands[-1][:-1]}, text='{data}')"
-
+            if self.create_commands:
+                self.commands[-1] = f"{self.commands[-1][:-1]}, text='{data}')"
         return
 
     def handle_comment(self, data):
         pass
-        # print("Comment  :", data)
 
     def handle_entityref(self, name):
         c = chr(name2codepoint[name])
-        # print("Named ent:", c)
 
     def handle_charref(self, name):
         if name.startswith('x'):
             c = chr(int(name[1:], 16))
         else:
             c = chr(int(name))
-        # print("Num ent  :", c)
 
     def handle_decl(self, data):
         pass
-        # print("Decl     :", data)
 
 
 def justPY_parser(html_string, **kwargs):

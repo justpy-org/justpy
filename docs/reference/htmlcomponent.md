@@ -370,7 +370,7 @@ Add a page to `pages`
 Set the model value
 
 `async def run_event_function(self, event_type, event_data)`  
-Run an event function
+Run an event function. This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handler examples in the tutorial. See example [here](tutorial/custom_components?id=handling-the-change-event)
 
 `@staticmethod def convert_dict_to_object(d)`  
 Takes the dictionary created by `convert_object_to_dict` and returns an object. Can be used to make independent copies of objects.
@@ -424,12 +424,5 @@ Get first child element
 Get last child element
 
 `def model_update(self)`  
-Override as necessary
+Override as necessary. See example [here](tutorial/model_and_data?id=advanced-use-of-the-model-attribute)
 
-
-
-## Input Component
-
-### Attributes
-
-### Methods

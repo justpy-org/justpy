@@ -93,7 +93,6 @@ function send_to_server(e, debug_flag) {
     }
     if (use_websockets) {
         if (websocket_ready) {
-
             socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
         } else {
             setTimeout(function () {

@@ -86,7 +86,7 @@ Vue.component('chart', {
                         }
 
                         if (use_websockets) {
-                            // Wait 100ms before sending tooltip information to server.
+                            // Wait tooltip_timeout_period before sending tooltip information to server.
                             // This allows new tooltip event delete old one if it arrives less than 100ms
                             // after the previous one. Basically, a debouncing of the tooltip event
                             clearTimeout(tooltip_timeout);

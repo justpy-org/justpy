@@ -30,6 +30,9 @@ def html_comps():
     wp = jp.WebPage()
     jp.get_tag('i', text='Text in Italic', a=wp)
     jp.get_tag('br',a=wp)
+    jp.get_tag('br',a=wp)
+    jp.get_tag('br',a=wp)
+    jp.get_tag('br',a=wp)
     jp.get_tag('strong', text='Text in the Strong element', a=wp)
     return wp
 

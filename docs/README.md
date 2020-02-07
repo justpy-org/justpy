@@ -1,15 +1,13 @@
 # JustPy
 ---
 
-?> For updates and news please go to the [JustPy Twitter account](https://twitter.com/justpyframework)
-
 ## Introduction
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming.  
 
-Unlike other web frameworks, JustPy has no front-end/back-end distinction. All programming is done on the back-end allowing a simpler and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. 
+Unlike other web frameworks, JustPy has no front-end/back-end distinction. All programming is done on the back-end allowing a simpler, more productive, and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. 
 
-!> The best way to understand JustPy is to follow the [tutorial](tutorial/getting_started.md). 
+!> The best way to understand JustPy is to follow the [tutorial](tutorial/getting_started.md) in which there are many examples. 
 
 In JustPy, elements on the web page are instances of component classes. A component in JustPy is a Python class that allows you to instantiate reusable custom elements whose functionality and design is encapsulated away from the rest of your code. 
 
@@ -17,9 +15,9 @@ Custom components can be created using other components as building blocks. Out 
 
 JustPy encourages creating your own components and reusing them in different projects (and, if applicable, sharing these components with others). 
 
-JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. 
-
 JustPy supports visualization using [matplotlib](tutorial/matplotlib.md) and [Highcharts](charts_tutorial/introduction.md).
+
+JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. JustPy comes with a [pandas extension](charts_tutorial/pandas?id=using-the-pandas-extension) that makes it simple to create interactive charts and grids from pandas data structures.
 
 Hopefully, JustPy will enable teaching web development in introductory Python courses by reducing the complexity of web development.
 
@@ -67,7 +65,11 @@ JustPy's backend is built using:
 JustPy's frontend (which is transparent to JustPy developers) is built using: 
 * [Vue.js](https://vuejs.org/) - "The Progressive JavaScript Framework"
 
-The way JustPy removes the frontend/backend distinction is by intercepting the relevant events on the frontend and sending them to the backend to be processed. 
+The way JustPy removes the frontend/backend distinction is by intercepting the relevant events on the frontend and sending them to the backend to be processed.
+
+## News and Updates
+
+For news and updates please follow the [JustPy Twitter account](https://twitter.com/justpyframework)
 
 ## License 
 

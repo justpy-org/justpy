@@ -292,7 +292,7 @@ jp.justpy(plot_test)
 In order to handle each chart separately, we create 20 distinct chart elements and assign to the button the list of the chart elements we created and then iterate over the charts in the button's click event handler.
 
 
-## Creating charts with pandas
+## Creating matplotlib charts with pandas
 
 Pandas provides a [visualization layer](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html) over matplotlib. 
 

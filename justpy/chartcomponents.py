@@ -19,8 +19,8 @@ class HighCharts(JustpyBaseComponent):
     # Highcharts.getOptions().colors
     highcharts_colors = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
 
-    #Theme is Ooe of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
-    #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
+    # Theme is One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
+    # 'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
     # but is set at the WebPage level. All charts on same page have the same theme.
     # Example: wp.highcharts_theme = 'grid'
 

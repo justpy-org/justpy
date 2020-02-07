@@ -3,8 +3,6 @@ from .htmlcomponents import _tag_class_dict, parse_dict
 from addict import Dict
 import demjson
 
-# Tested version 1.7.4
-
 quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog']
 
 
@@ -37,10 +35,8 @@ class QDiv(Div):
         super().__init__(**kwargs)
         self.vue_type = 'quasar_component'
         self.directives = quasar_directives
-        # self.attributes.append('key')  # For group transition
 
     def __setattr__(self, key, value):
-        # if key in self.__class__.slots:
         if key in self.slots:
             q_slot = key[:key.index('_slot')].replace('_', '-')
             self.add_scoped_slot(q_slot, value)
@@ -168,7 +164,7 @@ class QOptionGroup(_QInputBase):
         self.value = msg.value
 
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
 
         d = super().convert_object_to_dict()
         d['events'] = ['before', 'input']
@@ -184,7 +180,6 @@ class QBtnToggle(_QInputBase):
     def __init__(self, **kwargs):
         self.options = []
         super().__init__(**kwargs)
-        # Type: radio | checkbox | toggle https://quasar.dev/vue-components/option-group
         self.type = 'object'
         self.value = kwargs.get('value', None)
         self.prop_list = ['spread', 'no-caps', 'no-wrap', 'stack', 'stretch', 'value', 'options', 'readonly', 'disable',
@@ -209,7 +204,7 @@ class QSlider(_QInputBase):
                           'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'label-color', 'dark', 'dense']
         self.allowed_events = ['input', 'change']
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         if self.label_suffix:
             d['attrs']['label-value'] = str(self.value) + self.label_suffix
@@ -236,7 +231,7 @@ class QRange(_QInputBase):
         self.allowed_events = ['input', 'change']
 
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         if self.label_suffix:
             d['attrs']['label-value'] = str(self.value) + self.label_suffix
@@ -246,7 +241,7 @@ class QRange(_QInputBase):
 @parse_dict
 class QRating(_QInputBase):
 
-    slots = []   # Add slots for QTooltTip
+    slots = []
     html_tag = 'q-rating'
 
     def __init__(self, **kwargs):
@@ -299,12 +294,12 @@ class QDate(_QInputBase):
         self.prop_list = ['landscape', 'title', 'subtitle', 'today-btn', 'minimal', 'readonly', 'disable',
                           'color', 'text-color', 'dark', 'event-color', 'value', 'mask', 'locale', 'calendar',
                           'emit-immediately', 'default-year-month', 'default-view',
-                          'events-date', 'options-date', # These are really events and options, need to take care of
+                          'events-date', 'options-date',
                           'first-day-of-week', 'square', 'flat', 'bordered']
         self.allowed_events = ['input']
 
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         try:
             d['attrs']['events'] = self.events_date
@@ -332,7 +327,7 @@ class QCheckbox(_QInputBase):
                           'value', 'val', 'true-value', 'false-value', 'disable', 'color', 'dark', 'dense', 'size']
         self.allowed_events = ['input']
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         return d
 
@@ -353,15 +348,13 @@ class QToggle(_QInputBase):
                           'dark', 'dense', 'size']
         self.allowed_events = ['input']
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         return d
 
 
 @parse_dict
 class QAvatar(QDiv):
-
-    # https://quasar.dev/vue-components/avatar
 
     slots = ['default_slot']
     html_tag = 'q-avatar'
@@ -374,7 +367,6 @@ class QAvatar(QDiv):
 @parse_dict
 class QAjaxBar(QDiv):
 
-    # https://quasar.dev/vue-components/ajax-bar
     slots = []
     html_tag = 'q-ajax-bar'
 
@@ -404,7 +396,6 @@ class QBanner(QDiv):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.prop_list = ['inline-actions', 'dense', 'rounded']
-        # Slots: avatar, action
 
 
 @parse_dict
@@ -443,7 +434,7 @@ class QToolBarTitle(QDiv):
 @parse_dict
 class QBreadcrumbs(QDiv):
 
-    #DOES NOT WORK
+    # DOES NOT WORK
     html_tag = 'q-breadcrumbs'
 
     def __init__(self, **kwargs):
@@ -518,7 +509,6 @@ class QMenu(_QInputBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.type = 'boolean'
-        # self.value = True if self.value else False
         self.value = bool(self.value)
         self.prop_list = ['target', 'context-menu', 'fit', 'no-parent-event', 'touch-position', 'persistent',
                           'auto-close',
@@ -618,7 +608,6 @@ class QSplitter(_QInputBase):
     html_tag = 'q-splitter'
 
     def __init__(self, **kwargs):
-        # self.limits =[10, 90]
         super().__init__(**kwargs)
         self.value = kwargs.get('value', 50.0)
         self.limits = kwargs.get('limits', [0, 100])
@@ -671,7 +660,7 @@ class QChatMessage(QDiv):
                           'name', 'avatar', 'text', 'stamp', 'bg-color', 'text-color', 'size']
 
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
 
         d = super().convert_object_to_dict()
         try:
@@ -704,7 +693,7 @@ class QChip(QDiv):
     def chip_select(self, message):
         self.selected = not self.selected
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
 
         d = super().convert_object_to_dict()
         if self.selected is not None:
@@ -809,7 +798,7 @@ class QTooltip(_QInputBase):
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
-        self.disable_events = True  # For tooltips, events are disabeled by default otherwise input event for every time tooltip shows.
+        self.disable_events = True  # For tooltips, events are disabled by default otherwise input event occurs every time tooltip shows.
         self.type = 'boolean'
         self.value = bool(self.value)
         self.prop_list = ['transition-show', 'transition-hide', 'target', 'delay', 'max-height', 'max-width', 'value',
@@ -1027,7 +1016,6 @@ class QEditor(QInput):
     ]
 
     def __init__(self, **kwargs):
-        # https://quasar.dev/vue-components/editor
         self.kitchen_sink = False
         self.toolbar = QEditor.simple_options
         super().__init__(**kwargs)
@@ -1040,7 +1028,7 @@ class QEditor(QInput):
                           'toolbar-bg', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded']
         self.allowed_events = ['input']
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         self.debounce = 0   # Component has its own debounce mechanism
         if self.kitchen_sink:
             self.toolbar = QEditor.kitchen_sink
@@ -1060,7 +1048,6 @@ class QExpansionItem(_QInputBase):
         super().__init__(**kwargs)
 
         self.type = 'boolean'
-        # self.value = True if self.value else False
         self.value = bool(self.value)
         self.prop_list = ['to', 'exact', 'append', 'replace', 'active-class', 'exact-active-class', 'duration',
                           # 'default-opened',  Do not use, just set value to True: self.value = True
@@ -1072,12 +1059,8 @@ class QExpansionItem(_QInputBase):
                           'header-class']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
 
-    # def before_event_handler(self, msg):
-    #     super().before_event_handler(self, msg)
-    #     self.default_opened = False
-        # pass
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         try:
             if d['attrs']['default-opened']:
@@ -1098,7 +1081,6 @@ class QImg(QDiv):
         super().__init__(**kwargs)
         self.prop_list = ['transition', 'alt', 'basic', 'contain', 'position', 'ratio', 'src', 'srcset', 'sizes',
                           'placeholder-src', 'spinner-color', 'spinner-size']
-        # Scoped slots: loading, error
         # Events: load, error
 
 
@@ -1155,7 +1137,6 @@ class QIcon(QDiv):
     html_tag = 'q-icon'
 
     def __init__(self, **kwargs):
-        # self.size = '1em'
         super().__init__(**kwargs)
         self.prop_list = ['name', 'color', 'size', 'left', 'right', 'tag']
 
@@ -1176,7 +1157,7 @@ class QSpinner(QDiv):
         super().__init__(**kwargs)
         self.prop_list = ['size', 'color', 'thickness']
 
-    def convert_object_to_dict(self):  # Every object needs to redefine this
+    def convert_object_to_dict(self):
         if self.spinner_type in QSpinner.spinner_types:
             self.html_tag = 'q-spinner-' + self.spinner_type
         else:
@@ -1184,9 +1165,6 @@ class QSpinner(QDiv):
         d = super().convert_object_to_dict()
         return d
 
-
-
-# List and list items
 
 @parse_dict
 class QList(QDiv):
@@ -1247,7 +1225,7 @@ class QSlideItem(QDiv):
         self.prop_list = ['left-color', 'right-color']
         self.allowed_events = ['left', 'right', 'action']
 
-    def convert_object_to_dict(self):    # Every object needs to redefine this
+    def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         d['reset'] = self.reset
         return d
@@ -1391,15 +1369,7 @@ class QTree(QDiv):
 
 
     def model_update(self):
-        # update_value = self.model[0].data[self.model[1]]
         pass
-
-
-    def convert_object_to_dict(self):    # Every object needs to redefine this
-        d = super().convert_object_to_dict()
-
-        # self.events = ['update:expanded', 'update:ticked', 'update:selected']
-        return d
 
 
     def __setattr__(self, key, value):
@@ -1488,7 +1458,6 @@ class QTable(QDiv):
 
 
     def model_update(self):
-        # update_value = self.model[0].data[self.model[1]]
         pass
 
 
@@ -1524,14 +1493,12 @@ class QTable(QDiv):
 @parse_dict
 class QLayout(QDiv):
 
-    # To understand the 'view' prop read play with https://quasar.dev/layout-builder
+    # To understand the 'view' prop read https://quasar.dev/layout-builder
 
     slots = ['default_slot']
     html_tag = 'q-layout'
 
     def __init__(self, **kwargs):
-
-
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['view', 'container']
@@ -1595,8 +1562,6 @@ class QPageContainer(QDiv):
     html_tag = 'q-page-container'
 
     def __init__(self, **kwargs):
-
-
         super().__init__(**kwargs)
         self.prop_list = []
 
@@ -1608,8 +1573,6 @@ class QPage(QDiv):
     html_tag = 'q-page'
 
     def __init__(self, **kwargs):
-
-
         super().__init__(**kwargs)
         self.prop_list = ['padding', 'style-fn']
 
@@ -1621,8 +1584,6 @@ class QPageSticky(QDiv):
     html_tag = 'q-page-sticky'
 
     def __init__(self, **kwargs):
-
-
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['expand', 'position', 'offset']
@@ -1635,12 +1596,11 @@ class QPageScroller(QDiv):
     html_tag = 'q-page-scroller'
 
     def __init__(self, **kwargs):
-
         self.duration = 300
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['expand', 'position', 'offset', 'scroll-offset', 'duration']
-        # Required in order not have have the vue update during the scroll
+        # Required in order not have the vue update during the scroll
         self.on('click', self.default_click)
 
     @staticmethod
@@ -1655,7 +1615,6 @@ class QFab(QDiv):
     html_tag = 'q-fab'
 
     def __init__(self, **kwargs):
-
         self.value = False   # Default is to show drawer
         super().__init__(**kwargs)
         # direction on of  up | right | down | left   , type one of  a | submit | button | reset
@@ -1675,7 +1634,6 @@ class QFabAction(QDiv):
     html_tag = 'q-fab-action'
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['icon', 'type', 'to', 'replace', 'disable', 'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
@@ -1690,6 +1648,8 @@ class QSkeleton(QDiv):
         self.type = 'rect'
         self.tag = 'div'
         super().__init__(**kwargs)
+        if not self.animation:
+            self.animation = 'wave'
         self.prop_list = ['tag', 'type', 'dark', 'animation', 'square', 'bordered', 'size', 'width', 'height']
 
 

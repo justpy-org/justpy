@@ -59,7 +59,7 @@ Vue.component('html_component', {
             if (event.type == 'submit') {
                 var form_reference = this.$el;
                 var props = this.$props;
-                event.preventDefault();    //stop form from being submitted
+                event.preventDefault();    //stop form from being submitted in the normal way
                 event.stopPropagation();
                 var form_elements_list = [];
                 var form_elements = form_reference.elements;
