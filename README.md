@@ -1,5 +1,5 @@
 # JustPy
----
+
 [JustPy Docs and Tutorials](https://justpy.io)
 
 ## Introduction
