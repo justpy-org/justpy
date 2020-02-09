@@ -1,7 +1,66 @@
 # Parsing and Using HTML
 
+## Introduction
+
+JustPy provides several way of working directly with HTML. 
+
+If you don't need any events associated with your HTML just set the `inner_html` of a Div instance as described below.
+
+In order to interact with the HTML, you need to use `parse_html` to convert the HTML to JustPy commands that create the appropriate elements. You can then assign event handlers to the elements.
+
+##  The <span style="color: red;">inner_html</span> Attribute
+
+You can set the content of an element by assigning a HTML string to the element's `inner_html` attribute. This is the preferred method if you don't need to interact with the HTML. As a general rule, if you are not using the `name_dict` attribute created by `parse_html`, you probably should use `inner_html` instead.
+
+```python
+import justpy as jp
+
+my_html = """
+    <div>
+    <p class="m-2 p-2 text-red-500 text-xl">Paragraph 1</p>
+    <p class="m-2 p-2 text-blue-500 text-xl">Paragraph 2</p>
+    <p class="m-2 p-2 text-green-500 text-xl">Paragraph 3</p>
+    </div>
+    """
+
+def inner_demo():
+    wp = jp.WebPage()
+    d = jp.Div(a=wp, classes='m-4 p-4 text-3xl')
+    d.inner_html = '<pre>Hello there. \n How are you?</pre>'
+    jp.Div(a=wp, inner_html=my_html)
+    for color in ['red', 'green', 'blue', 'pink', 'yellow', 'teal', 'purple']:
+        jp.Div(a=wp, inner_html=f'<p class="ml-2 text-{color}-500 text-3xl">{color}</p>')
+    return wp
+
+jp.justpy(inner_demo)
+```
+
+!> if you set `inner_html`, it will override any other content of your component. 
+
+## Inserting HTML at the WebPage level
+
+You can inject HTML directly into the page by setting the `html` attribute of a WebPage instance.
+
+```python
+import justpy as jp
+
+def html_demo():
+    wp = jp.WebPage()
+    jp.Div(text='This will not be shown', a=wp)
+    wp.html = '<p class="text-2xl m-2 m-1 text-red-500">Hello world!<p>'
+    jp.Div(text='This will not be shown', a=wp)
+    return wp
+
+jp.justpy(html_demo)
+```
+
+If the `html` attribute is set, all other additions to the page will be ignored.
+
+
 ## The <span style="color: red;">parse_html</span> Function
-Sometimes it is convenient to take regular HTML and convert it to JustPy elements. In order to do so we use the function `parse_html`.
+
+To convert HTML to JustPy elements, use the `parse_html` function.
+
 ```python
 import justpy as jp
 
@@ -31,7 +90,7 @@ The printout shows that `c` is a `Div` component that has 3 child components tha
  
 There are several way to access the child components. For example, in our specific case the first paragraph is the first child of `c` and therefore can be accessed as `c.components[0]`.
 
-## The <span style="color: red;">name_dict</span> dictionary
+### The <span style="color: red;">name_dict</span> dictionary
 
 A more general way to access parsed elements is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. Here is an example:
 
@@ -60,13 +119,11 @@ If you click the second paragraph, its text will change. Notice that we added `n
 
 If more than one element is given the same name in the HTML text, the dictionary value is a list with all the elements with that name.
 
-## Additional parsing function
+### Additional parsing functions
 Along with parse_html there are two additional functions in JustPy to parse HTML: `parse_html_file` parses a file instead of a string and `parse_html_file_async` is a co-routine that does the same asynchronously.  
 
-## Converting to HTML
-Each component in JustPy also supports the `to_html()` method. It returns a string with the HTML representation of the element including all its child elements. You can think of it as the inverse of `parse_html()`.
 
-## The <span style="color: red;">commands</span> attribute
+### The <span style="color: red;">commands</span> attribute
 
 The `commands` attribute is created by `parse_html` and includes a list of the Python commands (represented as strings) needed to create the element in the JustPy framework. 
 
@@ -124,50 +181,23 @@ jp.justpy(commands_demo)
 
 The only change needed to the commands is to add `root` to the page.
 
-##  The <span style="color: red;">inner_html</span> Attribute
+### parse_html limitations
 
-You can set the content of an element by assigning a HTML string to the element's `inner_html` attribute.
+The parser does not handle correctly HTML in which top level text is divided. 
 
-```python
-import justpy as jp
-
-my_html = """
-    <div>
-    <p class="m-2 p-2 text-red-500 text-xl">Paragraph 1</p>
-    <p class="m-2 p-2 text-blue-500 text-xl">Paragraph 2</p>
-    <p class="m-2 p-2 text-green-500 text-xl">Paragraph 3</p>
-    </div>
-    """
-
-def inner_demo():
-    wp = jp.WebPage()
-    d = jp.Div(a=wp, classes='m-4 p-4 text-3xl')
-    d.inner_html = '<pre>Hello there. \n How are you?</pre>'
-    jp.Div(a=wp, inner_html=my_html)
-    for color in ['red', 'green', 'blue', 'pink', 'yellow', 'teal', 'purple']:
-        jp.Div(a=wp, inner_html=f'<p class="ml-2 text-{color}-500 text-3xl">{color}</p>')
-    return wp
-
-jp.justpy(inner_demo)
+The following HTML will not parse correctly:
+```html
+<div> First part of text <span> span text </span> second part of text</div>
 ```
 
-!> if you set `inner_html`, it will override any other content of your component. 
+This is because by design, JustPy has just one `text` attribute per element and so the parser discards the first part.
 
-## Inserting HTML at the WebPage level
-
-You can inject HTML directly into the page by setting the `html` attribute of a WebPage instance.
-
-```python
-import justpy as jp
-
-def html_demo():
-    wp = jp.WebPage()
-    jp.Div(text='This will not be shown', a=wp)
-    wp.html = '<p class="text-2xl m-2 m-1 text-red-500">Hello world!<p>'
-    jp.Div(text='This will not be shown', a=wp)
-    return wp
-
-jp.justpy(html_demo)
+In order to parse the HTML correctly, make each element have undivided text:
+```html
+<div> <span>First part of text</span><span class="ml-1">span text </span> <span class="ml-1">second part of text</span></div>
 ```
 
-If the `html` attribute is set, all other additions to the page will be ignored.
+Now each span has undivided text. The left margin class is required to so that there is a space between the spans. `parse_html` removes all white space before and after the text of the elements.
+
+### Converting to HTML
+Each component in JustPy also supports the `to_html()` method. It returns a string with the HTML representation of the element including all its child elements. You can think of it as the inverse of `parse_html()`.
