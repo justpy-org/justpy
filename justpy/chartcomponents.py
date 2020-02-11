@@ -3,9 +3,10 @@ import demjson
 from addict import Dict
 import itertools
 
-#TODO: May need to call chart.reflow() on resize
-#TODO: Handle formatter functions, for example in dataLabels and others.
-#TODO: Add support for more events like drilldown
+
+# TODO: May need to call chart.reflow() on resize
+# TODO: Handle formatter functions, for example in dataLabels and others.
+# TODO: Add support for more events like drilldown
 
 # If width of chart not specified it defaults to 600px
 # A JavaScript date is fundamentally specified as the number of milliseconds that have elapsed since midnight on January 1, 1970, UTC
@@ -14,10 +15,12 @@ import itertools
 def make_pairs_list(x_data, y_data):
     return list(map(list, itertools.zip_longest(x_data, y_data)))
 
-class HighCharts(JustpyBaseComponent):
 
+class HighCharts(JustpyBaseComponent):
     # Highcharts.getOptions().colors
-    highcharts_colors = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
+
+    highcharts_colors = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f",
+                         "#f45b5b", "#91e8e1"]
 
     # Theme is One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     # 'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
@@ -33,7 +36,7 @@ class HighCharts(JustpyBaseComponent):
                    'vector', 'venn', 'waterfall', 'windbarb', 'wordcloud', 'xrange']
 
     def __init__(self, **kwargs):
-        self.options = Dict()
+        self._options = Dict()
         self.stock = False
         self.use_cache = True
         self.classes = ''
@@ -47,13 +50,16 @@ class HighCharts(JustpyBaseComponent):
         self.tooltip_debounce = 100  # Default is 100 ms
         kwargs['temp'] = False
         super().__init__(**kwargs)
+
         for k, v in kwargs.items():
-            self.__setattr__(k,v)
+            self.__setattr__(k, v)
+
         self.allowed_events = ['tooltip', 'point_click', 'point_select', 'point_unselect', 'series_hide',
                                'series_show', 'series_click']
+
         for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
-                if prefix + e in kwargs.keys():
+                if prefix + e in kwargs:
                     fn = kwargs[prefix + e]
                     if isinstance(fn, str):
                         fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
@@ -62,9 +68,9 @@ class HighCharts(JustpyBaseComponent):
                     else:
                         self.on(e, fn)
                     break
-        if type(self.options) != Dict:
-            self.options = Dict(self.options)
-        if 'series' not in self.options:
+        if not isinstance(self._options, Dict):
+            self._options = Dict(self._options)
+        if 'series' not in self._options:
             self.options.series = []
         for com in ['a', 'add_to']:
             if com in kwargs.keys():
@@ -73,14 +79,16 @@ class HighCharts(JustpyBaseComponent):
     def __repr__(self):
         return f'{self.__class__.__name__}(id: {self.id}, vue_type: {self.vue_type}, chart options: {self.options})'
 
-    def __setattr__(self, key, value):
-        if key == 'options':
-            if isinstance(value, str):
-                self.load_json(value)
-            else:
-                self.__dict__[key] = value
+    @property
+    def options(self):
+        return self._options
+
+    @options.setter
+    def options(self, value):
+        if isinstance(value, str):
+            self.load_json(value)
         else:
-            self.__dict__[key] = value
+            self.options = value
 
 
     async def tooltip_update(self, tooltip, websocket):
@@ -127,44 +135,32 @@ class HighCharts(JustpyBaseComponent):
         pass
 
     def load_json(self, options_string):
-        self.options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
-        return self.options
+        self._options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
+        return self._options
 
     def load_json_from_file(self, file_name):
-        with open(file_name,'r') as f:
-            self.options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
-        return self.options
+        with open(file_name, 'r') as f:
+            self._options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
+        return self._options
 
     def convert_object_to_dict(self):
+        vals = ['vue_type', 'id', 'stock', 'use_cache', 'show', 'classes', 'event_propogation', 'def', 'events',
+                'tooltip_fixed', 'tooltip_x', 'tooltip_y', 'tooltip_debounce']
+        val_mapping = {'options': 'def'}
 
-        d = {}
-        d['vue_type'] = self.vue_type
-        d['id'] = self.id
-        d['stock'] = self.stock
-        d['use_cache'] = self.use_cache
-        d['show'] = self.show
-        d['classes'] = self.classes
-        d['style'] = self.style
-        d['event_propagation'] = self.event_propagation
-        d['def'] = self.options
-        d['events'] = self.events
-        d['tooltip_fixed'] = self.tooltip_fixed
-        d['tooltip_x'] = self.tooltip_x
-        d['tooltip_y'] = self.tooltip_y
-        d['tooltip_debounce'] = self.tooltip_debounce
-        return d
+        return {
+            val_mapping.get(val, val): self.__getattribute__(val) for val in vals
+        }
 
 
 class HighStock(HighCharts):
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.stock = True
 
 
 class Histogram(HighCharts):
-
     _options = """
 {
     title: {
@@ -213,7 +209,6 @@ class Histogram(HighCharts):
 
 
 class Pie(HighCharts):
-
     _options = """
             {
                 chart: {
@@ -258,7 +253,6 @@ class Pie(HighCharts):
 
 
 class PieSemiCircle(HighCharts):
-
     _options = """
             {
                 chart: {
@@ -316,7 +310,6 @@ class PieSemiCircle(HighCharts):
 
 
 class Scatter(HighCharts):
-
     _options = """
     {
     chart: {
@@ -348,7 +341,7 @@ class Scatter(HighCharts):
         super().__init__(**kwargs)
         self.load_json(self._options)
         s = Dict()
-        s.data = list(zip(x,y))
+        s.data = list(zip(x, y))
         self.options.series.append(s)
 
 
@@ -357,6 +350,7 @@ class Scatter(HighCharts):
 
 try:
     import matplotlib.pyplot as plt
+
     _has_matplotlib = True
     import io
 except:
