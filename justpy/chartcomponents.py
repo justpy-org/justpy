@@ -88,7 +88,7 @@ class HighCharts(JustpyBaseComponent):
         if isinstance(value, str):
             self.load_json(value)
         else:
-            self.options = value
+            self._options = value
 
 
     async def tooltip_update(self, tooltip, websocket):
