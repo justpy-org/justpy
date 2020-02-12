@@ -449,7 +449,9 @@ class Div(HTMLBaseComponent):
     def __init__(self, **kwargs):
         self.html_entity = False
         super().__init__(**kwargs)
-        self.components = []
+
+        if 'components' not in kwargs:
+            self.components = []
 
     def delete(self):
         if self.delete_flag:
