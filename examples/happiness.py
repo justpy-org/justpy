@@ -26,8 +26,12 @@ def series_change(self, msg):
                            stacking=msg.page.stacking, temp=True)
     msg.page.c.options = c.options
 
-def corr_button_click(self, msg):
+async def corr_button_click(self, msg):
     msg.page.open = '/corr'
+    await msg.page.update()
+    msg.page.open = ''
+    return True
+
 
 def happiness_plot(request):
     # ['Country', 'Rank', 'Score', 'Unexplained', 'GDP', 'Social_support', 'Health', 'Freedom', 'Generosity', Corruption']
