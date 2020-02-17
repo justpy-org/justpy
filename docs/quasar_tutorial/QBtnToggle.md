@@ -35,6 +35,7 @@ my_chart_def = """
 def button_change(self, msg):
     print(msg)
     self.chart.options.chart.type = self.value
+    self.chart.options.title.text = f'Chart of Type {self.value}'
 
 def button_toggle_test():
     wp = jp.QuasarPage()
@@ -46,5 +47,4 @@ def button_toggle_test():
 
 
 jp.justpy(button_toggle_test)
-
 ```

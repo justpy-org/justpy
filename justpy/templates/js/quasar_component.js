@@ -1,5 +1,6 @@
 // {% raw %}
 var storage_dict = {};
+// var comp_dict = {};  // moved to main.html
 
 Vue.component('quasar_component', {
 
@@ -275,6 +276,10 @@ Vue.component('quasar_component', {
         })
     },
     mounted() {
+        if (this.$props.jp_props.id) {
+            comp_dict[this.$props.jp_props.id] = this.$refs['r' + this.$props.jp_props.id];
+        }
+
         if (this.$props.jp_props.animation) this.animateFunction();
 
         switch (this.$props.jp_props.html_tag) {
@@ -286,10 +291,14 @@ Vue.component('quasar_component', {
                     });
                 }
                 break;
-            case 'q-tree1':
+            case 'q-tree':
+                var tree = comp_dict[this.$props.jp_props.id];
+                // Add attribute expand_at_start
                 if (true) {
                     this.$nextTick(() => {
-                        this.$refs['r' + this.$props.jp_props.id].expandAll();
+                        setTimeout(function () {
+                            tree.expandAll();
+                        }, 200);
                     });
                 }
                 break;

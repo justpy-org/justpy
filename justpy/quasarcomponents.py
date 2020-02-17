@@ -9,10 +9,11 @@ quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-
 class QuasarPage(WebPage):
 
     def __init__(self, **kwargs):
+        self.tailwind = False
         super().__init__(**kwargs)
         self.template_file = 'quasar.html'
         self.quasar = True
-        self.tailwind = False
+
 
     async def set_dark_mode(self, flag):
         try:
@@ -410,7 +411,7 @@ class QBar(QDiv):
 
 
 @parse_dict
-class QToolBar(QDiv):
+class QToolbar(QDiv):
 
     slots = ['default_slot']
     html_tag = 'q-toolbar'
@@ -421,7 +422,7 @@ class QToolBar(QDiv):
 
 
 @parse_dict
-class QToolBarTitle(QDiv):
+class QToolbarTitle(QDiv):
 
     slots = ['default_slot']
     html_tag = 'q-toolbar-title'
@@ -438,8 +439,11 @@ class QBreadcrumbs(QDiv):
     html_tag = 'q-breadcrumbs'
 
     def __init__(self, **kwargs):
+        self.separator = '/'
         super().__init__(**kwargs)
         self.prop_list = ['separator', 'active-color', 'gutter', 'separator-color', 'align']
+        self.separator = 'h'
+        self.separator_color = 'primary'
 
 
 @parse_dict
@@ -1690,4 +1694,36 @@ class ToggleDarkModeBtn(QBtn):
         await msg.page.set_dark_mode(msg.page.dark)
 
 
+class QInputDateTime(QInput):
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        date_slot = QIcon(name='event', classes='cursor-pointer')
+        c2 = QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
+        self.date = QDate(mask='YYYY-MM-DD HH:mm', name='date', a=c2)
+
+        time_slot = QIcon(name='access_time', classes='cursor-pointer')
+        c2 = QPopupProxy(transition_show='scale', transition_hide='scale', a=time_slot)
+        self.time = QTime(mask='YYYY-MM-DD HH:mm', format24h=True, name='time', a=c2)
+
+        self.date.parent = self
+        self.time.parent = self
+        self.date.value = self.value
+        self.time.value = self.value
+        self.prepend_slot = date_slot
+        self.append_slot = time_slot
+        self.date.on('input', self.date_time_change)
+        self.time.on('input', self.date_time_change)
+        self.on('input', self.input_change)
+
+    @staticmethod
+    def date_time_change(self, msg):
+        self.parent.value = self.value
+        self.parent.date.value = self.value
+        self.parent.time.value = self.value
+
+    @staticmethod
+    def input_change(self, msg):
+        self.date.value = self.value
+        self.time.value = self.value

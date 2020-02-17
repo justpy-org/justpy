@@ -39,21 +39,38 @@ Vue.component('editorjp', {
             simplemde.value(this.$props.jp_props.text);
         }
         p.cached_value = simplemde.value();
+        p.change_timeout = '';
+
+        // if (props.jp_props.debounce) {
+        // clearTimeout(props.timeout);
+        // props.timeout = setTimeout(function () {
+        //         send_to_server(e, props.jp_props.debug);
+        //     }
+        //     , props.jp_props.debounce);
+    // } else {
+    //     send_to_server(e, props.jp_props.debug);
+    // }
 
         simplemde.codemirror.on("change", function (event) {
-            p.updated = !p.updated;
-            if (p.updated) {
-                return;
-            }
-            event.type = 'change';
-            event.target = {};
-            event.target.id = p.jp_props.id;
-            event.target.value = simplemde.value();
-            event.currentTarget = {};
-            event.currentTarget.id = p.jp_props.id;
-            event.form_data = false;
-            eventHandler(p, event, false);
+            clearTimeout(p.change_timeout);
+            p.change_timeout = setTimeout(function () {
+
+                p.updated = !p.updated;
+                if (p.updated) {
+                    return;
+                }
+                event.type = 'change';
+                event.target = {};
+                event.target.id = p.jp_props.id;
+                event.target.value = simplemde.value();
+                event.currentTarget = {};
+                event.currentTarget.id = p.jp_props.id;
+                event.form_data = false;
+                eventHandler(p, event, false, simplemde.codemirror.getCursor());
+            }, 200);
         });
+
+
     },
     updated() {
         if (this.$props.jp_props.input_type) {    //this.$props.jp_props.input_type

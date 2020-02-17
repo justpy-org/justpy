@@ -141,7 +141,7 @@ class Homepage(HTTPEndpoint):
         else:
             page_dict = load_page.build_list()
         template_options['tailwind'] = load_page.tailwind
-        context = {'request': request, 'page_id': load_page.page_id, 'justpy_dict': json.dumps(page_dict),
+        context = {'request': request, 'page_id': load_page.page_id, 'justpy_dict': json.dumps(page_dict, default=str),
                    'use_websockets': json.dumps(WebPage.use_websockets), 'options': template_options, 'page_options': page_options,
                    'html': load_page.html}
         response = templates.TemplateResponse(load_page.template_file, context)
@@ -297,7 +297,9 @@ async def handle_event(data_dict, com_type=0):
 
 
 def justpy(func=None, *, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs):
-    global func_to_run, startup_func
+    global func_to_run, startup_func, HOST, PORT
+    HOST = host
+    PORT = port
     if func:
         func_to_run = func
     else:

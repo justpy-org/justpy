@@ -1,53 +1,46 @@
-{%  if not html %}
+{% if not html %}
 
-<!DOCTYPE html>
-<html>
-<head>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        {% include 'favicon.html' %}
 
+        {% if options.tailwind %}
+            <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+            <style>
+                {% include 'css/form.css' %}
+            </style>
+        {% endif %}
 
-    <title>JustPy</title>
-    {% include 'favicon.html' %}
+        <style>
+            {{ page_options.css }}
+        </style>
 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css"/>
 
-    {% if options.tailwind %}
-        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        {% include 'css/form.css' %}
-    </style>
-    {% endif %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"/>
+        <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
-    <style>
-        {{ page_options.css }}
-    </style>
+        {{ page_options.head_html }}
 
+        {% if not html %}
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.18/vue.min.js"></script>
+        {% endif %}
 
+        {% if options.highcharts %}
+            {% include 'highcharts.html' %}
+        {% endif %}
 
-{#    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">#}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css"/>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"/>
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-
-{{ page_options.head_html }}
-
-    {% if not html %}
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.18/vue.min.js"></script>
-    {% endif %}
-
-    {% if options.highcharts %}
-        {% include 'highcharts.html' %}
-    {% endif %}
-
-    {% if options.aggrid %}
-        <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
-    {% endif %}
-</head>
+        {% if options.aggrid %}
+            <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+        {% endif %}
+    </head>
 
 
-<body style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
+    <body style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
 
     <div id="components">
 
@@ -55,9 +48,9 @@
 
     {% include 'main.html' %}
 
-</body>
-</html>
-{% else %}{{ html | safe }}
+    </body>
+    </html>
+    {% else %}{{ html | safe }}
 {% endif %}
 
 

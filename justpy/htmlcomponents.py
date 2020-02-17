@@ -123,12 +123,15 @@ class WebPage:
     def last(self):
         return self.components[-1]
 
-    async def update(self):
+    async def update_old(self, *, built_list=None):
         try:
             websocket_dict = WebPage.sockets[self.page_id]
         except:
             return self
-        component_build = self.build_list()
+        if not built_list:
+            component_build = self.build_list()
+        else:
+            component_build = built_list
         for websocket in list(websocket_dict.values()):
             try:
                 WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build,
@@ -138,6 +141,24 @@ class WebPage:
                                                                                'favicon': self.favicon}}))
             except:
                 print('Problem with websocket in page update, ignoring')
+        return self
+
+
+
+    async def update(self):
+        try:
+            websocket_dict = WebPage.sockets[self.page_id]
+        except:
+            return self
+        page_build = self.build_list()
+        dict_to_send = {'type': 'page_update', 'data': page_build,
+                        'page_options': {'display_url': self.display_url,
+                                         'title': self.title,
+                                         'redirect': self.redirect, 'open': self.open,
+                                         'favicon': self.favicon}}
+
+        await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
+                             return_exceptions=True)
         return self
 
     async def delayed_update(self, delay):
@@ -233,6 +254,13 @@ class JustpyBaseComponent(Tailwind):
                     print('Problem with websocket in component update, ignoring')
         return self
 
+    async def run_method(self, command, websocket):
+        await websocket.send_json({'type': 'run_method', 'data': command, 'id': self.id})
+        # So the page itself does not update, return True not None
+        return True
+
+
+
     def remove_page_from_pages(self, wp: WebPage):
         self.pages.pop(wp.page_id)
 
@@ -283,7 +311,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
     attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'focus',
-                      'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation']
+                      'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation', 'debug']
 
     # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize',
     #                               'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
@@ -306,6 +334,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.class_name = type(self).__name__
+        self.debug = False
         self.inner_html = ''
         self.animation = False
         self.pages = {}  # Dictionary of pages the component is on. Not managed by framework.
@@ -320,6 +349,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
                                'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit']
         self.events = []
+        self.additional_properties = []
         self.event_propagation = True  # If True events are propagated
         self.prop_list = []  # For components from libraries like quasar
 
@@ -437,6 +467,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
         d['scoped_slots'] = {}
         for s in self.scoped_slots:
             d['scoped_slots'][s] = self.scoped_slots[s].convert_object_to_dict()
+        if self.additional_properties:
+            d['additional_properties'] = self.additional_properties
         return d
 
 
@@ -476,6 +508,7 @@ class Div(HTMLBaseComponent):
     def add(self, *args):
         for component in args:
             self.add_component(component)
+        return self
 
     def __add__(self, child):
         self.add_component(child)

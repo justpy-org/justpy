@@ -35,4 +35,87 @@ jp.justpy(date_time_test)
 
 ## Date and Time as QInput slots
 
-Coming soon
+```python
+import justpy as jp
+
+# https://quasar.dev/vue-components/date#With-QInput
+
+def input_test():
+    wp = jp.QuasarPage(data={'date': '2019-02-01 12:44'})
+    in1 = jp.QInput(filled=True, style='width: 400px', a=wp, model=[wp, 'date'], classes="q-pa-md")
+    date_slot = jp.parse_html("""
+    <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy transition-show="rotate" transition-hide="rotate">
+            <q-date mask="YYYY-MM-DD HH:mm" name="date"/>
+          </q-popup-proxy>
+        </q-icon>
+    """)
+    time_slot = jp.parse_html("""
+        <q-icon name="access_time" class="cursor-pointer">
+          <q-popup-proxy transition-show="scale" transition-hide="scale">
+            <q-time mask="YYYY-MM-DD HH:mm" format24h name="time"/>
+          </q-popup-proxy>
+        </q-icon>
+        """)
+    date_slot.name_dict['date'].model = [wp, 'date']
+    time_slot.name_dict['time'].model = [wp, 'date']
+    in1.prepend_slot = date_slot
+    in1.append_slot = time_slot
+    return wp
+
+```
+
+Or you can arrive at the same result by creating a reusable component:
+
+```python
+import justpy as jp
+
+# https://quasar.dev/vue-components/date#With-QInput
+
+class QInputDateTime(jp.QInput):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        date_slot = jp.QIcon(name='event', classes='cursor-pointer')
+        c2 = jp.QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
+        self.date = jp.QDate(mask='YYYY-MM-DD HH:mm', name='date', a=c2)
+
+        time_slot = jp.QIcon(name='access_time', classes='cursor-pointer')
+        c2 = jp.QPopupProxy(transition_show='scale', transition_hide='scale', a=time_slot)
+        self.time = jp.QTime(mask='YYYY-MM-DD HH:mm', format24h=True, name='time', a=c2)
+
+        self.date.parent = self
+        self.time.parent = self
+        self.date.value = self.value
+        self.time.value = self.value
+        self.prepend_slot = date_slot
+        self.append_slot = time_slot
+        self.date.on('input', self.date_time_change)
+        self.time.on('input', self.date_time_change)
+        self.on('input', self.input_change)
+
+    @staticmethod
+    def date_time_change(self, msg):
+        print(self.value)
+        self.parent.value = self.value
+        self.parent.date.value = self.value
+        self.parent.time.value = self.value
+
+    @staticmethod
+    def input_change(self, msg):
+        self.date.value = self.value
+        self.time.value = self.value
+
+
+def input_test():
+    wp = jp.QuasarPage()
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='')
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2020-03-01 12:44')
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2021-04-01 14:44')
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2022-05-01 18:44')
+    return wp
+
+
+jp.justpy(input_test)
+```

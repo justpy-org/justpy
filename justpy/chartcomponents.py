@@ -45,6 +45,8 @@ class HighCharts(JustpyBaseComponent):
         self.tooltip_x = -40
         self.tooltip_y = 40
         self.tooltip_debounce = 100  # Default is 100 ms
+        self.update_animation = True  # Whether to animate changes when chart is updated
+        self.update_create = False    # Whether to create new chart on update, if false current chart is updated
         kwargs['temp'] = False
         super().__init__(**kwargs)
         for k, v in kwargs.items():
@@ -82,6 +84,12 @@ class HighCharts(JustpyBaseComponent):
         else:
             self.__dict__[key] = value
 
+
+    async def chart_update(self, update_dict, websocket):
+        # https://api.highcharts.com/class-reference/Highcharts.Chart#update
+        await websocket.send_json({'type': 'chart_update', 'data': update_dict, 'id': self.id})
+        # So the page itself does not update, only the tooltip, return True not None
+        return True
 
     async def tooltip_update(self, tooltip, websocket):
         await websocket.send_json({'type': 'tooltip_update', 'data': tooltip, 'id': self.id})
@@ -152,6 +160,8 @@ class HighCharts(JustpyBaseComponent):
         d['tooltip_x'] = self.tooltip_x
         d['tooltip_y'] = self.tooltip_y
         d['tooltip_debounce'] = self.tooltip_debounce
+        d['update_animation'] = self.update_animation
+        d['update_create'] = self.update_create
         return d
 
 

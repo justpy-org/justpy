@@ -285,8 +285,15 @@ Vue.component('chart', {
         this.graph_change();
     },
     updated() {
+        const container = this.$props.jp_props.id.toString();
+        const chart = cached_graph_def['chart' + container];
+
         if (!this.$props.jp_props.use_cache || (JSON.stringify(this.$props.jp_props.def) != cached_graph_def[this.$props.jp_props.id])) {
-            this.graph_change();
+            if (this.$props.jp_props.update_create) {
+                this.graph_change();
+            } else {
+                chart.update(this.$props.jp_props.def, true, false, this.$props.jp_props.update_animation);
+            }
         }
     },
     props: {

@@ -23,7 +23,8 @@
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
-
+<script src="https://code.highcharts.com/modules/dumbbell.js"></script>
+<script src="https://code.highcharts.com/modules/lollipop.js"></script>
 <script src="https://code.highcharts.com/modules/sankey.js"></script>
 <script src="https://code.highcharts.com/modules/dependency-wheel.js"></script>
 <script src="https://code.highcharts.com/modules/item-series.js"></script>
@@ -40,6 +41,7 @@
 <script src="https://code.highcharts.com/modules/venn.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script src="https://code.highcharts.com/modules/treemap.js"></script>
+<script src="https://code.highcharts.com/modules/xrange.js"></script>
 
 <script src="http://code.highcharts.com/maps/modules/map.js"></script>
 
@@ -53,7 +55,7 @@
     {% if page_options.highcharts_theme %}
         {% set theme_file = 'highcharts/' + page_options.highcharts_theme + '.js' %}
         {% include theme_file %}
-    {%endif %}
+    {% endif %}
 
 
 </script>

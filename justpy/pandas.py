@@ -78,3 +78,30 @@ if _has_pandas:
 
     def read_csv_from_string(csv_string, *args):
         return pd.read_csv(StringIO(csv_string), *args)
+
+
+    class LinkedChartGrid(Div):
+
+        def __init__(self, df, x, y, **kwargs):
+            super().__init__(**kwargs)
+            self.df = df
+            self.x = x
+            self.y = y
+            self.kind = kwargs.get('kind', 'column')
+            self.stacking = kwargs.get('stacking', '')
+            self.title = kwargs.get('title', '')
+            self.subtitle = kwargs.get('subtitle', '')
+            self.set_classes('flex flex-col')
+            self.chart = df.jp.plot(x, y, a=self, classes='m-2 p-2 border', kind=self.kind, stacking=self.stacking,
+                                    title=self.title, subtitle=self.subtitle)
+            self.grid = df.jp.ag_grid(a=self)
+            self.grid.parent = self
+            for event_name in ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']:
+                self.grid.on(event_name, self.grid_change)
+
+        @staticmethod
+        def grid_change(self, msg):
+            self.parent.df = read_csv_from_string(msg.data)
+            c = self.parent.df.jp.plot(self.parent.x, self.parent.y, kind=self.parent.kind, title=self.parent.title,
+                                       subtitle=self.parent.subtitle, stacking=self.parent.stacking)
+            self.parent.chart.options = c.options

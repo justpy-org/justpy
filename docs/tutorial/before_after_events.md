@@ -4,7 +4,7 @@ Occasionally, you need to do something before an event handler is run, or after 
 
 For example, before the input event handler is run, you would like the value of the Python element to reflect the value of the respective input element on the page. Even if you have not assigned an input handler to that particular element, you may want to update the value anyway so it is available for other event handlers or background tasks.
 
-In fact, this is what happens with QInput elements. Even when they are not assigned an input event handler, they run an event handler for the <span style="color: red">before</span> event to correctly update the value of the element. 
+In fact, this is what happens with Input and QInput elements. Even when they are not assigned an input event handler, they run an event handler for the <span style="color: red">before</span> event to correctly update the value of the element. 
 
 In the example below, a different notification is shown for each button clicked. This is done by setting the `show` attribute of the notification to `True` in the click event handler. Then, the <span style="color: red">after</span> event handler is run, and it sets the `show` attribute back to `False` so that it is not displayed next time the page is updated. 
 

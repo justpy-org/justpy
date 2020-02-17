@@ -5,6 +5,7 @@ var files_chosen = {};
 function eventHandler(props, event, form_data, aux) {
 
     if (props.jp_props.debug) {
+    // if (true) {
         console.log('-------------------------');
         console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
         console.log(event);
@@ -30,6 +31,13 @@ function eventHandler(props, event, form_data, aux) {
         'page_id': page_id,
         'websocket_id': websocket_id
     };
+    if (props.jp_props.additional_properties) {
+        for (let i = 0; i < props.jp_props.additional_properties.length; i++) {
+            e[props.jp_props.additional_properties[i]] = event[props.jp_props.additional_properties[i]];
+            console.log(event[props.jp_props.additional_properties[i]]);
+            console.log(props.jp_props.additional_properties[i]);
+        }
+    }
     if ((event instanceof Event) && (event.target.type == 'file')) {
 
         files_chosen[event.target.id] = event.target.files;

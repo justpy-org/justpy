@@ -153,6 +153,31 @@ When an element is bound to an event, the event name (of type string) is added t
 If an event name is not in `allowed_events`, JustPy will generate an error if you try to bind to that event.
 You can use the `add_event` method to add an allowed event to the list.
 
+#### additional_properties
+ 
+ * Type: `list`
+ * Default: `[]`
+
+JustPy does not pass all the JavaScript event properties by default since in most cases they are not needed. If you need additional properties from the JavasScript event, use the `additional_properties` attribute. In the example below, more fields are added to `msg`.
+
+```python
+import justpy as jp
+
+def my_click(self, msg):
+    print(msg)
+    self.text = 'I was clicked'
+
+def event_demo():
+    wp = jp.WebPage()
+    wp.debug = True
+    d = jp.Div(text='Not clicked yet', a=wp, classes='w-48 text-xl m-2 p-1 bg-blue-500 text-white')
+    d.on('click', my_click)
+    d.additional_properties =['screenX', 'pageY','altKey','which','movementX','button', 'buttons']
+    return wp
+
+jp.justpy(event_demo)
+```
+
 #### inner_html
 
  * Type: `string`

@@ -1063,3 +1063,112 @@ def table_test():
 
 jp.justpy(table_test)
 ``` 
+
+## Quasar QInput Component with Integrated QDate and QTime
+
+
+```python
+import justpy as jp
+
+# https://quasar.dev/vue-components/date#With-QInput
+
+class QInputDateTime(jp.QInput):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        date_slot = jp.QIcon(name='event', classes='cursor-pointer')
+        c2 = jp.QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
+        self.date = jp.QDate(mask='YYYY-MM-DD HH:mm', name='date', a=c2)
+
+        time_slot = jp.QIcon(name='access_time', classes='cursor-pointer')
+        c2 = jp.QPopupProxy(transition_show='scale', transition_hide='scale', a=time_slot)
+        self.time = jp.QTime(mask='YYYY-MM-DD HH:mm', format24h=True, name='time', a=c2)
+
+        self.date.parent = self
+        self.time.parent = self
+        self.date.value = self.value
+        self.time.value = self.value
+        self.prepend_slot = date_slot
+        self.append_slot = time_slot
+        self.date.on('input', self.date_time_change)
+        self.time.on('input', self.date_time_change)
+        self.on('input', self.input_change)
+
+    @staticmethod
+    def date_time_change(self, msg):
+        print(self.value)
+        self.parent.value = self.value
+        self.parent.date.value = self.value
+        self.parent.time.value = self.value
+
+    @staticmethod
+    def input_change(self, msg):
+        self.date.value = self.value
+        self.time.value = self.value
+
+
+def input_test():
+    wp = jp.QuasarPage()
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='')
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2020-03-01 12:44')
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2021-04-01 14:44')
+    QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2022-05-01 18:44')
+    return wp
+
+
+jp.justpy(input_test)
+```
+
+## Component to Link Chart and Grid
+
+Please see [linking charts and grids](grids_tutorial/grid_events?id=linking-a-chart-and-a-grid-using-grid-events) for an explanation.
+
+When you use ag-Grid's filtering and sorting options, the results are not just reflected in the grid, but also in the chart.
+
+
+```python
+import justpy as jp
+import pandas as pd
+
+class LinkedChartGrid(jp.Div):
+
+    def __init__(self, df, x, y, **kwargs):
+        super().__init__(**kwargs)
+        self.df = df
+        self.x = x
+        self.y = y
+        self.kind = kwargs.get('kind', 'column')
+        self.stacking = kwargs.get('stacking', '')
+        self.title = kwargs.get('title', '')
+        self.subtitle = kwargs.get('subtitle', '')
+        self.set_classes('flex flex-col')
+        self.chart = df.jp.plot(x, y, a=self, classes='m-2 p-2 border', kind=self.kind, stacking=self.stacking, title=self.title, subtitle=self.subtitle)
+        self.grid = df.jp.ag_grid(a=self)
+        self.grid.parent = self
+        for event_name in ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']:
+            self.grid.on(event_name, self.grid_change)
+
+
+    @staticmethod
+    def grid_change(self, msg):
+        self.parent.df = jp.read_csv_from_string(msg.data)
+        c = self.parent.df.jp.plot(self.parent.x, self.parent.y, kind=self.parent.kind, title=self.parent.title,
+                                   subtitle=self.parent.subtitle, stacking=self.parent.stacking)
+        self.parent.chart.options = c.options
+
+
+
+alcohol_df = pd.read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv', encoding="ISO-8859-1")
+bad_drivers_df = pd.read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/bad-drivers/bad-drivers.csv', encoding="ISO-8859-1")
+
+
+def grid_test():
+    wp = jp.WebPage()
+    c = LinkedChartGrid(alcohol_df, 0, [1,2,3,4], kind='column', a=wp, classes='m-4 p-2 border',
+                        stacking='normal', title='Alcohol Consumption per Country', subtitle='538 data')
+    LinkedChartGrid(bad_drivers_df, 0, [1,2,3,4,5,6,7], kind='column', a=wp, classes='m-4 p-2 border-4', title='Bad Drivers per US State', subtitle='538 data')
+    return wp
+
+jp.justpy(grid_test)
+```

@@ -6,6 +6,8 @@ In addition, a basic understanding of HTML is required ([HTML - Getting Started]
 
 ?> The examples in this tutorial use [Python f-strings](https://realpython.com/python-f-strings/) which were added in Python 3.6
 
+?> If you have a question about JustPy please open an issue in the [JustPy Github repository](https://github.com/elimintz/justpy) or post a question with the tag `[justpy]` to [stack overflow](https://stackoverflow.com/). I will try to answer promptly.
+
 ## Installation
 
 First, make sure that the version of `python3` you have is 3.6 or higher:
