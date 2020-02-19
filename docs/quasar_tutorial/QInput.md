@@ -32,7 +32,7 @@ def input_test(request):
 jp.justpy(input_test)
 ```
 
-## Using slots
+## Using Slots
 
 ```python
 import justpy as jp
@@ -53,13 +53,13 @@ jp.justpy(input_test)
 
 ```
 
-## Password visibility toggle example
+## Password Visibility Toggle Example
 
 ```python
 import justpy as jp
 
 def input_test(request):
-    wp = jp.QuasarPage(data={'text': ''})
+    wp = jp.QuasarPage()
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
 
@@ -121,7 +121,7 @@ jp.justpy(input_test)
 
 ```
 
-## Input masks
+## Input Masks
 
 
 ```python
@@ -138,3 +138,127 @@ jp.justpy(input_test)
 
 ```
 
+## Input Validation
+
+In the example below, a regular expression is used to validate a field as the user is typing (you of course may use instead any one of the available data validation packages). It uses QInput's `error` and `error_message` props.
+
+```python
+import justpy as jp
+import re
+
+email_regex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+
+def input_change(self, msg):
+    print(self.value)
+    if re.match(email_regex,self.value):
+        self.error = False
+    else:
+        self.error = True
+        self.error_message = 'Enter valid email address'
+        self.bottom_slots = True
+
+
+def input_test():
+    wp = jp.QuasarPage()
+    in1 = jp.QInput(label='Enter email', style='width: 150px; margin: 20px', a=wp, input=input_change)
+    return wp
+
+
+jp.justpy(input_test)
+```
+
+## Yahoo Stock Charts Example
+
+!> You need to install the `pandas-datareader` package to run this example
+
+In the example below we define a component which simplifies entering dates. Click on the calendar icon of the QInput elements to have the a QDate element pop-up.
+
+Using a ticker and the dates provided by the user, data is retrieved from Yahoo and a chart is displayed.
+
+This is also an example of how you would change a Quasar button to the loading state while data is being retrieved. 
+
+```python
+import justpy as jp
+from pandas_datareader import data as pdr
+import datetime
+import functools
+
+epoch = datetime.datetime(1970, 1, 1)
+grouping_units = [['week', [1]], ['month', [1, 2, 3, 4, 6]]]
+
+chart_dict = {
+    'rangeSelector': {'selected': 1},
+    'yAxis': [
+        {'labels': {'align': 'right', 'x': -3}, 'title': {'text': 'OHLC'}, 'height': '60%', 'lineWidth': 2, 'resize': {'enabled': True}},
+        {'labels': {'align': 'right', 'x': -3}, 'title': {'text': 'Volume'}, 'top': '65%', 'height': '35%', 'offset': 0, 'lineWidth': 2}
+    ],
+    'tooltip': {'split': True},
+    'series': [
+        {'type': 'candlestick', 'tooltip': {'valueDecimals': 2}, 'dataGrouping': {'units': grouping_units}},
+        {'type': 'column', 'name': 'Volume', 'yAxis': 1, 'dataGrouping': {'units': grouping_units}}
+    ]
+}
+
+
+class QInputDate(jp.QInput):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        date_slot = jp.QIcon(name='event', classes='cursor-pointer')
+        c2 = jp.QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
+        self.date = jp.QDate(mask='YYYY-MM-DD', name='date', a=c2)
+
+        self.date.parent = self
+        self.date.value = self.value
+        self.append_slot = date_slot
+        self.date.on('input', self.date_time_change)
+        self.on('input', self.input_change)
+        self.proxy = c2
+
+    @staticmethod
+    async def date_time_change(self, msg):
+        self.parent.value = self.value
+        self.parent.date.value = self.value
+        await self.parent.proxy.run_method('hide()', msg.websocket)
+
+    @staticmethod
+    def input_change(self, msg):
+        self.date.value = self.value
+
+
+def convert_date(date_string):
+    date = datetime.datetime.strptime(str(date_string), '%Y-%m-%d')
+    return (date - epoch).total_seconds()*1000
+
+
+async def get_chart(self, msg):
+    self.loading = True
+    await msg.page.update()
+    data = await jp.JustPy.loop.run_in_executor(None, functools.partial(pdr.DataReader, data_source='yahoo', start=self.start_date.value, end=self.end_date.value), self.ticker.value)
+    data['Date'] = data.index.astype(str)
+    chart = jp.HighStock(a=msg.page, classes='q-ma-md', options=chart_dict, style='height: 600px')
+    o = chart.options
+    ticker = self.ticker.value
+    o.title.text = f'{ticker} Historical Prices'
+    x = list(data['Date'].map(convert_date))
+    o.series[0].data = list(zip(x, data['Open'], data['High'], data['Low'], data['Close']))
+    o.series[0].name = ticker
+    o.series[1].data = list(zip(x, data['Volume']))
+    self.loading = False
+
+
+async def stock_test(request):
+    wp = jp.QuasarPage(highcharts_theme='grid')
+    d = jp.Div(classes="q-ma-md q-gutter-md row", a=wp)
+    ticker = jp.QInput(label='Ticker', a=d, value='MSFT')
+    start_date = QInputDate(a=d, label='Start Date', standout=True, value='2007-01-01')
+    end_date = QInputDate(a=d, label='End Date', standout=True, value='2019-12-31')
+    b = jp.QBtn(label='Get Chart', a=d, start_date=start_date, end_date=end_date, ticker=ticker, click=get_chart, loading=False)
+    return wp
+
+
+
+jp.justpy(stock_test)
+
+```

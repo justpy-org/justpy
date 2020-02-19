@@ -76,7 +76,7 @@ class QInputDateTime(jp.QInput):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
+        self.mask = '####-##-## ##:##'
         date_slot = jp.QIcon(name='event', classes='cursor-pointer')
         c2 = jp.QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
         self.date = jp.QDate(mask='YYYY-MM-DD HH:mm', name='date', a=c2)

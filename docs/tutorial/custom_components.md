@@ -1097,7 +1097,6 @@ class QInputDateTime(jp.QInput):
 
     @staticmethod
     def date_time_change(self, msg):
-        print(self.value)
         self.parent.value = self.value
         self.parent.date.value = self.value
         self.parent.time.value = self.value
