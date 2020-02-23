@@ -1,0 +1,10 @@
+addict
+aiofiles
+demjson
+itsdangerous
+Jinja2
+numpy
+pandas
+requests
+starlette
+uvicorn
