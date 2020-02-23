@@ -464,6 +464,7 @@ class QBtn(QDiv):
     html_tag = 'q-btn'
 
     def __init__(self, **kwargs):
+        self.loading = False
         super().__init__(**kwargs)
         self.prop_list = ['ripple', 'type', 'to', 'replace', 'label', 'icon', 'icon-right', 'round', 'outline', 'flat',
                           'unelevated', 'rounded', 'push', 'glossy', 'size', 'fab', 'fab-mini', 'color', 'text-color',
@@ -1698,14 +1699,19 @@ class QInputDateTime(QInput):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.mask = '####-##-## ##:##'
+        self.fill_mask = True
+        self.proxy = {}
 
         date_slot = QIcon(name='event', classes='cursor-pointer')
         c2 = QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
         self.date = QDate(mask='YYYY-MM-DD HH:mm', name='date', a=c2)
+        self.proxy['QDate'] = c2
 
         time_slot = QIcon(name='access_time', classes='cursor-pointer')
         c2 = QPopupProxy(transition_show='scale', transition_hide='scale', a=time_slot)
         self.time = QTime(mask='YYYY-MM-DD HH:mm', format24h=True, name='time', a=c2)
+        self.proxy['QTime'] = c2
 
         self.date.parent = self
         self.time.parent = self
@@ -1718,12 +1724,41 @@ class QInputDateTime(QInput):
         self.on('input', self.input_change)
 
     @staticmethod
-    def date_time_change(self, msg):
+    async def date_time_change(self, msg):
+        print(self.value)
         self.parent.value = self.value
         self.parent.date.value = self.value
         self.parent.time.value = self.value
+        await self.parent.proxy[msg.class_name].run_method('hide()', msg.websocket)
 
     @staticmethod
     def input_change(self, msg):
         self.date.value = self.value
         self.time.value = self.value
+
+
+class QInputDate(QInput):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        date_slot = QIcon(name='event', classes='cursor-pointer')
+        c2 = QPopupProxy(transition_show='scale', transition_hide='scale', a=date_slot)
+        self.date = QDate(mask='YYYY-MM-DD', name='date', a=c2)
+
+        self.date.parent = self
+        self.date.value = self.value
+        self.append_slot = date_slot
+        self.date.on('input', self.date_time_change)
+        self.on('input', self.input_change)
+        self.proxy = c2
+
+    @staticmethod
+    async def date_time_change(self, msg):
+        self.parent.value = self.value
+        self.parent.date.value = self.value
+        await self.parent.proxy.run_method('hide()', msg.websocket)
+
+    @staticmethod
+    def input_change(self, msg):
+        self.date.value = self.value

@@ -57,6 +57,7 @@ class WebPage:
         self.components = []  # list of direct children components on page
         self.css = ''
         self.head_html = ''
+        self.body_html = ''
         # If html attribute is not empty, sets html of page directly
         self.html = ''
         self.body_style = ''
@@ -601,8 +602,9 @@ class Input(Div):
     html_tag = 'input'
     attributes = ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
                   'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
-                  'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
+                  'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
                   'required', 'size', 'src', 'step', 'type', 'value', 'width']
+    
 
     def __init__(self, **kwargs):
 
@@ -954,7 +956,7 @@ _attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'tar
                       'width'],
               'input': ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
                         'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
-                        'max', 'maxlength', 'min', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
+                        'max', 'maxlength', 'min', 'minlength','multiple', 'name', 'pattern', 'placeholder', 'readonly',
                         'required', 'size', 'src', 'step', 'type', 'value', 'width'], 'ins': ['cite', 'datetime'],
               'label': ['for', 'form'], 'li': ['value'],
               'link': ['crossorigin', 'href', 'hreflang', 'media', 'rel', 'sizes', 'type'], 'map': ['name'],

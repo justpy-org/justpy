@@ -5,7 +5,6 @@ var files_chosen = {};
 function eventHandler(props, event, form_data, aux) {
 
     if (props.jp_props.debug) {
-    // if (true) {
         console.log('-------------------------');
         console.log('In eventHandler: ' + event.type + '  ' + props.jp_props.vue_type + '  ' + props.jp_props.class_name);
         console.log(event);
@@ -55,7 +54,6 @@ function eventHandler(props, event, form_data, aux) {
     }
     if (aux) e['aux'] = aux;
     if (event instanceof KeyboardEvent) {
-        // it is a keyboard event!
         // https://developer.mozilla.org/en-US/docs/Web/Events/keydown   keyup, keypress
         e['key_data'] = {
             altKey: event.altKey,

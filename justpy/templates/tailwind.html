@@ -12,9 +12,7 @@
             </style>
         {% endif %}
 
-        <style>
-            {{ page_options.css }}
-        </style>
+
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
@@ -23,7 +21,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"/>
         <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
-        {{ page_options.head_html }}
+        <style>
+            {{ page_options.css }}
+        </style>
+
+        {{ page_options.head_html | safe }}
 
         {% if not html %}
             <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -37,11 +39,15 @@
         {% if options.aggrid %}
             <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
         {% endif %}
+
+        {% if options.aggrid_enterprise %}
+            <script src="https://unpkg.com/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
+        {% endif %}
     </head>
 
 
     <body style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
-
+    {{ page_options.body_html | safe }}
     <div id="components">
 
     </div>

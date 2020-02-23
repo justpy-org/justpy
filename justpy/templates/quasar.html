@@ -4,9 +4,9 @@
 
     {% if options.tailwind %}
         <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        {% include 'css/form.css' %}
-    </style>
+        <style>
+            {% include 'css/form.css' %}
+        </style>
 
     {% endif %}
 
@@ -37,6 +37,10 @@
         <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     {% endif %}
 
+    {% if options.aggrid_enterprise %}
+        <script src="https://unpkg.com/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
+    {% endif %}
+
 </head>
 
 
@@ -44,6 +48,7 @@
 {% if html %}
     {{ html | safe }}
 {% else %}
+    {{ page_options.body_html | safe }}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/quasar@^1.8.5/dist/quasar.umd.min.js"></script>
@@ -55,7 +60,7 @@
     <script>
         console.log('Quasar Version ' + Quasar.version);
         {% if page_options.dark %}
-        Quasar.Dark.set(true);
+            Quasar.Dark.set(true);
         {% endif %}
     </script>
 

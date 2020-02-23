@@ -47,7 +47,7 @@ class HighCharts(JustpyBaseComponent):
         self.tooltip_debounce = 100  # Default is 100 ms
         self.update_animation = True  # Whether to animate changes when chart is updated
         self.update_create = False    # Whether to create new chart on update, if false current chart is updated
-        kwargs['temp'] = False
+        kwargs['temp'] = False  # Force an id to be assigned to chart
         super().__init__(**kwargs)
         for k, v in kwargs.items():
             self.__setattr__(k,v)

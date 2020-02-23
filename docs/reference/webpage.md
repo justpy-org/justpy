@@ -138,16 +138,32 @@ Url to favicon. If `None`, `False` or the empty string, the default favicon is u
 CSS to inject into the page. The string is inserted in style tag in the head of the document.
  
  
-### head_html
+### head_html and body_html
  
  * Type: `string` or `'''`
  * Default: `'''`
  
-A string of any extra HTML to put in the head section of the template. Can be additional JavaScript for example.
+ From version 0.0.7
+ 
+A string of any extra HTML to put in the head section or body section of the template. Can be additional JavaScript for example.
  ```python
 wp.head_html ="""
 <script src="/my_scripts.js"></script>
 """
+```
+
+Simple example:
+```python
+import justpy as jp
+
+def test_head():
+    wp = jp.WebPage()
+    wp.head_html = '<script>console.log("Hello there from head");</script>'
+    wp.body_html = '<script>console.log("Hello there from body");</script>'
+    jp.Div(text='Testing...', a=wp)
+    return wp
+
+jp.justpy(test_head)
 ```
  
 ### html

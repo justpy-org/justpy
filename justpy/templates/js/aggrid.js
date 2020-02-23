@@ -8,6 +8,11 @@ Vue.component('grid', {
         grid_change() {
             var j = JSON.stringify(this.$props.jp_props.def);
             var grid_def = JSON.parse(j);  // Deep copy the grid definition
+            for (let i=0; i < this.$props.jp_props.html_columns.length; i++) {
+                grid_def.columnDefs[this.$props.jp_props.html_columns[i]].cellRenderer = function(params) {
+                            return params.value ? params.value : '';
+                        }
+            }
             cached_grid_def[this.$props.jp_props.id] = j;
             grid_def.onGridReady = grid_ready;
             new agGrid.Grid(document.getElementById(this.$props.jp_props.id.toString()), grid_def);  // the api calls are added to grid_def

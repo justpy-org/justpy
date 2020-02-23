@@ -1,5 +1,4 @@
 from starlette.applications import Starlette
-# from starlette.responses import Response
 from starlette.responses import JSONResponse
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
@@ -54,8 +53,9 @@ TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
 AGGRID = config('AGGRID', cast=bool, default=True)
+AGGRID_ENTERPRISE = config('AGGRID_ENTERPRISE', cast=bool, default=False)
 
-template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID,
+template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
                     'static_name': STATIC_NAME}
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
@@ -132,7 +132,7 @@ class Homepage(HTTPEndpoint):
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
-                        'body_classes': load_page.body_classes, 'css': load_page.css, 'scripts': load_page.head_html,
+                        'body_classes': load_page.body_classes, 'css': load_page.css, 'head_html': load_page.head_html, 'body_html': load_page.body_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
                         'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug,
                         'favicon': load_page.favicon if load_page.favicon else FAVICON}

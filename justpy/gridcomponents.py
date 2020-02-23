@@ -33,6 +33,7 @@ class AgGrid(JustpyBaseComponent):
         self.pages = {}
         self.auto_size = True   # If True, automatically resize columns after load to optimal fit
         self.theme = 'ag-theme-balham'  # one of ag-theme-balham, ag-theme-balham-dark, ag-theme-material
+        self.html_columns = []
         kwargs['temp'] = False
         super().__init__(**kwargs)
         for k, v in kwargs.items():
@@ -105,4 +106,5 @@ class AgGrid(JustpyBaseComponent):
         d['def'] = self.options
         d['auto_size'] = self.auto_size
         d['events'] = self.events
+        d['html_columns'] = self.html_columns
         return d
