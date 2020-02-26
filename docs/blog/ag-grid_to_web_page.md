@@ -1,5 +1,5 @@
 # From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
-
+https://dev.to/elimintz/from-a-pandas-dataframe-to-a-web-site-with-an-ag-grid-in-10-lines-of-python-2a9b
 
 ## Introduction
 
@@ -11,7 +11,7 @@
 
 ## Basic Example
 
-The following program reads a a CSV file into a DataFrame and creates a web application that serves a web page with the ag-Grid:
+The following program reads a a CSV file into a DataFrame and creates a web application that serves a web page with the ag-Grid. The [data](http://www.randalolson.com/2014/06/14/percentage-of-bachelors-degrees-conferred-to-women-by-major-1970-2012/) describes the percentage of bachelor's degrees conferred to women by major in the years 1970-2012.
 
 ```python
 import justpy as jp
@@ -31,7 +31,7 @@ jp.justpy(grid_test)
 
 That is it. That is the whole program. 
 
-To run this program you need to have version 3.6 or higher of Python and you need to install the pandas and justpy packages. Then, you would create a file with your favorite text editor and copy and paste the program above. If you called the file `grid.py` you would type `python3 grid.py` in the command line or you could use an IDE.The program above runs locally and you would access the web page by pointing your browser to http://127.0.0.1:8000
+To run this program you need to have Python version 3.6 or higher and you need to install the pandas and justpy packages. Then, you would create a file with your favorite text editor and copy and paste the program above. If you called the file `grid.py` you would type `python3 grid.py` in the command line or you could use an IDE. By default, you would access the web page by pointing your browser to http://127.0.0.1:8000 (it is easy to change the IP address and port that the application uses if you wish)
 
 For a more detailed explanation on how to get started using JustPy please see [Getting Started](https://justpy.io/#/tutorial/getting_started) from the tutorial.
 
@@ -97,7 +97,7 @@ jp.justpy(grid_test)
 
 ## Routes and Multiple Pages
 
-With JustPy it is simple to serve girds with different data based on the URL the user uses.
+With JustPy it is simple to serve girds with different data based on the URL.
 
 In the example below the URL http://127.0.0.1/wm will serve the full grid while the URL http://127.0.0.1/wm_20 will serve a grid only with the majors in which women started under 20%. 
 
@@ -135,7 +135,7 @@ jp.justpy()
 
 ## ag-Grid Enterprise 
 
-By default, JustPy uses the ag-Grid community version which is is a free to use product distributed under the MIT License. If you would like to try the enterprise version, which is a commercial product, create a file called `justpy.env` in the directory where your program file is with the following:
+By default, JustPy uses the ag-Grid community version which is a free to use product distributed under the MIT License. If you would like to try the enterprise version, create a file called `justpy.env` in the directory where your program file and include in it the following:
 
 ```python
 AGGRID = False
@@ -147,4 +147,3 @@ AGGRID_ENTERPRISE = True
 In future articles, I will show how to interact with gird events as well as how to create interactive charts that are linked to the gird data.
 
 If you would like to learn more how you can move your pandas data quickly onto a web page without any JavaScript programming, please go to the [JustPy Docs and Tutorials](https://justpy.io/) and feel free to ask me any questions either in the comments below or on [GitHub](https://github.com/elimintz/justpy).
-

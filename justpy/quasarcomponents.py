@@ -648,7 +648,8 @@ class QPagination(_QInputBase):
         self.value = kwargs.get('value', 1)
         self.type = 'float'
         self.prop_list = ['input', 'boundary-links', 'direction-links', 'boundary-numbers', 'ellipses', 'value', 'min',
-                          'max', 'max-pages', 'disable', 'color', 'text-color', 'input-style', 'input-class', 'size']
+                          'max', 'max-pages', 'disable', 'color', 'text-color', 'input-style', 'input-class', 'size',
+                          'icon-prev', 'icon-next', 'icon-first', 'icon-last']
         self.allowed_events = ['input']
 
 

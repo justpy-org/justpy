@@ -199,7 +199,6 @@ class JustpyEvents(WebSocketEndpoint):
         """
         Method to accept and act on data received from websocket
         """
-
         logging.debug('%s %s',f'Socket {websocket.id} data received:', data)
         data_dict = json.loads(data)
         msg_type = data_dict['type']
@@ -245,7 +244,8 @@ class JustpyEvents(WebSocketEndpoint):
 
     async def _event(self, data_dict):
         # com_type 0: websocket, com_type 1: ajax
-        await handle_event(data_dict, com_type=0)
+        # await handle_event(data_dict, com_type=0)
+        WebPage.loop.create_task(handle_event(data_dict, com_type=0))
         return
 
 
