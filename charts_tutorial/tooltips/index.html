@@ -1,0 +1,1654 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="An object-oriented, component based, high-level Python Web Framework that requires no front-end programming">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Tooltips - JustPy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-155125345-1", "justpy.io")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#tooltips" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="JustPy" aria-label="JustPy" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              JustPy
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Tooltips
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="JustPy" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    JustPy
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="What is JustPy" class="md-nav__link">
+      What is JustPy
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/basic_concepts/" title="Basic Concepts" class="md-nav__link">
+      Basic Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/handling_events/" title="Handling Events" class="md-nav__link">
+      Handling Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/html_components/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/routes/" title="Routes" class="md-nav__link">
+      Routes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/input/" title="Input Component" class="md-nav__link">
+      Input Component
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/model_and_data/" title="The model and data Attributes" class="md-nav__link">
+      The model and data Attributes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/working_with_html/" title="Parsing and Using HTML" class="md-nav__link">
+      Parsing and Using HTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/pushing_data/" title="Pushing Data to Web Pages" class="md-nav__link">
+      Pushing Data to Web Pages
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/custom_components/" title="Creating Your Own Components" class="md-nav__link">
+      Creating Your Own Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/before_after_events/" title="The before and after Events" class="md-nav__link">
+      The before and after Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/request_object/" title="The Request Object" class="md-nav__link">
+      The Request Object
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/form/" title="Forms" class="md-nav__link">
+      Forms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/tailwind/" title="Tailwind" class="md-nav__link">
+      Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/svg_components/" title="SVG Components" class="md-nav__link">
+      SVG Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/matplotlib/" title="Matplotlib Charting" class="md-nav__link">
+      Matplotlib Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
+      Ajax vs. WebSockets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/sessions/" title="Sessions" class="md-nav__link">
+      Sessions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/static/" title="Static Files" class="md-nav__link">
+      Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/uploading_files/" title="Downloading and Uploading Files" class="md-nav__link">
+      Downloading and Uploading Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/deployment/" title="Deployment" class="md-nav__link">
+      Deployment
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Highcharts Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Highcharts Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../creating_charts/" title="Creating Charts" class="md-nav__link">
+      Creating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pandas/" title="Using Pandas to Create Charts" class="md-nav__link">
+      Using Pandas to Create Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../stock_charts/" title="Stock Charts" class="md-nav__link">
+      Stock Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../updating_charts/" title="Updating Charts" class="md-nav__link">
+      Updating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tooltips
+      </label>
+    
+    <a href="./" title="Tooltips" class="md-nav__link md-nav__link--active">
+      Tooltips
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-use" class="md-nav__link">
+    Basic Use
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooltip-debouncing" class="md-nav__link">
+    Tooltip Debouncing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooltip-positioning" class="md-nav__link">
+    Tooltip Positioning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixed-tooltip" class="md-nav__link">
+    Fixed Tooltip
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-and-split-tooltips" class="md-nav__link">
+    Shared and Split Tooltips
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-tooltips" class="md-nav__link">
+    Default Tooltips
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-tooltips" class="md-nav__link">
+    Custom Tooltips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../chart_events/" title="Chart Events" class="md-nav__link">
+      Chart Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../iris/" title="Iris Dataset Visualization" class="md-nav__link">
+      Iris Dataset Visualization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../chart_components/" title="Chart Components" class="md-nav__link">
+      Chart Components
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      ag-Grid Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        ag-Grid Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
+      Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
+      Using Pandas to Create Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/database/" title="Displaying Database Tables and Query Results" class="md-nav__link">
+      Displaying Database Tables and Query Results
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/grid_events/" title="Grid Events" class="md-nav__link">
+      Grid Events
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Quasar Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Quasar Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/notify/" title="Notifications" class="md-nav__link">
+      Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDialog/" title="QDialog" class="md-nav__link">
+      QDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QInput/" title="QInput" class="md-nav__link">
+      QInput
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDate/" title="QDate and QTime" class="md-nav__link">
+      QDate and QTime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QOptionGroup/" title="QOptionGroup" class="md-nav__link">
+      QOptionGroup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QBtnToggle/" title="QBtnToggle" class="md-nav__link">
+      QBtnToggle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QExpansionItem/" title="QExpansionItem" class="md-nav__link">
+      QExpansionItem
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QSplitter/" title="QSplitter" class="md-nav__link">
+      QSplitter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QRating/" title="QRating" class="md-nav__link">
+      QRating
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QColor/" title="QColor" class="md-nav__link">
+      QColor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
+      Components not Working
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/webpage/" title="WebPage class" class="md-nav__link">
+      WebPage class
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/htmlcomponent/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/justpy/" title="The justpy Command" class="md-nav__link">
+      The justpy Command
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-use" class="md-nav__link">
+    Basic Use
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooltip-debouncing" class="md-nav__link">
+    Tooltip Debouncing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooltip-positioning" class="md-nav__link">
+    Tooltip Positioning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixed-tooltip" class="md-nav__link">
+    Fixed Tooltip
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-and-split-tooltips" class="md-nav__link">
+    Shared and Split Tooltips
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-tooltips" class="md-nav__link">
+    Default Tooltips
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-tooltips" class="md-nav__link">
+    Custom Tooltips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="tooltips">Tooltips<a class="headerlink" href="#tooltips" title="Permanent link">&para;</a></h1>
+<h2 id="basic-use">Basic Use<a class="headerlink" href="#basic-use" title="Permanent link">&para;</a></h2>
+<p>The tooltip is the popup that is shown when you hover over a point on the chart. It provides one of the advantages of using interactive charts as it makes the chart more informative.</p>
+<p>Highcharts allows defining a tooltip using a very versatile formatting function (in JavaScript). JustPy allows writing tooltip formatters for Highcharts charts in Python just like any other event handler. Let's look at a concrete example.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2">    chart: {</span>
+<span class="s2">        type: &#39;column&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    title: {</span>
+<span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
+<span class="s2">        },</span>
+<span class="s2">    xAxis: {</span>
+<span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
+<span class="s2">    },</span>
+<span class="s2">    series: [{</span>
+<span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
+<span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
+<span class="s2">    }]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My tooltip!&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">chart_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="c1"># First chart</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">css</span> <span class="o">=</span> <span class="s1">&#39;.h-chart {height: 300px;}&#39;</span>
+    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
+    <span class="c1"># Second chart</span>
+    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>In this example we put two charts on the page. They are identical except for their subtitle and the fact that that the second one has a custom tooltip formatter. </p>
+<p>The tooltip formatting function (the handler for the tooltip event) is called <code>tooltip_formatter</code> and has one line in it:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My tooltip!&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>This line returns the result of running the method <code>tooltip_update</code> of the HighCharts component. The method has two arguments (in addition to self). The first is an HTML string which determines the content of the tooltip and the second is the websocket over which this HTML needs to be transmitted. The websocket of the page on which the event occurred can be found in <code>msg.websocket</code> and this is the websocket we use (<code>msg</code> is the second argument of the event handler).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the method <code>tooltip_update</code> is a coroutine, it needs be awaited and the tooltip event handler needs to be defined with the keyword async.</p>
+</div>
+<h2 id="tooltip-debouncing">Tooltip Debouncing<a class="headerlink" href="#tooltip-debouncing" title="Permanent link">&para;</a></h2>
+<p>If you quickly mouseover several points on charts with user defined formatters, you will see the "Loading…" inscription instead of the information you expect. Only when no new tooltip event occurs for 100ms (0.1 second), JustPy notifies its backend that a tooltip event has happened. This prevents the server from being inundated with irrelevant tooltip requests as the user moves the mouse over the chart.</p>
+<p>The debouncing delay can be changed by setting the attribute <code>tooltip_debounce</code> which is by default 100ms. The following command changes the debounce period to 500ms:</p>
+<p>```python
+chart2.tooltip_debounce = 500  # Assign value of debounce period in ms</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">## Using Point Data to Format Tooltip</span>
+
+<span class="n">So</span> <span class="n">far</span><span class="p">,</span> <span class="n">the</span> <span class="n">tooltip</span> <span class="n">we</span> <span class="k">return</span> <span class="k">for</span> <span class="k">all</span> <span class="n">points</span> <span class="k">is</span> <span class="n">the</span> <span class="n">same</span><span class="p">.</span> <span class="n">That</span> <span class="k">is</span> <span class="k">not</span> <span class="n">very</span> <span class="n">interesting</span><span class="p">.</span> <span class="n">We</span> <span class="n">would</span> <span class="k">like</span> <span class="n">the</span> <span class="n">tooltip</span> <span class="k">to</span> <span class="n">be</span> <span class="n">much</span> <span class="n">more</span> <span class="n">descriptive</span><span class="p">.</span>
+
+<span class="n">The</span> <span class="n">second</span> <span class="n">argument</span> <span class="k">to</span> <span class="n">the</span> <span class="n">tooltip</span> <span class="nf">formatter</span> <span class="p">(</span><span class="ss">`msg`</span> <span class="k">in</span> <span class="n">our</span> <span class="k">case</span><span class="p">)</span> <span class="n">has</span> <span class="k">values</span> <span class="k">specific</span> <span class="k">to</span> <span class="n">tooltip</span> <span class="n">events</span> <span class="k">to</span> <span class="n">assist</span> <span class="n">us</span> <span class="k">with</span> <span class="n">this</span><span class="p">.</span> <span class="k">In</span> <span class="n">addition</span> <span class="k">to</span> <span class="n">the</span> <span class="n">usual</span> <span class="n">fields</span> <span class="n">it</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">fields</span><span class="p">:</span>
+<span class="o">-</span> <span class="ss">`msg.x`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">x</span> <span class="n">coordinate</span> <span class="n">of</span> <span class="n">the</span> <span class="n">point</span>
+<span class="o">-</span> <span class="ss">`msg.category`</span> <span class="o">-</span> <span class="k">If</span> <span class="n">the</span> <span class="n">x</span> <span class="n">value</span> <span class="k">is</span> <span class="k">not</span> <span class="n">a</span> <span class="n">number</span><span class="p">,</span> <span class="k">for</span> <span class="n">example</span> <span class="s1">&#39;Jan&#39;</span> <span class="k">or</span> <span class="s1">&#39;Feb&#39;</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="k">show</span> <span class="n">up</span> <span class="n">here</span>
+<span class="o">-</span> <span class="ss">`msg.y`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">y</span> <span class="n">coordinate</span> <span class="n">of</span> <span class="n">the</span> <span class="n">point</span>
+<span class="o">-</span> <span class="ss">`msg.color`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">color</span> <span class="n">of</span> <span class="n">the</span> <span class="n">point</span>
+<span class="o">-</span> <span class="ss">`msg.series_name`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">series</span> <span class="n">the</span> <span class="n">point</span> <span class="k">is</span> <span class="k">in</span>
+<span class="o">-</span> <span class="ss">`msg.series_index`</span> <span class="o">-</span> <span class="n">The</span> <span class="k">index</span> <span class="n">the</span> <span class="n">series</span> <span class="n">the</span> <span class="n">point</span> <span class="k">is</span> <span class="k">in</span>
+<span class="o">-</span> <span class="ss">`msg.point_index`</span> <span class="o">-</span> <span class="n">The</span> <span class="k">index</span> <span class="n">the</span> <span class="n">point</span> <span class="k">in</span> <span class="n">its</span> <span class="n">series</span>
+
+<span class="n">Let</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">use</span> <span class="n">some</span> <span class="n">of</span> <span class="n">the</span> <span class="n">fields</span> <span class="n">above</span> <span class="k">to</span> <span class="k">create</span> <span class="n">a</span> <span class="n">more</span> <span class="n">informative</span> <span class="n">tooltip</span><span class="p">.</span> <span class="n">Please</span> <span class="k">replace</span> <span class="ss">`tooltip_formatter`</span> <span class="k">with</span> <span class="n">this</span> <span class="n">new</span> <span class="n">version</span> <span class="k">and</span> <span class="n">run</span> <span class="n">the</span> <span class="n">program</span><span class="p">:</span>
+
+<span class="ss">``</span><span class="o">`</span><span class="n">python</span>
+<span class="n">async</span> <span class="n">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;</span><span class="n">color</span><span class="p">:</span> <span class="err">{</span><span class="n">msg</span><span class="p">.</span><span class="n">color</span><span class="err">}</span><span class="p">;</span><span class="s2">&quot;&gt;{msg.series_name}&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;{msg.category}&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;x: {msg.x}, y: {msg.y}&lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">await</span> <span class="n">self</span><span class="p">.</span><span class="nf">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">websocket</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We use the Python f-string template like features to create a tooltip that includes information about each point. Notice how <code>msg.color</code> is used to give the series name the color of the point. In charts with multiple series, this becomes very useful.</p>
+<p>There is another way to create the HTML string used to update the tooltip. Try using the following <code>tooltip_formatter</code> instead of the one above:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{msg.color}</span><span class="s1">;&#39;</span><span class="p">)</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
+    <span class="n">d3</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;x: </span><span class="si">{msg.x}</span><span class="s1">, y: </span><span class="si">{msg.y}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="n">d1</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span> <span class="o">+</span> <span class="n">d2</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span> <span class="o">+</span> <span class="n">d3</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>This time we create JustPy components and then use the <code>to_html()</code> method to convert them to HTML. Both methods work well and you should use the one you are most comfortable with.</p>
+<h2 id="tooltip-positioning">Tooltip Positioning<a class="headerlink" href="#tooltip-positioning" title="Permanent link">&para;</a></h2>
+<p>You may have noticed in the example above, that the tooltip covers part of the column instead of showing up above it. When we create custom tooltips, we need to help Highcharts position them correctly. We do this using the <code>tooltip_x</code> and <code>tooltip_y</code> attributes of the JustPy HighCharts class. These attributes determine the offset in pixels for the tooltip relative to where Higcharts estimates it needs to show it. In practice, you will need to experiment with different values to get the positioning you want.</p>
+<p>Here is the same example as above but with the tooltip position changed:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2">    chart: {</span>
+<span class="s2">        type: &#39;column&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    title: {</span>
+<span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
+<span class="s2">        },</span>
+<span class="s2">    xAxis: {</span>
+<span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
+<span class="s2">    },</span>
+<span class="s2">    series: [{</span>
+<span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
+<span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
+<span class="s2">    }</span>
+<span class="s2">    ]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;color: </span><span class="si">{msg.color}</span><span class="s2">;&quot;&gt;</span><span class="si">{msg.series_name}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;</span><span class="si">{msg.category}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;x: </span><span class="si">{msg.x}</span><span class="s2"> y: </span><span class="si">{msg.y}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">chart_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="c1"># First chart</span>
+    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
+
+    <span class="c1"># Second chart</span>
+    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter</span><span class="p">)</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">80</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">55</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We added the lines:</p>
+<div class="codehilite"><pre><span></span><code>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">80</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">55</span>
+</code></pre></div>
+
+
+<p>to get the desired positioning. </p>
+<h2 id="fixed-tooltip">Fixed Tooltip<a class="headerlink" href="#fixed-tooltip" title="Permanent link">&para;</a></h2>
+<p>A tooltip can be fixed to one position. This is done by setting the chart attribute <code>tooltip_fixed</code> to <code>True</code>. When the tooltip is fixed, <code>tooltip_x</code> and <code>tooltip_y</code> designate the absolute position in the chart to place the tooltip. </p>
+<p>Here is the example above but this time with a fixed tooltip:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2">    chart: {</span>
+<span class="s2">        type: &#39;column&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    title: {</span>
+<span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
+<span class="s2">        },</span>
+<span class="s2">    xAxis: {</span>
+<span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
+<span class="s2">    },</span>
+<span class="s2">    series: [{</span>
+<span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
+<span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
+<span class="s2">    }</span>
+<span class="s2">    ]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;color: </span><span class="si">{msg.color}</span><span class="s2">;&quot;&gt;</span><span class="si">{msg.series_name}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;</span><span class="si">{msg.category}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;x: </span><span class="si">{msg.x}</span><span class="s2"> y: </span><span class="si">{msg.y}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">chart_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="c1"># First chart</span>
+    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
+
+    <span class="c1"># Second chart</span>
+    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter</span><span class="p">)</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_fixed</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The lines that make the difference are:</p>
+<div class="codehilite"><pre><span></span><code>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_fixed</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="mi">100</span>
+</code></pre></div>
+
+
+<h2 id="shared-and-split-tooltips">Shared and Split Tooltips<a class="headerlink" href="#shared-and-split-tooltips" title="Permanent link">&para;</a></h2>
+<h3 id="default-tooltips">Default Tooltips<a class="headerlink" href="#default-tooltips" title="Permanent link">&para;</a></h3>
+<p>Highcharts supports shared and split tooltips in addition to the regular tooltip. To see the difference between the three, run the example below which includes the same chart three times, each time with a different kind of tooltip. This is how the Highcharts default tooltip looks like.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="c1"># https://www.highcharts.com/demo/line-basic</span>
+<span class="n">chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2"> chart: {</span>
+<span class="s2">        type: &#39;spline&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    title: {</span>
+<span class="s2">        text: &#39;&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    subtitle: {</span>
+<span class="s2">        text: &#39;JustPy Tooltip Demo&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    yAxis: {</span>
+<span class="s2">        title: {</span>
+<span class="s2">            text: &#39;Number of Employees&#39;</span>
+<span class="s2">        }</span>
+<span class="s2">    },</span>
+<span class="s2">    legend: {</span>
+<span class="s2">        layout: &#39;vertical&#39;,</span>
+<span class="s2">        align: &#39;right&#39;,</span>
+<span class="s2">        verticalAlign: &#39;middle&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    plotOptions: {</span>
+<span class="s2">        series: {</span>
+<span class="s2">            pointStart: 2010</span>
+<span class="s2">        }</span>
+<span class="s2">    },</span>
+<span class="s2">    series: [{</span>
+<span class="s2">        name: &#39;Installation&#39;,</span>
+<span class="s2">        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Manufacturing&#39;,</span>
+<span class="s2">        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Sales &amp; Distribution&#39;,</span>
+<span class="s2">        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Project Development&#39;,</span>
+<span class="s2">        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Other&#39;,</span>
+<span class="s2">        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]</span>
+<span class="s2">    }]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">tool_tip_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with default Highcharts tooltip&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip&#39;</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip&#39;</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip&#39;</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tool_tip_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h3 id="custom-tooltips">Custom Tooltips<a class="headerlink" href="#custom-tooltips" title="Permanent link">&para;</a></h3>
+<p>In the example below we add three additional charts with custom tooltips to the page. In total, there are now six charts on the page. The first three use the default Highcharts tooltip and the second three use custom tooltips. The first custom tooltip is of type single, the second is of type shared and the third is a split tooltip.</p>
+<p>For single and shared tooltip handlers the first argument ofthe  <code>tooltip_update</code> is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.</p>
+<p>In the case of shared and split tooltips, the <code>msg</code> argument of the tooltip formatter includes a list of the properties of all the points with the corresponding x value. It is accessed as <code>msg.points</code>. As you will see in the example below, we iterate over this list in the tooltip handlers to generate the required output.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="c1"># https://www.highcharts.com/demo/line-basic</span>
+<span class="n">chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2"> chart: {</span>
+<span class="s2">        type: &#39;spline&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    title: {</span>
+<span class="s2">        text: &#39;&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    subtitle: {</span>
+<span class="s2">        text: &#39;JustPy Tooltip Demo&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    yAxis: {</span>
+<span class="s2">        title: {</span>
+<span class="s2">            text: &#39;Number of Employees&#39;</span>
+<span class="s2">        }</span>
+<span class="s2">    },</span>
+<span class="s2">    legend: {</span>
+<span class="s2">        layout: &#39;vertical&#39;,</span>
+<span class="s2">        align: &#39;right&#39;,</span>
+<span class="s2">        verticalAlign: &#39;middle&#39;</span>
+<span class="s2">    },</span>
+<span class="s2">    plotOptions: {</span>
+<span class="s2">        series: {</span>
+<span class="s2">            pointStart: 2010</span>
+<span class="s2">        }</span>
+<span class="s2">    },</span>
+<span class="s2">    series: [{</span>
+<span class="s2">        name: &#39;Installation&#39;,</span>
+<span class="s2">        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Manufacturing&#39;,</span>
+<span class="s2">        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Sales &amp; Distribution&#39;,</span>
+<span class="s2">        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Project Development&#39;,</span>
+<span class="s2">        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]</span>
+<span class="s2">    }, {</span>
+<span class="s2">        name: &#39;Other&#39;,</span>
+<span class="s2">        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]</span>
+<span class="s2">    }]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">tool_tip_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with default Highcharts tooltip&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip&#39;</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip&#39;</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip&#39;</span>
+
+    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with user defined tooltip formatter functions&#39;</span><span class="p">,</span>
+           <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
+
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip - Formatter Example&#39;</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip - Formatter Example&#39;</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip - Formatter Example&#39;</span>
+
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">simple_tooltip_formatter</span><span class="p">)</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">shared_tooltip_formatter</span><span class="p">)</span>
+    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">split_tooltip_formatter</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">simple_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div class=&quot;text-red-500&quot;&gt;</span>
+<span class="s2">    &lt;div&gt;&lt;span style=&quot;color: </span><span class="si">{msg.color}</span><span class="s2">&quot;&gt;&amp;#x25CF;&amp;nbsp;&lt;/span&gt;</span><span class="si">{msg.series_name}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;Year: </span><span class="si">{msg.x}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;Number of employees: {&quot;</span><span class="si">{:,}</span><span class="s2">&quot;.format(msg.y)}&lt;/div&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">shared_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;text-white bg-blue-400&quot;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{msg.x}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">tooltip_div</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+        <span class="n">point_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">tooltip_div</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;&amp;#x25CF; </span><span class="si">{point.series_name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-white&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{point.color}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of employees: {&quot;</span><span class="si">{:,}</span><span class="s1">&quot;.format(point.y)}&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_div</span><span class="o">.</span><span class="n">to_html</span><span class="p">(),</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">split_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_array</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;The x value is </span><span class="si">{msg.x}</span><span class="s1">&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+        <span class="n">point_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">()</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&amp;#x25CF;&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-white&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{point.color}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{point.series_name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{point.x}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of employees: {&quot;</span><span class="si">{:,}</span><span class="s1">&quot;.format(point.y)}&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+        <span class="n">tooltip_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_div</span><span class="o">.</span><span class="n">to_html</span><span class="p">())</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_array</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tool_tip_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The <code>split_tooltip_formatter</code> function is a little more complex as can be seen above. A split tooltip means that each series has its own separate popup box and therefore the HTML for each series needs to be returned. The <code>tooltip_update</code> method therefore takes as its first argument a list of strings instead of a string as in the other cases. The first string in the list represents the HTML for the x axis value. </p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../updating_charts/" title="Updating Charts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Updating Charts
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../chart_events/" title="Chart Events" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Chart Events
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

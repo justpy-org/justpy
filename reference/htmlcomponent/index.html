@@ -1,0 +1,1906 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="An object-oriented, component based, high-level Python Web Framework that requires no front-end programming">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>HTML Components - JustPy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-155125345-1", "justpy.io")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#html-components" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="JustPy" aria-label="JustPy" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              JustPy
+            </span>
+            <span class="md-header-nav__topic">
+              
+                HTML Components
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="JustPy" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    JustPy
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="What is JustPy" class="md-nav__link">
+      What is JustPy
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/basic_concepts/" title="Basic Concepts" class="md-nav__link">
+      Basic Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/handling_events/" title="Handling Events" class="md-nav__link">
+      Handling Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/html_components/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/routes/" title="Routes" class="md-nav__link">
+      Routes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/input/" title="Input Component" class="md-nav__link">
+      Input Component
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/model_and_data/" title="The model and data Attributes" class="md-nav__link">
+      The model and data Attributes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/working_with_html/" title="Parsing and Using HTML" class="md-nav__link">
+      Parsing and Using HTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/pushing_data/" title="Pushing Data to Web Pages" class="md-nav__link">
+      Pushing Data to Web Pages
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/custom_components/" title="Creating Your Own Components" class="md-nav__link">
+      Creating Your Own Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/before_after_events/" title="The before and after Events" class="md-nav__link">
+      The before and after Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/request_object/" title="The Request Object" class="md-nav__link">
+      The Request Object
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/form/" title="Forms" class="md-nav__link">
+      Forms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/tailwind/" title="Tailwind" class="md-nav__link">
+      Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/svg_components/" title="SVG Components" class="md-nav__link">
+      SVG Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/matplotlib/" title="Matplotlib Charting" class="md-nav__link">
+      Matplotlib Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
+      Ajax vs. WebSockets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/sessions/" title="Sessions" class="md-nav__link">
+      Sessions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/static/" title="Static Files" class="md-nav__link">
+      Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/uploading_files/" title="Downloading and Uploading Files" class="md-nav__link">
+      Downloading and Uploading Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/deployment/" title="Deployment" class="md-nav__link">
+      Deployment
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Highcharts Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Highcharts Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/creating_charts/" title="Creating Charts" class="md-nav__link">
+      Creating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/pandas/" title="Using Pandas to Create Charts" class="md-nav__link">
+      Using Pandas to Create Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/stock_charts/" title="Stock Charts" class="md-nav__link">
+      Stock Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/updating_charts/" title="Updating Charts" class="md-nav__link">
+      Updating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/tooltips/" title="Tooltips" class="md-nav__link">
+      Tooltips
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/chart_events/" title="Chart Events" class="md-nav__link">
+      Chart Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/iris/" title="Iris Dataset Visualization" class="md-nav__link">
+      Iris Dataset Visualization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/chart_components/" title="Chart Components" class="md-nav__link">
+      Chart Components
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      ag-Grid Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        ag-Grid Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
+      Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
+      Using Pandas to Create Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/database/" title="Displaying Database Tables and Query Results" class="md-nav__link">
+      Displaying Database Tables and Query Results
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/grid_events/" title="Grid Events" class="md-nav__link">
+      Grid Events
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Quasar Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Quasar Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/notify/" title="Notifications" class="md-nav__link">
+      Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDialog/" title="QDialog" class="md-nav__link">
+      QDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QInput/" title="QInput" class="md-nav__link">
+      QInput
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDate/" title="QDate and QTime" class="md-nav__link">
+      QDate and QTime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QOptionGroup/" title="QOptionGroup" class="md-nav__link">
+      QOptionGroup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QBtnToggle/" title="QBtnToggle" class="md-nav__link">
+      QBtnToggle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QExpansionItem/" title="QExpansionItem" class="md-nav__link">
+      QExpansionItem
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QSplitter/" title="QSplitter" class="md-nav__link">
+      QSplitter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QRating/" title="QRating" class="md-nav__link">
+      QRating
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QColor/" title="QColor" class="md-nav__link">
+      QColor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
+      Components not Working
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../webpage/" title="WebPage class" class="md-nav__link">
+      WebPage class
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        HTML Components
+      </label>
+    
+    <a href="./" title="HTML Components" class="md-nav__link md-nav__link--active">
+      HTML Components
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#div-component" class="md-nav__link">
+    Div Component
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduction_1" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    Attributes
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text" class="md-nav__link">
+    text
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style" class="md-nav__link">
+    style
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed_events" class="md-nav__link">
+    allowed_events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional_properties" class="md-nav__link">
+    additional_properties
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inner_html" class="md-nav__link">
+    inner_html
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show" class="md-nav__link">
+    show
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#focus" class="md-nav__link">
+    focus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    animation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_flag" class="md-nav__link">
+    delete_flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event_propagation" class="md-nav__link">
+    event_propagation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vue_type" class="md-nav__link">
+    vue_type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html_tag" class="md-nav__link">
+    html_tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class_name" class="md-nav__link">
+    class_name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-html-attributes" class="md-nav__link">
+    Global HTML attributes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../justpy/" title="The justpy Command" class="md-nav__link">
+      The justpy Command
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#div-component" class="md-nav__link">
+    Div Component
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduction_1" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    Attributes
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text" class="md-nav__link">
+    text
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style" class="md-nav__link">
+    style
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed_events" class="md-nav__link">
+    allowed_events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional_properties" class="md-nav__link">
+    additional_properties
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inner_html" class="md-nav__link">
+    inner_html
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show" class="md-nav__link">
+    show
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#focus" class="md-nav__link">
+    focus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    animation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_flag" class="md-nav__link">
+    delete_flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event_propagation" class="md-nav__link">
+    event_propagation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vue_type" class="md-nav__link">
+    vue_type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html_tag" class="md-nav__link">
+    html_tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class_name" class="md-nav__link">
+    class_name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-html-attributes" class="md-nav__link">
+    Global HTML attributes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="html-components">HTML Components<a class="headerlink" href="#html-components" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>In JustPy components are Python classes. All HTML components inherit from either the Div or Input component. The Input component itself inherits from the Div component. </p>
+<p>The reference will describe primarily the Div component and the Input component.</p>
+<div class="admonition tip">
+<p class="admonition-title">It would be helpful to read the <a href="/tutorial/html_components">HTML Components</a> chapter in the tutorial first.</p>
+</div>
+<h2 id="div-component">Div Component<a class="headerlink" href="#div-component" title="Permanent link">&para;</a></h2>
+<h3 id="introduction_1">Introduction<a class="headerlink" href="#introduction_1" title="Permanent link">&para;</a></h3>
+<p>The Div component is the basic container component of JustPy. It is a component that can contain other components. It can of course, contain components that themselves are container components.</p>
+<h3 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h4>
+<p>Attributes can be set as keywords when an element is created.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-red-500&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>They can also be set anytime after the element is created (except for <code>delete_flag</code> which needs to be set at creation).</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;hello&#39;</span>
+<span class="n">d</span><span class="o">.</span><span class="n">classes</span><span class="o">=</span> <span class="s1">&#39;text-red-500&#39;</span>
+</code></pre></div>
+
+
+<h4 id="text">text<a class="headerlink" href="#text" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>""</code>  (the empty string)</li>
+</ul>
+<p>The <code>text</code> attribute will always be rendered as the first child of the component. If you want a Div (or any container component) instance to render multiple texts in different locations, encompass the text in another container component and add that component to the Div at the location you want.</p>
+<p>If you want to render an <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">HTML Entity</a> use the HTMLEntity component or set the <code>html_enity</code> attribute to <code>True</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">entity_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Space</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">HTMLEntity</span><span class="p">(</span><span class="n">entity</span><span class="o">=</span><span class="s1">&#39;a&amp;#768;&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-lg&#39;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;a&amp;#768;&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-lg&#39;</span><span class="p">,</span> <span class="n">html_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Space</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">HTMLEntity</span><span class="p">(</span><span class="n">entity</span><span class="o">=</span><span class="s1">&#39;a&amp;#769&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-xl&#39;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;a&amp;#769&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-xl&#39;</span><span class="p">,</span> <span class="n">html_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Space</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">HTMLEntity</span><span class="p">(</span><span class="n">entity</span><span class="o">=</span><span class="s1">&#39;&amp;#8707;&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl&#39;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&amp;#8707;&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl&#39;</span><span class="p">,</span> <span class="n">html_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Space</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">HTMLEntity</span><span class="p">(</span><span class="n">entity</span><span class="o">=</span><span class="s1">&#39;&amp;copy;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-3xl&#39;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&amp;copy;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-3xl&#39;</span><span class="p">,</span> <span class="n">html_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Space</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">entity_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The Space component can be used to insert spaces. It creates a Span with <code>num</code> repeats of the html entity '&amp;nbsp'.</p>
+</div>
+<h4 id="classes">classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>""</code>  (the empty string)</li>
+</ul>
+<p>The classes to attach to the element. Usually Tailwind classes, but may be any classes you define. Basically equivalent to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class"><code>class</code></a> attribute of HTML tags.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">classes_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Classes Example&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="c1"># Assign Tailwind classes to d</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="s1">&#39;text-5xl text-white bg-blue-500 hover:bg-blue-700 m-2 p-2 w-64&#39;</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">classes_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="style">style<a class="headerlink" href="#style" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>""</code>  (the empty string)</li>
+</ul>
+<p>The CSS to attach to the element. Basically equivalent to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style"><code>style</code></a> attribute of HTML tags.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">style_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39; </span><span class="si">{size}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;font-size: </span><span class="si">{size}</span><span class="s1">px; color: red&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;inline cursor-pointer&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+               <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.size *= 2; self.style=f&quot;font-size: </span><span class="si">{self.size}</span><span class="s1">px; color: green&quot;;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">style_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="components">components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>list</code></li>
+<li>Default: <code>[]</code></li>
+</ul>
+<p>Holds the list of child elements in the Div. Strictly speaking these are not components, they are elements, instances of components. When the Div is rendered, the elements are rendered according to their place on the list, starting with the first.</p>
+<p>In the following example, the Div elements will show up in a different order each time the page is loaded because <code>main_div.components</code> is shuffled.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">def</span> <span class="nf">shuffle_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">main_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap m-2 p-2 &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Div </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">main_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl text-white bg-blue-500&#39;</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">main_div</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">shuffle_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="events">events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>list</code></li>
+<li>Default: <code>[]</code></li>
+</ul>
+<p>When an element is bound to an event, the event name (of type string) is added to <code>events</code>. You can use <code>events</code> to check which events the element will respond. Also, by removing an event name from the list, you will disable the element responding to that event.</p>
+<h4 id="allowed_events">allowed_events<a class="headerlink" href="#allowed_events" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>list</code></li>
+<li>Default: <code>['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change', 'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur']</code></li>
+</ul>
+<p>If an event name is not in <code>allowed_events</code>, JustPy will generate an error if you try to bind to that event.
+You can use the <code>add_event</code> method to add an allowed event to the list.</p>
+<h4 id="additional_properties">additional_properties<a class="headerlink" href="#additional_properties" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>list</code></li>
+<li>Default: <code>[]</code></li>
+</ul>
+<p>JustPy does not pass all the JavaScript event properties by default since in most cases they are not needed. If you need additional properties from the JavasScript event, use the <code>additional_properties</code> attribute. In the example below, more fields are added to <code>msg</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked&#39;</span>
+
+<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-48 text-xl m-2 p-1 bg-blue-500 text-white&#39;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;screenX&#39;</span><span class="p">,</span> <span class="s1">&#39;pageY&#39;</span><span class="p">,</span><span class="s1">&#39;altKey&#39;</span><span class="p">,</span><span class="s1">&#39;which&#39;</span><span class="p">,</span><span class="s1">&#39;movementX&#39;</span><span class="p">,</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="s1">&#39;buttons&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="inner_html">inner_html<a class="headerlink" href="#inner_html" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>""</code>  (the empty string)</li>
+</ul>
+<p>Used to to set the HTML of an element directly.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">inner_html_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">inner_html</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;&lt;span style=&quot;color: orange&quot;&gt;</span><span class="si">{i}</span><span class="s1">) Hello!&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-3xl&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">inner_html_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="admonition warning">
+<p class="admonition-title">If <code>inner_html</code> is not the empty string, it will override any other content of the element</p>
+</div>
+<h4 id="show">show<a class="headerlink" href="#show" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>boolean</code></li>
+<li>Default: <code>True</code></li>
+</ul>
+<p>If set to <code>False</code>, the element is not rendered. See <a href="/tutorial/html_components/#showing-and-hiding-elements">here</a></p>
+<h4 id="focus">focus<a class="headerlink" href="#focus" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>boolean</code></li>
+<li>Default: <code>False</code></li>
+</ul>
+<p>If set to <code>True</code>, the element will have focus when the page is rendered.</p>
+<div class="admonition warning">
+<p class="admonition-title">If multiple elements have the <code>focus</code> attribute set to <code>True</code>, the results will be unpredictable. The last element to be rendered by Vue will have focus.</p>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="c1"># Try not using this event handler and see what happens</span>
+<span class="k">def</span> <span class="nf">my_blur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">focus_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">in1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Input 1&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="n">my_blur</span><span class="p">)</span>
+    <span class="n">in2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Input 2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="n">my_blur</span><span class="p">)</span>
+    <span class="n">in3</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Input 3&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="n">my_blur</span><span class="p">)</span>
+    <span class="n">in4</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Input 4&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="n">my_blur</span><span class="p">)</span>
+
+    <span class="c1"># Set focus on third Input element</span>
+    <span class="n">in3</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">focus_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="animation">animation<a class="headerlink" href="#animation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>""</code>  (the empty string)</li>
+</ul>
+<p>Set the animation of the element. Uses <a href="https://daneden.github.io/animate.css/">animate.css</a> </p>
+<p>Control the speed of the animation by adding classes:</p>
+<table>
+<thead>
+<tr>
+<th>Class Name</th>
+<th>Speed Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slow</code></td>
+<td><code>2s</code></td>
+</tr>
+<tr>
+<td><code>slower</code></td>
+<td><code>3s</code></td>
+</tr>
+<tr>
+<td><code>fast</code></td>
+<td><code>800ms</code></td>
+</tr>
+<tr>
+<td><code>faster</code></td>
+<td><code>500ms</code></td>
+</tr>
+</tbody>
+</table>
+<p>For more information and additional options consult the <a href="https://github.com/daneden/animate.css/blob/master/README.md">animate.css documentation</a></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">input_classes</span> <span class="o">=</span> <span class="s2">&quot;m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">delete_components</span><span class="p">()</span>  <span class="c1"># remove all components from d</span>
+    <span class="n">directions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;Down&#39;</span><span class="p">,</span> <span class="s1">&#39;Left&#39;</span><span class="p">,</span> <span class="s1">&#39;Right&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_to_animate</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">letter</span> <span class="o">=</span> <span class="s1">&#39;&amp;nbsp;&#39;</span> <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span> <span class="k">else</span> <span class="n">letter</span>  <span class="c1"># Hard space for HTML, otherwise space ignored</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">animation</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;fadeIn{random.choice(directions)}&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">letter</span><span class="p">,</span>
+               <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;rounded-full bg-blue-500 text-white text-6xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">animation_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">text_to_animate</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Enter text to animate&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Animation Demo!&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;return True&#39;</span><span class="p">)</span>
+    <span class="n">animate_btn</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Animate!&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">animate</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-32 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">animate_btn</span><span class="o">.</span><span class="n">text_to_animate</span><span class="o">=</span> <span class="n">text_to_animate</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex items-center justify-center&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 500px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">animate_btn</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">animation_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="id">id<a class="headerlink" href="#id" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: Nothing assigned</li>
+</ul>
+<p>If you need to identify an element use the <code>name</code> attribute (or any other attribute you choose), NOT the <code>id</code> attribute. JustPy assigns a unique id to elements that are associated with events and uses it to identify which event handler to run.</p>
+<div class="admonition danger">
+<p class="admonition-title">It is advised not to change an element's <code>id</code> or assign it an id</p>
+</div>
+<h4 id="delete_flag">delete_flag<a class="headerlink" href="#delete_flag" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>boolean</code></li>
+<li>Default: <code>True</code></li>
+</ul>
+<p>If set to <code>False</code>, element is not deleted when a page which it is on closes. In addition, non of its child components will be deleted.
+If you create an element that will be used on more than one page, set the value to <code>False</code>.</p>
+<h4 id="event_propagation">event_propagation<a class="headerlink" href="#event_propagation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>boolean</code></li>
+<li>Default: <code>True</code></li>
+</ul>
+<p>The current version of JustPy supports only event bubbling. Events originate in the innermost child and bubble up through the parents unless<code>event_propagation</code> is set to <code>False</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">event_propagates</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">main_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap m-2 p-2 &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;main div clicked&quot;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Div </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">main_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl text-white bg-blue-500&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;clicked&quot;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/no_propagation&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">event_does_not_propagate</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">main_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap m-2 p-2 &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;main div clicked&quot;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Div </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">main_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl text-white bg-blue-500&#39;</span><span class="p">,</span>
+               <span class="n">event_propagation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;clicked&quot;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_propagates</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="vue_type">vue_type<a class="headerlink" href="#vue_type" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>'html_component'</code></li>
+</ul>
+<p>The Vue component to couple with the Python class. Used by the front end of the framework.</p>
+<div class="admonition danger">
+<p class="admonition-title">If you change this, the component will not be rendered correctly</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">When you develop components that require a Vue component as well, you will need to set this attribute in the Python class</p>
+</div>
+<h4 id="html_tag">html_tag<a class="headerlink" href="#html_tag" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>'div'</code></li>
+</ul>
+<p>The HTML tag that corresponds to the component. If you change it, the component may not render correctly.</p>
+<div class="admonition danger">
+<p class="admonition-title">If you change this, the component may not be rendered correctly</p>
+</div>
+<h4 id="class_name">class_name<a class="headerlink" href="#class_name" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Default: <code>'Div'</code></li>
+</ul>
+<p>The class (component) name of the element. Should be considered read only</p>
+<h4 id="global-html-attributes">Global HTML attributes<a class="headerlink" href="#global-html-attributes" title="Permanent link">&para;</a></h4>
+<p>Div supports some HTML global attributes. Please review the  <a href="/tutorial/html_components/#common-attributes">Common Attributes</a> section in the Tutorial. </p>
+<h3 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h3>
+<p><code>def delete(self)</code><br />
+Remove references to the object from JustPy internal data structures to allow garbage collection.</p>
+<p><code>def on(self, event_type, func)</code><br />
+Bind a function to an event</p>
+<p><code>def remove_event(self, event_type)</code><br />
+Remove and event from the element's allowed events</p>
+<p><code>def has_event_function(self, event_type)</code><br />
+Returns <code>True</code> if the element has the specified event</p>
+<p><code>async def update(self)</code><br />
+Updates just the element, not the whole page. The element is updated on all pages specified in the attribute <code>pages</code>.
+See <a href="/tutorial/pushing_data/#simple-message-board">Simple Message Board</a>  </p>
+<p><code>remove_page_from_pages(self, wp: WebPage)</code><br />
+Remove a page from <code>pages</code></p>
+<p><code>def add_page(self, wp: WebPage)</code> and <code>def add_page_to_pages(self, wp: WebPage)</code><br />
+Add a page to <code>pages</code></p>
+<p><code>def set_model(self, value)</code><br />
+Set the model value</p>
+<p><code>async def run_event_function(self, event_type, event_data)</code><br />
+Run an event function. This method takes two arguments in addition to <code>self</code>. The first is the event type. The second, is the dictionary we want passed as the second positional argument to the event handler. This is what we usually designate as <code>msg</code> in our event handler examples in the tutorial. See example <a href="/tutorial/custom_components/#handling-the-change-event">here</a></p>
+<p><code>@staticmethod def convert_dict_to_object(d)</code><br />
+Takes the dictionary created by <code>convert_object_to_dict</code> and returns an object. Can be used to make independent copies of objects.</p>
+<p><code>def __len__(self)</code><br />
+<code>len(c)</code> returns the number of direct children the element <code>c</code> has</p>
+<p><code>def add_to_page(self, wp: WebPage)</code><br />
+Adds the element to a page</p>
+<p><code>def add_attribute(self, attr, value)</code><br />
+Adds an attribute that will be part of the dictionary created by <code>convert_object_to_dict</code></p>
+<p><code>def add_event(self, event_type)</code> and  <code>def add_allowed_event(self, event_type)</code><br />
+Add an allowed event to the element</p>
+<p><code>def add_scoped_slot(self, slot, c)</code><br />
+Relevant to Quasar and other Vue based frameworks or components.</p>
+<p><code>def to_html(self, indent=0, indent_step=0, format=True)</code><br />
+Returns an HTML representation of the element</p>
+<p><code>def react(self, data)</code><br />
+Executes just before the element is rendered. It is just <code>pass</code> for Div and is meant to be overridden by components that inherit from Div</p>
+<p><code>def convert_object_to_dict(self)</code><br />
+Converts the element to a dictionary in the format the can be sent to the frontend to be rendered.</p>
+<p><code>def add_component(self, child, position=None, slot=None)</code><br />
+Add a component at the specified position.</p>
+<p><code>def delete_components(self)</code><br />
+Use to empty a container element like Div. Does not delete the <code>text</code> attribute</p>
+<p><code>def add(self, *args)</code><br />
+Add all arguments as child elements after the current child elements</p>
+<p><code>def add_first(self, child)</code><br />
+Add a child element before all other child elements</p>
+<p><code>def remove_component(self, component)</code><br />
+Remove a child element</p>
+<p><code>def get_components(self)</code><br />
+Get child elements as a list</p>
+<p><code>def first(self)</code><br />
+Get first child element</p>
+<p><code>def last(self)</code><br />
+Get last child element</p>
+<p><code>def model_update(self)</code><br />
+Override as necessary. See example <a href="/tutorial/model_and_data/#advanced-use-of-the-model-attribute">here</a></p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../webpage/" title="WebPage class" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                WebPage class
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../justpy/" title="The justpy Command" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                The justpy Command
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

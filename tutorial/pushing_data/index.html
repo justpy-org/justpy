@@ -1,0 +1,1364 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="An object-oriented, component based, high-level Python Web Framework that requires no front-end programming">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Pushing Data to Web Pages - JustPy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-155125345-1", "justpy.io")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#pushing-data-to-web-pages" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="JustPy" aria-label="JustPy" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              JustPy
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Pushing Data to Web Pages
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="JustPy" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    JustPy
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="What is JustPy" class="md-nav__link">
+      What is JustPy
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../basic_concepts/" title="Basic Concepts" class="md-nav__link">
+      Basic Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../handling_events/" title="Handling Events" class="md-nav__link">
+      Handling Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../html_components/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../routes/" title="Routes" class="md-nav__link">
+      Routes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../input/" title="Input Component" class="md-nav__link">
+      Input Component
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../model_and_data/" title="The model and data Attributes" class="md-nav__link">
+      The model and data Attributes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../working_with_html/" title="Parsing and Using HTML" class="md-nav__link">
+      Parsing and Using HTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Pushing Data to Web Pages
+      </label>
+    
+    <a href="./" title="Pushing Data to Web Pages" class="md-nav__link md-nav__link--active">
+      Pushing Data to Web Pages
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clock" class="md-nav__link">
+    Clock
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collaborative-editor" class="md-nav__link">
+    Collaborative Editor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-message-board" class="md-nav__link">
+    Simple Message Board
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-final-countdown" class="md-nav__link">
+    The Final Countdown
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../custom_components/" title="Creating Your Own Components" class="md-nav__link">
+      Creating Your Own Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../before_after_events/" title="The before and after Events" class="md-nav__link">
+      The before and after Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../request_object/" title="The Request Object" class="md-nav__link">
+      The Request Object
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../form/" title="Forms" class="md-nav__link">
+      Forms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tailwind/" title="Tailwind" class="md-nav__link">
+      Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../svg_components/" title="SVG Components" class="md-nav__link">
+      SVG Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matplotlib/" title="Matplotlib Charting" class="md-nav__link">
+      Matplotlib Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
+      Ajax vs. WebSockets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sessions/" title="Sessions" class="md-nav__link">
+      Sessions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../static/" title="Static Files" class="md-nav__link">
+      Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uploading_files/" title="Downloading and Uploading Files" class="md-nav__link">
+      Downloading and Uploading Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deployment/" title="Deployment" class="md-nav__link">
+      Deployment
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Highcharts Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Highcharts Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/creating_charts/" title="Creating Charts" class="md-nav__link">
+      Creating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/pandas/" title="Using Pandas to Create Charts" class="md-nav__link">
+      Using Pandas to Create Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/stock_charts/" title="Stock Charts" class="md-nav__link">
+      Stock Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/updating_charts/" title="Updating Charts" class="md-nav__link">
+      Updating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/tooltips/" title="Tooltips" class="md-nav__link">
+      Tooltips
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/chart_events/" title="Chart Events" class="md-nav__link">
+      Chart Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/iris/" title="Iris Dataset Visualization" class="md-nav__link">
+      Iris Dataset Visualization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/chart_components/" title="Chart Components" class="md-nav__link">
+      Chart Components
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      ag-Grid Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        ag-Grid Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
+      Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
+      Using Pandas to Create Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/database/" title="Displaying Database Tables and Query Results" class="md-nav__link">
+      Displaying Database Tables and Query Results
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/grid_events/" title="Grid Events" class="md-nav__link">
+      Grid Events
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Quasar Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Quasar Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/notify/" title="Notifications" class="md-nav__link">
+      Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDialog/" title="QDialog" class="md-nav__link">
+      QDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QInput/" title="QInput" class="md-nav__link">
+      QInput
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDate/" title="QDate and QTime" class="md-nav__link">
+      QDate and QTime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QOptionGroup/" title="QOptionGroup" class="md-nav__link">
+      QOptionGroup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QBtnToggle/" title="QBtnToggle" class="md-nav__link">
+      QBtnToggle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QExpansionItem/" title="QExpansionItem" class="md-nav__link">
+      QExpansionItem
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QSplitter/" title="QSplitter" class="md-nav__link">
+      QSplitter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QRating/" title="QRating" class="md-nav__link">
+      QRating
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QColor/" title="QColor" class="md-nav__link">
+      QColor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
+      Components not Working
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/webpage/" title="WebPage class" class="md-nav__link">
+      WebPage class
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/htmlcomponent/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/justpy/" title="The justpy Command" class="md-nav__link">
+      The justpy Command
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clock" class="md-nav__link">
+    Clock
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collaborative-editor" class="md-nav__link">
+    Collaborative Editor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-message-board" class="md-nav__link">
+    Simple Message Board
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-final-countdown" class="md-nav__link">
+    The Final Countdown
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="pushing-data-to-web-pages">Pushing Data to Web Pages<a class="headerlink" href="#pushing-data-to-web-pages" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>The WebSocket API is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply.<br />
+ <span>-</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">Mozzila.org</a></p>
+</blockquote>
+<p>JustPy uses this technology in order allow the server to "push" data to web pages. 
+Here is an example of a program that implements a clock. Every second, the server pushes the updated time to all open web pages.</p>
+<h2 id="clock">Clock<a class="headerlink" href="#clock" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">clock_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Loading...&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-1 p-1 bg-gray-300 font-mono&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">clock_counter</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">clock_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%a</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> %b %Y, %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">update</span><span class="p">())</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">clock_init</span><span class="p">():</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">clock_counter</span><span class="p">())</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">clock_test</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">clock_test</span><span class="p">,</span> <span class="n">startup</span><span class="o">=</span><span class="n">clock_init</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The program first creates a WebPage instance called <code>wp</code> and <code>Span</code>instance called <code>clock_div</code> which is added to <code>wp</code>. Then we define a function called <code>clock_counter</code>. This function implements an infinite loop that changes the text of <code>clock_div</code> to the current time, updates <code>wp</code> and sleeps (in a non-blocking way) for one second. Every second, this loop is repeated. </p>
+<p>The <code>WebPage</code> instance <code>wp</code> is updated using the method <code>update()</code>. 
+In order to understand what is happening, we need to make several distinctions.</p>
+<ol>
+<li><code>wp</code> is an instance of the Python class <code>WebPage</code></li>
+<li><code>wp</code> can be the <code>WebPage</code> instance returned by several different requests, and in fact in our case, <code>wp</code> is always returned. All users get sent the same <code>wp</code>. This makes sense since the time is the same for everybody locally and we want to update it for everyone.</li>
+<li>However, each user has their own browser tab open. Also, the same user may have several browser tabs and windows open.</li>
+<li>There is therefore a one to many relation between <code>wp</code> and browser tabs and windows. <code>wp</code> may be rendered in many different tabs and windows (this is true for any instance of the class <code>WebPage</code>).</li>
+<li>Each time an instance of <code>WebPage</code> is rendered in a browser tab, JustPy creates a websocket connection (channel) between the tab and the sever. Therefore, an instance of <code>WebPage</code>, such as <code>wp</code>, may have many different websockets associated with it, one for every open tab that has <code>wp</code> rendered in it. JustPy keeps track of all open websockets</li>
+<li>The <code>update()</code> method when applied to the page, retrieves all open websockets associated with the specific WebPage instance and uses them to change the specific browser tab they connect with.  <code>wp.update()</code> updates all browser tabs that were rendered using <code>wp</code>.</li>
+</ol>
+<p>In JustPy, all the above is done by the framework without any need for developer intervention. What you need to remember is simply this: If requests from any number of users were returned the same instance of <code>WebPage</code>, any update to this instance will change the content for all these users.</p>
+<p>In our case, calling <code>wp.update()</code> will update all users since all requests result in wp being rendered (the function clock_test always returns <code>wp</code>).  </p>
+<p>It is important to remember that the update method is a coroutine and must run in the asyncio loop that the server runs on and therefore user functions that await this method must also be coroutines and defined using async. Once <code>justpy</code> has been called, the loop the server is running on can be accessed via <code>JustPy.loop</code> in case you need to do something more complex. Also <code>asyncio.get_event_loop()</code> will work if you haven’t initiated other loops.</p>
+<p>If the previous paragraph reads like gibberish to you, I apologize. Explaining Python's asyncio is beyond the scope of this tutorial. If you don't need to develop applications that scale, don't worry about it. Just use the examples as templates. </p>
+<p>Let's review the program in detail. First, we create <code>wp</code> and <code>clock_div</code> as global variables.
+Then we define the coroutine <code>clock_counter</code>. It runs an infinite loop. The first line of the loop sets the text attribute of <code>clock_div</code> to be the current time and date (formatted to look a little nicer). The second line uses the JustPy helper utility <code>run_task</code> to run the coroutine update (it in fact schedules the coroutine to run as soon as possible). The third line causes <code>clock_counter</code> to suspend running for 1 second in a non-blocking way (all other coroutines can run while <code>clock_counter</code> sleeps).</p>
+<p>Next, we define the coroutine <code>clock_init</code> (it could be just a regular function since it does not await any coroutine in this specific case). We will see in a second how this function will be used. All it does is run <code>clock_counter</code> once the server loop is up and running.</p>
+<p>The last coroutine we define is <code>clock_test</code>. This is the function that handles all web requests. It just returns <code>wp</code> (it doesn’t need to be a coroutine in this case, it would work as a regular function since it does not await any coroutines). </p>
+<p>The last line is the call to <code>justpy</code>. The keyword parameter <code>startup</code> allows us to designate a function to run once the server loop has been initiated. We cannot designate <code>clock_counter</code> as the startup function because the server is locked until the startup function terminates and <code>clock_counter</code> never terminates. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a JustPy event handler finishes running and returns <code>None</code>, JustPy calls the <code>update</code> method of the WebPage instance in which the event occurred. That is the reason that content in browser tabs gets updated after events automatically. If you don't want the page to update, return <code>True</code> or anything except for <code>None</code>. </p>
+</div>
+<h2 id="collaborative-editor">Collaborative Editor<a class="headerlink" href="#collaborative-editor" title="Permanent link">&para;</a></h2>
+<p>Run the following program:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">editor</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QEditor</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">kitchen_sink</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;94vh&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">joint_edit</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">joint_edit</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>This program allows joint editing of a document. Open several browser tabs or different browsers on your local machine and start editing the document. Any change you make in one browser tab, is reflected immediately in all others. </p>
+<p>The program uses the component QEditor. This JustPy component was built using the <a href="https://quasar.dev/vue-components/editor">Quasar QEditor Component</a> (Quasar based JustPy components are described <a href="/quasar_tutorial/introduction">here</a>).  </p>
+<p>Since the program renders <code>wp</code>, the same WebPage instance to all pages, they all share the same QEditor instance. QEditor supports the input event and therefore the keys pressed are sent to the server which in turn sets the value of the QEditor instance (<code>editor</code> in our case) and then updates <code>wp</code> using the update method. Since <code>wp</code> is rendered in all browser tabs, they are all updated by JustPy.</p>
+<h2 id="simple-message-board">Simple Message Board<a class="headerlink" href="#simple-message-board" title="Permanent link">&para;</a></h2>
+<p>JustPy allows updating just specific elements on the page and not the whole page. Here is an implementation of a simple message board in which just the Div with the messages is shared and updated. Load pages in different browser tabs and see the functionality (a message sent from one tab will show up in all the others).</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">input_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 bg-gray-200 font-mono appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-orange-500&#39;</span>
+<span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none&#39;</span>
+<span class="n">message_classes</span> <span class="o">=</span> <span class="s1">&#39;ml-4 p-2 text-lg bg-orange-500 text-white overflow-auto font-mono rounded-lg&#39;</span>
+
+<span class="n">shared_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 h-1/2 border overflow-auto&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Simple Message Board&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 text-3xl&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">button_icon</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;paper-plane&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">button_text</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Send&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-sm&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">message_icon</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl text-green-600&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">message_initialize</span><span class="p">():</span>
+    <span class="c1"># Called once on startup</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">shared_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex m-2 border&#39;</span><span class="p">)</span>
+    <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">),</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-xs ml-2 flex-shrink-0&#39;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Welcome to the simple message board!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">message_classes</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">message_icon</span><span class="p">,</span> <span class="n">time_stamp</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex m-2 border&#39;</span><span class="p">)</span>
+        <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">),</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-xs ml-2 flex-shrink-0&#39;</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">message_classes</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">message_icon</span><span class="p">,</span> <span class="n">time_stamp</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">shared_div</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>     <span class="c1"># Clear message box after message is sent</span>
+        <span class="k">await</span> <span class="n">shared_div</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">message_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">outer_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-col h-screen&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">outer_div</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">outer_div</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">TextArea</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Enter message here&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">send_button</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">send_message</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">)</span>
+    <span class="n">send_button</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">button_icon</span><span class="p">,</span> <span class="n">button_text</span><span class="p">)</span>
+    <span class="n">outer_div</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">shared_div</span><span class="p">)</span>
+    <span class="n">shared_div</span><span class="o">.</span><span class="n">add_page</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">send_button</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">message_demo</span><span class="p">,</span> <span class="n">startup</span><span class="o">=</span><span class="n">message_initialize</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>At the top of the program we define combinations of Tailwind classes to make our UI a little nicer. This technique, of defining classes in a global manner can be used to create templates for JustPy applications. Next, we create global components that will be shared by all web pages. We introduce the <code>Icon</code> component which is used to display icons from the free <a href="https://fontawesome.com/">Fontawesome</a> collection. </p>
+<p>Take a look at <code>message_demo</code>, the third function we define. All requests will be handled by this function. Each time it is called, it creates a new <code>WebPage</code> instance, <code>wp</code>. It adds a Div to it (<code>outer_div</code>). To this Div we add the predefined <code>header</code> Div and another Div which holds the message box and the button used to send messages. The button itself has two child components, the plane icon and the Div with the 'Send' text. We then add the shared message div to <code>outer_div</code>.</p>
+<p>The next line, <code>shared_div.add_page(wp)</code>, is important. We need to add <code>wp</code> to the dictionary of pages <code>shared_div</code> is on. When we call the <code>update</code> method of <code>shared_div</code>, it will use this dictionary to update the appropriate browser tabs. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>JustPy does not keep track automatically of which page an element is on. This would have introduced a lot of overhead since often, as in our case also, an element is indirectly added to a page by being added to an element that has been or will be added to a page.</p>
+</div>
+<p>Let's take a closer look at <code>send_message</code>, the event handler that gets called when <code>send_button</code> is clicked. If the message box is not empty, the function creates a Div to which it adds an icon, a time stamp and the text of the message. It then adds the Div as the first element in <code>shared_div</code>.  It clears the message box and then awaits the <code>update</code> method of <code>shared_div</code>. Only <code>shared_div</code> will be updated in all the WebPages it is on. All the other elements on the page will not be updated.</p>
+<p>Notice the <code>send_message</code> is a coroutine defined using the <code>async</code> keyword. This is the case because we need to await <code>update</code> from within <code>send_message</code>.  </p>
+<h2 id="the-final-countdown">The Final Countdown<a class="headerlink" href="#the-final-countdown" title="Permanent link">&para;</a></h2>
+<p>It is often required to call update several times within one event handler. For example, you may want to display a loading method while information is being retrieved from a database. Here is an exaggerated example:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none&#39;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">count_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">):</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">bomb_icon</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;bomb&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;inline-block text-5xl ml-1 mt-1&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-center m-4 p-4 text-6xl text-red-600 bg-blue-500 faster&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="p">,</span> <span class="n">animation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">count_animation</span><span class="p">)</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_num</span><span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Boom!&#39;</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">animation</span> <span class="o">=</span> <span class="s1">&#39;zoomIn&#39;</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;text-red-500 bg-white&#39;</span><span class="p">)</span>
+    <span class="n">bomb_icon</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;text-red-700&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">count_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">start_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">animation</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;animation&#39;</span><span class="p">,</span> <span class="s1">&#39;flip&#39;</span><span class="p">)</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">count_button</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Start Countdown&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">count_down</span><span class="p">)</span>
+    <span class="n">count_button</span><span class="o">.</span><span class="n">start_num</span> <span class="o">=</span> <span class="n">start_num</span>
+    <span class="n">count_button</span><span class="o">.</span><span class="n">count_animation</span> <span class="o">=</span> <span class="n">animation</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">count_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>When you press the countdown button, a countdown begins and the page is updated every second. </p>
+<p>Every JustPy component has a <code>show</code> attribute. If it is set to <code>False</code>, the component is not rendered. The first line in the <code>count_down</code> event handler sets the button's <code>show</code> attribute to <code>False</code> and it is not rendered during the countdown (in this way the user cannot accidentally initiate another countdown while one is going on). Then we remove from the page the <code>Div</code> with the current countdown (we check if the <code>Div</code> is stored on the page to handle the first countdown ). We create the <code>Div</code> and add it to the page and also store a reference to it under the <code>d</code> attribute of the page so we can later have easy access to it for removal.</p>
+<p>Then we loop from the countdown start number down to zero. In each loop iteration we set the text of <code>d</code>, update the page, and sleep 1 second using the asyncio library so as not to block countdowns on other pages. You can verify this by loading the page in different tabs or browsers.</p>
+<p>After the countdown loop has ended, we set the text of <code>d</code> to 'Boom!', change some of <code>d</code>'s classes and make the button visible again. Remember, that if an event handler returns <code>None</code> as in our case (the default in Python when no return statement is encountered), the framework updates the page. Therefore when count_down terminates the page is updated again and that is why we see the button and 'Boom!'.</p>
+<p>JustPy supports animation using the <a href="https://daneden.github.io/animate.css/">animate.css</a> library. Just set the animation attribute of any component to a valid animation name. The default animation we use above is 'flip'. Try http://127.0.0.1:8000/?animation=bounceIn for example. You can test different animations using query parameters. You can set the animation speed by adding one of the classes slow, slower, fast, faster to the classes of the component. In this case we used 'faster' so that the animation takes less than 1 second. </p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../working_with_html/" title="Parsing and Using HTML" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Parsing and Using HTML
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../custom_components/" title="Creating Your Own Components" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Creating Your Own Components
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

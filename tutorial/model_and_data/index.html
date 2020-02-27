@@ -1,0 +1,1369 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="An object-oriented, component based, high-level Python Web Framework that requires no front-end programming">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>The model and data Attributes - JustPy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-155125345-1", "justpy.io")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#the-model-and-data-attributes" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="JustPy" aria-label="JustPy" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              JustPy
+            </span>
+            <span class="md-header-nav__topic">
+              
+                The model and data Attributes
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="JustPy" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    JustPy
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    justpy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="What is JustPy" class="md-nav__link">
+      What is JustPy
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../basic_concepts/" title="Basic Concepts" class="md-nav__link">
+      Basic Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../handling_events/" title="Handling Events" class="md-nav__link">
+      Handling Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../html_components/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../routes/" title="Routes" class="md-nav__link">
+      Routes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../input/" title="Input Component" class="md-nav__link">
+      Input Component
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        The model and data Attributes
+      </label>
+    
+    <a href="./" title="The model and data Attributes" class="md-nav__link md-nav__link--active">
+      The model and data Attributes
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-and-examples" class="md-nav__link">
+    Introduction and Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-use-of-the-model-attribute" class="md-nav__link">
+    Advanced use of the model attribute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-complex-model_update-methods" class="md-nav__link">
+    More complex model_update methods
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../working_with_html/" title="Parsing and Using HTML" class="md-nav__link">
+      Parsing and Using HTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pushing_data/" title="Pushing Data to Web Pages" class="md-nav__link">
+      Pushing Data to Web Pages
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../custom_components/" title="Creating Your Own Components" class="md-nav__link">
+      Creating Your Own Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../before_after_events/" title="The before and after Events" class="md-nav__link">
+      The before and after Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../request_object/" title="The Request Object" class="md-nav__link">
+      The Request Object
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../form/" title="Forms" class="md-nav__link">
+      Forms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tailwind/" title="Tailwind" class="md-nav__link">
+      Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../svg_components/" title="SVG Components" class="md-nav__link">
+      SVG Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../matplotlib/" title="Matplotlib Charting" class="md-nav__link">
+      Matplotlib Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
+      Ajax vs. WebSockets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sessions/" title="Sessions" class="md-nav__link">
+      Sessions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../static/" title="Static Files" class="md-nav__link">
+      Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uploading_files/" title="Downloading and Uploading Files" class="md-nav__link">
+      Downloading and Uploading Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deployment/" title="Deployment" class="md-nav__link">
+      Deployment
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Highcharts Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Highcharts Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/creating_charts/" title="Creating Charts" class="md-nav__link">
+      Creating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/pandas/" title="Using Pandas to Create Charts" class="md-nav__link">
+      Using Pandas to Create Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/stock_charts/" title="Stock Charts" class="md-nav__link">
+      Stock Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/updating_charts/" title="Updating Charts" class="md-nav__link">
+      Updating Charts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/tooltips/" title="Tooltips" class="md-nav__link">
+      Tooltips
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/chart_events/" title="Chart Events" class="md-nav__link">
+      Chart Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/iris/" title="Iris Dataset Visualization" class="md-nav__link">
+      Iris Dataset Visualization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../charts_tutorial/chart_components/" title="Chart Components" class="md-nav__link">
+      Chart Components
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      ag-Grid Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        ag-Grid Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
+      Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
+      Using Pandas to Create Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/database/" title="Displaying Database Tables and Query Results" class="md-nav__link">
+      Displaying Database Tables and Query Results
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/grid_events/" title="Grid Events" class="md-nav__link">
+      Grid Events
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Quasar Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Quasar Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/notify/" title="Notifications" class="md-nav__link">
+      Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDialog/" title="QDialog" class="md-nav__link">
+      QDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QInput/" title="QInput" class="md-nav__link">
+      QInput
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QDate/" title="QDate and QTime" class="md-nav__link">
+      QDate and QTime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QOptionGroup/" title="QOptionGroup" class="md-nav__link">
+      QOptionGroup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QBtnToggle/" title="QBtnToggle" class="md-nav__link">
+      QBtnToggle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QExpansionItem/" title="QExpansionItem" class="md-nav__link">
+      QExpansionItem
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QSplitter/" title="QSplitter" class="md-nav__link">
+      QSplitter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QRating/" title="QRating" class="md-nav__link">
+      QRating
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QColor/" title="QColor" class="md-nav__link">
+      QColor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
+      Components not Working
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/webpage/" title="WebPage class" class="md-nav__link">
+      WebPage class
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/htmlcomponent/" title="HTML Components" class="md-nav__link">
+      HTML Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/justpy/" title="The justpy Command" class="md-nav__link">
+      The justpy Command
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-and-examples" class="md-nav__link">
+    Introduction and Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-use-of-the-model-attribute" class="md-nav__link">
+    Advanced use of the model attribute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-complex-model_update-methods" class="md-nav__link">
+    More complex model_update methods
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="the-model-and-data-attributes">The model and data Attributes<a class="headerlink" href="#the-model-and-data-attributes" title="Permanent link">&para;</a></h1>
+<h2 id="introduction-and-examples">Introduction and Examples<a class="headerlink" href="#introduction-and-examples" title="Permanent link">&para;</a></h2>
+<p>The <code>model</code> attribute is a special one in JustPy. You don't need to use it, but if you do, it may make your code more concise and readable. It is an elegant and simple way to share data between independent components (it was inspired by the <a href="https://vuejs.org/v2/api/#v-model"><code>v-model</code></a> directive in Vue.js and works in a similar manner).</p>
+<p>Try running the following program and typing into the input field in the browser:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">input_demo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Initial text&#39;</span><span class="p">})</span>
+    <span class="n">input_classes</span> <span class="o">=</span> <span class="s2">&quot;m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Please type here&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">])</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 h-32 text-xl border-2 overflow-auto&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Text entered in an input field is reflected in a div on the page. The connection between the input and the div is made using the <code>model</code> and <code>data</code> attributes. Notice that when we create the web page, we initialize a <code>data</code> attribute. The <code>data</code> attribute must be a Python dictionary. In our case it is a dictionary with one entry. The key is 'text' and the value is 'Initial text'. </p>
+<p>When we create the Input element, we add the following to its keyword arguments: <code>model=[wp, 'text']</code></p>
+<p>This tells the Input instance that it will model itself based on the value under the 'text' key in <code>wp</code>'s data. For an Input element this means that when rendered it will take its value from <code>wp.data['text']</code> AND when its value is changed due to an input event, it will set <code>wp.data['text']</code> to its new value. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is important to understand that in the case of Input, <code>model</code> has a two way influence. It gets its value from the appropriate data attribute and when an input event occurs it changes the appropriate data attribute.</p>
+</div>
+<p>In the case of a Div element the relation is only one way. Its text attribute is rendered according to the model attribute but it does not change the data dictionary.</p>
+<p>If an element has an input event, the model attribute works in two directions, otherwise just in one. For two directional elements the attribute changed is value while for one directional ones the attribute changed is text.</p>
+<p>How is this useful? Let's put three divs on the page instead of just one:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">input_demo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Initial text&#39;</span><span class="p">})</span>
+    <span class="n">input_classes</span> <span class="o">=</span> <span class="s2">&quot;m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Please type here&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 h-32 text-xl border-2 overflow-auto&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Since all Div instances have the same model, they change when we type. Without the model attribute, implementing this would be more verbose.</p>
+<p>Now let's duplicate the Inputs. Let's have five Inputs instead of one:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">input_demo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Initial text&#39;</span><span class="p">})</span>
+    <span class="n">input_classes</span> <span class="o">=</span> <span class="s2">&quot;m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Please type here&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 h-32 text-xl border-2 overflow-auto&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Type into any one of the five Input fields and see what happens. Since all elements share the same model, they all change in tandem. We didn't need to write any event handler.</p>
+<p>Let's make a small modification to the program and add a reset button that will clear all the elements on the page:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">reset_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">input_demo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Initial text&#39;</span><span class="p">})</span>
+    <span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;w-32 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&#39;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Reset&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">reset_all</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Hr</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>  <span class="c1"># Add horizontal like to page</span>
+    <span class="n">input_classes</span> <span class="o">=</span> <span class="s2">&quot;m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Please type here&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 h-32 text-xl border-2 overflow-auto&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>When the button is clicked, the following command in <code>reset_all</code> is executed: <code>msg.page.data['text'] = ''</code></p>
+<p>Since all the Inputs and Divs are modeled after this dictionary entry, they are all reset to the empty string when the button is clicked. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any element, a Div for example, may have a data attribute and be used in a model attribute, not just a WebPage.</p>
+</div>
+<p>With the <code>model</code> and <code>data</code> attributes you can easily propagate a change in one element to others.</p>
+<h2 id="advanced-use-of-the-model-attribute">Advanced use of the model attribute<a class="headerlink" href="#advanced-use-of-the-model-attribute" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This part of the tutorial will use custom components. I recommend skipping this section initially and returning to it after having completed the first few sections of the <a href="../custom_components">Creating Custom Components</a> part of the tutorial</p>
+</div>
+<p>The following program is the base one we will expand on. It uses <code>model</code> in the same way as examples above.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">corner_classes</span> <span class="o">=</span> <span class="s1">&#39;p-3 absolute bg-gray-200 &#39;</span>
+
+<span class="k">def</span> <span class="nf">model_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;relative h-screen bg-gray-600&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span>
+    <span class="k">for</span> <span class="n">v_pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">h_pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">]:</span>
+            <span class="n">corner_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">corner_classes</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{v_pos}</span><span class="s1">-0 </span><span class="si">{h_pos}</span><span class="s1">-0&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{v_pos}</span><span class="s1"> </span><span class="si">{h_pos}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">corner_div</span><span class="p">)</span>
+            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;typing will go here&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">corner_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">])</span>
+    <span class="n">middle_input</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;absolute text-xl border-2 border-red-600&#39;</span><span class="p">,</span>
+                            <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Type here&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;top: 50%; left: 40%&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">model_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>When you type text into <code>middle_input</code> it shows up in the four corners of the window. In each corner there is a Div that contains two other Divs. The second Div has the <code>model</code> property and the text in it changes when the user types into <code>middle_input</code>'`. </p>
+<p>If we want the corners to show the text "Nothing typed yet" when <code>middle_input</code> is empty, the best way to implement this, is by creating a new component with a more sophisticated <code>model</code> handling method.</p>
+<p>The program would look like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">corner_classes</span> <span class="o">=</span> <span class="s1">&#39;p-3 absolute bg-gray-200 &#39;</span>
+
+<span class="k">class</span> <span class="nc">MyDiv</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># model has the form [wp, &#39;text&#39;] for example</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Nothing typed yet&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">model_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;relative h-screen bg-gray-600&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span>
+    <span class="k">for</span> <span class="n">v_pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">h_pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">]:</span>
+            <span class="n">corner_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">corner_classes</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{v_pos}</span><span class="s1">-0 </span><span class="si">{h_pos}</span><span class="s1">-0&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{v_pos}</span><span class="s1"> </span><span class="si">{h_pos}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">corner_div</span><span class="p">)</span>
+            <span class="n">MyDiv</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;typing will go here&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">corner_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">])</span>
+    <span class="n">middle_input</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;absolute text-xl border-2 border-red-600&#39;</span><span class="p">,</span>
+                            <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Type here&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;top: 50%; left: 40%&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">model_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We define a new component, <code>MyDiv</code> that inherits from <code>Div</code> and is identical except for the <code>model_update</code> method. 
+The standard <code>model_update</code> method <code>Div</code> comes with is:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># [wp, &#39;text-data&#39;] for example</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+</code></pre></div>
+
+
+<p>In <code>MyDiv</code>'s <code>model_update</code> we check first if the value to set the <code>text</code> attribute is the empty string, and if so, assign to it the string "Nothing typed yet". It creates the functionality we were looking for.</p>
+<h2 id="more-complex-model_update-methods">More complex model_update methods<a class="headerlink" href="#more-complex-model_update-methods" title="Permanent link">&para;</a></h2>
+<p>We can put more functionality into the the <code>model_update</code> function.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">corner_classes</span> <span class="o">=</span> <span class="s1">&#39;p-3 absolute bg-gray-200 &#39;</span>
+
+<span class="k">class</span> <span class="nc">MyDiv</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># [wp, &#39;text-data&#39;] for example</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">repeat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_text</span>
+
+
+<span class="k">def</span> <span class="nf">model_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;relative h-screen bg-gray-600&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span>
+    <span class="n">repeat</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">v_pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">h_pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">]:</span>
+            <span class="n">corner_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">corner_classes</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{v_pos}</span><span class="s1">-0 </span><span class="si">{h_pos}</span><span class="s1">-0&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{v_pos}</span><span class="s1"> </span><span class="si">{h_pos}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">corner_div</span><span class="p">)</span>
+            <span class="n">MyDiv</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;typing will go here&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">corner_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">,</span> <span class="n">initial_text</span> <span class="o">=</span> <span class="s1">&#39;Yada Yada&#39;</span><span class="p">)</span>
+            <span class="n">repeat</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">middle_input</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;absolute text-xl border-2 border-red-600&#39;</span><span class="p">,</span>
+                            <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Type here&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;top: 50%; left: 40%&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">model_demo</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We add the two attributes <code>repeat</code> and <code>initial_text</code> to <code>MyDiv</code>. The first, <code>repeat</code> determines how many time the model value will be repeated in the text. We give each corner a different value. </p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../input/" title="Input Component" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Input Component
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../working_with_html/" title="Parsing and Using HTML" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Parsing and Using HTML
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
