@@ -706,6 +706,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#scatter-with-regression" class="md-nav__link">
+    Scatter with Regression
+  </a>
+  
+</li>
+      
       
       
       
@@ -1068,6 +1075,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#scatter-with-regression" class="md-nav__link">
+    Scatter with Regression
+  </a>
+  
+</li>
+      
       
       
       
@@ -1218,19 +1232,14 @@
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">histogram_test</span><span class="p">)</span>
+</code></pre></div>
 
- <span class="err">```</span>
 
-<span class="n">The</span> <span class="n">Histogram</span> <span class="k">class</span> <span class="nc">relies</span> <span class="n">on</span> <span class="n">a</span> <span class="p">[</span><span class="n">chart</span> <span class="n">definition</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">highcharts</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="n">chart</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">series</span><span class="o">-</span><span class="n">types</span><span class="o">/</span><span class="n">histogram</span><span class="o">-</span><span class="n">series</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">Highcharts</span> <span class="n">documentation</span><span class="o">.</span>
-
-<span class="n">Encompassing</span> <span class="n">the</span> <span class="n">chart</span> <span class="n">definition</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">class</span> <span class="nc">simplifies</span> <span class="n">its</span> <span class="n">use</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">build</span> <span class="n">such</span> <span class="n">classes</span> <span class="k">for</span> <span class="n">your</span> <span class="n">favorite</span> <span class="n">charts</span><span class="p">,</span> <span class="n">please</span> <span class="n">send</span> <span class="n">them</span> <span class="n">to</span> <span class="n">me</span> <span class="n">to</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">JustPy</span><span class="o">.</span> <span class="n">Once</span> <span class="n">the</span> <span class="n">Histogram</span> <span class="k">class</span> <span class="err">(</span><span class="nc">component</span><span class="p">)</span> <span class="ow">is</span> <span class="n">defined</span><span class="p">,</span> <span class="n">reusing</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">simple</span> <span class="ow">and</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">require</span> <span class="n">remembering</span> <span class="n">the</span> <span class="n">specifics</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Highcharts</span> <span class="n">API</span><span class="o">.</span> <span class="n">The</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">HighCharts</span> <span class="n">can</span> <span class="n">be</span> <span class="n">further</span> <span class="n">modified</span><span class="o">.</span> <span class="n">In</span> <span class="n">the</span> <span class="n">example</span> <span class="n">above</span><span class="p">,</span> <span class="n">we</span> <span class="n">change</span> <span class="n">the</span> <span class="n">chart</span> <span class="n">titles</span> <span class="n">after</span> <span class="n">the</span> <span class="n">chart</span> <span class="n">has</span> <span class="n">been</span> <span class="n">created</span><span class="o">.</span>
-
-<span class="c1">## Scatter with Regression</span>
-
-<span class="n">Let</span><span class="s1">&#39;s build a component that automatically adds a regression line to a scatter chart. We will use the predefined JustPy Scatter component. </span>
-
-<span class="err">```</span><span class="n">python</span>
-<span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<p>The Histogram class relies on a <a href="https://www.highcharts.com/docs/chart-and-series-types/histogram-series">chart definition</a> from the Highcharts documentation.</p>
+<p>Encompassing the chart definition in a class simplifies its use. If you build such classes for your favorite charts, please send them to me to include in JustPy. Once the Histogram class (component) is defined, reusing it is simple and does not require remembering the specifics of the Highcharts API. The instance of HighCharts can be further modified. In the example above, we change the chart titles after the chart has been created.</p>
+<h2 id="scatter-with-regression">Scatter with Regression<a class="headerlink" href="#scatter-with-regression" title="Permanent link">&para;</a></h2>
+<p>Let's build a component that automatically adds a regression line to a scatter chart. We will use the predefined JustPy Scatter component. </p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">class</span> <span class="nc">ScatterWithRegression</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Scatter</span><span class="p">):</span>
