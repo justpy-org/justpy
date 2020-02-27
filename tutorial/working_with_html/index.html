@@ -1225,8 +1225,8 @@
 </code></pre></div>
 
 
-<div class="admonition danger">
-<p class="admonition-title">Danger</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>if you set <code>inner_html</code>, it will override any other content of your component. </p>
 </div>
 <h2 id="inserting-html-at-the-webpage-level">Inserting HTML at the WebPage level<a class="headerlink" href="#inserting-html-at-the-webpage-level" title="Permanent link">&para;</a></h2>
@@ -1303,42 +1303,44 @@
 <p>Along with parse_html there are two additional functions in JustPy to parse HTML: <code>parse_html_file</code> parses a file instead of a string and <code>parse_html_file_async</code> is a co-routine that does the same asynchronously.  </p>
 <h3 id="the-commands-attribute">The <span style="color: red;">commands</span> attribute<a class="headerlink" href="#the-commands-attribute" title="Permanent link">&para;</a></h3>
 <p>The <code>commands</code> attribute is created by <code>parse_html</code> and includes a list of the Python commands (represented as strings) needed to create the element in the JustPy framework. </p>
-<p>```python
-import justpy as jp</p>
-<p>def commands_demo():
-    wp = jp.WebPage()
-    c = jp.parse_html("""
-        <div>
-        <p class="m-2 p-2 text-red-500 text-xl">Paragraph 1</p>
-        <p class="m-2 p-2 text-blue-500 text-xl">Paragraph 2</p>
-        <p class="m-2 p-2 text-green-500 text-xl">Paragraph 3</p>
-        </div>
-        """, a=wp)
-    for i in c.commands:
-        print(i)
-        jp.Div(text=i, classes='font-mono ml-2', a=wp)
-    print()
-    c = jp.parse_html("""
-            <div>
-            <p class="m-2 p-2 text-red-500 text-xl">Paragraph 1</p>
-            <p class="m-2 p-2 text-blue-500 text-xl">Paragraph 2</p>
-            <p class="m-2 p-2 text-green-500 text-xl">Paragraph 3</p>
-            </div>
-            """, a=wp, command_prefix='justpy.')
-    for i in c.commands:
-        print(i)
-        jp.Div(text=i, classes='font-mono ml-2', a=wp)
-    return wp</p>
-<p>jp.justpy(commands_demo)</p>
-<div class="codehilite"><pre><span></span><code><span class="n">The</span> <span class="sb">`command_prefix`</span> <span class="n">keyword</span> <span class="n">argument</span> <span class="n">allows</span> <span class="n">specifying</span> <span class="n">the</span> <span class="n">prefix</span> <span class="k">for</span> <span class="n">the</span> <span class="n">commands</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="ow">is</span> <span class="s1">&#39;jp.&#39;</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="err">!!!</span> <span class="n">warning</span>
-    <span class="n">All</span> <span class="n">non</span> <span class="n">blank</span> <span class="n">prefixes</span> <span class="n">should</span> <span class="n">have</span> <span class="n">the</span> <span class="s1">&#39;.&#39;</span> <span class="p">(</span><span class="n">period</span><span class="p">)</span> <span class="k">as</span> <span class="n">their</span> <span class="n">last</span> <span class="n">character</span>
+<span class="k">def</span> <span class="nf">commands_demo</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;div&gt;</span>
+<span class="s2">        &lt;p class=&quot;m-2 p-2 text-red-500 text-xl&quot;&gt;Paragraph 1&lt;/p&gt;</span>
+<span class="s2">        &lt;p class=&quot;m-2 p-2 text-blue-500 text-xl&quot;&gt;Paragraph 2&lt;/p&gt;</span>
+<span class="s2">        &lt;p class=&quot;m-2 p-2 text-green-500 text-xl&quot;&gt;Paragraph 3&lt;/p&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;font-mono ml-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            &lt;div&gt;</span>
+<span class="s2">            &lt;p class=&quot;m-2 p-2 text-red-500 text-xl&quot;&gt;Paragraph 1&lt;/p&gt;</span>
+<span class="s2">            &lt;p class=&quot;m-2 p-2 text-blue-500 text-xl&quot;&gt;Paragraph 2&lt;/p&gt;</span>
+<span class="s2">            &lt;p class=&quot;m-2 p-2 text-green-500 text-xl&quot;&gt;Paragraph 3&lt;/p&gt;</span>
+<span class="s2">            &lt;/div&gt;</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">command_prefix</span><span class="o">=</span><span class="s1">&#39;justpy.&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;font-mono ml-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">We</span> <span class="n">can</span> <span class="n">then</span> <span class="n">use</span> <span class="n">the</span> <span class="n">commands</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">the</span> <span class="n">output</span> <span class="n">we</span> <span class="n">need</span> <span class="n">without</span> <span class="n">parsing</span> <span class="n">HTML</span><span class="p">:</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">commands_demo</span><span class="p">)</span>
+</code></pre></div>
 
-<span class="sb">``</span><span class="err">`</span><span class="n">python</span>
-<span class="kn">import</span> <span class="nn">justpy</span> <span class="kn">as</span> <span class="nn">jp</span>
+
+<p>The <code>command_prefix</code> keyword argument allows specifying the prefix for the commands. The default is 'jp.'</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All non blank prefixes should have the '.' (period) as their last character</p>
+</div>
+<p>We can then use the commands to generate the output we need without parsing HTML:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">def</span> <span class="nf">commands_demo</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
