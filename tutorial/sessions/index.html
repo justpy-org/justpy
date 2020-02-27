@@ -1102,17 +1102,16 @@
                 <h1 id="sessions-in-justpy">Sessions in JustPy<a class="headerlink" href="#sessions-in-justpy" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>JustPy supports secure, server based sessions.</p>
-<p>Sessions are supported by default. If you want to disable them, add the line:
- ```python
-SESSIONS = False</p>
-<div class="codehilite"><pre><span></span><code><span class="k">to</span> <span class="n">the</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">,</span> <span class="n">justpy</span><span class="p">.</span><span class="n">env</span>
+<p>Sessions are supported by default. If you want to disable them, add the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">SESSIONS</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
 
-<span class="k">In</span> <span class="n">the</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">.</span> <span class="n">You</span> <span class="n">can</span> <span class="n">also</span> <span class="kt">set</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cookie</span> <span class="n">JustPy</span> <span class="n">will</span> <span class="k">use</span> <span class="k">by</span> <span class="n">setting</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span>
-<span class="ss">`SESSION_COOKIE_NAME`</span><span class="p">.</span> <span class="n">The</span> <span class="k">default</span> <span class="n">value</span> <span class="k">is</span> <span class="s1">&#39;jp_token&#39;</span><span class="p">.</span> <span class="n">The</span> <span class="n">max</span> <span class="n">age</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cookie</span> <span class="k">in</span> <span class="n">seconds</span> <span class="k">is</span> <span class="kt">set</span> <span class="k">using</span> <span class="ss">`COOKIE_MAX_AGE`</span><span class="p">,</span> <span class="k">default</span> <span class="k">is</span> <span class="mi">7</span> <span class="n">days</span><span class="p">.</span>
 
-<span class="n">Your</span> <span class="n">justpy</span><span class="p">.</span><span class="n">env</span> <span class="n">file</span> <span class="n">could</span> <span class="n">include</span> <span class="k">for</span> <span class="n">example</span><span class="p">:</span>
-<span class="ss">``</span><span class="o">`</span><span class="n">python</span>
-<span class="n">SESSIONS</span> <span class="o">=</span> <span class="no">True</span>
+<p>to the configuration file, justpy.env</p>
+<p>In the configuration file. You can also set the name of the cookie JustPy will use by setting the value of
+<code>SESSION_COOKIE_NAME</code>. The default value is 'jp_token'. The max age of the cookie in seconds is set using <code>COOKIE_MAX_AGE</code>, default is 7 days.</p>
+<p>Your justpy.env file could include for example:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">SESSIONS</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">SESSION_COOKIE_NAME</span> <span class="o">=</span> <span class="s2">&quot;my_cookie_name&quot;</span>
 <span class="n">COOKIE_MAX_AGE</span> <span class="o">=</span> <span class="mi">108000</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&quot;my_very_secret_key_that_only_I_know&quot;</span>
