@@ -671,6 +671,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-point-data-to-format-tooltip" class="md-nav__link">
+    Using Point Data to Format Tooltip
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tooltip-positioning" class="md-nav__link">
     Tooltip Positioning
   </a>
@@ -1110,6 +1117,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-point-data-to-format-tooltip" class="md-nav__link">
+    Using Point Data to Format Tooltip
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tooltip-positioning" class="md-nav__link">
     Tooltip Positioning
   </a>
@@ -1224,31 +1238,28 @@
 <h2 id="tooltip-debouncing">Tooltip Debouncing<a class="headerlink" href="#tooltip-debouncing" title="Permanent link">&para;</a></h2>
 <p>If you quickly mouseover several points on charts with user defined formatters, you will see the "Loading…" inscription instead of the information you expect. Only when no new tooltip event occurs for 100ms (0.1 second), JustPy notifies its backend that a tooltip event has happened. This prevents the server from being inundated with irrelevant tooltip requests as the user moves the mouse over the chart.</p>
 <p>The debouncing delay can be changed by setting the attribute <code>tooltip_debounce</code> which is by default 100ms. The following command changes the debounce period to 500ms:</p>
-<p>```python
-chart2.tooltip_debounce = 500  # Assign value of debounce period in ms</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">## Using Point Data to Format Tooltip</span>
+<div class="codehilite"><pre><span></span><code><span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_debounce</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># Assign value of debounce period in ms</span>
+</code></pre></div>
 
-<span class="n">So</span> <span class="n">far</span><span class="p">,</span> <span class="n">the</span> <span class="n">tooltip</span> <span class="n">we</span> <span class="k">return</span> <span class="k">for</span> <span class="k">all</span> <span class="n">points</span> <span class="k">is</span> <span class="n">the</span> <span class="n">same</span><span class="p">.</span> <span class="n">That</span> <span class="k">is</span> <span class="k">not</span> <span class="n">very</span> <span class="n">interesting</span><span class="p">.</span> <span class="n">We</span> <span class="n">would</span> <span class="k">like</span> <span class="n">the</span> <span class="n">tooltip</span> <span class="k">to</span> <span class="n">be</span> <span class="n">much</span> <span class="n">more</span> <span class="n">descriptive</span><span class="p">.</span>
 
-<span class="n">The</span> <span class="n">second</span> <span class="n">argument</span> <span class="k">to</span> <span class="n">the</span> <span class="n">tooltip</span> <span class="nf">formatter</span> <span class="p">(</span><span class="ss">`msg`</span> <span class="k">in</span> <span class="n">our</span> <span class="k">case</span><span class="p">)</span> <span class="n">has</span> <span class="k">values</span> <span class="k">specific</span> <span class="k">to</span> <span class="n">tooltip</span> <span class="n">events</span> <span class="k">to</span> <span class="n">assist</span> <span class="n">us</span> <span class="k">with</span> <span class="n">this</span><span class="p">.</span> <span class="k">In</span> <span class="n">addition</span> <span class="k">to</span> <span class="n">the</span> <span class="n">usual</span> <span class="n">fields</span> <span class="n">it</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">fields</span><span class="p">:</span>
-<span class="o">-</span> <span class="ss">`msg.x`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">x</span> <span class="n">coordinate</span> <span class="n">of</span> <span class="n">the</span> <span class="n">point</span>
-<span class="o">-</span> <span class="ss">`msg.category`</span> <span class="o">-</span> <span class="k">If</span> <span class="n">the</span> <span class="n">x</span> <span class="n">value</span> <span class="k">is</span> <span class="k">not</span> <span class="n">a</span> <span class="n">number</span><span class="p">,</span> <span class="k">for</span> <span class="n">example</span> <span class="s1">&#39;Jan&#39;</span> <span class="k">or</span> <span class="s1">&#39;Feb&#39;</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="k">show</span> <span class="n">up</span> <span class="n">here</span>
-<span class="o">-</span> <span class="ss">`msg.y`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">y</span> <span class="n">coordinate</span> <span class="n">of</span> <span class="n">the</span> <span class="n">point</span>
-<span class="o">-</span> <span class="ss">`msg.color`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">color</span> <span class="n">of</span> <span class="n">the</span> <span class="n">point</span>
-<span class="o">-</span> <span class="ss">`msg.series_name`</span> <span class="o">-</span> <span class="n">The</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">series</span> <span class="n">the</span> <span class="n">point</span> <span class="k">is</span> <span class="k">in</span>
-<span class="o">-</span> <span class="ss">`msg.series_index`</span> <span class="o">-</span> <span class="n">The</span> <span class="k">index</span> <span class="n">the</span> <span class="n">series</span> <span class="n">the</span> <span class="n">point</span> <span class="k">is</span> <span class="k">in</span>
-<span class="o">-</span> <span class="ss">`msg.point_index`</span> <span class="o">-</span> <span class="n">The</span> <span class="k">index</span> <span class="n">the</span> <span class="n">point</span> <span class="k">in</span> <span class="n">its</span> <span class="n">series</span>
-
-<span class="n">Let</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">use</span> <span class="n">some</span> <span class="n">of</span> <span class="n">the</span> <span class="n">fields</span> <span class="n">above</span> <span class="k">to</span> <span class="k">create</span> <span class="n">a</span> <span class="n">more</span> <span class="n">informative</span> <span class="n">tooltip</span><span class="p">.</span> <span class="n">Please</span> <span class="k">replace</span> <span class="ss">`tooltip_formatter`</span> <span class="k">with</span> <span class="n">this</span> <span class="n">new</span> <span class="n">version</span> <span class="k">and</span> <span class="n">run</span> <span class="n">the</span> <span class="n">program</span><span class="p">:</span>
-
-<span class="ss">``</span><span class="o">`</span><span class="n">python</span>
-<span class="n">async</span> <span class="n">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;div style=&quot;</span><span class="n">color</span><span class="p">:</span> <span class="err">{</span><span class="n">msg</span><span class="p">.</span><span class="n">color</span><span class="err">}</span><span class="p">;</span><span class="s2">&quot;&gt;{msg.series_name}&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;{msg.category}&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;x: {msg.x}, y: {msg.y}&lt;/div&gt;</span>
+<h2 id="using-point-data-to-format-tooltip">Using Point Data to Format Tooltip<a class="headerlink" href="#using-point-data-to-format-tooltip" title="Permanent link">&para;</a></h2>
+<p>So far, the tooltip we return for all points is the same. That is not very interesting. We would like the tooltip to be much more descriptive.</p>
+<p>The second argument to the tooltip formatter (<code>msg</code> in our case) has values specific to tooltip events to assist us with this. In addition to the usual fields it contains the fields:
+- <code>msg.x</code> - The x coordinate of the point
+- <code>msg.category</code> - If the x value is not a number, for example 'Jan' or 'Feb', it will show up here
+- <code>msg.y</code> - The y coordinate of the point
+- <code>msg.color</code> - The color of the point
+- <code>msg.series_name</code> - The name of the series the point is in
+- <code>msg.series_index</code> - The index the series the point is in
+- <code>msg.point_index</code> - The index the point in its series</p>
+<p>Let's use some of the fields above to create a more informative tooltip. Please replace <code>tooltip_formatter</code> with this new version and run the program:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;color: </span><span class="si">{msg.color}</span><span class="s2">;&quot;&gt;</span><span class="si">{msg.series_name}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;</span><span class="si">{msg.category}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div&gt;x: </span><span class="si">{msg.x}</span><span class="s2">, y: </span><span class="si">{msg.y}</span><span class="s2">&lt;/div&gt;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">await</span> <span class="n">self</span><span class="p">.</span><span class="nf">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">websocket</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
 </code></pre></div>
 
 
