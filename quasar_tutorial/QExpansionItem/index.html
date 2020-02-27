@@ -903,6 +903,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-2" class="md-nav__link">
+    Example 2
+  </a>
+  
+</li>
+      
       
       
       
@@ -1054,6 +1061,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-2" class="md-nav__link">
+    Example 2
+  </a>
+  
+</li>
+      
       
       
       
@@ -1074,33 +1088,33 @@
                 <h1 id="qexpansionitem-examples">QExpansionItem Examples<a class="headerlink" href="#qexpansionitem-examples" title="Permanent link">&para;</a></h1>
 <h2 id="example-1">Example 1<a class="headerlink" href="#example-1" title="Permanent link">&para;</a></h2>
 <p>Three expansion items are defined in a loop. All three are added to a QList instance. Each expansion item includes a QCard with a QCardSection with text. </p>
-<p>```python
-import justpy as jp</p>
-<p>sample_text = """
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-            eveniet doloribus ullam aliquid.
-"""</p>
-<p>def quasar_example():
-    wp = jp.QuasarPage()
-    d = jp.Div(classes="q-pa-md", style="max-width: 350px", a=wp)
-    item_list = jp.QList(classes="rounded-borders", padding=True, bordered=True, a=d)
-    for info in [("perm_identity", "Account settings"), ("signal_wifi_off", "Wifi settings"), ("drafts", "Drafts")]:
-        expansion_item = jp.QExpansionItem(icon=info[0], label=info[1], a=item_list, header_class='text-purple',
-                                           dense=True, dense_toggle=True, expand_separator=True)
-        card= jp.QCard(a=expansion_item)
-        jp.QCardSection(text=sample_text, a=card)</p>
-<div class="codehilite"><pre><span></span><code><span class="err">return wp</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">sample_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti</span>
+<span class="s2">            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste</span>
+<span class="s2">            eveniet doloribus ullam aliquid.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">quasar_example</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;max-width: 350px&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">item_list</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QList</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;rounded-borders&quot;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bordered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;perm_identity&quot;</span><span class="p">,</span> <span class="s2">&quot;Account settings&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;signal_wifi_off&quot;</span><span class="p">,</span> <span class="s2">&quot;Wifi settings&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;drafts&quot;</span><span class="p">,</span> <span class="s2">&quot;Drafts&quot;</span><span class="p">)]:</span>
+        <span class="n">expansion_item</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QExpansionItem</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">item_list</span><span class="p">,</span> <span class="n">header_class</span><span class="o">=</span><span class="s1">&#39;text-purple&#39;</span><span class="p">,</span>
+                                           <span class="n">dense</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dense_toggle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand_separator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">card</span><span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QCard</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">expansion_item</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">QCardSection</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">sample_text</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">card</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example</span><span class="p">)</span>
 </code></pre></div>
 
 
-<p>jp.justpy(quasar_example)</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">## Example 2</span>
-
-<span class="n">In</span> <span class="n">this</span> <span class="n">example</span> <span class="n">we</span> <span class="n">define</span> <span class="n">a</span> <span class="n">custom</span> <span class="n">component</span> <span class="n">base</span> <span class="n">on</span> <span class="n">QExpansionItem</span><span class="o">.</span> <span class="n">This</span> <span class="n">component</span> <span class="n">adds</span> <span class="n">an</span> <span class="n">image</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">site</span> <span class="p">[</span><span class="n">Lorem</span> <span class="n">Picsum</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">picsum</span><span class="o">.</span><span class="n">photos</span><span class="o">/</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">expansion</span> <span class="n">item</span> <span class="ow">and</span> <span class="ow">in</span> <span class="n">addition</span> <span class="n">formats</span> <span class="n">the</span> <span class="n">expansion</span> <span class="n">item</span><span class="o">.</span>
-
-<span class="sb">``</span><span class="err">`</span><span class="n">python</span>
-<span class="kn">import</span> <span class="nn">justpy</span> <span class="kn">as</span> <span class="nn">jp</span>
+<h2 id="example-2">Example 2<a class="headerlink" href="#example-2" title="Permanent link">&para;</a></h2>
+<p>In this example we define a custom component base on QExpansionItem. This component adds an image from the site <a href="https://picsum.photos/">Lorem Picsum</a> to the expansion item and in addition formats the expansion item.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">My_expansion</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">QExpansionItem</span><span class="p">):</span>
 
@@ -1109,24 +1123,24 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehend
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">outer_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">QImg</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;https://picsum.photos/400/300/?image={My_expansion.image_num}&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">outer_div</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">QImg</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://picsum.photos/400/300/?image=</span><span class="si">{My_expansion.image_num}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">outer_div</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;photo&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;Image {My_expansion.image_num}&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">expand_separator</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Image </span><span class="si">{My_expansion.image_num}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expand_separator</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">header_class</span> <span class="o">=</span> <span class="s2">&quot;bg-teal text-white text-overline&quot;</span>
         <span class="n">My_expansion</span><span class="o">.</span><span class="n">image_num</span> <span class="o">+=</span> <span class="mi">1</span>
 
 
 <span class="k">def</span> <span class="nf">expansion_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">dark</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">dark</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;max-width: 500px&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="n">jp</span><span class="o">.</span><span class="n">Link</span><span class="p">(</span><span class="n">href</span><span class="o">=</span><span class="s1">&#39;https://quasar.dev/vue-components/expansion-item&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Quasar Expansion Item Example&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span>
             <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;text-h5 q-mb-md&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;display: block;&#39;</span><span class="p">)</span>
     <span class="n">add_btn</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Add Image&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-mb-md&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
     <span class="n">close_btn</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Close All&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-ml-md q-mb-md&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
     <span class="n">open_btn</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Open All&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-ml-md q-mb-md&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;positive&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-    <span class="n">l</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QList</span><span class="p">(</span><span class="n">bordered</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QList</span><span class="p">(</span><span class="n">bordered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
     <span class="n">wp</span><span class="o">.</span><span class="n">list</span> <span class="o">=</span> <span class="n">l</span>
     <span class="n">l</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="n">My_expansion</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -1136,12 +1150,12 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehend
 
     <span class="k">def</span> <span class="nf">close_pics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
-            <span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">close_btn</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">close_pics</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">open_pics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
-            <span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">open_btn</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">open_pics</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">wp</span>
