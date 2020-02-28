@@ -1093,8 +1093,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#focus" class="md-nav__link">
-    focus
+  <a href="#set_focus" class="md-nav__link">
+    set_focus
   </a>
   
 </li>
@@ -1321,8 +1321,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#focus" class="md-nav__link">
-    focus
+  <a href="#set_focus" class="md-nav__link">
+    set_focus
   </a>
   
 </li>
@@ -1605,20 +1605,20 @@ You can use the <code>add_event</code> method to add an allowed event to the lis
 <li>Default: <code>True</code></li>
 </ul>
 <p>If set to <code>False</code>, the element is not rendered. See <a href="/tutorial/html_components/#showing-and-hiding-elements">here</a></p>
-<h4 id="focus">focus<a class="headerlink" href="#focus" title="Permanent link">&para;</a></h4>
+<h4 id="set_focus">set_focus<a class="headerlink" href="#set_focus" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Type: <code>boolean</code></li>
 <li>Default: <code>False</code></li>
 </ul>
 <p>If set to <code>True</code>, the element will have focus when the page is rendered.</p>
 <div class="admonition warning">
-<p class="admonition-title">If multiple elements have the <code>focus</code> attribute set to <code>True</code>, the results will be unpredictable. The last element to be rendered by Vue will have focus.</p>
+<p class="admonition-title">If multiple elements have the <code>set_focus</code> attribute set to <code>True</code>, the results will be unpredictable. The last element to be rendered by Vue will have focus.</p>
 </div>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="c1"># Try not using this event handler and see what happens</span>
 <span class="k">def</span> <span class="nf">my_blur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_focus</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">def</span> <span class="nf">focus_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
@@ -1628,7 +1628,7 @@ You can use the <code>add_event</code> method to add an allowed event to the lis
     <span class="n">in4</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">input_classes</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Input 4&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="n">my_blur</span><span class="p">)</span>
 
     <span class="c1"># Set focus on third Input element</span>
-    <span class="n">in3</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">in3</span><span class="o">.</span><span class="n">set_focus</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">return</span> <span class="n">wp</span>
 
