@@ -1679,10 +1679,14 @@ You can use the <code>add_event</code> method to add an allowed event to the lis
 <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">delete_components</span><span class="p">()</span>  <span class="c1"># remove all components from d</span>
     <span class="n">directions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;Down&#39;</span><span class="p">,</span> <span class="s1">&#39;Left&#39;</span><span class="p">,</span> <span class="s1">&#39;Right&#39;</span><span class="p">]</span>
+    <span class="n">html_entity</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_to_animate</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-        <span class="n">letter</span> <span class="o">=</span> <span class="s1">&#39;&amp;nbsp;&#39;</span> <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span> <span class="k">else</span> <span class="n">letter</span>  <span class="c1"># Hard space for HTML, otherwise space ignored</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">animation</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;fadeIn{random.choice(directions)}&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">letter</span><span class="p">,</span>
+        <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+            <span class="n">letter</span> <span class="o">=</span> <span class="s1">&#39;&amp;nbsp;&#39;</span>
+            <span class="n">html_entity</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">animation</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;fadeIn{random.choice(directions)}&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">letter</span><span class="p">,</span> <span class="n">html_entity</span><span class="o">=</span><span class="n">html_entity</span><span class="p">,</span>
                <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;rounded-full bg-blue-500 text-white text-6xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">html_entity</span> <span class="o">=</span> <span class="kc">False</span>
 
 
 <span class="k">def</span> <span class="nf">animation_test</span><span class="p">():</span>

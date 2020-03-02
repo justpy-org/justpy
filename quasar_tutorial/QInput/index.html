@@ -1295,6 +1295,19 @@
 </code></pre></div>
 
 
+<p>You can also use QInput's internal validation prop <code>rules</code>. The prop needs to be a list that contains a string that represents JavaScript functions. See the <a href="https://quasar.dev/vue-components/input#Internal-validation">examples</a> in the Quasar documentation</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">input_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+    <span class="n">in1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QInput</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Enter email&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 150px; margin: 20px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">lazy_rules</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">in1</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;val =&gt; val.length &lt;= 3 || &#39;Please use maximum 3 characters&#39;&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h2 id="yahoo-stock-charts-example">Yahoo Stock Charts Example<a class="headerlink" href="#yahoo-stock-charts-example" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
