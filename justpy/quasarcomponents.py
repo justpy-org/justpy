@@ -48,6 +48,7 @@ class QDiv(Div):
 class _QInputBase(Input):
 
     slots = []
+    evaluate_prop = []
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -88,7 +89,7 @@ class _QInputBase(Input):
         d = super().convert_object_to_dict()
         if self.disable_events:
             d['events'] = []
-
+        d['evaluate_prop'] = self.evaluate_prop
         return d
 
 
@@ -109,6 +110,7 @@ class QInput(_QInputBase):
                           'placeholder']
 
         self.allowed_events = ['keypress', 'input', 'focusin', 'focusout']  # Not different from focus and blur in documentation
+        self.evaluate_prop = ['rules']
 
 
 @parse_dict
@@ -808,7 +810,7 @@ class QTooltip(_QInputBase):
         self.type = 'boolean'
         self.value = bool(self.value)
         self.prop_list = ['transition-show', 'transition-hide', 'target', 'delay', 'max-height', 'max-width', 'value',
-                          'anchor', 'self', 'offset', 'content-class', 'content-style']
+                          'anchor', 'self', 'offset', 'content-class', 'content-style', 'hide-delay']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide']
 
 

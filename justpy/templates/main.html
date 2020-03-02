@@ -86,6 +86,9 @@
                     // update just specific component on the page
                     comp_replace(msg.data, app1.justpyComponents);
                     break;
+                case 'run_javascript':
+                    eval(msg.data);
+                    break;
                 case 'run_method':
                     // await websocket.send_json({'type': 'run_method', 'data': command, 'id': self.id})
                     eval('comp_dict[' + msg.id+ '].' + msg.data);

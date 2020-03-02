@@ -124,6 +124,16 @@ class WebPage:
     def last(self):
         return self.components[-1]
 
+    async def run_javascript(self, javascript_string):
+        try:
+            websocket_dict = WebPage.sockets[self.page_id]
+        except:
+            return self
+        dict_to_send = {'type': 'run_javascript', 'data': javascript_string}
+        await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
+                             return_exceptions=True)
+        return self
+
     async def update_old(self, *, built_list=None):
         try:
             websocket_dict = WebPage.sockets[self.page_id]
@@ -311,7 +321,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
-    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'focus',
+    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'set_focus',
                       'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation', 'debug']
 
     # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize',
@@ -340,7 +350,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.animation = False
         self.pages = {}  # Dictionary of pages the component is on. Not managed by framework.
         self.show = True
-        self.focus = False
+        self.set_focus = False
         self.classes = ''
         self.slot = None
         self.scoped_slots = {}  # For Quasar and other Vue.js based components
@@ -409,6 +419,14 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     def add_scoped_slot(self, slot, c):
         self.scoped_slots[slot] = c
+
+    def remove_class(self, tw_class):
+        class_list = self.classes.split()
+        try:
+            class_list.remove(tw_class)
+        except:
+            pass
+        self.classes = ' '.join(class_list)
 
     def to_html(self, indent=0, indent_step=0, format=True):
         block_indent = ' ' * indent
@@ -757,7 +775,7 @@ class Label(Div):
         return d
 
 
-class TextArea(Input):
+class Textarea(Input):
 
     html_tag = 'textarea'
     attributes = ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name',
@@ -839,7 +857,7 @@ class Icon(Div):
         return d
 
 
-class EditorMD(TextArea):
+class EditorMD(Textarea):
     # https://www.cssportal.com/style-input-range/   style an input range
     # Set the page's tailwind attribute to False for preview to work
     def __init__(self, **kwargs):

@@ -1,16 +1,16 @@
 // {% raw %}
 var storage_dict = {};
-// var comp_dict = {};  // moved to main.html
 
 Vue.component('quasar_component', {
 
     render: function (h) {
+
         if (this.jp_props.hasOwnProperty('text')) {
             var comps = [this.jp_props.text];
         } else comps = [];
 
         for (var i = 0; i < this.jp_props.object_props.length; i++) {
-            if (this.jp_props.object_props[i].show) {   // (this.jp_props.show)
+            if (this.jp_props.object_props[i].show) {
                 comps.push(h(this.jp_props.object_props[i].vue_type, {
                     props: {
                         jp_props: this.jp_props.object_props[i]
@@ -19,6 +19,20 @@ Vue.component('quasar_component', {
             }
         }
 
+        if (this.jp_props.evaluate_prop && (this.jp_props.evaluate_prop.length > 0)) {
+            for (i = 0; i < this.jp_props.evaluate_prop.length; i++) {
+                const evaluated_prop = this.jp_props.evaluate_prop[i];
+                if (this.jp_props.attrs[evaluated_prop]) {
+                    if (typeof this.jp_props.attrs[evaluated_prop] == 'string') {
+                        this.jp_props.attrs[evaluated_prop] = eval(this.jp_props.attrs[evaluated_prop])
+                    } else {
+                        for (let j = 0; i < this.jp_props.attrs[evaluated_prop].length; i++) {
+                            this.jp_props.attrs[evaluated_prop][j] = eval(this.jp_props.attrs[evaluated_prop][j]);
+                        }
+                    }
+                }
+            }
+        }
 
         description_object = {
             style: this.jp_props.style,
@@ -74,7 +88,7 @@ Vue.component('quasar_component', {
                 case 'load':
                     fn = this.loadEvent;
                     break;
-                // For Qtable
+                // For QTable
                 case 'update:pagination':
                     fn = this.tablePaginationEvent;
                     break;
@@ -319,7 +333,7 @@ Vue.component('quasar_component', {
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
         }
 
-        if (this.$props.jp_props.focus) {
+        if (this.$props.jp_props.set_focus) {
             this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
         }
     },
@@ -375,7 +389,7 @@ Vue.component('quasar_component', {
             }
         }
 
-        if (this.$props.jp_props.focus) {
+        if (this.$props.jp_props.set_focus) {
             this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
         }
     },

@@ -145,9 +145,17 @@ Vue.component('html_component', {
             var animation = this.$props.jp_props.animation;
             var element = this.$el;
             element.classList.add('animated', animation);
-            element.addEventListener('animationend', function () {
+            element.classList.remove('hidden');
+            var event_func = function() {
                 element.classList.remove('animated', animation);
-            });
+                if (animation.includes('Out')) {
+                    element.classList.add('hidden');
+                } else {
+                    element.classList.remove('hidden');
+                }
+                element.removeEventListener('animationend', event_func);
+            };
+            element.addEventListener('animationend', event_func);
 
         })
     },
@@ -159,7 +167,7 @@ Vue.component('html_component', {
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
         }
 
-        if (this.$props.jp_props.focus) {
+        if (this.$props.jp_props.set_focus) {
             this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
         }
 
@@ -187,7 +195,7 @@ Vue.component('html_component', {
             }
         }
 
-        if (this.$props.jp_props.focus) {
+        if (this.$props.jp_props.set_focus) {
             this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
         }
 
