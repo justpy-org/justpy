@@ -41,10 +41,6 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
-This will show this page at `http://127.0.0.1:8000` or `http://localhost:8000/` :
-
-![Hello World Clicks GIF](../Images/hello-world-justpy-clicks-gif.gif)
-
 !> You can easily copy the code by hovering over it and then clicking 'Copy to clipboard' in the upper right corner
 
 ## Running the Program
@@ -55,7 +51,9 @@ To run the program execute the following command:
 $ python3 test.py
 ```
 
-Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ 
+Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ to show:
+
+![Hello World Clicks GIF](../Images/hello-world-justpy-clicks-gif.gif)
 
 This refers to port 8000 on the local machine and should work in most environments. 
 
