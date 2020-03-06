@@ -22,6 +22,8 @@ For updates and news please follow the [JustPy Twitter account](https://twitter.
 
 ## Hello World!
 
+![Hello World GIF](docs/Images/hello-world-justpy-gif.gif)
+
 ```python
 import justpy as jp
 
