@@ -41,6 +41,10 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
+This will show this page at `http://127.0.0.1:8000` or `http://localhost:8000/` :
+
+![Hello World Clicks GIF](../Images/hello-world-justpy-clicks-gif.gif)
+
 !> You can easily copy the code by hovering over it and then clicking 'Copy to clipboard' in the upper right corner
 
 ## Running the Program
