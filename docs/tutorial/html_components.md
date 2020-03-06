@@ -2,7 +2,9 @@
 
 JustPY supports components corresponding to HTML and SVG tags. The name of the component is the same as the name of the HTML tag with the first letter capitalized. For example, we already saw the `Div` and `P` components that correspond to the the `div` and `p` HTML tags. JustPy supports all tags that put elements on the page and are not deprecated in HTML 5. 
 
-Here is a simple example with three HTML components. 
+Here is a simple example with three HTML components.
+
+![HTML Components 1](../Images/html-components/html-components-1.png)
 
 ```python
 import justpy as jp
@@ -21,7 +23,11 @@ jp.justpy(html_comps)
 * The [br](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br) HTML tag produces a line break. 
 * The [strong](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong) HTML tag is typically rendered in bold type. 
 
-The JustPy function `get_tag`, creates an instance of a component based on the HTML tag. Its first argument is a string with the tag and the rest of the arguments are the identical optional keyword arguments for the class `__init__` method. The program below is equivalent to the one above:
+The JustPy function `get_tag`, creates an instance of a component based on the HTML tag. Its first argument is a string with the tag and the rest of the arguments are the identical optional keyword arguments for the class `__init__` method. 
+
+The program below is equivalent to the one above:
+
+![HTML Components 2](../Images/html-components/html-components-2.png)
 
 ```python
 import justpy as jp
@@ -40,6 +46,9 @@ jp.justpy(html_comps)
 ```
 
 It is also possible to get the same formatting using the the `Div` component with the appropriate Tailwind classes:
+
+![HTML Components 3](../Images/html-components/html-components-3.png)
+
 ```python
 import justpy as jp
 
@@ -57,6 +66,8 @@ If you do not need the semantic information the specialized tags provide, it is 
 ## Container Elements
 
 Many HTML elements can have children elements. In JustPy parlance, an element can contain other elements.
+
+![HTML Containers](../Images/html-components/html-components-containers.png)
 
 ```python
 import justpy as jp
@@ -83,6 +94,8 @@ HTML components have common attributes as well as specific ones. JustPy componen
 
 In this example we use the `contenteditable`, `dir`, and `lang` attributes:
 
+![Common Attributes](../Images/html-components/html-components-common-attributes.png)
+
 ```python
 import justpy as jp
 
@@ -104,7 +117,11 @@ Run the program and try editing some text. You will see also that the Hebrew tex
 ## Specific Attributes
 
 Some components have specific attributes. For example, the   [img HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) has the `src` attribute that specifies the URL for the image.
+
+![Specific Attributes](../Images/html-components/html-components-specific-attributes.gif)
+
 Run the following program:
+
 ```python
 import justpy as jp
 
@@ -147,6 +164,8 @@ The program then sets the `degree` attribute of the image to the loop variable. 
 
 The mouse event handlers change the `style` and `class` attributes of the element as needed using the `degree` attribute of the image if required. For clarity, the event handlers are defined inside the loop, but they could be defined just once outside the loop or outside the request handler. We could also set the attributes as keyword arguments and the result is the following:
 
+![Specific Attributes](../Images/html-components/html-components-specific-attributes.gif)
+
 ```python
 import justpy as jp
 
@@ -177,6 +196,8 @@ In JustPy you create hyperlinks using the `A` component which corresponds to the
 
 The `A` component is also named `Link` (in case you want to use a more descriptive name).
 
+![Link Demo 1](../Images/html-components/html-components-link-demo-1.gif)
+
 ```python
 import justpy as jp
 
@@ -192,6 +213,8 @@ jp.justpy(link_demo)
 The link above goes to the Python.org web page. If you want the link to open in a new window, set the `target` attribute of the `A` component instance to '_blank' 
 
 If you want to link to an element on the page, use the `bookmark` attribute and assign to it the element you want to link to. If you want to scroll to the element, instead of jumping instantly, set the `scroll` attribute to `True`. 
+
+![Link Demo 2](../Images/html-components/html-components-link-demo-2.gif)
 
 ```python
 import justpy as jp
@@ -216,6 +239,9 @@ jp.justpy(link_demo)
 ## Lists
 
 The [ul tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul) together with the [li tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul) can be used to create lists. The corresponding JustPy components are `Ul` and `Li`.
+
+![List](../Images/html-components/html-components-list.png)
+
 ```python
 import justpy as jp
 
@@ -244,6 +270,8 @@ All JustPy components use the `show` boolean attribute to determine whether an e
 If you want the element to be on the page, but be invisible, use the `visible` and `invisible` Tailwind classes (or appropriate `style` values). When an element is invisible, the page structure stays the same.
 
 Run the following program and see the difference by clicking both buttons.
+
+![Show Hide Elements](../Images/html-components/html-components-show-hide.gif)
 
 ```python
 import justpy as jp
