@@ -22,7 +22,7 @@ For updates and news please follow the [JustPy Twitter account](https://twitter.
 
 ## Hello World!
 
-![Hello World GIF](docs/Images/hello-world-justpy-gif.gif)
+![Static Hello World](docs/Images/hello-world-justpy-static.png)
 
 ```python
 import justpy as jp
@@ -39,6 +39,8 @@ jp.justpy(hello_world)
 The program above activates a web server that returns a web page with 'Hello world!' for any request. Locally, you would direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ or  to see the result.
 
 Here is a slightly modified version in which 'Hello world!' changes to 'I was clicked!' when it is clicked.
+
+![Hello World With Clicks GIF](docs/Images/hello-world-justpy-gif.gif)
 
 ```python
 import justpy as jp
