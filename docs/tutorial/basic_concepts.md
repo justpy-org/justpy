@@ -112,6 +112,8 @@ jp.justpy(hello_world)
 ```
  
 Run the program above and look at the result in your browser.
+
+![More Hello World](../Images/basic-concepts/basic-concepts-hello-world-loop.png)
  
 !> **Don't forget to terminate the previous program first.**  
 Two JustPy servers cannot run at the same time on the same port. 
@@ -149,6 +151,8 @@ jp.justpy(hello_world)
 ```
 
 In this program Tailwind classes are used to make the output a little nicer. The JustPy attribute `classes` is equivalent to the HTML attribute [class](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class) (which is a reserved word in Python).
+
+![Tailwind Image](../Images/basic-concepts/basic-concepts-tailwind.png)
  
 ## Creating Web Pages Once
 

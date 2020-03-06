@@ -22,7 +22,7 @@ For updates and news please follow the [JustPy Twitter account](https://twitter.
 
 ## Hello World!
 
-![Static Hello World](docs/Images/hello-world-justpy-static.png)
+![Static Hello World](docs/Images/hello-world/hello-world-justpy-static.png)
 
 ```python
 import justpy as jp
@@ -40,7 +40,7 @@ The program above activates a web server that returns a web page with 'Hello wor
 
 Here is a slightly modified version in which 'Hello world!' changes to 'I was clicked!' when it is clicked.
 
-![Hello World With Clicks GIF](docs/Images/hello-world-justpy-gif.gif)
+![Hello World With Clicks GIF](docs/Images/hello-world/hello-world-justpy-clicks-gif.gif)
 
 ```python
 import justpy as jp

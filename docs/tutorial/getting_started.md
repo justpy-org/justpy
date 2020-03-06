@@ -53,7 +53,7 @@ $ python3 test.py
 
 Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ to show:
 
-![Hello World Clicks GIF](../Images/hello-world-justpy-clicks-gif.gif)
+![Hello World Clicks GIF](../Images/hello-world/hello-world-justpy-clicks-gif.gif)
 
 This refers to port 8000 on the local machine and should work in most environments. 
 
