@@ -1,5 +1,9 @@
 # Handling Events
-In this part of the tutorial you will learn how to deal with user generated events such as a mouse click. JustPy deals with such events by binding a function to an event. When the event occurs, the function is executed. Please run the following program and click on 'Not clicked yet':
+In this part of the tutorial you will learn how to deal with user generated events such as a mouse click. JustPy deals with such events by binding a function to an event. When the event occurs, the function is executed. 
+
+![Handling Clicks](../Images/handling-events/handling-events-clicks.gif)
+
+Please run the following program and click on 'Not clicked yet':
 
 ```python
 import justpy as jp
@@ -25,6 +29,8 @@ In `event_demo`, we first create a web page. Then we create a [Div](https://deve
 The first (I recommend calling it `self`), is the object which generated the event. It is an instance of one of the component classes. In the example above it is `d`, an instance of the class `Div`. The second parameter (I recommend calling it `msg`) is a [dictionary](https://github.com/mewwts/addict "addict is a Python module that gives you dictionaries whose values are both gettable and settable using attributes, in addition to standard item-syntax") that contains information about the event. The items in this dictionary can also be accessed using attribute (dot) notation. To get the event type for example we could write either  `msg['event_type']` or `msg.event_type`. 
  
 In the program below I have added some print commands to the `my_click` function. Run it and see what is printed to the console.
+
+![Handling Events Console 1](../Images/handling-events/handling-events-console-1.gif)
  
 ```python
 import justpy as jp
@@ -48,6 +54,8 @@ jp.justpy(event_demo)
 
 JustPy does not pass all the JavaScript event properties by default since in most cases they are not needed. If you need additional properties from the JavasScript event, use the `additional_properties` attribute. In the example below, more fields are added to `msg`.
 
+![Handling Events Console 2](../Images/handling-events/handling-events-console-2.gif)
+
 ```python
 import justpy as jp
 
@@ -66,9 +74,12 @@ def event_demo():
 jp.justpy(event_demo)
 ```
 
+
 ## Multiple Events
 
 The same element can handle multiple events. Run the following and move the mouse in and out of the element on the page. Click the element also.
+
+![Handling Multiple Events Mouseover](../Images/handling-events/handling-events-multiple-events.gif)
 
 ```python
 import justpy as jp
@@ -105,7 +116,12 @@ The above example also introduces the `set_class` method. This method "knows" wh
 
 ### Example 1 
 
-In many cases it is convenient to share one event handler among several elements. Please run the example below:
+In many cases it is convenient to share one event handler among several elements.
+
+
+![Handling Events Example 1](../Images/handling-events/handling-events-example-1.gif)
+
+Please run the example below:
 
 ```python
 import justpy as jp
@@ -130,6 +146,7 @@ def event_demo():
 
 jp.justpy(event_demo)
 ```
+
 
 This program creates 25 buttons on each page. Under the buttons is a message box that provides information about which button was clicked and how many times it was clicked (try clicking the same button several times and see the change in the message box).
  
@@ -167,6 +184,8 @@ The web page itself is an instance of a Python class and therefore can have user
 
 ?> We know which page's `button_list` we need to loop over because the page on which the event originated is always provided to the event handler in `msg.page` by JustPy.
 
+![Handling Events Example 2](../Images/handling-events/handling-events-example-2.gif)
+
 The result looks like this:
 ```python
 import justpy as jp
@@ -201,6 +220,9 @@ jp.justpy(event_demo)
 ### Example 3 - Event changes elements on page
 
 Events can also change the elements on the page itself, adding or removing them as necessary. As a concrete example let's change the program above to display a log of buttons that were clicked instead of just one line of information.
+
+![Handling Events Example 3](../Images/handling-events/handling-events-example-3.gif)
+
 ```python
 import justpy as jp
 
@@ -241,6 +263,8 @@ Instead of just changing the text in `message`, `button_click` creates a `p` ele
 In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess using these functions sometimes for one or two line event handlers.
 
 The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are `self` and `msg`. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of `self`. 
+
+![Handling Events Inline](../Images/handling-events/handling-events-inline.gif)
 
 ```python
 import justpy as jp
