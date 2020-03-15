@@ -18,6 +18,7 @@ from .routing import Route, SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, uuid, sys, os
 from ssl import PROTOCOL_SSLv23
+import traceback
 
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
@@ -277,7 +278,8 @@ async def handle_event(data_dict, com_type=0):
     except Exception as e:
         # raise Exception(e)
         event_result = None
-        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
+        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:\033[0m')
+        traceback.print_exc()
 
     # If page is not to be updated, the event_function should return anything but None
 
