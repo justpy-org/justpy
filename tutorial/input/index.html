@@ -1399,11 +1399,11 @@
 <h2 id="changing-focus-using-keyboard-events">Changing Focus using Keyboard Events<a class="headerlink" href="#changing-focus-using-keyboard-events" title="Permanent link">&para;</a></h2>
 <p>In the example below, Input elements respond to the Esc and Enter keys. When Esc is pressed, the field value is set to the empty string. When Enter is pressed, focus moves to the next field down unless it is the last field in which case focus is moved to the first.</p>
 <p>To make the example work, an event handler for the 'blur' event is required. When one of the input elements loses focus, the blur event occurs and the focus field of the element is set to false so that the correct element will have focus.</p>
-<p>By setting the <code>focus</code> attribute of an element to <code>True</code>, you transfer the focus to it. If the attribute is <code>True</code> for multiple elements on the page, the results are unpredictable and therefore the blur event handler is required to make sure the attribute is <code>True</code> for only one element.</p>
+<p>By setting the <code>set_focus</code> attribute of an element to <code>True</code>, you transfer the focus to it. If the attribute is <code>True</code> for multiple elements on the page, the results are unpredictable and therefore the blur event handler is required to make sure the attribute is <code>True</code> for only one element.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">def</span> <span class="nf">my_blur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_focus</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">def</span> <span class="nf">key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="c1"># print(msg.key_data)</span>
@@ -1412,12 +1412,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">key</span><span class="o">==</span><span class="s1">&#39;Enter&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_focus</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">next_to_focus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="n">next_to_focus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">next_to_focus</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">next_to_focus</span><span class="o">.</span><span class="n">set_focus</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span>
     <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Don&#39;t update the page</span>
 
