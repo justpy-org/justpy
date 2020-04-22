@@ -438,6 +438,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../drag_and_drop/" title="Drag and Drop" class="md-nav__link">
+      Drag and Drop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../tailwind/" title="Tailwind" class="md-nav__link">
       Tailwind
     </a>
@@ -518,9 +530,52 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Configuration
+      </label>
+    
     <a href="./" title="Configuration" class="md-nav__link md-nav__link--active">
       Configuration
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simulating-latency" class="md-nav__link">
+    Simulating Latency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-locally-without-an-internet-connection" class="md-nav__link">
+    Working Locally without an Internet Connection
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -545,6 +600,18 @@
   <li class="md-nav__item">
     <a href="../deployment/" title="Deployment" class="md-nav__link">
       Deployment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../advanced_components/" title="Advanced Components" class="md-nav__link">
+      Advanced Components
     </a>
   </li>
 
@@ -993,6 +1060,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/configuration/" title="Configuration Variables" class="md-nav__link">
+      Configuration Variables
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1015,6 +1094,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simulating-latency" class="md-nav__link">
+    Simulating Latency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-locally-without-an-internet-connection" class="md-nav__link">
+    Working Locally without an Internet Connection
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1027,6 +1136,7 @@
                 
                 
                 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>JustPy is configured by settings in the justpy.env file. The file is not strictly required, as there are defaults for all settings.</p>
 <p>Here is an example of a configuration file:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">HIGHCHARTS</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1038,7 +1148,11 @@
 
 
 <p>Since the default for whether to include the Highcharts library is <code>True</code>, the first line is not required (neither are the second or fifth).</p>
-<p>The <code>LATENCY</code> option is one I like to work with. When it is specified, JustPy adds the specified milliseconds to each communication between the server and the web pages. In this way you can simulate locally the effect of network latency and see if it hinders the user experience.</p>
+<h2 id="simulating-latency">Simulating Latency<a class="headerlink" href="#simulating-latency" title="Permanent link">&para;</a></h2>
+<p>The <code>LATENCY</code> option is one I like to work with. When it is set, JustPy adds the specified milliseconds to each communication between the server and the web pages. In this way you can simulate locally the effect of network latency and see if it hinders the user experience.</p>
+<h2 id="working-locally-without-an-internet-connection">Working Locally without an Internet Connection<a class="headerlink" href="#working-locally-without-an-internet-connection" title="Permanent link">&para;</a></h2>
+<p>If you set the option <code>NO_INTERNET</code> to <code>True</code>, JustPy will not attempt to use the internet to retrieve the JavasScript libraries it needs, and will use instead copies that are part of the package.
+The downside is that between versions of JustPy, the JavaScript libraries will not be updated to the latest version. </p>
                 
                   
                 

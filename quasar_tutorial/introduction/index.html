@@ -436,6 +436,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tutorial/drag_and_drop/" title="Drag and Drop" class="md-nav__link">
+      Drag and Drop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tutorial/tailwind/" title="Tailwind" class="md-nav__link">
       Tailwind
     </a>
@@ -534,6 +546,18 @@
   <li class="md-nav__item">
     <a href="../../tutorial/deployment/" title="Deployment" class="md-nav__link">
       Deployment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/advanced_components/" title="Advanced Components" class="md-nav__link">
+      Advanced Components
     </a>
   </li>
 
@@ -1057,6 +1081,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/configuration/" title="Configuration Variables" class="md-nav__link">
+      Configuration Variables
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1347,6 +1383,21 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The value of the directive can be a dictionary for configuring more options:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="c1"># https://quasar.dev/vue-directives/material-ripple#Ripple-API</span>
+
+<span class="k">def</span> <span class="nf">ripple_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md q-gutter-md row justify-center&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">v_ripple</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;orange-5&#39;</span><span class="p">},</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;relative-position container bg-grey-3 text-black inline flex flex-center&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                 <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 50%; cursor: pointer; width: 150px; height: 150px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">ripple_test</span><span class="p">)</span>
 </code></pre></div>
                 
                   
