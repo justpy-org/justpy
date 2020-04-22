@@ -4,7 +4,6 @@ var storage_dict = {};
 Vue.component('quasar_component', {
 
     render: function (h) {
-
         if (this.jp_props.hasOwnProperty('text')) {
             var comps = [this.jp_props.text];
         } else comps = [];

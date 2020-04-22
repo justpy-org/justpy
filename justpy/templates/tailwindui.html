@@ -7,9 +7,9 @@
 
         {% if options.tailwind %}
             {% if not options.no_internet %}
-                <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
             {% else %}
-                <link href="/templates/local/tailwind.css" rel="stylesheet">
+                <link href="/templates/local/tailwindui.css" rel="stylesheet">
             {% endif %}
             <style>
                 {% include 'css/form.css' %}

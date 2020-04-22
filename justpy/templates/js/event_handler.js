@@ -33,8 +33,6 @@ function eventHandler(props, event, form_data, aux) {
     if (props.jp_props.additional_properties) {
         for (let i = 0; i < props.jp_props.additional_properties.length; i++) {
             e[props.jp_props.additional_properties[i]] = event[props.jp_props.additional_properties[i]];
-            console.log(event[props.jp_props.additional_properties[i]]);
-            console.log(props.jp_props.additional_properties[i]);
         }
     }
     if ((event instanceof Event) && (event.target.type == 'file')) {
@@ -68,14 +66,14 @@ function eventHandler(props, event, form_data, aux) {
         }
     }
 
-    if (props.jp_props.debounce) {
+     if (props.jp_props.debounce && (event.type == 'input'))  {
         clearTimeout(props.timeout);
         props.timeout = setTimeout(function () {
-                send_to_server(e, props.jp_props.debug);
+                send_to_server(e, 'event', props.jp_props.debug);
             }
             , props.jp_props.debounce);
     } else {
-        send_to_server(e, props.jp_props.debug);
+        send_to_server(e, 'event', props.jp_props.debug);
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
@@ -92,17 +90,17 @@ function eventHandler(props, event, form_data, aux) {
     }
 }
 
-function send_to_server(e, debug_flag) {
+function send_to_server(e, event_type, debug_flag) {
     if (debug_flag) {
         console.log('Sending message to server:');
-        console.log({'type': 'event', 'event_data': e});
+        console.log({'type': event_type, 'event_data': e});
     }
     if (use_websockets) {
         if (websocket_ready) {
-            socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
+            socket.send(JSON.stringify({'type': event_type, 'event_data': e}));
         } else {
             setTimeout(function () {
-                socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
+                socket.send(JSON.stringify({'type': event_type, 'event_data': e}));
             }, 1000);
         }
     } else {
@@ -111,8 +109,25 @@ function send_to_server(e, debug_flag) {
         $.ajax({
             type: "POST",
             url: "/zzz_justpy_ajax",
-            data: JSON.stringify({'type': 'event', 'event_data': e}),
+            data: JSON.stringify({'type': event_type, 'event_data': e}),
             success: function (msg) {
+                console.log(msg);
+                if (msg.page_options.redirect) {
+                        location.href = msg.page_options.redirect;
+                    }
+                    if (msg.page_options.open) {
+                        window.open(msg.page_options.open, '_blank');
+                    }
+                    if (msg.page_options.display_url !== null)
+                        window.history.pushState("", "", msg.page_options.display_url);
+                    document.title = msg.page_options.title;
+                    if (msg.page_options.favicon) {
+                        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+                        link.type = 'image/x-icon';
+                        link.rel = 'shortcut icon';
+                        link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
+                        document.getElementsByTagName('head')[0].appendChild(link);
+                    }
                 if (msg) app1.justpyComponents = msg.data;
             },
             dataType: 'json'

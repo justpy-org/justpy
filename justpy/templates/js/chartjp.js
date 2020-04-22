@@ -92,7 +92,7 @@ Vue.component('chart', {
                             clearTimeout(tooltip_timeout);
                             tooltip_timeout = setTimeout(function () {
                                     //socket.send(JSON.stringify({'type': 'event', 'event_data': e}));
-                                    send_to_server(e);
+                                    send_to_server(e, 'event');
                                 }
                                 , tooltip_timeout_period);
                         }
@@ -135,7 +135,7 @@ Vue.component('chart', {
                         page_id: page_id,
                         websocket_id: websocket_id
                     };
-                    send_to_server(p);
+                    send_to_server(p, 'event');
                 }
             }
 
@@ -177,7 +177,7 @@ Vue.component('chart', {
                         })
                     }
                     p.selected_points = selected_points;
-                    send_to_server(p);
+                    send_to_server(p, 'event');
                 }
             }
 
@@ -219,7 +219,7 @@ Vue.component('chart', {
                         })
                     }
                     p.selected_points = selected_points;
-                    send_to_server(p);
+                    send_to_server(p, 'event');
                 }
             }
 
@@ -235,7 +235,7 @@ Vue.component('chart', {
                         page_id: page_id,
                         websocket_id: websocket_id
                     };
-                    send_to_server(p);
+                    send_to_server(p, 'event');
                 }
             }
 
@@ -251,7 +251,7 @@ Vue.component('chart', {
                         page_id: page_id,
                         websocket_id: websocket_id
                     };
-                    send_to_server(p);
+                    send_to_server(p, 'event');
                 }
 
             }
@@ -274,7 +274,7 @@ Vue.component('chart', {
                         page_id: page_id,
                         websocket_id: websocket_id
                     };
-                    send_to_server(p);
+                    send_to_server(p, 'event');
                 }
             }
 
@@ -287,8 +287,8 @@ Vue.component('chart', {
     updated() {
         const container = this.$props.jp_props.id.toString();
         const chart = cached_graph_def['chart' + container];
-
         if (!this.$props.jp_props.use_cache || (JSON.stringify(this.$props.jp_props.def) != cached_graph_def[this.$props.jp_props.id])) {
+            cached_graph_def[this.$props.jp_props.id] = JSON.stringify(this.$props.jp_props.def);
             if (this.$props.jp_props.update_create) {
                 this.graph_change();
             } else {

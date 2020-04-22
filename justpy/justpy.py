@@ -16,11 +16,12 @@ from .quasarcomponents import *
 from .pandas import *
 from .routing import Route, SetRoute
 from .utilities import run_task, create_delayed_task
-import uvicorn, logging, uuid, sys, os
+import uvicorn, logging, uuid, sys, os, traceback, fnmatch
 from ssl import PROTOCOL_SSLv23
 
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
+print(current_dir.replace('\\', '/'))
 print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
 
 config = Config('justpy.env')
@@ -55,14 +56,30 @@ HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
 AGGRID = config('AGGRID', cast=bool, default=True)
 AGGRID_ENTERPRISE = config('AGGRID_ENTERPRISE', cast=bool, default=False)
 
-template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
-                    'static_name': STATIC_NAME}
-logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
+NO_INTERNET = config('NO_INTERNET', cast=bool, default=False)
+
+def create_component_file_list():
+    file_list = []
+    component_dir = f'{STATIC_DIRECTORY}\\components'
+    if os.path.isdir(component_dir):
+        for file in os.listdir(component_dir):
+            if fnmatch.fnmatch(file, '*.js'):
+                file_list.append(f'/components/{file}')
+    return file_list
+
 
 templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
+component_file_list = create_component_file_list()
+
+template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
+                    'static_name': STATIC_NAME, 'component_file_list': component_file_list, 'no_internet': NO_INTERNET}
+logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
+
+
 app = Starlette(debug=DEBUG)
 app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
+app.mount('/templates', StaticFiles(directory=current_dir + '/templates'), name='templates')
 app.add_middleware(GZipMiddleware)
 if SSL_KEYFILE and SSL_CERTFILE:
     app.add_middleware(HTTPSRedirectMiddleware)
@@ -134,7 +151,7 @@ class Homepage(HTTPEndpoint):
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'head_html': load_page.head_html, 'body_html': load_page.body_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
-                        'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug,
+                        'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug, 'events': load_page.events,
                         'favicon': load_page.favicon if load_page.favicon else FAVICON}
         if load_page.use_cache:
             page_dict = load_page.cache
@@ -167,7 +184,10 @@ class Homepage(HTTPEndpoint):
                 data_dict['event_data']['session_id'] = session_id
 
             # data_dict['event_data']['session'] = request.session
-            result = await handle_event(data_dict, com_type=1)
+            msg_type = data_dict['type']
+            data_dict['event_data']['msg_type'] = msg_type
+            page_event = True if msg_type == 'page_event' else False
+            result = await handle_event(data_dict, com_type=1, page_event=page_event)
             if result:
                 if LATENCY:
                     await asyncio.sleep(LATENCY / 1000)
@@ -193,7 +213,8 @@ class JustpyEvents(WebSocketEndpoint):
         logging.debug(f'Websocket {JustpyEvents.socket_id} connected')
         JustpyEvents.socket_id += 1
         #Send back socket_id to page
-        await websocket.send_json({'type': 'websocket_update', 'data': websocket.id})
+        # await websocket.send_json({'type': 'websocket_update', 'data': websocket.id})
+        WebPage.loop.create_task(websocket.send_json({'type': 'websocket_update', 'data': websocket.id}))
 
     async def on_receive(self, websocket, data):
         """
@@ -202,17 +223,38 @@ class JustpyEvents(WebSocketEndpoint):
         logging.debug('%s %s',f'Socket {websocket.id} data received:', data)
         data_dict = json.loads(data)
         msg_type = data_dict['type']
+        # data_dict['event_data']['type'] = msg_type
         if msg_type == 'connect':
             # Initial message sent from browser after connection is established
-            await self._connect(websocket, data_dict)
+            # WebPage.sockets is a dictionary of dictionaries
+            # First dictionary key is page id
+            # Second dictionary key is socket id
+            page_key = data_dict['page_id']
+            websocket.page_id = page_key
+            if page_key in WebPage.sockets:
+                WebPage.sockets[page_key][websocket.id] = websocket
+            else:
+                WebPage.sockets[page_key] = {websocket.id: websocket}
             return
-        if msg_type == 'event':
+        if msg_type == 'event' or msg_type == 'page_event':
             # Message sent when an event occurs in the browser
             session_cookie = websocket.cookies.get(SESSION_COOKIE_NAME)
             if SESSIONS and session_cookie:
                 session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
                 data_dict['event_data']['session_id'] = session_id
-            await self._event(data_dict)
+            # await self._event(data_dict)
+            data_dict['event_data']['msg_type'] = msg_type
+            page_event = True if msg_type == 'page_event' else False
+            WebPage.loop.create_task(handle_event(data_dict, com_type=0, page_event=page_event))
+            return
+        if msg_type == 'zzz_page_event':
+            # Message sent when an event occurs in the browser
+            session_cookie = websocket.cookies.get(SESSION_COOKIE_NAME)
+            if SESSIONS and session_cookie:
+                session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
+                data_dict['event_data']['session_id'] = session_id
+            data_dict['event_data']['msg_type'] = msg_type
+            WebPage.loop.create_task(handle_event(data_dict, com_type=0, page_event=True))
             return
 
     async def on_disconnect(self, websocket, close_code):
@@ -222,6 +264,7 @@ class JustpyEvents(WebSocketEndpoint):
         if not WebPage.sockets[pid]:
             WebPage.sockets.pop(pid)
         await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
+        # WebPage.loop.create_task(WebPage.instances[pid].on_disconnect(websocket))
         if MEMORY_DEBUG:
             print('************************')
             print('Elements: ', len(JustpyBaseComponent.instances), JustpyBaseComponent.instances)
@@ -231,25 +274,9 @@ class JustpyEvents(WebSocketEndpoint):
             print(f'Memory used: {process.memory_info().rss:,}')
             print('************************')
 
-    async def _connect(self, websocket, data_dict):
-        # WebPage.sockets is a dictionary of dictionaries
-        # First dictionary key is page id
-        # Second dictionary key is socket id
-        page_key = data_dict['page_id']
-        websocket.page_id = page_key
-        if page_key in WebPage.sockets:
-            WebPage.sockets[page_key][websocket.id] = websocket
-        else:
-            WebPage.sockets[page_key] = {websocket.id: websocket}
-
-    async def _event(self, data_dict):
-        # com_type 0: websocket, com_type 1: ajax
-        # await handle_event(data_dict, com_type=0)
-        WebPage.loop.create_task(handle_event(data_dict, com_type=0))
-        return
 
 
-async def handle_event(data_dict, com_type=0):
+async def handle_event(data_dict, com_type=0, page_event=False):
     # com_type 0: websocket, con_type 1: ajax
     connection_type = {0: 'websocket', 1: 'ajax'}
     logging.info('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
@@ -266,7 +293,12 @@ async def handle_event(data_dict, com_type=0):
     if event_data['event_type'] == 'page_update':
         build_list = p.build_list()
         return {'type': 'page_update', 'data': build_list}
-    c = JustpyBaseComponent.instances[event_data['id']]
+
+    if page_event:
+        c = p
+    else:
+        c = JustpyBaseComponent.instances[event_data['id']]
+
     try:
         before_result = await c.run_event_function('before', event_data, True)
     except:
@@ -277,7 +309,9 @@ async def handle_event(data_dict, com_type=0):
     except Exception as e:
         # raise Exception(e)
         event_result = None
-        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
+        # logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
+        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:\033[0m')
+        logging.debug('%s', traceback.format_exc())
 
     # If page is not to be updated, the event_function should return anything but None
 
@@ -293,7 +327,12 @@ async def handle_event(data_dict, com_type=0):
     except:
         pass
     if com_type == 1 and event_result is None:
-        return {'type': 'page_update', 'data': build_list}
+        dict_to_send = {'type': 'page_update', 'data': build_list,
+                        'page_options': {'display_url': p.display_url,
+                                         'title': p.title,
+                                         'redirect': p.redirect, 'open': p.open,
+                                         'favicon': p.favicon}}
+        return dict_to_send
 
 
 def justpy(func=None, *, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs):
@@ -333,6 +372,5 @@ def convert_dict_to_object(d):
         if k != 'id':
             obj.__dict__[k] = v
     return obj
-
 
 

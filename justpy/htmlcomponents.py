@@ -41,6 +41,7 @@ class WebPage:
     highcharts_theme = None
     # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
+    allowed_events =['click', 'visibilitychange']
 
 
     def __init__(self, **kwargs):
@@ -63,6 +64,7 @@ class WebPage:
         self.body_style = ''
         self.body_classes = ''
         self.reload_interval = None
+        self.events = []
         self.dark = False    # Set to True for Quasar dark mode (use for other dark modes also)
         self.data = {}
         WebPage.instances[self.page_id] = self
@@ -200,6 +202,26 @@ class WebPage:
             object_list.append(d)
         return object_list
 
+    def on(self, event_type, func):
+        if event_type in self.allowed_events:
+            setattr(self, 'on_' + event_type, MethodType(func, self))
+            if event_type not in self.events:
+                self.events.append(event_type)
+        else:
+            raise Exception(f'No event of type {event_type} supported')
+
+    async def run_event_function(self, event_type, event_data, create_namespace_flag=True):
+        event_function = getattr(self, 'on_' + event_type)
+        if create_namespace_flag:
+            function_data = Dict(event_data)
+        else:
+            function_data = event_data
+        if inspect.iscoroutinefunction(event_function):
+            event_result = await event_function(function_data)
+        else:
+            event_result = event_function(function_data)
+        return event_result
+
 
 class JustpyBaseComponent(Tailwind):
     next_id = 1
@@ -219,6 +241,24 @@ class JustpyBaseComponent(Tailwind):
             cls.next_id += 1
         self.events = []
         self.allowed_events = []
+
+    def initialize(self, **kwargs):
+        for k, v in kwargs.items():
+            self.__setattr__(k, v)
+        for e in self.allowed_events:
+            for prefix in ['', 'on', 'on_']:
+                if prefix + e in kwargs.keys():
+                    fn = kwargs[prefix + e]
+                    if isinstance(fn, str):
+                        fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
+                        exec(fn_string)
+                        self.on(e, locals()[f'oneliner{self.id}'])
+                    else:
+                        self.on(e, fn)
+                    break
+        for com in ['a', 'add_to']:
+            if com in kwargs.keys():
+                kwargs[com].add_component(self)
 
     def delete(self):
         if self.needs_deletion:
@@ -357,8 +397,10 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.style = ''
         self.directives = []
         self.data = {}
+        self.drag_options = None
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
-                               'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit']
+                               'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit',
+                               'dragstart', 'dragover', 'drop']
         self.events = []
         self.additional_properties = []
         self.event_propagation = True  # If True events are propagated
@@ -488,6 +530,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
             d['scoped_slots'][s] = self.scoped_slots[s].convert_object_to_dict()
         if self.additional_properties:
             d['additional_properties'] = self.additional_properties
+        if self.drag_options:
+            d['drag_options'] = self.drag_options
         return d
 
 

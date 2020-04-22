@@ -73,7 +73,7 @@ Vue.component('grid', {
                     if (['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd'].includes(event_name)) {
                         e.data = grid_def.api.getDataAsCsv();
                     }
-                    send_to_server(e);
+                    send_to_server(e, 'event');
                 }
             }
         }

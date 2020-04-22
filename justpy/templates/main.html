@@ -1,3 +1,7 @@
+{% for file_name in options.component_file_list %}
+    <script src={{ url_for(options.static_name, path=file_name) }}></script>
+{% endfor %}
+
 <script>
 
     var websocket_ready = false;
@@ -25,6 +29,18 @@
     var crosshairs = [];
     var comp_dict = {};  // Hold components for running methods
 
+    {% for event in page_options.events %}
+        document.addEventListener('{{ event }}', function (evt) {
+            console.log(evt);
+            const e = {
+                'event_type': '{{ event }}',
+                'visibility': document.visibilityState,
+                'page_id': page_id,
+                'websocket_id': websocket_id
+            };
+            send_to_server(e, 'page_event', false);
+        });
+    {% endfor %}
 
     if (use_websockets) {
         console.log(location.protocol + ' Domain: ' + document.domain);
@@ -39,7 +55,6 @@
             var socket = new WebSocket(protocol_string + document.domain);
         }
 
-
         socket.addEventListener('open', function (event) {
             console.log('Webocket opened');
             socket.send(JSON.stringify({'type': 'connect', 'page_id': page_id}));
@@ -48,8 +63,8 @@
         socket.addEventListener('message', function (event) {
             msg = JSON.parse(event.data);
             {% if page_options.debug %}
-            console.log('Message received from server ', msg);
-            console.log(event);
+                console.log('Message received from server ', msg);
+                console.log(event);
             {%endif %}
 
             switch (msg.type) {
@@ -91,7 +106,7 @@
                     break;
                 case 'run_method':
                     // await websocket.send_json({'type': 'run_method', 'data': command, 'id': self.id})
-                    eval('comp_dict[' + msg.id+ '].' + msg.data);
+                    eval('comp_dict[' + msg.id + '].' + msg.data);
                     break;
                 case 'draw_crosshair':
                     // Remove previous crosshairs
@@ -145,6 +160,9 @@
                         });
                     }
                     break;
+                default: {
+
+                }
             }
         });
     }

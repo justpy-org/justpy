@@ -56,6 +56,18 @@ Vue.component('html_component', {
             if (!this.$props.jp_props.event_propagation) {
                 event.stopPropagation();
             }
+             if (event.type == 'dragstart') {
+                if (this.$props.jp_props.drag_options) {
+                    this.$refs['r' + this.$props.jp_props.id].className = this.$props.jp_props.drag_options['drag_classes']
+                }
+            }
+            if (event.type == 'dragover') {
+                event.preventDefault();
+                return
+            }
+            if (event.type == 'drop') {
+
+            }
             if (event.type == 'submit') {
                 var form_reference = this.$el;
                 var props = this.$props;
@@ -145,13 +157,14 @@ Vue.component('html_component', {
             var animation = this.$props.jp_props.animation;
             var element = this.$el;
             element.classList.add('animated', animation);
+            // element.style.animationFillMode = 'forwards';
             element.classList.remove('hidden');
             var event_func = function() {
                 element.classList.remove('animated', animation);
                 if (animation.includes('Out')) {
                     element.classList.add('hidden');
                 } else {
-                    element.classList.remove('hidden');
+                    // element.classList.remove('hidden');
                 }
                 element.removeEventListener('animationend', event_func);
             };

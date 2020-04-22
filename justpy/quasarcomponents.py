@@ -479,7 +479,7 @@ QButton = QBtn
 @parse_dict
 class QBtnGroup(QDiv):
 
-    slots= ['defualt_slot']
+    slots= ['default_slot']
     html_tag = 'q-btn-group'
 
     def __init__(self, **kwargs):
@@ -651,7 +651,7 @@ class QPagination(_QInputBase):
         self.type = 'float'
         self.prop_list = ['input', 'boundary-links', 'direction-links', 'boundary-numbers', 'ellipses', 'value', 'min',
                           'max', 'max-pages', 'disable', 'color', 'text-color', 'input-style', 'input-class', 'size',
-                          'icon-prev', 'icon-next', 'icon-first', 'icon-last']
+                          'icon-prev', 'icon-next', 'icon-first', 'icon-last', 'ripple']
         self.allowed_events = ['input']
 
 
@@ -1442,7 +1442,7 @@ class QTable(QDiv):
         self.pagination = False
         self.selected = []
         super().__init__(**kwargs)
-        self.attributes = ['fullscreen', 'losding', 'columns', 'visible-columns', 'title', 'hide-header', 'hide-bottom',
+        self.attributes = ['fullscreen', 'loading', 'columns', 'visible-columns', 'title', 'hide-header', 'hide-bottom',
                            'separator', 'wrap-cells', 'no-data-label', 'no-results-label', 'loading-label',
                            'filter', 'filter-method', 'data', 'row-key', 'rows-per-page-label', 'pagination-label',
                            'pagination', 'rows-per-page-options', 'selected-rows-label', 'selection', 'selected',
