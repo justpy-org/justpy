@@ -878,6 +878,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#running-quasar-component-methods" class="md-nav__link">
+    Running Quasar Component Methods
+  </a>
+  
+</li>
+      
       
       
       
@@ -1015,6 +1022,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../QList/" title="QList" class="md-nav__link">
+      QList
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../QAjaxBar/" title="QAjaxBar" class="md-nav__link">
+      QAjaxBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1093,6 +1124,90 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/notes/" title="Notes" class="md-nav__link">
+      Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      How To
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        How To
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
+      Monitor User Activity
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
+      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1156,6 +1271,13 @@
         <li class="md-nav__item">
   <a href="#quasar-directives" class="md-nav__link">
     Quasar Directives
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-quasar-component-methods" class="md-nav__link">
+    Running Quasar Component Methods
   </a>
   
 </li>
@@ -1398,6 +1520,33 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">ripple_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="running-quasar-component-methods">Running Quasar Component Methods<a class="headerlink" href="#running-quasar-component-methods" title="Permanent link">&para;</a></h2>
+<p>The Quasar methods use the <code>run_method</code> method of a JustPy Quasar component.</p>
+<p>The following example runs the start() and stop() methods of <a href="https://quasar.dev/vue-components/ajax-bar#QAjaxBar-API">QAjaxBar</a></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">start_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;start()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">stop_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;stop()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">bar_example</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="c1"># temp=False is important because this generates an id for the element that is required for run_method to work</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QAjaxBar</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;accent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;10px&#39;</span><span class="p">,</span> <span class="n">skip_hijack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">btn_start</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Start Bar&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">start_bar</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;margin-right: 20px&#39;</span><span class="p">)</span>
+    <span class="n">btn_stop</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stop Bar&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">stop_bar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">bar_example</span><span class="p">)</span>
 </code></pre></div>
                 
                   

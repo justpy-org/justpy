@@ -1042,6 +1042,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QList/" title="QList" class="md-nav__link">
+      QList
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QAjaxBar/" title="QAjaxBar" class="md-nav__link">
+      QAjaxBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1116,6 +1140,90 @@
   <li class="md-nav__item">
     <a href="../../reference/configuration/" title="Configuration Variables" class="md-nav__link">
       Configuration Variables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/notes/" title="Notes" class="md-nav__link">
+      Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      How To
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        How To
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
+      Monitor User Activity
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
+      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
     </a>
   </li>
 
@@ -1311,7 +1419,8 @@
 <p>The printout shows that <code>c</code> is a <code>Div</code> component that has 3 child components that are <code>P</code> components. The parsing function takes HTML and creates JustPy elements with the right relationships between them. It returns the topmost component if there is only one. If there are two or more siblings at the top level, it wraps them with a Div and returns the div. You can think of <code>parse_html</code> as returning the element at the base of the HTML tree.</p>
 <p>There are several way to access the child components. For example, in our specific case the first paragraph is the first child of <code>c</code> and therefore can be accessed as <code>c.components[0]</code>.</p>
 <h3 id="the-name_dict-dictionary">The <span style="color: red;">name_dict</span> dictionary<a class="headerlink" href="#the-name_dict-dictionary" title="Permanent link">&para;</a></h3>
-<p>A more general way to access parsed elements is to use the <code>name</code> attribute inside the HTML. The function <code>parse_html</code> attaches to the component it returns an attribute called <code>name_dict</code>, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. Here is an example:</p>
+<p>A more general way to access parsed elements is to use the <code>name</code> attribute inside the HTML. The function <code>parse_html</code> attaches to the component it returns an attribute called <code>name_dict</code>, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. </p>
+<p>Here is an example:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">parse_demo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
@@ -1335,6 +1444,7 @@
 
 <p>If you click the second paragraph, its text will change. Notice that we added <code>name="p2"</code> to the HTML of the second paragraph. When the parser sees the name attribute it creates an entry in <code>name_dict</code> with the name as the key and the component as the value.</p>
 <p>If more than one element is given the same name in the HTML text, the dictionary value is a list with all the elements with that name.</p>
+<p><code>name_dict</code> is of type Dict so its fields can be accessed using dot notation. Instead of <code>c.name_dict['a']</code> you can use <code>c.name_dict.a</code>.</p>
 <h3 id="additional-parsing-functions">Additional parsing functions<a class="headerlink" href="#additional-parsing-functions" title="Permanent link">&para;</a></h3>
 <p>Along with parse_html there are two additional functions in JustPy to parse HTML: <code>parse_html_file</code> parses a file instead of a string and <code>parse_html_file_async</code> is a co-routine that does the same asynchronously.  </p>
 <h3 id="the-commands-attribute">The <span style="color: red;">commands</span> attribute<a class="headerlink" href="#the-commands-attribute" title="Permanent link">&para;</a></h3>

@@ -940,6 +940,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QList/" title="QList" class="md-nav__link">
+      QList
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QAjaxBar/" title="QAjaxBar" class="md-nav__link">
+      QAjaxBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1124,6 +1148,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#children" class="md-nav__link">
+    children
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#animation" class="md-nav__link">
     animation
   </a>
@@ -1227,6 +1258,90 @@
   <li class="md-nav__item">
     <a href="../configuration/" title="Configuration Variables" class="md-nav__link">
       Configuration Variables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../notes/" title="Notes" class="md-nav__link">
+      Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      How To
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        How To
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
+      Monitor User Activity
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
+      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
     </a>
   </li>
 
@@ -1359,6 +1474,13 @@
           <li class="md-nav__item">
   <a href="#set_focus" class="md-nav__link">
     set_focus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#children" class="md-nav__link">
+    children
   </a>
   
 </li>
@@ -1669,6 +1791,29 @@ You can use the <code>add_event</code> method to add an allowed event to the lis
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">focus_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h4 id="children">children<a class="headerlink" href="#children" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Type: <code>list</code></li>
+<li>Default: <code>[]</code></li>
+</ul>
+<p>When an element is created, can be used to create its children also. Useful if you like defining elements in a hierarchical way.</p>
+<p>New in version 0.10</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">children_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">div_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 bg-blue-500 text-white text-lg&#39;</span>
+    <span class="n">span_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 bg-blue-500 text-yellow-700 text-xl&#39;</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="n">div_classes</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span>
+                            <span class="p">[</span><span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">span_classes</span><span class="p">),</span> <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;s2&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">span_classes</span><span class="p">)])</span>
+        <span class="p">,</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;d2&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">div_classes</span><span class="p">),</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;d3&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">div_classes</span><span class="p">),</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;d4&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">div_classes</span><span class="p">)],</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">children_test</span><span class="p">)</span>
 </code></pre></div>
 
 

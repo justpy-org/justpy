@@ -569,6 +569,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#quasar-version" class="md-nav__link">
+    Quasar Version
+  </a>
+  
+</li>
+      
       
       
       
@@ -994,6 +1001,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QList/" title="QList" class="md-nav__link">
+      QList
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QAjaxBar/" title="QAjaxBar" class="md-nav__link">
+      QAjaxBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1072,6 +1103,90 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/notes/" title="Notes" class="md-nav__link">
+      Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      How To
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        How To
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
+      Monitor User Activity
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
+      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1118,6 +1233,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#quasar-version" class="md-nav__link">
+    Quasar Version
+  </a>
+  
+</li>
+      
       
       
       
@@ -1152,7 +1274,16 @@
 <p>The <code>LATENCY</code> option is one I like to work with. When it is set, JustPy adds the specified milliseconds to each communication between the server and the web pages. In this way you can simulate locally the effect of network latency and see if it hinders the user experience.</p>
 <h2 id="working-locally-without-an-internet-connection">Working Locally without an Internet Connection<a class="headerlink" href="#working-locally-without-an-internet-connection" title="Permanent link">&para;</a></h2>
 <p>If you set the option <code>NO_INTERNET</code> to <code>True</code>, JustPy will not attempt to use the internet to retrieve the JavasScript libraries it needs, and will use instead copies that are part of the package.
-The downside is that between versions of JustPy, the JavaScript libraries will not be updated to the latest version. </p>
+The downside is that between versions of JustPy, the JavaScript libraries will not be updated to the latest version.</p>
+<p>Since version 0.1.0 the default for this option is <code>True</code>.</p>
+<h2 id="quasar-version">Quasar Version<a class="headerlink" href="#quasar-version" title="Permanent link">&para;</a></h2>
+<p>New in version 0.1.0</p>
+<p>You can specify the Quasar version to use:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">QUASAR_VERSION</span> <span class="o">=</span> <span class="s1">&#39;1.9.4&#39;</span>
+</code></pre></div>
+
+
+<p>When <code>NO_INTERNET</code> is true, version 1.9.4 is used.</p>
                 
                   
                 

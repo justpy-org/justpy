@@ -387,6 +387,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-debounce-and-throttle-event-modifiers" class="md-nav__link">
+    The debounce and throttle Event Modifiers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-click__out-event" class="md-nav__link">
+    The click__out Event
+  </a>
+  
+</li>
+      
       
       
       
@@ -1028,6 +1042,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QList/" title="QList" class="md-nav__link">
+      QList
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QAjaxBar/" title="QAjaxBar" class="md-nav__link">
+      QAjaxBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1102,6 +1140,90 @@
   <li class="md-nav__item">
     <a href="../../reference/configuration/" title="Configuration Variables" class="md-nav__link">
       Configuration Variables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../reference/notes/" title="Notes" class="md-nav__link">
+      Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      How To
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        How To
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
+      Monitor User Activity
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
+      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
     </a>
   </li>
 
@@ -1182,6 +1304,20 @@
         <li class="md-nav__item">
   <a href="#inline-event-handlers" class="md-nav__link">
     Inline Event Handlers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-debounce-and-throttle-event-modifiers" class="md-nav__link">
+    The debounce and throttle Event Modifiers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-click__out-event" class="md-nav__link">
+    The click__out Event
   </a>
   
 </li>
@@ -1437,6 +1573,60 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="the-debounce-and-throttle-event-modifiers">The debounce and throttle Event Modifiers<a class="headerlink" href="#the-debounce-and-throttle-event-modifiers" title="Permanent link">&para;</a></h2>
+<p>Sometimes you nee to debounce or throttle on event. To do this, use the <code>debounce</code> and <code>throttle</code> keyword arguments of the <code>on</code> method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the <code>immediate</code> attribute of <code>on</code> to <code>True</code>.</p>
+<p>The example below also uses the <code>add_event</code> method. The <code>mousemove</code> event is not among the events that are supported by default and needs to be added the element's allowed events.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">mouse_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">info_div</span><span class="o">.</span><span class="n">add_first</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.counter}</span><span class="s1">) </span><span class="si">{msg.event_type}</span><span class="s1">&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">debounce_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 100vh&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">,</span> <span class="n">mouse_event</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">mouse_event</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">immediate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">info_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Recent mouse events&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">debounce_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="the-click__out-event">The click__out Event<a class="headerlink" href="#the-click__out-event" title="Permanent link">&para;</a></h2>
+<p>The <code>click__out</code> event fires when there is a click outside of an element. This is useful for example in the case of dropdown list you would like closed when there is a click outside of the dropdown element.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Notice the TWO underline characters in <code>click__out</code>. </p>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">def</span> <span class="nf">click_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;click out&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;text-blue-500&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">click_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;click in&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;text-red-500&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_out</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1">) Div&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 p-4 text-xl border w-32&#39;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click__out&#39;</span><span class="p">,</span> <span class="n">click_out</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">click_in</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">test_out</span><span class="p">)</span>
 </code></pre></div>
                 
                   
