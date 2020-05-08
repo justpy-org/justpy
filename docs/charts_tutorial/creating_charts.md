@@ -44,7 +44,7 @@ def chart_test():
 jp.justpy(chart_test)
 ```
 
-Run the program above as explained [here](tutorial/getting_started.md).
+Run the program above as explained [here](/tutorial/getting_started).
 
 We create a chart using the JustPy HighCharts class. Like other JustPy components, it recognizes keyword arguments like `classes`, `style` and `a`.
 
@@ -72,11 +72,13 @@ def chart_test():
 
 Four charts are created and put on the page, each one of a different type. We accomplish this by iterating over a list with four different chart types that Highcharts supports. When we create each chart, we load the same options (via a keyword argument) to all of them. 
 
-?> The reference for the Highcharts chart options can be found at https://api.highcharts.com/highcharts/
+!!! info
+    The reference for the Highcharts chart options can be found at https://api.highcharts.com/highcharts/
 
 However, we then proceed to change the options. Using the dot notation, we assign different values to [`options.chart.type`](https://api.highcharts.com/highcharts/chart.type), [`options.title.text`](https://api.highcharts.com/highcharts/title.text) and [`options.subtitle.text`](https://api.highcharts.com/highcharts/subtitle.text). 
 
-?> Notice that `options.subtitle` was not specified in `my_chart_def`. The [addict](https://github.com/mewwts/addict) library `Dict` structure creates sub dictionaries automatically when required. 
+!!! note
+    Notice that `options.subtitle` was not specified in `my_chart_def`. The [addict](https://github.com/mewwts/addict) library `Dict` structure creates sub dictionaries automatically when required. 
 
 
 ## Using Highcharts Online Examples
@@ -169,19 +171,23 @@ jp.justpy(chart_test)
 
 This time, there is no error. When you copy a JavaScript object, make sure that it does not include function definitions or uses JavaScript language functions to compute values. These will cause errors. 
 
-!> JustPy can only parse JavaScript objects that look like a Python dictionary except for the missing quotes around the dictionary keys. Also, mixing single and double quotes in the JavaScript object may cause problems. Use only single quotes as is the norm with most Highcharts examples.
+!!! warning
+    JustPy can only parse JavaScript objects that look like a Python dictionary except for the missing quotes around the dictionary keys. Also, mixing single and double quotes in the JavaScript object may cause problems. Use only single quotes as is the norm with most Highcharts examples.
 
-?> It is very likely someone has already created a chart like that one you need and put it online. Use that chart as a stepping stone to create yours. Eventually, you may need to make use of the excellent Highcharts [docs](https://www.highcharts.com/docs/index)
+!!! tip
+    It is very likely someone has already created a chart like that one you need and put it online. Use that chart as a stepping stone to create yours. Eventually, you may need to make use of the excellent Highcharts [docs](https://www.highcharts.com/docs/index)
 
 ## Chart Series
 
 Notice that we have added two lines to `chart_test` above.  The first of these lines gives the series a name and makes the legend more informative. 
 
-!> The Dicts that describe the series of a chart are held in a list so the first series is `options.series[0]`
+!!! note
+    The Dicts that describe the series of a chart are held in a list so the first series is `options.series[0]`
 
 Here is an example of how you create a chart with multiple series.
 
-!> numpy needs to be installed for this example to work
+!!! warning
+    numpy needs to be installed for this example to work
 
 ```python
 import justpy as jp

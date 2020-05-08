@@ -4,9 +4,11 @@ In order to take full advantage of this tutorial some knowledge of Python is req
 of [object oriented programming](https://docs.python.org/3/tutorial/classes.html) in Python. 
 In addition, a basic understanding of HTML is required ([HTML - Getting Started](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started)). 
 
-?> The examples in this tutorial use [Python f-strings](https://realpython.com/python-f-strings/) which were added in Python 3.6
+!!! info
+    The examples in this tutorial use [Python f-strings](https://realpython.com/python-f-strings/) which were added in Python 3.6
 
-?> If you have a question about JustPy please open an issue in the [JustPy Github repository](https://github.com/elimintz/justpy) or post a question with the tag `[justpy]` to [stack overflow](https://stackoverflow.com/). I will try to answer promptly.
+!!! tip
+    If you have a question about JustPy please open an issue in the [JustPy Github repository](https://github.com/elimintz/justpy) or post a question with the tag `[justpy]` to [stack overflow](https://stackoverflow.com/). I will try to answer promptly.
 
 ## Installation
 
@@ -41,7 +43,8 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
-!> You can easily copy the code by hovering over it and then clicking 'Copy to clipboard' in the upper right corner
+!!! note
+    You can easily copy the code by hovering over it and then clicking 'Copy to clipboard' in the upper right corner
 
 ## Running the Program
 

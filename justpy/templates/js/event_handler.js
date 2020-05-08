@@ -66,7 +66,29 @@ function eventHandler(props, event, form_data, aux) {
         }
     }
 
-     if (props.jp_props.debounce && (event.type == 'input'))  {
+    let modifiers = props.jp_props.event_modifiers[event.type];
+
+    if (modifiers && modifiers.debounce) {
+        let callNow = modifiers.debounce.immediate && !modifiers.debounce.timeout;
+        clearTimeout(modifiers.debounce.timeout);
+        let set_e = e;
+        modifiers.debounce.timeout = setTimeout(function () {
+            modifiers.debounce.timeout = undefined;
+            if (!callNow) send_to_server(set_e, 'event', props.jp_props.debug);
+            }
+            , modifiers.debounce.value);
+        if (callNow) send_to_server(set_e, 'event', props.jp_props.debug);
+
+    } else if (modifiers && modifiers.throttle) {
+        if (!modifiers.throttle.timeout) {
+            let set_e = e;
+            modifiers.throttle.timeout = setTimeout(function () {
+                    send_to_server(set_e, 'event', props.jp_props.debug);
+                    modifiers.throttle.timeout = undefined;
+                }
+                , modifiers.throttle.value);
+        }
+    } else if (props.jp_props.debounce && (event.type == 'input')) {
         clearTimeout(props.timeout);
         props.timeout = setTimeout(function () {
                 send_to_server(e, 'event', props.jp_props.debug);
@@ -111,23 +133,22 @@ function send_to_server(e, event_type, debug_flag) {
             url: "/zzz_justpy_ajax",
             data: JSON.stringify({'type': event_type, 'event_data': e}),
             success: function (msg) {
-                console.log(msg);
                 if (msg.page_options.redirect) {
-                        location.href = msg.page_options.redirect;
-                    }
-                    if (msg.page_options.open) {
-                        window.open(msg.page_options.open, '_blank');
-                    }
-                    if (msg.page_options.display_url !== null)
-                        window.history.pushState("", "", msg.page_options.display_url);
-                    document.title = msg.page_options.title;
-                    if (msg.page_options.favicon) {
-                        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-                        link.type = 'image/x-icon';
-                        link.rel = 'shortcut icon';
-                        link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
-                        document.getElementsByTagName('head')[0].appendChild(link);
-                    }
+                    location.href = msg.page_options.redirect;
+                }
+                if (msg.page_options.open) {
+                    window.open(msg.page_options.open, '_blank');
+                }
+                if (msg.page_options.display_url !== null)
+                    window.history.pushState("", "", msg.page_options.display_url);
+                document.title = msg.page_options.title;
+                if (msg.page_options.favicon) {
+                    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+                    link.type = 'image/x-icon';
+                    link.rel = 'shortcut icon';
+                    link.href = '{{ url_for(options.static_name, path=' / ') }}' + msg.page_options.favicon;
+                    document.getElementsByTagName('head')[0].appendChild(link);
+                }
                 if (msg) app1.justpyComponents = msg.data;
             },
             dataType: 'json'

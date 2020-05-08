@@ -2,7 +2,8 @@
 
 Notification are created by a special component that does not wrap a quasar component but activates the quasar [notify](https://quasar.dev/quasar-plugins/notify) utility.
 
-!> Add an 'after' event to button that activates the notification that sets the `notify` attribute back to false. Otherwise, the notification will appear every update. Alternatively, await page update in event and then set notify to `False`.
+!!! warning
+    Add an 'after' event to any button that activates the notification that sets the `notify` attribute back to false. Otherwise, the notification will appear every update. Alternatively, await page update in event and then set notify to `False`.
 
 The following is based on [this](https://quasar.dev/quasar-plugins/notify#positioning) example in the Quasar documentation.
 

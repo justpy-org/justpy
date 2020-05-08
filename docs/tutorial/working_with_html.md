@@ -35,7 +35,8 @@ def inner_demo():
 jp.justpy(inner_demo)
 ```
 
-!> if you set `inner_html`, it will override any other content of your component. 
+!!! warning
+    if you set `inner_html`, it will override any other content of your component. 
 
 ## Inserting HTML at the WebPage level
 
@@ -92,7 +93,9 @@ There are several way to access the child components. For example, in our specif
 
 ### The <span style="color: red;">name_dict</span> dictionary
 
-A more general way to access parsed elements is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. Here is an example:
+A more general way to access parsed elements is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to. 
+
+Here is an example:
 
 ```python
 import justpy as jp
@@ -119,6 +122,8 @@ If you click the second paragraph, its text will change. Notice that we added `n
 
 If more than one element is given the same name in the HTML text, the dictionary value is a list with all the elements with that name.
 
+`name_dict` is of type Dict so its fields can be accessed using dot notation. Instead of `c.name_dict['a']` you can use `c.name_dict.a`.
+
 ### Additional parsing functions
 Along with parse_html there are two additional functions in JustPy to parse HTML: `parse_html_file` parses a file instead of a string and `parse_html_file_async` is a co-routine that does the same asynchronously.  
 
@@ -127,7 +132,7 @@ Along with parse_html there are two additional functions in JustPy to parse HTML
 
 The `commands` attribute is created by `parse_html` and includes a list of the Python commands (represented as strings) needed to create the element in the JustPy framework. 
 
- ```python
+```python
 import justpy as jp
 
 def commands_demo():
@@ -160,7 +165,8 @@ jp.justpy(commands_demo)
 
 The `command_prefix` keyword argument allows specifying the prefix for the commands. The default is 'jp.'
 
-!> All non blank prefixes should have the '.' (period) as their last character
+!!! warning
+    All non blank prefixes should have the '.' (period) as their last character
 
 We can then use the commands to generate the output we need without parsing HTML:
 

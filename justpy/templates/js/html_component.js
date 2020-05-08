@@ -38,7 +38,8 @@ Vue.component('html_component', {
 
         var event_description = {};
         for (i = 0; i < this.jp_props.events.length; i++) {
-            event_description[this.jp_props.events[i]] = this.eventFunction
+            if (!this.jp_props.events[i].includes('__'))
+                event_description[this.jp_props.events[i]] = this.eventFunction
         }
         description_object['on'] = event_description;
 
@@ -56,7 +57,7 @@ Vue.component('html_component', {
             if (!this.$props.jp_props.event_propagation) {
                 event.stopPropagation();
             }
-             if (event.type == 'dragstart') {
+            if (event.type == 'dragstart') {
                 if (this.$props.jp_props.drag_options) {
                     this.$refs['r' + this.$props.jp_props.id].className = this.$props.jp_props.drag_options['drag_classes']
                 }
@@ -157,9 +158,8 @@ Vue.component('html_component', {
             var animation = this.$props.jp_props.animation;
             var element = this.$el;
             element.classList.add('animated', animation);
-            // element.style.animationFillMode = 'forwards';
             element.classList.remove('hidden');
-            var event_func = function() {
+            var event_func = function () {
                 element.classList.remove('animated', animation);
                 if (animation.includes('Out')) {
                     element.classList.add('hidden');
@@ -169,12 +169,33 @@ Vue.component('html_component', {
                 element.removeEventListener('animationend', event_func);
             };
             element.addEventListener('animationend', event_func);
-
         })
     },
     mounted() {
 
         if (this.$props.jp_props.animation) this.animateFunction();
+        var el = this.$refs['r' + this.$props.jp_props.id];
+        var props = this.$props;
+
+        for (let i = 0; i < props.jp_props.events.length; i++) {
+            let split_event = props.jp_props.events[i].split('__');
+            if (split_event[1] == 'out')
+                document.addEventListener(split_event[0], function (event) {
+                    if (el.contains(event.target)) return;
+                    if (el.offsetWidth < 1 && el.offsetHeight < 1) return;
+                    console.log('click is outside');
+                    e = {
+                        'event_type': 'click__out',
+                        'id': props.jp_props.id,
+                        'class_name': props.jp_props.class_name,
+                        'html_tag': props.jp_props.html_tag,
+                        'vue_type': props.jp_props.vue_type,
+                        'page_id': page_id,
+                        'websocket_id': websocket_id
+                    };
+                    send_to_server(e, 'event', props.jp_props.debug);
+                });
+        }
 
         if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
             this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;

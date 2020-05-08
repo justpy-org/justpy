@@ -41,7 +41,7 @@ class WebPage:
     highcharts_theme = None
     # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
-    allowed_events =['click', 'visibilitychange']
+    allowed_events =['click', 'visibilitychange', 'page_ready']
 
 
     def __init__(self, **kwargs):
@@ -136,6 +136,9 @@ class WebPage:
                              return_exceptions=True)
         return self
 
+    async def reload(self):
+        return await self.run_javascript('location.reload()')
+
     async def update_old(self, *, built_list=None):
         try:
             websocket_dict = WebPage.sockets[self.page_id]
@@ -156,9 +159,7 @@ class WebPage:
                 print('Problem with websocket in page update, ignoring')
         return self
 
-
-
-    async def update(self):
+    async def update(self, websocket=None):
         try:
             websocket_dict = WebPage.sockets[self.page_id]
         except:
@@ -170,7 +171,10 @@ class WebPage:
                                          'redirect': self.redirect, 'open': self.open,
                                          'favicon': self.favicon}}
 
-        await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
+        if websocket:
+            WebPage.loop.create_task(websocket.send_json(dict_to_send))
+        else:
+            await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
                              return_exceptions=True)
         return self
 
@@ -240,14 +244,25 @@ class JustpyBaseComponent(Tailwind):
             self.id = cls.next_id
             cls.next_id += 1
         self.events = []
+        self.event_modifiers = Dict()
         self.allowed_events = []
 
     def initialize(self, **kwargs):
         for k, v in kwargs.items():
             self.__setattr__(k, v)
-        for e in self.allowed_events:
+        self.set_keyword_events(**kwargs)
+        for com in ['a', 'add_to']:
+            if com in kwargs.keys():
+                kwargs[com].add_component(self)
+
+    def set_keyword_events(self, **kwargs):
+        for e in self.allowed_events: # + ['click_out']:
             for prefix in ['', 'on', 'on_']:
                 if prefix + e in kwargs.keys():
+                    cls = JustpyBaseComponent
+                    if not self.id:
+                        self.id = cls.next_id
+                        cls.next_id += 1
                     fn = kwargs[prefix + e]
                     if isinstance(fn, str):
                         fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
@@ -256,9 +271,6 @@ class JustpyBaseComponent(Tailwind):
                     else:
                         self.on(e, fn)
                     break
-        for com in ['a', 'add_to']:
-            if com in kwargs.keys():
-                kwargs[com].add_component(self)
 
     def delete(self):
         if self.needs_deletion:
@@ -266,7 +278,7 @@ class JustpyBaseComponent(Tailwind):
                 JustpyBaseComponent.instances.pop(self.id)
                 self.needs_deletion = False
 
-    def on(self, event_type, func):
+    def on(self, event_type, func, debounce=None, throttle=None, immediate=False):
         if event_type in self.allowed_events:
             cls = JustpyBaseComponent
             if not self.id:
@@ -274,9 +286,17 @@ class JustpyBaseComponent(Tailwind):
                 cls.next_id += 1
             cls.instances[self.id] = self
             self.needs_deletion = True
-            setattr(self, 'on_' + event_type, MethodType(func, self))
+            if inspect.ismethod(func):
+                setattr(self, 'on_' + event_type, func)
+            else:
+                setattr(self, 'on_' + event_type, MethodType(func, self))
             if event_type not in self.events:
                 self.events.append(event_type)
+            if debounce:
+                self.event_modifiers[event_type].debounce = {'value': debounce, 'timeout': None, 'immediate': immediate}
+                print(self.event_modifiers)
+            elif throttle:
+                self.event_modifiers[event_type].throttle = {'value': throttle, 'timeout': None}
         else:
             raise Exception(f'No event of type {event_type} supported')
 
@@ -361,7 +381,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
     html_global_attributes = ['accesskey', 'class', 'contenteditable', 'dir', 'draggable', 'dropzone', 'hidden', 'id',
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
-    attribute_list = ['id', 'vue_type', 'show', 'events', 'classes', 'style', 'set_focus',
+    attribute_list = ['id', 'vue_type', 'show', 'events', 'event_modifiers', 'classes', 'style', 'set_focus',
                       'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation', 'debug']
 
     # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize',
@@ -382,6 +402,10 @@ class HTMLBaseComponent(JustpyBaseComponent):
     # allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
     #                   'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur']
 
+    # allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
+    #                   'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit',
+    #                   'dragstart', 'dragover', 'drop']
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.class_name = type(self).__name__
@@ -400,38 +424,14 @@ class HTMLBaseComponent(JustpyBaseComponent):
         self.drag_options = None
         self.allowed_events = ['click', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'input', 'change',
                                'after', 'before', 'keydown', 'keyup', 'keypress', 'focus', 'blur', 'submit',
-                               'dragstart', 'dragover', 'drop']
+                               'dragstart', 'dragover', 'drop', 'click__out']
         self.events = []
-        self.additional_properties = []
+        self.event_modifiers = Dict()
+        self.additional_properties = []  # Additional fields to get from the JavasScript event object
         self.event_propagation = True  # If True events are propagated
         self.prop_list = []  # For components from libraries like quasar
 
         self.initialize(**kwargs)
-
-
-    def initialize(self, **kwargs):
-        for k, v in kwargs.items():
-            self.__setattr__(k, v)
-        for e in self.allowed_events:
-            for prefix in ['', 'on', 'on_']:
-                if prefix + e in kwargs.keys():
-                    fn = kwargs[prefix + e]
-                    if isinstance(fn, str):
-                        cls = JustpyBaseComponent
-                        if not self.id:
-                            self.id = cls.next_id
-                            cls.next_id += 1
-                        fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
-                        exec(fn_string)
-                        self.on(e, locals()[f'oneliner{self.id}'])
-                    else:
-                        self.on(e, fn)
-                    break
-
-        for com in ['a', 'add_to']:
-            if com in kwargs.keys():
-                kwargs[com].add_component(self)
-
 
     def __len__(self):
         if hasattr(self, 'components'):
@@ -440,7 +440,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
             return 0
 
     def __repr__(self):
-        return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, vue_type: {self.vue_type}, number of components: {len(self)})'
+        name = self.name if hasattr(self, 'name') else 'No name'
+        return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, vue_type: {self.vue_type}, name: {name}, number of components: {len(self)})'
 
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)
@@ -543,8 +544,9 @@ class Div(HTMLBaseComponent):
 
     def __init__(self, **kwargs):
         self.html_entity = False
+        self.children = []
         super().__init__(**kwargs)
-        self.components = []
+        self.components = self.children.copy()
 
     def delete(self):
         if self.delete_flag:
@@ -863,10 +865,11 @@ class A(Div):
         self.inline_option = 'nearest'  # One of "start", "center", "end", or "nearest". Defaults to "nearest".
         super().__init__(**kwargs)
 
-        def default_click(self, msg):
-            return True
+        if not kwargs.get('click'):
+            def default_click(self, msg):
+                return True
 
-        self.on('click', default_click)
+            self.on('click', default_click)
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -1285,13 +1288,14 @@ class BasicHTMLParser(HTMLParser):
     void_elements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem', 'meta',
                      'param', 'source', 'track', 'wbr']
 
-    def __init__(self, **kwargs):
+    def __init__(self, context, **kwargs):
         super().__init__()
+        self.context = context
         self.level = -1
         self.parse_id = 0
         self.start_tag = True
         self.components = []
-        self.name_dict = {}  # After parsing holds a dict with named components
+        self.name_dict = Dict()  # After parsing holds a dict with named components
         self.dict_attribute = kwargs.get('dict_attribute','name')  # Use another attribute than name
         self.root = Div(name='root')
         self.containers = []
@@ -1377,6 +1381,20 @@ class BasicHTMLParser(HTMLParser):
         for attr in attrs:
             attr = list(attr)
             attr[0] = attr[0].replace('-', '_')
+            if attr[0][0] == '@':
+                if attr[1] in self.context.f_locals:
+                    c.on(attr[0][1:], self.context.f_locals[attr[1]])
+                elif attr[1] in self.context.f_globals:
+                    c.on(attr[0][1:], self.context.f_globals[attr[1]])
+                else:
+                    cls = JustpyBaseComponent
+                    if not c.id:
+                        c.id = cls.next_id
+                        cls.next_id += 1
+                    fn_string = f'def oneliner{c.id}(self, msg):\n {attr[1]}'   # remove first and last charcters which are quotes
+                    exec(fn_string)
+                    c.on(attr[0][1:], locals()[f'oneliner{c.id}'])
+                continue
             if attr[0][0] == ':':
                 attr[0] = attr[0][1:]
                 attr[1] = eval(attr[1])
@@ -1453,12 +1471,12 @@ class BasicHTMLParser(HTMLParser):
         pass
 
 
-def justPY_parser(html_string, **kwargs):
+def justPY_parser(html_string, context, **kwargs):
     '''
     Returns root component of the parser with the name_dict as attribute.
     If root component has only one child, returns the child
     '''
-    parser = BasicHTMLParser(**kwargs)
+    parser = BasicHTMLParser(context, **kwargs)
     parser.feed(html_string)
     if len(parser.root.components) == 1:
         parser_result = parser.root.components[0]
@@ -1472,12 +1490,13 @@ def justPY_parser(html_string, **kwargs):
 
 
 def parse_html(html_string, **kwargs):
-    return justPY_parser(html_string, **kwargs)
+    # return justPY_parser(html_string, inspect.stack()[1][0].f_globals, **kwargs)
+    return justPY_parser(html_string, inspect.stack()[1][0], **kwargs)
 
 
 def parse_html_file(html_file, **kwargs):
     with open(html_file, encoding="utf-8") as f:
-        return justPY_parser(f.read(), **kwargs)
+        return justPY_parser(f.read(), inspect.stack()[1][0].f_globals, **kwargs)
 
 
 try:

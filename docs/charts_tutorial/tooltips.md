@@ -55,7 +55,8 @@ return await self.tooltip_update('<div>My tooltip!</div>', msg.websocket)
 
 This line returns the result of running the method `tooltip_update` of the HighCharts component. The method has two arguments (in addition to self). The first is an HTML string which determines the content of the tooltip and the second is the websocket over which this HTML needs to be transmitted. The websocket of the page on which the event occurred can be found in `msg.websocket` and this is the websocket we use (`msg` is the second argument of the event handler).
 
-!> Since the method `tooltip_update` is a coroutine, it needs be awaited and the tooltip event handler needs to be defined with the keyword async.
+!!! note
+    Since the method `tooltip_update` is a coroutine, it needs be awaited and the tooltip event handler needs to be defined with the keyword async.
 
 ## Tooltip Debouncing
 
@@ -63,7 +64,7 @@ If you quickly mouseover several points on charts with user defined formatters, 
 
 The debouncing delay can be changed by setting the attribute `tooltip_debounce` which is by default 100ms. The following command changes the debounce period to 500ms:
 
- ```python
+```python
 chart2.tooltip_debounce = 500  # Assign value of debounce period in ms
 ```
  

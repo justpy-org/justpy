@@ -8,10 +8,11 @@ JustPy comes with a [pandas extension](https://pandas.pydata.org/pandas-docs/sta
 
 The program below loads a [csv](https://elimintz.github.io/women_majors.csv) file into a pandas frame and then creates a chart based on the data in the frame. 
 
-?> The examples in this section were inspired by [this](https://www.dataquest.io/blog/making-538-plots/) blog post.
- Many thanks to [Randal Olson](http://www.randalolson.com/2014/06/14/percentage-of-bachelors-degrees-conferred-to-women-by-major-1970-2012/) for creating and hosting the data set.
+!!! note
+    The examples in this section were inspired by [this](https://www.dataquest.io/blog/making-538-plots/) blog post. Many thanks to [Randal Olson](http://www.randalolson.com/2014/06/14/percentage-of-bachelors-degrees-conferred-to-women-by-major-1970-2012/) for creating and hosting the data set.
 
-!> To run the program below you will need to have pandas installed.
+!!! warning
+    To run the program below you will need to have pandas installed.
 
 ```python
 import justpy as jp
@@ -35,6 +36,7 @@ jp.justpy(women_majors)
 The JustPy pandas extension `jp` includes the function `plot` that creates and returns a chart instance. 
 
 It has two positional arguments:
+
 - The frame column to use as the x value, can either be the index of the column or its name
 - A list of the columns to plot as y values. Items on the list can either be column indexes or names
 
@@ -153,5 +155,6 @@ In our specific case, the data of each series is a list of lists of pairs, each 
 
 In this example, we used the itertools library function `zip_longest` to make sure missing values are handled correctly. Since the zip family of functions returns tuples, we need to convert them to lists (this is not strictly true since the standard library `json.dumps` function converts python tuples to JavaScript arrays). All this is done in the function `make_pairs_list` above.
 
-!> JustPy comes with several Highcharts themes. The theme of all charts on a page must be the same and therefore `highcharts_theme` is a WebPage attribute. In this example we set the theme to 'grid'. 
+!!! info
+    JustPy comes with several Highcharts themes. The theme of all charts on a page must be the same and therefore `highcharts_theme` is a WebPage attribute. In this example we set the theme to 'grid'. 
 

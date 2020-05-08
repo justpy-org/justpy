@@ -1,6 +1,6 @@
 # Updating Charts
 
-In some applications, we would like charts to update as the underlying data changes. The following program updates the two series on a chart every second and then updates all the browser tabs the page is open in. The program is similar to the [clock](tutorial/pushing_data?id=clock) example in the general tutorial.
+In some applications, we would like charts to update as the underlying data changes. The following program updates the two series on a chart every second and then updates all the browser tabs the page is open in. The program is similar to the [clock](/tutorial/pushing_data?/#clock) example in the general tutorial.
 
 ```python
 import justpy as jp

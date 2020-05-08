@@ -1,4 +1,5 @@
 import asyncio
+import inspect
 
 
 def print_request(request):
@@ -40,6 +41,13 @@ def run_task(task):
 async def create_delayed_task(task, delay, loop):
     await asyncio.sleep(delay)
     loop.create_task(task)
+
+def print_func_info(*args):
+    # Calling function name
+    print(inspect.stack()[1][3])
+    for i in args:
+        print(i)
+
 
 
 

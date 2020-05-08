@@ -4,7 +4,8 @@
 
 The main advantage of the [form tag in HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form), is that it supports an action called "submit" that collects the information from the input elements on the form and sends them to the server to be processed by a script that can be specified.
 
-!> It is only necessary to use the Form component with JustPy when you need to handle [file uploads](tutorial/uploading_files.md) by using an Input with type `file` . In all other cases Input elements can be put on a page without the need to organize them inside a form. 
+!!! note
+    It is only necessary to use the Form component with JustPy when you need to handle [file uploads](../uploading_files) by using an Input with type `file` . In all other cases Input elements can be put on a page without the need to organize them inside a form. 
 
 ## The submit Event
 

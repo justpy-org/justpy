@@ -132,7 +132,7 @@ def svg_demo():
 jp.justpy(svg_demo)
 ```
 
-In `svg_demo`, in a loop that iterates over a list of colors, an element is created from parsing a modification of of the string `svg_html` (we change the id of the gradient definition to be unique). Then, the result is modified using the [name_dict](tutorial/working_with_html?id=the-name_dict-dictionary) attribute. In the HTML string we named the elements we plan to modify later and they can be found in [name_dict](tutorial/working_with_html?id=the-name_dict-dictionary).
+In `svg_demo`, in a loop that iterates over a list of colors, an element is created from parsing a modification of of the string `svg_html` (we change the id of the gradient definition to be unique). Then, the result is modified using the [name_dict](../working_with_html/#the-name_dict-dictionary) attribute. In the HTML string we named the elements we plan to modify later and they can be found in [name_dict](../working_with_html/#the-name_dict-dictionary).
 
 Notice the two lines:
 

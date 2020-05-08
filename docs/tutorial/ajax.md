@@ -20,7 +20,8 @@ jp.justpy(hello_test, websockets=False)
 
 The program above will use Ajax to handle clicks on the Hello elements. You van verify this by using the debugging tools of your browser (in Chrome press CTRL+Shift+I and go to the "Network" tab)
 
-!> In most cases, users will not notice any difference in the performance of the application if you use Ajax instead of WebSockets. If your hosting solution does not support WebSockets, give the Ajax option a try.
+!!! note
+    In most cases, users will not notice any difference in the performance of the application if you use Ajax instead of WebSockets. If your hosting solution does not support WebSockets, give the Ajax option a try.
 
 ## Ajax Page Reload
 

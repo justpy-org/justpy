@@ -110,7 +110,8 @@ In the example below we create two sets of [radio buttons](https://developer.moz
 
 Later in the tutorial we will see how to create a component for radio buttons which is a more intuitive way to use them. 
 
-?> If you plan to use Quasar with JustPy, checkout the [QOptionGroup component](https://quasar.dev/vue-components/option-group)
+!!! tip
+    If you plan to use Quasar with JustPy, checkout the [QOptionGroup component](https://quasar.dev/vue-components/option-group)
 
 ```python
 import justpy as jp
@@ -148,7 +149,8 @@ Radio buttons generate the 'change' event on all browsers. They generate the 'in
  
  Radio buttons are grouped according to their `name` attribute and the value of their `form` attribute if one is assigned. Buttons with the same name on different assigned forms, will be in different groups. All radio buttons not in any form but with the same name, will be in one group.
  
-!> You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page. 
+!!! note
+    You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page. 
 
 In the example below, the results of clicking a radio button are shown using the event handler `radio_changed`. Notice that the value of the radio button is always the same. What changes is its `checked` property. The value of a group of radio buttons is the value of the radio button in the group that is checked.
 
@@ -233,13 +235,13 @@ In the example below, Input elements respond to the Esc and Enter keys. When Esc
 
 To make the example work, an event handler for the 'blur' event is required. When one of the input elements loses focus, the blur event occurs and the focus field of the element is set to false so that the correct element will have focus.
 
-By setting the `focus` attribute of an element to `True`, you transfer the focus to it. If the attribute is `True` for multiple elements on the page, the results are unpredictable and therefore the blur event handler is required to make sure the attribute is `True` for only one element.
+By setting the `set_focus` attribute of an element to `True`, you transfer the focus to it. If the attribute is `True` for multiple elements on the page, the results are unpredictable and therefore the blur event handler is required to make sure the attribute is `True` for only one element.
 
 ```python
 import justpy as jp
 
 def my_blur(self, msg):
-        self.focus = False
+        self.set_focus = False
 
 def key_down(self, msg):
     # print(msg.key_data)
@@ -248,12 +250,12 @@ def key_down(self, msg):
         self.value=''
         return
     if key=='Enter':
-        self.focus = False
+        self.set_focus = False
         try:
             next_to_focus = self.input_list[self.num + 1]
         except:
             next_to_focus = self.input_list[0]
-        next_to_focus.focus = True
+        next_to_focus.set_focus = True
         return
     return True  # Don't update the page
 

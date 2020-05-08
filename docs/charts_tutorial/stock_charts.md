@@ -3,7 +3,8 @@ In addition to Highcharts, Highsoft offers a great stock charting product called
 
 The program below serves a chart of stock price data.
 
-!> You need to install pandas to run the program
+!!! warning
+    You need to install pandas to run the program
 
 ```python
 import justpy as jp

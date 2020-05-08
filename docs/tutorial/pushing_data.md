@@ -61,7 +61,8 @@ The last coroutine we define is `clock_test`. This is the function that handles 
 
 The last line is the call to `justpy`. The keyword parameter `startup` allows us to designate a function to run once the server loop has been initiated. We cannot designate `clock_counter` as the startup function because the server is locked until the startup function terminates and `clock_counter` never terminates. 
 
-!> When a JustPy event handler finishes running and returns `None`, JustPy calls the `update` method of the WebPage instance in which the event occurred. That is the reason that content in browser tabs gets updated after events automatically. If you don't want the page to update, return `True` or anything except for `None`. 
+!!! note
+    When a JustPy event handler finishes running and returns `None`, JustPy calls the `update` method of the WebPage instance in which the event occurred. That is the reason that content in browser tabs gets updated after events automatically. If you don't want the page to update, return `True` or anything except for `None`. 
 
 ## Collaborative Editor
 
@@ -81,7 +82,7 @@ jp.justpy(joint_edit)
 
 This program allows joint editing of a document. Open several browser tabs or different browsers on your local machine and start editing the document. Any change you make in one browser tab, is reflected immediately in all others. 
 
-The program uses the component QEditor. This JustPy component was built using the [Quasar QEditor Component](https://quasar.dev/vue-components/editor) (Quasar based JustPy components are described [here](quasar_tutorial/introduction.md)).  
+The program uses the component QEditor. This JustPy component was built using the [Quasar QEditor Component](https://quasar.dev/vue-components/editor) (Quasar based JustPy components are described [here](/quasar_tutorial/introduction)).  
  
 Since the program renders `wp`, the same WebPage instance to all pages, they all share the same QEditor instance. QEditor supports the input event and therefore the keys pressed are sent to the server which in turn sets the value of the QEditor instance (`editor` in our case) and then updates `wp` using the update method. Since `wp` is rendered in all browser tabs, they are all updated by JustPy.
 
@@ -126,7 +127,7 @@ def message_demo():
     outer_div = jp.Div(classes='flex flex-col h-screen', a=wp)
     outer_div.add(header)
     d = jp.Div(classes='flex', a=outer_div)
-    message = jp.TextArea(placeholder='Enter message here', a=d, classes=input_classes, debounce=500)
+    message = jp.Textarea(placeholder='Enter message here', a=d, classes=input_classes, debounce=500)
     send_button = jp.Button(a=d, click=send_message, classes=button_classes)
     send_button.add(button_icon, button_text)
     outer_div.add(shared_div)
@@ -145,7 +146,8 @@ Take a look at `message_demo`, the third function we define. All requests will b
 
 The next line, `shared_div.add_page(wp)`, is important. We need to add `wp` to the dictionary of pages `shared_div` is on. When we call the `update` method of `shared_div`, it will use this dictionary to update the appropriate browser tabs. 
 
-!> JustPy does not keep track automatically of which page an element is on. This would have introduced a lot of overhead since often, as in our case also, an element is indirectly added to a page by being added to an element that has been or will be added to a page.
+!!! note
+    JustPy does not keep track automatically of which page an element is on. This would have introduced a lot of overhead since often, as in our case also, an element is indirectly added to a page by being added to an element that has been or will be added to a page.
 
 Let's take a closer look at `send_message`, the event handler that gets called when `send_button` is clicked. If the message box is not empty, the function creates a Div to which it adds an icon, a time stamp and the text of the message. It then adds the Div as the first element in `shared_div`.  It clears the message box and then awaits the `update` method of `shared_div`. Only `shared_div` will be updated in all the WebPages it is on. All the other elements on the page will not be updated.
 

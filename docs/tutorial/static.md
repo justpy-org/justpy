@@ -54,4 +54,5 @@ app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAM
 
 If you want to change JustPy's defaults, change the settings in justpy.env, the configuration file.
 
-!> STATIC_NAME is used inside JustPy's templates so there is probably no reason to change it in any application unless you change the template files also. 
+!!! note
+    STATIC_NAME is used inside JustPy's templates so there is probably no reason to change it in any application unless you change the template files also. 

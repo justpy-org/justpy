@@ -6,7 +6,8 @@ The AgGrid method `load_pandas_frame(df)` makes it simple to load data from a pa
 
 The example below reads a CSV file into a pandas frame and then uses the grid to display the data. The data shows the percentage of women in each college major per year.
 
-!> To run the example below you will need to have pandas installed.
+!!! warning
+    To run the example below you will need to have pandas installed.
 
 ```python
 import justpy as jp

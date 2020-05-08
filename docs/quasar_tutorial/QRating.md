@@ -2,7 +2,7 @@
 
 [Quasar Rating](https://quasar.dev/vue-components/rating) is a Component which allows users to rate items.
 
-Each generates an input event each time it is clicked with the value of the input being the rating.
+It generates an input event each time it is clicked with the value of the input being the rating.
 
 ```python
 import justpy as jp

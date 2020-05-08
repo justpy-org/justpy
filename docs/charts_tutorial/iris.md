@@ -13,7 +13,7 @@ The [Iris flower dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) is
  
  Please run the program below:
  
- ```python
+```python
 import justpy as jp
 import pandas as pd
 

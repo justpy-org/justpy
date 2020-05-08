@@ -24,7 +24,8 @@ When we create the Input element, we add the following to its keyword arguments:
 
 This tells the Input instance that it will model itself based on the value under the 'text' key in `wp`'s data. For an Input element this means that when rendered it will take its value from `wp.data['text']` AND when its value is changed due to an input event, it will set `wp.data['text']` to its new value. 
 
-!>It is important to understand that in the case of Input, `model` has a two way influence. It gets its value from the appropriate data attribute and when an input event occurs it changes the appropriate data attribute.
+!!! note
+    It is important to understand that in the case of Input, `model` has a two way influence. It gets its value from the appropriate data attribute and when an input event occurs it changes the appropriate data attribute.
 
 In the case of a Div element the relation is only one way. Its text attribute is rendered according to the model attribute but it does not change the data dictionary.
 
@@ -92,13 +93,15 @@ When the button is clicked, the following command in `reset_all` is executed: `m
 
 Since all the Inputs and Divs are modeled after this dictionary entry, they are all reset to the empty string when the button is clicked. 
 
-?> Any element, a Div for example, may have a data attribute and be used in a model attribute, not just a WebPage.
+!!! note
+    Any element, a Div for example, may have a data attribute and be used in a model attribute, not just a WebPage.
 
 With the `model` and `data` attributes you can easily propagate a change in one element to others.
 
 ## Advanced use of the model attribute
 
-!> This part of the tutorial will use custom components. I recommend skipping this section initially and returning to it after having completed the first few sections of the [Creating Custom Components](tutorial/custom_components.md) part of the tutorial
+!!! tip
+    This part of the tutorial will use custom components. I recommend skipping this section initially and returning to it after having completed the first few sections of the [Creating Custom Components](../custom_components) part of the tutorial
 
 The following program is the base one we will expand on. It uses `model` in the same way as examples above.
 

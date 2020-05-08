@@ -69,7 +69,8 @@ The chart instance that is created can be further modified by changing its optio
 
 A component that comes with JustPy is Histogram. It simplifies creating a histogram chart. In this example, we include the  definition.
 
-!> In order to run this example, you need to install [numpy](https://numpy.org/)
+!!! warning
+    In order to run this example, you need to install [numpy](https://numpy.org/)
 
 ```python
 import justpy as jp
@@ -138,7 +139,7 @@ def histogram_test(request):
 
 jp.justpy(histogram_test)
 
- ```
+```
 
 The Histogram class relies on a [chart definition](https://www.highcharts.com/docs/chart-and-series-types/histogram-series) from the Highcharts documentation.
  

@@ -62,7 +62,8 @@ This code snippet has the same functionality as the one above it.
 
 So far we have created a page and added an element to it. We haven't yet loaded the page into the user's browser.
 
-?> In this tutorial, I will call the process of delivering a Web page to a user "**rendering the page**".
+!!! note
+    In this tutorial, I will call the process of delivering a Web page to a user "**rendering the page**".
 
 When you type a URL into your browser's [Address Bar](https://en.wikipedia.org/wiki/Address_bar) and tell your browser to navigate to that address,
 the browser generates a request; it requests data from the server the URL you entered points to. 
@@ -88,11 +89,12 @@ jp.justpy(hello_world)
 
 The function `hello_world` creates a web page, adds a paragraph element to it and returns the page.
  
-!> **In this tutorial, functions like `hello_world` will be called "request handlers".**
+!!! note
+    **In this tutorial, functions like `hello_world` will be called "request handlers".**
 
 The `jp.justpy(hello_world)` command starts a web server and sends all requests to the function `hello_world`.
 
-Run the program above (as explained in [getting started](tutorial/getting_started.md#Run "Getting Started") ).
+Run the program above (as explained in [getting started](../getting_started/#running-the-program) ).
 You should see 'Hello World!' in your browser.
 
 ## More Hello World
@@ -113,7 +115,8 @@ jp.justpy(hello_world)
  
 Run the program above and look at the result in your browser.
  
-!> **Don't forget to terminate the previous program first.**  
+!!! warning
+    **Don't forget to terminate the previous program first.**  
 Two JustPy servers cannot run at the same time on the same port. 
 
 The P instances are created inside a loop with the loop index being used to give each paragraph some different text and a different font size.
@@ -131,7 +134,8 @@ and see what happens.
 Another way to style elements is to use classes.
 By default, instances of WebPage support styling using [Tailwind](https://tailwindcss.com/) classes. If you are familiar with CSS, checkout Tailwind. For me, it is a joy to work with.
 
-?> You can also put your own CSS on a page and use your own class definitions by setting the `css` attribute of a page.
+!!! info
+    You can also put your own CSS on a page and use your own class definitions by setting the `css` attribute of a page.
 
 Let's use Tailwind classes to style our page:
 
@@ -168,12 +172,14 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
-!> When you define a page that is going to be rendered in more than one browser tab or page, you need to set its `delete_flag` to `False`.
+!!! info
+    When you define a page that is going to be rendered in more than one browser tab or page, you need to set its `delete_flag` to `False`.
 
 Otherwise, the page (the instance of `WebPage` to be precise) will be deleted when a browser tab or window that renders that page is closed.
 The default is for JustPy to remove all references to the page and the elements on it so that the Python garbage collector can reclaim the memory. 
 
-?> When a page's (or element's) `delete_flag` is set to `False`, none of its child elements will be deleted, even if their `delete_flag` is `True`. 
+!!! warning
+    When a page's (or element's) `delete_flag` is set to `False`, none of its child elements will be deleted, even if their `delete_flag` is `True`. 
 
 In the next part of the tutorial you will learn how to deal with events such as a mouse click.
  

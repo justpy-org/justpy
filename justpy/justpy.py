@@ -52,15 +52,16 @@ STATIC_NAME = config('STATIC_NAME', cast=str, default='static')
 FAVICON = config('FAVICON', cast=str, default='')  # If False gets value from https://elimintz.github.io/favicon.png
 TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
+QUASAR_VERSION = config('QUASAR_VERSION', cast=str, default=None)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
 AGGRID = config('AGGRID', cast=bool, default=True)
 AGGRID_ENTERPRISE = config('AGGRID_ENTERPRISE', cast=bool, default=False)
 
-NO_INTERNET = config('NO_INTERNET', cast=bool, default=False)
+NO_INTERNET = config('NO_INTERNET', cast=bool, default=True)
 
 def create_component_file_list():
     file_list = []
-    component_dir = f'{STATIC_DIRECTORY}\\components'
+    component_dir = os.path.join(STATIC_DIRECTORY, 'components')
     if os.path.isdir(component_dir):
         for file in os.listdir(component_dir):
             if fnmatch.fnmatch(file, '*.js'):
@@ -72,7 +73,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 component_file_list = create_component_file_list()
 
-template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
+template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'quasar_version': QUASAR_VERSION, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
                     'static_name': STATIC_NAME, 'component_file_list': component_file_list, 'no_internet': NO_INTERNET}
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
@@ -216,6 +217,7 @@ class JustpyEvents(WebSocketEndpoint):
         # await websocket.send_json({'type': 'websocket_update', 'data': websocket.id})
         WebPage.loop.create_task(websocket.send_json({'type': 'websocket_update', 'data': websocket.id}))
 
+
     async def on_receive(self, websocket, data):
         """
         Method to accept and act on data received from websocket
@@ -298,6 +300,7 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         c = p
     else:
         c = JustpyBaseComponent.instances[event_data['id']]
+        event_data['target'] = c
 
     try:
         before_result = await c.run_event_function('before', event_data, True)
@@ -311,7 +314,7 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         event_result = None
         # logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
         logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:\033[0m')
-        logging.debug('%s', traceback.format_exc())
+        logging.info('%s', traceback.format_exc())
 
     # If page is not to be updated, the event_function should return anything but None
 

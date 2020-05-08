@@ -129,4 +129,4 @@ async def dog_test(request):
     await change_pic(main_image, {})
     return wp
 
-justpy(dog_test)
+justpy(dog_test, websockets=True)

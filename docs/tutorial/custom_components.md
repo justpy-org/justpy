@@ -35,7 +35,8 @@ Our new component, PillButton, inherits from Button and therefore will have all 
 
 The only change we make is to redefine `__init__`, the method that is called when an instance is created. In this case the method calls the `__init__` of the super class (Button in our case) and then sets the classes that format the button.
 
-!> The line `super().__init__(**kwargs)` is a **MUST** in component's `__init__`  
+!!! warning
+    The line `super().__init__(**kwargs)` is a **MUST** in component's `__init__`  
 Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it. 
 
 Let's add a custom attribute to the component that will determine the background color of the button.
@@ -101,7 +102,7 @@ html_string = """
 """
 ```
 
-We will use [`parse_html`](tutorial/working_with_html?id=the-parse_html-function) to easily convert this to JustPy commands.
+We will use [`parse_html`](../working_with_html?id=the-parse_html-function) to easily convert this to JustPy commands.
 
 Run the following program. As it does not start a web server, there is no need to load a web page. We will be interested only in the printout. 
 
@@ -176,12 +177,14 @@ def alert_test():
 jp.justpy(alert_test)
 ```
 
-!> The line `super().__init__(**kwargs)` is a **MUST** in custom component's `__init__`  
+!!! warning
+    The line `super().__init__(**kwargs)` is a **MUST** in custom component's `__init__`  
 Without it, the instances of the components will not be created correctly. Only default values for keyword arguments should precede it.
 
 When you run the program above, notice that the title of the MyAlert instance is rendered as 'Hello' instead of 'Shalom' even though the line `d.title_text = 'Shalom'` is executed after it is created (this problem also exists with the PillButton component we defined above). To fix this bug we need to assign the attributes `title_text` and `body_text` to the text of the appropriate elements when the instance is rendered, not when it is created.
 
-?> As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the `convert_object_to_dict` method that each component class has.
+!!! note
+    As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the `convert_object_to_dict` method that each component class has.
 
 ## The <span style="color: red">react</span> Method
 
@@ -676,7 +679,8 @@ This method takes two arguments in addition to `self`. The first is the event ty
  
  Before calling `run_event_function` we modify some values in `msg` to make it more informative. In general, you would create the appropriate `msg` for how you believe the component will be used. In our case we have added the `button_text` key which stores the text of the last button that was clicked and that generated the change event.
 
-!> Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
+!!! note
+    Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
 
 ### Adding a <span style="color: red">model</span> attribute
 
@@ -787,11 +791,12 @@ In this component, the method `convert_object_to_dict`, is overridden. This is t
 
 Below we also define another component, TabPills, that inherits from Tabs and just changes the appearance of the tabs label line. It does so by just changing a few class variables. 
 
-!> When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design. 
+!!! tip
+    When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design. 
 
  In the example below we use three tab components to display charts and pictures.
  
- ```python
+```python
 from justpy import Div, WebPage, Ul, Li, HighCharts, A, justpy
 import justpy as jp
 
@@ -1011,7 +1016,8 @@ The AutoTable component takes a list of lists and formats it into a nice looking
 
 In the example below, we read a CSV file into a pandas frame, convert it to a list of lists and add the column names as the first list and then use the component.
 
-!> You need pandas installed to run the example below.
+!!! note
+    You need pandas installed to run the example below.
 
 ```python
 import justpy as jp

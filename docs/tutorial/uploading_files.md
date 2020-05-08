@@ -11,7 +11,7 @@ import justpy as jp
 download_link = jp.A(text='Download image', href='/static/image1.png', download='image1.png')
 ```
 
-In the example above, when the element is clicked, the file 'image1.png' from the directory the server was run (the default static directory) will be downloaded and will be called 'image1.png' on the user's computer. The way JustPy handles static files is explained [here](tutorial/static.md)
+In the example above, when the element is clicked, the file 'image1.png' from the directory the server was run (the default static directory) will be downloaded and will be called 'image1.png' on the user's computer. The way JustPy handles static files is explained [here](../static)
 
 ### Dynamic Content
 
@@ -58,7 +58,8 @@ First, let's look at the isolated behavior of an Input element of type 'file'.
 
 In the program below, one such element is put on the page and after the user selects files, information about the selected files is displayed on the page.
 
-!> In order to be compatible with all browsers, use the 'change' event with this kind of Input element and not the 'input' event
+!!! note
+    In order to be compatible with all browsers, use the 'change' event with this kind of Input element and not the 'input' event
 
 
 ```python
@@ -93,13 +94,14 @@ Note that the content of the files is not available to the change event handler.
 
 Again the information is found in `msg.files` but with an additional key called `file_content`. The value under this key is the file content in  [base64 format](https://docs.python.org/3/library/base64.html). Files in this format are in printable ASCII characters and can be included in WebSocket messages and HTTP POST requests. 
 
-!> When using Websockets there is currently a 1 MByte limit on total upload size in one request after the base64 conversion. If you want a large limit, run the upload page or the application with `websockets=false`
+!!! note
+    When using Websockets there is currently a 1 MByte limit on total upload size in one request after the base64 conversion. If you want a large limit, run the upload page or the application with `websockets=false`
 
 The program below lets users upload image files and displays thumbnails of the files uploaded. When the thumbnails are clicked, the file that was uploaded is downloaded. 
 
 Each user's files are stored in a directory that is unique for each session.
 
-The ThumbNail component defined in the program is an [A component](tutorial/html_components?id=html-links) that includes an Img component. 
+The ThumbNail component defined in the program is an [A component](../html_components?id=html-links) that includes an Img component. 
 
 ```python
 import justpy as jp

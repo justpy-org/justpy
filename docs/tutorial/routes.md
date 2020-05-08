@@ -40,7 +40,8 @@ jp.justpy(bye_function)
 
 Type different URLs into the browser and see what happens. Unless the path is exactly '/hello', the `bye_function` will run and 'Goodbye!' will be displayed.
  
-!> All paths must start with '/', otherwise an error occurs.
+!!! warning
+    All paths must start with '/', otherwise an error occurs.
 
 ## Using Decorators
 

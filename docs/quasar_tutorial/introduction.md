@@ -14,13 +14,14 @@ The name of the Quasar component and the JustPy component is the same. If the Qu
 
 This guide/tutorial is far from complete and I will be adding examples to it over time.
 
-!> Quasar uses its own [classes](https://quasar.dev/style/typography) to style elements on the page, so do not use Tailwind classes on Quasar pages.
+!!! warning
+    Quasar uses its own [classes](https://quasar.dev/style/typography) to style elements on the page, so do not use Tailwind classes on Quasar pages unless you set the `tailwind` attribute to `True`..
 
 ## Example
 
 The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page. 
  
- ```python
+```python
 import justpy as jp
 import random
 
@@ -214,9 +215,9 @@ jp.justpy(quasar_example)
 JustPy supports the following Quasar Vue directives:
 'v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog'
 
-!> In JustPy the directives are specified in snake case: `v_close_popup` instead of `v-close-popup`
+!!! info "In JustPy the directives are specified in snake case: `v_close_popup` instead of `v-close-popup`"
 
-!> Use QDiv instead of Div if you want to apply directives on an element.
+!!! info "Use QDiv instead of Div if you want to apply directives on an element."
 
 ```python
 import justpy as jp
@@ -232,6 +233,50 @@ def quasar_example():
 jp.justpy(quasar_example)
 ```
 
+The value of the directive can be a dictionary for configuring more options:
+
+```python
+import justpy as jp
+# https://quasar.dev/vue-directives/material-ripple#Ripple-API
+
+def ripple_test():
+    wp = jp.QuasarPage()
+    d = jp.QDiv(classes="q-pa-md q-gutter-md row justify-center", a=wp)
+    d1 = jp.QDiv(v_ripple={'center': True, 'color': 'orange-5'}, classes="relative-position container bg-grey-3 text-black inline flex flex-center", text='center',
+                 style='border-radius: 50%; cursor: pointer; width: 150px; height: 150px', a=d)
+    return wp
+
+jp.justpy(ripple_test)
+```
+
+## Running Quasar Component Methods
+
+The Quasar methods use the `run_method` method of a JustPy Quasar component.
+
+The following example runs the start() and stop() methods of [QAjaxBar](https://quasar.dev/vue-components/ajax-bar#QAjaxBar-API)
+
+```python
+import justpy as jp
+
+async def start_bar(self, msg):
+    wp = msg.page
+    await wp.ajax_bar.run_method('start()', msg.websocket)
+
+async def stop_bar(self, msg):
+    wp = msg.page
+    await wp.ajax_bar.run_method('stop()', msg.websocket)
 
 
+def bar_example():
+    wp = jp.QuasarPage()
+    d = jp.Div(classes='q-pa-md', a=wp)
+    # temp=False is important because this generates an id for the element that is required for run_method to work
+    wp.ajax_bar = jp.QAjaxBar(position='bottom', color='accent', size='10px', skip_hijack=True, a=d, temp=False)
+    btn_start = jp.QBtn(color='primary', label='Start Bar', a=d, click=start_bar, style='margin-right: 20px')
+    btn_stop = jp.QBtn(color='primary', label='Stop Bar', a=d, click=stop_bar)
+    return wp
+
+jp.justpy(bar_example)
+
+```
 

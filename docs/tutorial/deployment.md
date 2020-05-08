@@ -14,7 +14,7 @@ apt install python3-pip
 ```
 
 
-Follow the [getting started](tutorial/getting_started.md) instructions. This will prepare your VM to run your JustPY program.
+Follow the [getting started](/tutorial/getting_started) instructions. This will prepare your VM to run your JustPY program.
 
 Then, set the `HOST` parameter in the configuration file justpy.env to the public IP address of the VM or to '0.0.0.0' (one should work). If you want to use the default port, set the `PORT` parameter to 80 (otherwise port 8000 will be used). In some cloud services only port 80 is supported by default. In some cloud services, if you are not logged in as root by default, you will need to run the program with sudo.
 
@@ -33,7 +33,7 @@ Now, point your browser to your VM using the IP address and port and you should 
 
 For more complex deployments please look at the [uvicorn deployment instructions](https://www.uvicorn.org/deployment/).
 
-Make sure to set the `start_server` keyword argument of the [`justpy`](reference/justpy.md) command to`False`, so that uvicorn server is not started.
+Make sure to set the `start_server` keyword argument of the [`justpy`](/reference/justpy) command to`False`, so that uvicorn server is not started.
 
 You also need to expose the starlette app to unvicorn. If test.py is your main program file where you import justpy then you need to add the following line to it after importing justpy:
 ```python
@@ -41,6 +41,7 @@ import justpy as jp
 app = jp.app
 ```
 
-!> The JustPy configuration file is not applicable in this case. You will need to specify the required configuration in the command line or in the Gunicorn configuration file.
+!!! info
+    The JustPy configuration file is not applicable in this case. You will need to specify the required configuration in the command line or in the Gunicorn configuration file.
 
 

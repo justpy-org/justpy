@@ -35,11 +35,13 @@ This program shows the names and colors of all Tailwind text colors.
 
 ## Headers in Tailwind
 
-!> All h1-h6 elements are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#6-explicitly-style-any-headings).
+!!! note
+    All h1-h6 elements are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#6-explicitly-style-any-headings).
 
 ## Lists in Tailwind
 
-!> All lists are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#7-explicitly-style-any-lists-that-should-have-bullets-numbers).
+!!! note
+    All lists are un-styled by default with Tailwind. The reason for this can be found [here](https://tailwindcss.com/docs/upgrading-to-v1/#7-explicitly-style-any-lists-that-should-have-bullets-numbers).
 
 ## Disabling Tailwind
 

@@ -167,9 +167,24 @@ def input_test():
 jp.justpy(input_test)
 ```
 
+You can also use QInput's internal validation prop `rules`. The prop needs to be a list that contains a string that represents JavaScript functions. See the [examples](https://quasar.dev/vue-components/input#Internal-validation) in the Quasar documentation
+
+```python
+import justpy as jp
+
+def input_test():
+    wp = jp.QuasarPage()
+    in1 = jp.QInput(label='Enter email', style='width: 150px; margin: 20px', a=wp, lazy_rules=False)
+    in1.rules = ["val => val.length <= 3 || 'Please use maximum 3 characters'"]
+    return wp
+
+jp.justpy(input_test)
+```
+
 ## Yahoo Stock Charts Example
 
-!> You need to install the `pandas-datareader` package to run this example
+!!! warning
+    You need to install the `pandas-datareader` package to run this example
 
 In the example below we define a component which simplifies entering dates. Click on the calendar icon of the QInput elements to have the a QDate element pop-up.
 

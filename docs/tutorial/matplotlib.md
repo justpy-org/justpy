@@ -29,13 +29,15 @@ jp.justpy(plot_test)
 
 The line `jp.Matplotlib(a=wp)` creates a Matplotlib instance and adds it to `wp`. 
 
-!> If you call Matplotlib where you would normally call `plt.show()` the chart instance is created reflecting all the matplotlib commands issued so far. 
+!!! tip
+    If you call Matplotlib where you would normally call `plt.show()` the chart instance is created reflecting all the matplotlib commands issued so far. 
 
 The Matplotlib component is a modified Div component whose `inner_html` attribute is set to the SVG representation of a [matplotlib figure](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.figure.Figure.html). 
 
 If a matplotlib figure is not specified explicitly when a Matplotlib instance is created (like in the example above), Matplotlib uses the current figure. If you want to put some other figure on the page use the `figure` keyword when creating the instance or use the `set_figure(figure)` method of the component after creation.
 
-!> Don't forget to close matplotlib figures that are not in use. This will not affect any JustPy Matplotlib instances as the SVG representation that was created from the figure is distinct from the figure and will not be deleted. 
+!!! tip
+    Don't forget to close matplotlib figures that are not in use. This will not affect any JustPy Matplotlib instances as the SVG representation that was created from the figure is distinct from the figure and will not be deleted. 
 
 In the example below, the first chart created is displayed second and the second chart created is displayed first.
 
@@ -298,9 +300,11 @@ Pandas provides a [visualization layer](https://pandas.pydata.org/pandas-docs/st
 
 Since pandas creates matplotlib plots, the Matplotlib component works in this case as well. Simply call Matplotlib when in your code you would normally call `plt.show()`. 
 
-!> If you create matplotlib charts within request handlers, don't forget to close the matplotlib figures associated with them in order to conserve memory and make your application scalable.
+!!! tip
+    If you create matplotlib charts within request handlers, don't forget to close the matplotlib figures associated with them in order to conserve memory and make your application scalable.
 
-!> The example below takes about 15 seconds to load a request, it is not hanging
+!!! note
+    The example below takes about 15 seconds to load a request, it is not hanging
 
 ```python
 import justpy as jp

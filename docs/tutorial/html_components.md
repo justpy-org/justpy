@@ -1,4 +1,4 @@
-# HTMl Components
+# HTML Components
 
 JustPY supports components corresponding to HTML and SVG tags. The name of the component is the same as the name of the HTML tag with the first letter capitalized. For example, we already saw the `Div` and `P` components that correspond to the the `div` and `p` HTML tags. JustPy supports all tags that put elements on the page and are not deprecated in HTML 5. 
 
@@ -143,7 +143,8 @@ The images are added inside a loop. In each iteration of the loop, an image is a
 
 The program then sets the `degree` attribute of the image to the loop variable. It will be used in the event handlers that define the interaction with the mouse. 
 
-!>`degree` is a different kind of attribute than `src`, `height`, and `width`. It is a user defined attribute that is not part of the HTML specification. In the JustPy component definitions, attributes that are part of the HTML specification are explicitly identified and handled accordingly.
+!!! note
+    `degree` is a different kind of attribute than `src`, `height`, and `width`. It is a user defined attribute that is not part of the HTML specification. In the JustPy component definitions, attributes that are part of the HTML specification are explicitly identified and handled accordingly.
 
 The mouse event handlers change the `style` and `class` attributes of the element as needed using the `degree` attribute of the image if required. For clarity, the event handlers are defined inside the loop, but they could be defined just once outside the loop or outside the request handler. We could also set the attributes as keyword arguments and the result is the following:
 

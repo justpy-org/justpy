@@ -9,7 +9,7 @@ The HighCharts component supports events that allow making charts more interacti
 - **series_hide** - fires when series is hidden
 - **series_show** - fires when series is shown
 - **series_click** - fires when series is clicked
-- **tooltip** - fires when chart requests a tooltip (covered in its own [chapter](charts_tutorial/tooltips.md) in the tutorial)
+- **tooltip** - fires when chart requests a tooltip (covered in its own [chapter](../tooltips) in the tutorial)
 
 
 For all chart events, JustPy adds the following fields to the second argument of the event handler (`msg` in this tutorial): 
@@ -41,7 +41,7 @@ Draw crosshairs for designated points.
         return True
 ```
 
-See example of usage in [Iris Flower Dataset Visualization](charts_tutorial/iris.md)
+See example of usage in [Iris Flower Dataset Visualization](../iris)
 
 
 ### `async def select_point(self, point_list, websocket)`
@@ -49,19 +49,19 @@ See example of usage in [Iris Flower Dataset Visualization](charts_tutorial/iris
 Selects designated points.
 
 ```python
-    async def select_point(self, point_list, websocket):
-        # data is list of of dictionaries  whose keys are:
-        # 'id': the chart id 
-        # 'series': the series index
-        # 'point': the point index 
-        #  Values are  all integers
-        # Example:
-        # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
-        await websocket.send_json({'type': 'select_point', 'data': point_list})
-        # So the page itself does not update, only the tooltip, return True not None
-        return True
+async def select_point(self, point_list, websocket):
+    # data is list of of dictionaries  whose keys are:
+    # 'id': the chart id 
+    # 'series': the series index
+    # 'point': the point index 
+    #  Values are  all integers
+    # Example:
+    # {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
+    await websocket.send_json({'type': 'select_point', 'data': point_list})
+    # So the page itself does not update, only the tooltip, return True not None
+    return True
 ```
  
- See example of usage in [Iris Flower Dataset Visualization](charts_tutorial/iris.md)
+ See example of usage in [Iris Flower Dataset Visualization](../iris)
  
  

@@ -5,7 +5,7 @@
 JustPy supports secure, server based sessions.
 
 Sessions are supported by default. If you want to disable them, add the line:
- ```python
+```python
 SESSIONS = False
 ```
 to the configuration file, justpy.env
@@ -27,13 +27,16 @@ The value of the JustPy cookie is signed using the python package [`itsdangerous
 
 The advantage of signing the cookie is that cookie tampering  can be detected. If JustPy detects that the cookie was tampered with, a  **Bad Cookie** response is returned to the browser. 
 
-!> If you get a **Bad Cookie** response while testing you site, it may mean that you changed your secret key and your cookie is signed with the previous one. Just erase the cookie in your browser and try again. 
+!!! tip
+    If you get a **Bad Cookie** response while testing you site, it may mean that you changed your secret key and your cookie is signed with the previous one. Just erase the cookie in your browser and try again. 
 
 If the cookie is validated, the session inserts the session id into the `request` object as `request.session_id`.
 
-!> The JustPy cookie **ONLY** holds the signed session id. There is no other information in the cookie.
+!!! info
+    The JustPy cookie **ONLY** holds the signed session id. There is no other information in the cookie.
 
-!> The JustPy cookie is an [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Creating_cookies) cookie and is inaccessible to JavaScript on the page.
+!!! info
+    The JustPy cookie is an [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Creating_cookies) cookie and is inaccessible to JavaScript on the page.
 
 ## Simple Example
 

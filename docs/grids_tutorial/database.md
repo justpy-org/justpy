@@ -2,7 +2,8 @@
 
 In the example below we use both pandas and ag-Grid to display database tables from an sqlite database.
 
-!> For the example to work you need to download the [chinook sqlite database](https://elimintz.github.io/chinook.db) and put it in the directory from which you are running the program. The file is a copy of the one found on https://www.sqlitetutorial.net/ which is an excellent resource for learning sqlite.
+!!! warning
+    For the example to work you need to download the [chinook sqlite database](https://elimintz.github.io/chinook.db) and put it in the directory from which you are running the program. The file is a copy of the one found on https://www.sqlitetutorial.net/ which is an excellent resource for learning sqlite.
 
 The program uses pandas ability to load a frame with the result of a SQL query. This is done using [`read_sql_query`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql_query.html).
 

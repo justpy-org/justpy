@@ -110,6 +110,7 @@ class QInput(_QInputBase):
                           'placeholder']
 
         self.allowed_events = ['keypress', 'input', 'focusin', 'focusout']  # Not different from focus and blur in documentation
+        self.set_keyword_events(**kwargs)
         self.evaluate_prop = ['rules']
 
 
@@ -138,6 +139,7 @@ class QSelect(_QInputBase):
                   'virtual-scroll-slice-size', 'virtual-scroll-item-size', 'virtual-scroll-sticky-size-start', 'virtual-scroll-sticky-size-end']
 
         self.allowed_events = ['input', 'remove', 'add', 'new_value', 'filter', 'filter_abort']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -158,6 +160,7 @@ class QOptionGroup(_QInputBase):
         self.prop_list = ['keep-color', 'type', 'left-label', 'inline', 'value', 'options', 'disable',
                           'size', 'color', 'dark', 'dense']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
     def before_event_handler(self, msg):
@@ -189,6 +192,7 @@ class QBtnToggle(_QInputBase):
                           'ripple', 'color', 'text-color', 'toggle-color', 'toggle-text-color', 'outline', 'flat',
                           'unelevated', 'rounded', 'push', 'glossy', 'size', 'dense', 'clearable']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -206,6 +210,7 @@ class QSlider(_QInputBase):
         self.prop_list = ['label-always', 'snap', 'label', 'label-value', 'label-always', 'markers', 'tabindex',
                           'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'label-color', 'dark', 'dense']
         self.allowed_events = ['input', 'change']
+        # self.set_keyword_events(**kwargs)
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -232,6 +237,7 @@ class QRange(_QInputBase):
                           'label-always', 'snap', 'label', 'label-always', 'markers', 'tabindex',
                           'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'dark', 'dense']
         self.allowed_events = ['input', 'change']
+        # self.set_keyword_events(**kwargs)
 
 
     def convert_object_to_dict(self):
@@ -254,6 +260,7 @@ class QRating(_QInputBase):
         self.prop_list = ['icon', 'max', 'value', 'no-reset', 'readonly', 'disable', 'color', 'size', 'icon-selected',
                           'icon-half', 'no-dimming', 'color-selected', 'color-half']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
     def before_event_handler(self, msg):
         if msg.event_type not in ['input']:
@@ -283,6 +290,7 @@ class QTime(_QInputBase):
                           'with-seconds', 'now-btn', 'value', 'mask', 'locale', 'calendar', 'readonly', 'disable',
                           'color', 'text-color', 'dark', 'square', 'flat', 'bordered']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -300,6 +308,7 @@ class QDate(_QInputBase):
                           'events-date', 'options-date',
                           'first-day-of-week', 'square', 'flat', 'bordered']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
     def convert_object_to_dict(self):
@@ -329,6 +338,7 @@ class QCheckbox(_QInputBase):
                           'left-label',
                           'value', 'val', 'true-value', 'false-value', 'disable', 'color', 'dark', 'dense', 'size']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -350,6 +360,7 @@ class QToggle(_QInputBase):
                           'label', 'left-label', 'value', 'val', 'true-value', 'false-value', 'disable', 'color',
                           'dark', 'dense', 'size']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -375,8 +386,9 @@ class QAjaxBar(QDiv):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.prop_list = ['skip-hijack', 'reverse', 'position', 'sixe', 'color']
+        self.prop_list = ['skip-hijack', 'reverse', 'position', 'size', 'color']
         self.allowed_events = ['start', 'stop']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -505,6 +517,7 @@ class QBtnDropdown(_QInputBase):
                           'fab-mini',
                           'color', 'text-color', 'dense', 'content-style', 'content-class']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'click']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -523,6 +536,7 @@ class QMenu(_QInputBase):
                           'offset',
                           'content-class', 'content-style', 'square', 'max-height', 'max-width']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -571,6 +585,7 @@ class QTabs(_QInputBase):
                           'narrow-indicator', 'inline-label', 'no-caps', 'value', 'active-color', 'active-bg-color',
                           'indicator-color', 'dense']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -595,6 +610,7 @@ class QTabPanels(_QInputBase):
         self.value = kwargs.get('value', '')
         self.prop_list = ['keep-alive', 'animated', 'infinite', 'swipeable', 'transition-prev', 'transition-next', 'value']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -622,6 +638,7 @@ class QSplitter(_QInputBase):
         self.prop_list = ['horizontal', 'limits', 'value', 'disable', 'before-class', 'after-class', 'separator-class',
                           'separator-style', 'dark']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -637,6 +654,7 @@ class QKnob(_QInputBase):
         self.prop_list = ['show-value', 'angle', 'tabindex', 'value', 'min', 'max', 'step', 'disable', 'readonly',
                           'color', 'center-color', 'track-color', 'size', 'font-size', 'thickness']
         self.allowed_events = ['input', 'change', 'drag_value']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -653,6 +671,7 @@ class QPagination(_QInputBase):
                           'max', 'max-pages', 'disable', 'color', 'text-color', 'input-style', 'input-class', 'size',
                           'icon-prev', 'icon-next', 'icon-first', 'icon-last', 'ripple']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -690,6 +709,7 @@ class QChip(QDiv):
         self.prop_list = ['icon', 'icon-right', 'label', 'tabindex', 'value', 'selected', 'clickable', 'removable',
                           'disable', 'ripple', 'dense', 'color', 'text-color', 'square', 'outline']
         self.allowed_events = ['update:selected', 'click', 'remove']
+        self.set_keyword_events(**kwargs)
 
         def chip_remove(self, message):
             self.show = False
@@ -749,6 +769,7 @@ class QColor(_QInputBase):
         self.prop_list = ['default-view', 'no-header', 'no-footer', 'value', 'default-value', 'format-model',
                           'disable', 'readonly', 'dark']
         self.allowed_events = ['input', 'change']
+        # self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -778,6 +799,7 @@ class QPopupProxy(_QInputBase):
              'auto-close', 'position', 'full-height', 'self', 'maximized', 'offset', 'anchor', 'no-refocus', 'target',
              'persistent']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -795,6 +817,7 @@ class QDialog(_QInputBase):
                           'transition-show', 'transition-hide', 'no-refocus', 'no-focus', 'seamless', 'maximized',
                           'full-width', 'full-height', 'position', 'value', 'content-class', 'content-style', 'square']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -811,7 +834,8 @@ class QTooltip(_QInputBase):
         self.value = bool(self.value)
         self.prop_list = ['transition-show', 'transition-hide', 'target', 'delay', 'max-height', 'max-width', 'value',
                           'anchor', 'self', 'offset', 'content-class', 'content-style', 'hide-delay']
-        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide']
+        self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'before']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -829,6 +853,7 @@ class QStepper(_QInputBase):
                                'alternative-labels', 'contracted', 'inactive-icon', 'inactive-color', 'done-icon', 'done-color',
                                'active-icon', 'active-color', 'error-icon', 'error-color']
         self.allowed_events = ['input', 'before-transition', 'transition']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -1035,6 +1060,7 @@ class QEditor(QInput):
                           'toolbar-toggle-color',
                           'toolbar-bg', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded']
         self.allowed_events = ['input']
+        # self.set_keyword_events(**kwargs)
 
     def convert_object_to_dict(self):
         self.debounce = 0   # Component has its own debounce mechanism
@@ -1066,6 +1092,7 @@ class QExpansionItem(_QInputBase):
                           'value', 'disable', 'expand-icon-class', 'dark', 'dense', 'dense-toggle', 'header-style',
                           'header-class']
         self.allowed_events = ['input', 'show', 'before_show', 'hide', 'before_hide', 'escape_key']
+        self.set_keyword_events(**kwargs)
 
 
     def convert_object_to_dict(self):
@@ -1217,7 +1244,7 @@ class QItemLabel(QDiv):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.prop_list = ['lines', 'overline', 'caption', 'header', 'lines']
+        self.prop_list = ['lines', 'overline', 'caption', 'header']
 
 
 @parse_dict
@@ -1227,11 +1254,11 @@ class QSlideItem(QDiv):
     html_tag = 'q-slide-item'
 
     def __init__(self, **kwargs):
-
         self.reset = False
         super().__init__(**kwargs)
         self.prop_list = ['left-color', 'right-color']
-        self.allowed_events = ['left', 'right', 'action']
+        self.allowed_events = ['left', 'right', 'action', 'bottom', 'top']
+        self.set_keyword_events(**kwargs)
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -1256,6 +1283,7 @@ class QInfiniteScroll(QDiv):
         super().__init__(**kwargs)
         self.prop_list = ['offset', 'scrollTarget', 'reverse', 'disable']
         self.allowed_events = ['load']
+        self.set_keyword_events(**kwargs)
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
@@ -1298,6 +1326,7 @@ class QScrollObserver(QDiv):
         super().__init__(**kwargs)
         self.prop_list = ['debounce', 'horizontal']
         self.allowed_events = ['scroll']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -1361,6 +1390,7 @@ class QTree(QDiv):
                            'no-nodes-label', 'no-results-label', 'filter', 'filter-method', 'ticked', 'expanded', 'selected',
                            'color', 'control-color', 'text-color', 'selected-color', 'dark', 'duration', 'no-connectors']
         self.allowed_events = ['before', 'after', 'update:expanded', 'lazy-load', 'update:ticked', 'update:selected']
+        self.set_keyword_events(**kwargs)
         self.events = ['update:expanded', 'update:ticked', 'update:selected']
         def default_input(self, msg):
             return self.before_event_handler(msg)
@@ -1452,6 +1482,7 @@ class QTable(QDiv):
         # Need to load: columns, data
         # separator one of  horizontal | vertical | cell | none
         self.allowed_events = ['before', 'after', 'request', 'selection', 'update:pagination', 'update:selected']
+        self.set_keyword_events(**kwargs)
         self.events = ['update:pagination', 'update:selected']
         def default_input(self, msg):
             return self.before_event_handler(msg)
@@ -1511,6 +1542,7 @@ class QLayout(QDiv):
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['view', 'container']
         self.allowed_events = ['resize', 'scroll', 'scroll-height']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -1526,6 +1558,7 @@ class QHeader(QDiv):
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
         self.prop_list = ['reveal', 'reveal-offset', 'value', 'bordered', 'elevated']
         self.allowed_events = ['reveal']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -1540,6 +1573,7 @@ class QFooter(QDiv):
         super().__init__(**kwargs)
         self.prop_list = ['reveal', 'reveal-offset', 'value', 'bordered', 'elevated']
         self.allowed_events = ['reveal']
+        self.set_keyword_events(**kwargs)
 
 
 @parse_dict
@@ -1557,6 +1591,7 @@ class QDrawer(QDiv):
                           'no-swipe-open', 'no-swipe-close', 'value', 'width', 'mini-width', 'bordered', 'elevated',
                           'content-class', 'content-style']
         self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'on-layout', 'click', 'mouseover', 'mouseout']
+        self.set_keyword_events(**kwargs)
 
     def model_update(self):
         update_value = self.model[0].data[self.model[1]]
@@ -1629,6 +1664,7 @@ class QFab(QDiv):
         self.prop_list = ['direction', 'persistent', 'icon', 'active-icon', 'type', 'value', 'disable',
                           'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
         self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'click', 'mouseover', 'mouseout']
+        self.set_keyword_events(**kwargs)
 
     def model_update(self):
         update_value = self.model[0].data[self.model[1]]
@@ -1676,6 +1712,7 @@ class QPopupEdit(_QInputBase):
                           'content-class', 'content-style', 'color', 'offset', 'square', 'max-height', 'max-width']
 
         self.allowed_events = ['input', 'cancel', 'save']
+        self.set_keyword_events(**kwargs)
 
         def default_event_handler(self, msg):
             print(msg)

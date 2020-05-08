@@ -18,9 +18,11 @@ jp.justpy(event_demo)
 
 In `event_demo`, we first create a web page. Then we create a [Div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element named `d` whose content is the string "Not clicked yet" and add it to the page (we also add some Tailwind classes for formatting). Then, using the `on` method, we bind the function `my_click`, which we defined earlier, to the click event and return the page. When the the element on the page is clicked, JustPy runs the function `my_click`.
 
-!> Functions that handle events are called "event handlers". `my_click` is an example of such a function.
+!!! info
+    Functions that handle events are called "event handlers". `my_click` is an example of such a function.
  
-!> In JustPy, event handlers **must** have two arguments. 
+!!! warning
+    In JustPy, event handlers **must** have two arguments. 
  
 The first (I recommend calling it `self`), is the object which generated the event. It is an instance of one of the component classes. In the example above it is `d`, an instance of the class `Div`. The second parameter (I recommend calling it `msg`) is a [dictionary](https://github.com/mewwts/addict "addict is a Python module that gives you dictionaries whose values are both gettable and settable using attributes, in addition to standard item-syntax") that contains information about the event. The items in this dictionary can also be accessed using attribute (dot) notation. To get the event type for example we could write either  `msg['event_type']` or `msg.event_type`. 
  
@@ -165,7 +167,8 @@ As the program is written now, once a button is clicked, its background will alw
 
 The web page itself is an instance of a Python class and therefore can have user specified attributes. We will create a list of all the buttons and assign it to the `button_list` attribute of the page. In the event handler we will loop over this list and change the backgrounds to blue after which we will set the background of the clicked button to red. 
 
-?> We know which page's `button_list` we need to loop over because the page on which the event originated is always provided to the event handler in `msg.page` by JustPy.
+!!! info
+    We know which page's `button_list` we need to loop over because the page on which the event originated is always provided to the event handler in `msg.page` by JustPy.
 
 The result looks like this:
 ```python
@@ -260,3 +263,63 @@ def comp_test():
 
 jp.justpy(comp_test)
 ```
+
+## The debounce and throttle Event Modifiers
+
+Sometimes you nee to debounce or throttle on event. To do this, use the `debounce` and `throttle` keyword arguments of the `on` method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the `immediate ` attribute of `on` to `True`.
+
+The example below also uses the `add_event` method. The `mousemove` event is not among the events that are supported by default and needs to be added the element's allowed events.
+
+```python
+import justpy as jp
+
+def mouse_event(self, msg):
+    try:
+        self.counter += 1
+    except:
+        self.counter = 1
+    msg.page.info_div.add_first(jp.Div(text=f'{self.counter}) {msg.event_type}'))
+
+
+def debounce_test():
+    wp = jp.WebPage()
+    d = jp.Div(style='height: 100vh', a=wp)
+    d.add_event('mousemove')
+    d.on('mousemove', mouse_event, throttle=1000)
+    d.on('click', mouse_event, debounce=2000, immediate=False)
+    wp.info_div = jp.Div(text='Recent mouse events', classes='m-4 text-lg', a=d)
+    return wp
+
+jp.justpy(debounce_test)
+```
+
+## The click__out Event
+
+The `click__out` event fires when there is a click outside of an element. This is useful for example in the case of dropdown list you would like closed when there is a click outside of the dropdown element.
+
+!!! info
+    Notice the TWO underline characters in `click__out`. 
+
+
+```python
+import justpy as jp
+
+def click_out(self, msg):
+    self.text = 'click out'
+    self.set_classes('text-blue-500')
+
+def click_in(self, msg):
+    self.text = 'click in'
+    self.set_classes('text-red-500')
+
+def test_out():
+    wp = jp.WebPage()
+    for i in range(4):
+        d = jp.Div(text=f'{i}) Div', a=wp, classes='m-4 p-4 text-xl border w-32')
+        d.on('click__out', click_out)
+        d.on('click', click_in)
+    return wp
+
+jp.justpy(test_out)
+```
+

@@ -22,7 +22,11 @@
         <link href="https://cdn.jsdelivr.net/npm/@mdi/font@^3.0.0/css/materialdesignicons.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
-        <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
+        {% if options.quasar_version %}
+            <link href="https://cdn.jsdelivr.net/npm/quasar@{{ options.quasar_version }}/dist/quasar.min.css" rel="stylesheet" type="text/css">
+        {% else %}
+            <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
+        {% endif %}
     {% else %}
         <link rel="stylesheet" href="/templates/local/robotofont/robotofont.css"/>
         <link rel="stylesheet" href="/templates/local/ionicons/ionicons.css"/>
@@ -70,7 +74,12 @@
     {% if not options.no_internet %}
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/quasar@^1.8.5/dist/quasar.umd.min.js"></script>
+        {% if options.quasar_version %}
+            <script src="https://cdn.jsdelivr.net/npm/quasar@{{ options.quasar_version }}/dist/quasar.umd.min.js"></script>
+        {% else %}
+            <script src="https://cdn.jsdelivr.net/npm/quasar@^1.8.5/dist/quasar.umd.min.js"></script>
+        {% endif %}
+
     {% else %}
         <script src="/templates/local/jquery.js"></script>
         <script src="/templates/local/vue.js"></script>

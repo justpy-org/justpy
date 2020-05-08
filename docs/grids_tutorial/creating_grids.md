@@ -35,7 +35,8 @@ jp.justpy(grid_test)
 ```
 In this case the grid options are defined using a string that represents a JavaScript object. It could also be a Python dictionary. The options object is described in the [ag_Grid documentation](https://www.ag-grid.com/documentation-main/documentation.php).
  
-?> We will see later, that when working with pandas, JustPy can automate the process and there is no need to go into the grid specification details.
+!!! note
+    We will see later, that when working with pandas, JustPy can automate the process and there is no need to go into the grid specification details.
 
 As mentioned above, AgGrid provides a default style to the grid when it is created. Let’s change that style. Replace the function `grid_test` in the example above with the following:
 ```python

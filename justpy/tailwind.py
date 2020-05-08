@@ -323,3 +323,6 @@ class Tailwind:
                 self.set_class(c[1], c[0])
             else:
                 self.set_class(c[0])
+
+    def has_class(self, class_name):
+        return class_name in self.classes.split()

@@ -31,7 +31,6 @@
 
     {% for event in page_options.events %}
         document.addEventListener('{{ event }}', function (evt) {
-            console.log(evt);
             const e = {
                 'event_type': '{{ event }}',
                 'visibility': document.visibilityState,
@@ -65,7 +64,7 @@
             {% if page_options.debug %}
                 console.log('Message received from server ', msg);
                 console.log(event);
-            {%endif %}
+            {% endif %}
 
             switch (msg.type) {
                 case 'page_update':
@@ -96,6 +95,16 @@
                 case 'websocket_update':
                     websocket_id = msg.data;
                     websocket_ready = true;
+
+                {% if 'page_ready' in page_options.events %}
+                    const e = {
+                        'event_type': 'page_ready',
+                        'visibility': document.visibilityState,
+                        'page_id': page_id,
+                        'websocket_id': websocket_id
+                    };
+                    send_to_server(e, 'page_event', false);
+                {% endif %}
                     break;
                 case 'component_update':
                     // update just specific component on the page

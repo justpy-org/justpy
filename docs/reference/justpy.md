@@ -1,4 +1,4 @@
-# The justpy Command
+# The **justpy** Command
 
 The `justpy` command starts the web sever and the async loop in which the application runs. Unless the `justpy` command is executed, no web pages will be served. No other command in the file after the `justpy` command will be executed (unless the `start_server` option is `False`) so it should be the last command in the program file. 
 
@@ -21,7 +21,7 @@ If test.py is your main program file where you import justpy then for the above 
 app = jp.app # assuming import justpy as jp
 ```
 
-This exposes the starlette app to uvicorn 
+This exposes the starlette app to uvicorn. 
 
 `websockets` - If `False`, all pages in the application will use Ajax instead of Websockets by default.
 
@@ -31,7 +31,7 @@ This exposes the starlette app to uvicorn
 
 `startup` - The function to run before starting the web server. The async loop has already been started but the web server will not start until the function terminates.
 
-All other keyword arguments are used to set the template options. It is better to set these via the configuration file.
+All other keyword arguments are used to set the template options. You can these also in the configuration file.
 
 ```python
 template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'static_name': STATIC_NAME}

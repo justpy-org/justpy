@@ -2,7 +2,7 @@
 
 Use the [QOptionGroup component](https://quasar.dev/vue-components/option-group)  to group radio buttons, checkboxes or toggles.
 
-!> Use instead of QRadio always.  
+!!! warning "Use instead of QRadio always."  
 
 In the example below, the type of the chart is based on the radio button selection.
 

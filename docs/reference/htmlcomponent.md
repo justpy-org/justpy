@@ -6,7 +6,7 @@ In JustPy components are Python classes. All HTML components inherit from either
 
 The reference will describe primarily the Div component and the Input component.
 
-It would be helpful to read the [HTML Components](tutorial/html_components) chapter in the tutorial first.
+!!! tip "It would be helpful to read the [HTML Components](/tutorial/html_components) chapter in the tutorial first."
 
 ## Div Component
 
@@ -70,7 +70,8 @@ def entity_test():
 jp.justpy(entity_test)
 ```
 
-?> The Space component can be used to insert spaces. It creates a Span with `num` repeats of the html entity '&nbsp;'.
+!!! info
+    The Space component can be used to insert spaces. It creates a Span with `num` repeats of the html entity '&nbsp'.
 
 #### classes
 
@@ -198,31 +199,31 @@ jp.justpy(inner_html_test)
 ```
 
 
-!> If `inner_html` is not the empty string, it will override any other content of the element
+!!! warning "If `inner_html` is not the empty string, it will override any other content of the element"
 
 #### show
 
  * Type: `boolean`
  * Default: `True`
  
-If set to `False`, the element is not rendered. See [here](tutorial/html_components?id=showing-and-hiding-elements)
+If set to `False`, the element is not rendered. See [here](/tutorial/html_components/#showing-and-hiding-elements)
 
 
-#### focus
+#### set_focus
 
  * Type: `boolean`
  * Default: `False`
  
 If set to `True`, the element will have focus when the page is rendered.
 
-!> If multiple elements have the `focus` attribute set to `True`, the results will be unpredictable. The last element to be rendered by Vue will have focus. 
+!!! warning "If multiple elements have the `set_focus` attribute set to `True`, the results will be unpredictable. The last element to be rendered by Vue will have focus."
 
 ```python
 import justpy as jp
 
 # Try not using this event handler and see what happens
 def my_blur(self, msg):
-        self.focus = False
+        self.set_focus = False
 
 def focus_test():
     wp = jp.WebPage()
@@ -232,7 +233,7 @@ def focus_test():
     in4 = jp.Input(classes=jp.Styles.input_classes, placeholder='Input 4', a=wp, blur=my_blur)
 
     # Set focus on third Input element
-    in3.focus = True
+    in3.set_focus = True
 
     return wp
 
@@ -240,6 +241,30 @@ jp.justpy(focus_test)
 
 ```
 
+#### children
+
+ * Type: `list`
+ * Default: `[]`
+ 
+ When an element is created, can be used to create its children also. Useful if you like defining elements in a hierarchical way.
+ 
+ New in version 0.10
+
+```python
+import justpy as jp
+
+def children_test():
+    wp = jp.WebPage()
+    div_classes = 'm-2 p-2 bg-blue-500 text-white text-lg'
+    span_classes = 'm-2 p-2 bg-blue-500 text-yellow-700 text-xl'
+    jp.Div(children=[jp.Div(classes=div_classes, children=
+                            [jp.Span(text='s1', classes=span_classes), jp.Span(text='s2', classes=span_classes)])
+        ,jp.Div(text='d2', classes=div_classes), jp.Div(text='d3', classes=div_classes), jp.Div(text='d4', classes=div_classes)], a=wp)
+
+    return wp
+
+jp.justpy(children_test)
+```
 
 #### animation
 
@@ -269,10 +294,14 @@ input_classes = "m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounde
 def animate(self, msg):
     self.d.delete_components()  # remove all components from d
     directions = ['Up', 'Down', 'Left', 'Right']
+    html_entity = False
     for letter in self.text_to_animate.value:
-        letter = '&nbsp;' if letter == ' ' else letter  # Hard space for HTML, otherwise space ignored
-        jp.Div(animation=f'fadeIn{random.choice(directions)}', text=letter,
+        if letter == ' ':
+            letter = '&nbsp;'
+            html_entity = True
+        jp.Div(animation=f'fadeIn{random.choice(directions)}', text=letter, html_entity=html_entity,
                classes='rounded-full bg-blue-500 text-white text-6xl', a=self.d)
+        html_entity = False
 
 
 def animation_test():
@@ -295,7 +324,7 @@ jp.justpy(animation_test)
  
  If you need to identify an element use the `name` attribute (or any other attribute you choose), NOT the `id` attribute. JustPy assigns a unique id to elements that are associated with events and uses it to identify which event handler to run.
  
- !> It is advised not to change an element's `id` or assign it an id.
+!!! danger "It is advised not to change an element's `id` or assign it an id"
  
 
 #### delete_flag
@@ -343,9 +372,9 @@ jp.justpy(event_propagates)
  
 The Vue component to couple with the Python class. Used by the front end of the framework.
 
-!> If you change this, the component will not be rendered correctly. 
+!!! danger "If you change this, the component will not be rendered correctly" 
 
-?> When you develop components that require a Vue component as well, you will need to set this attribute in the Python class
+!!! info "When you develop components that require a Vue component as well, you will need to set this attribute in the Python class"
 
 #### html_tag
 
@@ -354,7 +383,7 @@ The Vue component to couple with the Python class. Used by the front end of the 
  
 The HTML tag that corresponds to the component. If you change it, the component may not render correctly.
 
-!> If you change this, the component may not be rendered correctly.
+!!! danger "If you change this, the component may not be rendered correctly"
 
 #### class_name
 
@@ -365,7 +394,7 @@ The class (component) name of the element. Should be considered read only
  
 #### Global HTML attributes
 
-Div supports some HTML global attributes. Please review the  [Common Attributes](tutorial/html_components?id=common-attributes) section in the Tutorial 
+Div supports some HTML global attributes. Please review the  [Common Attributes](/tutorial/html_components/#common-attributes) section in the Tutorial. 
 
 ### Methods
 
@@ -383,7 +412,7 @@ Returns `True` if the element has the specified event
 
 `async def update(self)`  
 Updates just the element, not the whole page. The element is updated on all pages specified in the attribute `pages`.
-See [Simple Message Board](tutorial/pushing_data?id=simple-message-board)  
+See [Simple Message Board](/tutorial/pushing_data/#simple-message-board)  
 
 `remove_page_from_pages(self, wp: WebPage)`  
 Remove a page from `pages`
@@ -395,7 +424,7 @@ Add a page to `pages`
 Set the model value
 
 `async def run_event_function(self, event_type, event_data)`  
-Run an event function. This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handler examples in the tutorial. See example [here](tutorial/custom_components?id=handling-the-change-event)
+Run an event function. This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handler examples in the tutorial. See example [here](/tutorial/custom_components/#handling-the-change-event)
 
 `@staticmethod def convert_dict_to_object(d)`  
 Takes the dictionary created by `convert_object_to_dict` and returns an object. Can be used to make independent copies of objects.
@@ -449,5 +478,5 @@ Get first child element
 Get last child element
 
 `def model_update(self)`  
-Override as necessary. See example [here](tutorial/model_and_data?id=advanced-use-of-the-model-attribute)
+Override as necessary. See example [here](/tutorial/model_and_data/#advanced-use-of-the-model-attribute)
 

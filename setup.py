@@ -7,7 +7,7 @@ def get_long_description():
 setuptools.setup(
     name="justpy",
     python_requires=">=3.6",
-    version="0.0.9",
+    version="0.1.0",
     license="Apache",
     author="Eliezer Mintz",
     author_email="eli.mintz@gmail.com",
@@ -29,6 +29,10 @@ setuptools.setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Operating System :: OS Independent",
+        "Topic :: Software Development :: User Interfaces",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: Apache Software License"
     ]
 )

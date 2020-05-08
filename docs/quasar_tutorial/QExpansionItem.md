@@ -5,7 +5,7 @@
 
 Three expansion items are defined in a loop. All three are added to a QList instance. Each expansion item includes a QCard with a QCardSection with text. 
  
- ```python
+```python
 import justpy as jp
 
 sample_text = """
