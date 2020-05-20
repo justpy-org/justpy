@@ -208,7 +208,10 @@ class WebPage:
 
     def on(self, event_type, func):
         if event_type in self.allowed_events:
-            setattr(self, 'on_' + event_type, MethodType(func, self))
+            if inspect.ismethod(func):
+                setattr(self, 'on_' + event_type, func)
+            else:
+                setattr(self, 'on_' + event_type, MethodType(func, self))
             if event_type not in self.events:
                 self.events.append(event_type)
         else:
@@ -256,7 +259,7 @@ class JustpyBaseComponent(Tailwind):
                 kwargs[com].add_component(self)
 
     def set_keyword_events(self, **kwargs):
-        for e in self.allowed_events: # + ['click_out']:
+        for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
                 if prefix + e in kwargs.keys():
                     cls = JustpyBaseComponent
@@ -343,7 +346,19 @@ class JustpyBaseComponent(Tailwind):
 
     def set_model(self, value):
         if hasattr(self, 'model'):
-            self.model[0].data[self.model[1]] = value
+            if len(self.model) == 2:
+                self.model[0].data[self.model[1]] = value
+            else:
+                self.model[0][self.model[1]] = value
+
+    def get_model(self):
+        if len(self.model) == 2:
+            model_value = self.model[0].data[self.model[1]]
+        else:
+            model_value = self.model[0][self.model[1]]
+        return model_value
+
+
 
     async def run_event_function(self, event_type, event_data, create_namespace_flag=True):
         event_function = getattr(self, 'on_' + event_type)
@@ -635,7 +650,8 @@ class Div(HTMLBaseComponent):
 
     def model_update(self):
         # [wp, 'text'] for example
-        self.text = str(self.model[0].data[self.model[1]])
+        # self.text = str(self.model[0].data[self.model[1]])
+        self.text = self.get_model()
 
     def build_list(self):
         object_list = []
@@ -714,8 +730,14 @@ class Input(Div):
                 self.model[0].data[self.model[1]] = msg.value
             self.value = msg.value
         else:
+            if msg.input_type == 'number':
+                try:
+                    msg.value = int(msg.value)
+                except:
+                    msg.value = float(msg.value)
             if hasattr(self, 'model'):
-                self.model[0].data[self.model[1]] = msg.value
+                # self.model[0].data[self.model[1]] = msg.value
+                self.set_model(msg.value)
             self.value = msg.value
 
     @staticmethod
@@ -739,7 +761,8 @@ class Input(Div):
             Input.radio_button_set_model_update(radio_button, c, model_value)
 
     def model_update(self):
-        update_value = self.model[0].data[self.model[1]]
+        # update_value = self.model[0].data[self.model[1]]
+        update_value = self.get_model()
         if self.type == 'checkbox':
             self.checked = update_value
         elif self.type == 'radio':
@@ -1490,13 +1513,12 @@ def justPY_parser(html_string, context, **kwargs):
 
 
 def parse_html(html_string, **kwargs):
-    # return justPY_parser(html_string, inspect.stack()[1][0].f_globals, **kwargs)
     return justPY_parser(html_string, inspect.stack()[1][0], **kwargs)
 
 
 def parse_html_file(html_file, **kwargs):
     with open(html_file, encoding="utf-8") as f:
-        return justPY_parser(f.read(), inspect.stack()[1][0].f_globals, **kwargs)
+        return justPY_parser(f.read(), inspect.stack()[1][0], **kwargs)
 
 
 try:

@@ -51,6 +51,7 @@ class _QInputBase(Input):
     evaluate_prop = []
 
     def __init__(self, **kwargs):
+        self.disable_input_event = False
         super().__init__(**kwargs)
         self.vue_type = 'quasar_component'
         self.directives = quasar_directives
@@ -90,6 +91,7 @@ class _QInputBase(Input):
         if self.disable_events:
             d['events'] = []
         d['evaluate_prop'] = self.evaluate_prop
+        d['disable_input_event'] = self.disable_input_event
         return d
 
 
@@ -109,9 +111,10 @@ class QInput(_QInputBase):
                           'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon',
                           'placeholder']
 
-        self.allowed_events = ['keypress', 'input', 'focusin', 'focusout']  # Not different from focus and blur in documentation
+        self.allowed_events = ['keypress', 'input', 'focus', 'blur']  # Not different from focus and blur in documentation
         self.set_keyword_events(**kwargs)
         self.evaluate_prop = ['rules']
+
 
 
 @parse_dict
@@ -138,7 +141,7 @@ class QSelect(_QInputBase):
                  'disable', 'readonly', 'behavior', 'input-class', 'input-style',
                   'virtual-scroll-slice-size', 'virtual-scroll-item-size', 'virtual-scroll-sticky-size-start', 'virtual-scroll-sticky-size-end']
 
-        self.allowed_events = ['input', 'remove', 'add', 'new_value', 'filter', 'filter_abort']
+        self.allowed_events = ['input', 'remove', 'add', 'new_value', 'filter', 'filter_abort', 'focus', 'blur']
         # self.set_keyword_events(**kwargs)
 
 
@@ -1592,6 +1595,9 @@ class QDrawer(QDiv):
                           'content-class', 'content-style']
         self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'on-layout', 'click', 'mouseover', 'mouseout']
         self.set_keyword_events(**kwargs)
+
+    async def toggle(self, msg):
+        await self.run_method('toggle()', msg.websocket)
 
     def model_update(self):
         update_value = self.model[0].data[self.model[1]]

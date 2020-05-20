@@ -14,15 +14,26 @@ function eventHandler(props, event, form_data, aux) {
     if (!websocket_ready && use_websockets) {
         return;
     }
-
+    let event_type = event.type;
+    if (event_type == 'input' && (props.jp_props.vue_type == 'quasar_component') && (props.jp_props.disable_input_event)) {
+        comp_dict[props.jp_props.id].value = event.target.value;
+        return;
+    }
+    if (event_type == 'focusin' && (props.jp_props.vue_type == 'quasar_component')) {
+        event_type = 'focus';
+        event.target.value = comp_dict[props.jp_props.id].value;
+    }
+    if (event_type == 'focusout' && (props.jp_props.vue_type == 'quasar_component')) {
+        event_type = 'blur';
+        event.target.value = comp_dict[props.jp_props.id].value;
+    }
     e = {
-        'event_type': event.type,
+        'event_type': event_type,
         'id': props.jp_props.id,
         'class_name': props.jp_props.class_name,
         'html_tag': props.jp_props.html_tag,
         'vue_type': props.jp_props.vue_type,
         'event_target': event.target.id,
-        // 'event_current_target': event.currentTarget.id,
         'input_type': props.jp_props.input_type,
         'checked': event.target.checked,
         'data': event.data,
@@ -48,7 +59,8 @@ function eventHandler(props, event, form_data, aux) {
     if (form_data) {
         e['form_data'] = form_data;
     } else {
-        e['event_current_target'] = event.currentTarget.id;
+        if (event.currentTarget)
+            e['event_current_target'] = event.currentTarget.id;
     }
     if (aux) e['aux'] = aux;
     if (event instanceof KeyboardEvent) {
@@ -73,8 +85,8 @@ function eventHandler(props, event, form_data, aux) {
         clearTimeout(modifiers.debounce.timeout);
         let set_e = e;
         modifiers.debounce.timeout = setTimeout(function () {
-            modifiers.debounce.timeout = undefined;
-            if (!callNow) send_to_server(set_e, 'event', props.jp_props.debug);
+                modifiers.debounce.timeout = undefined;
+                if (!callNow) send_to_server(set_e, 'event', props.jp_props.debug);
             }
             , modifiers.debounce.value);
         if (callNow) send_to_server(set_e, 'event', props.jp_props.debug);
@@ -118,6 +130,11 @@ function send_to_server(e, event_type, debug_flag) {
         console.log({'type': event_type, 'event_data': e});
     }
     if (use_websockets) {
+        if (web_socket_closed) {
+            let ok_to_reload = confirm('Page needs to be reloaded, click OK to reload');
+            if (ok_to_reload) window.location.reload();
+            return;
+        }
         if (websocket_ready) {
             socket.send(JSON.stringify({'type': event_type, 'event_data': e}));
         } else {

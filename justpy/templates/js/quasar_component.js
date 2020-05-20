@@ -35,7 +35,7 @@ Vue.component('quasar_component', {
 
         description_object = {
             style: this.jp_props.style,
-            attrs: this.jp_props.attrs,
+            attrs: Object.assign({}, this.jp_props.attrs),
             domProps: {
                 // innerHTML: this.jp_props.inner_html
             },
@@ -112,7 +112,6 @@ Vue.component('quasar_component', {
                 case 'cancel':
                     fn = this.cancelEvent;
                     break;
-
 
                 default:
                     fn = this.defaultEvent;
@@ -251,10 +250,6 @@ Vue.component('quasar_component', {
         eventFunction: (function (event, event_type, aux) {
             if (!this.$props.jp_props.event_propagation) {
                 event.stopPropagation();
-            }
-
-            if (event instanceof Event) {
-                eventHandler(this.$props, event, false);
             } else {
                 this.createEvent(event, event_type, aux);
             }

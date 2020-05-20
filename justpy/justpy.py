@@ -26,6 +26,7 @@ print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
 
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
+CRASH = config('CRASH', cast=bool, default=False)
 MEMORY_DEBUG = config('MEMORY_DEBUG', cast=bool, default=False)
 if MEMORY_DEBUG:
     import psutil
@@ -307,14 +308,22 @@ async def handle_event(data_dict, com_type=0, page_event=False):
     except:
         pass
     try:
-        event_result = await c.run_event_function(event_data['event_type'], event_data, True)
+        if hasattr(c, 'on_' + event_data['event_type']):
+            event_result = await c.run_event_function(event_data['event_type'], event_data, True)
+        else:
+            event_result = None
+            logging.debug('%s %s %s %s', c, 'has no ', event_data['event_type'], ' event handler')
         logging.debug('%s %s', 'Event result:', event_result)
     except Exception as e:
         # raise Exception(e)
+        if CRASH:
+            print(traceback.format_exc())
+            sys.exit(1)
         event_result = None
         # logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
-        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:\033[0m')
+        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mError in event handler:\033[0m')
         logging.info('%s', traceback.format_exc())
+
 
     # If page is not to be updated, the event_function should return anything but None
 
