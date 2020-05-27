@@ -94,6 +94,7 @@ class _QInputBase(Input):
         d['disable_input_event'] = self.disable_input_event
         return d
 
+QInputBase = _QInputBase
 
 @parse_dict
 class QInput(_QInputBase):
@@ -111,9 +112,44 @@ class QInput(_QInputBase):
                           'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon',
                           'placeholder']
 
-        self.allowed_events = ['keypress', 'input', 'focus', 'blur']  # Not different from focus and blur in documentation
+        self.allowed_events = ['keypress', 'input', 'focus', 'blur', 'change']  # Not different from focus and blur in documentation
         self.set_keyword_events(**kwargs)
         self.evaluate_prop = ['rules']
+
+
+class QInputBlur(QInput):
+
+    def before_event_handler(self, msg):
+        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        if hasattr(self, 'model'):
+            self.model[0].data[self.model[1]] = msg.value
+        self.value = msg.value
+
+
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['disable_input_event'] = True
+        if 'blur' not in self.events:
+            self.events.append('blur')
+        return d
+
+
+class QInputChange(QInput):
+
+    def before_event_handler(self, msg):
+        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        if hasattr(self, 'model'):
+            self.model[0].data[self.model[1]] = msg.value
+        self.value = msg.value
+
+
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['disable_input_event'] = True
+        d['events'].remove('input')
+        if 'change' not in self.events:
+            self.events.append('change')
+        return d
 
 
 
@@ -1388,6 +1424,7 @@ class QTree(QDiv):
         self.expanded = []
         self.selected = []
         self.tick_strategy = 'none'   # none | strict | leaf | leaf-filtered
+        self.default_expand_all = False
         super().__init__(**kwargs)
         self.attributes = ['tick-strategy', 'default-expand-all', 'accordion', 'nodes', 'node-key', 'label-key', 'icon',
                            'no-nodes-label', 'no-results-label', 'filter', 'filter-method', 'ticked', 'expanded', 'selected',
@@ -1435,6 +1472,11 @@ class QTree(QDiv):
             self.nodes = demjson.decode(f.read().encode("ascii", "ignore"))
         return self.nodes
 
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['default_expand_all'] = self.default_expand_all
+        return d
+
 
 @parse_dict
 class QNotify(QDiv):
@@ -1467,7 +1509,7 @@ class QTable(QDiv):
 
     # Has also specific slots for column names body-cell-{name}
     slots = ['item_slot', 'body_slot', 'body-cell_slot', 'top-row_slot', 'bottom-row_slot', 'bottom_slot', 'pagination_slot', 'header_slot',
-             'header-cell_slot', 'top-left_slot', 'top-right_slot', 'top-selection_slot']
+             'header-cell_slot', 'top-left_slot', 'top-right_slot', 'top-selection_slot', 'top_slot', 'bottom_slot', 'loading_slot']
     html_tag = 'q-table'
 
     def __init__(self, **kwargs):
@@ -1529,7 +1571,46 @@ class QTable(QDiv):
         self.columns = [Dict({'name': col, 'align': 'center', 'label': col, 'field': col, 'sortable': True}) for col in df.columns]
         self.data = df.to_dict('records')
 
+@parse_dict
+class QTh(QDiv):
 
+    slots = ['default_slot']
+    html_tag = 'q-th'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['props', 'auto-width']
+        self.allowed_events = []
+        self.set_keyword_events(**kwargs)
+
+
+@parse_dict
+class QTr(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-tr'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['props', 'no-hover']
+        self.allowed_events = []
+        self.set_keyword_events(**kwargs)
+
+
+@parse_dict
+class QTd(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-td'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
+        self.prop_list = ['auto-width', 'props', 'no-hover']
+        self.allowed_events = []
+        self.set_keyword_events(**kwargs)
 # Layout components  https://quasar.dev/layout/layout
 
 @parse_dict

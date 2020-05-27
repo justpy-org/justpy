@@ -246,10 +246,12 @@ Vue.component('quasar_component', {
                 eventHandler(props, event, form_elements_list);
             }
         }),
-
         eventFunction: (function (event, event_type, aux) {
             if (!this.$props.jp_props.event_propagation) {
                 event.stopPropagation();
+            }
+            if (event instanceof Event) {
+                eventHandler(this.$props, event, false);
             } else {
                 this.createEvent(event, event_type, aux);
             }
@@ -302,7 +304,7 @@ Vue.component('quasar_component', {
             case 'q-tree':
                 var tree = comp_dict[this.$props.jp_props.id];
                 // Add attribute expand_at_start
-                if (true) {
+                if (this.$props.jp_props.default_expand_all) {
                     this.$nextTick(() => {
                         setTimeout(function () {
                             tree.expandAll();

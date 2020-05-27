@@ -803,6 +803,23 @@ class Input(Div):
         return d
 
 
+class InputChangeOnly(Input):
+    """
+    Does not generate the 'input' event. Generates the 'change' event. Leaves other events unchanged.
+    Use if you don't need to look at each character typed. Saves interaction with the server
+    The 'change' event docs:
+    https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+    Salient: When the element loses focus after its value was changed, but not commited (e.g., after editing the value
+    of <textarea> or <input type="text">) or when Enter is pressed.
+    """
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['events'].remove('input')
+        if 'change' not in d['events']:
+            d['events'].append('change')
+        return d
+
+
 class Form(Div):
 
     html_tag = 'form'
