@@ -383,6 +383,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-change-event-and-the-inputonlychange-component" class="md-nav__link">
+    The change Event and the InputOnlyChange Component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-type-attribute" class="md-nav__link">
     The Type Attribute
   </a>
@@ -612,6 +619,18 @@
   <li class="md-nav__item">
     <a href="../static/" title="Static Files" class="md-nav__link">
       Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../page_events/" title="Page Events" class="md-nav__link">
+      Page Events
     </a>
   </li>
 
@@ -1066,6 +1085,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QTree/" title="QTree" class="md-nav__link">
+      QTree
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1228,6 +1259,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
+      Reactivity in JustPy
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1263,6 +1306,13 @@
         <li class="md-nav__item">
   <a href="#the-input-event" class="md-nav__link">
     The input Event
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-change-event-and-the-inputonlychange-component" class="md-nav__link">
+    The change Event and the InputOnlyChange Component
   </a>
   
 </li>
@@ -1385,6 +1435,31 @@
 <p>The input event occurs each and every time a character is typed into an input element. After every keystroke this function is run (if the debounce period has expired - see below), and it changes the text of the div to the value of the input field.  By assigning the div to an <code>in1</code> attribute, we have access to all the variables we need in the event handler.</p>
 <p>You may have noticed that there is a delay in the updating of the Div. That is because the component by default sets the <code>debounce</code> attribute of the input event to 200ms. This means an input event is generated only after a key has not been pressed for 200ms. </p>
 <p>Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the <code>debounce</code> attribute to the value you prefer in ms, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.</p>
+<h2 id="the-change-event-and-the-inputonlychange-component">The change Event and the InputOnlyChange Component<a class="headerlink" href="#the-change-event-and-the-inputonlychange-component" title="Permanent link">&para;</a></h2>
+<p>The regular Input component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field as the user is typing, it is preferable to use InputOnlyChange instead of Input. </p>
+<p>InputOnlyChange does not generate the input event, only the change event. The change event is generated when the field loses focus or the user presses the Enter button. It is not generated when the user types a character. </p>
+<p>The example below is the same as the one above except that InputOnlyChange is used instead of Input. </p>
+<div class="codehilite"><pre><span></span><code>import justpy as jp
+
+input_classes = &quot;m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;
+p_classes = &#39;m-2 p-2 h-32 text-xl border-2&#39;
+
+def my_input(self, msg):
+    self.div.text = self.value
+
+def input_demo(request):
+    wp = jp.WebPage()
+    in1 = jp.InputChangeOnly(a=wp, classes=input_classes, placeholder=&#39;Please type here&#39;)
+    in1.div = jp.Div(text=&#39;What you type will show up here only when Input element loses focus or you press Enter&#39;,
+                     classes=p_classes, a=wp)
+    in1.on(&#39;input&#39;, my_input)
+    in1.on(&#39;change&#39;, my_input)
+    return wp
+
+jp.justpy(input_demo)
+</code></pre></div>
+
+
 <h2 id="the-type-attribute">The Type Attribute<a class="headerlink" href="#the-type-attribute" title="Permanent link">&para;</a></h2>
 <h3 id="number-example">Number Example<a class="headerlink" href="#number-example" title="Permanent link">&para;</a></h3>
 <p>The input component can be of different <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#%3Cinput%3E_types">types</a> such as 'number' or  'password'.</p>

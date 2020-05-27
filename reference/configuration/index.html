@@ -520,6 +520,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tutorial/page_events/" title="Page Events" class="md-nav__link">
+      Page Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tutorial/configuration/" title="Configuration" class="md-nav__link">
       Configuration
     </a>
@@ -964,6 +976,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QTree/" title="QTree" class="md-nav__link">
+      QTree
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1137,6 +1161,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
+      Reactivity in JustPy
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1177,6 +1213,9 @@ See also <a href="/tutorial/configuration">configuration in tutorial</a></p>
 <div class="codehilite"><pre><span></span><code><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s1">&#39;justpy.env&#39;</span><span class="p">)</span>
 <span class="c1"># Determines if error is shown in browser when it occurs</span>
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># If set to True, the program terminates if there is an error in an event handler</span>
+<span class="n">CRASH</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;CRASH&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1"># When True the console displays the memory taken by the program each time a browser tab closes so you check if memory is being reclaimed</span>
 <span class="c1"># It requires psutil to be installed</span>
@@ -1220,6 +1259,7 @@ See also <a href="/tutorial/configuration">configuration in tutorial</a></p>
 
 <span class="n">TAILWIND</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;TAILWIND&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">QUASAR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;QUASAR&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># If none, latest version is loaded unless NO_INTERNET is Tru in which case the version that comes with the package is loaded</span>
 <span class="n">QUASAR_VERSION</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;QUASAR_VERSION&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">HIGHCHARTS</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;HIGHCHARTS&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">AGGRID</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s1">&#39;AGGRID&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

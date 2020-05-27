@@ -520,6 +520,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tutorial/page_events/" title="Page Events" class="md-nav__link">
+      Page Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tutorial/configuration/" title="Configuration" class="md-nav__link">
       Configuration
     </a>
@@ -1046,6 +1058,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../QTree/" title="QTree" class="md-nav__link">
+      QTree
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1204,6 +1228,18 @@
   <li class="md-nav__item">
     <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
       From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
+      Reactivity in JustPy
     </a>
   </li>
 
@@ -1524,8 +1560,12 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 
 
 <h2 id="running-quasar-component-methods">Running Quasar Component Methods<a class="headerlink" href="#running-quasar-component-methods" title="Permanent link">&para;</a></h2>
-<p>The Quasar methods use the <code>run_method</code> method of a JustPy Quasar component.</p>
+<p>In order to run Quasar methods use the <code>run_method</code> method of the JustPy Quasar component.</p>
 <p>The following example runs the start() and stop() methods of <a href="https://quasar.dev/vue-components/ajax-bar#QAjaxBar-API">QAjaxBar</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You must set <code>temp=False</code> when the component is created because this generates an id for the element without which <code>run_method</code> will not work</p>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">start_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>

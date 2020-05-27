@@ -401,6 +401,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#event-handlers-defined-in-components" class="md-nav__link">
+    Event Handlers Defined in Components
+  </a>
+  
+</li>
+      
       
       
       
@@ -612,6 +619,18 @@
   <li class="md-nav__item">
     <a href="../static/" title="Static Files" class="md-nav__link">
       Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../page_events/" title="Page Events" class="md-nav__link">
+      Page Events
     </a>
   </li>
 
@@ -1066,6 +1085,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QTree/" title="QTree" class="md-nav__link">
+      QTree
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1228,6 +1259,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
+      Reactivity in JustPy
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1318,6 +1361,13 @@
         <li class="md-nav__item">
   <a href="#the-click__out-event" class="md-nav__link">
     The click__out Event
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-handlers-defined-in-components" class="md-nav__link">
+    Event Handlers Defined in Components
   </a>
   
 </li>
@@ -1577,7 +1627,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 
 
 <h2 id="the-debounce-and-throttle-event-modifiers">The debounce and throttle Event Modifiers<a class="headerlink" href="#the-debounce-and-throttle-event-modifiers" title="Permanent link">&para;</a></h2>
-<p>Sometimes you nee to debounce or throttle on event. To do this, use the <code>debounce</code> and <code>throttle</code> keyword arguments of the <code>on</code> method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the <code>immediate</code> attribute of <code>on</code> to <code>True</code>.</p>
+<p>Sometimes you need to debounce or throttle on event. To do this, use the <code>debounce</code> and <code>throttle</code> keyword arguments of the <code>on</code> method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the <code>immediate</code> attribute of <code>on</code> to <code>True</code>.</p>
 <p>The example below also uses the <code>add_event</code> method. The <code>mousemove</code> event is not among the events that are supported by default and needs to be added the element's allowed events.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
@@ -1627,6 +1677,41 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">test_out</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="event-handlers-defined-in-components">Event Handlers Defined in Components<a class="headerlink" href="#event-handlers-defined-in-components" title="Permanent link">&para;</a></h2>
+<p>This section reflects changes introduced in version 0.1.0</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may want to return to this section after having covered the custom components part of the tutorial</p>
+</div>
+<p>In the example below we define a simple component that is a Div that includes 5 buttons and another Div with some information.</p>
+<p>If an event handler is defined as a method of a component, the <code>self</code> attribute passed to it will be that of the component instance and not of the child instance which originated the event. That child instance can be found in the <code>msg.target</code> field.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">class</span> <span class="nc">ButtonDiv</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39; m-2 p-2 border text-blue text-lg&#39;</span><span class="p">)</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">b</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;info will go here&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">button_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{msg.target.num}</span><span class="s1"> was clicked&#39;</span>
+
+<span class="k">def</span> <span class="nf">target_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">ButtonDiv</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">target_test</span><span class="p">)</span>
 </code></pre></div>
                 
                   

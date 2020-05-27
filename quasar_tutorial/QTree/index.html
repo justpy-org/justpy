@@ -38,7 +38,7 @@
     
     
       
-        <title>QRating - JustPy</title>
+        <title>QTree - JustPy</title>
       
     
     
@@ -112,7 +112,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#qrating" tabindex="0" class="md-skip">
+      <a href="#qtree" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -138,7 +138,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                QRating
+                QTree
               
             </span>
           
@@ -928,20 +928,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="QRating" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../QRating/" title="QRating" class="md-nav__link">
       QRating
     </a>
-    
   </li>
 
         
@@ -985,11 +976,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../QTree/" title="QTree" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="QTree" class="md-nav__link md-nav__link--active">
       QTree
     </a>
+    
   </li>
 
         
@@ -1206,46 +1206,76 @@
               
                 
                 
-                <h1 id="qrating">QRating<a class="headerlink" href="#qrating" title="Permanent link">&para;</a></h1>
-<p><a href="https://quasar.dev/vue-components/rating">Quasar Rating</a> is a Component which allows users to rate items.</p>
-<p>It generates an input event each time it is clicked with the value of the input being the rating.</p>
+                <h1 id="qtree">QTree<a class="headerlink" href="#qtree" title="Permanent link">&para;</a></h1>
+<p>Quasars <a href="https://quasar.dev/vue-components/tree">Qtree</a> component allows displaying hierarchical data in a tree structure.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">rating_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">rating_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-gutter-y-md column&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;1.5em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;thumb_up&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;2em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;favorite_border&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red-7&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;2.5em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;create&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple-4&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;3em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;pets&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;brown-5&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;4.5em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;star_border&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green-5&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;5em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;star_border&#39;</span><span class="p">,</span><span class="n">icon_selected</span><span class="o">=</span><span class="s1">&#39;star&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">],</span>
-               <span class="n">color_selected</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;light-green-3&#39;</span><span class="p">,</span> <span class="s1">&#39;light-green-6&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;green-9&#39;</span><span class="p">,</span> <span class="s1">&#39;green-10&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;5em&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;star_border&#39;</span><span class="p">,</span><span class="n">icon_selected</span><span class="o">=</span><span class="s1">&#39;star&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green-5&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;3.5em&#39;</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red-5&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">rating_div</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">],</span>
-               <span class="n">icon</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sentiment_very_dissatisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;sentiment_dissatisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;sentiment_satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;sentiment_very_satisfied&#39;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">wp</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">expand_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;expandAll()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">rating_test</span><span class="p">)</span>
-</code></pre></div>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">collapse_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;collapseAll()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
 
 
-<p>With tooltips</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">rating_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">tree_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">tailwind</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">num_stars</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QRating</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s1">&#39;2em&#39;</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">num_stars</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">num_stars</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QTooltip</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1"> rating&#39;</span><span class="p">)</span>
-        <span class="n">r</span><span class="o">.</span><span class="n">add_scoped_slot</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tip-</span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md q-gutter-sm&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">node_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    [</span>
+<span class="s2">        {</span>
+<span class="s2">          label: &#39;Satisfied customers (with avatar)&#39;,</span>
+<span class="s2">          avatar: &#39;https://cdn.quasar.dev/img/boy-avatar.png&#39;,</span>
+<span class="s2">          children: [</span>
+<span class="s2">            {</span>
+<span class="s2">              label: &#39;Good food (with icon)&#39;,</span>
+<span class="s2">              icon: &#39;restaurant_menu&#39;,</span>
+<span class="s2">              children: [</span>
+<span class="s2">                { label: &#39;Quality ingredients&#39;, icon: &#39;favorite&#39; },</span>
+<span class="s2">                { label: &#39;Good recipe&#39; }</span>
+<span class="s2">              ]</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">              label: &#39;Good service (disabled node with icon)&#39;,</span>
+<span class="s2">              icon: &#39;room_service&#39;,</span>
+<span class="s2">              disabled: true,</span>
+<span class="s2">              children: [</span>
+<span class="s2">                { label: &#39;Prompt attention&#39; },</span>
+<span class="s2">                { label: &#39;Professional waiter&#39; }</span>
+<span class="s2">              ]</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">              label: &#39;Pleasant surroundings (with icon)&#39;,</span>
+<span class="s2">              icon: &#39;photo&#39;,</span>
+<span class="s2">              children: [</span>
+<span class="s2">                {</span>
+<span class="s2">                  label: &#39;Happy atmosphere (with image)&#39;,</span>
+<span class="s2">                  img: &#39;https://cdn.quasar.dev/img/logo_calendar_128px.png&#39;</span>
+<span class="s2">                },</span>
+<span class="s2">                { label: &#39;Good table presentation&#39; },</span>
+<span class="s2">                { label: &#39;Pleasing decor&#39; }</span>
+<span class="s2">              ]</span>
+<span class="s2">            }</span>
+<span class="s2">          ]</span>
+<span class="s2">        }</span>
+<span class="s2">      ]</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expand&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">expand_tree</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Collapse&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">collapse_tree</span><span class="p">)</span>
+
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QTree</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">node_key</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">nodes</span><span class="o">=</span><span class="n">node_string</span><span class="p">,</span> <span class="n">tick_strategy</span><span class="o">=</span><span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">no_connectors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default_expand_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">my_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;in my updated&#39;</span><span class="p">)</span>
+        <span class="n">d1</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">tree</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;update:ticked&#39;</span><span class="p">,</span> <span class="n">my_updated</span><span class="p">)</span>
+
+    <span class="n">b1</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span>
+    <span class="n">b2</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">rating_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tree_test</span><span class="p">)</span>
 </code></pre></div>
                 
                   
@@ -1268,7 +1298,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../QSplitter/" title="QSplitter" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../QAjaxBar/" title="QAjaxBar" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1277,19 +1307,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                QSplitter
+                QAjaxBar
               </span>
             </div>
           </a>
         
         
-          <a href="../QColor/" title="QColor" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../not_working/" title="Components not Working" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                QColor
+                Components not Working
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

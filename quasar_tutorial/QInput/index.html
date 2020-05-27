@@ -520,6 +520,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tutorial/page_events/" title="Page Events" class="md-nav__link">
+      Page Events
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tutorial/configuration/" title="Configuration" class="md-nav__link">
       Configuration
     </a>
@@ -908,6 +920,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#qinputblur-disabling-the-input-event" class="md-nav__link">
+    QInputBlur - Disabling the Input Event
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#yahoo-stock-charts-example" class="md-nav__link">
     Yahoo Stock Charts Example
   </a>
@@ -1029,6 +1048,18 @@
   <li class="md-nav__item">
     <a href="../QAjaxBar/" title="QAjaxBar" class="md-nav__link">
       QAjaxBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../QTree/" title="QTree" class="md-nav__link">
+      QTree
     </a>
   </li>
 
@@ -1201,6 +1232,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
+      Reactivity in JustPy
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1257,6 +1300,13 @@
         <li class="md-nav__item">
   <a href="#input-validation" class="md-nav__link">
     Input Validation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qinputblur-disabling-the-input-event" class="md-nav__link">
+    QInputBlur - Disabling the Input Event
   </a>
   
 </li>
@@ -1449,6 +1499,30 @@
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="qinputblur-disabling-the-input-event">QInputBlur - Disabling the Input Event<a class="headerlink" href="#qinputblur-disabling-the-input-event" title="Permanent link">&para;</a></h2>
+<p>In some cases the debounce feature may not be sufficient to provide a good user experience. This may happen when users type in bursts. Setting debounce to 1000 almost always solves these problems but there is another option if the large debounce is causing other issues. You can disable the input event altogether and capture the value of the QInput when it loses focus.</p>
+<p>You can control this yourself by setting the <code>disable_input_event</code> attribute to <code>True</code> or use the predefined QInputBlur component. This component will only update the value of the field when the component loses focus.</p>
+<p>The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputBlur instead of QInput. </p>
+<p>QInputBlur is similar to <a href="/tutorial/input/#the-change-event-and-the-inputonlychange-component">InputChangeOnly</a> but uses the <code>blur</code> event since QInput does not support the <code>change</code> event.</p>
+<div class="codehilite"><pre><span></span><code>import justpy as jp
+
+def my_blur(self, msg):
+    self.div.text = self.value
+
+def input_demo(request):
+    wp = jp.QuasarPage()
+    c1 = jp.Div(classes=&#39;q-pa-md&#39;, a=wp)
+    c2 = jp.Div(classes=&#39;q-gutter-md&#39;, style=&#39;max-width: 300px&#39;, a=c1)
+    in1 = jp.QInputBlur(a=c2,placeholder=&#39;Please type here&#39;, label=&#39;QInputBlur&#39;)
+    in1.div = jp.Div(text=&#39;What you type will show up here only when Input element loses focus&#39;,
+                      classes=&#39;text-h6&#39;, a=c2)
+    in1.on(&#39;blur&#39;, my_blur)
+    return wp
+
+jp.justpy(input_demo)
 </code></pre></div>
 
 
