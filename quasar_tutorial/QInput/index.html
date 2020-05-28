@@ -920,8 +920,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#qinputblur-disabling-the-input-event" class="md-nav__link">
-    QInputBlur - Disabling the Input Event
+  <a href="#qinputchange-and-qinputblur-disabling-the-input-event" class="md-nav__link">
+    QInputChange and QInputBlur - Disabling the Input Event
   </a>
   
 </li>
@@ -1305,8 +1305,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#qinputblur-disabling-the-input-event" class="md-nav__link">
-    QInputBlur - Disabling the Input Event
+  <a href="#qinputchange-and-qinputblur-disabling-the-input-event" class="md-nav__link">
+    QInputChange and QInputBlur - Disabling the Input Event
   </a>
   
 </li>
@@ -1502,11 +1502,10 @@
 </code></pre></div>
 
 
-<h2 id="qinputblur-disabling-the-input-event">QInputBlur - Disabling the Input Event<a class="headerlink" href="#qinputblur-disabling-the-input-event" title="Permanent link">&para;</a></h2>
+<h2 id="qinputchange-and-qinputblur-disabling-the-input-event">QInputChange and QInputBlur - Disabling the Input Event<a class="headerlink" href="#qinputchange-and-qinputblur-disabling-the-input-event" title="Permanent link">&para;</a></h2>
 <p>In some cases the debounce feature may not be sufficient to provide a good user experience. This may happen when users type in bursts. Setting debounce to 1000 almost always solves these problems but there is another option if the large debounce is causing other issues. You can disable the input event altogether and capture the value of the QInput when it loses focus.</p>
-<p>You can control this yourself by setting the <code>disable_input_event</code> attribute to <code>True</code> or use the predefined QInputBlur component. This component will only update the value of the field when the component loses focus.</p>
-<p>The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputBlur instead of QInput. </p>
-<p>QInputBlur is similar to <a href="/tutorial/input/#the-change-event-and-the-inputonlychange-component">InputChangeOnly</a> but uses the <code>blur</code> event since QInput does not support the <code>change</code> event.</p>
+<p>You can control this yourself by setting the <code>disable_input_event</code> attribute to <code>True</code> or use the predefined QInputChange and QInputBlur components. QInputBlur will only update the value of the field when the component loses focus. QInputChange will update the value when the change event is fired. Both are very similar except that change will also fire when the Enter key is pressed and focus remains on the component.</p>
+<p>The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputChange and QInputBlur instead of QInput. </p>
 <div class="codehilite"><pre><span></span><code>import justpy as jp
 
 def my_blur(self, msg):
