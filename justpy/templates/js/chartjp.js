@@ -292,7 +292,7 @@ Vue.component('chart', {
             if (this.$props.jp_props.update_create) {
                 this.graph_change();
             } else {
-                chart.update(this.$props.jp_props.def, true, false, this.$props.jp_props.update_animation);
+                chart.update(this.$props.jp_props.def, true, true, this.$props.jp_props.update_animation);
             }
         }
     },

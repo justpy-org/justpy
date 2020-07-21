@@ -10,7 +10,6 @@ from .tailwind import Tailwind
 import logging
 import httpx
 
-
 # Dictionary for translating from tag to class
 _tag_class_dict = {}
 
@@ -40,9 +39,8 @@ class WebPage:
     debug = False
     highcharts_theme = None
     # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
-    #'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
-    allowed_events =['click', 'visibilitychange', 'page_ready']
-
+    # 'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
+    allowed_events = ['click', 'visibilitychange', 'page_ready', 'result_ready']
 
     def __init__(self, **kwargs):
         self.page_id = WebPage.next_page_id
@@ -56,6 +54,7 @@ class WebPage:
         self.open = None
         self.favicon = None
         self.components = []  # list of direct children components on page
+        self.cookies = {}
         self.css = ''
         self.head_html = ''
         self.body_html = ''
@@ -65,7 +64,7 @@ class WebPage:
         self.body_classes = ''
         self.reload_interval = None
         self.events = []
-        self.dark = False    # Set to True for Quasar dark mode (use for other dark modes also)
+        self.dark = False  # Set to True for Quasar dark mode (use for other dark modes also)
         self.data = {}
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
@@ -126,12 +125,19 @@ class WebPage:
     def last(self):
         return self.components[-1]
 
-    async def run_javascript(self, javascript_string):
+    def set_cookie(self, k, v):
+        self.cookies[str(k)] = str(v)
+
+    def delete_cookie(self, k):
+        if k in self.cookies:
+            del (self.cookies[str(k)])
+
+    async def run_javascript(self, javascript_string, *, request_id=None, send=True):
         try:
             websocket_dict = WebPage.sockets[self.page_id]
         except:
             return self
-        dict_to_send = {'type': 'run_javascript', 'data': javascript_string}
+        dict_to_send = {'type': 'run_javascript', 'data': javascript_string, 'request_id': request_id, 'send': send}
         await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
                              return_exceptions=True)
         return self
@@ -153,7 +159,8 @@ class WebPage:
                 WebPage.loop.create_task(websocket.send_json({'type': 'page_update', 'data': component_build,
                                                               'page_options': {'display_url': self.display_url,
                                                                                'title': self.title,
-                                                                               'redirect': self.redirect, 'open': self.open,
+                                                                               'redirect': self.redirect,
+                                                                               'open': self.open,
                                                                                'favicon': self.favicon}}))
             except:
                 print('Problem with websocket in page update, ignoring')
@@ -175,7 +182,7 @@ class WebPage:
             WebPage.loop.create_task(websocket.send_json(dict_to_send))
         else:
             await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
-                             return_exceptions=True)
+                                 return_exceptions=True)
         return self
 
     async def delayed_update(self, delay):
@@ -248,6 +255,7 @@ class JustpyBaseComponent(Tailwind):
             cls.next_id += 1
         self.events = []
         self.event_modifiers = Dict()
+        self.transition = None
         self.allowed_events = []
 
     def initialize(self, **kwargs):
@@ -313,27 +321,57 @@ class JustpyBaseComponent(Tailwind):
         else:
             return False
 
-    async def update(self):
+    def has_class(self, class_name):
+        return class_name in self.classes.split()
+
+    def remove_class(self, tw_class):
+        class_list = self.classes.split()
+        try:
+            class_list.remove(tw_class)
+        except:
+            pass
+        self.classes = ' '.join(class_list)
+
+    def hidden(self, flag=True):
+        if flag:
+            self.set_class('hidden')
+        else:
+            self.remove_class('hidden')
+
+    def hidden_toggle(self):
+        if self.has_class('hidden'):
+            self.remove_class('hidden')
+        else:
+            self.set_class('hidden')
+
+    async def update(self, socket=None):
         component_dict = self.convert_object_to_dict()
-        pages_to_update = list(self.pages.values())
-        for page in pages_to_update:
-            try:
-                websocket_dict = WebPage.sockets[page.page_id]
-            except:
-                continue
-            for websocket in list(websocket_dict.values()):
+        if socket:
+            WebPage.loop.create_task(socket.send_json({'type': 'component_update', 'data': component_dict}))
+        else:
+            pages_to_update = list(self.pages.values())
+            for page in pages_to_update:
                 try:
-                    WebPage.loop.create_task(websocket.send_json({'type': 'component_update', 'data': component_dict}))
+                    websocket_dict = WebPage.sockets[page.page_id]
                 except:
-                    print('Problem with websocket in component update, ignoring')
+                    continue
+                for websocket in list(websocket_dict.values()):
+                    try:
+                        WebPage.loop.create_task(websocket.send_json({'type': 'component_update', 'data': component_dict}))
+                    except:
+                        print('Problem with websocket in component update, ignoring')
         return self
+
+    def check_transition(self):
+        if self.transition and (not self.id):
+            cls = JustpyBaseComponent
+            self.id = cls.next_id
+            cls.next_id += 1
 
     async def run_method(self, command, websocket):
         await websocket.send_json({'type': 'run_method', 'data': command, 'id': self.id})
         # So the page itself does not update, return True not None
         return True
-
-
 
     def remove_page_from_pages(self, wp: WebPage):
         self.pages.pop(wp.page_id)
@@ -357,8 +395,6 @@ class JustpyBaseComponent(Tailwind):
         else:
             model_value = self.model[0][self.model[1]]
         return model_value
-
-
 
     async def run_event_function(self, event_type, event_data, create_namespace_flag=True):
         event_function = getattr(self, 'on_' + event_type)
@@ -397,13 +433,13 @@ class HTMLBaseComponent(JustpyBaseComponent):
                               'lang', 'spellcheck', 'style', 'tabindex', 'title']
 
     attribute_list = ['id', 'vue_type', 'show', 'events', 'event_modifiers', 'classes', 'style', 'set_focus',
-                      'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation', 'debug']
+                      'html_tag', 'class_name', 'event_propagation', 'inner_html', 'animation', 'debug', 'transition']
 
     # not_used_global_attributes = ['dropzone', 'translate', 'autocapitalize',
     #                               'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype']
 
     # Additions to global attributes to add to attrs dict apart from id and style.
-    used_global_attributes = ['contenteditable', 'dir', 'tabindex', 'title', 'accesskey', 'draggable', 'lang', 'hidden', 'spellcheck']
+    used_global_attributes = ['contenteditable', 'dir', 'tabindex', 'title', 'accesskey', 'draggable', 'lang', 'spellcheck']
 
     # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 
@@ -478,14 +514,6 @@ class HTMLBaseComponent(JustpyBaseComponent):
     def add_scoped_slot(self, slot, c):
         self.scoped_slots[slot] = c
 
-    def remove_class(self, tw_class):
-        class_list = self.classes.split()
-        try:
-            class_list.remove(tw_class)
-        except:
-            pass
-        self.classes = ' '.join(class_list)
-
     def to_html(self, indent=0, indent_step=0, format=True):
         block_indent = ' ' * indent
         if format:
@@ -507,6 +535,9 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
     def convert_object_to_dict(self):
         d = {}
+        # Add id if CSS transition is defined
+        if self.transition:
+            self.check_transition()
         if self.id:
             d['attrs'] = {'id': str(self.id)}
         else:
@@ -525,7 +556,7 @@ class HTMLBaseComponent(JustpyBaseComponent):
                 d['attrs'][i] = getattr(self, i)
             except:
                 pass
-            if i in ['in', 'from']:   # Attributes that are also python reserved words
+            if i in ['in', 'from']:  # Attributes that are also python reserved words
                 try:
                     d['attrs'][i] = getattr(self, '_' + i)
                 except:
@@ -674,8 +705,8 @@ class Div(HTMLBaseComponent):
                 d['inner_html'] = self.text
         return d
 
-class Input(Div):
 
+class Input(Div):
     # Edge and Internet explorer do not support the input event for checkboxes and radio buttons. Use change instead
     # IMPORTANT: Scope of name of radio buttons is the whole page and not the form unless form is specified
 
@@ -684,7 +715,6 @@ class Input(Div):
                   'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
                   'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly',
                   'required', 'size', 'src', 'step', 'type', 'value', 'width']
-    
 
     def __init__(self, **kwargs):
 
@@ -785,7 +815,8 @@ class Input(Div):
         d['attrs']['value'] = self.value
         d['checked'] = self.checked
         if not self.no_events:
-            if self.type in ['radio', 'checkbox', 'select'] or self.type == 'file':  #Not all browsers create input event
+            if self.type in ['radio', 'checkbox', 'select'] or self.type == 'file':
+                # Not all browsers create input event
                 if 'change' not in self.events:
                     self.events.append('change')
             else:
@@ -809,9 +840,10 @@ class InputChangeOnly(Input):
     Use if you don't need to look at each character typed. Saves interaction with the server
     The 'change' event docs:
     https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
-    Salient: When the element loses focus after its value was changed, but not commited (e.g., after editing the value
+    Salient: When the element loses focus after its value was changed, but not committed (e.g., after editing the value
     of <textarea> or <input type="text">) or when Enter is pressed.
     """
+
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         d['events'].remove('input')
@@ -826,7 +858,6 @@ class Form(Div):
     attributes = ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'target']
 
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
 
         def default_submit(self, msg):
@@ -836,7 +867,6 @@ class Form(Div):
         if not self.has_event_function('submit'):
             # If an event handler is not  assigned, the front end cannot stop the default page request that happens when a form is submitted
             self.on('submit', default_submit)
-
 
 
 class Label(Div):
@@ -929,7 +959,7 @@ class A(Div):
         return d
 
 
-Link = A   # The 'Link' name is more descriptive and can be used instead
+Link = A  # The 'Link' name is more descriptive and can be used instead
 
 
 class Icon(Div):
@@ -957,7 +987,7 @@ class EditorMD(Textarea):
 
 class Space(Div):
 
-# Creates a span with hard spaces.
+    # Creates a span with hard spaces.
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -1061,7 +1091,8 @@ _attr_dict = {'a': ['download', 'href', 'hreflang', 'media', 'ping', 'rel', 'tar
                       'width'],
               'input': ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form',
                         'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list',
-                        'max', 'maxlength', 'min', 'minlength','multiple', 'name', 'pattern', 'placeholder', 'readonly',
+                        'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder',
+                        'readonly',
                         'required', 'size', 'src', 'step', 'type', 'value', 'width'], 'ins': ['cite', 'datetime'],
               'label': ['for', 'form'], 'li': ['value'],
               'link': ['crossorigin', 'href', 'hreflang', 'media', 'rel', 'sizes', 'type'], 'map': ['name'],
@@ -1089,9 +1120,8 @@ Animate = AnimateMotion = AnimateTransform = Circle = ClipPath = Defs = Desc = D
 
 # Tag classes defined dynamically at runtime
 for tag in _tag_create_list:
-    globals()[tag.capitalize()] = type(tag.capitalize(), (Div, ),
+    globals()[tag.capitalize()] = type(tag.capitalize(), (Div,),
                                        {'html_tag': tag, 'attributes': _attr_dict.get(tag, [])})
-
 
 # **********************************
 # SVG components
@@ -1108,14 +1138,15 @@ svg_tags = ['a', 'animate', 'animateMotion', 'animateTransform', 'audio', 'canva
             'style', 'svg', 'switch', 'symbol', 'text', 'textPath', 'title', 'tspan', 'unknown', 'use', 'video', 'view']
 
 svg_tags_use = ['animate', 'animateMotion', 'animateTransform', 'circle', 'clipPath', 'defs',
-            'desc', 'discard', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite',
-            'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood',
-            'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode',
-            'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence',
-            'filter', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'marker', 'mask', 'metadata',
-            'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'set', 'stop',
-            'svg', 'switch', 'symbol', 'text', 'textPath', 'tspan', 'use', 'view']
-
+                'desc', 'discard', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite',
+                'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow',
+                'feFlood',
+                'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode',
+                'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile',
+                'feTurbulence',
+                'filter', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'marker', 'mask', 'metadata',
+                'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'set', 'stop',
+                'svg', 'switch', 'symbol', 'text', 'textPath', 'tspan', 'use', 'view']
 
 svg_presentation_attributes = ['alignment-baseline', 'baseline-shift', 'clip', 'clip-path', 'clip-rule', 'color',
                                'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering',
@@ -1223,17 +1254,17 @@ svg_attr_dict = {'a': ['download', 'requiredExtensions', 'role', 'systemLanguage
                  'video': ['requiredExtensions', 'role', 'systemLanguage'],
                  'view': ['preserveAspectRatio', 'role', 'viewBox', 'zoomAndPan']}
 
-
 for tag in svg_tags_use:
     c_tag = tag[0].capitalize() + tag[1:]
     globals()[c_tag] = type(c_tag, (Div,),
-                                       {'html_tag': tag,
-                                        'attributes': svg_attr_dict.get(tag, []) + svg_presentation_attributes + svg_filter_attributes})
+                            {'html_tag': tag,
+                             'attributes': svg_attr_dict.get(tag, []) + svg_presentation_attributes + svg_filter_attributes})
+
 
 # *************************** end SVG components
 
 class HTMLEntity(Span):
-# Render HTML Entities
+    # Render HTML Entities
 
     def __init__(self, **kwargs):
         self.entity = ''
@@ -1293,15 +1324,13 @@ class AutoTable(Table):
     tr_odd_classes = ''
     th_classes = 'px-4 py-2'
 
-
     def __init__(self, **kwargs):
         self.values = []
         super().__init__(**kwargs)
 
-
-    def react(self,data):
+    def react(self, data):
         self.set_class('table-auto')
-        #First row of values is header
+        # First row of values is header
         if self.values:
             headers = self.values[0]
             thead = Thead(a=self)
@@ -1318,12 +1347,10 @@ class AutoTable(Table):
                     Td(text=item, classes=self.td_classes, a=tr)
 
 
-
 get_tag = component_by_tag
 
 
 class BasicHTMLParser(HTMLParser):
-
     # Void elements do not need closing tag
     void_elements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem', 'meta',
                      'param', 'source', 'track', 'wbr']
@@ -1336,7 +1363,7 @@ class BasicHTMLParser(HTMLParser):
         self.start_tag = True
         self.components = []
         self.name_dict = Dict()  # After parsing holds a dict with named components
-        self.dict_attribute = kwargs.get('dict_attribute','name')  # Use another attribute than name
+        self.dict_attribute = kwargs.get('dict_attribute', 'name')  # Use another attribute than name
         self.root = Div(name='root')
         self.containers = []
         self.containers.append(self.root)
@@ -1344,7 +1371,8 @@ class BasicHTMLParser(HTMLParser):
         self.create_commands = kwargs.get('create_commands', True)  # If True, create the justpy command list
         self.command_prefix = kwargs.get('command_prefix', 'jp.')  # Prefix for commands generated, defaults to 'jp.'
         if self.create_commands:
-            self.commands = [f"root = {self.command_prefix}Div()"]  # List of command strings (justpy command to generate the element)
+            # List of command strings (justpy python code to generate the element)
+            self.commands = [f"root = {self.command_prefix}Div()"]
         else:
             self.commands = ''
 
@@ -1431,7 +1459,7 @@ class BasicHTMLParser(HTMLParser):
                     if not c.id:
                         c.id = cls.next_id
                         cls.next_id += 1
-                    fn_string = f'def oneliner{c.id}(self, msg):\n {attr[1]}'   # remove first and last charcters which are quotes
+                    fn_string = f'def oneliner{c.id}(self, msg):\n {attr[1]}'  # remove first and last charcters which are quotes
                     exec(fn_string)
                     c.on(attr[0][1:], locals()[f'oneliner{c.id}'])
                 continue
@@ -1480,6 +1508,9 @@ class BasicHTMLParser(HTMLParser):
         if tag in BasicHTMLParser.void_elements:
             self.handle_endtag(tag)
             self.endtag_required = False
+        else:
+            self.endtag_required = True
+
 
     def handle_endtag(self, tag):
         c = self.containers.pop()
@@ -1528,7 +1559,6 @@ def justPY_parser(html_string, context, **kwargs):
     return parser_result
 
 
-
 def parse_html(html_string, **kwargs):
     return justPY_parser(html_string, inspect.stack()[1][0], **kwargs)
 
@@ -1540,6 +1570,7 @@ def parse_html_file(html_file, **kwargs):
 
 try:
     import aiofiles
+
     _has_aiofiles = True
 except:
     _has_aiofiles = False
@@ -1567,8 +1598,14 @@ def get_websocket(event_data):
     return WebPage.sockets[event_data['page_id']][event_data['websocket_id']]
 
 
-class Styles:
+def create_transition():
+    return Dict({'enter': '', 'enter_start': '', 'enter_end': '',
+                 'leave': '', 'leave_start': '', 'leave_end': '',
+                 'load': '', 'load_start': '', 'load_end': ''
+                 })
 
+
+class Styles:
     button_simple = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
     button_pill = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
     button_outline = 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
@@ -1583,5 +1620,3 @@ class Styles:
     lorem_ipsum = """
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     """
-
-

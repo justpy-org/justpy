@@ -2,18 +2,24 @@
 <html>
 <head>
 
-    {% if options.tailwind %}
-        {% if not options.no_internet %}
-            <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-        {% else %}
-            <link href="/templates/local/tailwind.css" rel="stylesheet">
-        {% endif %}
-        <style>
-            {% include 'css/form.css' %}
-        </style>
-    {% endif %}
-
     {% include 'favicon.html' %}
+
+        {% if options.tailwind %}
+            {% if not options.no_internet %}
+                <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.4.6/dist/base.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.4.6/dist/components.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@^0.1.2/dist/typography.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.4.6/dist/utilities.min.css">
+            {% else %}
+                <link href="/templates/local/tailwind/base.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/components.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/typography.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/utilities.css" rel="stylesheet">
+            {% endif %}
+            <style>
+                {% include 'css/form.css' %}
+            </style>
+        {% endif %}
 
     {% if not options.no_internet %}
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
@@ -37,7 +43,7 @@
     {% endif %}
 
     <style>
-        {{ page_options.css }}
+        {{ page_options.css | safe}}
     </style>
 
     {{ page_options.head_html | safe }}

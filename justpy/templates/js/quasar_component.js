@@ -146,6 +146,11 @@ Vue.component('quasar_component', {
         return h(this.jp_props.html_tag, description_object, comps);
 
     },
+    data: function () {
+        return {
+            previous_display: 'none'
+        }
+    },
     methods: {
         createEvent: (function (event, event_type, aux) {
             new_event = {};
@@ -221,28 +226,49 @@ Vue.component('quasar_component', {
             this.eventFunction(index, 'load');
         }),
         submitEvent: (function (event) {
-            if (event.hasOwnProperty('type')) {
-                var form_reference = this.$el;
-                var props = this.$props;
-                event.preventDefault();    //stop form from submitting
-                var form_elements_list = [];
-                var formData = new FormData(form_reference);
-                var form_elements = form_reference.elements;
-
-                for (var i = 0; i < form_elements.length; i++) {
-                    var attributes = form_elements[i].attributes;
-                    var attr_dict = {};
-                    attr_dict['html_tag'] = form_elements[i].tagName.toLowerCase();
-                    for (var j = 0; j < attributes.length; j++) {
-                        var attr = attributes[j];
-                        attr_dict[attr.name] = attr.value;
+            console.log('in submit');
+            console.log(event);
+            //if (event.hasOwnProperty('type')) {
+            var form_elements_list = [];
+            var props = this.$props;
+            if (true) {
+                console.log('in loop');
+                console.log(this.$props.jp_props.id_list);
+                if (this.$props.jp_props.id_list) {
+                    for (const id of this.$props.jp_props.id_list) {
+                        console.log(comp_dict[id].value);
+                        let field = comp_dict[id];
+                        console.log(field);
+                        console.log(field.attributes);
+                        let attr_dict = {
+                            id: id,
+                            value: field.value,
+                            checked: field.checked,
+                            type: field.type,
+                            name: field.name
+                        };
+                        form_elements_list.push(attr_dict);
                     }
-                    attr_dict['value'] = form_elements[i].value;
-                    attr_dict['checked'] = form_elements[i].checked;
-                    attr_dict['id'] = form_elements[i].id;
-                    form_elements_list.push(attr_dict);
-                }
+                } else {
+                    var form_reference = this.$el;
 
+                    event.preventDefault();    //stop form from submitting
+                    var formData = new FormData(form_reference);
+                    var form_elements = form_reference.elements;
+                    for (var i = 0; i < form_elements.length; i++) {
+                        var attributes = form_elements[i].attributes;
+                        var attr_dict = {};
+                        attr_dict['html_tag'] = form_elements[i].tagName.toLowerCase();
+                        for (var j = 0; j < attributes.length; j++) {
+                            var attr = attributes[j];
+                            attr_dict[attr.name] = attr.value;
+                        }
+                        attr_dict['value'] = form_elements[i].value;
+                        attr_dict['checked'] = form_elements[i].checked;
+                        attr_dict['id'] = form_elements[i].id;
+                        form_elements_list.push(attr_dict);
+                    }
+                }
                 eventHandler(props, event, form_elements_list);
             }
         }),
@@ -263,6 +289,67 @@ Vue.component('quasar_component', {
             element.addEventListener('animationend', function () {
                 element.classList.remove('animated', animation);
             });
+        }),
+        transitionFunction: (function () {
+            let el = this.$refs['r' + this.$props.jp_props.id];
+            const props = this.$props.jp_props;
+            if (el.$el) el = el.$el;
+            const class_list = props.classes.trim().replace(/\s\s+/g, ' ').split(' ');
+            // Transition change from hidden to not hidden
+            if (this.previous_display == 'none' && (!class_list.includes('hidden'))) {
+
+                let enter_list = props.transition.enter.trim().replace(/\s\s+/g, ' ').split(' ');
+                let enter_start_list = props.transition.enter_start.trim().replace(/\s\s+/g, ' ').split(' ');
+                let enter_end_list = props.transition.enter_end.trim().replace(/\s\s+/g, ' ').split(' ');
+                el.classList.add(...enter_start_list);
+
+                setTimeout(function () {
+                    el.classList.remove(...enter_start_list);
+                    el.classList.add(...enter_list);
+                    el.classList.add(...enter_end_list);
+                }, 3);
+            }
+            // Transition change from not hidden to hidden
+            else if (this.previous_display != 'none' && (class_list.includes('hidden'))) {
+                let leave_list = props.transition.leave.trim().replace(/\s\s+/g, ' ').split(' ');
+                let leave_start_list = props.transition.leave_start.trim().replace(/\s\s+/g, ' ').split(' ');
+                let leave_end_list = props.transition.leave_end.trim().replace(/\s\s+/g, ' ').split(' ');
+                el.classList.add(...leave_start_list);
+                el.classList.remove('hidden');
+
+                setTimeout(function () {
+                    el.classList.remove(...leave_start_list);
+                    el.classList.add(...leave_list);
+                    el.classList.add(...leave_end_list);
+                    let event_func = function () {
+                        el.removeEventListener('transitionend', event_func);
+                        el.classList.add('hidden');
+                    };
+
+                    el.addEventListener('transitionend', event_func);
+                }, 3);
+
+            }
+        }),
+        transitionLoadFunction: (function () {
+
+            let el = this.$refs['r' + this.$props.jp_props.id];
+            const props = this.$props.jp_props;
+            if (el.$el) el = el.$el;
+            const class_list = props.classes.trim().replace(/\s\s+/g, ' ').split(' ');
+
+
+            let load_list = props.transition.load.trim().replace(/\s\s+/g, ' ').split(' ');
+            let load_start_list = props.transition.load_start.trim().replace(/\s\s+/g, ' ').split(' ');
+            let load_end_list = props.transition.load_end.trim().replace(/\s\s+/g, ' ').split(' ');
+            el.classList.add(...load_start_list);
+
+            setTimeout(function () {
+                el.classList.remove(...load_start_list);
+                el.classList.add(...load_list);
+                el.classList.add(...load_end_list);
+            }, 3)
+
         }),
         notifyFunction: (function () {
             var attr_list = ['message', 'position', 'icon', 'color', 'textColor', 'timeout', 'avatar',
@@ -286,25 +373,50 @@ Vue.component('quasar_component', {
         })
     },
     mounted() {
-        if (this.$props.jp_props.id) {
-            comp_dict[this.$props.jp_props.id] = this.$refs['r' + this.$props.jp_props.id];
+        const el = this.$refs['r' + this.$props.jp_props.id];
+        const props = this.$props.jp_props;
+
+        if (props.id) {
+            comp_dict[props.id] = this.$refs['r' + props.id];
         }
 
-        if (this.$props.jp_props.animation) this.animateFunction();
+        if (props.animation) this.animateFunction();
+        if (props.id && props.transition && props.transition.load) this.transitionLoadFunction();
 
-        switch (this.$props.jp_props.html_tag) {
+
+        for (let i = 0; i < props.events.length; i++) {
+            let split_event = props.events[i].split('__');
+            if (split_event[1] == 'out')
+                document.addEventListener(split_event[0], function (event) {
+                    if (el.contains(event.target)) return;
+                    if (el.offsetWidth < 1 && el.offsetHeight < 1) return;
+                    e = {
+                        'event_type': 'click__out',
+                        'id': props.id,
+                        'class_name': props.class_name,
+                        'html_tag': props.html_tag,
+                        'vue_type': props.vue_type,
+                        'page_id': page_id,
+                        'websocket_id': websocket_id
+                    };
+                    send_to_server(e, 'event', props.debug);
+                });
+        }
+
+
+        switch (props.html_tag) {
 
             case 'q-notify':
-                if (this.$props.jp_props.notify) {
+                if (props.notify) {
                     this.$nextTick(() => {
                         this.notifyFunction();
                     });
                 }
                 break;
             case 'q-tree':
-                var tree = comp_dict[this.$props.jp_props.id];
+                var tree = comp_dict[props.id];
                 // Add attribute expand_at_start
-                if (this.$props.jp_props.default_expand_all) {
+                if (props.default_expand_all) {
                     this.$nextTick(() => {
                         setTimeout(function () {
                             tree.expandAll();
@@ -313,80 +425,92 @@ Vue.component('quasar_component', {
                 }
                 break;
             case 'q-scroll-area':
-                if (this.$props.jp_props.offset) {
+                if (props.offset) {
                     this.$nextTick(() => {
-                        if (this.$props.jp_props.duration)
-                            this.$refs['r' + this.$props.jp_props.id].setScrollPosition(this.$props.jp_props.offset, this.$props.jp_props.duration);
+                        if (props.duration)
+                            this.$refs['r' + props.id].setScrollPosition(props.offset, props.duration);
                         else
-                            this.$refs['r' + this.$props.jp_props.id].setScrollPosition(this.$props.jp_props.offset);
+                            this.$refs['r' + props.id].setScrollPosition(props.offset);
                     });
                 }
                 break;
         }
 
 
-        if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
-            this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
+        if (props.input_type && (props.input_type != 'file')) {
+            this.$refs['r' + props.id].value = props.value;
         }
 
-        if (this.$props.jp_props.set_focus) {
-            this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
+        if (props.set_focus) {
+            this.$nextTick(() => this.$refs['r' + props.id].focus())
+        }
+    },
+    beforeUpdate() {
+        if (this.$props.jp_props.id && this.$props.jp_props.transition) {
+            let el = this.$refs['r' + this.$props.jp_props.id];
+            if (el.$el) el = el.$el;
+            this.previous_display = getComputedStyle(el, null).display;
         }
     },
     updated() {
-        if (this.$props.jp_props.animation) this.animateFunction();
+        const el = this.$refs['r' + this.$props.jp_props.id];
+        const props = this.$props.jp_props;
 
-        switch (this.$props.jp_props.html_tag) {
+        if (props.animation) this.animateFunction();
+        if (props.id && props.transition) this.transitionFunction();
+
+
+        switch (props.html_tag) {
 
             case 'q-slide-item':
-                if (this.$props.jp_props.reset) {
-                    storage_dict['r' + this.$props.jp_props.id].reset();
+                if (props.reset) {
+                    storage_dict['r' + props.id].reset();
                 }
                 break;
             case 'q-infinite-scroll':
-                if (this.$props.jp_props.done) {
-                    storage_dict['r' + this.$props.jp_props.id]();
+                if (props.done) {
+                    storage_dict['r' + props.id]();
                 }
                 break;
             case 'q-notify':
-                if (this.$props.jp_props.notify) {
+                if (props.notify) {
                     this.$nextTick(() => {
                         this.notifyFunction();
                     });
                 }
                 break;
             case 'q-scroll-area':
-                if (this.$props.jp_props.offset) {
+                if (props.offset) {
                     this.$nextTick(() => {
-                        if (this.$props.jp_props.duration)
-                            this.$refs['r' + this.$props.jp_props.id].setScrollPosition(this.$props.jp_props.offset, this.$props.jp_props.duration);
+                        if (props.duration)
+                            this.$refs['r' + props.id].setScrollPosition(props.offset, props.duration);
                         else
-                            this.$refs['r' + this.$props.jp_props.id].setScrollPosition(this.$props.jp_props.offset);
+                            this.$refs['r' + props.id].setScrollPosition(props.offset);
                     });
                 }
                 break;
         }
 
 
-        if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
+        if (props.input_type && (props.input_type != 'file')) {
 
-            this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;    //make sure that the input value is the correct one received from server
+            this.$refs['r' + props.id].value = props.value;    //make sure that the input value is the correct one received from server
 
-            if (this.$props.jp_props.input_type == 'radio') {
-                if (this.$props.jp_props.checked) {
-                    this.$refs['r' + this.$props.jp_props.id].checked = true;  // This un-checks other radio buttons in group also
+            if (props.input_type == 'radio') {
+                if (props.checked) {
+                    this.$refs['r' + props.id].checked = true;  // This un-checks other radio buttons in group also
                 } else {
-                    this.$refs['r' + this.$props.jp_props.id].checked = false;
+                    this.$refs['r' + props.id].checked = false;
                 }
             }
 
-            if (this.$props.jp_props.input_type == 'checkbox') {
-                this.$refs['r' + this.$props.jp_props.id].checked = this.$props.jp_props.checked;
+            if (props.input_type == 'checkbox') {
+                this.$refs['r' + props.id].checked = props.checked;
             }
         }
 
-        if (this.$props.jp_props.set_focus) {
-            this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
+        if (props.set_focus) {
+            this.$nextTick(() => this.$refs['r' + props.id].focus())
         }
     },
     props: {

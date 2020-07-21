@@ -7,9 +7,15 @@
 
         {% if options.tailwind %}
             {% if not options.no_internet %}
-                <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.4.6/dist/base.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.4.6/dist/components.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@^0.1.2/dist/typography.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.4.6/dist/utilities.min.css">
             {% else %}
-                <link href="/templates/local/tailwind.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/base.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/components.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/typography.css" rel="stylesheet">
+                <link href="/templates/local/tailwind/utilities.css" rel="stylesheet">
             {% endif %}
             <style>
                 {% include 'css/form.css' %}

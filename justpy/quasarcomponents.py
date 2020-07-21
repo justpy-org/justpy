@@ -146,7 +146,10 @@ class QInputChange(QInput):
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         d['disable_input_event'] = True
-        d['events'].remove('input')
+        try:
+            d['events'].remove('input')
+        except:
+            pass
         if 'change' not in self.events:
             self.events.append('change')
         return d
@@ -276,6 +279,7 @@ class QRange(_QInputBase):
                           'label-always', 'snap', 'label', 'label-always', 'markers', 'tabindex',
                           'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'dark', 'dense']
         self.allowed_events = ['input', 'change']
+
         # self.set_keyword_events(**kwargs)
 
 
@@ -374,8 +378,8 @@ class QCheckbox(_QInputBase):
         self.type = 'object'
         self.value = kwargs.get('value', False)
         self.prop_list = ['keep-color', 'indeterminate-value', 'toggle-indeterminate', 'tabindex', 'label',
-                          'left-label',
-                          'value', 'val', 'true-value', 'false-value', 'disable', 'color', 'dark', 'dense', 'size']
+                          'left-label', 'name', 'toggle-order', 'value', 'val', 'true-value', 'false-value', 'disable',
+                          'color', 'dark', 'dense', 'size']
         self.allowed_events = ['input']
         # self.set_keyword_events(**kwargs)
 
@@ -404,6 +408,28 @@ class QToggle(_QInputBase):
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
         return d
+
+
+@parse_dict
+class QForm(QDiv):
+
+    slots = ['default_slot']
+    html_tag = 'q-form'
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+        self.prop_list = ['autofocus', 'no-error-focus', 'no-reset-focus', 'greedy']
+        self.allowed_events = ['submit', 'before']
+
+        def default_submit(self, msg):
+            print('Default form submit', msg.form_data)
+            return True
+
+        if not self.has_event_function('submit'):
+            # If an event handler is not  assigned, the front end cannot stop the default page request that happens when a form is submitted
+            self.on('submit', default_submit)
+
 
 
 @parse_dict
@@ -1523,7 +1549,7 @@ class QTable(QDiv):
                            'pagination', 'rows-per-page-options', 'selected-rows-label', 'selection', 'selected',
                            'binary-state-sort', 'sort-method', 'color', 'grid', 'dense', 'dark', 'flat', 'bordered',
                            'square', 'table-style', 'table-class', 'table-header-style', 'table-header-class',
-                           'card-style', 'card-class']
+                           'card-style', 'card-class', 'icon-first-page', 'con-prev-page', 'icon-next-page', 'icon-last-page']
         # Need to load: columns, data
         # separator one of  horizontal | vertical | cell | none
         self.allowed_events = ['before', 'after', 'request', 'selection', 'update:pagination', 'update:selected']
@@ -1674,8 +1700,18 @@ class QDrawer(QDiv):
         self.prop_list = ['side', 'overlay', 'mini', 'mini-to-overlay', 'breakpoint', 'behavior', 'persistent', 'show-if-above',
                           'no-swipe-open', 'no-swipe-close', 'value', 'width', 'mini-width', 'bordered', 'elevated',
                           'content-class', 'content-style']
-        self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'on-layout', 'click', 'mouseover', 'mouseout']
+        self.allowed_events = ['before', 'input', 'show', 'before-show', 'hide', 'before-hide', 'on-layout', 'click', 'mouseover', 'mouseout']
         self.set_keyword_events(**kwargs)
+        self.on('input', self.default_input)
+        self.on('before', self.default_before)
+
+    def default_before(self, msg):
+        if hasattr(self, 'model'):
+            self.set_model(msg.value)
+        self.value = msg.value
+
+    def default_input(self, msg):
+        pass
 
     async def toggle(self, msg):
         await self.run_method('toggle()', msg.websocket)

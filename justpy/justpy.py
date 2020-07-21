@@ -168,6 +168,8 @@ class Homepage(HTTPEndpoint):
             cookie_value = cookie_signer.sign(request.state.session_id)
             cookie_value = cookie_value.decode("utf-8")
             response.set_cookie(SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True)
+            for k, v in load_page.cookies.items():
+                response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
         if LATENCY:
             await asyncio.sleep(LATENCY/1000)
         return response

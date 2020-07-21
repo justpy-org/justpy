@@ -79,6 +79,7 @@
                 console.log(event);
             {% endif %}
 
+            let e = {};
             switch (msg.type) {
                 case 'page_update':
                     if (msg.page_options.redirect) {
@@ -95,7 +96,11 @@
                         var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
                         link.type = 'image/x-icon';
                         link.rel = 'shortcut icon';
-                        link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
+                        if (msg.page_options.favicon.startsWith('http')) {
+                            link.href = msg.page_options.favicon;
+                        } else {
+                            link.href = '{{ url_for(options.static_name, path='/') }}' + msg.page_options.favicon;
+                        }
                         document.getElementsByTagName('head')[0].appendChild(link);
                     }
 
@@ -110,7 +115,7 @@
                     websocket_ready = true;
 
                 {% if 'page_ready' in page_options.events %}
-                    const e = {
+                    e = {
                         'event_type': 'page_ready',
                         'visibility': document.visibilityState,
                         'page_id': page_id,
@@ -124,7 +129,27 @@
                     comp_replace(msg.data, app1.justpyComponents);
                     break;
                 case 'run_javascript':
-                    eval(msg.data);
+                    // let js_result = eval(msg.data);
+                    let js_result;
+
+                function eval_success() {
+                    e = {
+                        'event_type': 'result_ready',
+                        'visibility': document.visibilityState,
+                        'page_id': page_id,
+                        'websocket_id': websocket_id,
+                        'request_id': msg.request_id,
+                        'result': js_result //JSON.stringify(js_result)
+                    };
+                    {% if 'result_ready' in page_options.events %}
+                        if (msg.send) send_to_server(e, 'page_event', false);
+                    {% endif %}
+                }
+
+                    const jsPromise = (new Promise(function () {
+                        js_result = eval(msg.data);
+                    })).then(eval_success());
+
                     break;
                 case 'run_method':
                     // await websocket.send_json({'type': 'run_method', 'data': command, 'id': self.id})
@@ -269,9 +294,5 @@
             return h('div', {}, comps);
         }
     });
-
-         //app1.justpyComponents = justpyComponents;
-//setTimeout(function(){ alert("Hello"); app1.justpyComponents = justpyComponents; }, 3000)
-
 
 </script>

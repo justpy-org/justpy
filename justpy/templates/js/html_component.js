@@ -51,6 +51,11 @@ Vue.component('html_component', {
         return h(this.jp_props.html_tag, description_object, comps);
 
     },
+    data: function () {
+        return {
+            previous_display: 'none'
+        }
+    },
     methods: {
 
         eventFunction: (function (event) {
@@ -169,68 +174,151 @@ Vue.component('html_component', {
                 element.removeEventListener('animationend', event_func);
             };
             element.addEventListener('animationend', event_func);
+        }),
+        transitionFunction: (function () {
+            let el = this.$refs['r' + this.$props.jp_props.id];
+            const props = this.$props.jp_props;
+            if (el.$el) el = el.$el;
+            const class_list = props.classes.trim().replace(/\s\s+/g, ' ').split(' ');
+            // Transition change from hidden to not hidden
+            if (props.transition.enter && this.previous_display == 'none' && (!class_list.includes('hidden'))) {
+
+                let enter_list = props.transition.enter.trim().replace(/\s\s+/g, ' ').split(' ');
+                let enter_start_list = props.transition.enter_start.trim().replace(/\s\s+/g, ' ').split(' ');
+                let enter_end_list = props.transition.enter_end.trim().replace(/\s\s+/g, ' ').split(' ');
+                el.classList.add(...enter_start_list);
+
+                setTimeout(function () {
+                    el.classList.remove(...enter_start_list);
+                    el.classList.add(...enter_list);
+                    el.classList.add(...enter_end_list);
+                    let event_func = function () {
+                        el.removeEventListener('transitionend', event_func);
+                        el.classList.remove(...enter_list);
+                        el.classList.remove(...enter_end_list);
+                    };
+                    el.addEventListener('transitionend', event_func);
+                }, 3);
+            }
+            // Transition change from not hidden to hidden
+            else if (props.transition.leave && this.previous_display != 'none' && (class_list.includes('hidden'))) {
+                let leave_list = props.transition.leave.trim().replace(/\s\s+/g, ' ').split(' ');
+                let leave_start_list = props.transition.leave_start.trim().replace(/\s\s+/g, ' ').split(' ');
+                let leave_end_list = props.transition.leave_end.trim().replace(/\s\s+/g, ' ').split(' ');
+                el.classList.add(...leave_start_list);
+                el.classList.remove('hidden');
+
+                setTimeout(function () {
+                    el.classList.remove(...leave_start_list);
+                    el.classList.add(...leave_list);
+                    el.classList.add(...leave_end_list);
+                    let event_func = function () {
+                        el.removeEventListener('transitionend', event_func);
+                        el.classList.remove(...leave_list);
+                        el.classList.remove(...leave_end_list);
+                        el.classList.add('hidden');
+
+                    };
+                    el.addEventListener('transitionend', event_func);
+                }, 3);
+
+            }
+        }),
+        transitionLoadFunction: (function () {
+            let el = this.$refs['r' + this.$props.jp_props.id];
+            const props = this.$props.jp_props;
+            if (el.$el) el = el.$el;
+            const class_list = props.classes.trim().replace(/\s\s+/g, ' ').split(' ');
+
+
+                let load_list = props.transition.load.trim().replace(/\s\s+/g, ' ').split(' ');
+                let load_start_list = props.transition.load_start.trim().replace(/\s\s+/g, ' ').split(' ');
+                let load_end_list = props.transition.load_end.trim().replace(/\s\s+/g, ' ').split(' ');
+                el.classList.add(...load_start_list);
+
+                setTimeout(function () {
+                    el.classList.remove(...load_start_list);
+                    el.classList.add(...load_list);
+                    el.classList.add(...load_end_list);
+                    let event_func = function () {
+                        el.removeEventListener('transitionend', event_func);
+                        el.classList.remove(...load_end_list);
+                        el.classList.remove(...load_list);
+                    };
+                    el.addEventListener('transitionend', event_func);
+                }, 3)
+
         })
     },
     mounted() {
+        const el = this.$refs['r' + this.$props.jp_props.id];
+        const props = this.$props.jp_props;
 
-        if (this.$props.jp_props.animation) this.animateFunction();
-        var el = this.$refs['r' + this.$props.jp_props.id];
-        var props = this.$props;
+        if (props.animation) this.animateFunction();
+        if (props.id && props.transition && props.transition.load) this.transitionLoadFunction();
 
-        for (let i = 0; i < props.jp_props.events.length; i++) {
-            let split_event = props.jp_props.events[i].split('__');
+        for (let i = 0; i < props.events.length; i++) {
+            let split_event = props.events[i].split('__');
             if (split_event[1] == 'out')
                 document.addEventListener(split_event[0], function (event) {
                     if (el.contains(event.target)) return;
                     if (el.offsetWidth < 1 && el.offsetHeight < 1) return;
-                    console.log('click is outside');
                     e = {
                         'event_type': 'click__out',
-                        'id': props.jp_props.id,
-                        'class_name': props.jp_props.class_name,
-                        'html_tag': props.jp_props.html_tag,
-                        'vue_type': props.jp_props.vue_type,
+                        'id': props.id,
+                        'class_name': props.class_name,
+                        'html_tag': props.html_tag,
+                        'vue_type': props.vue_type,
                         'page_id': page_id,
                         'websocket_id': websocket_id
                     };
-                    send_to_server(e, 'event', props.jp_props.debug);
+                    send_to_server(e, 'event', props.debug);
                 });
         }
 
-        if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
-            this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;
+        if (props.input_type && (props.input_type != 'file')) {
+            el.value = props.value;
         }
 
-        if (this.$props.jp_props.set_focus) {
-            this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
+        if (props.set_focus) {
+            this.$nextTick(() => el.focus())
         }
 
 
     },
+    beforeUpdate() {
+        if (this.$props.jp_props.id && this.$props.jp_props.transition) {
+            let el = this.$refs['r' + this.$props.jp_props.id];
+            if (el.$el) el = el.$el;
+            this.previous_display = getComputedStyle(el, null).display;
+        }
+    },
     updated() {
+        const el = this.$refs['r' + this.$props.jp_props.id];
+        const props = this.$props.jp_props;
 
-        if (this.$props.jp_props.animation) this.animateFunction();
+        if (props.animation) this.animateFunction();
+        if (this.$props.jp_props.id && props.transition) this.transitionFunction();
 
-        if (this.$props.jp_props.input_type && (this.$props.jp_props.input_type != 'file')) {
+        if (props.input_type && (props.input_type != 'file')) {
 
-            this.$refs['r' + this.$props.jp_props.id].value = this.$props.jp_props.value;    //make sure that the input value is the correct one received from server
+            el.value = props.value;    //make sure that the input value is the correct one received from server
 
-            if (this.$props.jp_props.input_type == 'radio') {
-                if (this.$props.jp_props.checked) {
-                    this.$refs['r' + this.$props.jp_props.id].checked = true;  // This un-checks other radio buttons in group also
+            if (props.input_type == 'radio') {
+                if (props.checked) {
+                    el.checked = true;  // This un-checks other radio buttons in group also
                 } else {
-                    this.$refs['r' + this.$props.jp_props.id].checked = false;
+                    el.checked = false;
                 }
             }
 
-
-            if (this.$props.jp_props.input_type == 'checkbox') {
-                this.$refs['r' + this.$props.jp_props.id].checked = this.$props.jp_props.checked;
+            if (props.input_type == 'checkbox') {
+                el.checked = props.checked;
             }
         }
 
-        if (this.$props.jp_props.set_focus) {
-            this.$nextTick(() => this.$refs['r' + this.$props.jp_props.id].focus())
+        if (props.set_focus) {
+            this.$nextTick(() => el.focus())
         }
 
     },
