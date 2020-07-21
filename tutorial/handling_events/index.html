@@ -462,7 +462,7 @@
 
   <li class="md-nav__item">
     <a href="../model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The model and data Attributes
+      The <b>model</b> and <b>data</b> Attributes
     </a>
   </li>
 
@@ -559,6 +559,18 @@
   <li class="md-nav__item">
     <a href="../tailwind/" title="Tailwind" class="md-nav__link">
       Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../transitions/" title="Transitions" class="md-nav__link">
+      Transitions
     </a>
   </li>
 
@@ -859,6 +871,18 @@
   <li class="md-nav__item">
     <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
       Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/adding_html/" title="Adding HTML to Cells" class="md-nav__link">
+      Adding HTML to Cells
     </a>
   </li>
 
@@ -1223,6 +1247,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
+      Use Different Fonts
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1267,6 +1303,18 @@
   <li class="md-nav__item">
     <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
       Reactivity in JustPy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
+      Vue.js Examples in JustPy
     </a>
   </li>
 
@@ -1605,7 +1653,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 
 <p>Instead of just changing the text in <code>message</code>, <code>button_click</code> creates a <code>p</code> element with the text message and adds the element to <code>message</code> using the <code>add_component</code> method. It is different from <code>add</code> because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the <code>message</code> div so that most recent messages show up first. Also, in <code>event_demo</code> we changed <code>message</code> to a div element and added the first message as a p element with text. </p>
 <h2 id="inline-event-handlers">Inline Event Handlers<a class="headerlink" href="#inline-event-handlers" title="Permanent link">&para;</a></h2>
-<p>In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess using these functions sometimes for one or two line event handlers.</p>
+<p>In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess to using these functions sometimes for event handlers that are just one or two lines of code.</p>
 <p>The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are <code>self</code> and <code>msg</code>. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of <code>self</code>. </p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
@@ -1628,7 +1676,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 
 <h2 id="the-debounce-and-throttle-event-modifiers">The debounce and throttle Event Modifiers<a class="headerlink" href="#the-debounce-and-throttle-event-modifiers" title="Permanent link">&para;</a></h2>
 <p>Sometimes you need to debounce or throttle on event. To do this, use the <code>debounce</code> and <code>throttle</code> keyword arguments of the <code>on</code> method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the <code>immediate</code> attribute of <code>on</code> to <code>True</code>.</p>
-<p>The example below also uses the <code>add_event</code> method. The <code>mousemove</code> event is not among the events that are supported by default and needs to be added the element's allowed events.</p>
+<p>The example below also uses the <code>add_event</code> method. The <code>mousemove</code> event is not among the events that are supported by default and needs to be added to the element's allowed events.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">def</span> <span class="nf">mouse_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>

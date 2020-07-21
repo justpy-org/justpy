@@ -355,7 +355,7 @@
 
   <li class="md-nav__item">
     <a href="../model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The model and data Attributes
+      The <b>model</b> and <b>data</b> Attributes
     </a>
   </li>
 
@@ -452,6 +452,18 @@
   <li class="md-nav__item">
     <a href="../tailwind/" title="Tailwind" class="md-nav__link">
       Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../transitions/" title="Transitions" class="md-nav__link">
+      Transitions
     </a>
   </li>
 
@@ -620,6 +632,13 @@
         <li class="md-nav__item">
   <a href="#vuejs-component" class="md-nav__link">
     Vue.js Component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fullcalendar-example" class="md-nav__link">
+    FullCalendar Example
   </a>
   
 </li>
@@ -811,6 +830,18 @@
   <li class="md-nav__item">
     <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
       Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/adding_html/" title="Adding HTML to Cells" class="md-nav__link">
+      Adding HTML to Cells
     </a>
   </li>
 
@@ -1175,6 +1206,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
+      Use Different Fonts
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1219,6 +1262,18 @@
   <li class="md-nav__item">
     <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
       Reactivity in JustPy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
+      Vue.js Examples in JustPy
     </a>
   </li>
 
@@ -1272,6 +1327,13 @@
         <li class="md-nav__item">
   <a href="#vuejs-component" class="md-nav__link">
     Vue.js Component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fullcalendar-example" class="md-nav__link">
+    FullCalendar Example
   </a>
   
 </li>
@@ -1432,6 +1494,204 @@
             <span class="nx">jp_props</span><span class="o">:</span> <span class="nb">Object</span>
         <span class="p">}</span>
     <span class="p">});</span>
+</code></pre></div>
+
+
+<h2 id="fullcalendar-example">FullCalendar Example<a class="headerlink" href="#fullcalendar-example" title="Permanent link">&para;</a></h2>
+<p><a href="https://fullcalendar.io/">FullCalendar</a> is a full featured JavaScript Calendar</p>
+<p>The following implementation does not support all the features and events but is a sound basis to build on.</p>
+<p>Python file:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+
+<span class="k">class</span> <span class="nc">FullCalendar</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">JustpyBaseComponent</span><span class="p">):</span>
+    <span class="n">vue_type</span> <span class="o">=</span> <span class="s1">&#39;fullcalendar&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_propagation</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Force an id to be assigned</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allowed_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;eventClick&#39;</span><span class="p">,</span> <span class="s1">&#39;eventDrop&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span> <span class="o">!=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_to_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wp</span><span class="p">:</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">):</span>
+        <span class="n">wp</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">react</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">websocket</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send_json</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;run_method&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">command</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">})</span>
+        <span class="c1"># So the page itself does not update, return True not None</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">convert_object_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;vue_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vue_type</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;event_propagation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_propagation</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;options&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+<span class="n">calendar_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;plugins&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;dayGrid&#39;</span><span class="p">,</span> <span class="s1">&#39;interaction&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;editable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="s1">&#39;today prev,next&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;defaultDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-15&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;events&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;This is an event&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-02&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-12&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;editable&#39;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;event with a URL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://www.google.com/&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-03&#39;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="c1"># https://fullcalendar.io/docs/plugin-index</span>
+<span class="n">head_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css&quot;&gt;</span>
+<span class="s2">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.css&quot;&gt;</span>
+<span class="s2">&lt;script src=&quot;https://unpkg.com/@fullcalendar/core@4.4.0/main.min.js&quot;&gt;&lt;/script&gt;</span>
+<span class="s2">&lt;script src=&quot;https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.js&quot;&gt;&lt;/script&gt;</span>
+<span class="s2">&lt;script src=&quot;https://unpkg.com/@fullcalendar/interaction@4.4.0/main.min.js&quot;&gt;&lt;/script&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">add_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">calendar</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Very new event&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-02&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-05&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;editable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">event_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">event_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">all_events</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">all_events</span>
+
+<span class="k">def</span> <span class="nf">calendar_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">head_html</span> <span class="o">=</span> <span class="n">head_html</span>
+    <span class="n">calendar</span> <span class="o">=</span> <span class="n">FullCalendar</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-ma-lg&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 700px;&#39;</span><span class="p">)</span>
+    <span class="n">calendar</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">calendar_options</span>
+    <span class="n">calendar</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;eventClick&#39;</span><span class="p">,</span> <span class="n">event_click</span><span class="p">)</span>
+    <span class="n">calendar</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;eventDrop&#39;</span><span class="p">,</span> <span class="n">event_drop</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Add Event&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-ma-lg&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_event</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">calendar</span> <span class="o">=</span> <span class="n">calendar</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">calendar_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Vue.js component:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">full_calendars</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="s1">&#39;fullcalendar&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">template</span><span class="o">:</span>
+        <span class="sb">`&lt;div  v-bind:id=&quot;jp_props.id&quot; :class=&quot;jp_props.classes&quot;  :style=&quot;jp_props.style&quot; &gt;&lt;/div&gt;`</span><span class="p">,</span>
+
+    <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">get_all_events</span><span class="p">(</span><span class="nx">calendar</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">all_events</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">event_obj</span> <span class="k">of</span> <span class="nx">calendar</span><span class="p">.</span><span class="nx">getEvents</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nx">all_events</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">create_object_from_event</span><span class="p">(</span><span class="nx">event_obj</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">all_events</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="nx">create_object_from_event</span><span class="p">(</span><span class="nx">event_obj</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// https://fullcalendar.io/docs/event-object</span>
+            <span class="kr">const</span> <span class="nx">event_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;groupId&#39;</span><span class="p">,</span> <span class="s1">&#39;allDay&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;classNames&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;editable&#39;</span><span class="p">,</span> <span class="s1">&#39;startEditable&#39;</span><span class="p">,</span> <span class="s1">&#39;durationEditable&#39;</span><span class="p">,</span> <span class="s1">&#39;resourceEditable&#39;</span><span class="p">,</span> <span class="s1">&#39;rendering&#39;</span><span class="p">,</span> <span class="s1">&#39;overlap&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;constraint&#39;</span><span class="p">,</span> <span class="s1">&#39;backgroundColor&#39;</span><span class="p">,</span> <span class="s1">&#39;borderColor&#39;</span><span class="p">,</span> <span class="s1">&#39;textColor&#39;</span><span class="p">,</span> <span class="s1">&#39;extendedProps&#39;</span><span class="p">];</span>
+            <span class="kd">let</span> <span class="nx">event_data</span> <span class="o">=</span> <span class="p">{};</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="k">of</span> <span class="nx">event_properties</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">event_data</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span><span class="nx">event_obj</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">event_data</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="nx">calendar_change</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+            <span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">events</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">props</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$props</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">calendarEl</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">calendar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FullCalendar</span><span class="p">.</span><span class="nx">Calendar</span><span class="p">(</span><span class="nx">calendarEl</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span>
+            <span class="kr">const</span> <span class="nx">parent_comp</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">events</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;eventClick&#39;</span><span class="p">))</span>
+                <span class="c1">// https://fullcalendar.io/docs/eventClick</span>
+                <span class="nx">calendar</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;eventClick&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">info</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;event_type&#39;</span><span class="o">:</span> <span class="s1">&#39;eventClick&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+                        <span class="s1">&#39;class_name&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">class_name</span><span class="p">,</span>
+                        <span class="s1">&#39;html_tag&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">html_tag</span><span class="p">,</span>
+                        <span class="s1">&#39;vue_type&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">vue_type</span><span class="p">,</span>
+                        <span class="s1">&#39;page_id&#39;</span><span class="o">:</span> <span class="nx">page_id</span><span class="p">,</span>
+                        <span class="s1">&#39;websocket_id&#39;</span><span class="o">:</span> <span class="nx">websocket_id</span><span class="p">,</span>
+                        <span class="s1">&#39;event_data&#39;</span><span class="o">:</span> <span class="nx">parent_comp</span><span class="p">.</span><span class="nx">create_object_from_event</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">),</span>
+                        <span class="s1">&#39;all_events&#39;</span><span class="o">:</span> <span class="nx">parent_comp</span><span class="p">.</span><span class="nx">get_all_events</span><span class="p">(</span><span class="nx">calendar</span><span class="p">)</span>
+                    <span class="p">};</span>
+                    <span class="nx">send_to_server</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">);</span>
+                <span class="p">});</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">events</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;eventDrop&#39;</span><span class="p">))</span>
+                <span class="c1">// https://fullcalendar.io/docs/eventDrop</span>
+                <span class="nx">calendar</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;eventDrop&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">info</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;event_type&#39;</span><span class="o">:</span> <span class="s1">&#39;eventDrop&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+                        <span class="s1">&#39;class_name&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">class_name</span><span class="p">,</span>
+                        <span class="s1">&#39;html_tag&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">html_tag</span><span class="p">,</span>
+                        <span class="s1">&#39;vue_type&#39;</span><span class="o">:</span> <span class="nx">props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">vue_type</span><span class="p">,</span>
+                        <span class="s1">&#39;page_id&#39;</span><span class="o">:</span> <span class="nx">page_id</span><span class="p">,</span>
+                        <span class="s1">&#39;websocket_id&#39;</span><span class="o">:</span> <span class="nx">websocket_id</span><span class="p">,</span>
+                        <span class="s1">&#39;event_data&#39;</span><span class="o">:</span> <span class="nx">parent_comp</span><span class="p">.</span><span class="nx">create_object_from_event</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">),</span>
+                        <span class="s1">&#39;old_event_data&#39;</span><span class="o">:</span> <span class="nx">parent_comp</span><span class="p">.</span><span class="nx">create_object_from_event</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">oldEvent</span><span class="p">),</span>
+                        <span class="s1">&#39;delta&#39;</span><span class="o">:</span> <span class="nx">info</span><span class="p">.</span><span class="nx">delta</span><span class="p">,</span>
+                        <span class="s1">&#39;all_events&#39;</span><span class="o">:</span> <span class="nx">parent_comp</span><span class="p">.</span><span class="nx">get_all_events</span><span class="p">(</span><span class="nx">calendar</span><span class="p">)</span>
+                    <span class="p">};</span>
+                    <span class="nx">send_to_server</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">);</span>
+                <span class="p">});</span>
+            <span class="nx">full_calendars</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">calendar</span><span class="p">;</span>
+            <span class="nx">comp_dict</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">$props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">calendar</span><span class="p">;</span>
+
+            <span class="nx">calendar</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+        <span class="p">},</span>
+
+    <span class="p">},</span>
+
+    <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">calendar_change</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="nx">updated</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">calendar</span> <span class="o">=</span> <span class="nx">comp_dict</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">$props</span><span class="p">.</span><span class="nx">jp_props</span><span class="p">.</span><span class="nx">id</span><span class="p">];</span>
+        <span class="nx">calendar</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">calendar_change</span><span class="p">();</span>
+
+    <span class="p">},</span>
+    <span class="nx">props</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">jp_props</span><span class="o">:</span> <span class="nb">Object</span>
+    <span class="p">}</span>
+<span class="p">});</span>
 </code></pre></div>
                 
                   

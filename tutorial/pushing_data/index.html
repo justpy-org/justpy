@@ -355,7 +355,7 @@
 
   <li class="md-nav__item">
     <a href="../model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The model and data Attributes
+      The <b>model</b> and <b>data</b> Attributes
     </a>
   </li>
 
@@ -511,6 +511,18 @@
   <li class="md-nav__item">
     <a href="../tailwind/" title="Tailwind" class="md-nav__link">
       Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../transitions/" title="Transitions" class="md-nav__link">
+      Transitions
     </a>
   </li>
 
@@ -811,6 +823,18 @@
   <li class="md-nav__item">
     <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
       Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/adding_html/" title="Adding HTML to Cells" class="md-nav__link">
+      Adding HTML to Cells
     </a>
   </li>
 
@@ -1175,6 +1199,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
+      Use Different Fonts
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1219,6 +1255,18 @@
   <li class="md-nav__item">
     <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
       Reactivity in JustPy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
+      Vue.js Examples in JustPy
     </a>
   </li>
 
@@ -1464,7 +1512,7 @@ Then we define the coroutine <code>clock_counter</code>. It runs an infinite loo
 <p>Every JustPy component has a <code>show</code> attribute. If it is set to <code>False</code>, the component is not rendered. The first line in the <code>count_down</code> event handler sets the button's <code>show</code> attribute to <code>False</code> and it is not rendered during the countdown (in this way the user cannot accidentally initiate another countdown while one is going on). Then we remove from the page the <code>Div</code> with the current countdown (we check if the <code>Div</code> is stored on the page to handle the first countdown ). We create the <code>Div</code> and add it to the page and also store a reference to it under the <code>d</code> attribute of the page so we can later have easy access to it for removal.</p>
 <p>Then we loop from the countdown start number down to zero. In each loop iteration we set the text of <code>d</code>, update the page, and sleep 1 second using the asyncio library so as not to block countdowns on other pages. You can verify this by loading the page in different tabs or browsers.</p>
 <p>After the countdown loop has ended, we set the text of <code>d</code> to 'Boom!', change some of <code>d</code>'s classes and make the button visible again. Remember, that if an event handler returns <code>None</code> as in our case (the default in Python when no return statement is encountered), the framework updates the page. Therefore when count_down terminates the page is updated again and that is why we see the button and 'Boom!'.</p>
-<p>JustPy supports animation using the <a href="https://daneden.github.io/animate.css/">animate.css</a> library. Just set the animation attribute of any component to a valid animation name. The default animation we use above is 'flip'. Try http://127.0.0.1:8000/?animation=bounceIn for example. You can test different animations using query parameters. You can set the animation speed by adding one of the classes slow, slower, fast, faster to the classes of the component. In this case we used 'faster' so that the animation takes less than 1 second. </p>
+<p>JustPy supports animation using the <a href="https://daneden.github.io/animate.css/">animate.css</a> library. Just set the animation attribute of any component to a valid animation name. The default animation we use above is 'flip'. Try <code>http://127.0.0.1:8000/?animation=bounceIn</code> for example. You can test different animations using query parameters. You can set the animation speed by adding one of the classes slow, slower, fast, faster to the classes of the component. In this case we used 'faster' so that the animation takes less than 1 second. </p>
                 
                   
                 

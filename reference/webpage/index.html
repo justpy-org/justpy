@@ -353,7 +353,7 @@
 
   <li class="md-nav__item">
     <a href="../../tutorial/model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The model and data Attributes
+      The <b>model</b> and <b>data</b> Attributes
     </a>
   </li>
 
@@ -450,6 +450,18 @@
   <li class="md-nav__item">
     <a href="../../tutorial/tailwind/" title="Tailwind" class="md-nav__link">
       Tailwind
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/transitions/" title="Transitions" class="md-nav__link">
+      Transitions
     </a>
   </li>
 
@@ -750,6 +762,18 @@
   <li class="md-nav__item">
     <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
       Creating Grids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/adding_html/" title="Adding HTML to Cells" class="md-nav__link">
+      Adding HTML to Cells
     </a>
   </li>
 
@@ -1319,15 +1343,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-def-run_javascriptself-javascript_string" class="md-nav__link">
-    async def run_javascript(self, javascript_string)
+  <a href="#async-def-run_javascriptself-javascript_string-request_id-sendtrue" class="md-nav__link">
+    async def run_javascript(self, javascript_string, request_id='', send=True)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-def-relaodself" class="md-nav__link">
-    async def relaod(self)
+  <a href="#async-def-reloadself" class="md-nav__link">
+    async def reload(self)
   </a>
   
 </li>
@@ -1432,6 +1456,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
+      Use Different Fonts
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1476,6 +1512,18 @@
   <li class="md-nav__item">
     <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
       Reactivity in JustPy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
+      Vue.js Examples in JustPy
     </a>
   </li>
 
@@ -1772,15 +1820,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-def-run_javascriptself-javascript_string" class="md-nav__link">
-    async def run_javascript(self, javascript_string)
+  <a href="#async-def-run_javascriptself-javascript_string-request_id-sendtrue" class="md-nav__link">
+    async def run_javascript(self, javascript_string, request_id='', send=True)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-def-relaodself" class="md-nav__link">
-    async def relaod(self)
+  <a href="#async-def-reloadself" class="md-nav__link">
+    async def reload(self)
   </a>
   
 </li>
@@ -2024,8 +2072,38 @@
 <p>Same as <code>update</code> but with a delay. The argument specifies the delay in seconds.</p>
 <h3 id="on_disconnectself-websocketnone"><code>on_disconnect(self, websocket=None)</code><a class="headerlink" href="#on_disconnectself-websocketnone" title="Permanent link">&para;</a></h3>
 <p>Override if you want to do something special when one of the tabs the page is rendered on closes.</p>
-<h3 id="async-def-run_javascriptself-javascript_string"><code>async def run_javascript(self, javascript_string)</code><a class="headerlink" href="#async-def-run_javascriptself-javascript_string" title="Permanent link">&para;</a></h3>
-<p>Runs JavaScript code on the page</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="k">class</span> <span class="nc">MyPage</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">):</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">websocket</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">await</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disconnect</span><span class="p">()</span>
+        <span class="c1"># Do what you want to do on disconnect here</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Page disconnected&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">close_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">MyPage</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Div </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-blue-500 text-white m-2 p-2 w-32&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">close_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h3 id="async-def-run_javascriptself-javascript_string-request_id-sendtrue"><code>async def run_javascript(self, javascript_string, request_id='', send=True)</code><a class="headerlink" href="#async-def-run_javascriptself-javascript_string-request_id-sendtrue" title="Permanent link">&para;</a></h3>
+<p>Runs JavaScript code on the page.
+The method has two keyword arguments:</p>
+<ul>
+<li>
+<p><code>request_id</code>: A user supplied identification for the run request. Can be used in combination with the <code>result_ready</code> page event to obtain the result of the computation</p>
+</li>
+<li>
+<p><code>send</code>: By default, the result of the command is sent to the server. In some cases, you may need to execute a promise and handle sending to the server from within your code (see second example below). In those cases, set <code>send</code> to <code>False</code> to stop the result being sent twice.</p>
+</li>
+</ul>
+<p>Simple example:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -2045,7 +2123,63 @@
 </code></pre></div>
 
 
-<h3 id="async-def-relaodself"><code>async def relaod(self)</code><a class="headerlink" href="#async-def-relaodself" title="Permanent link">&para;</a></h3>
+<p>Getting the browser location:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+
+<span class="n">javascript_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">var options = {</span>
+<span class="s2">  enableHighAccuracy: true,</span>
+<span class="s2">  timeout: 5000,</span>
+<span class="s2">  maximumAge: 0</span>
+<span class="s2">};</span>
+
+<span class="s2">function success(pos) {</span>
+<span class="s2">  var crd = pos.coords;</span>
+
+<span class="s2">  console.log(&#39;Your current position is:&#39;);</span>
+<span class="s2">  console.log(`Latitude : $</span><span class="si">{crd.latitude}</span><span class="s2">`);</span>
+<span class="s2">  console.log(`Longitude: $</span><span class="si">{crd.longitude}</span><span class="s2">`);</span>
+<span class="s2">  console.log(`More or less $</span><span class="si">{crd.accuracy}</span><span class="s2"> meters.`);</span>
+<span class="s2">  e.result = {latitude: crd.latitude, longitude: crd.longitude, accuracy: crd.accuracy};</span>
+<span class="s2">  send_to_server(e, &#39;page_event&#39;, false);</span>
+<span class="s2">}</span>
+
+<span class="s2">function error(err) {</span>
+<span class="s2">  console.warn(`ERROR($</span><span class="si">{err.code}</span><span class="s2">): $</span><span class="si">{err.message}</span><span class="s2">`);</span>
+<span class="s2">  e.result = &#39;Error&#39;;</span>
+<span class="s2">  send_to_server(e, &#39;page_event&#39;, false);</span>
+<span class="s2">}</span>
+
+<span class="s2">navigator.geolocation.getCurrentPosition(success, error, options);</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">result_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">request_id</span> <span class="o">==</span> <span class="s1">&#39;geo_location&#39;</span><span class="p">:</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;longitude: </span><span class="si">{msg.result.longitude}</span><span class="s1"> Latitude: </span><span class="si">{msg.result.latitude}</span><span class="s1"> Accuracy: </span><span class="si">{msg.result.accuracy}</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-lg border&#39;</span><span class="p">))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">page_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_javascript</span><span class="p">(</span><span class="n">javascript_string</span><span class="p">,</span> <span class="n">request_id</span><span class="o">=</span><span class="s1">&#39;geo_location&#39;</span><span class="p">,</span> <span class="n">send</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">result_ready_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;page_ready&#39;</span><span class="p">,</span> <span class="n">page_ready</span><span class="p">)</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;result_ready&#39;</span><span class="p">,</span> <span class="n">result_ready</span><span class="p">)</span>
+    <span class="c1"># Some arbitrary content</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">):</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Div </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;border m-2 p-2 text-xs&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">result_ready_test</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h3 id="async-def-reloadself"><code>async def reload(self)</code><a class="headerlink" href="#async-def-reloadself" title="Permanent link">&para;</a></h3>
 <p>Forces a page reload.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
 </code></pre></div>
