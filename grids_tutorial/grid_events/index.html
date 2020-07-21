@@ -353,7 +353,7 @@
 
   <li class="md-nav__item">
     <a href="../../tutorial/model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The model and data Attributes
+      The <b>model</b> and <b>data</b> Attributes
     </a>
   </li>
 
@@ -460,6 +460,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tutorial/transitions/" title="Transitions" class="md-nav__link">
+      Transitions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tutorial/svg_components/" title="SVG Components" class="md-nav__link">
       SVG Components
     </a>
@@ -510,6 +522,18 @@
   <li class="md-nav__item">
     <a href="../../tutorial/static/" title="Static Files" class="md-nav__link">
       Static Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/page_events/" title="Page Events" class="md-nav__link">
+      Page Events
     </a>
   </li>
 
@@ -750,6 +774,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../adding_html/" title="Adding HTML to Cells" class="md-nav__link">
+      Adding HTML to Cells
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
       Using Pandas to Create Grids
     </a>
@@ -810,6 +846,13 @@
         <li class="md-nav__item">
   <a href="#example-2" class="md-nav__link">
     Example 2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3-multiple-row-selection" class="md-nav__link">
+    Example 3 - Multiple Row Selection
   </a>
   
 </li>
@@ -1032,6 +1075,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../quasar_tutorial/QTree/" title="QTree" class="md-nav__link">
+      QTree
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
       Components not Working
     </a>
@@ -1158,6 +1213,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
+      Use Different Fonts
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1190,6 +1257,30 @@
   <li class="md-nav__item">
     <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
       From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
+      Reactivity in JustPy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
+      Vue.js Examples in JustPy
     </a>
   </li>
 
@@ -1229,6 +1320,13 @@
         <li class="md-nav__item">
   <a href="#example-2" class="md-nav__link">
     Example 2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3-multiple-row-selection" class="md-nav__link">
+    Example 3 - Multiple Row Selection
   </a>
   
 </li>
@@ -1346,6 +1444,61 @@
 
 
 <p>The chart is created once when the page is requested, but the first and only series in it is changed to reflect the new values once a row is selected.</p>
+<h2 id="example-3-multiple-row-selection">Example 3 - Multiple Row Selection<a class="headerlink" href="#example-3-multiple-row-selection" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="n">grid_options</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2">    rowSelection: &#39;multiple&#39;,</span>
+<span class="s2">    defaultColDef: {</span>
+<span class="s2">        filter: true,</span>
+<span class="s2">        sortable: true,</span>
+<span class="s2">        resizable: true,</span>
+<span class="s2">        cellStyle: {textAlign: &#39;center&#39;},</span>
+<span class="s2">        headerClass: &#39;font-bold&#39;</span>
+<span class="s2">    }, </span>
+<span class="s2">      columnDefs: [</span>
+<span class="s2">      {headerName: &quot;Make&quot;, field: &quot;make&quot;},</span>
+<span class="s2">      {headerName: &quot;Model&quot;, field: &quot;model&quot;},</span>
+<span class="s2">      {headerName: &quot;Price&quot;, field: &quot;price&quot;}</span>
+<span class="s2">    ],</span>
+<span class="s2">      rowData: [</span>
+<span class="s2">      {make: &quot;Toyota&quot;, model: &quot;Celica&quot;, price: 35000},</span>
+<span class="s2">      {make: &quot;Ford&quot;, model: &quot;Mondeo&quot;, price: 32000},</span>
+<span class="s2">      {make: &quot;Porsche&quot;, model: &quot;Boxter&quot;, price: 72000}</span>
+<span class="s2">    ]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">row_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">selected</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+        <span class="n">wp</span><span class="o">.</span><span class="n">selected_rows</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">rowIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wp</span><span class="o">.</span><span class="n">selected_rows</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">rowIndex</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Selected rows {sorted(list(wp.selected_rows.keys()))}&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">selected_rows</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{s}</span><span class="se">\n</span><span class="s1"> Row </span><span class="si">{i}</span><span class="s1">  Data: </span><span class="si">{wp.selected_rows[i]}</span><span class="s1">&#39;</span>
+    <span class="k">if</span> <span class="n">wp</span><span class="o">.</span><span class="n">selected_rows</span><span class="p">:</span>
+        <span class="n">wp</span><span class="o">.</span><span class="n">rows_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wp</span><span class="o">.</span><span class="n">rows_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;No row selected&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">grid_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">selected_rows</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Dictionary holding selected rows</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">checkboxSelection</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;rowSelected&#39;</span><span class="p">,</span> <span class="n">row_selected</span><span class="p">)</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">rows_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Data will go here when you select rows&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;border text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h2 id="event-properties">Event Properties<a class="headerlink" href="#event-properties" title="Permanent link">&para;</a></h2>
 <p>Ag-Grid supports many <a href="https://www.ag-grid.com/javascript-grid-events/">events</a>. All the events supported by the community version can be captured and acted upon using JustPy. Each event contains different properties most of which JustPy makes available to the event handler through its second argument (<code>msg</code> in the tutorial).  </p>
 <p>A simple way to see which properties are available is to print <code>msg</code>. Another way is to go <a href="https://www.ag-grid.com/javascript-grid-events/#properties-and-hierarchy">here</a>.</p>
