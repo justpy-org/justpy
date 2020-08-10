@@ -86,6 +86,9 @@ async def stand(self, msg):
     # Show dealer card
     wp.card_back.set_class('hidden')
     wp.down_card.remove_class('hidden')
+    for btn in [wp.stand_btn, wp.hit_btn]:
+        btn.disabled = True
+        btn.set_classes('cursor-not-allowed bg-gray-200 opacity-50')
     await wp.update()
     await asyncio.sleep(1.1)
 
@@ -107,9 +110,7 @@ async def stand(self, msg):
         result_div.text=f'YOU LOST, Your hand: {player_hand_value}, Dealer\'s hand: {dealer_hand_value}'
     else:
         result_div.text = f'IT IS A DRAW, Your hand: {player_hand_value}, Dealer\'s hand: {dealer_hand_value}'
-    for btn in [wp.stand_btn, wp.hit_btn]:
-        btn.disabled = True
-        btn.set_classes('cursor-not-allowed bg-gray-200 opacity-50')
+
     wp.play_again_btn.remove_class('hidden')
 
 
