@@ -27,6 +27,10 @@ class QuasarPage(WebPage):
                 print('Problem with websocket in page update, ignoring')
         return self
 
+    async def toggle_full_screen(self):
+        await self.run_javascript('Quasar.AppFullscreen.toggle()')
+        return True
+
 
 class QDiv(Div):
 
