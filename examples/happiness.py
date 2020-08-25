@@ -1,6 +1,7 @@
 import justpy as jp
 import pandas as pd
 import numpy as np
+import asyncio
 
 # https://worldhappiness.report/ed/2019/
 df = pd.read_csv('http://elimintz.github.io/happiness_report_2019.csv').round(3)
@@ -84,6 +85,7 @@ class ScatterWithRegression(jp.Scatter):
         s.name = f'Regression, m: {round(m, 3)}, b: {round(b, 3)}'
         self.options.series.append(s)
 
+chart_list = []
 
 def create_corr_page():
     # creates a page showing correlation between factors
@@ -95,6 +97,7 @@ def create_corr_page():
             x = df[x_col]
             y = df[y_col]
             chart = ScatterWithRegression(x, y, a=d, style='width: 400px; height: 400px; margin: 10px;', classes='border')
+            chart_list.append(chart)
             o = chart.options
             o.title.text = f'{x_col} vs. {y_col}'
             o.xAxis.title.text = x_col
@@ -118,5 +121,21 @@ corr_page = create_corr_page()
 @jp.SetRoute('/corr')
 def corr_test():
     return(corr_page)
+
+async def page_ready(self, msg):
+    wp = msg.page
+    for chart in chart_list:
+        wp.d.add(chart)
+        await self.update()
+        await asyncio.sleep(0.5)
+
+
+# Loads charts one by one to page, improving user experience
+@jp.SetRoute('/corr_staggered')
+def corr_stag_test():
+    wp = jp.WebPage()
+    wp.on('page_ready', page_ready)
+    wp.d = jp.Div(a=wp, classes='flex flex-wrap')
+    return(wp)
 
 jp.justpy(happiness_plot)
