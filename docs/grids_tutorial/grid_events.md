@@ -83,6 +83,62 @@ jp.justpy(grid_test)
 
 The chart is created once when the page is requested, but the first and only series in it is changed to reflect the new values once a row is selected.
 
+## Example 3 - Multiple Row Selection
+
+```python
+import justpy as jp
+
+grid_options = """
+{
+    rowSelection: 'multiple',
+    defaultColDef: {
+        filter: true,
+        sortable: true,
+        resizable: true,
+        cellStyle: {textAlign: 'center'},
+        headerClass: 'font-bold'
+    }, 
+      columnDefs: [
+      {headerName: "Make", field: "make"},
+      {headerName: "Model", field: "model"},
+      {headerName: "Price", field: "price"}
+    ],
+      rowData: [
+      {make: "Toyota", model: "Celica", price: 35000},
+      {make: "Ford", model: "Mondeo", price: 32000},
+      {make: "Porsche", model: "Boxter", price: 72000}
+    ]
+}
+"""
+
+def row_selected(self, msg):
+    print(msg.selected, msg)
+    wp = msg.page
+    if msg.selected:
+        wp.selected_rows[msg.rowIndex] = msg.data
+    else:
+        wp.selected_rows.pop(msg.rowIndex)
+    s = f'Selected rows {sorted(list(wp.selected_rows.keys()))}'
+    for i in sorted(wp.selected_rows):
+        s = f'{s}\n Row {i}  Data: {wp.selected_rows[i]}'
+    if wp.selected_rows:
+        wp.rows_div.text = s
+    else:
+        wp.rows_div.text = 'No row selected'
+
+
+def grid_test():
+    wp = jp.WebPage()
+    wp.selected_rows = {}  # Dictionary holding selected rows
+    grid = jp.AgGrid(a=wp, options=grid_options, style='height: 200px; width: 300px; margin: 0.25em')
+    grid.options.columnDefs[0].checkboxSelection = True
+    grid.on('rowSelected', row_selected)
+    wp.rows_div = jp.Pre(text='Data will go here when you select rows', classes='border text-lg', a=wp)
+    return wp
+
+jp.justpy(grid_test)
+```
+
 ## Event Properties
  
 Ag-Grid supports many [events](https://www.ag-grid.com/javascript-grid-events/). All the events supported by the community version can be captured and acted upon using JustPy. Each event contains different properties most of which JustPy makes available to the event handler through its second argument (`msg` in the tutorial).  
