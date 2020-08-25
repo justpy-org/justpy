@@ -226,51 +226,42 @@ Vue.component('quasar_component', {
             this.eventFunction(index, 'load');
         }),
         submitEvent: (function (event) {
-            console.log('in submit');
-            console.log(event);
-            //if (event.hasOwnProperty('type')) {
             var form_elements_list = [];
             var props = this.$props;
-            if (true) {
-                console.log('in loop');
-                console.log(this.$props.jp_props.id_list);
-                if (this.$props.jp_props.id_list) {
-                    for (const id of this.$props.jp_props.id_list) {
-                        console.log(comp_dict[id].value);
-                        let field = comp_dict[id];
-                        console.log(field);
-                        console.log(field.attributes);
-                        let attr_dict = {
-                            id: id,
-                            value: field.value,
-                            checked: field.checked,
-                            type: field.type,
-                            name: field.name
-                        };
-                        form_elements_list.push(attr_dict);
-                    }
-                } else {
-                    var form_reference = this.$el;
-
-                    event.preventDefault();    //stop form from submitting
-                    var formData = new FormData(form_reference);
-                    var form_elements = form_reference.elements;
-                    for (var i = 0; i < form_elements.length; i++) {
-                        var attributes = form_elements[i].attributes;
-                        var attr_dict = {};
-                        attr_dict['html_tag'] = form_elements[i].tagName.toLowerCase();
-                        for (var j = 0; j < attributes.length; j++) {
-                            var attr = attributes[j];
-                            attr_dict[attr.name] = attr.value;
-                        }
-                        attr_dict['value'] = form_elements[i].value;
-                        attr_dict['checked'] = form_elements[i].checked;
-                        attr_dict['id'] = form_elements[i].id;
-                        form_elements_list.push(attr_dict);
-                    }
+            if (this.$props.jp_props.id_list) {
+                for (const id of this.$props.jp_props.id_list) {
+                    let field = comp_dict[id];
+                    let attr_dict = {
+                        id: id,
+                        value: field.value,
+                        checked: field.checked,
+                        type: field.type,
+                        name: field.name
+                    };
+                    form_elements_list.push(attr_dict);
                 }
-                eventHandler(props, event, form_elements_list);
+            } else {
+                var form_reference = this.$el;
+
+                event.preventDefault();    //stop form from submitting
+                var formData = new FormData(form_reference);
+                var form_elements = form_reference.elements;
+                for (var i = 0; i < form_elements.length; i++) {
+                    var attributes = form_elements[i].attributes;
+                    var attr_dict = {};
+                    attr_dict['html_tag'] = form_elements[i].tagName.toLowerCase();
+                    for (var j = 0; j < attributes.length; j++) {
+                        var attr = attributes[j];
+                        attr_dict[attr.name] = attr.value;
+                    }
+                    attr_dict['value'] = form_elements[i].value;
+                    attr_dict['checked'] = form_elements[i].checked;
+                    attr_dict['id'] = form_elements[i].id;
+                    form_elements_list.push(attr_dict);
+                }
             }
+            eventHandler(props, event, form_elements_list);
+
         }),
         eventFunction: (function (event, event_type, aux) {
             if (!this.$props.jp_props.event_propagation) {
