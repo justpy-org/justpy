@@ -4,6 +4,10 @@
 
 <script>
 
+    {% if page_options.redirect %}
+        location.href = '{{ page_options.redirect }}';
+    {%endif %}
+
     var websocket_ready = false;
 
     {% include 'js/event_handler.js' %}
