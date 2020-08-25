@@ -41,7 +41,10 @@ import justpy as jp
 app = jp.app
 ```
 
-!!! info
-    The JustPy configuration file is not applicable in this case. You will need to specify the required configuration in the command line or in the Gunicorn configuration file.
+!!! warning
+    The following JustPy configuration file params do not get set in this case: HOST, PORT, UVICORN_LOGGING_LEVEL, SSL_KEYFILE, SSL_CERTFILE, SSL_VERSION. You will need to specify the required configuration in the command line or in the Gunicorn configuration file if you want to use a value different than the default one uvicorn uses.
+    
+    
+
 
 
