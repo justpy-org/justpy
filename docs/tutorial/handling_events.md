@@ -241,7 +241,7 @@ Instead of just changing the text in `message`, `button_click` creates a `p` ele
 
 ## Inline Event Handlers
 
-In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess using these functions sometimes for one or two line event handlers.
+In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess to using these functions sometimes for event handlers that are just one or two lines of code.
 
 The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are `self` and `msg`. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of `self`. 
 
@@ -266,9 +266,9 @@ jp.justpy(comp_test)
 
 ## The debounce and throttle Event Modifiers
 
-Sometimes you nee to debounce or throttle on event. To do this, use the `debounce` and `throttle` keyword arguments of the `on` method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the `immediate ` attribute of `on` to `True`.
+Sometimes you need to debounce or throttle on event. To do this, use the `debounce` and `throttle` keyword arguments of the `on` method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the `immediate ` attribute of `on` to `True`.
 
-The example below also uses the `add_event` method. The `mousemove` event is not among the events that are supported by default and needs to be added the element's allowed events.
+The example below also uses the `add_event` method. The `mousemove` event is not among the events that are supported by default and needs to be added to the element's allowed events.
 
 ```python
 import justpy as jp
@@ -321,5 +321,44 @@ def test_out():
     return wp
 
 jp.justpy(test_out)
+```
+
+## Event Handlers Defined in Components
+
+This section reflects changes introduced in version 0.1.0
+
+!!! Note
+    You may want to return to this section after having covered the custom components part of the tutorial
+
+In the example below we define a simple component that is a Div that includes 5 buttons and another Div with some information.
+
+If an event handler is defined as a method of a component, the `self` attribute passed to it will be that of the component instance and not of the child instance which originated the event. That child instance can be found in the `msg.target` field.
+
+
+```python
+import justpy as jp
+
+class ButtonDiv(jp.Div):
+
+    def __init__(self, **kwargs):
+
+        super().__init__(**kwargs)
+        for i in range(1,6):
+            b = jp.Button(text=f'Button {i}', a=self, classes=' m-2 p-2 border text-blue text-lg')
+            b.num = i
+            b.on('click', self.button_clicked)
+        self.info_div = jp.Div(text='info will go here', classes='m-2 p-2 border', a=self)
+
+    def button_clicked(self, msg):
+        print(self)
+        print(msg.target)
+        self.info_div.text = f'Button {msg.target.num} was clicked'
+
+def target_test():
+    wp = jp.WebPage()
+    ButtonDiv(a=wp)
+    return wp
+
+jp.justpy(target_test)
 ```
 

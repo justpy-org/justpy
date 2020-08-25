@@ -251,9 +251,12 @@ jp.justpy(ripple_test)
 
 ## Running Quasar Component Methods
 
-The Quasar methods use the `run_method` method of a JustPy Quasar component.
+In order to run Quasar methods use the `run_method` method of the JustPy Quasar component.
 
 The following example runs the start() and stop() methods of [QAjaxBar](https://quasar.dev/vue-components/ajax-bar#QAjaxBar-API)
+
+!!! warning
+    You must set `temp=False` when the component is created because this generates an id for the element without which `run_method` will not work
 
 ```python
 import justpy as jp

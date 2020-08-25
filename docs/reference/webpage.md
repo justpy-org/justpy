@@ -264,9 +264,37 @@ Same as `update` but with a delay. The argument specifies the delay in seconds.
 ### `on_disconnect(self, websocket=None)`  
 Override if you want to do something special when one of the tabs the page is rendered on closes.
 
-### `async def run_javascript(self, javascript_string)`
+```python
+import justpy as jp
 
-Runs JavaScript code on the page
+class MyPage(jp.WebPage):
+
+    async def on_disconnect(self, websocket=None):
+        await super().on_disconnect()
+        # Do what you want to do on disconnect here
+        print('Page disconnected')
+
+
+def close_test():
+    wp = MyPage()
+    for i in range(10):
+        jp.Div(text=f'Div {i}', a=wp, classes='bg-blue-500 text-white m-2 p-2 w-32')
+    return wp
+
+jp.justpy(close_test)
+
+```
+
+### `async def run_javascript(self, javascript_string, request_id='', send=True)`
+
+Runs JavaScript code on the page.
+The method has two keyword arguments:
+
+- `request_id`: A user supplied identification for the run request. Can be used in combination with the `result_ready` page event to obtain the result of the computation
+
+- `send`: By default, the result of the command is sent to the server. In some cases, you may need to execute a promise and handle sending to the server from within your code (see second example below). In those cases, set `send` to `False` to stop the result being sent twice.
+
+Simple example:
 
 ```python
 import justpy as jp
@@ -288,7 +316,66 @@ jp.justpy(javascript_test)
 
 ```
 
-### `async def relaod(self)`
+Getting the browser location:
+
+```python
+import justpy as jp
+
+
+javascript_string = """
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+  e.result = {latitude: crd.latitude, longitude: crd.longitude, accuracy: crd.accuracy};
+  send_to_server(e, 'page_event', false);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+  e.result = 'Error';
+  send_to_server(e, 'page_event', false);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+"""
+
+async def result_ready(self, msg):
+    if msg.request_id == 'geo_location':
+        msg.page.add(jp.Div(text=f'longitude: {msg.result.longitude} Latitude: {msg.result.latitude} Accuracy: {msg.result.accuracy}',
+                        classes='m-2 p-2 text-lg border'))
+
+
+async def page_ready(self, msg):
+    jp.run_task(self.run_javascript(javascript_string, request_id='geo_location', send=False))
+
+
+def result_ready_test():
+    wp = jp.WebPage()
+    wp.on('page_ready', page_ready)
+    wp.on('result_ready', result_ready)
+    # Some arbitrary content
+    wp.d = jp.Div(classes='flex flex-wrap', a=wp)
+    for i in range(1, 31):
+        jp.Div(text=f'Div {i}', a=wp.d, classes='border m-2 p-2 text-xs')
+    return wp
+
+
+jp.justpy(result_ready_test)
+```
+
+
+
+### `async def reload(self)`
 
 Forces a page reload.
 

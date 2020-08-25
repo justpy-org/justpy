@@ -57,6 +57,36 @@ You may have noticed that there is a delay in the updating of the Div. That is b
 
 Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer in ms, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
 
+## The change Event and the InputOnlyChange Component
+
+The regular Input component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field as the user is typing, it is preferable to use InputOnlyChange instead of Input. 
+
+InputOnlyChange does not generate the input event, only the change event. The change event is generated when the field loses focus or the user presses the Enter button. It is not generated when the user types a character. 
+
+The example below is the same as the one above except that InputOnlyChange is used instead of Input. 
+
+```html
+import justpy as jp
+
+input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
+p_classes = 'm-2 p-2 h-32 text-xl border-2'
+
+def my_input(self, msg):
+    self.div.text = self.value
+
+def input_demo(request):
+    wp = jp.WebPage()
+    in1 = jp.InputChangeOnly(a=wp, classes=input_classes, placeholder='Please type here')
+    in1.div = jp.Div(text='What you type will show up here only when Input element loses focus or you press Enter',
+                     classes=p_classes, a=wp)
+    in1.on('input', my_input)
+    in1.on('change', my_input)
+    return wp
+
+jp.justpy(input_demo)
+
+```
+
 ## The Type Attribute
 
 ### Number Example
@@ -279,6 +309,34 @@ jp.justpy(focus_test)
 ```
 
 As a rule of thumb, try to limit the usage of keyboard events to a minimum since they don't work well for mobile users.
+
+## Using Select
+
+The [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) tag needs to be used together with the option tag. In JustPy these correspond to Select and Option elements. 
+
+The program below creates a select element whose value changes the background color of a Div.
+
+
+```python
+import justpy as jp
+
+
+def change_color(self, msg):
+    self.color_div.set_class(f'bg-{self.value}-600')
+
+
+def comp_test():
+    wp = jp.WebPage()
+    colors = ['red', 'green', 'blue', 'pink', 'yellow', 'teal', 'purple']
+    select = jp.Select(classes='w-32 text-xl m-4 p-2 bg-white  border rounded', a=wp, value='red',
+                  change=change_color)
+    for color in colors:
+        select.add(jp.Option(value=color, text=color, classes=f'bg-{color}-600'))
+    select.color_div = jp.Div(classes='bg-red-600 w-32 h-16 m-4',a=wp)
+    return wp
+
+jp.justpy(comp_test)
+```
 
 ## Your First Component
 

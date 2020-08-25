@@ -181,6 +181,34 @@ def input_test():
 jp.justpy(input_test)
 ```
 
+## QInputChange and QInputBlur - Disabling the Input Event
+
+In some cases the debounce feature may not be sufficient to provide a good user experience. This may happen when users type in bursts. Setting debounce to 1000 almost always solves these problems but there is another option if the large debounce is causing other issues. You can disable the input event altogether and capture the value of the QInput when it loses focus.
+
+You can control this yourself by setting the `disable_input_event` attribute to `True` or use the predefined QInputChange and QInputBlur components. QInputBlur will only update the value of the field when the component loses focus. QInputChange will update the value when the change event is fired. Both are very similar except that change will also fire when the Enter key is pressed and focus remains on the component.
+
+The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputChange and QInputBlur instead of QInput. 
+
+
+```html
+import justpy as jp
+
+def my_blur(self, msg):
+    self.div.text = self.value
+
+def input_demo(request):
+    wp = jp.QuasarPage()
+    c1 = jp.Div(classes='q-pa-md', a=wp)
+    c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
+    in1 = jp.QInputBlur(a=c2,placeholder='Please type here', label='QInputBlur')
+    in1.div = jp.Div(text='What you type will show up here only when Input element loses focus',
+                      classes='text-h6', a=c2)
+    in1.on('blur', my_blur)
+    return wp
+
+jp.justpy(input_demo)
+```
+
 ## Yahoo Stock Charts Example
 
 !!! warning
