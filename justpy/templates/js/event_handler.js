@@ -102,8 +102,9 @@ function eventHandler(props, event, form_data, aux) {
         }
     } else if (props.jp_props.debounce && (event.type == 'input')) {
         clearTimeout(props.timeout);
+        let set_e = e;
         props.timeout = setTimeout(function () {
-                send_to_server(e, 'event', props.jp_props.debug);
+                send_to_server(set_e, 'event', props.jp_props.debug);
             }
             , props.jp_props.debounce);
     } else {
