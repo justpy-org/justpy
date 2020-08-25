@@ -386,7 +386,8 @@ class Tailwind:
                                  '-space-y-4', '-space-y-5', '-space-y-6', '-space-y-8', '-space-y-10', '-space-y-12',
                                  '-space-y-16', '-space-y-20', '-space-y-24', '-space-y-32', '-space-y-40',
                                  '-space-y-48', '-space-y-56', '-space-y-64', '-space-y-px', 'space-x-reverse',
-                                 'space-y-reverse']
+                                 'space-y-reverse'],
+               'animation': ['animate-none', 'animate-spin', 'animate-ping', 'animate-pulse', 'animate-bounce']
                }
 
     @staticmethod
