@@ -96,6 +96,16 @@ class AgGrid(JustpyBaseComponent):
         # Change NaN and similar to None for JSON compatibility
         self.options.rowData = df.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max]).where(pd.notnull(df), None).to_dict('records')
 
+    async def run_api(self, command, page):
+        await page.run_javascript(f"""cached_grid_def['g' + {self.id}].api.{command}""")
+
+    async def select_all_rows(self, page):
+        await page.run_javascript(f"""cached_grid_def['g' + {self.id}].api.selectAll()""")
+
+    async def deselect_rows(self, page):
+        await page.run_javascript(f"""cached_grid_def['g' + {self.id}].api.deselectAll()""")
+
+
     def convert_object_to_dict(self):
 
         d = {}
