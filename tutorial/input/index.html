@@ -438,6 +438,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-select" class="md-nav__link">
+    Using Select
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#your-first-component" class="md-nav__link">
     Your First Component
   </a>
@@ -923,6 +930,42 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/checkbox/" title="Rendering Checkboxes" class="md-nav__link">
+      Rendering Checkboxes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/field_evaluation/" title="Evaluating Fields using JavaScript" class="md-nav__link">
+      Evaluating Fields using JavaScript
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../grids_tutorial/grid_api/" title="Running Grid API Commands" class="md-nav__link">
+      Running Grid API Commands
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1259,6 +1302,54 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/reload_pages/" title="Reload Page" class="md-nav__link">
+      Reload Page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/login_decorator/" title="Use Decorators with Request Handlers" class="md-nav__link">
+      Use Decorators with Request Handlers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/create_select/" title="Creating Select Elements" class="md-nav__link">
+      Creating Select Elements
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../how_to/quasar_full_screen/" title="Quasar Full Screen Mode" class="md-nav__link">
+      Quasar Full Screen Mode
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1409,6 +1500,13 @@
         <li class="md-nav__item">
   <a href="#changing-focus-using-keyboard-events" class="md-nav__link">
     Changing Focus using Keyboard Events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-select" class="md-nav__link">
+    Using Select
   </a>
   
 </li>
@@ -1709,6 +1807,30 @@ jp.justpy(input_demo)
 
 
 <p>As a rule of thumb, try to limit the usage of keyboard events to a minimum since they don't work well for mobile users.</p>
+<h2 id="using-select">Using Select<a class="headerlink" href="#using-select" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">select</a> tag needs to be used together with the option tag. In JustPy these correspond to Select and Option elements. </p>
+<p>The program below creates a select element whose value changes the background color of a Div.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+
+<span class="k">def</span> <span class="nf">change_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">color_div</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{self.value}</span><span class="s1">-600&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;pink&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;teal&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">]</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-32 text-xl m-4 p-2 bg-white  border rounded&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                  <span class="n">change</span><span class="o">=</span><span class="n">change_color</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
+        <span class="n">select</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{color}</span><span class="s1">-600&#39;</span><span class="p">))</span>
+    <span class="n">select</span><span class="o">.</span><span class="n">color_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-red-600 w-32 h-16 m-4&#39;</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wp</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+</code></pre></div>
+
+
 <h2 id="your-first-component">Your First Component<a class="headerlink" href="#your-first-component" title="Permanent link">&para;</a></h2>
 <p>JustPy allows building your own reusable components. We will have a lot more to say about this later, but just to start easing into the subject, let's suppose we want to encapsulate the functionality of an Input coupled to a Div into one component (like in one of the first examples above). The program would look like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
