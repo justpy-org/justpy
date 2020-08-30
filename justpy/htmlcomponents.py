@@ -237,6 +237,14 @@ class WebPage:
         return event_result
 
 
+class TailwindUIPage(WebPage):
+    # https://tailwindui.com/components
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.template_file = 'tailwindui.html'
+
+
 class JustpyBaseComponent(Tailwind):
     next_id = 1
     instances = {}
@@ -305,7 +313,6 @@ class JustpyBaseComponent(Tailwind):
                 self.events.append(event_type)
             if debounce:
                 self.event_modifiers[event_type].debounce = {'value': debounce, 'timeout': None, 'immediate': immediate}
-                print(self.event_modifiers)
             elif throttle:
                 self.event_modifiers[event_type].throttle = {'value': throttle, 'timeout': None}
         else:
@@ -523,7 +530,8 @@ class HTMLBaseComponent(JustpyBaseComponent):
         s = f'{block_indent}<{self.html_tag} '
         d = self.convert_object_to_dict()
         for attr, value in d['attrs'].items():
-            s = f'{s}{attr}="{value}" '
+            if value:
+                s = f'{s}{attr}="{value}" '
         if self.classes:
             s = f'{s}class="{self.classes}"/>{ws}'
         else:
@@ -602,6 +610,9 @@ class Div(HTMLBaseComponent):
                 JustpyBaseComponent.instances.pop(self.id)
             self.components = []
 
+    def __getitem__(self, index):
+        return self.components[index]
+
     def add_component(self, child, position=None, slot=None):
         if slot:
             child.slot = slot
@@ -660,7 +671,8 @@ class Div(HTMLBaseComponent):
         s = f'{block_indent}<{self.html_tag} '
         d = self.convert_object_to_dict()
         for attr, value in d['attrs'].items():
-            s = f'{s}{attr}="{value}" '
+            if value:
+                s = f'{s}{attr}="{value}" '
         if self.style:
             s = f'{s}style="{self.style}"'
         if self.classes:
@@ -773,11 +785,12 @@ class Input(Div):
     @staticmethod
     def radio_button_set(radio_button, container):
         # Set all radio buttons in container with same name as radio_button to unchecked
-        for c in container.components:
-            if hasattr(c, 'name'):
-                if c.name == radio_button.name and not radio_button.id == c.id:
-                    c.checked = False
-            Input.radio_button_set(radio_button, c)
+        if hasattr(container, 'components'):
+            for c in container.components:
+                if hasattr(c, 'name'):
+                    if c.name == radio_button.name and not radio_button.id == c.id:
+                        c.checked = False
+                Input.radio_button_set(radio_button, c)
 
     @staticmethod
     def radio_button_set_model_update(radio_button, container, model_value):
