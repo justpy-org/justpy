@@ -7,7 +7,7 @@ def get_long_description():
 setuptools.setup(
     name="justpy",
     python_requires=">=3.6",
-    version="0.1.3",
+    version="0.1.4",
     license="Apache",
     author="Eliezer Mintz",
     author_email="eli.mintz@gmail.com",
