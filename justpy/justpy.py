@@ -95,7 +95,15 @@ def initial_func(request):
 func_to_run = initial_func
 startup_func = None
 
+
+def server_error_func(request):
+    wp = WebPage()
+    Div(text='JustPy says: 500 - Server Error', classes='inline-block text-5xl m-3 p-3 text-white bg-red-600', a=wp)
+    return wp
+
+
 cookie_signer = Signer(str(SECRET_KEY))
+
 
 @app.on_event('startup')
 async def justpy_startup():
@@ -152,7 +160,7 @@ class Homepage(HTTPEndpoint):
         assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'head_html': load_page.head_html, 'body_html': load_page.body_html,
-                        'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title,
+                        'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title, 'redirect': load_page.redirect,
                         'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug, 'events': load_page.events,
                         'favicon': load_page.favicon if load_page.favicon else FAVICON}
         if load_page.use_cache:
@@ -388,3 +396,8 @@ def convert_dict_to_object(d):
     return obj
 
 
+def redirect(url):
+    wp = WebPage()
+    wp.add(Div())
+    wp.redirect = url
+    return wp
