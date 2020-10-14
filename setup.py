@@ -7,7 +7,7 @@ def get_long_description():
 setuptools.setup(
     name="justpy",
     python_requires=">=3.6",
-    version="0.1.4",
+    version="0.1.5",
     license="Apache",
     author="Eliezer Mintz",
     author_email="eli.mintz@gmail.com",
@@ -19,7 +19,7 @@ setuptools.setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0',
+        'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0', 'websockets',
         'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'httpx>=0.11.0', 'aiofiles'
     ],
     classifiers=[

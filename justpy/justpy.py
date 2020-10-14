@@ -396,7 +396,6 @@ def convert_dict_to_object(d):
     return obj
 
 
-
 def redirect(url):
     wp = WebPage()
     wp.add(Div())

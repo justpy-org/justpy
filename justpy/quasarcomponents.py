@@ -552,7 +552,7 @@ class QBtn(QDiv):
         self.prop_list = ['ripple', 'type', 'to', 'replace', 'label', 'icon', 'icon-right', 'round', 'outline', 'flat',
                           'unelevated', 'rounded', 'push', 'glossy', 'size', 'fab', 'fab-mini', 'color', 'text-color',
                           'no-caps', 'no-wrap', 'dense', 'tabindex', 'align', 'stack', 'stretch', 'loading', 'disable',
-                          'percentage', 'dark-percentage', 'href', 'target']
+                          'percentage', 'dark-percentage', 'href', 'target', 'download']
 
 
 QButton = QBtn
@@ -1789,7 +1789,7 @@ class QFab(QDiv):
         super().__init__(**kwargs)
         # direction on of  up | right | down | left   , type one of  a | submit | button | reset
         self.prop_list = ['direction', 'persistent', 'icon', 'active-icon', 'type', 'value', 'disable',
-                          'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
+                          'outline', 'push', 'flat', 'color', 'text-color', 'glossy', 'label', 'external-label', 'label-position']
         self.allowed_events = ['input', 'show', 'before-show', 'hide', 'before-hide', 'click', 'mouseover', 'mouseout']
         self.set_keyword_events(**kwargs)
 
@@ -1807,7 +1807,8 @@ class QFabAction(QDiv):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # position one of top-right | top-left | bottom-right | bottom-left | top | right | bottom | left
-        self.prop_list = ['icon', 'type', 'to', 'replace', 'disable', 'outline', 'push', 'flat', 'color', 'text-color', 'glossy']
+        self.prop_list = ['icon', 'type', 'to', 'replace', 'disable', 'outline', 'push', 'flat', 'color', 'text-color',
+                          'glossy', 'label', 'external-label', 'label-position']
 
 @parse_dict
 class QSkeleton(QDiv):
