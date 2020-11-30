@@ -114,7 +114,7 @@ class QInput(_QInputBase):
                           'filled', 'outlined', 'borderless', 'standout', 'bottom-slots', 'rounded', 'square', 'dense',
                           'items-aligned', 'disable', 'readonly', 'value', 'type', 'debounce', 'counter', 'maxlength',
                           'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon',
-                          'placeholder']
+                          'placeholder', 'min', 'max']
 
         self.allowed_events = ['keypress', 'input', 'focus', 'blur', 'change']  # Not different from focus and blur in documentation
         self.set_keyword_events(**kwargs)
