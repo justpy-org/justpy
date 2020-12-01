@@ -36,8 +36,8 @@ if LATENCY:
 SESSIONS = config('SESSIONS', cast=bool, default=True)
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', cast=str, default='jp_token')
 SECRET_KEY = config('SECRET_KEY', default='$$$my_secret_string$$$')    # Make sure to change when deployed
+LOGGING_LOGGER = config('LOGGING_LOGGER',default='JustPy')
 LOGGING_LEVEL = config('LOGGING_LEVEL', default=logging.WARNING)
-JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 UVICORN_LOGGING_LEVEL = config('UVICORN_LOGGING_LEVEL', default='WARNING').lower()
 COOKIE_MAX_AGE = config('COOKIE_MAX_AGE', cast=int, default=60*60*24*7)   # One week in seconds
 HOST = config('HOST', cast=str, default='127.0.0.1')
@@ -76,6 +76,10 @@ component_file_list = create_component_file_list()
 
 template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'quasar_version': QUASAR_VERSION, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
                     'static_name': STATIC_NAME, 'component_file_list': component_file_list, 'no_internet': NO_INTERNET}
+
+JustPy.log=logging.getLogger(LOGGING_LOGGER)
+JustPy.log.setLevel(LOGGING_LEVEL)
+
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
 
@@ -138,7 +142,7 @@ class Homepage(HTTPEndpoint):
                 request.state.session_id = str(uuid.uuid4().hex)
                 request.session_id = request.state.session_id
                 new_cookie = True
-                logging.debug(f'New session_id created: {request.session_id}')
+                JustPy.log.debug(f'New session_id created: {request.session_id}')
         for route in Route.instances:
             func = route.matches(request['path'], request)
             if func:
@@ -208,7 +212,7 @@ class Homepage(HTTPEndpoint):
                 return JSONResponse(False)
 
     async def on_disconnect(self, page_id):
-        logging.debug(f'In disconnect Homepage')
+        JustPy.log.debug(f'In disconnect Homepage')
         await WebPage.instances[page_id].on_disconnect()  # Run the specific page disconnect function
         return JSONResponse(False)
 
@@ -222,7 +226,7 @@ class JustpyEvents(WebSocketEndpoint):
         await websocket.accept()
         websocket.id = JustpyEvents.socket_id
         websocket.open = True
-        logging.debug(f'Websocket {JustpyEvents.socket_id} connected')
+        JustPy.log.debug(f'Websocket {JustpyEvents.socket_id} connected')
         JustpyEvents.socket_id += 1
         #Send back socket_id to page
         # await websocket.send_json({'type': 'websocket_update', 'data': websocket.id})
@@ -233,7 +237,7 @@ class JustpyEvents(WebSocketEndpoint):
         """
         Method to accept and act on data received from websocket
         """
-        logging.debug('%s %s',f'Socket {websocket.id} data received:', data)
+        JustPy.log.debug('%s %s',f'Socket {websocket.id} data received:', data)
         data_dict = json.loads(data)
         msg_type = data_dict['type']
         # data_dict['event_data']['type'] = msg_type
@@ -292,12 +296,12 @@ class JustpyEvents(WebSocketEndpoint):
 async def handle_event(data_dict, com_type=0, page_event=False):
     # com_type 0: websocket, con_type 1: ajax
     connection_type = {0: 'websocket', 1: 'ajax'}
-    logging.info('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
+    JustPy.log.info('%s %s %s', 'In event handler:', connection_type[com_type], str(data_dict))
     event_data = data_dict['event_data']
     try:
         p = WebPage.instances[event_data['page_id']]
     except:
-        logging.warning('No page to load')
+        JustPy.log.warning('No page to load')
         return
     event_data['page'] = p
     if com_type==0:
@@ -322,17 +326,17 @@ async def handle_event(data_dict, com_type=0, page_event=False):
             event_result = await c.run_event_function(event_data['event_type'], event_data, True)
         else:
             event_result = None
-            logging.debug('%s %s %s %s', c, 'has no ', event_data['event_type'], ' event handler')
-        logging.debug('%s %s', 'Event result:', event_result)
+            JustPy.log.debug('%s %s %s %s', c, 'has no ', event_data['event_type'], ' event handler')
+        JustPy.log.debug('%s %s', 'Event result:', event_result)
     except Exception as e:
         # raise Exception(e)
         if CRASH:
             print(traceback.format_exc())
             sys.exit(1)
         event_result = None
-        # logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
-        logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mError in event handler:\033[0m')
-        logging.info('%s', traceback.format_exc())
+        # JustPy.log.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
+        JustPy.log.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mError in event handler:\033[0m')
+        JustPy.log.info('%s', traceback.format_exc())
 
 
     # If page is not to be updated, the event_function should return anything but None

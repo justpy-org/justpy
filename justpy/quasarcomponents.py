@@ -124,7 +124,7 @@ class QInput(_QInputBase):
 class QInputBlur(QInput):
 
     def before_event_handler(self, msg):
-        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        JustPy.log.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
         if hasattr(self, 'model'):
             self.model[0].data[self.model[1]] = msg.value
         self.value = msg.value
@@ -141,7 +141,7 @@ class QInputBlur(QInput):
 class QInputChange(QInput):
 
     def before_event_handler(self, msg):
-        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        JustPy.log.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
         if hasattr(self, 'model'):
             self.model[0].data[self.model[1]] = msg.value
         self.value = msg.value
@@ -210,7 +210,7 @@ class QOptionGroup(_QInputBase):
 
 
     def before_event_handler(self, msg):
-        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        JustPy.log.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
         if hasattr(self, 'model'):
             self.model[0].data[self.model[1]] = msg.value
         self.value = msg.value

@@ -25,7 +25,7 @@ def parse_dict(cls):
 
 class JustPy:
     loop = None
-    LOGGING_LEVEL = logging.DEBUG
+    log = None
 
 
 class WebPage:
@@ -752,7 +752,7 @@ class Input(Div):
         return f'{self.__class__.__name__}(id: {self.id}, html_tag: {self.html_tag}, input_type: {self.type}, vue_type: {self.vue_type}, value: {self.value}, checked: {self.checked}, number of components: {num_components})'
 
     def before_event_handler(self, msg):
-        logging.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
+        JustPy.log.debug('%s %s %s %s %s', 'before ', self.type, msg.event_type, msg.input_type, msg)
         if msg.event_type not in ['input', 'change', 'select']:
             return
         if msg.input_type == 'checkbox':
