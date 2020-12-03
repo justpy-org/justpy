@@ -1,5 +1,5 @@
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, Response
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
 from starlette.endpoints import HTTPEndpoint
@@ -156,6 +156,9 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run(request)
             else:
                 load_page = func_to_run()
+        if isinstance(load_page,Response):
+            logging.debug('Returning raw startlette.responses.Response.')
+            return load_page
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
