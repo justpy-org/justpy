@@ -57,13 +57,13 @@ You may have noticed that there is a delay in the updating of the Div. That is b
 
 Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer in ms, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
 
-## The change Event and the InputOnlyChange Component
+## The change Event and the InputChangeOnly Component
 
-The regular Input component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field as the user is typing, it is preferable to use InputOnlyChange instead of Input. 
+The regular Input component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field as the user is typing, it is preferable to use InputChangeOnly instead of Input. 
 
-InputOnlyChange does not generate the input event, only the change event. The change event is generated when the field loses focus or the user presses the Enter button. It is not generated when the user types a character. 
+InputChangeOnly does not generate the input event, only the change event. The change event is generated when the field loses focus or the user presses the Enter button. It is not generated when the user types a character. 
 
-The example below is the same as the one above except that InputOnlyChange is used instead of Input. 
+The example below is the same as the one above except that InputChangeOnly is used instead of Input. 
 
 ```html
 import justpy as jp
