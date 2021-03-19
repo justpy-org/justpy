@@ -1,11 +1,17 @@
+import asyncio
+import collections
+import copy
+import inspect
+import json
+import re
+import sys
+
 from types import MethodType
 from addict import Dict
-import json, copy, inspect, sys, re
 from html.parser import HTMLParser, tagfind_tolerant, attrfind_tolerant
 from html.entities import name2codepoint
 from html import unescape
 from jinja2 import Template
-import asyncio
 from .tailwind import Tailwind
 import logging
 import httpx
@@ -98,7 +104,11 @@ class WebPage:
 
     def add(self, *args):
         for component in args:
-            self.add_component(component)
+            if isinstance(component, collections.abc.Iterable):
+                for c in component:
+                    self.add_component(c)
+            else:
+                self.add_component(component)
         return self
 
     def __add__(self, other):
@@ -629,7 +639,11 @@ class Div(HTMLBaseComponent):
 
     def add(self, *args):
         for component in args:
-            self.add_component(component)
+            if isinstance(component, collections.abc.Iterable):
+                for c in component:
+                    self.add_component(c)
+            else:
+                self.add_component(component)
         return self
 
     def __add__(self, child):
