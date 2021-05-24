@@ -52,9 +52,9 @@
             protocol_string = 'ws://'
         }
         if (location.port) {
-            var socket = new WebSocket(protocol_string + document.domain + ':' + location.port);
+            var socket = new WebSocket(protocol_string + document.domain + ':' + location.port + location.pathname);
         } else {
-            var socket = new WebSocket(protocol_string + document.domain);
+            var socket = new WebSocket(protocol_string + document.domain + location.pathname);
         }
 
         socket.addEventListener('open', function (event) {

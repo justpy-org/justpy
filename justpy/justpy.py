@@ -162,7 +162,8 @@ class Homepage(HTTPEndpoint):
                         'body_classes': load_page.body_classes, 'css': load_page.css, 'head_html': load_page.head_html, 'body_html': load_page.body_html,
                         'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title, 'redirect': load_page.redirect,
                         'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug, 'events': load_page.events,
-                        'favicon': load_page.favicon if load_page.favicon else FAVICON}
+                        'favicon': load_page.favicon if load_page.favicon else FAVICON, 
+                        'path_prefix': request.headers.get('X-Forwarded-Prefix', '')}
         if load_page.use_cache:
             page_dict = load_page.cache
         else:
