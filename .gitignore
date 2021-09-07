@@ -1,0 +1,7 @@
+.idea/
+__pycache__/
+dist/
+examples/justpy.env
+justpy/__pycache__/
+test - Copy/
+tests/
