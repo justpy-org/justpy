@@ -496,6 +496,66 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tutorial/plotly/" title="Plotly Charting" class="md-nav__link">
+      Plotly Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/altair/" title="Altair Charting" class="md-nav__link">
+      Altair Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/bokeh/" title="Bokeh Charting" class="md-nav__link">
+      Bokeh Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/equations/" title="Equations" class="md-nav__link">
+      Equations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorial/markdown/" title="Markdown" class="md-nav__link">
+      Markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tutorial/ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
       Ajax vs. WebSockets
     </a>
@@ -1439,14 +1499,16 @@
                 
                 <h1 id="chart-events-and-methods">Chart Events and Methods<a class="headerlink" href="#chart-events-and-methods" title="Permanent link">&para;</a></h1>
 <h2 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h2>
-<p>The HighCharts component supports events that allow making charts more interactive:
-- <strong>point_click</strong> - fires when a point is clicked
-- <strong>point_select</strong> - fires when a point is selected
-- <strong>point_unselect</strong> - fires when point is unselected
-- <strong>series_hide</strong> - fires when series is hidden
-- <strong>series_show</strong> - fires when series is shown
-- <strong>series_click</strong> - fires when series is clicked
-- <strong>tooltip</strong> - fires when chart requests a tooltip (covered in its own <a href="../tooltips">chapter</a> in the tutorial)</p>
+<p>The HighCharts component supports events that allow making charts more interactive:</p>
+<ul>
+<li><strong>point_click</strong> - fires when a point is clicked</li>
+<li><strong>point_select</strong> - fires when a point is selected</li>
+<li><strong>point_unselect</strong> - fires when point is unselected</li>
+<li><strong>series_hide</strong> - fires when series is hidden</li>
+<li><strong>series_show</strong> - fires when series is shown</li>
+<li><strong>series_click</strong> - fires when series is clicked</li>
+<li><strong>tooltip</strong> - fires when chart requests a tooltip (covered in its own <a href="../tooltips">chapter</a> in the tutorial)</li>
+</ul>
 <p>For all chart events, JustPy adds the following fields to the second argument of the event handler (<code>msg</code> in this tutorial): 
 - <code>msg.x</code> - the x value of the point
 - <code>msg.y</code> - the y value of the point

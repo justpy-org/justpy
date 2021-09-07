@@ -38,7 +38,7 @@
     
     
       
-        <title>Monitor User Activity - JustPy</title>
+        <title>How to Play Audio - JustPy</title>
       
     
     
@@ -112,7 +112,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#monitor-inactivity" tabindex="0" class="md-skip">
+      <a href="#how-to-play-audio" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -138,7 +138,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Monitor User Activity
+                How to Play Audio
               
             </span>
           
@@ -1207,12 +1207,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       How To
@@ -1228,20 +1226,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Monitor User Activity" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../monitor_idle/" title="Monitor User Activity" class="md-nav__link">
       Monitor User Activity
     </a>
-    
   </li>
 
         
@@ -1398,45 +1387,25 @@
               
                 
                 
-                <h1 id="monitor-inactivity">Monitor Inactivity<a class="headerlink" href="#monitor-inactivity" title="Permanent link">&para;</a></h1>
+                <h1 id="how-to-play-audio">How to Play Audio<a class="headerlink" href="#how-to-play-audio" title="Permanent link">&para;</a></h1>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="n">audio_file_url</span> <span class="o">=</span> <span class="s1">&#39;https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3&#39;</span>
 
 
-<span class="k">def</span> <span class="nf">mouse_moved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mouse moved&#39;</span><span class="p">)</span>
-    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-    <span class="k">return</span> <span class="kc">True</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">play_audio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">run_javascript</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    new Audio(&#39;</span><span class="si">{audio_file_url}</span><span class="s2">&#39;).play();</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">idle_test</span><span class="p">():</span>
+
+<span class="k">def</span> <span class="nf">audio_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 100vh&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">,</span> <span class="n">mouse_moved</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">idle_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Idle time&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-
-    <span class="c1"># Has to be in request handler so can be specific per page</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">monitor_timer</span><span class="p">():</span>
-        <span class="n">keep_monitoring</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">idle_threshold</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="k">while</span> <span class="n">keep_monitoring</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-                <span class="n">idle_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">wp</span><span class="o">.</span><span class="n">start_time</span>
-                <span class="k">if</span> <span class="n">idle_time</span> <span class="o">&gt;</span> <span class="n">idle_threshold</span><span class="p">:</span>
-                    <span class="n">wp</span><span class="o">.</span><span class="n">idle_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Idle for </span><span class="si">{idle_time}</span><span class="s1"> seconds&#39;</span>
-                    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">update</span><span class="p">())</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="c1"># When page is closed, it will be erased, the exception will occur and the task will terminate</span>
-                <span class="n">keep_monitoring</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">monitor_timer</span><span class="p">())</span>
-
+    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Play Audio&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 &#39;</span><span class="o">+</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_simple</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">play_audio</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">idle_test</span><span class="p">)</span>
+
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">audio_test</span><span class="p">)</span>
 </code></pre></div>
                 
                   
@@ -1455,41 +1424,6 @@
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../../reference/notes/" title="Notes" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Notes
-              </span>
-            </div>
-          </a>
-        
-        
-          <a href="../change_font/" title="Use Different Fonts" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Use Different Fonts
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
