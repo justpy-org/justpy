@@ -40,7 +40,10 @@ async def create_deck():
 
 
 async def deal(deck_id, count=1):
-    cards = await jp.get(f'https://deckofcardsapi.com/api/deck/{deck_id}/draw/?count={count}')
+    try:
+        cards = await jp.get(f'https://deckofcardsapi.com/api/deck/{deck_id}/draw/?count={count}')
+    except:
+        print('error in deal')
     return cards
 
 

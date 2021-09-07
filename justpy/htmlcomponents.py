@@ -26,10 +26,29 @@ def parse_dict(cls):
 class JustPy:
     loop = None
     LOGGING_LEVEL = logging.DEBUG
+    component_registry = {}
+    # Meadows
+    meadows = False
+
+
+def register_component(component_class, tag, attributes=[]):
+    JustPy.component_registry[tag] = {'class': component_class, 'attributes': attributes}
+
+
+class Register:
+
+    def __init__(self, tag, attributes=[], **kwargs):
+        self.tag = tag
+        self.kwargs = kwargs
+        self.attributes = attributes
+
+    def __call__(self, cls, **kwargs):
+        register_component(cls, self.tag, self.attributes)
+        return cls
 
 
 class WebPage:
-    # TODO: Add page events such as online, beforeunload, resize, visibilitychange
+    # TODO: Add page events online, beforeunload, resize
     instances = {}
     sockets = {}
     next_page_id = 0
@@ -40,7 +59,8 @@ class WebPage:
     highcharts_theme = None
     # One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     # 'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
-    allowed_events = ['click', 'visibilitychange', 'page_ready', 'result_ready']
+    allowed_events = ['click', 'visibilitychange', 'page_ready', 'result_ready', 'keydown', 'keyup', 'keypress']
+
 
     def __init__(self, **kwargs):
         self.page_id = WebPage.next_page_id
@@ -66,6 +86,7 @@ class WebPage:
         self.events = []
         self.dark = False  # Set to True for Quasar dark mode (use for other dark modes also)
         self.data = {}
+        self.meadows = False
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
             self.__setattr__(k, v)
@@ -213,8 +234,8 @@ class WebPage:
             object_list.append(d)
         return object_list
 
-    def on(self, event_type, func):
-        if event_type in self.allowed_events:
+    def on(self, event_type, func, *, meadows=False):
+        if event_type in self.allowed_events or meadows:
             if inspect.ismethod(func):
                 setattr(self, 'on_' + event_type, func)
             else:
@@ -236,6 +257,30 @@ class WebPage:
             event_result = event_function(function_data)
         return event_result
 
+    def add_event(self, event):
+        if event not in self.allowed_events:
+            self.allowed_events.append(event)
+
+    def write(self,md_text):
+        assert _has_markdown, 'Markdown not installed'
+        return Markdown(markdown=md_text, a=self, classes='m-2 p-2', all_extensions=True)
+
+    def equation(self,eq_text):
+        return Equation(equation=eq_text, a=self, classes='m-2 p-2')
+
+
+class TailwindVersion1Page(WebPage):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.tailwind = False
+        self.head_html = """
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.5/dist/base.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.5/dist/components.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.2.x/dist/typography.min.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.5/dist/utilities.min.css" />
+        """
+
 
 class TailwindUIPage(WebPage):
     # https://tailwindui.com/components
@@ -243,6 +288,24 @@ class TailwindUIPage(WebPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.template_file = 'tailwindui.html'
+
+
+class MeadowsPage(WebPage):
+    # https://tailwindui.com/components
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.meadows = True
+        self.meadows_data = {'if': [], 'show': [], 'attrs': [], 'for': [], 'class': [], 'class_evaluate': [],
+                             'refs': Dict({}), 'event_handler_count': 0, 'events': Dict({})}
+
+    async def on_disconnect(self, websocket=None):
+        if self.delete_flag:
+            self.delete_components()
+            del self.meadows_data
+            self.remove_page()
+
+
 
 
 class JustpyBaseComponent(Tailwind):
@@ -294,11 +357,11 @@ class JustpyBaseComponent(Tailwind):
     def delete(self):
         if self.needs_deletion:
             if self.delete_flag:
-                JustpyBaseComponent.instances.pop(self.id)
+                JustpyBaseComponent.instances.pop(self.id, None)
                 self.needs_deletion = False
 
-    def on(self, event_type, func, debounce=None, throttle=None, immediate=False):
-        if event_type in self.allowed_events:
+    def on(self, event_type, func, *, debounce=None, throttle=None, immediate=False, meadows=False):
+        if meadows or event_type in self.allowed_events:
             cls = JustpyBaseComponent
             if not self.id:
                 self.id = cls.next_id
@@ -351,10 +414,12 @@ class JustpyBaseComponent(Tailwind):
         else:
             self.set_class('hidden')
 
-    async def update(self, socket=None):
+    async def update(self, socket=None, *, react=None):
+        if react:
+            self.react([])
         component_dict = self.convert_object_to_dict()
         if socket:
-            WebPage.loop.create_task(socket.send_json({'type': 'component_update', 'data': component_dict}))
+            await socket.send_json({'type': 'component_update', 'data': component_dict})
         else:
             pages_to_update = list(self.pages.values())
             for page in pages_to_update:
@@ -364,7 +429,8 @@ class JustpyBaseComponent(Tailwind):
                     continue
                 for websocket in list(websocket_dict.values()):
                     try:
-                        WebPage.loop.create_task(websocket.send_json({'type': 'component_update', 'data': component_dict}))
+                        # WebPage.loop.create_task(websocket.send_json({'type': 'component_update', 'data': component_dict}))
+                        await websocket.send_json({'type': 'component_update', 'data': component_dict})
                     except:
                         print('Problem with websocket in component update, ignoring')
         return self
@@ -607,7 +673,7 @@ class Div(HTMLBaseComponent):
             for c in self.components:
                 c.delete()
             if self.needs_deletion:
-                JustpyBaseComponent.instances.pop(self.id)
+                JustpyBaseComponent.instances.pop(self.id, None)
             self.components = []
 
     def __getitem__(self, index):
@@ -1311,13 +1377,20 @@ class QHello(Hello):
         self.classes = 'text-h3 text-primary q-ma-md'
 
 
-def component_by_tag(tag, **kwargs):
+def component_by_tag(tag, attrs=[], **kwargs):
     # tag = tag.lower()
     if tag[0:2] == 'q-':
         if tag in _tag_class_dict:
             c = _tag_class_dict[tag](**kwargs)
         else:
             raise ValueError(f'Tag not defined: {tag}')
+    elif tag in JustPy.component_registry:
+        attributes = JustPy.component_registry[tag]['attributes']
+        attr_dict = {}
+        for attr in attrs:
+            if attr[0] in attributes:
+                attr_dict[attr[0]] = attr[1]
+        c = JustPy.component_registry[tag]['class'](**attr_dict)
     else:
         tag_class_name = tag[0].capitalize() + tag[1:]
         try:
@@ -1453,7 +1526,7 @@ class BasicHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         self.level = self.level + 1
         self.parse_id += 1
-        c = component_by_tag(tag)
+        c = component_by_tag(tag, attrs)
         c.parse_id = self.parse_id
         command_string = f''
         if c is None:
@@ -1472,7 +1545,7 @@ class BasicHTMLParser(HTMLParser):
                     if not c.id:
                         c.id = cls.next_id
                         cls.next_id += 1
-                    fn_string = f'def oneliner{c.id}(self, msg):\n {attr[1]}'  # remove first and last charcters which are quotes
+                    fn_string = f'def oneliner{c.id}(self, msg):\n {attr[1]}'  # remove first and last characters which are quotes
                     exec(fn_string)
                     c.on(attr[0][1:], locals()[f'oneliner{c.id}'])
                 continue
@@ -1605,6 +1678,63 @@ async def get(url, format='json'):
         return result.json()
     else:
         return result.text
+
+
+try:
+    import markdown
+    _has_markdown = True
+except:
+    _has_markdown = False
+
+
+if _has_markdown:
+
+    class Markdown(Div):
+
+        all_markdown_extensions = ['extra', 'abbr', 'attr_list', 'def_list', 'fenced_code', 'footnotes', 'md_in_html',
+                               'tables', 'admonition', 'codehilite', 'legacy_attrs', 'legacy_em', 'meta', 'nl2br',
+                               'sane_lists', 'smarty', 'toc', 'wikilinks']
+
+        def __init__(self, **kwargs):
+            self.markdown = ''
+            self._cache = ''
+            self.all_extensions = True
+            self._html_result = ''
+            self.inner_html = ''
+            self.extensions = []
+            super().__init__(**kwargs)
+
+        def convert_object_to_dict(self):
+            d = super().convert_object_to_dict()
+            if 'prose' not in d['classes'].split():
+                d['classes'] += ' prose'
+            # Use all extensions if all_extensions is True and no extensions were specified
+            if self.all_extensions and not self.extensions:
+                self.extensions = self.all_markdown_extensions
+            if self.markdown != self._cache:
+                d['inner_html'] = self._html_result = markdown.markdown(self.markdown, extensions=self.extensions)
+                self._cache = self.markdown
+            else:
+                d['inner_html'] = self._html_result
+            return d
+
+
+class Equation(Div):
+
+    vue_type = 'katexjp'
+
+    def __init__(self, **kwargs):
+        self.equation = ''
+        self.options = {'macros': {}}
+        kwargs['temp'] = False  # Force an id to be assigned
+        super().__init__(**kwargs)
+
+    def convert_object_to_dict(self):
+        d = super().convert_object_to_dict()
+        d['equation'] = self.equation
+        self.options['throwOnError'] = False
+        d['options'] = self.options
+        return d
 
 
 def get_websocket(event_data):

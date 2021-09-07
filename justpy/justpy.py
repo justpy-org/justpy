@@ -1,5 +1,5 @@
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, Response
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
 from starlette.endpoints import HTTPEndpoint
@@ -13,6 +13,8 @@ from .htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
+from .misccomponents import *
+from .meadows import *
 from .pandas import *
 from .routing import Route, SetRoute
 from .utilities import run_task, create_delayed_task
@@ -55,6 +57,11 @@ TAILWIND = config('TAILWIND', cast=bool, default=True)
 QUASAR = config('QUASAR', cast=bool, default=False)
 QUASAR_VERSION = config('QUASAR_VERSION', cast=str, default=None)
 HIGHCHARTS = config('HIGHCHARTS', cast=bool, default=True)
+KATEX = config('KATEX', cast=bool, default=False)
+VEGA = config('VEGA', cast=bool, default=False)
+PLOTLY = config('BOKEH', cast=bool, default=False)
+BOKEH = config('PLOTLY', cast=bool, default=False)
+DECKGL = config('DECKGL', cast=bool, default=False)
 AGGRID = config('AGGRID', cast=bool, default=True)
 AGGRID_ENTERPRISE = config('AGGRID_ENTERPRISE', cast=bool, default=False)
 
@@ -75,7 +82,8 @@ templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 component_file_list = create_component_file_list()
 
 template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'quasar_version': QUASAR_VERSION, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
-                    'static_name': STATIC_NAME, 'component_file_list': component_file_list, 'no_internet': NO_INTERNET}
+                    'static_name': STATIC_NAME, 'component_file_list': component_file_list, 'no_internet': NO_INTERNET,
+                    'katex': KATEX, 'plotly': PLOTLY, 'bokeh': BOKEH, 'deckgl': DECKGL, 'vega': VEGA}
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
 
@@ -109,16 +117,20 @@ cookie_signer = Signer(str(SECRET_KEY))
 async def justpy_startup():
     WebPage.loop = asyncio.get_event_loop()
     JustPy.loop = WebPage.loop
+    JustPy.STATIC_DIRECTORY = STATIC_DIRECTORY
+
     if startup_func:
         if inspect.iscoroutinefunction(startup_func):
             await startup_func()
         else:
             startup_func()
-    print(f'JustPy ready to go on http://{HOST}:{PORT}')
+    if SSL_KEYFILE:
+        print(f'JustPy ready to go on https://{HOST}:{PORT}')
+    else:
+        print(f'JustPy ready to go on http://{HOST}:{PORT}')
 
 
 @app.route("/{path:path}")
-
 class Homepage(HTTPEndpoint):
 
     async def get(self, request):
@@ -156,6 +168,9 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run(request)
             else:
                 load_page = func_to_run()
+        if isinstance(load_page, Response):
+            logging.debug('Returning raw starlette.responses.Response.')
+            return load_page
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
         page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
@@ -271,13 +286,15 @@ class JustpyEvents(WebSocketEndpoint):
             return
 
     async def on_disconnect(self, websocket, close_code):
-        pid = websocket.page_id
+        try:
+            pid = websocket.page_id
+        except:
+            return
         websocket.open = False
         WebPage.sockets[pid].pop(websocket.id)
         if not WebPage.sockets[pid]:
             WebPage.sockets.pop(pid)
         await WebPage.instances[pid].on_disconnect(websocket)   # Run the specific page disconnect function
-        # WebPage.loop.create_task(WebPage.instances[pid].on_disconnect(websocket))
         if MEMORY_DEBUG:
             print('************************')
             print('Elements: ', len(JustpyBaseComponent.instances), JustpyBaseComponent.instances)
@@ -334,9 +351,9 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mError in event handler:\033[0m')
         logging.info('%s', traceback.format_exc())
 
-
+    if p.meadows:
+        await update_lists(p)
     # If page is not to be updated, the event_function should return anything but None
-
     if event_result is None:
         if com_type == 0:     # WebSockets communication
             if LATENCY:
