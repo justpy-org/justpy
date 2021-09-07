@@ -557,6 +557,66 @@
 
 
   <li class="md-nav__item">
+    <a href="../plotly/" title="Plotly Charting" class="md-nav__link">
+      Plotly Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../altair/" title="Altair Charting" class="md-nav__link">
+      Altair Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bokeh/" title="Bokeh Charting" class="md-nav__link">
+      Bokeh Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../equations/" title="Equations" class="md-nav__link">
+      Equations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../markdown/" title="Markdown" class="md-nav__link">
+      Markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
       Ajax vs. WebSockets
     </a>
@@ -1428,7 +1488,7 @@
                 <h1 id="pushing-data-to-web-pages">Pushing Data to Web Pages<a class="headerlink" href="#pushing-data-to-web-pages" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>The WebSocket API is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply.<br />
- <span>-</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">Mozzila.org</a></p>
+ <span>-</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">Mozilla.org</a></p>
 </blockquote>
 <p>JustPy uses this technology in order allow the server to "push" data to web pages. 
 Here is an example of a program that implements a clock. Every second, the server pushes the updated time to all open web pages.</p>
@@ -1502,12 +1562,12 @@ Then we define the coroutine <code>clock_counter</code>. It runs an infinite loo
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="n">input_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 bg-gray-200 font-mono appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-orange-500&#39;</span>
-<span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none&#39;</span>
+<span class="n">input_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 bg-gray-200 font-mono appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-red-500&#39;</span>
+<span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 text-red-700 bg-white hover:bg-red-200 hover:text-red-500 border focus:border-red-500 focus:outline-none&#39;</span>
 <span class="n">message_classes</span> <span class="o">=</span> <span class="s1">&#39;ml-4 p-2 text-lg bg-red-500 text-white overflow-auto font-mono rounded-lg&#39;</span>
 
 <span class="n">shared_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 h-1/2 border overflow-auto&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">header</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Simple Message Board&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 text-3xl&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Simple Message Board&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-red-100 border-l-4 border-red-500 text-red-700 p-4 text-3xl&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">button_icon</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;paper-plane&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">button_text</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Send&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-sm&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">message_icon</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl text-green-600&#39;</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1560,7 +1620,7 @@ Then we define the coroutine <code>clock_counter</code>. It runs an infinite loo
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 
-<span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none&#39;</span>
+<span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;m-2 p-2 text-red-700 bg-white hover:bg-red-200 hover:text-red-500 border focus:border-red-500 focus:outline-none&#39;</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">count_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>

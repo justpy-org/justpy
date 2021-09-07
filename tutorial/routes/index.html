@@ -370,6 +370,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-route-parameters" class="md-nav__link">
+    Using Route Parameters
+  </a>
+  
+</li>
+      
       
       
       
@@ -533,6 +540,66 @@
   <li class="md-nav__item">
     <a href="../matplotlib/" title="Matplotlib Charting" class="md-nav__link">
       Matplotlib Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../plotly/" title="Plotly Charting" class="md-nav__link">
+      Plotly Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../altair/" title="Altair Charting" class="md-nav__link">
+      Altair Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bokeh/" title="Bokeh Charting" class="md-nav__link">
+      Bokeh Charting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../equations/" title="Equations" class="md-nav__link">
+      Equations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../markdown/" title="Markdown" class="md-nav__link">
+      Markdown
     </a>
   </li>
 
@@ -1380,6 +1447,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-route-parameters" class="md-nav__link">
+    Using Route Parameters
+  </a>
+  
+</li>
+      
       
       
       
@@ -1461,6 +1535,19 @@
 
 
 <p>The SetRoute decorator accepts as a parameter the route and assigns the decorated function to it. The program above defines two routes, '/hello' and '/bye'. URLs that do not include these exact routes, will cause the 'Page not found' message to appear. </p>
+<h2 id="using-route-parameters">Using Route Parameters<a class="headerlink" href="#using-route-parameters" title="Permanent link">&para;</a></h2>
+<p>It is possible to use <a href="https://www.starlette.io/routing/">Starlette routing syntax</a> to define routes with parameters. Parameters are exposed in the <code>request.path.params</code> dictionary:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="k">def</span> <span class="nf">greeting_function</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Hello there, </span><span class="si">{request.path_params[&quot;name&quot;]}</span><span class="s1">!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">wp</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello/</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">greeting_function</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>For more examples using path and url parameters see <a href="/tutorials/request_object.md">request object</a>.</p>
                 
                   
                 
