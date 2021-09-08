@@ -3,7 +3,7 @@
 
 
 > The WebSocket API is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply.  
- <span>-</span> [Mozzila.org](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+ <span>-</span> [Mozilla.org](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 
 JustPy uses this technology in order allow the server to "push" data to web pages. 
 Here is an example of a program that implements a clock. Every second, the server pushes the updated time to all open web pages.
@@ -95,12 +95,12 @@ JustPy allows updating just specific elements on the page and not the whole page
 import justpy as jp
 from datetime import datetime
 
-input_classes = 'm-2 bg-gray-200 font-mono appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-orange-500'
-button_classes = 'm-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none'
-message_classes = 'ml-4 p-2 text-lg bg-orange-500 text-white overflow-auto font-mono rounded-lg'
+input_classes = 'm-2 bg-gray-200 font-mono appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-red-500'
+button_classes = 'm-2 p-2 text-red-700 bg-white hover:bg-red-200 hover:text-red-500 border focus:border-red-500 focus:outline-none'
+message_classes = 'ml-4 p-2 text-lg bg-red-500 text-white overflow-auto font-mono rounded-lg'
 
 shared_div = jp.Div(classes='m-2 h-1/2 border overflow-auto', delete_flag=False)
-header = jp.Div(text='Simple Message Board', classes='bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 text-3xl', delete_flag=False)
+header = jp.Div(text='Simple Message Board', classes='bg-red-100 border-l-4 border-red-500 text-red-700 p-4 text-3xl', delete_flag=False)
 button_icon = jp.Icon(icon='paper-plane', classes='text-2xl', delete_flag=False)
 button_text = jp.Div(text='Send', classes='text-sm', delete_flag=False)
 message_icon = jp.Icon(icon='comments', classes='text-2xl text-green-600', delete_flag=False)
@@ -161,7 +161,7 @@ It is often required to call update several times within one event handler. For 
 import justpy as jp
 import asyncio
 
-button_classes = 'm-2 p-2 text-orange-700 bg-white hover:bg-orange-200 hover:text-orange-500 border focus:border-orange-500 focus:outline-none'
+button_classes = 'm-2 p-2 text-red-700 bg-white hover:bg-red-200 hover:text-red-500 border focus:border-red-500 focus:outline-none'
 
 async def count_down(self, msg):
     self.show = False

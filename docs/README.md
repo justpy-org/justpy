@@ -8,11 +8,11 @@ JustPy is an object-oriented, component based, high-level Python Web Framework t
 Unlike other web frameworks, JustPy has no front-end/back-end distinction. All programming is done on the back-end allowing a simpler, more productive, and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed. 
 
 !!! note
-    The best way to understand JustPy is to follow the [tutorial](../tutorial/getting_started) in which there are many examples. 
+    The best way to understand JustPy is to follow the [tutorial](/tutorial/getting_started) in which there are many examples. 
 
 In JustPy, elements on the web page are instances of component classes. A component in JustPy is a Python class that allows you to instantiate reusable custom elements whose functionality and design is encapsulated away from the rest of your code. 
 
-Custom components can be created using other components as building blocks. Out of the box, JustPy comes with support for [HTML](../html_components) and [SVG](../svg_components) components as well as more complex components such as [charts](charts_tutorial/introduction.md) and [grids](grids_tutorial/introduction.md).  It also supports most of the components and the functionality of the [Quasar](https://quasar.dev/) library of [Material Design 2.0](https://material.io/) components.
+Custom components can be created using other components as building blocks. Out of the box, JustPy comes with support for [HTML](tutorial/html_components) and [SVG](tutorial/svg_components) components as well as more complex components such as [charts](charts_tutorial/introduction.md) and [grids](grids_tutorial/introduction.md).  It also supports most of the components and the functionality of the [Quasar](https://quasar.dev/) library of [Material Design 2.0](https://material.io/) components.
 
 JustPy encourages creating your own components and reusing them in different projects (and, if applicable, sharing these components with others). 
 
@@ -78,4 +78,4 @@ For news and updates please follow the [JustPy Twitter account](https://twitter.
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-Copyright (c) 2019, 2020, Eliezer Mintz
+Copyright (c) 2019, 2020, 2021 Eliezer Mintz
