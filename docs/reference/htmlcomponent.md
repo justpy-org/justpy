@@ -405,7 +405,7 @@ Remove references to the object from JustPy internal data structures to allow ga
 Bind a function to an event
 
 `def remove_event(self, event_type)`  
-Remove and event from the element's allowed events
+Remove an event from the element's allowed events
 
 `def has_event_function(self, event_type)`  
 Returns `True` if the element has the specified event
