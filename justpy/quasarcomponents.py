@@ -1165,7 +1165,7 @@ class QEditor(QInput):
                           'content-class',
                           'definitions', 'fonts', 'toolbar', 'toolbar-color', 'toolbar-text-color',
                           'toolbar-toggle-color',
-                          'toolbar-bg', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded']
+                          'toolbar-bg', 'toolbar-outline', 'toolbar-push', 'toolbar-rounded', 'placeholder']
         self.allowed_events = ['input']
         # self.set_keyword_events(**kwargs)
 
