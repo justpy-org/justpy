@@ -1,5 +1,5 @@
 from .htmlcomponents import *
-import demjson
+import demjson3
 from addict import Dict
 try:
     import numpy as np
@@ -75,12 +75,12 @@ class AgGrid(JustpyBaseComponent):
         pass
 
     def load_json(self, options_string):
-        self.options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
+        self.options = Dict(demjson3.decode(options_string.encode("ascii", "ignore")))
         return self.options
 
     def load_json_from_file(self, file_name):
         with open(file_name,'r') as f:
-            self.options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
+            self.options = Dict(demjson3.decode(f.read().encode("ascii", "ignore")))
         return self.options
 
     def load_pandas_frame(self, df):

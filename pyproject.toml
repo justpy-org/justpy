@@ -10,7 +10,7 @@ home-page = "https://justpy.io"
 description-file = "README.md"
 requires = [
         'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0', 'websockets',
-        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson>=2.2.4', 'httpx>=0.11.0', 'aiofiles',
+        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson3>=3.0.5', 'httpx>=0.11.0', 'aiofiles',
         'twine', 'wheel'
     ]
 classifiers=[

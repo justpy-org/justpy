@@ -1,7 +1,7 @@
 from .htmlcomponents import *
 from .htmlcomponents import _tag_class_dict, parse_dict
 from addict import Dict
-import demjson
+import demjson3
 
 quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog']
 
@@ -97,13 +97,13 @@ class _QInputBase(Input):
         self.value = update_value
 
     def load_json(self, options_string):
-        self.options = demjson.decode(options_string.encode("ascii", "ignore"))
+        self.options = demjson3.decode(options_string.encode("ascii", "ignore"))
         return self.options
 
 
     def load_json_from_file(self, file_name):
         with open(file_name,'r') as f:
-            self.options = demjson.decode(f.read().encode("ascii", "ignore"))
+            self.options = demjson3.decode(f.read().encode("ascii", "ignore"))
         return self.options
 
     def convert_object_to_dict(self):
@@ -1531,13 +1531,13 @@ class QTree(QDiv):
 
 
     def load_json(self, options_string):
-        self.nodes = demjson.decode(options_string.encode("ascii", "ignore"))
+        self.nodes = demjson3.decode(options_string.encode("ascii", "ignore"))
         return self.nodes
 
 
     def load_json_from_file(self, file_name):
         with open(file_name,'r') as f:
-            self.nodes = demjson.decode(f.read().encode("ascii", "ignore"))
+            self.nodes = demjson3.decode(f.read().encode("ascii", "ignore"))
         return self.nodes
 
     def convert_object_to_dict(self):
@@ -1626,13 +1626,13 @@ class QTable(QDiv):
 
 
     def load_json(self, options_string):
-        self.nodes = demjson.decode(options_string.encode("ascii", "ignore"))
+        self.nodes = demjson3.decode(options_string.encode("ascii", "ignore"))
         return self.nodes
 
 
     def load_json_from_file(self, file_name):
         with open(file_name,'r') as f:
-            self.nodes = demjson.decode(f.read().encode("ascii", "ignore"))
+            self.nodes = demjson3.decode(f.read().encode("ascii", "ignore"))
         return self.nodes
 
     def load_pandas_frame(self, df):
