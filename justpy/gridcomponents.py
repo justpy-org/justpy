@@ -1,5 +1,5 @@
 from .htmlcomponents import *
-import demjson
+import demjson3 as demjson
 from addict import Dict
 try:
     import numpy as np
