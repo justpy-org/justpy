@@ -1,7 +1,7 @@
 from .htmlcomponents import *
 from .htmlcomponents import _tag_class_dict, parse_dict
 from addict import Dict
-import demjson
+import demjson3 as demjson
 
 quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog']
 
