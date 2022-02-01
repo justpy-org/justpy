@@ -85,6 +85,9 @@
         {% if page_options.dark %}
             Quasar.Dark.set(true);
         {% endif %}
+        {% if page_options.dark == "auto" %}
+            Quasar.Dark.set("auto");
+        {% endif %}
     </script>
 
     {% include 'main.html' %}
