@@ -133,8 +133,7 @@ function send_to_server(e, event_type, debug_flag) {
     }
     if (use_websockets) {
         if (web_socket_closed) {
-            let ok_to_reload = confirm('Page needs to be reloaded, click OK to reload');
-            if (ok_to_reload) window.location.reload();
+            reload_site();
             return;
         }
         if (websocket_ready) {
