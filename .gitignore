@@ -13,3 +13,4 @@ examples/justpy.env
 # Eclipse
 .settings
 .project
+.pydevproject
