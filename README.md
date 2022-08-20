@@ -11,6 +11,10 @@
 ## Docs and Tutorials
 [JustPy Docs and Tutorials](https://justpy.io)
 
+## Live Demos
+[nicegui](https://nicegui.io/)
+[justpy demos](https://jpdemo.bitplan.com)
+
 ## Questions and Discussions
 Please file Bugs you found checking the issues Badge Link above.
 
