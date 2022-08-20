@@ -9,7 +9,7 @@ from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 from starlette.config import Config
 from itsdangerous import Signer
-from .htmlcomponents import *
+from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
@@ -124,10 +124,8 @@ async def justpy_startup():
             await startup_func()
         else:
             startup_func()
-    if SSL_KEYFILE:
-        print(f'JustPy ready to go on https://{HOST}:{PORT}')
-    else:
-        print(f'JustPy ready to go on http://{HOST}:{PORT}')
+    protocol="https" if SSL_KEYFILE else "http"
+    print(f'JustPy ready to go on {protocol}://{HOST}:{PORT}')
 
 
 @app.route("/{path:path}")
