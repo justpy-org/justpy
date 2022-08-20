@@ -15,3 +15,5 @@ examples/justpy.env
 .pydevproject
 # docs
 docs
+# Mac
+.DS_Store

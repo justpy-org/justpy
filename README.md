@@ -8,8 +8,12 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues/?q=is%3Aissue+is%3Aclosed)
 [![License](https://img.shields.io/github/license/elimintz/justpy.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-
+## Docs and Tutorials
 [JustPy Docs and Tutorials](https://justpy.io)
+
+## Questions and Discussions
+[github discussions](https://github.com/elimintz/justpy/discussions)
+[stackoverflow questions](https://stackoverflow.com/questions/tagged/justpy)
 
 ## Introduction
 
