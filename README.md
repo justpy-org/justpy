@@ -12,7 +12,7 @@
 [JustPy Docs and Tutorials](https://justpy.io)
 
 ## Questions and Discussions
-Please file Bugs your found checking the issues Badge Link above.
+Please file Bugs you found checking the issues Badge Link above.
 
 Questions which involve details of upstream frameworks such as 
 Quasar, Tailwind, Highcharts are best ask involving a larger community via and tagging
