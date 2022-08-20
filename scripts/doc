@@ -77,7 +77,7 @@ fixconf() {
 
 src=docs/source
 checkinstalled  sphinx-apidoc
-sphinx-apidoc --full -f -o $src .
+sphinx-apidoc --full -f -o $src justpy
 cd $src
 
 fixconf 2019-2022 "Eliezer Mintz"
