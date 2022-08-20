@@ -1,7 +1,7 @@
 # JustPy
 
-[![pypi](https://img.shields.io/pypi/pyversions/pyLoDStorage)](https://pypi.org/project/pyLoDStorage/)
-[![Github Actions Build](https://github.com/elimintz/pyLoDStorage/workflows/Build/badge.svg?branch=master)](https://github.com/elimintz/pyLoDStorage/actions?query=workflow%3ABuild+branch%3Amaster)
+[![pypi](https://img.shields.io/pypi/pyversions/justpy)](https://pypi.org/project/justpy/)
+[![Github Actions Build](https://github.com/elimintz/justpy/workflows/Build/badge.svg?branch=master)](https://github.com/elimintz/justpy/actions?query=workflow%3ABuild+branch%3Amaster)
 [![PyPI Status](https://img.shields.io/pypi/v/justpy.svg)](https://pypi.python.org/pypi/justpy/)
 [![Downloads](https://pepy.tech/badge/justpy)](https://pepy.tech/project/justpy)
 [![GitHub issues](https://img.shields.io/github/issues/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues)
