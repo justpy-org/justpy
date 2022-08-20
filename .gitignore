@@ -13,3 +13,5 @@ examples/justpy.env
 .settings
 .project
 .pydevproject
+# docs
+docs
