@@ -15,11 +15,13 @@
 Please file Bugs you found checking the issues Badge Link above.
 
 Questions which involve details of upstream frameworks such as 
-Quasar, Tailwind, Highcharts are best ask involving a larger community via and tagging
-your question with both "justpy" and the tag or the specific library your are asking a question for
+Quasar, Tailwind, Highcharts are best ask involving a larger community via 
+
 [stackoverflow questions](https://stackoverflow.com/questions/tagged/justpy)
 
-Dicussions are categorized. Please use the Category "Ideas" for feature requests. 
+and tagging your question with both "justpy" and the tag or the specific library your are asking a question for
+
+Our github dicussions are categorized. Please use the Category "Ideas" for feature requests. 
 [github discussions](https://github.com/elimintz/justpy/discussions)
 
 ## Introduction
