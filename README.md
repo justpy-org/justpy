@@ -1,5 +1,12 @@
 # JustPy
 
+[![PyPI Status](https://img.shields.io/pypi/v/justpy.svg)](https://pypi.python.org/pypi/justpy/)
+[![Downloads](https://pepy.tech/badge/justpy)](https://pepy.tech/project/justpy)
+[![GitHub issues](https://img.shields.io/github/issues/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues/?q=is%3Aissue+is%3Aclosed)
+[![License](https://img.shields.io/github/license/elimintz/justpy.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
+
 [JustPy Docs and Tutorials](https://justpy.io)
 
 ## Introduction
@@ -71,4 +78,4 @@ The way JustPy removes the frontend/backend distinction is by intercepting the r
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-Copyright (c) 2019, Eliezer Mintz
+Copyright (c) 2019-2022, Eliezer Mintz
