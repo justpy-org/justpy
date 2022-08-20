@@ -1,5 +1,5 @@
 from .htmlcomponents import *
-import demjson
+import demjson3
 from addict import Dict
 
 

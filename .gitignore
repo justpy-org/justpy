@@ -3,7 +3,6 @@ __pycache__/
 dist/
 justpy/__pycache__/
 test - Copy/
-tests/
 examples/justpy.env
 # 
 # IDEs
