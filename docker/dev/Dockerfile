@@ -13,7 +13,7 @@ LABEL maintainer="Wolfgang Fahl - wf@bitplan.com"
 # working directory
 WORKDIR /usr/src/
 
-# install justpy
+# install justpy, green and pandas
 RUN pip install --no-cache-dir justpy
 
 # Development stuff
@@ -26,3 +26,4 @@ RUN git clone https://github.com/elimintz/justpy
 # pip install green testing environment
 # https://pypi.org/project/green/
 RUN pip install green
+RUN pip install pandas

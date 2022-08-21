@@ -39,10 +39,11 @@ error() {
 # show usage
 #
 usage() {
-  echo "$0  [-h|--help] test example [example]"
+  echo "$0  [-h|--help] dev example [example] test"
   echo "-h  |--help:  show this usage"
-  echo "test run the unit test using green"
+  echo "dev run a bash in python 3.10 environment with a cloned justpy e.g. to test pull requests"
   echo "example run the given example e.g. dogs"
+  echo "test run the unit test using green"
   exit 1
 }
 
