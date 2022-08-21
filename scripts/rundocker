@@ -1,0 +1,37 @@
+#!/bin/bash
+# WF 2022-08-21
+
+build() {
+  local l_tag="$1"
+  local l_path="$2"
+  docker build -t $l_tag $l_path
+}
+
+run() {
+  local l_tag="$1"
+  local l_cmd="$2"
+  docker run --rm -it -v ${PWD}:"/mnt" -w "/mnt" $l_tag $l_cmd
+}
+
+if [ $# -eq 0 ]
+then
+  build justpy docker
+  run justpy /bin/bash
+fi
+while [  "$1" != ""  ]
+do
+  option="$1"
+  case $option in
+    test)
+      build justpy-dev docker/dev
+      # bash
+      run justpy-dev green
+      ;;
+    dev)
+      build justpy-dev docker/dev
+      # bash
+      run justpy-dev /bin/bash
+      ;;
+  esac
+  shift
+done
