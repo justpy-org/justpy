@@ -28,6 +28,14 @@ and tagging your question with both "justpy" and the tag or the specific library
 Our github dicussions are categorized. Please use the Category "Ideas" for feature requests. 
 [github discussions](https://github.com/elimintz/justpy/discussions)
 
+## Trying out with docker
+```bash
+git clone https://github.com/elimintz/justpy
+scripts/rundocker -h
+scripts/rundocker test
+scripts/rundocker example dogs
+scripts/rundocker dev
+```
 ## Introduction
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs. 
