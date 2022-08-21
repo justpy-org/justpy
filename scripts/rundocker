@@ -14,7 +14,9 @@ run() {
   local l_cmd="$2"
   local l_wd="$3"
   # mount current directory as volume /mnt and use it as a working directory
-  docker run --rm -it -v ${PWD}:"/mnt" -w "$l_wd" $l_tag $l_cmd
+  # map default justpy port 8000
+  docker run --rm -it -p 8000:8000 -v ${PWD}:"/mnt" -w "$l_wd" $l_tag $l_cmd
+  open http://localhost/8000
 }
 
 if [ $# -eq 0 ]
