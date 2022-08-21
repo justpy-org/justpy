@@ -1,22 +1,26 @@
 #!/bin/bash
 # WF 2022-08-21
 
+# run a docker build
 build() {
   local l_tag="$1"
   local l_path="$2"
   docker build -t $l_tag $l_path
 }
 
+# run docker
 run() {
   local l_tag="$1"
   local l_cmd="$2"
-  docker run --rm -it -v ${PWD}:"/mnt" -w "/mnt" $l_tag $l_cmd
+  local l_wd="$3"
+  # mount current directory as volume /mnt and use it as a working directory
+  docker run --rm -it -v ${PWD}:"/mnt" -w "$l_wd" $l_tag $l_cmd
 }
 
 if [ $# -eq 0 ]
 then
   build justpy docker
-  run justpy /bin/bash
+  run justpy /bin/bash /mnt
 fi
 while [  "$1" != ""  ]
 do
@@ -30,8 +34,12 @@ do
     dev)
       build justpy-dev docker/dev
       # bash
-      run justpy-dev /bin/bash
+      run justpy-dev /bin/bash /usr/src/justpy
       ;;
+    #pull)
+    #  build justpy-dev docker/dev
+    #  run justpy-dev /bin/bash /usr/src/justpy
+    #  ;;
   esac
   shift
 done

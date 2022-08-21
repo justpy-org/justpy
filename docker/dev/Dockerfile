@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir justpy
 # Development stuff
 # install git
 RUN apt update
-RUN apt install -y git
+RUN apt install -y git nano vim
 
 RUN git clone https://github.com/elimintz/justpy
 
