@@ -148,5 +148,5 @@ async def blackjack():
     return wp
 
 
-jp.justpy(blackjack)
-
+from  examples.basedemo import Demo
+Demo('blackjack demo',blackjack)

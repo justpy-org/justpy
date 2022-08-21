@@ -76,4 +76,5 @@ def iris_data():
     iris_stats.jp.ag_grid(a=wp, classes='m-2 p-2 border', style='height: 500px; width: 950px', auto_size=True, theme='ag-theme-material')
     return wp
 
-jp.justpy(iris_data, HIGHCHARTS=True, AGGRID=True)
+from  examples.basedemo import Demo
+Demo('iris demo',iris_data, HIGHCHARTS=True, AGGRID=True)
