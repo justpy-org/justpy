@@ -1,0 +1,8 @@
+#!/bin/bash
+# WF 2022-08-21
+# script to find tutorial examples
+for md in $(find docs -name "*.md")
+do
+  echo $md
+  grep jp.justpy $md
+done
