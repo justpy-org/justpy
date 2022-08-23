@@ -226,7 +226,7 @@ class Homepage(HTTPEndpoint):
         return JSONResponse(False)
 
 
-@app.websocket_route("/")
+@app.websocket_route("/", name="ws")
 class JustpyEvents(WebSocketEndpoint):
 
     socket_id = 0

@@ -72,11 +72,8 @@
         } else {
             protocol_string = 'ws://'
         }
-        if (location.port) {
-            var socket = new WebSocket(protocol_string + document.domain + ':' + location.port);
-        } else {
-            var socket = new WebSocket(protocol_string + document.domain);
-        }
+        const wsURL = '{{ url_for('ws') }}';
+        var socket = new WebSocket(wsURL);
 
         socket.addEventListener('open', function (event) {
             console.log('Webocket opened');
