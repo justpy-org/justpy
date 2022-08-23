@@ -13,7 +13,7 @@ from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
-from .misccomponents import *
+#from .misccomponents import *
 from .meadows import *
 from .pandas import *
 from .routing import Route, SetRoute
