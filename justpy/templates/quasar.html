@@ -11,10 +11,10 @@
                 <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.4.x/dist/typography.min.css">
                 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/utilities.min.css">
             {% else %}
-                <link href="/templates/local/tailwind/base.css" rel="stylesheet">
-                <link href="/templates/local/tailwind/components.css" rel="stylesheet">
-                <link href="/templates/local/tailwind/typography.css" rel="stylesheet">
-                <link href="/templates/local/tailwind/utilities.css" rel="stylesheet">
+                <link href="{{ url_for('templates', path='/local/tailwind/base.css') }}" rel="stylesheet">
+                <link href="{{ url_for('templates', path='/local/tailwind/components.css') }}" rel="stylesheet">
+                <link href="{{ url_for('templates', path='/local/tailwind/typography.css') }}" rel="stylesheet">
+                <link href="{{ url_for('templates', path='/local/tailwind/utilities.css') }}" rel="stylesheet">
             {% endif %}
             <style>
                 {% include 'css/form.css' %}
@@ -36,12 +36,12 @@
                   type="text/css">
         {% endif %}
     {% else %}
-        <link rel="stylesheet" href="/templates/local/robotofont/robotofont.css"/>
-        <link rel="stylesheet" href="/templates/local/ionicons/ionicons.css"/>
-        <link rel="stylesheet" href="/templates/local/materialdesignicons/iconfont/material-icons.css"/>
-        <link rel="stylesheet" href="/templates/local/fontawesome/css/all.min.css"/>
-        <link rel="stylesheet" href="/templates/local/animate.css"/>
-        <link rel="stylesheet" href="/templates/local/quasar.css"/>
+        <link rel="stylesheet" href="{{ url_for('templates', path='/local/robotofont/robotofont.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('templates', path='/local/ionicons/ionicons.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('templates', path='/local/materialdesignicons/iconfont/material-icons.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('templates', path='/local/fontawesome/css/all.min.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('templates', path='/local/animate.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('templates', path='/local/quasar.css') }}"/>
     {% endif %}
 
     <style>
@@ -71,9 +71,9 @@
         {% endif %}
 
     {% else %}
-        <script src="/templates/local/jquery.js"></script>
-        <script src="/templates/local/vue.js"></script>
-        <script src="/templates/local/quasar.js"></script>
+        <script src="{{ url_for('templates', path='/local/jquery.js') }}"></script>
+        <script src="{{ url_for('templates', path='/local/vue.js') }}"></script>
+        <script src="{{ url_for('templates', path='/local/quasar.js') }}"></script>
     {% endif %}
 
     <div id="components">
