@@ -1,15 +1,22 @@
 from justpy import *
 
-def on_submit(c, msg):
-    print(len(msg.form_data[0]["files"][0]["file_content"]))
-    print(len(msg.form_data[1]["files"][0]["file_content"]))
+def handle_submit(c, msg):
+  fl=msg.page.file_list
+  fl.components.clear()
+  for fd in msg.form_data:
+    if "files" in fd:
+      for f in fd["files"]:
+        Li(text=f"File uploaded: {f['name']} of {len(f['file_content'])}", a=fl)
 
-def multi_uploads():
-    wp=WebPage()
-    form=Form(a=wp, submit=on_submit)
-    Input(type="file", name="f1", a=form)
-    Input(type="file", name="f2", a=form)
-    Input(type="submit", value="OK", a=form)
-    return wp
+def p1():
+  wp=WebPage()
+  f=Form(submit=handle_submit, a=wp)
+  Input(name="f1", type="file", a=f)
+  Input(name="f2", type="file", a=f)
+  Input(type="submit", value="OK", a=f)
+  wp.file_list=Ol(a=wp)
+  return wp
+  
 
-justpy(multi_uploads)
+WebPage.tailwind=False
+justpy(p1, start_server=(__name__=="__main__"))
