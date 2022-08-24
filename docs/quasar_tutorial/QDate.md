@@ -33,6 +33,17 @@ jp.justpy(date_time_test)
 
 ```
 
+## Using Function Style Property
+
+In order to use a function-style property with QDate, the following is necessary:
+```python
+    qd = jp.QDate()
+    qd.events_date = "(date) => {return date[9] %3 === 0}"
+    qd.evaluate_prop.append('events')
+```
+
+Note that the mapping of property names is a little bit tricky. In Quasar, the property is named QDate.events. Due to the fact that 'events' is a reserved property in JustPy, the property is called events_date in the Python domain. However the evaluate_prop list is only analyzed in the JS domain, where the property name is 'events'.
+
 ## Date and Time as QInput slots
 
 ```python

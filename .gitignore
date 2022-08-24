@@ -1,0 +1,19 @@
+# general python
+__pycache__/
+dist/
+justpy/__pycache__/
+test - Copy/
+examples/justpy.env
+# 
+# IDEs
+#
+# Idea 
+.idea/
+# Eclipse
+.settings
+.project
+.pydevproject
+# docs
+docs
+# Mac
+.DS_Store

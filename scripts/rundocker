@@ -1,0 +1,107 @@
+#!/bin/bash
+# WF 2022-08-21
+
+#ansi colors
+#http://www.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
+blue='\033[0;34m'
+red='\033[0;31m'
+green='\033[0;32m' # '\e[1;32m' is too bright for white bg.
+endColor='\033[0m'
+
+#
+# a colored message
+#   params:
+#     1: l_color - the color of the message
+#     2: l_msg - the message to display
+#
+color_msg() {
+  local l_color="$1"
+  local l_msg="$2"
+  echo -e "${l_color}$l_msg${endColor}"
+}
+
+#
+# error
+#
+# show the given error message on stderr and exit
+#
+#   params:
+#     1: l_msg - the error message to display
+#
+error() {
+  local l_msg="$1"
+  # use ansi red for error
+  color_msg $red "Error:" 1>&2
+  color_msg $red "\t$l_msg" 1>&2
+  exit 1
+}
+
+# show usage
+#
+usage() {
+  echo "$0  [-h|--help] dev example [example] test"
+  echo "-h  |--help:  show this usage"
+  echo "dev run a bash in python 3.10 environment with a cloned justpy e.g. to test pull requests"
+  echo "example run the given example e.g. dogs"
+  echo "test run the unit test using green"
+  exit 1
+}
+
+# run a docker build
+build() {
+  local l_tag="$1"
+  local l_path="$2"
+  local l_option="$3"
+  docker build $l_option -t $l_tag $l_path
+}
+
+# run docker
+run() {
+  local l_tag="$1"
+  local l_cmd="$2"
+  local l_wd="$3"
+
+  # mount current directory as volume /mnt and use it as a working directory
+  # map default justpy port 8000
+  docker run --rm -it  -p 8000:8000 -v ${PWD}:"/mnt" -w "$l_wd" -e "PYTHONPATH=$l_wd" $l_tag $l_cmd
+}
+
+if [ $# -eq 0 ]
+then
+  build justpy docker
+  run justpy /bin/bash /mnt
+fi
+while [  "$1" != ""  ]
+do
+  option="$1"
+  case $option in
+    -h)
+      usage
+      ;;
+    test)
+      build justpy-dev docker/dev
+      # bash
+      run justpy-dev green
+      ;;
+    dev)
+      # use --no-cache to force rebuild
+      build justpy-dev docker/dev
+      # bash
+      run justpy-dev /bin/bash /usr/src/justpy
+      ;;
+    example)
+      shift
+      if [ $# -lt 1 ]
+      then
+        error "example parameter missing eg. 'dogs'"
+      fi
+      build justpy-dev docker/dev
+      run justpy-dev "python examples/$1.py --host 0.0.0.0" /usr/src/justpy
+      ;;
+    #pull)
+    #  build justpy-dev docker/dev
+    #  run justpy-dev /bin/bash /usr/src/justpy
+    #  ;;
+  esac
+  shift
+done

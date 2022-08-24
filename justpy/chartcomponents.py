@@ -1,7 +1,8 @@
 from .htmlcomponents import *
-import demjson
+import demjson3 as demjson
 from addict import Dict
 import itertools
+from urllib.parse import quote
 
 #TODO: May need to call chart.reflow() on resize
 #TODO: Handle formatter functions, for example in dataLabels and others.
@@ -52,7 +53,7 @@ class HighCharts(JustpyBaseComponent):
         for k, v in kwargs.items():
             self.__setattr__(k,v)
         self.allowed_events = ['tooltip', 'point_click', 'point_select', 'point_unselect', 'series_hide',
-                               'series_show', 'series_click']
+                               'series_show', 'series_click', 'zoom_x', 'zoom_y']
         for e in self.allowed_events:
             for prefix in ['', 'on', 'on_']:
                 if prefix + e in kwargs.keys():
@@ -80,9 +81,9 @@ class HighCharts(JustpyBaseComponent):
             if isinstance(value, str):
                 self.load_json(value)
             else:
-                self.__dict__[key] = value
+                super().__setattr__(key, value)
         else:
-            self.__dict__[key] = value
+            super().__setattr__(key, value)
 
 
     async def chart_update(self, update_dict, websocket):
@@ -392,3 +393,208 @@ if _has_matplotlib:
                                                         '*{stroke-linecap:butt;stroke-linejoin:round;}')
             output.close()
             return self.inner_html
+
+# --------------------------------------------------------------------
+# deck.gl related objects
+
+s = """
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="about:blank" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" data-html={} onload="this.contentDocument.open();this.contentDocument.write(    decodeURIComponent(this.getAttribute('data-html')));this.contentDocument.close();" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+"""
+
+try:
+    import pydeck as pdk
+    _has_pydeck = True
+except:
+    _has_pydeck = False
+
+if _has_pydeck:
+
+    class PyDeckFrame(Iframe):
+
+        vue_type = 'iframejp'
+
+        def __init__(self, **kwargs):
+            self.deck = None
+            self.srcdoc = None
+            kwargs['temp'] = False  # Force an id to be assigned to chart
+            self.view_delay = 0  # Additional delay in ms for display after frame has loaded
+            self.transition_duration = 0.1  # Duration of transition between frames in seconds
+            super().__init__(**kwargs)
+
+
+        def convert_object_to_dict(self):
+            self.srcdoc = quote(self.deck.to_html(as_string=True))
+            d = super().convert_object_to_dict()
+            d['view_delay'] = self.view_delay
+            d['transition_duration'] = self.transition_duration
+            return d
+
+
+    class PyDeck(Div):
+
+        vue_type = 'deckgl'
+
+        def __init__(self, **kwargs):
+            self.use_cache = False
+            self.deck = None
+            kwargs['temp'] = False  # Force an id to be assigned to chart
+            super().__init__(**kwargs)
+
+        def convert_object_to_dict(self):
+            d = {}
+            d['vue_type'] = self.vue_type
+            d['id'] = self.id
+            d['use_cache'] = self.use_cache
+            d['show'] = self.show
+            d['classes'] = self.classes
+            d['style'] = self.style
+            d['event_propagation'] = self.event_propagation
+            d['deck'] = self.deck.to_json()
+            d['events'] = self.events
+            d['mapbox_key'] = self.deck.mapbox_key
+            return d
+
+
+try:
+    import altair as alt
+    _has_altair = True
+except:
+    _has_altair = False
+
+
+if _has_altair:
+
+    class AltairChart(Div):
+
+        vue_type = 'altairjp'
+
+        def __init__(self, **kwargs):
+            self.use_cache = False
+            self.chart = None
+            self.options = {}
+            self.vega_source = None
+            # self.style = 'width:100%; height: 500px'
+            kwargs['temp'] = False  # Force an id to be assigned to chart
+            super().__init__(**kwargs)
+
+        def convert_object_to_dict(self):
+            d = {}
+            d['vue_type'] = self.vue_type
+            d['id'] = self.id
+            d['use_cache'] = self.use_cache
+            d['show'] = self.show
+            d['classes'] = self.classes
+            d['style'] = self.style
+            d['event_propagation'] = self.event_propagation
+            if self.vega_source:
+                d['vega_source'] = json.dumps(self.vega_source)
+            else:
+                d['vega_source'] = self.chart.to_json()
+            d['events'] = self.events
+            d['options'] = self.options
+            return d
+
+try:
+    import plotly
+    _has_plotly = True
+except:
+    _has_plotly = False
+
+
+if _has_plotly:
+
+    class PlotlyChart(Div):
+
+        vue_type = 'plotlyjp'
+
+        def __init__(self, **kwargs):
+            self.use_cache = False
+            self.chart = None
+            self.chart_dict = {}
+            self.config = {}
+            kwargs['temp'] = False  # Force an id to be assigned to chart
+            super().__init__(**kwargs)
+
+        def convert_object_to_dict(self):
+            d = {}
+            d['vue_type'] = self.vue_type
+            d['id'] = self.id
+            d['use_cache'] = self.use_cache
+            d['show'] = self.show
+            d['classes'] = self.classes
+            d['style'] = self.style
+            d['event_propagation'] = self.event_propagation
+            if self.chart:
+                d['chart'] = self.chart.to_json()
+            else:
+                d['chart'] = self.chart_dict
+            d['events'] = self.events
+            d['config'] = self.config
+            return d
+
+try:
+    import bokeh
+    _has_bokeh = True
+except:
+    _has_bokeh = False
+
+
+if _has_bokeh:
+
+    class BokehChart(Div):
+
+        vue_type = 'bokehjp'
+
+        def __init__(self, **kwargs):
+            self.use_cache = False
+            self.chart = None
+            self.chart_dict = {}
+            self.config = {}
+            kwargs['temp'] = False  # Force an id to be assigned to chart
+            super().__init__(**kwargs)
+
+        def convert_object_to_dict(self):
+            d = {}
+            d['vue_type'] = self.vue_type
+            d['id'] = self.id
+            d['use_cache'] = self.use_cache
+            d['show'] = self.show
+            d['classes'] = self.classes
+            d['style'] = self.style
+            d['event_propagation'] = self.event_propagation
+            if self.chart:
+                d['chart'] = json.dumps(bokeh.embed.standalone.json_item(self.chart))
+            else:
+                d['chart'] = self.chart_dict
+            d['events'] = self.events
+            d['config'] = self.config
+            return d
+
+
+try:
+    import folium
+    _has_folium = True
+except:
+    _has_folium = False
+
+
+if _has_folium:
+
+    class FoliumChart(Div):
+
+
+        def __init__(self, **kwargs):
+            self.use_cache = False
+            self.chart = None
+            kwargs['temp'] = False  # Force an id to be assigned to chart
+            super().__init__(**kwargs)
+            self.inner_div = Div(a=self)
+
+        def convert_object_to_dict(self):
+            if self.chart:
+                self.inner_html = self.chart._repr_html_()
+            d = super().convert_object_to_dict()
+            return d
+
+
+

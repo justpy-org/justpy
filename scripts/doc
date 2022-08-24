@@ -1,0 +1,88 @@
+#!/bin/bash
+# WF 2020-01-31
+
+#
+# check whether the given command is installed
+#
+checkinstalled() {
+  local l_cmd="$1"
+  which $l_cmd > /dev/null
+  if [ $? -ne 0 ]
+  then
+    echo "$l_cmd need to be installed" 1>&2
+    exit 1
+  fi
+}
+
+fixconf() {
+  local l_year="$1"
+  local l_author="$2"
+  conf=conf.py
+  # fix sys path
+  # https://stackoverflow.com/questions/10324393/sphinx-build-fail-autodoc-cant-import-find-module
+  grep "# sys.path" $conf
+  if [ $? -eq 0 ]
+  then
+    tmpconf=/tmp/conf$$.py
+    cat $conf | awk -v author="$l_author" -v year="$l_year" '
+    BEGIN {
+      quote="\x27"
+      squote="\047"
+    }
+    /# import os/ { next }
+    /# import sys/ { next }
+    /copyright/ {
+      printf "copyright = %s%s, %s%s\n",squote,year,author,squote
+      next
+    }
+    /author/ {
+      printf "author = %s%s%s\n",squote,author,squote
+      next
+    }
+    /html_theme = / {
+      # html_theme = 'alabaster'
+      printf "html_theme = %ssphinx_rtd_theme%s\n",squote,squote
+      printf "master_doc = %sindex%s\n",squote,squote
+      next
+    }
+    # add sphinx_rtd extension
+    /extensions = / {
+      print $0
+      printf "\t%ssphinx_rtd_theme%s,\n",squote,squote
+      printf "\t%ssphinx.ext.napoleon%s,\n",squote,squote
+      next
+    }
+    /# sys.path/ {
+      print("#https://stackoverflow.com/a/44980548/1497139")
+      print("import os")
+      print("import sys")
+      print("import sphinx_rtd_theme")
+      printf("basepath=os.path.abspath(%s../..%s)\n",squote,squote)
+      printf("print(%sadding basepath %%s%s %% (basepath))\n",squote,squote)
+      print("sys.path.insert(0, basepath)")
+      printf("print(%ssys.path is now: %%s%s %% (sys.path))\n",squote,squote)
+      next
+    }
+    { print }
+    END {
+      print ("#additional settings")
+      print ("#https://stackoverflow.com/a/5599712/1497139")
+      print ("autoclass_content = '\''both'\''")
+    }' > $tmpconf
+    #diff $tmpconf $conf
+    mv $tmpconf $conf
+    echo "$src/conf.py has been fixed"
+  fi
+}
+
+src=docs/source
+checkinstalled  sphinx-apidoc
+sphinx-apidoc --full -f -o $src justpy
+cd $src
+
+fixconf 2019-2022 "Eliezer Mintz"
+make clean html
+if [ "$GHACTIONS" != "ACTIVE" ]
+then
+  open _build/html/index.html
+fi

@@ -1,7 +1,41 @@
 # JustPy
 
+[![pypi](https://img.shields.io/pypi/pyversions/justpy)](https://pypi.org/project/justpy/)
+[![Github Actions Build](https://github.com/elimintz/justpy/workflows/Build/badge.svg?branch=master)](https://github.com/elimintz/justpy/actions?query=workflow%3ABuild+branch%3Amaster)
+[![PyPI Status](https://img.shields.io/pypi/v/justpy.svg)](https://pypi.python.org/pypi/justpy/)
+[![Downloads](https://pepy.tech/badge/justpy)](https://pepy.tech/project/justpy)
+[![GitHub issues](https://img.shields.io/github/issues/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues/?q=is%3Aissue+is%3Aclosed)
+[![License](https://img.shields.io/github/license/elimintz/justpy.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
+## Docs and Tutorials
 [JustPy Docs and Tutorials](https://justpy.io)
 
+## Live Demos
+[nicegui](https://nicegui.io/)
+[justpy demos](https://jpdemo.bitplan.com)
+
+## Questions and Discussions
+Please file Bugs you found checking the issues Badge Link above.
+
+Questions which involve details of upstream frameworks such as 
+Quasar, Tailwind, Highcharts are best ask involving a larger community via 
+
+[stackoverflow questions](https://stackoverflow.com/questions/tagged/justpy)
+
+and tagging your question with both "justpy" and the tag or the specific library your are asking a question for
+
+Our github dicussions are categorized. Please use the Category "Ideas" for feature requests. 
+[github discussions](https://github.com/elimintz/justpy/discussions)
+
+## Trying out with docker
+```bash
+git clone https://github.com/elimintz/justpy
+scripts/rundocker -h
+scripts/rundocker test
+scripts/rundocker example dogs
+scripts/rundocker dev
+```
 ## Introduction
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs. 
@@ -71,4 +105,4 @@ The way JustPy removes the frontend/backend distinction is by intercepting the r
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-Copyright (c) 2019, Eliezer Mintz
+Copyright (c) 2019-2022, Eliezer Mintz

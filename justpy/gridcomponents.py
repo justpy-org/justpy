@@ -1,5 +1,5 @@
 from .htmlcomponents import *
-import demjson
+import demjson3 as demjson
 from addict import Dict
 try:
     import numpy as np
@@ -47,6 +47,7 @@ class AgGrid(JustpyBaseComponent):
                 kwargs[com].add_component(self)
 
     def __repr__(self):
+        # return f'stam'
         return f'{self.__class__.__name__}(id: {self.id}, vue_type: {self.vue_type}, Grid options: {self.options})'
 
     def __setattr__(self, key, value):
@@ -54,14 +55,14 @@ class AgGrid(JustpyBaseComponent):
             if isinstance(value, str):
                 self.load_json(value)
             else:
-                self.__dict__[key] = value
+                super().__setattr__(key, value)
         else:
-            self.__dict__[key] = value
+            super().__setattr__(key, value)
 
-    def on(self, event_type, func):
+    def on(self, event_type, func, **kwargs):
         # https://www.ag-grid.com/javascript-grid-events/
         self.allowed_events.append(event_type)
-        super().on(event_type, func)
+        super().on(event_type, func, **kwargs)
 
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)
@@ -105,6 +106,9 @@ class AgGrid(JustpyBaseComponent):
     async def deselect_rows(self, page):
         await page.run_javascript(f"""cached_grid_def['g' + {self.id}].api.deselectAll()""")
 
+    async def apply_transaction(self, transaction, page):
+        await page.run_javascript(
+            f"""cached_grid_def['g' + {self.id}].api.applyTransaction({transaction.__repr__()})""")
 
     def convert_object_to_dict(self):
 

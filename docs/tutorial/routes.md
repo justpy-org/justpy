@@ -67,3 +67,19 @@ jp.justpy()
 ```
 
 The SetRoute decorator accepts as a parameter the route and assigns the decorated function to it. The program above defines two routes, '/hello' and '/bye'. URLs that do not include these exact routes, will cause the 'Page not found' message to appear. 
+
+## Using Route Parameters
+
+It is possible to use [Starlette routing syntax](https://www.starlette.io/routing/) to define routes with parameters. Parameters are exposed in the `request.path.params` dictionary:
+
+```python
+import justpy as jp
+def greeting_function(request):
+    wp = jp.WebPage()
+    wp.add(jp.P(text=f'Hello there, {request.path_params["name"]}!', classes='text-5xl m-2'))
+    return wp
+jp.Route('/hello/{name}', greeting_function)
+jp.justpy()
+```
+
+For more examples using path and url parameters see [request object](/tutorials/request_object.md).

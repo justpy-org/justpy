@@ -3,6 +3,7 @@
 ## Events
 
 The HighCharts component supports events that allow making charts more interactive:
+
 - **point_click** - fires when a point is clicked
 - **point_select** - fires when a point is selected
 - **point_unselect** - fires when point is unselected

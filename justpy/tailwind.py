@@ -80,7 +80,7 @@ class Tailwind:
                               'whitespace-pre-wrap'],
                'word_break': ['break-normal', 'break-words', 'break-all', 'truncate'],
                'background_attachment': ['bg-fixed', 'bg-local', 'bg-scroll'],
-               'background_color': ['bg-transparent', 'bg-current', 'bg-black', 'bg-white', 'bg-gray-100',
+               'background_color': ['bg-transparent', 'bg-current', 'bg-black', 'bg-white', 'bg-gray-50','bg-gray-100',
                                     'bg-gray-200',
                                     'bg-gray-300', 'bg-gray-400', 'bg-gray-500', 'bg-gray-600', 'bg-gray-700',
                                     'bg-gray-800',

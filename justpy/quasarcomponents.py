@@ -1,7 +1,7 @@
 from .htmlcomponents import *
 from .htmlcomponents import _tag_class_dict, parse_dict
 from addict import Dict
-import demjson
+import demjson3 as demjson
 
 quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog']
 
@@ -9,8 +9,8 @@ quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-
 class QuasarPage(WebPage):
 
     def __init__(self, **kwargs):
-        self.tailwind = False
         super().__init__(**kwargs)
+        self.tailwind = kwargs.get('tailwind', False)
         self.template_file = 'quasar.html'
         self.quasar = True
 
@@ -32,6 +32,22 @@ class QuasarPage(WebPage):
         return True
 
 
+class QuasarMeadowsPage(QuasarPage):
+    # https://tailwindui.com/components
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.meadows = True
+        self.meadows_data = {'if': [], 'show': [], 'attrs': [], 'for': [], 'class': [], 'class_evaluate': [],
+                             'refs': Dict({}), 'event_handler_count': 0, 'events': Dict({})}
+
+    async def on_disconnect(self, websocket=None):
+        if self.delete_flag:
+            self.delete_components()
+            del self.meadows_data
+            self.remove_page()
+
+
 class QDiv(Div):
 
     slots = []
@@ -46,7 +62,7 @@ class QDiv(Div):
             q_slot = key[:key.index('_slot')].replace('_', '-')
             self.add_scoped_slot(q_slot, value)
         else:
-            self.__dict__[key] = value
+            super().__setattr__(key, value)
 
 
 class _QInputBase(Input):
@@ -62,6 +78,7 @@ class _QInputBase(Input):
         self.disable_events = False
         self.prop_list = []
         self.attributes = []
+
 
     def __setattr__(self, key, value):
         if key == 'options':
@@ -114,7 +131,7 @@ class QInput(_QInputBase):
                           'filled', 'outlined', 'borderless', 'standout', 'bottom-slots', 'rounded', 'square', 'dense',
                           'items-aligned', 'disable', 'readonly', 'value', 'type', 'debounce', 'counter', 'maxlength',
                           'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon',
-                          'placeholder']
+                          'placeholder', 'min', 'max']
 
         self.allowed_events = ['keypress', 'input', 'focus', 'blur', 'change']  # Not different from focus and blur in documentation
         self.set_keyword_events(**kwargs)
@@ -159,6 +176,25 @@ class QInputChange(QInput):
         return d
 
 
+@parse_dict
+class QField(QDiv):
+
+    html_tag = 'q-field'
+    slots = ['default_slot', 'before_slot', 'prepend_slot', 'append_slot', 'after_slot',
+             'label_slot', 'error_slot', 'hint_slot', 'counter_slot', 'loading_slot']
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.prop_list = ['error', 'rules', 'reactive-rules', 'lazy-rules', 'autofocus', 'name',
+                          'error-message', 'no-error-icon', 'label', 'stack-label', 'hint', 'hide-hint',
+                          'prefix', 'suffix', 'loading', 'clearable', 'clear-icon', 'label-slot', 'bottom-slots',
+                          'counter', 'maxlength', 'disable', 'readonly',
+                          'label-color', 'color', 'bg-color', 'dark', 'filled', 'outlined', 'borderless',
+                          'standout',  'hide-bottom-space', 'rounded',  'square', 'dense', 'item-aligned',
+                          'value']
+
+        self.allowed_events = ['clear', 'input', 'focus', 'blur']
+
 
 @parse_dict
 class QSelect(_QInputBase):
@@ -184,7 +220,8 @@ class QSelect(_QInputBase):
                  'disable', 'readonly', 'behavior', 'input-class', 'input-style',
                   'virtual-scroll-slice-size', 'virtual-scroll-item-size', 'virtual-scroll-sticky-size-start', 'virtual-scroll-sticky-size-end']
 
-        self.allowed_events = ['input', 'remove', 'add', 'new_value', 'filter', 'filter_abort', 'focus', 'blur']
+        self.allowed_events = ['input', 'remove', 'add', 'new-value', 'filter', 'filter-abort', 'focus', 'blur',
+                               'clear', ]
         # self.set_keyword_events(**kwargs)
 
 
@@ -253,7 +290,7 @@ class QSlider(_QInputBase):
         self.value = kwargs.get('value', 0)
         # The label suffix is a stop gap till full label-value prop implemented
         self.label_suffix = kwargs.get('label_suffix', '')
-        self.prop_list = ['label-always', 'snap', 'label', 'label-value', 'label-always', 'markers', 'tabindex',
+        self.prop_list = ['label-always', 'snap', 'label', 'label-value', 'label-always', 'markers', 'tabindex', 'vertical',
                           'value', 'min', 'max', 'step', 'disable', 'readonly', 'color', 'label-color', 'dark', 'dense']
         self.allowed_events = ['input', 'change']
         # self.set_keyword_events(**kwargs)
@@ -355,6 +392,7 @@ class QDate(_QInputBase):
                           'events-date', 'options-date',
                           'first-day-of-week', 'square', 'flat', 'bordered']
         self.allowed_events = ['input']
+        self.evaluate_prop = []
         # self.set_keyword_events(**kwargs)
 
 
@@ -468,7 +506,7 @@ class QBadge(QDiv):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.prop_list = ['color', 'text-color', 'floating', 'transparent', 'multi-line', 'label', 'align']
+        self.prop_list = ['color', 'text-color', 'floating', 'transparent', 'multi-line', 'label', 'align', 'outline']
 
 
 @parse_dict
@@ -1885,6 +1923,8 @@ class QInputDateTime(QInput):
         self.time.parent = self
         self.date.value = self.value
         self.time.value = self.value
+        self.date.model = self.model
+        self.time.model = self.model
         self.prepend_slot = date_slot
         self.append_slot = time_slot
         self.date.on('input', self.date_time_change)
@@ -1893,7 +1933,6 @@ class QInputDateTime(QInput):
 
     @staticmethod
     async def date_time_change(self, msg):
-        print(self.value)
         self.parent.value = self.value
         self.parent.date.value = self.value
         self.parent.time.value = self.value
@@ -1930,3 +1969,17 @@ class QInputDate(QInput):
     @staticmethod
     def input_change(self, msg):
         self.date.value = self.value
+
+
+@parse_dict
+class QResizeObserver(QDiv):
+
+    html_tag = 'q-resize-observer'
+
+    def __init__(self, **kwargs):
+
+        self.debounce = 300
+        super().__init__(**kwargs)
+        self.prop_list = ['debounce']
+        self.allowed_events = ['resize']
+        self.set_keyword_events(**kwargs)

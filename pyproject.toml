@@ -1,0 +1,35 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "justpy"
+author = "Eli Mintz"
+author-email = "eli.mintz@gmail.com"
+home-page = "https://justpy.io"
+description-file = "README.md"
+requires = [
+        'starlette>=0.12.0', 'uvicorn>=0.7.1', 'itsdangerous>=1.1.0', 'websockets',
+        'addict>=2.2.1', 'jinja2>=2.10.1', 'demjson3>=3.0.5', 'httpx>=0.11.0', 'aiofiles',
+        'twine', 'wheel'
+    ]
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: User Interfaces",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License"
+    ]
+
+[tool.flit.metadata.urls]
+Documentation = "https://justpy.io/"
+
