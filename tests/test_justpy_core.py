@@ -17,6 +17,9 @@ class TestJustpyCore(asynctest.TestCase):
     Tests for Justpy Core features
     '''
     async def wp_to_test(self):
+        '''
+        the example Webpage under test
+        '''
         wp = jp.WebPage()
         _d=jp.Div(a=wp)
         return wp
@@ -32,7 +35,7 @@ class TestJustpyCore(asynctest.TestCase):
                             },
                             daemon=True)
         self.proc.start()
-        await asyncio.sleep(0.1)  # time for the server to start
+        await asyncio.sleep(0.5)  # time for the server to start
         
     async def tearDown(self):
         """ Shutdown the app. """
@@ -40,10 +43,19 @@ class TestJustpyCore(asynctest.TestCase):
         
     
     async def testWp(self):
+        ''''
+        test the webpage asynchronously
+        '''
         async with aiohttp.ClientSession() as session:
             async with session.get(f"http://127.0.0.1:{self.port}/") as resp:
+                rawhtml = await resp.content.read()
                 status = resp.status
         self.assertEqual(200,status)        
+        html=rawhtml.decode("utf8")
+        debug=True
+        if debug:
+            print(html)
+
     
     
 

@@ -1,8 +1,8 @@
 {% if not html %}
-
-    <!DOCTYPE html>
-    <html>
-    <head>
+<!DOCTYPE html>
+<html>
+  <!--This is a justpy application using the tailwind.html template-->
+  <head>
         {% include 'favicon.html' %}
 
         {% if options.tailwind %}
@@ -60,9 +60,9 @@
 
     {% include 'main.html' %}
 
-    </body>
-    </html>
-    {% else %}{{ html | safe }}
+  </body>
+</html>
+{% else %}{{ html | safe }}
 {% endif %}
 
 
