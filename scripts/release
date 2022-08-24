@@ -1,0 +1,8 @@
+#!/bin/bash
+# WF 2022-08-24
+# Release to  pypi
+git pull
+scripts/install
+python -m build
+green -q && rm -rf ./dist/* && python setup.py sdist bdist_wheel && twine upload dist/*
+
