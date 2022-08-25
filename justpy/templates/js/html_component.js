@@ -72,7 +72,7 @@ Vue.component('html_component', {
                 return
             }
             if (event.type == 'drop') {
-
+                event.preventDefault();
             }
             if (event.type == 'submit') {
                 var form_reference = this.$el;
