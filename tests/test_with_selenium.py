@@ -8,7 +8,7 @@ import justpy as jp
 
 from tests.basetest import BaseAsynctest
 from webdriver_manager.firefox import GeckoDriverManager
-
+from selenium.webdriver import FirefoxOptions
 
 class TestWithSelenium(BaseAsynctest):
     '''
@@ -18,7 +18,9 @@ class TestWithSelenium(BaseAsynctest):
     async def setUp(self):
         await BaseAsynctest.setUp(self, self.wp_to_test)
         self.firefox_path=GeckoDriverManager().install()
-        self.browser = webdriver.Firefox(executable_path=self.firefox_path)
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        self.browser = webdriver.Firefox(executable_path=self.firefox_path,options=opts)
         
 
     async def wp_to_test(self):

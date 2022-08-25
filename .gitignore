@@ -17,3 +17,5 @@ examples/justpy.env
 docs
 # Mac
 .DS_Store
+# selenium test logs
+geckodriver.log
