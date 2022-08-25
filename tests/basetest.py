@@ -3,10 +3,85 @@ Created on 2021-08-19
 
 @author: wf
 '''
+import justpy as jp
+import aiohttp
+import asynctest
+import asyncio
 import os
 import getpass
 from unittest import TestCase
 import time
+from multiprocessing import Process
+
+
+class BaseAsynctest(asynctest.TestCase):
+    '''
+    basic asynch test
+    '''
+    # https://github.com/encode/starlette/blob/master/docs/testclient.md
+    # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
+
+    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.2,debug=False,profile=True):
+        """ Bring server up. 
+        
+        Args:
+            wpfunc: the (async) function for the webpage
+            port(int): the port
+            host(str): the host 
+            sleepTime(float): the time to sleep after server process was started
+            debug(bool): if True debugging is on
+            profile(bool): if True time for test is profiled
+        """ 
+        self.port=port
+        self.host=host
+        self.debug=debug
+        self.profile=profile
+        msg=f"test {self._testMethodName}, debug={self.debug}"
+        self.profiler=Profiler(msg,profile=self.profile)
+        self.proc = Process(target=jp.justpy,
+                            args=(wpfunc,),
+                            kwargs={
+                                "host": self.host,
+                                "port": self.port,
+                            },
+                            daemon=True)
+        self.proc.start()
+        await asyncio.sleep(sleepTime)  # time for the server to start
+        
+    async def tearDown(self):
+        """ Shutdown the app. """
+        self.proc.terminate()
+        self.profiler.time()
+        
+    def getUrl(self,path):
+        '''
+        get the url for the given path
+        
+        Args:
+            path(str): the path
+        Returns:
+            str: the url for the path
+        
+        '''
+        url=f"http://{self.host}:{self.port}{path}"
+        return url
+        
+    async def getResponseHtml(self,path:str="/"):
+        '''
+        get the status and raw html for the given path
+        
+        Args:
+            path(str): the path
+        Returns:
+            status,rawhtml
+        '''
+        async with aiohttp.ClientSession() as session:
+            url=self.getUrl(path)
+            async with session.get(url) as resp:
+                rawhtml = await resp.content.read()
+                status = resp.status
+        return status,rawhtml
+                
 
 class Basetest(TestCase):
     '''
