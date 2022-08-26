@@ -7,13 +7,18 @@ quasar_directives = ['v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-
 
 
 class QuasarPage(WebPage):
+    '''
+    a Quasar based WebPage
+    '''
 
     def __init__(self, **kwargs):
+        '''
+        constructor
+        '''
         super().__init__(**kwargs)
         self.tailwind = kwargs.get('tailwind', False)
         self.template_file = 'quasar.html'
         self.quasar = True
-
 
     async def set_dark_mode(self, flag):
         try:

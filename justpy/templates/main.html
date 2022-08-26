@@ -5,7 +5,7 @@
 <script>
 
     {% if page_options.redirect %}
-        location.href = '{{ page_options.redirect }}';
+        location.href = '{{ page_options.redirect|safe }}';
     {%endif %}
 
     var websocket_ready = false;

@@ -133,4 +133,5 @@ def pydeck_demo(request):
     return wp
 
 
-jp.justpy(pydeck_demo, VEGA=True)
+from  examples.basedemo import Demo
+Demo('uber pydeck demo',pydeck_demo, VEGA=True)

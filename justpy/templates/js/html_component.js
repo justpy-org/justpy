@@ -72,7 +72,7 @@ Vue.component('html_component', {
                 return
             }
             if (event.type == 'drop') {
-
+                event.preventDefault();
             }
             if (event.type == 'submit') {
                 var form_reference = this.$el;
@@ -81,11 +81,7 @@ Vue.component('html_component', {
                 event.stopPropagation();
                 var form_elements_list = [];
                 var form_elements = form_reference.elements;
-                var reader = new FileReader();
-                var file_readers = [];
-                var reader_ready = [];
-                var file_content = [];
-                var file_element_position = null;
+                var uploaders=[];
 
                 for (var i = 0; i < form_elements.length; i++) {
                     var attributes = form_elements[i].attributes;
@@ -103,15 +99,15 @@ Vue.component('html_component', {
                     attr_dict['id'] = form_elements[i].id;
 
                     if ((attr_dict['html_tag'] == 'input') && (input_type == 'file') && (files_chosen[attr_dict['id']])) {
-                        file_element_position = i;
-                        reader_ready = [];
+                        let uploader={ file_readers: [], file_content:[], file_element_position: i, reader_ready: [] };
+                        uploaders.push(uploader);
                         attr_dict['files'] = [];
                         const file_list = files_chosen[attr_dict['id']];
                         const num_files = file_list.length;
                         for (let j = 0; j < num_files; j++) {
-                            reader_ready.push(false);
-                            file_content.push('pending');
-                            file_readers.push(new FileReader());
+                            uploader.reader_ready.push(false);
+                            uploader.file_content.push('pending');
+                            uploader.file_readers.push(new FileReader());
                             attr_dict['files'].push({
                                 file_content: 'pending',
                                 name: file_list[j].name,
@@ -121,11 +117,12 @@ Vue.component('html_component', {
                             });
                         }
                         for (let j = 0; j < num_files; j++) {
-                            file_readers[j].onload = function (e) {
-                                file_content[j] = e.target.result.substring(e.target.result.indexOf(",") + 1);
-                                reader_ready[j] = true;
+                            uploader.file_readers[j].onload = function (e) {
+                                console.log("loaded");
+                                uploader.file_content[j] = e.target.result.substring(e.target.result.indexOf(",") + 1);
+                                uploader.reader_ready[j] = true;
                             };
-                            file_readers[j].readAsDataURL(file_list[j]);
+                            uploader.file_readers[j].readAsDataURL(file_list[j]);
                         }
                     }
 
@@ -133,13 +130,16 @@ Vue.component('html_component', {
                 }
 
                 function check_readers() {
-                    if (reader_ready.every(function (x) {
+                    reader_ready_all=uploaders.flatMap((uploader)=> uploader.reader_ready);
+                    if (reader_ready_all.every(function (x) {
                         return x
                     })) {
-                        const file_element = form_elements_list[file_element_position];
+                        for (uploader of uploaders) {
+                            const file_element = form_elements_list[uploader.file_element_position];
 
-                        for (let i = 0; i < file_element.files.length; i++) {
-                            file_element.files[i].file_content = file_content[i];
+                            for (let i = 0; i < file_element.files.length; i++) {
+                                file_element.files[i].file_content = uploader.file_content[i];
+                            }
                         }
                         eventHandler(props, event, form_elements_list);
                         return;
@@ -149,7 +149,7 @@ Vue.component('html_component', {
                     setTimeout(check_readers, 300);
                 }
 
-                if (file_element_position === null) {
+                if (uploaders.length==0) {
                     eventHandler(props, event, form_elements_list);
                 } else {
                     check_readers();

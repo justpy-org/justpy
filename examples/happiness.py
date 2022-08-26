@@ -138,4 +138,5 @@ def corr_stag_test():
     wp.d = jp.Div(a=wp, classes='flex flex-wrap')
     return(wp)
 
-jp.justpy(happiness_plot)
+from  examples.basedemo import Demo
+Demo('happiness plot demo',happiness_plot)

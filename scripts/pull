@@ -1,0 +1,14 @@
+#!/bin/bash
+# WF 2022-08-21
+# cherry pick a pull request
+git config list > /dev/null 2>&1
+if [ $? -ne 0 ] 
+then
+   echo "assuming this is in docker $HOSTNAME"
+   echo "setting git config user.email to allow pull"
+   git config user.email "$HOSTNAME@localhost"
+   git config pull.rebase false
+fi
+rev=$(git rev-parse --short HEAD)
+git pull origin pull/$1/head --no-edit
+git diff $rev

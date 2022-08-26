@@ -1,0 +1,11 @@
+#!/bin/bash
+# WF 2022-08-24
+# Release to  pypi
+git pull
+which flit > /dev/null
+if [ $? -ne 0 ]
+then
+  pip install flit
+fi
+flit publish
+
