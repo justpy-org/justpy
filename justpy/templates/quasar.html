@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <base href="{{request.headers.get('X-Forwarded-Prefix','') }}/"/>
-
+    
     {% include 'favicon.html' %}
 
     {% if options.tailwind %}
@@ -73,9 +72,9 @@
         {% endif %}
 
     {% else %}
-        <script src="/templates/local/jquery.js"></script>
-        <script src="/templates/local/vue.js"></script>
-        <script src="/templates/local/quasar.js"></script>
+        <script src="templates/local/jquery.js"></script>
+        <script src="templates/local/vue.js"></script>
+        <script src="templates/local/quasar.js"></script>
     {% endif %}
 
     <div id="components">
