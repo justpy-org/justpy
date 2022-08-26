@@ -3,6 +3,8 @@
     <!DOCTYPE html>
     <html>
     <head>
+        <base href="{{request.headers.get('X-Forwarded-Prefix','') }}/"/>
+
         {% include 'favicon.html' %}
 
         {% if options.tailwind %}
@@ -12,10 +14,10 @@
                 <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.4.x/dist/typography.min.css">
                 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/utilities.min.css">
             {% else %}
-                <link href="/templates/local/tailwind/base.css" rel="stylesheet">
-                <link href="/templates/local/tailwind/components.css" rel="stylesheet">
-                <link href="/templates/local/tailwind/typography.css" rel="stylesheet">
-                <link href="/templates/local/tailwind/utilities.css" rel="stylesheet">
+                <link href="templates/local/tailwind/base.css" rel="stylesheet">
+                <link href="templates/local/tailwind/components.css" rel="stylesheet">
+                <link href="templates/local/tailwind/typography.css" rel="stylesheet">
+                <link href="templates/local/tailwind/utilities.css" rel="stylesheet">
             {% endif %}
             <style>
                 {% include 'css/form.css' %}
@@ -27,8 +29,8 @@
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"/>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
         {% else %}
-            <link rel="stylesheet" href="/templates/local/fontawesome/css/all.min.css"/>
-            <link rel="stylesheet" href="/templates/local/animate.css"/>
+            <link rel="stylesheet" href="templates/local/fontawesome/css/all.min.css"/>
+            <link rel="stylesheet" href="templates/local/animate.css"/>
         {% endif %}
 
         <style>
