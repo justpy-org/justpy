@@ -11,8 +11,7 @@ import os
 import getpass
 from unittest import TestCase
 import time
-from multiprocessing import Process
-
+from threading import Thread
 
 class BaseAsynctest(asynctest.TestCase):
     '''
@@ -20,6 +19,7 @@ class BaseAsynctest(asynctest.TestCase):
     '''
     # https://github.com/encode/starlette/blob/master/docs/testclient.md
     # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
+    # https://github.com/encode/uvicorn/discussions/1103
 
     async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.2,debug=False,profile=True):
         """ Bring server up. 
@@ -38,19 +38,19 @@ class BaseAsynctest(asynctest.TestCase):
         self.profile=profile
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
-        self.proc = Process(target=jp.justpy,
+        self.thread = Thread(target=jp.justpy,
                             args=(wpfunc,),
                             kwargs={
                                 "host": self.host,
                                 "port": self.port,
                             },
                             daemon=True)
-        self.proc.start()
+        self.thread.start()
         await asyncio.sleep(sleepTime)  # time for the server to start
         
     async def tearDown(self):
         """ Shutdown the app. """
-        self.proc.terminate()
+        #self.proc.terminate()
         self.profiler.time()
         
     def getUrl(self,path):
