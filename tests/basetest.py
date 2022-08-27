@@ -84,14 +84,17 @@ class BaseAsynctest(asynctest.TestCase):
         """ Shutdown the app. """
         #self.cancel()
         # https://stackoverflow.com/a/59089890/1497139
-        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
-        [task.cancel() for task in tasks]
-        await asyncio.gather(*tasks)
+        #tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+        #[task.cancel() for task in tasks]
+        #await asyncio.gather(*tasks)
         # https://stackoverflow.com/questions/58133694/graceful-shutdown-of-uvicorn-starlette-app-with-websockets
         if self.server:
             self.server.should_exit = True
             self.server.force_exit = True
+            await asyncio.sleep(0.5)
             await self.server.shutdown()
+            pass
+        self.thread.join(timeout=1.0)
         self.profiler.time()
         
     def getUrl(self,path):

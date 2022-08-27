@@ -46,7 +46,7 @@ class TestWithSelenium(BaseAsynctest):
         d.additional_properties =['screenX', 'pageY','altKey','which','movementX','button', 'buttons']
         return wp
     
-    async def testHomePage(self):
+    async def testClickDemo(self):
         '''
         this will actually start a firefox browser and the websocket reload dialog will appear
         '''
