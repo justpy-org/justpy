@@ -22,7 +22,7 @@ class BaseAsynctest(asynctest.TestCase):
     # https://github.com/encode/uvicorn/discussions/1103
     # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
 
-    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.2,debug=False,profile=True):
+    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.5,debug=False,profile=True):
         """ Bring server up. 
         
         Args:
@@ -39,19 +39,58 @@ class BaseAsynctest(asynctest.TestCase):
         self.profile=profile
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
-        self.thread = Thread(target=jp.justpy,
-                            args=(wpfunc,),
-                            kwargs={
-                                "host": self.host,
-                                "port": self.port,
-                            },
-                            daemon=True)
+        jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False)
+        self.server=jp.getServer()
+        pass
+        #self.thread = Thread(target=jp.justpy,
+        #                    args=(wpfunc,),
+        #                    kwargs={
+        #                        "host": self.host,
+        #                        "port": self.port,
+        #                    },
+        #                    daemon=True)
+        #self.thread=Thread(target=asyncio.run, args=(self.runServer(self.server),))
+        self.thread=Thread(target=self.server.run)
         self.thread.start()
         await asyncio.sleep(sleepTime)  # time for the server to start
         
+    #
+    # arthur-tacca suggestions of 
+    # https://github.com/encode/uvicorn/discussions/1103
+    # 
+    async def _server_run(self,server):
+        '''
+        run the given uvicorn server
+        '''
+        try:
+            await server.serve()
+        finally:
+            await server.shutdown()
+            
+    def cancel(self):
+        self.loop.call_soon_threadsafe(self.task.cancel)
+            
+    async def runServer(self, server):
+        self.loop = asyncio.get_running_loop()
+        self.task = asyncio.create_task(self._server_run(server))
+        try:
+            await self.task
+        except asyncio.CancelledError:
+            pass
+        finally:
+            await server.shutdown()
+                
     async def tearDown(self):
         """ Shutdown the app. """
-        #self.proc.terminate()
+        #self.cancel()
+        # https://stackoverflow.com/a/59089890/1497139
+        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+        [task.cancel() for task in tasks]
+        await asyncio.gather(*tasks)
+        # https://stackoverflow.com/questions/58133694/graceful-shutdown-of-uvicorn-starlette-app-with-websockets
+        self.server.should_exit = True
+        self.server.force_exit = True
+        await self.server.shutdown()
         self.profiler.time()
         
     def getUrl(self,path):

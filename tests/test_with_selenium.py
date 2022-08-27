@@ -21,7 +21,7 @@ class TestWithSelenium(BaseAsynctest):
     '''
     
     async def setUp(self):
-        await BaseAsynctest.setUp(self, self.wp_to_test)
+        await BaseAsynctest.setUp(self, self.wp_to_test,port=8124)
         
         #self.firefox_path=GeckoDriverManager().install()
         #opts = FirefoxOptions()
@@ -52,8 +52,8 @@ class TestWithSelenium(BaseAsynctest):
         '''
         # do not run automatically in CI yet 
         # need to fix 
-        if Basetest.inPublicCI():
-            return
+        #if Basetest.inPublicCI():
+        #    return
         url=self.getUrl("/")
         self.browser.get(url)
         sleepTime=0.2
@@ -66,5 +66,5 @@ class TestWithSelenium(BaseAsynctest):
             div.click()
             time.sleep(sleepTime)
             self.assertEqual(f"I was clicked {i+1} times",div.text)
-        time.sleep(2)
+        self.browser.close()
         

@@ -27,6 +27,12 @@ current_dir = os.path.dirname(current_module.__file__)
 print(current_dir.replace('\\', '/'))
 print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
 
+#
+# globals
+#
+# uvicorn Server 
+jp_server = None
+
 config = Config('justpy.env')
 DEBUG = config('DEBUG', cast=bool, default=True)
 CRASH = config('CRASH', cast=bool, default=False)
@@ -104,7 +110,6 @@ def initial_func(request):
 
 func_to_run = initial_func
 startup_func = None
-
 
 def server_error_func(request):
     wp = WebPage()
@@ -373,8 +378,13 @@ async def handle_event(data_dict, com_type=0, page_event=False):
                                          'favicon': p.favicon}}
         return dict_to_send
 
+def getServer():
+    '''
+    workaround for global variable jp_server not working as expected
+    '''
+    return jp_server
 
-def justpy(func=None, *, start_server=True, websockets:bool=True, host:str=HOST, port:int=PORT, startup=None, **kwargs):
+def justpy(func=None, *, start_server:bool=True, websockets:bool=True, host:str=HOST, port:int=PORT, startup=None, init_server:bool=True,**kwargs):
     '''
     
     The main justpy entry point
@@ -386,10 +396,12 @@ def justpy(func=None, *, start_server=True, websockets:bool=True, host:str=HOST,
         host(str): the host to start from e.g. localhost or 0.0.0.0 to listen on all interfaces
         port(int): the port to use for listening
         startup: a callback for the startup phase
+        init_server(bool): if True construct the server
         kwargs: further keyword arguments
         
     '''
-    global func_to_run, startup_func, HOST, PORT
+    global jp_server,func_to_run, startup_func, HOST, PORT
+    
     HOST = host
     PORT = port
     if func:
@@ -406,13 +418,16 @@ def justpy(func=None, *, start_server=True, websockets:bool=True, host:str=HOST,
     for k, v in kwargs.items():
         template_options[k.lower()] = v
 
-    if start_server:
+    if init_server:
         if SSL_KEYFILE and SSL_CERTFILE:
-            uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL, proxy_headers=True,
+            uvicorn_config=uvicorn.config.Config(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL, proxy_headers=True,
                         ssl_keyfile=SSL_KEYFILE, ssl_certfile=SSL_CERTFILE, ssl_version=SSL_VERSION)
         else:
-            uvicorn.run(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL)
-
+            uvicorn_config=uvicorn.config.Config(app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL)
+        jp_server = uvicorn.Server(uvicorn_config)
+        if start_server:
+            jp_server.run()
+   
     return func_to_run
 
 

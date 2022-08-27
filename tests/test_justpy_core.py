@@ -32,7 +32,3 @@ class TestJustpyCore(BaseAsynctest):
         debug=True
         if debug:
             print(html)
-
-    
-    
-
