@@ -88,9 +88,10 @@ class BaseAsynctest(asynctest.TestCase):
         [task.cancel() for task in tasks]
         await asyncio.gather(*tasks)
         # https://stackoverflow.com/questions/58133694/graceful-shutdown-of-uvicorn-starlette-app-with-websockets
-        self.server.should_exit = True
-        self.server.force_exit = True
-        await self.server.shutdown()
+        if self.server:
+            self.server.should_exit = True
+            self.server.force_exit = True
+            await self.server.shutdown()
         self.profiler.time()
         
     def getUrl(self,path):
