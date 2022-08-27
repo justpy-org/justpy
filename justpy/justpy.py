@@ -3,6 +3,7 @@ from starlette.responses import JSONResponse, Response
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
 from starlette.endpoints import HTTPEndpoint
+from starlette.middleware import Middleware
 from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.staticfiles import StaticFiles
@@ -86,13 +87,14 @@ template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'quasar_version': QU
                     'katex': KATEX, 'plotly': PLOTLY, 'bokeh': BOKEH, 'deckgl': DECKGL, 'vega': VEGA}
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
-
-app = Starlette(debug=DEBUG)
+# modify middleware handling according to deprecation
+# https://github.com/encode/starlette/discussions/1762
+middleware =[Middleware(GZipMiddleware)]
+if SSL_KEYFILE and SSL_CERTFILE:
+    middleware.append(Middleware(HTTPSRedirectMiddleware))
+app = Starlette(middleware=middleware,debug=DEBUG)
 app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
 app.mount('/templates', StaticFiles(directory=current_dir + '/templates'), name='templates')
-app.add_middleware(GZipMiddleware)
-if SSL_KEYFILE and SSL_CERTFILE:
-    app.add_middleware(HTTPSRedirectMiddleware)
 
 
 def initial_func(request):
