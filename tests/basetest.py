@@ -20,6 +20,7 @@ class BaseAsynctest(asynctest.TestCase):
     # https://github.com/encode/starlette/blob/master/docs/testclient.md
     # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
     # https://github.com/encode/uvicorn/discussions/1103
+    # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
 
     async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.2,debug=False,profile=True):
         """ Bring server up. 
