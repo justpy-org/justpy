@@ -124,6 +124,9 @@ QInputBase = _QInputBase
 
 @parse_dict
 class QInput(_QInputBase):
+    '''
+    https://quasar.dev/vue-components/input
+    '''
 
     html_tag = 'q-input'
     slots = ['default_slot', 'before_slot', 'after_slot', 'error_slot', 'hint_slot', 'counter_slot', 'loading_slot',
@@ -136,7 +139,7 @@ class QInput(_QInputBase):
                           'filled', 'outlined', 'borderless', 'standout', 'bottom-slots', 'rounded', 'square', 'dense',
                           'items-aligned', 'disable', 'readonly', 'value', 'type', 'debounce', 'counter', 'maxlength',
                           'autogrow', 'autofocus', 'input-class', 'input-style', 'clearable', 'clear-icon',
-                          'placeholder', 'min', 'max']
+                          'placeholder', 'min', 'max', 'loading']
 
         self.allowed_events = ['keypress', 'input', 'focus', 'blur', 'change']  # Not different from focus and blur in documentation
         self.set_keyword_events(**kwargs)

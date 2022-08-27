@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  justpy:
+    build:
+      context: ../../
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8000:8000
+    labels:
+      - traefik.http.routers.justpy.rule=PathPrefix(`/justpy`)
+      - traefik.http.services.justpy.loadbalancer.server.port=8000
+      - traefik.http.middlewares.justpy-prefix.stripprefix.prefixes=/justpy
+      - traefik.http.middlewares.justpy-prefix.stripprefix.forceSlash=false # see https://doc.traefik.io/traefik/middlewares/stripprefix/#forceslash
+      - traefik.http.routers.justpy.middlewares=justpy-prefix
+
+  # setup a proxy to test hosting on a sub-path; here localhost:8080/justpy
+  proxy:
+    image: traefik:v2.8
+    command:
+      - --providers.docker
+      - --accesslog # http access log
+      - --log #Traefik log, for configurations and errors
+      - --api # Enable API
+      - --api.insecure=true
+      - --api.dashboard=true
+    ports:
+      - "8888:80" # reverse proxy
+      - "8880:8080" # dashboard
+    volumes:
+      # Traefik must be able to listen for Docker events
+      - /var/run/docker.sock:/var/run/docker.sock

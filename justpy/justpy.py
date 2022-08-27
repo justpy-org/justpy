@@ -372,7 +372,21 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         return dict_to_send
 
 
-def justpy(func=None, *, start_server=True, websockets=True, host=HOST, port=PORT, startup=None, **kwargs):
+def justpy(func=None, *, start_server=True, websockets:bool=True, host:str=HOST, port:int=PORT, startup=None, **kwargs):
+    '''
+    
+    The main justpy entry point
+    
+    Args:
+        func: the callback to get the webpage
+        start_server(bool): if True start the server
+        websockets(bool): if True use websockets
+        host(str): the host to start from e.g. localhost or 0.0.0.0 to listen on all interfaces
+        port(int): the port to use for listening
+        startup: a callback for the startup phase
+        kwargs: further keyword arguments
+        
+    '''
     global func_to_run, startup_func, HOST, PORT
     HOST = host
     PORT = port
