@@ -4,6 +4,7 @@ Created on 2022-08-25
 @author: wf
 '''
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import justpy as jp
 import time
 
@@ -29,19 +30,16 @@ class TestWithSelenium(BaseAsynctest):
         #self.browser = webdriver.Firefox(executable_path=self.firefox_path,options=opts)
         self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),chrome_options=chrome_options)
 
-
     async def onDivClick(self, msg):
         print(msg)
         self.clickCount+=1
-        self.text= f'I was clicked {self.clickCount} times'
-        wp = msg.page
-        await wp.update()
-    
+        msg.target.text= f'I was clicked {self.clickCount} times'
+     
     async def wp_to_test(self):
         '''
         the example Webpage under test
         '''
-        wp = jp.WebPage()
+        wp = jp.WebPage(debug=True)
         self.clickCount=0
         d = jp.Div(text='Not clicked yet', a=wp, classes='w-48 text-xl m-2 p-1 bg-blue-500 text-white')
         d.on('click', self.onDivClick)
@@ -58,5 +56,15 @@ class TestWithSelenium(BaseAsynctest):
             return
         url=self.getUrl("/")
         self.browser.get(url)
-        time.sleep(1000)
+        sleepTime=0.2
+        time.sleep(sleepTime)
+        divs=self.browser.find_elements(By.TAG_NAME,"div")
+        # get the clickable div
+        div=divs[1]
+        self.assertEqual("Not clicked yet",div.text)
+        for i in range(5):
+            div.click()
+            time.sleep(sleepTime)
+            self.assertEqual(f"I was clicked {i+1} times",div.text)
+        time.sleep(2)
         
