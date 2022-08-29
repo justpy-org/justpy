@@ -1,3 +1,6 @@
+# This is the "black jack" example for justpy
+# see https://github.com/justpy-org/justpy/blob/master/examples/blackjack.py
+
 # Simplified blackjack game using https://deckofcardsapi.com/ API
 # Not all rules are implemented
 
@@ -16,9 +19,14 @@ div_classes = 'items-center px-6 py-6 border border-gray-700 text-3xl leading-6 
 
 
 class Card(jp.Img):
-# Card component: an image with predefined width and height and a transition
+    '''
+      Card component: an extended image with predefined width and height and a transition
+    '''
 
     def __init__(self, **kwargs):
+        '''
+        constructor
+        '''
         super().__init__(**kwargs)
         self.width = card_width
         self.height = card_height
@@ -35,11 +43,17 @@ class Card(jp.Img):
 
 
 async def create_deck():
+    '''
+    get a new deck
+    '''
     deck = await jp.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
     return deck['deck_id']
 
 
 async def deal(deck_id, count=1):
+    '''
+    deal
+    '''
     try:
         cards = await jp.get(f'https://deckofcardsapi.com/api/deck/{deck_id}/draw/?count={count}')
     except:
@@ -48,6 +62,9 @@ async def deal(deck_id, count=1):
 
 
 def hand_value(hand):
+    '''
+    calculate the hand value
+    '''
     value = 0
     aces = 0
     for card in hand:
@@ -65,6 +82,9 @@ def hand_value(hand):
 
 
 async def hit(self, msg):
+    '''
+    react on hit button
+    '''
     wp = msg.page
     card_dict = jp.Dict(await deal(wp.deck_id))
     card = card_dict.cards[0]
@@ -85,6 +105,9 @@ async def hit(self, msg):
 
 
 async def stand(self, msg):
+    '''
+    react on stand button
+    '''
     wp = msg.page
     # Show dealer card
     wp.card_back.set_class('hidden')
@@ -118,11 +141,17 @@ async def stand(self, msg):
 
 
 async def play_again(self, msg):
+    '''
+    react on play again button
+    '''
     wp = msg.page
     await wp.reload()
 
 
 async def blackjack():
+    '''
+    the async web page to serve
+    '''
     wp = jp.WebPage()
     wp.outer_div = jp.Div(classes='container mx-auto px-4 sm:px-6 lg:px-8 space-y-5', a=wp)
     wp.deck_id = await create_deck()
