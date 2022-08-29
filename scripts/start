@@ -1,0 +1,17 @@
+#!/bin/bash
+# WF 2022-08-29
+# helps starting examples
+export PYTHONPATH="."
+if [ $# -lt 1 ]
+then
+  echo "usage $0 module" 1>&2
+  exit 1
+fi
+module="$1.py"
+shift
+if [ ! -f "$module" ]
+then
+  echo "$module missing" 1>&2
+  exit 1
+fi
+python "$module" $@
