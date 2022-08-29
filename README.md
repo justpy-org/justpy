@@ -36,7 +36,7 @@ Our github dicussions are categorized. Please use the Category "Ideas" for featu
 
 ## Trying out with docker
 ```bash
-git clone https://github.com/elimintz/justpy
+git clone https://github.com/justpy-org/justpy
 scripts/rundocker -h
 scripts/rundocker test
 scripts/rundocker example dogs
