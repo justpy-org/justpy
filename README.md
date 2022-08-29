@@ -17,6 +17,10 @@
 [justpy demos](https://jpdemo.bitplan.com)
 
 ### Examples
+[clickdemo.py](https://github.com/justpy-org/justpy/blob/master/examples/clickdemo.py)
+
+![clickdemo](https://user-images.githubusercontent.com/1336221/187233892-c97aa972-4445-4e12-a3a6-3a23538247b1.gif)
+
 [dogs.py](https://github.com/justpy-org/justpy/blob/master/examples/dogs.py)
 
 ![dogs_animated](https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif)
