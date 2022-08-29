@@ -1,3 +1,5 @@
+# This is the "dogs" example for justpy
+# see https://github.com/justpy-org/justpy/blob/master/examples/dogs.py
 from justpy import *
 # https://dog.ceo/api/breeds/list/all    dict of all breeds under
 
@@ -23,7 +25,10 @@ breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'basen
               'terrier-silky', 'terrier-tibetan', 'terrier-toy', 'terrier-westhighland', 'terrier-wheaten',
               'terrier-yorkshire', 'vizsla', 'weimaraner', 'whippet', 'wolfhound-irish']
 
-async def dog_test(request):
+async def dog_test(_request):
+    '''
+    create a reactive webpage for dog pictures taken from 
+    '''
     wp = QuasarPage()
     wp.body_style = 'overflow: hidden'
     bp = parse_html("""
@@ -86,7 +91,10 @@ async def dog_test(request):
         breed_item.on('click', change_breed)
         breed_list.add(breed_item)
 
-    def add_thumbnail(self, msg):
+    def add_thumbnail(self, _msg):
+        '''
+        add a thumbnail
+        '''
         list_item_html = f'''<q-item clickable v-ripple>
                             <q-item-section thumbnail>
                                 <img src="{self.src}"/>
@@ -101,16 +109,29 @@ async def dog_test(request):
         list_item.name_dict['delete'].list = bp.name_dict['thumbnail_list']
         list_item.name_dict['delete'].list_item = list_item
         bp.name_dict['thumbnail_list'].add(list_item)
-        def display_thumbnail(self, msg):
+        
+        
+        def display_thumbnail(self, _msg):
+            '''
+            display a thumbnail
+            '''
             main_image.src = self.src
 
         list_item.on('mouseenter', display_thumbnail)
-        def delete_list_item(self, msg):
+        
+        def delete_list_item(self, _msg):
+            '''
+            delete a list item
+            '''
             self.list.remove(self.list_item)
+            
         list_item.name_dict['delete'].on('click',delete_list_item)
 
 
     async def change_pic(self, msg):
+        '''
+        change the pictures
+        '''
         # https://dog.ceo/api/breed/bulldog/french/images/random
         if '-' in self.breed:
             b = self.breed.split('-')
@@ -122,12 +143,19 @@ async def dog_test(request):
 
 
     async def next_pic(self, msg):
+        '''
+        react on next picture clicked
+        '''
         return await change_pic(main_image, msg)
 
+    # allow clicking an image 
     main_image.on('click', change_pic)
     bp.name_dict['next_picture'].on('click', next_pic)
+    
+    # initial picture
     await change_pic(main_image, {})
     return wp
 
+# initialize the demo
 from  examples.basedemo import Demo
 Demo('dogs demo',dog_test)
