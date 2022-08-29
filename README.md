@@ -20,7 +20,6 @@
 [dogs.py](https://github.com/justpy-org/justpy/blob/master/examples/dogs.py)
 ![dogs_animated](https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif)
 
-
 ## Questions and Discussions
 Please file Bugs you found checking the issues Badge Link above.
 
