@@ -18,8 +18,11 @@
 
 ### Examples
 [dogs.py](https://github.com/justpy-org/justpy/blob/master/examples/dogs.py)
+
 ![dogs_animated](https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif)
+
 [blackjack.py](https://github.com/justpy-org/justpy/blob/master/examples/blackjack.py)
+
 ![blackjack_animated](https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif)
 
 ## Questions and Discussions
