@@ -12,7 +12,7 @@ Run the following example that uses the Matplotlib component:
 import justpy as jp
 import matplotlib.pyplot as plt
 
-def plot_test():
+def plot_test1():
     wp = jp.WebPage()
     plt.plot([0, 1, 4, 9], marker='*', markersize=20, markeredgecolor='red')
     plt.title('Matplotlib Example')
@@ -24,7 +24,7 @@ def plot_test():
     plt.close()
     return wp
 
-jp.justpy(plot_test)
+jp.justpy(plot_test1)
 ```
 
 The line `jp.Matplotlib(a=wp)` creates a Matplotlib instance and adds it to `wp`. 
@@ -45,7 +45,7 @@ In the example below, the first chart created is displayed second and the second
 import justpy as jp
 import matplotlib.pyplot as plt
 
-def plot_test():
+def plot_test2():
     wp = jp.WebPage()
     
     first_figure = plt.figure()
@@ -71,7 +71,7 @@ def plot_test():
     plt.close(second_figure)
     return wp
 
-jp.justpy(plot_test)
+jp.justpy(plot_test2)
 ```
 
 ## Updating charts following events
@@ -83,7 +83,7 @@ import justpy as jp
 import matplotlib.pyplot as plt
 
 
-def plot_test():
+def plot_test3():
     wp = jp.WebPage()
     
     f = plt.figure()
@@ -115,7 +115,7 @@ def plot_test():
     return wp
 
 
-jp.justpy(plot_test)
+jp.justpy(plot_test3)
 ```
 
 The chart component itself is a JustPy component so it responds also to events. In the example below, clicking the button adds a point to the chart while clicking the chart subtracts a point.
@@ -125,7 +125,7 @@ import justpy as jp
 import matplotlib.pyplot as plt
 
 
-def plot_test():
+def plot_test4():
     wp = jp.WebPage()
     print(f'start {plt.get_fignums()}')
     f = plt.figure()
@@ -170,7 +170,7 @@ def plot_test():
     return wp
 
 
-jp.justpy(plot_test)
+jp.justpy(plot_test4)
 ```
 
 ## Multiple charts on a page
@@ -182,7 +182,7 @@ import justpy as jp
 import matplotlib.pyplot as plt
 
 
-def plot_test():
+def plot_test5():
     wp = jp.WebPage()
     print(f'start {plt.get_fignums()}')
     f = plt.figure(figsize=(2, 2))
@@ -230,7 +230,7 @@ def plot_test():
 
     return wp
 
-jp.justpy(plot_test)
+jp.justpy(plot_test5)
 ```
 
 If we want to treat each chart separately in the event handlers we need to modify the program. In the program below clicking the button adds a point to all charts while clicking each chart subtracts a point only from the chart clicked.
@@ -263,7 +263,7 @@ def subtract_point(self, msg):
     self.set_figure(f)
     plt.close(f)
 
-def plot_test():
+def plot_test6():
     wp = jp.WebPage()
     f = plt.figure(figsize=(2, 2))
     plt.plot([0, 1, 4, 9], marker='*', markersize=20, markeredgecolor='red')
@@ -288,7 +288,7 @@ def plot_test():
     return wp
 
 
-jp.justpy(plot_test)
+jp.justpy(plot_test6)
 ```
 
 In order to handle each chart separately, we create 20 distinct chart elements and assign to the button the list of the chart elements we created and then iterate over the charts in the button's click event handler.
@@ -314,7 +314,7 @@ import matplotlib.pyplot as plt
 
 # All examples from https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
 
-def plot_test():
+def plot_test7():
     wp = jp.WebPage()
 
     jp.Div(text='Series Plot', a=wp, classes='text-white bg-blue-500 text-center text-xl')
@@ -357,7 +357,7 @@ def plot_test():
 
     return wp
 
-jp.justpy(plot_test)
+jp.justpy(plot_test7)
 ```
 
 If you don't need to customize the chart for each request, you can speed up your website's response time by generating the charts once and serving the same chart elements with each request.
@@ -417,10 +417,10 @@ def create_page():
 
 wp = create_page()
 
-def plot_test():
+def plot_test8():
     return wp
 
-jp.justpy(plot_test)
+jp.justpy(plot_test8)
 ```
  
 ## Creating charts with seaborn
@@ -487,9 +487,9 @@ def create_page():
 
 wp = create_page()
 
-def plot_test():
+def plot_test9():
     return wp
 
-jp.justpy(plot_test)
+jp.justpy(plot_test9)
 ```
 
