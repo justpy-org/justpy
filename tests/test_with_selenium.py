@@ -14,6 +14,7 @@ from tests.basetest import BaseAsynctest, Basetest
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+import os
 
 class TestWithSelenium(BaseAsynctest):
     '''
@@ -21,6 +22,8 @@ class TestWithSelenium(BaseAsynctest):
     '''
     
     async def setUp(self):
+        # debug https://github.com/SergeyPirogov/webdriver_manager/issues/433
+        # print (os.environ['GH_TOKEN'])
         await BaseAsynctest.setUp(self, self.wp_to_test,port=8124)
         
         #self.firefox_path=GeckoDriverManager().install()
@@ -28,7 +31,8 @@ class TestWithSelenium(BaseAsynctest):
         chrome_options = Options()
         chrome_options.headless=Basetest.inPublicCI()
         #self.browser = webdriver.Firefox(executable_path=self.firefox_path,options=opts)
-        self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),chrome_options=chrome_options)
+        chrome_executable=ChromeDriverManager(cache_valid_range=365).install()
+        self.browser = webdriver.Chrome(service=ChromeService(chrome_executable),chrome_options=chrome_options)
 
     async def onDivClick(self, msg):
         print(msg)
