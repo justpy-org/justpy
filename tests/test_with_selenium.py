@@ -59,8 +59,8 @@ class TestWithSelenium(BaseAsynctest):
         '''
         # do not run automatically in CI yet 
         # need to fix 
-        #if Basetest.inPublicCI():
-        #    return
+        if Basetest.inPublicCI():
+            return
         await asyncio.sleep(self.sleepTime)
         url=self.getUrl("/")
         self.browser.get(url)
