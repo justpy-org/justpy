@@ -49,12 +49,12 @@ class TestRouteAndUrlFor(Basetest):
         test url for functionality
         '''
         app = jp.app
-        client = TestClient(app)
-        
-        response=client.get("/hello")    
-        self.assertEqual(200,response.status_code)
-        debug=self.debug
-        if debug:
-            print(response.text)
-        self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
+        if not self.inPublicCI():
+            with  TestClient(app) as client:
+                response=client.get("/hello")    
+                self.assertEqual(200,response.status_code)
+                debug=self.debug
+                if debug:
+                    print(response.text)
+                self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
         pass

@@ -14,6 +14,10 @@ class JpRoute(Route):
     routesByPath={}
     
     @classmethod
+    def reset(cls):
+        JpRoute.routesByPath={}
+        
+    @classmethod
     def getFuncForRequest(cls,request):
         '''
         get the function for the given request
