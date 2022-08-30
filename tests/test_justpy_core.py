@@ -32,3 +32,5 @@ class TestJustpyCore(BaseAsynctest):
         debug=True
         if debug:
             print(html)
+            with open("/tmp/justpy.html", "w") as html_file:
+                print(html, file=html_file)

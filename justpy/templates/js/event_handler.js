@@ -1,6 +1,9 @@
 // {% raw %}
-
+/**
+ * justpy event handler
+ */
 var files_chosen = {};
+
 
 function eventHandler(props, event, form_data, aux) {
 
