@@ -2,7 +2,7 @@
 <html>
 <!--This is a justpy application using the quasar.html template-->
 <head>
-    {% include 'favicon.html' %}
+    {%- include 'favicon.html' -%}
     {% if options.tailwind %}
             {% if not options.no_internet %}
                 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/base.min.css">
@@ -15,11 +15,8 @@
                 <link href="/templates/local/tailwind/typography.css" rel="stylesheet">
                 <link href="/templates/local/tailwind/utilities.css" rel="stylesheet">
             {% endif %}
-            <style>
-                {% include 'css/form.css' %}
-            </style>
+            <link href="/template/css/form.css" rel="stylesheet">
         {% endif %}
-
     {% if not options.no_internet %}
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
               rel="stylesheet" type="text/css">
@@ -42,21 +39,17 @@
         <link rel="stylesheet" href="/templates/local/animate.css"/>
         <link rel="stylesheet" href="/templates/local/quasar.css"/>
     {% endif %}
-
     <style>
         {{ page_options.css | safe}}
     </style>
     {{ page_options.head_html | safe }}
     {% include 'optional_packages.html' %}
 </head>
-
-
 <body class="" style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
 {% if html %}
     {{ html | safe }}
 {% else %}
     {{ page_options.body_html | safe }}
-
     {% if not options.no_internet %}
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
@@ -65,17 +58,13 @@
         {% else %}
             <script src="https://cdn.jsdelivr.net/npm/quasar@^1.8.5/dist/quasar.umd.min.js"></script>
         {% endif %}
-
     {% else %}
         <script src="/templates/local/jquery.js"></script>
         <script src="/templates/local/vue.js"></script>
         <script src="/templates/local/quasar.js"></script>
     {% endif %}
-
     <div id="components">
-
     </div>
-
     <script>
         console.log('Quasar Version ' + Quasar.version);
         {% if page_options.dark %}
@@ -85,9 +74,7 @@
             Quasar.Dark.set("auto");
         {% endif %}
     </script>
-
     {% include 'main.html' %}
-
 {% endif %}
 </body>
 </html>

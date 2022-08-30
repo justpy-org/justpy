@@ -1,0 +1,11 @@
+/* needed for exporting menu - used to be part of highcharts.html template */
+hr {
+    display: block;
+    margin-before: 0.5em;
+    margin-after: 0.5em;
+    margin-start: auto;
+    margin-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}

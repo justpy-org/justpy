@@ -1,17 +1,5 @@
-<style>
-    {#needed for exporting menu#}
-    hr {
-        display: block;
-        margin-before: 0.5em;
-        margin-after: 0.5em;
-        margin-start: auto;
-        margin-end: auto;
-        overflow: hidden;
-        border-style: inset;
-        border-width: 1px;
-    }
-</style>
-{% if not options.no_internet %}
+    <link href="/template/css/highcharts_jp.css" rel="stylesheet">
+{%- if not options.no_internet %}
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
     <script src="https://code.highcharts.com/stock/modules/histogram-bellcurve.js"></script>
@@ -42,22 +30,20 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
     <script src="https://code.highcharts.com/modules/xrange.js"></script>
-
     <script src="http://code.highcharts.com/maps/modules/map.js"></script>
-
     {#Must be last#}
     <script src="https://code.highcharts.com/stock/modules/boost.js"></script>
-{% else %}
+{%- else %}
     <script src="/templates/local/highcharts.js"></script>
-{% endif %}
-<script>
+{%- endif %}
+    <script>
     Highcharts.setOptions({
         lang: {
             thousandsSep: ','
         }
     });
-    {% if page_options.highcharts_theme %}
+    {%- if page_options.highcharts_theme %}
         {% set theme_file = 'highcharts/' + page_options.highcharts_theme + '.js' %}
         {% include theme_file %}
-    {% endif %}
-</script>
+    {%- endif %}
+    </script>

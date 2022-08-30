@@ -1,7 +1,7 @@
-{% for file_name in options.component_file_list %}
+{%- for file_name in options.component_file_list %}
     <script src={{ url_for(options.static_name, path=file_name) }}></script>
 {%- endfor %}
-<script>
+    <script>
     {% if page_options.redirect %}
         location.href = '{{ page_options.redirect|safe }}';
     {%endif %}
@@ -11,17 +11,16 @@
     {% if page_options.display_url is not none %}
         window.history.pushState("", "", '{{ page_options.display_url }}');
     {%endif %}
-
     var page_id = {{ page_id | safe }};
     var websocket_id = '';
     var use_websockets = JSON.parse('{{ use_websockets }}');
     var justpyComponents = {{ justpy_dict.replace('</' + 'script>', '</" + "script>') | safe }};
-</script>
+    </script>
 {%- for file_name in ["justpy_core","event_handler","html_component","quasar_component",
 	"chartjp","aggrid","iframejp","deckgl","altairjp","plotlyjp","bokehjp","katexjp","editorjp"] %}
     <script src='/templates/js/{{file_name}}.js'></script>
 {%- endfor %}
-<script>
+    <script>
     {%- for event in page_options.events %}
         document.addEventListener('{{ event }}', function (evt) {
             console.log(evt);
@@ -48,7 +47,6 @@
             send_to_server(e, 'page_event', false);
         });
     {%- endfor %}
-
     if (use_websockets) {
         console.log(location.protocol + ' Domain: ' + document.domain);
         if (location.protocol === 'https:') {
