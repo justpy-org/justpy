@@ -44,7 +44,7 @@ class BaseAsynctest(asynctest.TestCase):
         self.proc=None
         self.thread=None
         if sleepTime is None:
-            sleepTime = 2.0 if Basetest.inPublicCI() else 0.25
+            sleepTime = 2.0 if Basetest.inPublicCI() else 0.5
         self.sleepTime=sleepTime
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
