@@ -63,15 +63,14 @@ class TestWithSelenium(BaseAsynctest):
         #    return
         url=self.getUrl("/")
         self.browser.get(url)
-        sleepTime=0.2
-        time.sleep(sleepTime)
+        time.sleep(self.sleepTime)
         divs=self.browser.find_elements(By.TAG_NAME,"div")
         # get the clickable div
         div=divs[1]
         self.assertEqual("Not clicked yet",div.text)
         for i in range(5):
             div.click()
-            time.sleep(sleepTime)
+            time.sleep(self.sleepTime)
             self.assertEqual(f"I was clicked {i+1} times",div.text)
         self.browser.close()
         

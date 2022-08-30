@@ -25,7 +25,7 @@ class BaseAsynctest(asynctest.TestCase):
     # https://github.com/encode/uvicorn/discussions/1103
     # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
 
-    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=1.0,debug=False,profile=True,mode=None):
+    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=None,debug=False,profile=True,mode=None):
         """ Bring server up. 
         
         Args:
@@ -43,6 +43,9 @@ class BaseAsynctest(asynctest.TestCase):
         self.server=None
         self.proc=None
         self.thread=None
+        if sleepTime is None:
+            sleepTime = 2.0 if Basetest.inPublicCI() else 0.5
+        self.sleepTime=sleepTime
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
         if mode is None:
@@ -107,10 +110,10 @@ class BaseAsynctest(asynctest.TestCase):
         if self.server:
             self.server.should_exit = True
             self.server.force_exit = True
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(self.sleepTime)
             await self.server.shutdown()
         if self.thread:
-            self.thread.join(timeout=1.0)
+            self.thread.join(timeout=self.sleepTime)
         if self.proc:
             pid = self.proc.pid
             parent = psutil.Process(pid)
