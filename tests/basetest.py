@@ -25,7 +25,7 @@ class BaseAsynctest(asynctest.TestCase):
     # https://github.com/encode/uvicorn/discussions/1103
     # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
 
-    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.5,debug=False,profile=True,mode=None):
+    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=1.0,debug=False,profile=True,mode=None):
         """ Bring server up. 
         
         Args:
