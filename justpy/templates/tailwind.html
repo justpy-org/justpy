@@ -3,25 +3,20 @@
   <!--This is a justpy application using the tailwind.html template-->
   <head>
         {% include 'favicon.html' %}
-
         {% if options.tailwind %}
-            {% if not options.no_internet %}
+            {%- if not options.no_internet %}
                 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/base.min.css">
                 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/components.min.css">
                 <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.4.x/dist/typography.min.css">
                 <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/utilities.min.css">
-            {% else %}
+            {%- else %}
                 <link href="/templates/local/tailwind/base.css" rel="stylesheet">
                 <link href="/templates/local/tailwind/components.css" rel="stylesheet">
                 <link href="/templates/local/tailwind/typography.css" rel="stylesheet">
                 <link href="/templates/local/tailwind/utilities.css" rel="stylesheet">
-            {% endif %}
-            <style>
-                {% include 'css/form.css' %}
-            </style>
+            {%- endif %}
+            	<link href="/template/css/form.css" rel="stylesheet">
         {% endif %}
-
-
         {% if not options.no_internet %}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"/>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
@@ -29,13 +24,10 @@
             <link rel="stylesheet" href="/templates/local/fontawesome/css/all.min.css"/>
             <link rel="stylesheet" href="/templates/local/animate.css"/>
         {% endif %}
-
         <style>
             {{ page_options.css }}
         </style>
-
         {{ page_options.head_html | safe }}
-
         {% if not html %}
             {% if not options.no_internet %}
                 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -45,23 +37,14 @@
                 <script src="/templates/local/vue.js"></script>
             {% endif %}
         {% endif %}
-
         {% include 'optional_packages.html' %}
-
     </head>
-
-
     <body style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
     {{ page_options.body_html | safe }}
     <div id="components">
-
     </div>
-
     {% include 'main.html' %}
-
   </body>
 </html>
 {% else %}{{ html | safe }}
 {% endif %}
-
-

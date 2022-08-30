@@ -229,8 +229,7 @@
             send_to_server(e);
         });
     }
-
-    {% if page_options.reload_interval %}
+    {%- if page_options.reload_interval %}
         setInterval(function () {
             $.ajax({
                 type: "POST",
@@ -245,7 +244,7 @@
                 dataType: 'json'
             });
         }, 1000 * {{ page_options.reload_interval }});
-    {% endif %}
+    {%- endif %}
 
     var app1 = new Vue({
         el: '#components',
@@ -266,5 +265,4 @@
             return h('div', {}, comps);
         }
     });
-
-</script>
+    </script>
