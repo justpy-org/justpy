@@ -9,6 +9,7 @@ and https://github.com/justpy-org/justpy/issues/389
 '''
 import justpy as jp
 from starlette.testclient import TestClient
+from justpy.routing import JpRoute
 from tests.basetest import Basetest
 
 @jp.SetRoute("/bye", name = "bye")
@@ -24,13 +25,31 @@ def hello_function(request):
     print("request  = ", request.url_for("bye"))
     return wp
 
-class TestUrlFor(Basetest):
+class TestRouteAndUrlFor(Basetest):
     '''
     test the url_for functionality
     '''
     
+    def testRoute(self):
+        '''
+        test the routing
+        '''
+        self.assertEqual(2,len(JpRoute.routesByPath))
+        debug=self.debug
+        #debug=True
+        for route in JpRoute.routesByPath.values():
+            routeAsText=str(route)
+            if debug:
+                print(routeAsText)
+        for path in ["/bye","/hello"]:
+            self.assertTrue(path in JpRoute.routesByPath)
+       
     def testUrlFor(self):
+        '''
+        test url for functionality
+        '''
         app = jp.app
         client = TestClient(app)
+        
         if not self.inPublicCI():
             client.get("/hello")    

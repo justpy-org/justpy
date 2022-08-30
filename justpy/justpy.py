@@ -17,7 +17,7 @@ from .quasarcomponents import *
 #from .misccomponents import *
 from .meadows import *
 from .pandas import *
-from .routing import Route, SetRoute
+from .routing import JpRoute,SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, uuid, sys, os, traceback, fnmatch
 from ssl import PROTOCOL_SSLv23
@@ -156,11 +156,9 @@ class Homepage(HTTPEndpoint):
                 request.session_id = request.state.session_id
                 new_cookie = True
                 logging.debug(f'New session_id created: {request.session_id}')
-        for route in Route.instances:
-            func = route.matches(request['path'], request)
-            if func:
-                func_to_run = func
-                break
+        func=JpRoute.getFuncForRequest(request)
+        if func:
+            func_to_run = func
         func_parameters = len(inspect.signature(func_to_run).parameters)
         assert func_parameters < 2, f"Function {func_to_run.__name__} cannot have more than one parameter"
         if inspect.iscoroutinefunction(func_to_run):
@@ -414,7 +412,7 @@ def justpy(func=None, *, start_server:bool=True, websockets:bool=True, host:str=
         WebPage.use_websockets = True
     else:
         WebPage.use_websockets = False
-    Route("/{path:path}", func_to_run, last=True, name='default')
+    JpRoute("/{path:path}", func_to_run, name='default')
     for k, v in kwargs.items():
         template_options[k.lower()] = v
 

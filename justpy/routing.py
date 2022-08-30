@@ -1,54 +1,83 @@
-from starlette.routing import compile_path
+from starlette.routing import Route
 import typing
 
-
-class Route:
-
-    # Modified code from Starlette routing.py: https://github.com/encode/starlette/blob/master/starlette/routing.py
-    # Copyright © 2018, Encode OSS Ltd. All rights reserved.
-    # You may obtain a copy of the License at: https://github.com/encode/starlette/blob/master/LICENSE.md
-
-    instances = []
-    id = 0
-
-    def __init__(self, path: str, func_to_run: typing.Callable, last=False, **kwargs):
-
-        assert path.startswith("/"), "Routed paths must start with '/'"
-        self.path = path
-        self.func_to_run = func_to_run
-        self.name = kwargs.get('name', None)
-        self.path_regex, self.path_format, self.param_convertors = compile_path(path)
-        self.id = Route.id
-        Route.id += 1
-        if last:
-            Route.instances.append(self)
-        else:
-            Route.instances.insert(0, self)
-
-    def matches(self, path, request):
-        match = self.path_regex.match(path)
-        if match:
-            matched_params = match.groupdict()
-            for key, value in matched_params.items():
-                matched_params[key] = self.param_convertors[key].convert(value)
-            request.path_params.update(matched_params)
-            return self.func_to_run
-        else:
-            return False
-
+class JpRoute(Route):
+    '''
+    extends starlette Routing
+    
+    see 
+       https://www.starlette.io/routing/
+    
+       https://github.com/encode/starlette/blob/master/starlette/routing.py
+    '''
+    # map for all routes that are defined
+    routesByPath={}
+    
+    @classmethod
+    def getFuncForRequest(cls,request):
+        '''
+        get the function for the given request
+        
+        Args:
+            request: the starlette request
+            
+        Returns:
+            Callable: the function that is bound to the path of the given request
+        '''
+        scope=request.scope
+        return JpRoute.getFuncForScope(scope)
+    
+    @classmethod
+    def getFuncForScope(cls,scope):
+        '''
+        get the function (endpoint in starlette jargon) for the given scope
+        
+        Args:
+            path: the path to check
+        Returns:
+            Callable: the function that is bound to the given path 
+        '''
+        for _path,route in JpRoute.routesByPath.items():
+            if route.matches(scope):
+                func_to_run=route.endpoint
+                return func_to_run
+        return None
+     
+    def __init__(self, path: str, endpoint: typing.Callable,**kwargs):
+        '''
+        constructor
+        '''
+        # call super constructor
+        Route.__init__(self, path=path,endpoint=endpoint,**kwargs)
+        # remember my routes 
+        JpRoute.routesByPath[path]=self
+        
     def __repr__(self):
-        return f'{self.__class__.__name__}(name: {self.name}, id: {self.id}, path: {self.path}, format: {self.path_format}, func: {self.func_to_run.__name__}, regex: {self.path_regex})'
-
-
+        return f'{self.__class__.__name__}(name: {self.name}, path: {self.path}, format: {self.path_format}, func: {self.endpoint.__name__}, regex: {self.path_regex})'
+  
 class SetRoute:
+    '''
+    Justpy specific route annotation
+    '''
 
     def __init__(self, route, **kwargs):
+        '''
+        constructor
+        
+        Args:
+            route(Route): the starlette route to set
+            **kwargs: Arbitrary keyword arguments.
+        '''
         self.route = route
         self.kwargs = kwargs
 
-
-    def __call__(self, fn, **kwargs):
-        Route(self.route, fn,  name=self.kwargs.get('name', None))
+    def __call__(self, fn, **_instance_kwargs):
+        '''
+        Args:
+            fn(Callable): the function
+            **_instance_kwargs: Arbitrary keyword arguments (ignored).
+        
+        '''
+        # create a new route
+        JpRoute(path=self.route, endpoint=fn,  name=self.kwargs.get('name', None))
         return fn
-
-
