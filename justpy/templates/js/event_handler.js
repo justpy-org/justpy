@@ -4,7 +4,6 @@
  */
 var files_chosen = {};
 
-
 function eventHandler(props, event, form_data, aux) {
 
     if (props.jp_props.debug) {

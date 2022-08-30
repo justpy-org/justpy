@@ -1,49 +1,13 @@
 {% for file_name in options.component_file_list %}
     <script src={{ url_for(options.static_name, path=file_name) }}></script>
 {%- endfor %}
-
-{% for file_name in ["event_handler","html_component","quasar_component",
-	"chartjp","aggrid","iframejp","deckgl","altairjp","plotlyjp","bokehjp","katexjp","editorjp"] %}
-    <script src='/templates/js/{{file_name}}.js'></script>
-{%- endfor %}
-
 <script>
-	var websocket_ready = false;
-    
-	let reload_timeout = 2000;
-    let reload_started = false;
-
-    function try_reload_site() {
-        fetch(window.location)
-        .then(function(response) {
-            console.log('Site Available, reloading');
-            window.location.reload();
-        })
-        .catch(function(error) {
-            console.log('Site Unavailable (', error.message, '), retrying in ', reload_timeout, 'ms');
-            setTimeout(try_reload_site, reload_timeout);
-            if (reload_timeout < 60000)
-                reload_timeout += 1000;
-        });
-    }
-
-    function reload_site() {
-        if (!reload_started) {
-            console.log("Reloading site...");
-            reload_started = true;
-            setTimeout(try_reload_site, reload_timeout);
-        }
-    }
-
     {% if page_options.redirect %}
         location.href = '{{ page_options.redirect|safe }}';
     {%endif %}
-
-
     {% if page_options.title is not none %}
         document.title = '{{ page_options.title }}';
     {%endif %}
-
     {% if page_options.display_url is not none %}
         window.history.pushState("", "", '{{ page_options.display_url }}');
     {%endif %}
@@ -52,10 +16,13 @@
     var websocket_id = '';
     var use_websockets = JSON.parse('{{ use_websockets }}');
     var justpyComponents = {{ justpy_dict.replace('</' + 'script>', '</" + "script>') | safe }};
-    var crosshairs = [];
-    var comp_dict = {};  // Hold components for running methods
-
-    {% for event in page_options.events %}
+</script>
+{%- for file_name in ["justpy_core","event_handler","html_component","quasar_component",
+	"chartjp","aggrid","iframejp","deckgl","altairjp","plotlyjp","bokehjp","katexjp","editorjp"] %}
+    <script src='/templates/js/{{file_name}}.js'></script>
+{%- endfor %}
+<script>
+    {%- for event in page_options.events %}
         document.addEventListener('{{ event }}', function (evt) {
             console.log(evt);
             const e = {
@@ -80,7 +47,7 @@
     }
             send_to_server(e, 'page_event', false);
         });
-    {% endfor %}
+    {%- endfor %}
 
     if (use_websockets) {
         console.log(location.protocol + ' Domain: ' + document.domain);
@@ -261,40 +228,6 @@
             };
             send_to_server(e);
         });
-    }
-
-
-    function draw_crosshair(chart, series, point) {
-
-        var
-            r = chart.renderer,
-            left = chart.plotLeft,
-            top = chart.plotTop,
-            width = chart.plotWidth,
-            height = chart.plotHeight,
-            x = point.plotX,
-            y = point.plotY;
-
-        var crosshair = r.path(['M', left, top + y, 'L', left + width, top + y, 'M', left + x, top, 'L', left + x, top + height])
-            .attr({
-                'stroke-width': 1,
-                stroke: '#D3D3D3'
-            })
-            .add();
-        crosshairs.push(crosshair);
-    }
-
-    function comp_replace(comp, comp_list) {
-        var m_id = comp['id'];
-        for (let i = 0; i < comp_list.length; i++) {
-            if (comp_list[i]['id'] == m_id) {
-                var spliced = comp_list.splice(i, 1, comp);
-            } else {
-                if (comp_list[i]['object_props']) {
-                    comp_replace(comp, comp_list[i]['object_props']);
-                }
-            }
-        }
     }
 
     {% if page_options.reload_interval %}

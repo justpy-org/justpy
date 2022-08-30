@@ -49,10 +49,15 @@ class TestRouteAndUrlFor(Basetest):
         test url for functionality
         '''
         app = jp.app
+        # see https://www.starlette.io/testclient/
         with  TestClient(app) as client:
             response=client.get("/hello")    
             self.assertEqual(200,response.status_code)
             debug=self.debug
+            debug=True
+            lines=response.text.split("\n")
             if debug:
                 print(response.text)
+                print(f"{len(lines)} lines")
             self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
+            self.assertTrue(len(lines)<500)
