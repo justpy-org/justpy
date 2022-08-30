@@ -35,6 +35,9 @@ class TestWithSelenium(BaseAsynctest):
         self.browser = webdriver.Chrome(service=ChromeService(chrome_executable),chrome_options=chrome_options)
 
     async def onDivClick(self, msg):
+        '''
+        handle the click of the div
+        '''
         print(msg)
         self.clickCount+=1
         msg.target.text= f'I was clicked {self.clickCount} times'

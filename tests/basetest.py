@@ -49,7 +49,8 @@ class BaseAsynctest(asynctest.TestCase):
             if platform == "darwin":
                 mode="direct"
             else:
-                mode="process"
+                #mode="process"
+                mode="direct"
         if mode=="direct":
             jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False)
             await asyncio.sleep(sleepTime)  # time for the server to start
