@@ -22,13 +22,13 @@ class PillButton(jp.Button):
         self.set_classes('bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full')
 
 
-def comp_test():
+def comp_test1():
     wp = jp.WebPage()
     for i in range(5):
         PillButton(text='Pill Button', click='self.text="I was clicked"', a=wp, classes='m-2')
     return wp
 
-jp.justpy(comp_test)
+jp.justpy(comp_test1)
 ```
 
 Our new component, PillButton, inherits from Button and therefore will have all the attributes and functionality of Button.
@@ -52,13 +52,13 @@ class PillButton(jp.Button):
         super().__init__(**kwargs)
         self.set_classes(f'bg-{self.bg_color}-500 hover:bg-{self.bg_color}-700 text-white font-bold py-2 px-4 rounded-full')
 
-def comp_test():
+def comp_test2():
     wp = jp.WebPage()
     for color in ['blue', 'red', 'orange', 'pink']:
         PillButton(bg_color=color, text='Pill Button', click='self.text="I was clicked"', a=wp, classes='m-2')
     return wp
 
-jp.justpy(comp_test)
+jp.justpy(comp_test2)
 ```
 
 When we create the PillButton instances we set the attribute `bg_color`. Each of the four PillButton instances will have a different background color.
@@ -287,7 +287,7 @@ class CalendarDate(jp.Div):
         </div>
         """
 
-def comp_test():
+def comp_test3():
     wp = jp.WebPage()
     year = 2019
     month = 'Feb'
@@ -299,7 +299,7 @@ def comp_test():
         CalendarDate(day=day, month='Jul', year='2005', color='yellow', a=d)
     return wp
 
-jp.justpy(comp_test)
+jp.justpy(comp_test3)
 ```
 
 In this custom component we are using the template like behavior of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component `Div`. It changes only the `__init__` method and inherits all the others. 
@@ -340,7 +340,7 @@ class CalendarDate(jp.Div):
                         """
 
 
-def comp_test():
+def comp_test4():
     wp = jp.WebPage()
     year = 2019
     month = 'Feb'
@@ -353,7 +353,7 @@ def comp_test():
         c.day += 1    # Notice how the date starts from 6 and not from 5.
     return wp
 
-jp.justpy(comp_test)
+jp.justpy(comp_test4)
 ```
 
 The `react` method accepts an additional argument to self. The argument `data` is the `data` attribute of the element's direct parent. If the element has no parent, it is the `data` attribute of the page. Using `react` we can have child elements change their behavior when rendered based on the `data` attribute of their parent or the page they are on. 
@@ -393,7 +393,7 @@ class CalendarDate(jp.Div):
 def change_color(self, msg):
     self.d.data["color"] = self.value
 
-def comp_test():
+def comp_test5():
     wp = jp.WebPage()
     year = 2019
     month = 'Feb'
@@ -412,7 +412,7 @@ def comp_test():
         s.add(jp.Option(value=color, text=color, classes=f'bg-{color}-600'))
     return wp
 
-jp.justpy(comp_test)
+jp.justpy(comp_test5)
 ```
 
 This example is a little more complex as we have added a [Select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) component at the bottom of the page. Try changing the selected color. The color of the `CalendarDate` instances in the second group changes because in the event handler, `change_color` we change the `data` attribute of the parent Div, `d`. 
@@ -974,7 +974,7 @@ pics_papillons = ['5037', '2556', '7606', '8241']
 def tab_change(self, msg):
     print('in change', msg)
 
-def tab_comp_test():
+def tab_comp_test1():
     wp = jp.WebPage(data={'tab': 'id2556'})
 
     t = Tabs(a=wp, classes='w-3/4 m-4', style='', animation=True, content_height=550)
@@ -1007,7 +1007,7 @@ def tab_comp_test():
     return wp
 
 
-justpy(tab_comp_test)
+justpy(tab_comp_test1)
 ```
 
 ## Table Component
