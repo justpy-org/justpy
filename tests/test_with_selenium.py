@@ -14,7 +14,7 @@ from tests.basetest import BaseAsynctest, Basetest
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-import os
+#import os
 
 class TestWithSelenium(BaseAsynctest):
     '''

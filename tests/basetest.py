@@ -11,6 +11,8 @@ import os
 import getpass
 from unittest import TestCase
 import time
+import psutil
+from multiprocessing import Process
 from threading import Thread
 
 class BaseAsynctest(asynctest.TestCase):
@@ -22,7 +24,7 @@ class BaseAsynctest(asynctest.TestCase):
     # https://github.com/encode/uvicorn/discussions/1103
     # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
 
-    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.5,debug=False,profile=True):
+    async def setUp(self,wpfunc,port:int=8123,host:str="127.0.0.1",sleepTime=0.5,debug=False,profile=True,mode="process"):
         """ Bring server up. 
         
         Args:
@@ -37,23 +39,31 @@ class BaseAsynctest(asynctest.TestCase):
         self.host=host
         self.debug=debug
         self.profile=profile
+        self.server=None
+        self.proc=None
+        self.thread=None
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
-        jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False)
-        self.server=jp.getServer()
-        pass
-        #self.thread = Thread(target=jp.justpy,
-        #                    args=(wpfunc,),
-        #                    kwargs={
-        #                        "host": self.host,
-        #                        "port": self.port,
-        #                    },
-        #                    daemon=True)
-        #self.thread=Thread(target=asyncio.run, args=(self.runServer(self.server),))
-        self.thread=Thread(target=self.server.run)
-        self.thread.start()
-        await asyncio.sleep(sleepTime)  # time for the server to start
-        
+        if mode=="direct":
+            jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False)
+            self.server=jp.getServer()
+        elif mode=="thread":
+            self.thread=Thread(target=self.server.run)
+            self.thread.start()
+            await asyncio.sleep(sleepTime)  # time for the server to start
+        elif mode=="process":
+            self.proc = Process(
+                target=jp.justpy,
+                args=(wpfunc,),
+                kwargs={
+                    "host": self.host,
+                    "port": self.port,
+                    "start_server": True,
+                },
+            )
+            self.proc.start()
+            await asyncio.sleep(sleepTime)
+            assert self.proc.is_alive()
     #
     # arthur-tacca suggestions of 
     # https://github.com/encode/uvicorn/discussions/1103
@@ -93,8 +103,14 @@ class BaseAsynctest(asynctest.TestCase):
             self.server.force_exit = True
             await asyncio.sleep(0.5)
             await self.server.shutdown()
-            pass
-        self.thread.join(timeout=1.0)
+        if self.thread:
+            self.thread.join(timeout=1.0)
+        if self.proc:
+            pid = self.proc.pid
+            parent = psutil.Process(pid)
+            for child in parent.children(recursive=True):
+                child.kill()
+            self.proc.terminate()
         self.profiler.time()
         
     def getUrl(self,path):
