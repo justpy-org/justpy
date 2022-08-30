@@ -1,4 +1,4 @@
-from starlette.routing import Route
+from starlette.routing import Route, Match
 import typing
 
 class JpRoute(Route):
@@ -42,7 +42,8 @@ class JpRoute(Route):
             Callable: the function that is bound to the given path 
         '''
         for _path,route in JpRoute.routesByPath.items():
-            if route.matches(scope):
+            match,_matchScope=route.matches(scope)
+            if match is not Match.NONE:
                 func_to_run=route.endpoint
                 return func_to_run
         return None

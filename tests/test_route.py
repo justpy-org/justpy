@@ -15,14 +15,14 @@ from tests.basetest import Basetest
 @jp.SetRoute("/bye", name = "bye")
 def bye_function(_request):
     wp = jp.WebPage()
-    wp.add(jp.P(text='Hello there!', classes='text-5xl m-2'))
+    wp.add(jp.P(text='Bye bye!', classes='text-5xl m-2'))
     return wp
 
 @jp.SetRoute("/hello", name = "hello")
 def hello_function(request):
     wp = jp.WebPage()
     wp.add(jp.P(text='Hello there!', classes='text-5xl m-2'))
-    print("request  = ", request.url_for("bye"))
+    #print("request  = ", request.url_for("hello_function"))
     return wp
 
 class TestRouteAndUrlFor(Basetest):
