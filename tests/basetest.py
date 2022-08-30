@@ -44,7 +44,7 @@ class BaseAsynctest(asynctest.TestCase):
         self.proc=None
         self.thread=None
         if sleepTime is None:
-            sleepTime = 2.0 if Basetest.inPublicCI() else 0.5
+            sleepTime = 2.0 if Basetest.inPublicCI() else 0.25
         self.sleepTime=sleepTime
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
@@ -108,6 +108,7 @@ class BaseAsynctest(asynctest.TestCase):
         #await asyncio.gather(*tasks)
         # https://stackoverflow.com/questions/58133694/graceful-shutdown-of-uvicorn-starlette-app-with-websockets
         if self.server:
+            #await asyncio.wait([jp.app.router.shutdown()],timeout=self.sleepTime)
             self.server.should_exit = True
             self.server.force_exit = True
             await asyncio.sleep(self.sleepTime)

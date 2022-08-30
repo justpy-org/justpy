@@ -3,10 +3,10 @@ Created on 2022-08-25
 
 @author: wf
 '''
+import asyncio
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import justpy as jp
-import time
 
 from tests.basetest import BaseAsynctest, Basetest
 #from webdriver_manager.firefox import GeckoDriverManager
@@ -61,16 +61,18 @@ class TestWithSelenium(BaseAsynctest):
         # need to fix 
         #if Basetest.inPublicCI():
         #    return
+        await asyncio.sleep(self.sleepTime)
         url=self.getUrl("/")
         self.browser.get(url)
-        time.sleep(self.sleepTime)
+        await asyncio.sleep(self.sleepTime)
         divs=self.browser.find_elements(By.TAG_NAME,"div")
         # get the clickable div
         div=divs[1]
         self.assertEqual("Not clicked yet",div.text)
         for i in range(5):
             div.click()
-            time.sleep(self.sleepTime)
+            await asyncio.sleep(self.sleepTime)
             self.assertEqual(f"I was clicked {i+1} times",div.text)
         self.browser.close()
+        await asyncio.sleep(self.sleepTime)
         
