@@ -58,7 +58,7 @@
     var page_id = {{ page_id | safe }};
     var websocket_id = '';
     var use_websockets = JSON.parse('{{ use_websockets }}');
-    var justpyComponents = {{ justpy_dict | safe }};
+    var justpyComponents = {{ justpy_dict.replace('</' + 'script>', '</" + "script>') | safe }};
     var crosshairs = [];
     var comp_dict = {};  // Hold components for running methods
 
