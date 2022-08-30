@@ -51,5 +51,10 @@ class TestRouteAndUrlFor(Basetest):
         app = jp.app
         client = TestClient(app)
         
-        if not self.inPublicCI():
-            client.get("/hello")    
+        response=client.get("/hello")    
+        self.assertEqual(200,response.status_code)
+        debug=self.debug
+        if debug:
+            print(response.text)
+        self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
+        pass
