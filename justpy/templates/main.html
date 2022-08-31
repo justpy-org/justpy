@@ -21,6 +21,7 @@
     <script src='/templates/js/{{file_name}}.js'></script>
 {%- endfor %}
     <script>
+    //let justp_core=new JustpyCore(page_options)
     {%- for event in page_options.events %}
         document.addEventListener('{{ event }}', function (evt) {
             console.log(evt);
