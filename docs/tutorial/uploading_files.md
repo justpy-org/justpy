@@ -26,7 +26,7 @@ from datetime import datetime
 def change_link_text(self, msg):
     self.set_classes('text-yellow-500')
 
-def download_test():
+def download_test1():
     wp = jp.WebPage()
     download_link = jp.A(text='Download File', href='/create_file', download='text_file.txt', a=wp,
              classes='inline-block m-2 p-2 text-white bg-blue-500 text-2xl')
@@ -40,7 +40,7 @@ def create_file():
     wp.html = f'This text file was generated on {now}'
     return wp
 
-jp.justpy(download_test)
+jp.justpy(download_test1)
 
 ```
  
@@ -65,7 +65,7 @@ In the program below, one such element is put on the page and after the user sel
 ```python
 import justpy as jp
 
-def download_test():
+def download_test2():
     wp = jp.WebPage()
     in1 = jp.Input(type='file', classes=jp.Styles.input_classes, a=wp, multiple=True, change=file_input)
     in1.file_div = jp.Div(a=wp)
@@ -77,7 +77,7 @@ def file_input(self, msg):
         jp.Div(text=f'{f.name} | {f.size} | {f.type} | {f.lastModified}', a=self.file_div, classes='font-mono m-1 p-2')
 
 
-jp.justpy(download_test)
+jp.justpy(download_test2)
 
 ```
 

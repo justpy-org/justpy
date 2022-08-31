@@ -10,7 +10,7 @@ JustPy comes with components for all the SVG elements.
 ```python
 import justpy as jp
 
-def svg_demo():
+def svg_demo1():
     wp = jp.WebPage()
     for color in ['red', 'green', 'blue']:
         svg = jp.Svg(viewBox='0 0 100 100', xmlns='http://www.w3.org/2000/svg', a=wp, width=100, height=100, classes='m-2 inline-block')
@@ -20,7 +20,7 @@ def svg_demo():
         ellipse = jp.Ellipse(cx=50, cy=50, rx=radius, ry=radius/2, fill='teal', a=svg)
     return wp
 
-jp.justpy(svg_demo)
+jp.justpy(svg_demo1)
 ```
 
 The example above puts a few circles and ellipses on the page.
@@ -64,13 +64,13 @@ svg_html = """
 """
 
 
-def svg_demo():
+def svg_demo2():
     wp = jp.WebPage()
     jp.parse_html(svg_html, a=wp)
     return wp
 
 
-jp.justpy(svg_demo)
+jp.justpy(svg_demo2)
 ```
 
 ## Advanced parse_html example
@@ -115,7 +115,7 @@ def circle_click(self, msg):
     else:
         self.stop.stop_color = 'orange'
 
-def svg_demo():
+def svg_demo3():
     wp = jp.WebPage()
     colors = ['pink', 'red', 'blue', 'green', 'teal', 'yellow']
     for color in colors:
@@ -129,7 +129,7 @@ def svg_demo():
         g.name_dict["simple_circle"].fill = color
     return wp
 
-jp.justpy(svg_demo)
+jp.justpy(svg_demo3)
 ```
 
 In `svg_demo`, in a loop that iterates over a list of colors, an element is created from parsing a modification of of the string `svg_html` (we change the id of the gradient definition to be unique). Then, the result is modified using the [name_dict](../working_with_html/#the-name_dict-dictionary) attribute. In the HTML string we named the elements we plan to modify later and they can be found in [name_dict](../working_with_html/#the-name_dict-dictionary).

@@ -12,12 +12,12 @@ import justpy as jp
 
 input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
 
-async def input_demo(request):
+async def input_demo1(request):
     wp = jp.WebPage()
     in1 = jp.Input(a=wp, classes=input_classes, placeholder='Please type here')
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo1)
 ```
 
 ## The input Event
@@ -32,17 +32,17 @@ import justpy as jp
 input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
 p_classes = 'm-2 p-2 h-32 text-xl border-2'
 
-async def my_input(self, msg):
+async def my_input1(self, msg):
     self.div.text = self.value
 
-async def input_demo(request):
+async def input_demo1(request):
     wp = jp.WebPage()
     in1 = jp.Input(a=wp, classes=input_classes, placeholder='Please type here')
     in1.div = jp.Div(text='What you type will show up here', classes=p_classes, a=wp)
-    in1.on('input', my_input)
+    in1.on('input', my_input1)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo1)
 ```
 
 The function `input_demo` creates a web page and adds an input element called `in1` to it (ignore the classes, they are there just to make the input element look nicer and do not affect the functionality of the program). 
@@ -65,25 +65,25 @@ InputOnlyChange does not generate the input event, only the change event. The ch
 
 The example below is the same as the one above except that InputOnlyChange is used instead of Input. 
 
-```html
+```python
 import justpy as jp
 
 input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
 p_classes = 'm-2 p-2 h-32 text-xl border-2'
 
-def my_input(self, msg):
+def my_input2(self, msg):
     self.div.text = self.value
 
-def input_demo(request):
+def input_demo2(request):
     wp = jp.WebPage()
     in1 = jp.InputChangeOnly(a=wp, classes=input_classes, placeholder='Please type here')
     in1.div = jp.Div(text='What you type will show up here only when Input element loses focus or you press Enter',
                      classes=p_classes, a=wp)
-    in1.on('input', my_input)
-    in1.on('change', my_input)
+    in1.on('input', my_input2)
+    in1.on('change', my_input2)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo2)
 
 ```
 
@@ -99,17 +99,17 @@ import justpy as jp
 input_classes = "m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
 p_classes = 'm-2 p-2 h-32 text-xl border-2'
 
-async def my_input(self, msg):
+async def my_input3(self, msg):
     self.div.text = self.value
 
-async def input_demo(request):
+async def input_demo3(request):
     wp = jp.WebPage()
     in1 = jp.Input(type='number', a=wp, classes=input_classes, placeholder='Please type here')
     in1.div = jp.Div(text='What you type will show up here', classes=p_classes, a=wp)
-    in1.on('input', my_input)
+    in1.on('input', my_input3)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo3)
 ```
 
 In the example above the type of `in1` is set to 'number'. Run the program and verify that only numbers can be input into the element.
@@ -146,7 +146,7 @@ Later in the tutorial we will see how to create a component for radio buttons wh
 ```python
 import justpy as jp
 
-def radio_test():
+def radio_test1():
     wp = jp.WebPage()
     genders = ['male', 'female', 'other']
     ages = [(0, 30), (31, 60), (61, 100)]
@@ -169,7 +169,7 @@ def radio_test():
 
     return wp
 
-jp.justpy(radio_test)
+jp.justpy(radio_test1)
 
 ```
 
@@ -201,7 +201,7 @@ def radio_changed(self, msg):
             jp.Span(text=f'{btn.value} is NOT checked', a=d, classes='text-red-500 mr-6')
 
 
-def radio_test():
+def radio_test2():
     wp = jp.WebPage()
     genders = ['male', 'female', 'other']
     ages = [(0, 30), (31, 60), (61, 100)]
@@ -235,7 +235,7 @@ def radio_test():
     wp.add(result_div)
     return wp
 
-jp.justpy(radio_test)
+jp.justpy(radio_test2)
 ``` 
 
 ### Checkbox Example
@@ -360,13 +360,13 @@ class InputWithDiv(jp.Div):
         self.in1.div = jp.Div(text='What you type will show up here', classes='m-2 p-2 h-32 text-xl border-2', a=self)
 
 
-def input_demo(request):
+def input_demo4(request):
     wp = jp.WebPage()
     for i in range(10):
         InputWithDiv(a=wp)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo4)
 ```
 
 Try running the program. It will put on the page 10 pairs of input and div elements. If you type into the respective input field, the text will show up in the respective div.

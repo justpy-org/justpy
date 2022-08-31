@@ -33,7 +33,7 @@ Let's do something a little more useful (well, at least more entertaining). The 
 ```python
 import justpy as jp
 
-async def dog_pic(request):
+async def dog_pic1(request):
     wp = jp.WebPage()
     breed = request.query_params.get('breed', 'papillon' )
     r = await jp.get(f'https://dog.ceo/api/breed/{breed}/images/random')
@@ -41,7 +41,7 @@ async def dog_pic(request):
     jp.Img(src=img_url, a=wp, classes='m-2 p-2')
     return wp
 
-jp.justpy(dog_pic)
+jp.justpy(dog_pic1)
 ```
 
 After a few seconds, you should see a picture of a [papillon](https://www.akc.org/dog-breeds/papillon/). That is the default dog breed to show (now you know the breed of my two dogs). Each time you reload the page you will get a different picture as we are asking the site for a random image. Try changing the breed of the dogs in the picture by specifying the breed parameter in the URL, for example: http://127.0.0.1:8000/?breed=corgi
@@ -59,21 +59,21 @@ As the program is currently written, to get a new image we need to reload the pa
 ```python
 import justpy as jp
 
-async def get_image(self, msg):
+async def get_image1(self, msg):
     r = await jp.get(f'https://dog.ceo/api/breed/{msg.page.breed}/images/random')
     self.src = r['message']
 
 
-async def dog_pic(request):
+async def dog_pic2(request):
     wp = jp.WebPage()
     breed = request.query_params.get('breed', 'papillon')
     wp.breed = breed
     r = await jp.get(f'https://dog.ceo/api/breed/{breed}/images/random')
     img_url = r['message']
-    jp.Img(src=img_url, a=wp, classes='m-2 p-2 cursor-pointer', click=get_image)
+    jp.Img(src=img_url, a=wp, classes='m-2 p-2 cursor-pointer', click=get_image1)
     return wp
 
-jp.justpy(dog_pic)
+jp.justpy(dog_pic2)
 ```
 
 We added the function `get_image` and assigned the image's click event to it . We also made a small design change by adding 'cursor-pointer' to the classes of the image. When the mouse cursor enters the image, it will change its shape to indicate that the image can be interacted with. Notice how we also assigned the breed to a page attribute so that `get_image` will have direct access to it via `msg.page.breed`.
@@ -85,21 +85,21 @@ JustPy also supports [path parameters](https://www.starlette.io/routing/#path-pa
 ```python
 import justpy as jp
 
-async def get_image(self, msg):
+async def get_image2(self, msg):
     r = await jp.get(f'https://dog.ceo/api/breed/{msg.page.breed}/images/random')
     self.src = r['message']
 
 @jp.SetRoute('/breed/{breed}')
-async def dog_pic(request):
+async def dog_pic3(request):
     wp = jp.WebPage()
     breed = request.path_params.get('breed', 'papillon')
     wp.breed = breed
     r = await jp.get(f'https://dog.ceo/api/breed/{breed}/images/random')
     img_url = r['message']
-    jp.Img(src=img_url, a=wp, classes='m-2 p-2 cursor-pointer', click=get_image)
+    jp.Img(src=img_url, a=wp, classes='m-2 p-2 cursor-pointer', click=get_image2)
     return wp
 
-jp.justpy(dog_pic)
+jp.justpy(dog_pic3)
 ```
 
 Try going to http://127.0.0.1:8000/breed/borzoi or http://127.0.0.1:8000/breed/boxer

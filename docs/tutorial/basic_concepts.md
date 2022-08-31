@@ -79,12 +79,12 @@ Here is a basic example:
 ```python
 import justpy as jp
 
-def hello_world():
+def hello_world1():
     wp = jp.WebPage()
     p = jp.P(text='Hello World!', a=wp)
     return wp
 
-jp.justpy(hello_world)
+jp.justpy(hello_world1)
 ```
 
 The function `hello_world` creates a web page, adds a paragraph element to it and returns the page.
@@ -104,13 +104,13 @@ Saying hello once isn't enough! We would like to say "hello" ten times. We also 
 ```python
 import justpy as jp
 
-def hello_world():
+def hello_world2():
     wp = jp.WebPage()
     for i in range(1,11):
         jp.P(text=f'{i}) Hello World!', a=wp, style=f'font-size: {10*i}px')
     return wp
 
-jp.justpy(hello_world)
+jp.justpy(hello_world2)
 ```
  
 Run the program above and look at the result in your browser.

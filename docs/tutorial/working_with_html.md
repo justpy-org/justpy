@@ -65,7 +65,7 @@ To convert HTML to JustPy elements, use the `parse_html` function.
 ```python
 import justpy as jp
 
-async def parse_demo(request):
+async def parse_demo1(request):
     wp = jp.WebPage()
     c = jp.parse_html("""
     <div>
@@ -78,7 +78,7 @@ async def parse_demo(request):
     print(c.components)
     return wp
 
-jp.justpy(parse_demo)
+jp.justpy(parse_demo1)
 ```
 
 Run the program above. It renders the HTML on the page. The two `print` commands output the following:
@@ -100,7 +100,7 @@ Here is an example:
 ```python
 import justpy as jp
 
-async def parse_demo(request):
+async def parse_demo2(request):
     wp = jp.WebPage()
     c = jp.parse_html("""
     <div>
@@ -115,7 +115,7 @@ async def parse_demo(request):
     p2.on('click', my_click)
     return wp
 
-jp.justpy(parse_demo)
+jp.justpy(parse_demo2)
 ```
 
 If you click the second paragraph, its text will change. Notice that we added `name="p2"` to the HTML of the second paragraph. When the parser sees the name attribute it creates an entry in `name_dict` with the name as the key and the component as the value.
@@ -135,7 +135,7 @@ The `commands` attribute is created by `parse_html` and includes a list of the P
 ```python
 import justpy as jp
 
-def commands_demo():
+def commands_demo1():
     wp = jp.WebPage()
     c = jp.parse_html("""
         <div>
@@ -160,7 +160,7 @@ def commands_demo():
         jp.Div(text=i, classes='font-mono ml-2', a=wp)
     return wp
 
-jp.justpy(commands_demo)
+jp.justpy(commands_demo1)
 ```
 
 The `command_prefix` keyword argument allows specifying the prefix for the commands. The default is 'jp.'
@@ -173,7 +173,7 @@ We can then use the commands to generate the output we need without parsing HTML
 ```python
 import justpy as jp
 
-def commands_demo():
+def commands_demo2():
     wp = jp.WebPage()
     root = jp.Div(a=wp)
     c1 = jp.Div(a=root)
@@ -182,7 +182,7 @@ def commands_demo():
     c4 = jp.P(classes='m-2 p-2 text-green-500 text-xl', a=c1, text='Paragraph 3')
     return wp
 
-jp.justpy(commands_demo)
+jp.justpy(commands_demo2)
 ```
 
 The only change needed to the commands is to add `root` to the page.

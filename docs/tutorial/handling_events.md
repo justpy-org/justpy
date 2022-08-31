@@ -4,16 +4,16 @@ In this part of the tutorial you will learn how to deal with user generated even
 ```python
 import justpy as jp
 
-def my_click(self, msg):
+def my_click1(self, msg):
     self.text = 'I was clicked'
 
-def event_demo():
+def event_demo1():
     wp = jp.WebPage()
     d = jp.Div(text='Not clicked yet', a=wp, classes='w-48 text-xl m-2 p-1 bg-blue-500 text-white')
-    d.on('click', my_click)
+    d.on('click', my_click1)
     return wp
 
-jp.justpy(event_demo)
+jp.justpy(event_demo1)
 ```
 
 In `event_demo`, we first create a web page. Then we create a [Div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element named `d` whose content is the string "Not clicked yet" and add it to the page (we also add some Tailwind classes for formatting). Then, using the `on` method, we bind the function `my_click`, which we defined earlier, to the click event and return the page. When the the element on the page is clicked, JustPy runs the function `my_click`.
@@ -31,19 +31,19 @@ In the program below I have added some print commands to the `my_click` function
 ```python
 import justpy as jp
 
-def my_click(self, msg):
+def my_click2(self, msg):
     self.text = 'I was clicked'
     print(msg.event_type)
     print(msg['event_type'])
     print(msg)
 
-def event_demo():
+def event_demo2():
     wp = jp.WebPage()
     d = jp.P(text='Not clicked yet', a=wp, classes='text-xl m-2 p-2 bg-blue-500 text-white')
-    d.on('click', my_click)
+    d.on('click', my_click2)
     return wp
 
-jp.justpy(event_demo)
+jp.justpy(event_demo2)
 ```
 
 ## Additional Event Properties
@@ -53,19 +53,19 @@ JustPy does not pass all the JavaScript event properties by default since in mos
 ```python
 import justpy as jp
 
-def my_click(self, msg):
+def my_click3(self, msg):
     print(msg)
     self.text = 'I was clicked'
 
-def event_demo():
+def event_demo3():
     wp = jp.WebPage()
     wp.debug = True
     d = jp.Div(text='Not clicked yet', a=wp, classes='w-48 text-xl m-2 p-1 bg-blue-500 text-white')
-    d.on('click', my_click)
+    d.on('click', my_click3)
     d.additional_properties =['screenX', 'pageY','altKey','which','movementX','button', 'buttons']
     return wp
 
-jp.justpy(event_demo)
+jp.justpy(event_demo3)
 ```
 
 ## Multiple Events
@@ -75,7 +75,7 @@ The same element can handle multiple events. Run the following and move the mous
 ```python
 import justpy as jp
 
-def my_click(self, msg):
+def my_click4(self, msg):
     self.text = 'I was clicked'
     self.set_class('bg-blue-500')
 
@@ -88,13 +88,13 @@ def my_mouseleave(self, msg):
     self.set_class('bg-teal-500')
 
 
-def event_demo():
+def event_demo4():
     wp = jp.WebPage()
     d = jp.Div(text='Not clicked yet', a=wp, classes='w-64 text-2xl m-2 p-2 bg-blue-500 text-white',
-             click=my_click, mouseenter=my_mouseenter, mouseleave=my_mouseleave)
+             click=my_click4, mouseenter=my_mouseenter, mouseleave=my_mouseleave)
     return wp
 
-jp.justpy(event_demo)
+jp.justpy(event_demo4)
 ```
  
  In the example above, there are three event handlers, one each for the `click`, `mouseenter` and `mouseleave` events. All three are bound to the same element, `d`.
@@ -112,13 +112,13 @@ In many cases it is convenient to share one event handler among several elements
 ```python
 import justpy as jp
 
-def button_click(self, msg):
+def button_click1(self, msg):
     self.num_clicked += 1
     self.message.text = f'{self.text} clicked. Number of clicks: {self.num_clicked}'
     self.set_class('bg-red-500')
     self.set_class('bg-red-700', 'hover')
 
-def event_demo():
+def event_demo5():
     number_of_buttons = 25
     wp = jp.WebPage()
     button_div = jp.Div(classes='flex m-4 flex-wrap', a=wp)
@@ -130,7 +130,7 @@ def event_demo():
         b.num_clicked = 0
     return wp 
 
-jp.justpy(event_demo)
+jp.justpy(event_demo5)
 ```
 
 This program creates 25 buttons on each page. Under the buttons is a message box that provides information about which button was clicked and how many times it was clicked (try clicking the same button several times and see the change in the message box).
@@ -174,7 +174,7 @@ The result looks like this:
 ```python
 import justpy as jp
 
-def button_click(self, msg):
+def button_click2(self, msg):
     self.num_clicked += 1
     self.message.text = f'{self.text} clicked. Number of clicks: {self.num_clicked}'
     for button in msg.page.button_list:
@@ -183,7 +183,7 @@ def button_click(self, msg):
     self.set_class('bg-red-500')
     self.set_class('bg-red-700', 'hover')
 
-def event_demo():
+def event_demo6():
     number_of_buttons = 25
     wp = jp.WebPage()
     button_div = jp.Div(classes='flex m-4 flex-wrap', a=wp)
@@ -191,14 +191,14 @@ def event_demo():
     message = jp.P(text='No button clicked yet', classes='text-2xl border m-4 p-2', a=wp)
     button_list = []
     for i in range(1, number_of_buttons + 1):
-        b = jp.Button(text=f'Button {i}', a=button_div, classes=button_classes, click=button_click)
+        b = jp.Button(text=f'Button {i}', a=button_div, classes=button_classes, click=button_click2)
         b.message = message
         b.num_clicked = 0
         button_list.append(b)
     wp.button_list = button_list   # The list will now be referenced by the WebPage instance attribute
     return wp
 
-jp.justpy(event_demo)
+jp.justpy(event_demo6)
 ```
 
 ### Example 3 - Event changes elements on page
@@ -207,7 +207,7 @@ Events can also change the elements on the page itself, adding or removing them 
 ```python
 import justpy as jp
 
-def button_click(self, msg):
+def button_click3(self, msg):
     self.num_clicked += 1
     # self.message.text = f'{self.text} clicked. Number of clicks: {self.num_clicked}'
     p = jp.P(text=f'{self.text} clicked. Number of clicks: {self.num_clicked}')
@@ -218,7 +218,7 @@ def button_click(self, msg):
     self.set_class('bg-red-500')
     self.set_class('bg-red-700', 'hover')
 
-def event_demo():
+def event_demo7():
     number_of_buttons = 25
     wp = jp.WebPage()
     button_div = jp.Div(classes='flex m-4 flex-wrap', a=wp)
@@ -227,14 +227,14 @@ def event_demo():
     message.add(jp.P(text='No button clicked yet'))
     button_list = []
     for i in range(1, number_of_buttons + 1):
-        b = jp.Button(text=f'Button {i}', a=button_div, classes=button_classes, click=button_click)
+        b = jp.Button(text=f'Button {i}', a=button_div, classes=button_classes, click=button_click3)
         b.message = message
         b.num_clicked = 0
         button_list.append(b)
     wp.button_list = button_list   # The list will now be referenced by the WebPage instance attribute
     return wp
 
-jp.justpy(event_demo)
+jp.justpy(event_demo7)
 ```
 
 Instead of just changing the text in `message`, `button_click` creates a `p` element with the text message and adds the element to `message` using the `add_component` method. It is different from `add` because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the `message` div so that most recent messages show up first. Also, in `event_demo` we changed `message` to a div element and added the first message as a p element with text. 

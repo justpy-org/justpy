@@ -8,12 +8,12 @@ Please run the following program:
 ```python
 import justpy as jp
 
-def hello_function():
+def hello_function1():
     wp = jp.WebPage()
     wp.add(jp.P(text='Hello there!', classes='text-5xl m-2'))
     return wp
 
-jp.Route('/hello', hello_function)
+jp.Route('/hello', hello_function1)
 
 jp.justpy()
 ```
@@ -23,19 +23,19 @@ Try running the following program:
 ```python
 import justpy as jp
 
-def hello_function():
+def hello_function2():
     wp = jp.WebPage()
     wp.add(jp.P(text='Hello there!', classes='text-5xl m-2'))
     return wp
 
-def bye_function():
+def bye_function1():
     wp = jp.WebPage()
     wp.add(jp.P(text='Goodbye!', classes='text-5xl m-2'))
     return wp
 
-jp.Route('/hello', hello_function)
+jp.Route('/hello', hello_function2)
 
-jp.justpy(bye_function)
+jp.justpy(bye_function1)
 ```
 
 Type different URLs into the browser and see what happens. Unless the path is exactly '/hello', the `bye_function` will run and 'Goodbye!' will be displayed.
@@ -51,13 +51,13 @@ It is common in Python web frameworks to use decorators to assign functions to r
 import justpy as jp
 
 @jp.SetRoute('/hello')
-def hello_function():
+def hello_function3():
     wp = jp.WebPage()
     wp.add(jp.P(text='Hello there!', classes='text-5xl m-2'))
     return wp
 
 @jp.SetRoute('/bye')
-def bye_function():
+def bye_function2():
     wp = jp.WebPage()
     wp.add(jp.P(text='Goodbye!', classes='text-5xl m-2'))
     return wp

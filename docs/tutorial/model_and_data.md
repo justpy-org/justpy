@@ -8,14 +8,14 @@ Try running the following program and typing into the input field in the browser
 ```python
 import justpy as jp
 
-async def input_demo(request):
+async def input_demo1(request):
     wp = jp.WebPage(data={ 'text': 'Initial text'})
     input_classes = "m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
     jp.Input(a=wp, classes=input_classes, placeholder='Please type here', model=[wp, 'text'])
     jp.Div(model=[wp, 'text'], classes='m-2 p-2 h-32 text-xl border-2 overflow-auto', a=wp)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo1)
 ```
 
 Text entered in an input field is reflected in a div on the page. The connection between the input and the div is made using the `model` and `data` attributes. Notice that when we create the web page, we initialize a `data` attribute. The `data` attribute must be a Python dictionary. In our case it is a dictionary with one entry. The key is 'text' and the value is 'Initial text'. 
@@ -36,7 +36,7 @@ How is this useful? Let's put three divs on the page instead of just one:
 ```python
 import justpy as jp
 
-async def input_demo(request):
+async def input_demo2(request):
     wp = jp.WebPage(data={'text': 'Initial text'})
     input_classes = "m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
     jp.Input(a=wp, classes=input_classes, placeholder='Please type here', model=[wp, 'text'])
@@ -44,7 +44,7 @@ async def input_demo(request):
         jp.Div(model=[wp, 'text'], classes='m-2 p-2 h-32 text-xl border-2 overflow-auto', a=wp)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo2)
 ```
 
 Since all Div instances have the same model, they change when we type. Without the model attribute, implementing this would be more verbose.
@@ -53,7 +53,7 @@ Now let's duplicate the Inputs. Let's have five Inputs instead of one:
 ```python
 import justpy as jp
 
-async def input_demo(request):
+async def input_demo2(request):
     wp = jp.WebPage(data={'text': 'Initial text'})
     input_classes = "m-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded xtw-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
     for _ in range(5):
@@ -62,7 +62,7 @@ async def input_demo(request):
         jp.Div(model=[wp, 'text'], classes='m-2 p-2 h-32 text-xl border-2 overflow-auto', a=wp)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo2)
 ```
 
 Type into any one of the five Input fields and see what happens. Since all elements share the same model, they all change in tandem. We didn't need to write any event handler.
@@ -74,7 +74,7 @@ import justpy as jp
 def reset_all(self, msg):
     msg.page.data['text'] = ''
 
-async def input_demo(request):
+async def input_demo3(request):
     wp = jp.WebPage(data={'text': 'Initial text'})
     button_classes = 'w-32 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
     b = jp.Button(text='Reset', click=reset_all, a=wp, classes=button_classes)
@@ -86,7 +86,7 @@ async def input_demo(request):
         jp.Div(model=[wp, 'text'], classes='m-2 p-2 h-32 text-xl border-2 overflow-auto', a=wp)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo3)
 ```
 
 When the button is clicked, the following command in `reset_all` is executed: `msg.page.data['text'] = ''`
@@ -110,7 +110,7 @@ import justpy as jp
 
 corner_classes = 'p-3 absolute bg-gray-200 '
 
-def model_demo():
+def model_demo1():
     wp = jp.WebPage()
     d = jp.Div(classes='relative h-screen bg-gray-600', a=wp, data={'text': ''})
     for v_pos in ['top', 'bottom']:
@@ -122,7 +122,7 @@ def model_demo():
                             placeholder='Type here', style='top: 50%; left: 40%', model=[d, 'text'], a=d)
     return wp
 
-jp.justpy(model_demo)
+jp.justpy(model_demo1)
 ``` 
 
 When you type text into `middle_input` it shows up in the four corners of the window. In each corner there is a Div that contains two other Divs. The second Div has the `model` property and the text in it changes when the user types into `middle_input`'`. 
@@ -137,7 +137,7 @@ corner_classes = 'p-3 absolute bg-gray-200 '
 
 class MyDiv(jp.Div):
 
-    def model_update(self):
+    def model_update1(self):
         # model has the form [wp, 'text'] for example
         if self.model[0].data[self.model[1]]:
             self.text = str(self.model[0].data[self.model[1]])
@@ -145,7 +145,7 @@ class MyDiv(jp.Div):
             self.text = "Nothing typed yet"
 
 
-def model_demo():
+def model_demo2():
     wp = jp.WebPage()
     d = jp.Div(classes='relative h-screen bg-gray-600', a=wp, data={'text': ''})
     for v_pos in ['top', 'bottom']:
@@ -157,13 +157,13 @@ def model_demo():
                             placeholder='Type here', style='top: 50%; left: 40%', model=[d, 'text'], a=d)
     return wp
 
-jp.justpy(model_demo)
+jp.justpy(model_demo2)
 ```
 
 We define a new component, `MyDiv` that inherits from `Div` and is identical except for the `model_update` method. 
 The standard `model_update` method `Div` comes with is:
 ```python
-def model_update(self):
+def model_update2(self):
     # [wp, 'text-data'] for example
     self.text = str(self.model[0].data[self.model[1]])
 ```
@@ -181,7 +181,7 @@ corner_classes = 'p-3 absolute bg-gray-200 '
 
 class MyDiv(jp.Div):
 
-    def model_update(self):
+    def model_update3(self):
         # [wp, 'text-data'] for example
         if self.model[0].data[self.model[1]]:
             self.text = (str(self.model[0].data[self.model[1]]) + ' ')*self.repeat
@@ -189,7 +189,7 @@ class MyDiv(jp.Div):
             self.text = self.initial_text
 
 
-def model_demo():
+def model_demo3():
     wp = jp.WebPage()
     d = jp.Div(classes='relative h-screen bg-gray-600', a=wp, data={'text': ''})
     repeat = 1
@@ -203,7 +203,7 @@ def model_demo():
                             placeholder='Type here', style='top: 50%; left: 40%', model=[d, 'text'], a=d)
     return wp
 
-jp.justpy(model_demo)
+jp.justpy(model_demo3)
 ```
 
  We add the two attributes `repeat` and `initial_text` to `MyDiv`. The first, `repeat` determines how many time the model value will be repeated in the text. We give each corner a different value. 
