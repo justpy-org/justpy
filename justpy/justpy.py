@@ -30,7 +30,7 @@ print(f'Module directory: {current_dir}, Application directory: {os.getcwd()}')
 #
 # globals
 #
-# uvicorn Server 
+# uvicorn Server
 jp_server = None
 
 config = Config('justpy.env')
@@ -342,8 +342,8 @@ async def handle_event(data_dict, com_type=0, page_event=False):
             event_result = await c.run_event_function(event_data['event_type'], event_data, True)
         else:
             event_result = None
-            logging.debug('%s %s %s %s', c, 'has no ', event_data['event_type'], ' event handler')
-        logging.debug('%s %s', 'Event result:', event_result)
+            logging.debug(f"{c} has no {event_data['event_type']} event handler")
+        logging.debug(f"Event result:{event_result}")
     except Exception as e:
         # raise Exception(e)
         if CRASH:
@@ -384,9 +384,9 @@ def getServer():
 
 def justpy(func=None, *, start_server:bool=True, websockets:bool=True, host:str=HOST, port:int=PORT, startup=None, init_server:bool=True,**kwargs):
     '''
-    
+
     The main justpy entry point
-    
+
     Args:
         func: the callback to get the webpage
         start_server(bool): if True start the server
@@ -396,10 +396,10 @@ def justpy(func=None, *, start_server:bool=True, websockets:bool=True, host:str=
         startup: a callback for the startup phase
         init_server(bool): if True construct the server
         kwargs: further keyword arguments
-        
+
     '''
     global jp_server,func_to_run, startup_func, HOST, PORT
-    
+
     HOST = host
     PORT = port
     if func:
@@ -425,7 +425,7 @@ def justpy(func=None, *, start_server:bool=True, websockets:bool=True, host:str=
         jp_server = uvicorn.Server(uvicorn_config)
         if start_server:
             jp_server.run()
-   
+
     return func_to_run
 
 

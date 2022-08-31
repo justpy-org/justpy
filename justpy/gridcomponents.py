@@ -1,3 +1,5 @@
+from pandas import Timestamp
+
 from .htmlcomponents import *
 import demjson3 as demjson
 from addict import Dict
@@ -118,7 +120,12 @@ class AgGrid(JustpyBaseComponent):
         d['show'] = self.show
         d['classes'] = self.classes + ' ' + self.theme
         d['style'] = self.style
-        d['def'] = self.options
+        options = self.options.deepcopy()
+        for row in options.get("rowData", []):
+            for k, v in row.items():
+                if isinstance(v, Timestamp):
+                    row[k] = str(v)
+        d['def'] = options
         d['auto_size'] = self.auto_size
         d['events'] = self.events
         d['html_columns'] = self.html_columns

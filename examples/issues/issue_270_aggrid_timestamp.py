@@ -14,24 +14,30 @@ df_object['row4'] = [3]*5
 df_object['row5'] = [100]*5
 
 df = pd.DataFrame(df_object)
+msg_div = None
 
-def row_selected(self, msg):
+async def row_selected(self, msg):
     print(msg)
     if msg.selected:
-        self.row_data_div.text = msg.data
+        self.a.components[0].text = msg.data
         self.row_selected = msg.rowIndex
     elif self.row_selected == msg.rowIndex:
         self.row_data_div.text = ''
 
+async def btn_click(self, msg):
+    print("Button clicked")
+    self.a.components[0].text="Clicked!!!"
+
+
 def grid_test():
     wp = jp.WebPage()
-    row_data_div = jp.Div(a=wp)
+    row_data_div = jp.Div(a=wp, text="Replace me by selecting a row")
     grid = df.jp.ag_grid(a=wp)
-    grid.row_data_div = row_data_div
     grid.on('rowSelected', row_selected)
     grid.options.columnDefs[0].checkboxSelection = True
+    btn = jp.Button(text="Click", a=wp, click=btn_click)
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_test, port=8400)
 from  examples.basedemo import Demo
 Demo('Issue 270 aggrid timestamp value',grid_test)
