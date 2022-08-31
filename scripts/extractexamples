@@ -1,0 +1,42 @@
+#!/bin/bash
+# WF 2022-08-21
+# script to extract tutorial examples
+tutorial=$1
+if [ ! -f $tutorial ]
+then
+  echo "$tutorial does not exist" 1>&2
+  exit 1
+fi
+target=$(echo "$tutorial" | sed 's/docs/examples/' | sed  's/.md//')
+if [ -d $target ]
+then
+  echo "creating target directory $target"
+  mkdirs -p $target
+fi
+cat $tutorial | awk -v target=$target -v tutorial=$tutorial '
+/```python/ {
+  incode=1
+  next
+}
+/jp.justpy/ {
+  if (match($0, /jp.justpy[(][a-zA-Z_0-9]*[,)]/)) {
+    pyfile=target pname ".py"
+    print pyfile
+    pname=substr($0, RSTART+10, RLENGTH-11)
+    print "# Justpy Tutorial demo " pname " from " tutorial > pyfile
+    for (line=1;line<=incode;line++) {
+      print lines[line] >> pyfile
+    }
+    print "# initialize the demo" >> pyfile
+    print "from  examples.basedemo import Demo" >> pyfile
+    demo="Demo (\x22" pname "\x22,"
+    gsub ("jp.justpy[(]",demo,$0)
+    print >> pyfile
+  }
+  incode=0
+}
+incode {
+  lines[incode]=$0
+  incode++
+}
+'
