@@ -13,7 +13,6 @@ from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
-from .misccomponents import *
 from .meadows import *
 from .pandas import *
 from .routing import Route, SetRoute
@@ -337,8 +336,8 @@ async def handle_event(data_dict, com_type=0, page_event=False):
             event_result = await c.run_event_function(event_data['event_type'], event_data, True)
         else:
             event_result = None
-            logging.debug('%s %s %s %s', c, 'has no ', event_data['event_type'], ' event handler')
-        logging.debug('%s %s', 'Event result:', event_result)
+            logging.debug(f"{c} has no {event_data['event_type']} event handler")
+        logging.debug(f"Event result:{event_result}")
     except Exception as e:
         # raise Exception(e)
         if CRASH:
