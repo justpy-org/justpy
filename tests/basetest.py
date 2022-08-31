@@ -3,6 +3,14 @@ Created on 2021-08-19
 
 @author: wf
 '''
+from typing import List
+
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import FirefoxOptions
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+import starlette.responses
 import justpy as jp
 import aiohttp
 import asynctest
@@ -15,6 +23,7 @@ import psutil
 from sys import platform
 from multiprocessing import Process
 from threading import Thread
+from selenium import webdriver
 
 class BaseAsynctest(asynctest.TestCase):
     '''
@@ -43,6 +52,7 @@ class BaseAsynctest(asynctest.TestCase):
         self.server=None
         self.proc=None
         self.thread=None
+        self.browsers = self._getSeleniumBrowsers()
         if sleepTime is None:
             sleepTime = 2.0 if Basetest.inPublicCI() else 0.5
         self.sleepTime=sleepTime
@@ -151,7 +161,42 @@ class BaseAsynctest(asynctest.TestCase):
                 rawhtml = await resp.content.read()
                 status = resp.status
         return status,rawhtml
-                
+
+    def _getSeleniumBrowsers(self) -> List[WebDriver]:
+        """
+        Returns a list of all browsers to test
+        """
+        browsers = []
+        if Basetest.inPublicCI():
+            # test all browsers
+            browsers = [self._getChromeWebDriver(), self._getFirefoxWebDriver()]
+        else:
+            if platform == "linux":
+                browsers.append(self._getFirefoxWebDriver())
+            else:
+                browsers.append(self._getChromeWebDriver())
+        return browsers
+
+    def _getFirefoxWebDriver(self) -> webdriver.Firefox:
+        """
+        Returns the Firefox selenium webdriver
+        """
+        options = FirefoxOptions()
+        options.headless = Basetest.inPublicCI()
+        browser = webdriver.Firefox(options=options)
+        return browser
+
+    def _getChromeWebDriver(self) -> webdriver.Chrome:
+        """
+        Returns the Chrome selenium webdriver
+        """
+        options = webdriver.chrome.options.Options()
+        options.headless = Basetest.inPublicCI()
+        chrome_executable = ChromeDriverManager(cache_valid_range=365).install()
+        service = ChromeService(chrome_executable)
+        browser = webdriver.Chrome(service=service, options=options)
+        return browser
+
 
 class Basetest(TestCase):
     '''
