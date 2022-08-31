@@ -1,4 +1,4 @@
-{% raw %}
+/* {% raw %} */
 
 /*  This file ads formatting for form elements in Tailwind https://nervous-knuth-fa9c3e.netlify.com/   additional form classes form-radio etc*/
 
@@ -117,4 +117,4 @@ input[type=radio]:checked + .form-radio, input[type=radio].form-radio:checked {
   border-color: #63b3ed;
 }
 
-{% endraw %}
+/*{% endraw %} */

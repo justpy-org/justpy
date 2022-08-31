@@ -188,6 +188,12 @@ class WebPage:
         return self
 
     async def update(self, websocket=None):
+        '''
+        update the Webpage
+        
+        Args:
+            websocket(): The websocket to use (if any)
+        '''
         try:
             websocket_dict = WebPage.sockets[self.page_id]
         except:
@@ -202,8 +208,11 @@ class WebPage:
         if websocket:
             WebPage.loop.create_task(websocket.send_json(dict_to_send))
         else:
-            await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in list(websocket_dict.values())],
+            websockets=list(websocket_dict.values())
+            # https://stackoverflow.com/questions/54987361/python-asyncio-handling-exceptions-in-gather-documentation-unclear
+            _results=await asyncio.gather(*[websocket.send_json(dict_to_send) for websocket in websockets],
                                  return_exceptions=True)
+            pass
         return self
 
     async def delayed_update(self, delay):

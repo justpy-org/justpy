@@ -78,8 +78,8 @@
 class JustpyCore {
  
   // create a JustpyCore instance
-  constructor() {
-    
+  constructor(page_options) {
+    this.page_options=page_options
   }
   
 }
