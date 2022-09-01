@@ -6,11 +6,10 @@ Created on 2021-08-19
 from typing import List
 
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import ChromeOptions
 from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-import starlette.responses
 import justpy as jp
 import aiohttp
 import asynctest
@@ -190,7 +189,7 @@ class BaseAsynctest(asynctest.TestCase):
         """
         Returns the Chrome selenium webdriver
         """
-        options = webdriver.chrome.options.Options()
+        options = ChromeOptions()
         options.headless = Basetest.inPublicCI()
         chrome_executable = ChromeDriverManager(cache_valid_range=365).install()
         service = ChromeService(chrome_executable)

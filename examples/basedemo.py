@@ -12,6 +12,7 @@ class Demo(object):
     '''
     Base class for justpy demos to allow selecting host and port from commandline
     '''
+    testmode=False
 
     def __init__(self, name:str,wp:typing.Callable,**kwargs):
         '''
@@ -23,6 +24,9 @@ class Demo(object):
             wp(callable): the webpage callback
             **kwargs: further keyword arguments
         '''
+        # make sure Demo code may be tested without automatically starting
+        if Demo.testmode:
+            return
         parser = argparse.ArgumentParser(description=name)
         parser.add_argument('--host',default=socket.getfqdn())
         parser.add_argument('--port',type=int,default=8000)

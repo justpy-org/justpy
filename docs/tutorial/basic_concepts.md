@@ -87,12 +87,12 @@ def hello_world1():
 jp.justpy(hello_world1)
 ```
 
-The function `hello_world` creates a web page, adds a paragraph element to it and returns the page.
+The function `hello_world1` creates a web page, adds a paragraph element to it and returns the page.
 
 !!! note
     **In this tutorial, functions like `hello_world` will be called "request handlers".**
 
-The `jp.justpy(hello_world)` command starts a web server and sends all requests to the function `hello_world`.
+The `jp.justpy(hello_world1)` command starts a web server and sends all requests to the function `hello_world1`.
 
 Run the program above (as explained in [getting started](../getting_started/#running-the-program) ).
 You should see 'Hello World!' in your browser.

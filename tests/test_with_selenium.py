@@ -4,17 +4,10 @@ Created on 2022-08-25
 @author: wf
 '''
 import asyncio
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 import justpy as jp
 
-from tests.basetest import BaseAsynctest, Basetest
-#from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver import FirefoxOptions
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-#import os
+from tests.basetest import BaseAsynctest
 
 class TestWithSelenium(BaseAsynctest):
     '''
@@ -50,8 +43,8 @@ class TestWithSelenium(BaseAsynctest):
         '''
         # do not run automatically in CI yet 
         # need to fix 
-        if Basetest.inPublicCI():
-            return
+        #if Basetest.inPublicCI():
+        #    return
         await asyncio.sleep(self.sleepTime)
         url=self.getUrl("/")
         self.browser.get(url)
