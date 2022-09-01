@@ -5,7 +5,7 @@ JustPy components are classes that instantiate reusable elements that can be be 
 Out of the box, JustPy comes with many components. You can use the available JustPy components
 and also build more complex components using other components as building blocks.
 
-In JustPy, components are implemented as Python classes. When you define a new component, you do so by defining a new Python class. 
+In JustPy, components are implemented as Python classes. When you define a new component, you do so by defining a new Python class.
 
 A JustPy element is an instance of a component class.
 
@@ -13,7 +13,7 @@ A JustPy element is an instance of a component class.
 import justpy as jp
 p = jp.P()
 p.text = 'Hello!'
-``` 
+```
 
 In the example above, `p` is an instance of the class `P`. Its text attribute is set to 'Hello!'.
 The above is similar to the HTML element:
@@ -25,7 +25,7 @@ You can set the JustPy element attributes when the element is created (synonym f
 ```python
 import justpy as jp
 p = jp.P(text='Hello!')
-``` 
+```
 
 Just creating an element is not very useful. We need to get it on a web page and into the user's browser tab. We will do this next.
 
@@ -49,7 +49,7 @@ wp.add(p)  # Same as p.add_to(wp), wp = wp + p, wp += p
 
 In the example above, we create a web page. Then we create a `p` element and add it to the page using the `add` method.
 
-Since adding an element to a page is very common, there is a way to do so using the keyword argument `a`: 
+Since adding an element to a page is very common, there is a way to do so using the keyword argument `a`:
 ```python
 import justpy as jp
 wp = jp.WebPage()
@@ -66,9 +66,9 @@ So far we have created a page and added an element to it. We haven't yet loaded 
     In this tutorial, I will call the process of delivering a Web page to a user "**rendering the page**".
 
 When you type a URL into your browser's [Address Bar](https://en.wikipedia.org/wiki/Address_bar) and tell your browser to navigate to that address,
-the browser generates a request; it requests data from the server the URL you entered points to. 
+the browser generates a request; it requests data from the server the URL you entered points to.
 
-When a request comes from a browser, the JustPy framework runs a user defined function. 
+When a request comes from a browser, the JustPy framework runs a user defined function.
 This function must return a web page which is then rendered in the browser that sent the request. All that you as a developer need to do is write the function that takes a request and returns a web page.
 The framework takes care of the rest.
 
@@ -88,7 +88,7 @@ jp.justpy(hello_world1)
 ```
 
 The function `hello_world` creates a web page, adds a paragraph element to it and returns the page.
- 
+
 !!! note
     **In this tutorial, functions like `hello_world` will be called "request handlers".**
 
@@ -99,7 +99,7 @@ You should see 'Hello World!' in your browser.
 
 ## More Hello World
 
-Saying hello once isn't enough! We would like to say "hello" ten times. We also want to let the user know how many times we said "hello". More specifically, we would like "Hello World!" to show up ten times on the page and be enumerated. In addition, we would like to use a bigger font each time. 
+Saying hello once isn't enough! We would like to say "hello" ten times. We also want to let the user know how many times we said "hello". More specifically, we would like "Hello World!" to show up ten times on the page and be enumerated. In addition, we would like to use a bigger font each time.
 
 ```python
 import justpy as jp
@@ -112,20 +112,20 @@ def hello_world2():
 
 jp.justpy(hello_world2)
 ```
- 
+
 Run the program above and look at the result in your browser.
- 
+
 !!! warning
     **Don't forget to terminate the previous program first.**  
-Two JustPy servers cannot run at the same time on the same port. 
+Two JustPy servers cannot run at the same time on the same port.
 
 The P instances are created inside a loop with the loop index being used to give each paragraph some different text and a different font size.
 
-The `style` attribute in JustPy is the same as the HTML [style](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style) attribute. It allows using [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) properties to style the element. 
+The `style` attribute in JustPy is the same as the HTML [style](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style) attribute. It allows using [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) properties to style the element.
 
 For example, change the style assignment to:
 ```python
-style=f'color: blue; font-size: {10*i}px' 
+style=f'color: blue; font-size: {10*i}px'
 ```
 and see what happens.
 
@@ -142,18 +142,18 @@ Let's use Tailwind classes to style our page:
 ```python
 import justpy as jp
 
-def hello_world():
+def hello_world3():
     wp = jp.WebPage()
     my_paragraph_design = "w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
     for i in range(1,11):
         jp.P(text=f'{i}) Hello World!', a=wp, classes=my_paragraph_design)
     return wp
 
-jp.justpy(hello_world)
+jp.justpy(hello_world3)
 ```
 
 In this program Tailwind classes are used to make the output a little nicer. The JustPy attribute `classes` is equivalent to the HTML attribute [class](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class) (which is a reserved word in Python).
- 
+
 ## Creating Web Pages Once
 
 You may have noticed that since we have been serving the same page to everyone, there is no need to create a new page each time a request is made.
@@ -166,20 +166,19 @@ my_paragraph_design = "w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bo
 for i in range(1,11):
     jp.P(text=f'{i}) Hello World!', a=wp, classes=my_paragraph_design)
 
-def hello_world():
+def hello_world4():
     return wp
 
-jp.justpy(hello_world)
+jp.justpy(hello_world4)
 ```
 
 !!! info
     When you define a page that is going to be rendered in more than one browser tab or page, you need to set its `delete_flag` to `False`.
 
 Otherwise, the page (the instance of `WebPage` to be precise) will be deleted when a browser tab or window that renders that page is closed.
-The default is for JustPy to remove all references to the page and the elements on it so that the Python garbage collector can reclaim the memory. 
+The default is for JustPy to remove all references to the page and the elements on it so that the Python garbage collector can reclaim the memory.
 
 !!! warning
-    When a page's (or element's) `delete_flag` is set to `False`, none of its child elements will be deleted, even if their `delete_flag` is `True`. 
+    When a page's (or element's) `delete_flag` is set to `False`, none of its child elements will be deleted, even if their `delete_flag` is `True`.
 
 In the next part of the tutorial you will learn how to deal with events such as a mouse click.
- 
