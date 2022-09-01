@@ -32,5 +32,5 @@ class TestTutorial(BaseAsynctest):
         self.assertEqual(1,len(divs))
         div=divs[0]
         text=div.text
-        self.assertEqual("Hello world!",text)
+        self.assertEqual("Hello World!",text)
         
