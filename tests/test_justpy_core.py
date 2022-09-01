@@ -4,7 +4,7 @@ Created on 2022-08-24
 @author: wf
 '''
 import justpy as jp
-from tests.basetest import BaseAsynctest
+from tests.base_server_test import BaseAsynctest
 
 class TestJustpyCore(BaseAsynctest):
     '''

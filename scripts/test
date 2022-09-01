@@ -1,4 +1,4 @@
 #!/bin/bash
 # WF 2022-08-20
 pip install aiohttp asynctest green pandas psutil selenium webdriver-manager
-green
+green tests

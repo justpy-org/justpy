@@ -4,7 +4,8 @@ Created on 2022-08-25
 @author: wf
 '''
 
-from tests.basetest import BaseAsynctest
+from tests.base_server_test import BaseAsynctest
+from tests.browser_test import SeleniumBrowsers
 import asyncio
 from selenium.webdriver.common.by import By
 
@@ -18,12 +19,12 @@ class TestTutorial(BaseAsynctest):
         Demo.testmode=True
         from examples.tutorial.basic_concepts.hello_world1 import hello_world1
         await super().setUp(hello_world1, port=8125)
-        self.browser = self.browsers[0]
         
     async def testHelloWorld1(self):
         '''
         test the hello world 1 example
         '''
+        self.browser=SeleniumBrowsers().getFirst()
         await asyncio.sleep(self.sleepTime)
         url=self.getUrl("/")
         self.browser.get(url)

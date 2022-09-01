@@ -6,8 +6,9 @@ Created on 2022-08-25
 import asyncio
 from selenium.webdriver.common.by import By
 import justpy as jp
-
-from tests.basetest import BaseAsynctest
+from tests.browser_test import SeleniumBrowsers
+from tests.base_server_test import BaseAsynctest
+from tests.basetest import Basetest
 
 class TestWithSelenium(BaseAsynctest):
     '''
@@ -16,7 +17,6 @@ class TestWithSelenium(BaseAsynctest):
     
     async def setUp(self, **kwargs):
         await super().setUp(self.wp_to_test, port=8124)
-        self.browser = self.browsers[0]
 
     async def onDivClick(self, msg):
         '''
@@ -45,6 +45,7 @@ class TestWithSelenium(BaseAsynctest):
         # need to fix 
         #if Basetest.inPublicCI():
         #    return
+        self.browser=SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
         await asyncio.sleep(self.sleepTime)
         url=self.getUrl("/")
         self.browser.get(url)
