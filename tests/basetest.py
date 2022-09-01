@@ -167,14 +167,14 @@ class BaseAsynctest(asynctest.TestCase):
         Returns a list of all browsers to test
         """
         browsers = []
-        if Basetest.inPublicCI():
-            # test all browsers
-            browsers = [self._getChromeWebDriver(), self._getFirefoxWebDriver()]
+        #if Basetest.inPublicCI():
+        #    # test all browsers
+        #    browsers = [self._getChromeWebDriver(), self._getFirefoxWebDriver()]
+        #else:
+        if platform == "linux":
+            browsers.append(self._getFirefoxWebDriver())
         else:
-            if platform == "linux":
-                browsers.append(self._getFirefoxWebDriver())
-            else:
-                browsers.append(self._getChromeWebDriver())
+            browsers.append(self._getChromeWebDriver())
         return browsers
 
     def _getFirefoxWebDriver(self) -> webdriver.Firefox:
