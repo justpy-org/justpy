@@ -7,7 +7,7 @@ then
   echo "usage $0 module" 1>&2
   exit 1
 fi
-module="$1.py"
+module="$1"
 shift
 if [ ! -f "$module" ]
 then

@@ -61,6 +61,3 @@ This refers to port 8000 on the local machine and should work in most environmen
 You should see 'Hello!' in your browser. Click it a few times also. It should report the number of times it has been clicked. 
 
 In this tutorial, when asked to "run the program", follow the two steps above (there is no need to name the file "test.py", you can use any name you like). 
-
-
-

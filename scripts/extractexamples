@@ -21,9 +21,9 @@ cat $tutorial | awk -v target=$target -v tutorial=$tutorial '
 }
 /jp.justpy/ {
   if (match($0, /jp.justpy[(][a-zA-Z_0-9]*[,)]/)) {
+    pname=substr($0, RSTART+10, RLENGTH-11)
     pyfile=target "/" pname ".py"
     print pyfile
-    pname=substr($0, RSTART+10, RLENGTH-11)
     print "# Justpy Tutorial demo " pname " from " tutorial > pyfile
     for (line=1;line<=incode;line++) {
       print lines[line] >> pyfile
