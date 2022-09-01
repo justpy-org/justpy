@@ -10,7 +10,7 @@ import justpy as jp
 
 from tests.basetest import BaseAsynctest, Basetest
 #from webdriver_manager.firefox import GeckoDriverManager
-#from selenium.webdriver import FirefoxOptions
+from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -21,18 +21,9 @@ class TestWithSelenium(BaseAsynctest):
     testing actual browser behavior with selenium
     '''
     
-    async def setUp(self):
-        # debug https://github.com/SergeyPirogov/webdriver_manager/issues/433
-        # print (os.environ['GH_TOKEN'])
-        await BaseAsynctest.setUp(self, self.wp_to_test,port=8124)
-        
-        #self.firefox_path=GeckoDriverManager().install()
-        #opts = FirefoxOptions()
-        chrome_options = Options()
-        chrome_options.headless=Basetest.inPublicCI()
-        #self.browser = webdriver.Firefox(executable_path=self.firefox_path,options=opts)
-        chrome_executable=ChromeDriverManager(cache_valid_range=365).install()
-        self.browser = webdriver.Chrome(service=ChromeService(chrome_executable),chrome_options=chrome_options)
+    async def setUp(self, **kwargs):
+        await super().setUp(self.wp_to_test, port=8124)
+        self.browser = self.browsers[0]
 
     async def onDivClick(self, msg):
         '''
