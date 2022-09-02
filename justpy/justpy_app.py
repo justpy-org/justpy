@@ -71,7 +71,7 @@ class JustpyServer:
                     "port": self.port,
                     "start_server": True,
                 }
-            kwargs = {**needed_kwargs, **self.kwargs}
+            kwargs = {**needed_kwargs, **kwargs}
             self.proc = Process(
                 target=jp.justpy,
                 args=(wpfunc,),
