@@ -4,47 +4,8 @@ Created on 2022-09-22
 @author: wf
 '''
 import os
-import re
 from examples.basedemo import Demo
-class JustpyApp:
-    '''
-    a justpy application 
-    '''
-    def __init__(self,pymodule_file):
-        '''
-        Args:
-            pymodule_file(str): the python module path where the app resides
-    
-        '''
-        self.pymodule_file=pymodule_file
-        with open(self.pymodule_file, 'r') as sourcefile:
-            self.source = sourcefile.read()
-            self.checkDemo()
-    
-    def checkDemo(self):
-        '''
-        check whether this is a demo
-        '''
-        if "Demo(" or "Demo (" in self.source:
-            endpointMatch=re.search("""Demo[ ]?[(]["'](.*)["'],(.*?)(,.*)*[)]""",self.source)
-            if endpointMatch:
-                self.description=endpointMatch.group(1)
-                self.endpoint=endpointMatch.group(2)
-                self.pymodule=re.search('justpy/(examples/.*)[.]py', self.pymodule_file).group(1)
-                self.isDemo=not "lambda" in self.endpoint
-                return 
-        self.isDemo=False
-        
-    def start(self):
-        '''
-        start me
-        '''
-       
-          
-    def __str__(self):
-        text=f"{self.pymodule}:{self.endpoint}:{self.description}"
-        return text
-       
+from justpy.justpy_app import JustpyApp
         
 class Demostarter:
     '''

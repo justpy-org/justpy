@@ -11,7 +11,7 @@ class TestJustpyCore(BaseAsynctest):
     Tests for Justpy Core features
     '''
     async def setUp(self):
-        await BaseAsynctest.setUp(self, self.wp_to_test)
+        await BaseAsynctest.setUp(self,port=8122)
         
     async def wp_to_test(self):
         '''
@@ -21,11 +21,11 @@ class TestJustpyCore(BaseAsynctest):
         _d=jp.Div(a=wp)
         return wp
         
-    
     async def testWp(self):
         ''''
         test the webpage asynchronously
         '''
+        await self.server.start(self.wp_to_test)
         status,rawhtml=await self.getResponseHtml()
         self.assertEqual(200,status)        
         html=rawhtml.decode("utf8")

@@ -15,8 +15,8 @@ class TestWithSelenium(BaseAsynctest):
     testing actual browser behavior with selenium
     '''
     
-    async def setUp(self, **kwargs):
-        await super().setUp(self.wp_to_test, port=8124)
+    async def setUp(self):
+        await super().setUp(port=8124)
 
     async def onDivClick(self, msg):
         '''
@@ -46,18 +46,19 @@ class TestWithSelenium(BaseAsynctest):
         #if Basetest.inPublicCI():
         #    return
         self.browser=SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
-        await asyncio.sleep(self.sleepTime)
-        url=self.getUrl("/")
+        await asyncio.sleep(self.server.sleepTime)
+        await self.server.start(self.wp_to_test)
+        url=self.server.getUrl("/")
         self.browser.get(url)
-        await asyncio.sleep(self.sleepTime)
+        await asyncio.sleep(self.server.sleepTime)
         divs=self.browser.find_elements(By.TAG_NAME,"div")
         # get the clickable div
         div=divs[1]
         self.assertEqual("Not clicked yet",div.text)
         for i in range(5):
             div.click()
-            await asyncio.sleep(self.sleepTime)
+            await asyncio.sleep(self.server.sleepTime)
             self.assertEqual(f"I was clicked {i+1} times",div.text)
         self.browser.close()
-        await asyncio.sleep(self.sleepTime)
+        await asyncio.sleep(self.server.sleepTime)
         
