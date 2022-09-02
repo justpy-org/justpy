@@ -15,6 +15,9 @@ class TestTutorial(BaseAsynctest):
     '''
     
     async def setUp(self):
+        '''
+        prepare justpy tutorial app
+        '''
         from examples.basedemo import Demo
         Demo.testmode=True
         from examples.tutorial.basic_concepts.hello_world1 import hello_world1

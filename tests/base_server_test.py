@@ -45,13 +45,30 @@ class BaseAsynctest(asynctest.TestCase):
         self.sleepTime=sleepTime
         msg=f"test {self._testMethodName}, debug={self.debug}"
         self.profiler=Profiler(msg,profile=self.profile)
+        await self.startServer(wpfunc, mode=mode,host=self.host, port=self.port,sleepTime=self.sleepTime)
+            
+    async def startServer(self,wpfunc,mode:str,host:str,port:int,sleepTime:float):
+        '''
+        start a justpy server for the given webpage function wpfunc
+        
+        Args:
+            wpfunc: the (async) function for the webpage
+            mode(str): None, direct or process. If None direct is used on MacOs and process on other platforms. 
+                process mode will run the task as a process and kill it with psutils, direct will use threading and
+                trying shutdown with uvicorns built in shutdown method (as of 2022-09 this leads to error messages since
+                the starlette router is not shutdown properly)
+            port(int): the port
+            host(str): the host 
+            sleepTime(float): the time to sleep after server process was started
+        
+        '''
         if mode is None:
             if platform == "darwin":
                 mode="direct"
             else:
                 mode="process"
         if mode=="direct":
-            jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False)
+            jp.justpy(wpfunc,host=host,port=port,start_server=False)
             await asyncio.sleep(sleepTime)  # time for the server to start
             self.server=jp.getServer()
             self.thread=Thread(target=self.server.run)
@@ -62,14 +79,15 @@ class BaseAsynctest(asynctest.TestCase):
                 target=jp.justpy,
                 args=(wpfunc,),
                 kwargs={
-                    "host": self.host,
-                    "port": self.port,
+                    "host": host,
+                    "port": port,
                     "start_server": True,
                 },
             )
             self.proc.start()
             await asyncio.sleep(sleepTime)
             assert self.proc.is_alive()
+     
     #
     # arthur-tacca suggestions of 
     # https://github.com/encode/uvicorn/discussions/1103
