@@ -1,0 +1,23 @@
+#!/bin/bash
+# WF 2022-09-02
+# Install gecko driver for selenium test cases
+# see  https://askubuntu.com/a/871077
+version=v0.31.0
+driver=geckodriver
+tgz=$driver-$version-linux64.tar.gz
+bin=/usr/local/bin
+if [ -f $bin/$driver ]
+then 
+  echo "$bin/$driver already installed"
+else
+  cd /usr/local/src
+  if [ ! -f $tgz ]
+  then
+    wget https://github.com/mozilla/geckodriver/releases/download/$version/$tgz
+  else
+    echo "$tgz already downloaded ..."
+  fi
+  tar -xvzf $tgz
+  chmod +x $driver
+  sudo mv $driver $bin
+fi
