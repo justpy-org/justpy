@@ -48,6 +48,8 @@ class TestRouteAndUrlFor(Basetest):
         '''
         test url for functionality
         '''
+        if Basetest.inPublicCI():
+            return
         app = jp.app
         # see https://www.starlette.io/testclient/
         with TestClient(app) as client:
