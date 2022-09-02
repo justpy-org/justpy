@@ -21,5 +21,4 @@ class TestDownlad(Basetest):
         os.makedirs(Download.getCachePath(),exist_ok=True)
         filePath=f"{Download.getCachePath()}/{dbname}"
         Download.downloadFile(url, dbname, targetDirectory=Download.getCachePath())
-        self.assertTrue(os.path.isfile(filePath))
-        
+        self.assertTrue(os.path.isfile(filePath)) 
