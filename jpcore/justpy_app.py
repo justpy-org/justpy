@@ -5,7 +5,6 @@ Created on 2022-09-02
 '''
 import asyncio
 import re
-import justpy as jp
 import psutil
 import typing
 from sys import platform
@@ -58,6 +57,8 @@ class JustpyServer:
             
         
         '''
+        # this import is actually calling code ...
+        import justpy as jp
         if self.mode=="direct":
             jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False,kwargs=kwargs)
             await asyncio.sleep(self.sleepTime)  # time for the server to start
@@ -162,7 +163,6 @@ class JustpyApp:
         '''
         start me
         '''
-       
           
     def __str__(self):
         text=f"{self.pymodule}:{self.endpoint}:{self.description}"

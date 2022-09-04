@@ -1,7 +1,7 @@
-from starlette.routing import Route, Match
+import starlette.routing 
 import typing
 
-class JpRoute(Route):
+class JpRoute(starlette.routing.Route):
     '''
     extends starlette Routing
     
@@ -43,7 +43,7 @@ class JpRoute(Route):
         '''
         for _path,route in JpRoute.routesByPath.items():
             match,_matchScope=route.matches(scope)
-            if match is not Match.NONE:
+            if match is not starlette.routing.Match.NONE:
                 func_to_run=route.endpoint
                 return func_to_run
         return None
@@ -53,13 +53,20 @@ class JpRoute(Route):
         constructor
         '''
         # call super constructor
-        Route.__init__(self, path=path,endpoint=endpoint,**kwargs)
+        starlette.routing.Route.__init__(self, path=path,endpoint=endpoint,**kwargs)
         # remember my routes 
         JpRoute.routesByPath[path]=self
         
     def __repr__(self):
         return f'{self.__class__.__name__}(name: {self.name}, path: {self.path}, format: {self.path_format}, func: {self.endpoint.__name__}, regex: {self.path_regex})'
   
+class Route(JpRoute):
+    '''
+    legacy compatibility layer - use JpRoute instead
+    '''
+    def __init__(self, path: str, endpoint: typing.Callable,**kwargs):
+        JpRoute.__init__(self,path,endpoint,**kwargs)
+    
 class SetRoute:
     '''
     Justpy specific route annotation

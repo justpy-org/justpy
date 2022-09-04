@@ -2,7 +2,7 @@ import justpy as jp
 import sqlite3
 import pandas as pd
 import os
-from justpy.download import Download
+from jpcore.download import Download
 
 # Download the database file to the $HOME/.justpy directory
 # from: https://elimintz.github.io/chinook.db, originally from https://www.sqlitetutorial.net/

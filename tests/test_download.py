@@ -4,7 +4,7 @@ Created on 29.08.2022
 @author: wf
 '''
 from tests.basetest import Basetest
-from justpy.download import Download
+from jpcore.download import Download
 import os
 
 class TestDownlad(Basetest):

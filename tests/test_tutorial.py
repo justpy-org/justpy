@@ -52,4 +52,5 @@ class TestTutorial(BaseAsynctest):
         server=self.server.nextServer()
         divs=await self.getElements(server,hello_world2,"p")
         self.assertEqual(10,len(divs))
+        await server.stop()
         

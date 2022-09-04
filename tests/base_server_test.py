@@ -5,7 +5,7 @@ Created on 2022-09-01
 '''
 import aiohttp
 import asynctest
-from justpy.justpy_app import JustpyServer
+from jpcore.justpy_app import JustpyServer
 from tests.basetest import Basetest,Profiler
 
 class BaseAsynctest(asynctest.TestCase):
@@ -14,7 +14,7 @@ class BaseAsynctest(asynctest.TestCase):
     '''
     # https://github.com/encode/starlette/blob/master/docs/testclient.md
 
-    async def setUp(self,port:int=8123,host:str="127.0.0.1",sleepTime=None,debug=False,profile=True,mode=None):
+    async def setUp(self,port:int=8123,host:str="127.0.0.1",sleepTime=None,withServer=True,debug=False,profile=True,mode=None):
         """ Bring server up. 
         
         Args:
@@ -28,7 +28,9 @@ class BaseAsynctest(asynctest.TestCase):
         if sleepTime is None:
             sleepTime = 2.0 if Basetest.inPublicCI() else 0.5
         self.sleepTime=sleepTime
-        self.server=JustpyServer(port=port,host=host,sleepTime=sleepTime,mode=mode,debug=debug)
+        self.server=None
+        if withServer:
+            self.server=JustpyServer(port=port,host=host,sleepTime=sleepTime,mode=mode,debug=debug)
         self.debug=debug
         self.profile=profile
         msg=f"test {self._testMethodName}, debug={self.debug}"
@@ -36,7 +38,8 @@ class BaseAsynctest(asynctest.TestCase):
                 
     async def tearDown(self):
         """ Shutdown the app. """
-        await self.server.stop()
+        if self.server is not None:
+            await self.server.stop()
         self.profiler.time()
         
     def getUrl(self,path):

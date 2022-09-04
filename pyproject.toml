@@ -4,20 +4,28 @@ build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
 module = "justpy"
-author = "Eli Mintz"
-author-email = "eli.mintz@gmail.com"
+authors = [
+  {name = "Eli Mintz", email = "eli.mintz@gmail.com"}
+]
 home-page = "https://justpy.io"
 description-file = "README.md"
 requires = [
-        'starlette>=0.20.4', 'uvicorn>=0.18.3', 'itsdangerous>=2.1.2', 'websockets',
-        'addict>=2.4.0', 'jinja2>=3.1.2', 'demjson3>=3.0.5', 'httpx>=0.23.0', 'aiofiles',
-        'twine', 'wheel'
+        'starlette>=0.20.4', 
+        'uvicorn>=0.18.3', 
+        'itsdangerous>=2.1.2', 
+        'websockets',
+        'addict>=2.4.0', 
+        'jinja2>=3.1.2', 
+        'demjson3>=3.0.5', 
+        'httpx>=0.23.0', 
+        'aiofiles',
+        'twine', 
+        'wheel'
     ]
 classifiers=[
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
