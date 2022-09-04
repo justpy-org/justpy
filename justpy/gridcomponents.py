@@ -1,5 +1,3 @@
-from pandas import Timestamp
-
 from .htmlcomponents import *
 import demjson3 as demjson
 from addict import Dict
@@ -7,6 +5,7 @@ try:
     import numpy as np
     import pandas as pd
     from pandas.api.types import is_numeric_dtype, is_datetime64_any_dtype
+    from pandas import Timestamp
     _has_pandas = True
 except:
     _has_pandas = False
@@ -113,7 +112,9 @@ class AgGrid(JustpyBaseComponent):
             f"""cached_grid_def['g' + {self.id}].api.applyTransaction({transaction.__repr__()})""")
 
     def convert_object_to_dict(self):
-
+        '''
+        convert object to dict
+        '''
         d = {}
         d['vue_type'] = self.vue_type
         d['id'] = self.id
@@ -123,7 +124,7 @@ class AgGrid(JustpyBaseComponent):
         options = self.options.deepcopy()
         for row in options.get("rowData", []):
             for k, v in row.items():
-                if isinstance(v, Timestamp):
+                if _has_pandas and isinstance(v, Timestamp):
                     row[k] = str(v)
         d['def'] = options
         d['auto_size'] = self.auto_size
