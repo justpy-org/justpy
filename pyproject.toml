@@ -1,15 +1,20 @@
+# see https://flit.pypa.io/en/latest/pyproject_toml.html
 [build-system]
-requires = ["flit_core >=2,<4"]
+requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
-module = "justpy"
+[project]
+name = "justpy"
 authors = [
   {name = "Eli Mintz", email = "eli.mintz@gmail.com"}
 ]
-home-page = "https://justpy.io"
-description-file = "README.md"
-requires = [
+maintainers = [
+  { name = "Wolfgang Fahl", email = "wf@bitplan.com" },
+]
+readme = "README.md"
+# flit_core.config.ConfigError: license field should be <class 'dict'>, not <class 'str'>
+# license= "Apache-2.0"
+dependencies = [
         'starlette>=0.20.4', 
         'uvicorn>=0.18.3', 
         'itsdangerous>=2.1.2', 
@@ -22,6 +27,8 @@ requires = [
         'twine', 
         'wheel'
     ]
+
+requires-python = ">=3.7"    
 classifiers=[
     "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
@@ -37,7 +44,21 @@ classifiers=[
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License"
     ]
-
-[tool.flit.metadata.urls]
+dynamic = ["version", "description"]   
+ 
+[project.urls]
+Home = "https://justpy.io/"
 Documentation = "https://justpy.io/"
+Source = "https://github.com/justpy-org/justpy"
+
+[project.optional-dependencies]
+test = [
+  "aiohttp",
+  "asynctest",
+  "green",
+  "pandas",
+  "psutil",
+  "selenium",
+  "webdriver-manager"
+]
 
