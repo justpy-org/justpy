@@ -20,6 +20,7 @@ jobs:
     - name: Build and publish
       run: |
         pip install .
+        flit build
     - name: Publish distribution to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
