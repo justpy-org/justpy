@@ -1,8 +1,31 @@
 #!/bin/bash
 # WF 2022-08-21
 # script to find tutorial examples
-for md in $(find docs -name "*.md")
-do
-  echo $md
-  grep jp.justpy $md
-done
+findexamples() {
+  for md in $(find docs -name "*.md")
+  do
+    echo $md
+    grep jp.justpy $md
+  done
+}
+
+stats() {
+  findexamples | grep jp.justpy | sort | uniq -c
+}
+if [ $# -gt 0 ]
+then
+  case $1 in
+    stats)
+      stats
+      exit 0
+      ;;
+    unique)
+      stats | grep -v "1 jp"
+      exit 0
+      ;;
+    *)
+      echo "unknown option $1" 1>&2
+      exit 1
+  esac
+fi
+findexamples
