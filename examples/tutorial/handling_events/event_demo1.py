@@ -10,7 +10,6 @@ def event_demo1():
     d.on('click', my_click1)
     return wp
 
-
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("event_demo1",event_demo1)

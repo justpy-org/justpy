@@ -25,7 +25,6 @@ def event_demo6():
     wp.button_list = button_list   # The list will now be referenced by the WebPage instance attribute
     return wp
 
-
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("event_demo6",event_demo6)

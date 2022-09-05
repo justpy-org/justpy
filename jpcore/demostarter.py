@@ -43,21 +43,22 @@ class Demostarter:
         start the demos from the given baseport optionally limitting the number of demos
         
         Args:
-            baseport(int): the portnumber to start from
+            baseport(int): the port number to start from
             limit(int): the maximum number of demos to start (default: None)
         '''
         Demo.testmode=True
         port=baseport
+        server=None
         for i,demo in enumerate(self.demos):
-            if i==0:
-                server=JustpyServer(port=port)
-            else:
-                server=server.nextServer()
-            self.servers[server.port]=server
-            demo.port=server.port
-            demo_module=importlib.import_module(demo.pymodule)
-            demo.wp = getattr(demo_module, demo.endpoint)
             try:
+                if server is None:
+                    server=JustpyServer(port=port)
+                else:
+                    server=server.nextServer()
+                self.servers[server.port]=server
+                demo.port=server.port
+                demo_module=importlib.import_module(demo.pymodule)
+                demo.wp = getattr(demo_module, demo.endpoint)
                 print(f"starting {i+1:3}:{demo}  ...")
                 await (demo.start(server))
             except Exception as ex:
@@ -69,6 +70,9 @@ class Demostarter:
                 break
             
     async def stop(self):
+        '''
+        try stopping all servers
+        '''
         for server in list(self.servers.values()):
             if self.debug:
                 print(f"stopping server at port {server.port} ...")

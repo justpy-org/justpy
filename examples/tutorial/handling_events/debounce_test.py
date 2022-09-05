@@ -18,7 +18,6 @@ def debounce_test():
     wp.info_div = jp.Div(text='Recent mouse events', classes='m-4 text-lg', a=d)
     return wp
 
-    message.add(jp.P(text='No button clicked yet'))
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("debounce_test",debounce_test)

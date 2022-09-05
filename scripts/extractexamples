@@ -25,7 +25,7 @@ cat $tutorial | awk -v target=$target -v tutorial=$tutorial '
     pyfile=target "/" pname ".py"
     print pyfile
     print "# Justpy Tutorial demo " pname " from " tutorial > pyfile
-    for (line=1;line<=incode;line++) {
+    for (line=1;line<incode;line++) {
       print lines[line] >> pyfile
     }
     print "# initialize the demo" >> pyfile

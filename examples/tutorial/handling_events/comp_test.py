@@ -14,7 +14,6 @@ def comp_test():
     return wp
 
 
-    wp = jp.WebPage()
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("comp_test",comp_test)

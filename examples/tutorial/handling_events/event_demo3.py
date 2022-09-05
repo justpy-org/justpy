@@ -13,7 +13,6 @@ def event_demo3():
     d.additional_properties =['screenX', 'pageY','altKey','which','movementX','button', 'buttons']
     return wp
 
-
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("event_demo3",event_demo3)

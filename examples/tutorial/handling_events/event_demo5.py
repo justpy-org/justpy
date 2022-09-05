@@ -19,7 +19,6 @@ def event_demo5():
         b.num_clicked = 0
     return wp 
 
-
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("event_demo5",event_demo5)

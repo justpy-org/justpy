@@ -22,7 +22,6 @@ def target_test():
     ButtonDiv(a=wp)
     return wp
 
-        b.message = message
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("target_test",target_test)

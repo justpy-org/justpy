@@ -17,7 +17,6 @@ def test_out():
         d.on('click', click_in)
     return wp
 
-
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("test_out",test_out)

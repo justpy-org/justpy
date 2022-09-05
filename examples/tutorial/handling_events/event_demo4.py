@@ -20,7 +20,6 @@ def event_demo4():
              click=my_click4, mouseenter=my_mouseenter, mouseleave=my_mouseleave)
     return wp
 
-
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("event_demo4",event_demo4)
