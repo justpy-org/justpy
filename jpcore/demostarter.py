@@ -31,6 +31,7 @@ class Demostarter:
         pymodule_files=self.findFiles(justpy_dir, ".py")
         self.demos=[]
         self.servers={}
+        self.errors={}
         for pymodule_file in pymodule_files:
             demo=JustpyApp(pymodule_file)
             if demo.isDemo:
@@ -50,18 +51,19 @@ class Demostarter:
         port=baseport
         server=None
         for i,demo in enumerate(self.demos):
-            try:
-                if server is None:
-                    server=JustpyServer(port=port)
-                else:
-                    server=server.nextServer()
+            if server is None:
+                server=JustpyServer(port=port)
+            else:
+                server=server.nextServer()
                 self.servers[server.port]=server
-                demo.port=server.port
+            demo.port=server.port
+            try:
                 demo_module=importlib.import_module(demo.pymodule)
                 demo.wp = getattr(demo_module, demo.endpoint)
                 print(f"starting {i+1:3}:{demo}  ...")
                 await (demo.start(server))
             except Exception as ex:
+                self.errors[demo.port]=ex
                 print(f"failed due to exception: {str(ex)}")
                 if self.debug:
                     print(traceback.format_exc())
