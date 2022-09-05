@@ -14,23 +14,23 @@ class BaseAsynctest(asynctest.TestCase):
     '''
     # https://github.com/encode/starlette/blob/master/docs/testclient.md
 
-    async def setUp(self,port:int=8123,host:str="127.0.0.1",sleepTime=None,withServer=True,debug=False,profile=True,mode=None):
+    async def setUp(self,port:int=8123,host:str="127.0.0.1",sleep_time=None,with_server=True,debug=False,profile=True,mode=None):
         """ Bring server up. 
         
         Args:
             wpfunc: the (async) function for the webpage
             port(int): the port
             host(str): the host 
-            sleepTime(float): the time to sleep after server process was started
+            sleep_time(float): the time to sleep after server process was started
             debug(bool): if True debugging is on
             profile(bool): if True time for test is profiled
         """ 
-        if sleepTime is None:
-            sleepTime = 2.0 if Basetest.inPublicCI() else 0.5
-        self.sleepTime=sleepTime
+        if sleep_time is None:
+            sleep_time = 2.0 if Basetest.inPublicCI() else 0.5
+        self.sleep_time=sleep_time
         self.server=None
-        if withServer:
-            self.server=JustpyServer(port=port,host=host,sleepTime=sleepTime,mode=mode,debug=debug)
+        if with_server:
+            self.server=JustpyServer(port=port,host=host,sleep_time=sleep_time,mode=mode,debug=debug)
         self.debug=debug
         self.profile=profile
         msg=f"test {self._testMethodName}, debug={self.debug}"

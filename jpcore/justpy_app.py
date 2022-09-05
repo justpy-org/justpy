@@ -20,14 +20,14 @@ class JustpyServer:
     
  
     '''
-    def __init__(self,host:str,port:int,sleepTime:float,mode:str,debug:bool=False):
+    def __init__(self,host:str,port:int,sleep_time:float,mode:str,debug:bool=False):
         '''
         constructor
         
         Args:
             port(int): the port
             host(str): the host 
-            sleepTime(float): the time to sleep after server process was started
+            sleep_time(float): the time to sleep after server process was started
             mode(str): None, direct or process. If None direct is used on MacOs and process on other platforms. 
                 process mode will run the task as a process and kill it with psutils, direct will use threading and
                 trying shutdown with uvicorns built in shutdown method (as of 2022-09 this leads to error messages since
@@ -36,7 +36,7 @@ class JustpyServer:
         '''
         self.host=host
         self.port=port
-        self.sleepTime=sleepTime
+        self.sleep_time=sleep_time
         self.server=None
         self.proc=None
         self.thread=None
@@ -61,11 +61,11 @@ class JustpyServer:
         import justpy as jp
         if self.mode=="direct":
             jp.justpy(wpfunc,host=self.host,port=self.port,start_server=False,kwargs=kwargs)
-            await asyncio.sleep(self.sleepTime)  # time for the server to start
+            await asyncio.sleep(self.sleep_time)  # time for the server to start
             self.server=jp.getServer()
             self.thread=Thread(target=self.server.run)
             self.thread.start()
-            await asyncio.sleep(self.sleepTime)  # time for the server to start
+            await asyncio.sleep(self.sleep_time)  # time for the server to start
         elif self.mode=="process":
             needed_kwargs={
                     "host": self.host,
@@ -79,7 +79,7 @@ class JustpyServer:
                 kwargs=kwargs,
             )
             self.proc.start()
-            await asyncio.sleep(self.sleepTime)
+            await asyncio.sleep(self.sleep_time)
             assert self.proc.is_alive()
  
     async def stop(self):
@@ -93,13 +93,13 @@ class JustpyServer:
         #await asyncio.gather(*tasks)
         # https://stackoverflow.com/questions/58133694/graceful-shutdown-of-uvicorn-starlette-app-with-websockets
         if self.server:
-            #await asyncio.wait([jp.app.router.shutdown()],timeout=self.sleepTime)
+            #await asyncio.wait([jp.app.router.shutdown()],timeout=self.sleep_time)
             self.server.should_exit = True
             self.server.force_exit = True
-            await asyncio.sleep(self.sleepTime)
+            await asyncio.sleep(self.sleep_time)
             await self.server.shutdown()
         if self.thread:
-            self.thread.join(timeout=self.sleepTime)
+            self.thread.join(timeout=self.sleep_time)
         if self.proc:
             pid = self.proc.pid
             parent = psutil.Process(pid)
@@ -111,8 +111,8 @@ class JustpyServer:
         '''
         get another similar server with the portnumber incremented by one
         '''
-        nextServer=JustpyServer(port=self.port+1,host=self.host,sleepTime=self.sleepTime,mode=self.mode,debug=self.debug)
-        return nextServer
+        next_server=JustpyServer(port=self.port+1,host=self.host,sleep_time=self.sleep_time,mode=self.mode,debug=self.debug)
+        return next_server
         
     def getUrl(self,path):
         '''

@@ -23,13 +23,13 @@ class TestTutorial(BaseAsynctest):
         Demo.testmode=True
         await super().setUp(port=8125)
         self.browser=SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
-        await asyncio.sleep(self.sleepTime)
+        await asyncio.sleep(self.sleep_time)
         
     async def getElements(self,server,wpfunc,tagName:str="div"):
         await server.start(wpfunc)
         url=server.getUrl("/")
         self.browser.get(url)
-        await asyncio.sleep(self.sleepTime)
+        await asyncio.sleep(self.sleep_time)
         divs=self.browser.find_elements(By.TAG_NAME,tagName)
         return divs
         

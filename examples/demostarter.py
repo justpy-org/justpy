@@ -5,7 +5,7 @@ Created on 2022-09-22
 '''
 import os
 from examples.basedemo import Demo
-from justpy.justpy_app import JustpyApp
+from jpcore.justpy_app import JustpyApp
         
 class Demostarter:
     '''
