@@ -8,7 +8,8 @@ modulewise_test() {
   for testmodule in tests/test*.py
   do
     echo "testing $testmodule ..."
-    green $testmodule
+    #green $testmodule
+    python -m unittest $testmodule
   done
 }
 

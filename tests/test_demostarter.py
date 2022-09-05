@@ -20,6 +20,8 @@ class TestDemoStarter(BaseAsynctest):
         test the demo starter
         '''
         demoStarter=Demostarter(debug=True)
+        await asyncio.sleep(0.5)
+
         await demoStarter.start(limit=None)
         self.assertEqual(0,len(demoStarter.errors.values()))
         # wait a bit 

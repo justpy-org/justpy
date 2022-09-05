@@ -51,23 +51,22 @@ class Demostarter:
         port=baseport
         server=None
         for i,demo in enumerate(self.demos):
-            if server is None:
-                server=JustpyServer(port=port)
-            else:
-                server=server.nextServer()
-                self.servers[server.port]=server
-            demo.port=server.port
             try:
                 print(f"starting {i+1:3}:{demo}  ...")
+                if server is None:
+                    server=JustpyServer(port=port)
+                else:
+                    server=server.nextServer()
+                    self.servers[server.port]=server
+                demo.port=server.port
                 demo_module=importlib.import_module(demo.pymodule)
                 demo.wp = getattr(demo_module, demo.endpoint)
                 await (demo.start(server))
             except Exception as ex:
-                self.errors[demo.port]=ex
+                self.errors[i]=ex
                 print(f"failed due to exception: {str(ex)}")
                 if self.debug:
                     print(traceback.format_exc())
-                
             if limit is not None and i+1>=limit:
                 break
             
@@ -127,4 +126,3 @@ def main(argv=None): # IGNORE:C0111
         
 if __name__ == "__main__":
     sys.exit(main())
- 
