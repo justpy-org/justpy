@@ -169,7 +169,12 @@ function send_to_server(e, event_type, debug_flag) {
                     link.href = '{{ url_for(options.static_name, path=' / ') }}' + msg.page_options.favicon;
                     document.getElementsByTagName('head')[0].appendChild(link);
                 }
-                if (msg) app1.justpyComponents = msg.data;
+                // if there is a message
+                if (msg) {
+					// replace my components with the data in the message
+					// this is where the whole page is rebuild
+					app1.justpyComponents = msg.data;
+				}
             },
             dataType: 'json'
         });

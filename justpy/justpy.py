@@ -137,6 +137,9 @@ async def justpy_startup():
 
 @app.route("/{path:path}")
 class Homepage(HTTPEndpoint):
+    '''
+    justpy main page handler
+    '''
 
     async def get(self, request):
         # Handle web requests
@@ -176,11 +179,23 @@ class Homepage(HTTPEndpoint):
             return load_page
         assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
         assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
-        page_options = {'reload_interval': load_page.reload_interval, 'body_style': load_page.body_style,
-                        'body_classes': load_page.body_classes, 'css': load_page.css, 'head_html': load_page.head_html, 'body_html': load_page.body_html,
-                        'display_url': load_page.display_url, 'dark': load_page.dark, 'title': load_page.title, 'redirect': load_page.redirect,
-                        'highcharts_theme': load_page.highcharts_theme, 'debug': load_page.debug, 'events': load_page.events,
-                        'favicon': load_page.favicon if load_page.favicon else FAVICON}
+        page_options = {
+            'reload_interval': load_page.reload_interval, 
+            'body_style': load_page.body_style,
+            'body_classes': load_page.body_classes, 
+            'css': load_page.css, 
+            'head_html': load_page.head_html, 
+            'body_html': load_page.body_html,
+            'display_url': load_page.display_url, 
+            'dark': load_page.dark, 
+            'title': load_page.title, 
+            'redirect': load_page.redirect,
+            'highcharts_theme': load_page.highcharts_theme, 
+            'debug': load_page.debug, 
+            'events': load_page.events,
+            'favicon': load_page.favicon 
+            if load_page.favicon else FAVICON
+        }
         if load_page.use_cache:
             page_dict = load_page.cache
         else:
