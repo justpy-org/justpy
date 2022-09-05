@@ -28,6 +28,7 @@ class TestDemoStarter(BaseAsynctest):
         await asyncio.sleep(0.5)
 
         with self.subTest("Test demoStarter errors", demoStarter=demoStarter):
+            demoStarter.start(limit=None)
             self.assertEqual(0,len(demoStarter.errors.values()))
       
         # wait a bit 
