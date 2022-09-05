@@ -153,16 +153,18 @@ class JustpyApp:
         '''
         check whether this is a demo
         '''
+        self.isDemo=False
         if "Demo(" or "Demo (" in self.source:
             endpointMatch=re.search("""Demo[ ]?[(]["'](.*)["'],(.*?)(,.*)*[)]""",self.source)
             if endpointMatch:
                 self.description=endpointMatch.group(1)
                 self.endpoint=endpointMatch.group(2)
-                self.pymodule=re.search('justpy/(examples/.*)[.]py', self.pymodule_file).group(1)
-                self.pymodule=self.pymodule.replace("/",".")
-                self.isDemo=not "lambda" in self.endpoint
+                modulematch=re.search('justpy/(examples/.*)[.]py', self.pymodule_file)
+                if modulematch:
+                    self.pymodule=modulematch.group(1)
+                    self.pymodule=self.pymodule.replace("/",".")
+                    self.isDemo=not "lambda" in self.endpoint
                 return 
-        self.isDemo=False
         
     async def start(self,server:JustpyServer):
         '''
