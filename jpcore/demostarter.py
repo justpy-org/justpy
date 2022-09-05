@@ -38,6 +38,9 @@ class Demostarter:
             demo=JustpyApp(pymodule_file)
             if demo.isDemo:
                 self.demos.append(demo)
+            else:
+                if self.debug:
+                    print(f"{pymodule_file} is not a demo")
         if self.debug:
             print(f"found {len(self.demos)} justpy demo python modules")
                 
