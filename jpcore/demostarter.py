@@ -28,6 +28,8 @@ class Demostarter:
         self.debug=debug
         script_dir =os.path.dirname(__file__)
         justpy_dir= f"{os.path.dirname(script_dir)}/examples"
+        if self.debug:
+            print(f"collecting examples from {justpy_dir}")
         pymodule_files=self.findFiles(justpy_dir, ".py")
         self.demos=[]
         self.servers={}
