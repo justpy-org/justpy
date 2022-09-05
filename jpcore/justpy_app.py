@@ -159,9 +159,10 @@ class JustpyApp:
             if endpointMatch:
                 self.description=endpointMatch.group(1)
                 self.endpoint=endpointMatch.group(2)
-                modulematch=re.search('justpy/(examples/.*)[.]py', self.pymodule_file)
+                # jenkins could have /var/lib/jenkins/jobs/justpy/workspace/examples/charts_tutorial/pandas/women_majors2.py is not a demo
+                modulematch=re.search('justpy/(workspace/)?(examples/.*)[.]py', self.pymodule_file)
                 if modulematch:
-                    self.pymodule=modulematch.group(1)
+                    self.pymodule=modulematch.group(2)
                     self.pymodule=self.pymodule.replace("/",".")
                     self.isDemo=not "lambda" in self.endpoint
                 return 
