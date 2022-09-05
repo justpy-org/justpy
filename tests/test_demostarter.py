@@ -4,7 +4,7 @@ Created on 2022-09-05
 @author: wf
 '''
 from tests.base_server_test import BaseAsynctest
-#from tests.basetest import Basetest
+from tests.basetest import Basetest
 from jpcore.demostarter import Demostarter
 import asyncio
 
@@ -20,6 +20,10 @@ class TestDemoStarter(BaseAsynctest):
         '''
         test the demo starter
         '''
+        if Basetest.inPublicCI():
+            # avoid endless wait ...
+            return
+        
         demoStarter=Demostarter(debug=True,mode="direct")
         await asyncio.sleep(0.5)
 
