@@ -32,7 +32,7 @@ async def my_click(self, msg):
     msg.page.dark = not msg.page.dark
     await msg.page.set_dark_mode(msg.page.dark)
 
-def quasar_example():
+def quasar_example1():
     wp = jp.QuasarPage(dark=True)  # Load page in dark mode
     d = jp.Div(classes='q-pa-md q-gutter-sm', a=wp)
     jp.QBtn(color='primary', icon='mail', label='On Left', a=d, click=my_click)
@@ -42,7 +42,7 @@ def quasar_example():
     jp.QBtn(icon='phone', label='Stacked', stack=True, glossy=True, color='purple', a=d, click=my_click)
     return wp
 
-jp.justpy(quasar_example)
+jp.justpy(quasar_example1)
 ```
 
 The program uses the JustPy QBtn component which is based on the [Quasar QBtn component](https://quasar.dev/vue-components/button). Click the buttons and notice the ripple effect which is part of the Material specification.
@@ -79,7 +79,7 @@ In the example below we add an icon to several QInput slots.
 ```python
 import justpy as jp
 
-def input_test(request):
+def input_test1(request):
     wp = jp.QuasarPage()
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
@@ -90,7 +90,7 @@ def input_test(request):
         setattr(in1, slot + '_slot', icon1)
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test1)
 
 ```
 
@@ -199,14 +199,14 @@ html_string = """
   </div>
 """
 
-def quasar_example():
+def quasar_example2():
     wp = jp.QuasarPage()
     c = jp.parse_html(html_string, a=wp)
     for i in c.commands:
         print(i)
     return wp
 
-jp.justpy(quasar_example)
+jp.justpy(quasar_example2)
 ```
 
 
@@ -222,7 +222,7 @@ JustPy supports the following Quasar Vue directives:
 ```python
 import justpy as jp
 
-def quasar_example():
+def quasar_example3():
     wp = jp.QuasarPage()
     d = jp.Div(classes='q-pa-md row justify-center', a=wp)
     jp.QDiv(v_ripple=True, classes='relative-position flex flex-center text-white bg-primary',
@@ -230,7 +230,7 @@ def quasar_example():
                 a=d, text='Click/tap me')
     return wp
 
-jp.justpy(quasar_example)
+jp.justpy(quasar_example3)
 ```
 
 The value of the directive can be a dictionary for configuring more options:

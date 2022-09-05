@@ -7,7 +7,7 @@ It generates an input event each time it is clicked with the value of the input 
 ```python
 import justpy as jp
 
-def rating_test():
+def rating_test1():
     wp = jp.QuasarPage(data={'rating': 2})
     d = jp.Div(classes='q-pa-md', a=wp)
     rating_div = jp.Div(classes='q-gutter-y-md column', a=d)
@@ -23,7 +23,7 @@ def rating_test():
                icon=['sentiment_very_dissatisfied', 'sentiment_dissatisfied', 'sentiment_satisfied', 'sentiment_very_satisfied'])
     return wp
 
-jp.justpy(rating_test)
+jp.justpy(rating_test1)
 
 ```
 
@@ -32,7 +32,7 @@ With tooltips
 ```python
 import justpy as jp
 
-def rating_test():
+def rating_test2():
     wp = jp.QuasarPage()
     wp.tailwind = True
     num_stars = 3
@@ -43,6 +43,6 @@ def rating_test():
     return wp
 
 
-jp.justpy(rating_test)
+jp.justpy(rating_test2)
 
 ```

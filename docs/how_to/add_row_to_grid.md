@@ -21,7 +21,7 @@ def add_row(self, msg):
     self.grid.options.rowData.append({'make': 'Tesla', 'model': 'Roadster', 'price': 95000})
 
 
-def grid_test():
+def grid_test18():
     wp = jp.WebPage()
     add_row_btn = jp.Button(text='Add Row', classes='m-2 ' + jp.Styles.button_simple, a=wp, click=add_row)
     grid = jp.AgGrid(a=wp, options=grid_options, auto_size=False)
@@ -29,6 +29,6 @@ def grid_test():
     return wp
 
 
-jp.justpy(grid_test)
+jp.justpy(grid_test18)
 
 ```

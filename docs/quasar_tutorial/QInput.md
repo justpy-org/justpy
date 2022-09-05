@@ -11,7 +11,7 @@ The program below puts on the page several QInput elements with different featur
 ```python
 import justpy as jp
 
-def input_test(request):
+def input_test5(request):
     wp = jp.QuasarPage(data={'text': ''})
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
@@ -29,7 +29,7 @@ def input_test(request):
     c14 = jp.QInput(square=True, standout=True, label='Square standout', a=c2, model=[wp, 'text'])
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test5)
 ```
 
 ## Using Slots
@@ -37,7 +37,7 @@ jp.justpy(input_test)
 ```python
 import justpy as jp
 
-def input_test(request):
+def input_test6(request):
     wp = jp.QuasarPage()
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
@@ -49,7 +49,7 @@ def input_test(request):
         setattr(in1, slot + '_slot', icon1)
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test6)
 
 ```
 
@@ -58,7 +58,7 @@ jp.justpy(input_test)
 ```python
 import justpy as jp
 
-def input_test(request):
+def input_test7(request):
     wp = jp.QuasarPage()
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
@@ -81,7 +81,7 @@ def input_test(request):
 
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test7)
 ```
 
 Or better yet, as a reusable component
@@ -109,7 +109,7 @@ class PasswordWithToggle(jp.QInput):
             self.password_input.type = 'password'
 
 
-def input_test(request):
+def input_test8(request):
     wp = jp.QuasarPage(data={'text': ''})
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
@@ -117,7 +117,7 @@ def input_test(request):
         PasswordWithToggle(filled=True,  type='password', a=c2, hint=f'Password with toggle #{i}')
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test8)
 
 ```
 
@@ -127,14 +127,14 @@ jp.justpy(input_test)
 ```python
 import justpy as jp
 
-def input_test(request):
+def input_test9(request):
     wp = jp.QuasarPage(data={'text': ''})
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
     jp.QInput(filled=True, label='Phone', mask='(###) ### - ####', hint="Mask: (###) ### - ####", a=c2)
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test9)
 
 ```
 
@@ -158,13 +158,13 @@ def input_change(self, msg):
         self.bottom_slots = True
 
 
-def input_test():
+def input_test10():
     wp = jp.QuasarPage()
     in1 = jp.QInput(label='Enter email', style='width: 150px; margin: 20px', a=wp, input=input_change)
     return wp
 
 
-jp.justpy(input_test)
+jp.justpy(input_test10)
 ```
 
 You can also use QInput's internal validation prop `rules`. The prop needs to be a list that contains a string that represents JavaScript functions. See the [examples](https://quasar.dev/vue-components/input#Internal-validation) in the Quasar documentation
@@ -172,13 +172,13 @@ You can also use QInput's internal validation prop `rules`. The prop needs to be
 ```python
 import justpy as jp
 
-def input_test():
+def input_test11():
     wp = jp.QuasarPage()
     in1 = jp.QInput(label='Enter email', style='width: 150px; margin: 20px', a=wp, lazy_rules=False)
     in1.rules = ["val => val.length <= 3 || 'Please use maximum 3 characters'"]
     return wp
 
-jp.justpy(input_test)
+jp.justpy(input_test11)
 ```
 
 ## QInputChange and QInputBlur - Disabling the Input Event

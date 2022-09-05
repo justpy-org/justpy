@@ -5,6 +5,7 @@ Components in JustPy are Python classes that inherit from other JustPy component
 ## Pie Chart Component
 
 ```python
+
 import justpy as jp
 
 

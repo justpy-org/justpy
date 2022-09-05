@@ -32,11 +32,11 @@ grid_options = {
     ]
 }
 
-def grid_test():
+def grid_test9():
     wp = jp.WebPage()
     grid = jp.AgGrid(a=wp, options=grid_options)
     grid.evaluate = ['getDataPath']
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_test9)
 ```

@@ -35,7 +35,7 @@ my_chart_def = """
 }
 """
 
-def chart_test():
+def chart_test1():
     wp = jp.WebPage()
     my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border', style='width: 600px')
     my_chart.options = my_chart_def
@@ -58,9 +58,9 @@ Try for example, changing the text of the chart title in `my_chart_def` and runn
 
 ## Chart Types
 
-Let's do something a little more complex. Change `chart_test` in the above example to the following:
+Let's do something a little more complex. Change `chart_test1` in the above example to the following:
 ```python
-def chart_test():
+def chart_test2():
     wp = jp.WebPage()
     for chart_type in ['bar', 'column', 'line', 'spline']:
         my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
@@ -123,12 +123,12 @@ my_chart_def = """
 }
 """
 
-def chart_test():
+def chart_test3():
     wp = jp.WebPage()
     my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
     return wp
 
-jp.justpy(chart_test)
+jp.justpy(chart_test3)
 ```
 
 The problem is that the value of the `tooltip.formatter` key is a JavaScript function definition. JustPy does not support this. We will soon see how to define tooltip formatters in JustPy, but for now, please remove the whole tooltip section and run the program. Your program should look like this:
@@ -159,14 +159,14 @@ my_chart_def = """
 }
 """
 
-def chart_test():
+def chart_test4():
     wp = jp.WebPage()
     my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
     my_chart.options.series[0].name = 'Tourists in \'000'
     my_chart.options.title.text = 'Tourists in Middle Earth'
     return wp
 
-jp.justpy(chart_test)
+jp.justpy(chart_test4)
 ```
 
 This time, there is no error. When you copy a JavaScript object, make sure that it does not include function definitions or uses JavaScript language functions to compute values. These will cause errors. 
@@ -179,7 +179,7 @@ This time, there is no error. When you copy a JavaScript object, make sure that 
 
 ## Chart Series
 
-Notice that we have added two lines to `chart_test` above.  The first of these lines gives the series a name and makes the legend more informative. 
+Notice that we have added two lines to `chart_test4` above.  The first of these lines gives the series a name and makes the legend more informative. 
 
 !!! note
     The Dicts that describe the series of a chart are held in a list so the first series is `options.series[0]`
@@ -231,7 +231,7 @@ import justpy as jp
 charts = ['org', 'bubbles', 'item', 'timeline', 'states', 'browsers', 'wheel']
 
 @jp.SetRoute('/{chart_name}')
-async def chart_test(request):
+async def chart_test5(request):
     wp = jp.WebPage()
     chart_name = request.path_params.get('chart_name', 'item')   # Default chart is item
     if chart_name not in charts:
@@ -240,7 +240,7 @@ async def chart_test(request):
     my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-3/4', options=chart_options)
     return wp
 
-jp.justpy(chart_test)
+jp.justpy(chart_test5)
 ```
 
 The program above fetches chart definitions from a static page server (a github repository in this case) based on the URL. Take a look at the different charts for a small taste of what Highcharts can do (these are all taken from the Highcharts website where there are many more examples). You could deploy the program above and have others accessing the charts via the appropriate URLs. 

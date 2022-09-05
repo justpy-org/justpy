@@ -14,7 +14,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehend
             eveniet doloribus ullam aliquid.
 """
 
-def quasar_example():
+def quasar_example4():
     wp = jp.QuasarPage()
     d = jp.Div(classes="q-pa-md", style="max-width: 350px", a=wp)
     item_list = jp.QList(classes="rounded-borders", padding=True, bordered=True, a=d)
@@ -26,7 +26,7 @@ def quasar_example():
 
     return wp
 
-jp.justpy(quasar_example)
+jp.justpy(quasar_example4)
 ```
 
 ## Example 2

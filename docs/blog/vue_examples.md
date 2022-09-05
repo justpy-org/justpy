@@ -17,7 +17,7 @@ class ButtonCounter(jp.Button):
     def button_clicked(self, msg):
         self.count += 1
 
-    def react(self, data):
+    def react1(self, data):
         self.text = f'You clicked me {self.count} times.'
 
 
@@ -57,7 +57,7 @@ class Products(jp.Div):
             total += product["quantity"]
         return total
 
-    def react(self, data):
+    def react2(self, data):
         self.ul.delete_components()
         for product in self.products:
             item = jp.Li(a=self.ul)
@@ -97,7 +97,7 @@ class TodoList(jp.Div):
         self.todos.append(self.task.value)
         self.task.value = ''
 
-    def react(self, data):
+    def react3(self, data):
         self.ol.delete_components()
         for todo in self.todos:
             jp.Li(text=todo, a=self.ol)

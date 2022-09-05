@@ -30,7 +30,7 @@ grid_options = """
 }
 """
 
-def row_selected(self, msg):
+def row_selected1(self, msg):
     wp = msg.page
     if msg.selected:
         wp.selected_rows[msg.rowIndex] = msg.data
@@ -53,12 +53,12 @@ async def deselect_rows(self, msg):
     await self.grid.run_api('deselectAll()', msg.page)
 
 
-def grid_test():
+def grid_test10():
     wp = jp.WebPage()
     wp.selected_rows = {}  # Dictionary holding selected rows
     grid = jp.AgGrid(a=wp, options=grid_options, style='height: 200px; width: 300px; margin: 0.25em')
     grid.options.columnDefs[0].checkboxSelection = True
-    grid.on('rowSelected', row_selected)
+    grid.on('rowSelected', row_selected1)
     wp.rows_div = jp.Pre(text='Data will go here when you select rows', classes='border text-lg', a=wp)
     btn_deselect = jp.Button(text='Deselect rows', classes=jp.Styles.button_simple+' m-2', a=wp, click=deselect_rows)
     btn_deselect.grid = grid
@@ -67,5 +67,5 @@ def grid_test():
     return wp
 
 
-jp.justpy(grid_test)
+jp.justpy(grid_test10)
 ```

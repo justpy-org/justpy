@@ -51,7 +51,7 @@ import justpy as jp
 
 # https://quasar.dev/vue-components/date#With-QInput
 
-def input_test():
+def input_test3():
     wp = jp.QuasarPage(data={'date': '2019-02-01 12:44'})
     in1 = jp.QInput(filled=True, style='width: 400px', a=wp, model=[wp, 'date'], classes="q-pa-md")
     date_slot = jp.parse_html("""
@@ -119,7 +119,7 @@ class QInputDateTime(jp.QInput):
         self.time.value = self.value
 
 
-def input_test():
+def input_test4():
     wp = jp.QuasarPage()
     QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='')
     QInputDateTime(filled=True, style='width: 600px', a=wp, classes="q-pa-md", value='2020-03-01 12:44')
@@ -128,5 +128,5 @@ def input_test():
     return wp
 
 
-jp.justpy(input_test)
+jp.justpy(input_test4)
 ```

@@ -93,7 +93,7 @@ async def result_ready(self, msg):
       row_data = msg.result['row_data'] 
       await wp.run_javascript(f"""cached_grid_def['g' + {wp.grid.id}].api.applyTransaction({{  remove: [{row_data}] }})""") 
 
-def grid_test():
+def grid_test3():
     wp = jp.WebPage()
     wp.on('result_ready', result_ready) 
     wp.grid = jp.AgGrid(a=wp, options=grid_options)
@@ -101,6 +101,6 @@ def grid_test():
     wp.grid.evaluate = ['getContextMenuItems', 'getRowNodeId'] 
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_test3)
 
 ```

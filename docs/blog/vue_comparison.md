@@ -16,7 +16,7 @@ class ButtonCounter(jp.Button):
     def button_clicked(self, msg):
         self.count += 1
 
-    def react(self, data):
+    def react1(self, data):
         self.text = f'You clicked me {self.count} times.'
 
 
@@ -56,7 +56,7 @@ class Products(jp.Div):
             total += product["quantity"]
         return total
 
-    def react(self, data):
+    def react2(self, data):
         self.ul.delete_components()
         for product in self.products:
             item = jp.Li(a=self.ul)
@@ -95,7 +95,7 @@ class TodoList(jp.Div):
         self.todos.append(self.task.value)
         self.task.value = ''
 
-    def react(self, data):
+    def react3(self, data):
         self.ol.delete_components()
         for todo in self.todos:
             jp.Li(text=todo, a=self.ol)
@@ -178,7 +178,7 @@ Example of rendering a simple list:
  ```python
 import justpy as jp
 
-def for_example():
+def for_example1():
     wp = jp.WebPage(tailwind=False)  
     items = [{'message': 'Foo'},
              {'message': 'Bar'}]
@@ -187,7 +187,7 @@ def for_example():
         jp.Li(text=f'{item["message"]}', a=ul)
     return wp
 
-jp.justpy(for_example)
+jp.justpy(for_example1)
 ```
 
 Second example with index:
@@ -195,7 +195,7 @@ Second example with index:
 ```python
 import justpy as jp
 
-def for_example():
+def for_example2():
     wp = jp.WebPage(tailwind=False)
     ul = jp.Ul(a=wp)
     ul.items = [{'message': 'Foo'},
@@ -205,7 +205,7 @@ def for_example():
         jp.Li(text=f'{ul.parent_message}-{index}-{item["message"]}', a=ul)
     return wp
 
-jp.justpy(for_example)
+jp.justpy(for_example2)
 ```
 Note that the HTML elements are Python class instances and therefore we can assign values to their attributes.
 
@@ -219,7 +219,7 @@ Rendering keys and values of an object:
 import justpy as jp
 
 
-def for_example():
+def for_example3():
     wp = jp.WebPage(tailwind=False)
     ul = jp.Ul(a=wp)
     object = {
@@ -231,7 +231,7 @@ def for_example():
         jp.Li(text=f'{name}: {value}', a=ul)
     return wp
 
-jp.justpy(for_example)
+jp.justpy(for_example3)
 
 ```
 With index:
@@ -241,7 +241,7 @@ With index:
 import justpy as jp
 
 
-def for_example():
+def for_example4():
     wp = jp.WebPage(tailwind=False)
     object = {
       'title': 'How to do lists in Vue',
@@ -252,7 +252,7 @@ def for_example():
         jp.Div(text=f'{index}. {name}: {value}', a=wp)
     return wp
 
-jp.justpy(for_example)
+jp.justpy(for_example4)
 
 ```
 
@@ -281,7 +281,7 @@ This manifests itself when items are added or deleted, not when their property c
 from justpy import WebPage, Div, SetRoute
 
 SetRoute('/for')
-def for_example():
+def for_example5():
     wp = WebPage()
     items = ['car', 'plane', 'train']
     for index, item in enumerate(items):
@@ -302,7 +302,7 @@ Nesting:
 from justpy import WebPage, Div, SetRoute
 
 SetRoute('/nested_for')
-def for_example():
+def for_example6():
     wp = WebPage()
     items = {'car': ['Ford', 'Toyota', 'GM'], 'plane': ['Boeing', 'Airbus'], 'train': ['Amtrak', 'NJ Transit']}
     for index, item in enumerate(items):

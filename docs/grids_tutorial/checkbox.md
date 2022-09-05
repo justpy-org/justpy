@@ -37,12 +37,12 @@ def grid_change(self, msg):
     print(msg)
 
 
-def grid_test():
+def grid_test2():
     wp = jp.WebPage()
     grid = jp.AgGrid(a=wp, options=grid_options)
     grid.on('cellValueChanged', grid_change)
     return wp
 
 
-jp.justpy(grid_test)
+jp.justpy(grid_test2)
 ```

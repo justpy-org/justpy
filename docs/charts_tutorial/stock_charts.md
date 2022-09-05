@@ -14,7 +14,7 @@ import datetime
 epoch = datetime.datetime(1970, 1, 1)
 
 
-def convert_date(date_string):
+def convert_date1(date_string):
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
     return (date - epoch).total_seconds()*1000
 
@@ -30,7 +30,7 @@ def stock_test(request):
     o.title.text = 'Historical Stock Price'
     o.legend = {'enabled': True, 'align': 'right', 'layout': 'proximate'}
     o.rangeSelector.selected = 4  # Set default range to 1 year
-    x = list(data['Date'].map(convert_date))
+    x = list(data['Date'].map(convert_date1))
     y = data['Adj Close'].to_list()
     s = jp.Dict({'name': ticker.upper(), 'data': jp.make_pairs_list(x, y)})
     o.series = [s]
@@ -61,7 +61,7 @@ Date,Open,High,Low,Close,Adj Close,Volume
 
 The program uses pandas to read a CSV file corresponding to the ticker parameter (only the tickers MSFT, AAPL, IBM and INTC have data behind them, the rest default to MSFT). Try http://127.0.0.1:8000/?ticker=intc for example.
 
-The program needs to convert the dates to support the Highcharts (standard JavaScript) format which is number of milliseconds since the Epoch (1/1/1970). The short function convert_date does this using the Python datetime library. We use `map` to apply `convert_date` to all values in the 'Date' column in order to generate the list of x values for the series. 
+The program needs to convert the dates to support the Highcharts (standard JavaScript) format which is number of milliseconds since the Epoch (1/1/1970). The short function convert_date1 does this using the Python datetime library. We use `map` to apply `convert_date1` to all values in the 'Date' column in order to generate the list of x values for the series. 
 
 ## Stock Chart with Volume
 
@@ -88,7 +88,7 @@ chart_dict = {
 }
 
 
-def convert_date(date_string):
+def convert_date2(date_string):
     date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
     return (date - epoch).total_seconds()*1000
 
@@ -102,7 +102,7 @@ async def stock_test(request):
     chart = jp.HighStock(a=wp, classes='m-1 p-2 border w-10/12', options=chart_dict, style='height: 600px')
     o = chart.options
     o.title.text = f'{ticker} Historical Prices'
-    x = list(data['Date'].map(convert_date))
+    x = list(data['Date'].map(convert_date2))
     o.series[0].data = list(zip(x, data['Open'], data['High'], data['Low'], data['Close']))
     o.series[0].name = ticker
     o.series[1].data = list(zip(x, data['Volume']))

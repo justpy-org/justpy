@@ -9,7 +9,7 @@ import justpy as jp
 def color_change(self, msg):
     self.div.style = f'color: {self.value}'
 
-def input_test():
+def input_test2():
     wp = jp.QuasarPage(data={'color': ''})
     in1 = jp.QInput(filled=True, style='width: 400px', a=wp, model=[wp, 'color'], classes="q-pa-md", input=color_change)
     j = jp.parse_html("""
@@ -28,5 +28,5 @@ def input_test():
     return wp
 
 
-jp.justpy(input_test)
+jp.justpy(input_test2)
 ```

@@ -27,10 +27,10 @@ my_chart_def = """
 }
 """
 
-async def tooltip_formatter(self, msg):
+async def tooltip_formatter1(self, msg):
     return await self.tooltip_update('<div>My tooltip!</div>', msg.websocket)
 
-def chart_test():
+def chart_test1():
     wp = jp.WebPage()
     # First chart
     wp.css = '.h-chart {height: 300px;}'
@@ -39,15 +39,15 @@ def chart_test():
     # Second chart
     chart2 = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
     chart2.options.subtitle.text = 'Custom Tooltip'
-    chart2.on('tooltip', tooltip_formatter)
+    chart2.on('tooltip', tooltip_formatter1)
     return wp
 
-jp.justpy(chart_test)
+jp.justpy(chart_test1)
 ```
 
 In this example we put two charts on the page. They are identical except for their subtitle and the fact that that the second one has a custom tooltip formatter. 
 
-The tooltip formatting function (the handler for the tooltip event) is called `tooltip_formatter` and has one line in it:
+The tooltip formatting function (the handler for the tooltip event) is called `tooltip_formatter1` and has one line in it:
 
 ```python
 return await self.tooltip_update('<div>My tooltip!</div>', msg.websocket)
@@ -82,10 +82,10 @@ The second argument to the tooltip formatter (`msg` in our case) has values spec
 - `msg.series_index` - The index the series the point is in
 - `msg.point_index` - The index the point in its series
 
-Let's use some of the fields above to create a more informative tooltip. Please replace `tooltip_formatter` with this new version and run the program:
+Let's use some of the fields above to create a more informative tooltip. Please replace `tooltip_formatter1` with this new version and run the program:
 
 ```python
-async def tooltip_formatter(self, msg):
+async def tooltip_formatter2(self, msg):
     tooltip_html = f"""
     <div style="color: {msg.color};">{msg.series_name}</div>
     <div>{msg.category}</div>
@@ -96,9 +96,9 @@ async def tooltip_formatter(self, msg):
 
 We use the Python f-string template like features to create a tooltip that includes information about each point. Notice how `msg.color` is used to give the series name the color of the point. In charts with multiple series, this becomes very useful.
 
-There is another way to create the HTML string used to update the tooltip. Try using the following `tooltip_formatter` instead of the one above:
+There is another way to create the HTML string used to update the tooltip. Try using the following `tooltip_formatter2` instead of the one above:
 ```python
-async def tooltip_formatter(self, msg):
+async def tooltip_formatter3(self, msg):
     d1 = jp.Div(text=msg.series_name, style=f'color: {msg.color};')
     d2 = jp.Div(text=msg.category)
     d3 = jp.Div(text=f'x: {msg.x}, y: {msg.y}')
@@ -137,7 +137,7 @@ my_chart_def = """
 }
 """
 
-async def tooltip_formatter(self, msg):
+async def tooltip_formatter4(self, msg):
     tooltip_html = f"""
     <div style="color: {msg.color};">{msg.series_name}</div>
     <div>{msg.category}</div>
@@ -145,7 +145,7 @@ async def tooltip_formatter(self, msg):
     """
     return await self.tooltip_update(tooltip_html, msg.websocket)
 
-def chart_test():
+def chart_test2():
     wp = jp.WebPage()
     # First chart
     chart1 = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
@@ -154,12 +154,12 @@ def chart_test():
     # Second chart
     chart2 = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
     chart2.options.subtitle.text = 'Custom Tooltip'
-    chart2.on('tooltip', tooltip_formatter)
+    chart2.on('tooltip', tooltip_formatter4)
     chart2.tooltip_y = 80
     chart2.tooltip_x = -55
     return wp
 
-jp.justpy(chart_test)
+jp.justpy(chart_test2)
 ```
 
 We added the lines:
@@ -197,7 +197,7 @@ my_chart_def = """
 }
 """
 
-async def tooltip_formatter(self, msg):
+async def tooltip_formatter5(self, msg):
     tooltip_html = f"""
     <div style="color: {msg.color};">{msg.series_name}</div>
     <div>{msg.category}</div>
@@ -205,7 +205,7 @@ async def tooltip_formatter(self, msg):
     """
     return await self.tooltip_update(tooltip_html, msg.websocket)
 
-def chart_test():
+def chart_test3():
     wp = jp.WebPage()
     # First chart
     chart1 = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
@@ -214,13 +214,13 @@ def chart_test():
     # Second chart
     chart2 = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
     chart2.options.subtitle.text = 'Custom Tooltip'
-    chart2.on('tooltip', tooltip_formatter)
+    chart2.on('tooltip', tooltip_formatter5)
     chart2.tooltip_fixed = True
     chart2.tooltip_y = 100
     chart2.tooltip_x = 100
     return wp
 
-jp.justpy(chart_test)
+jp.justpy(chart_test3)
 ```
 
 The lines that make the difference are:
@@ -286,7 +286,7 @@ chart_def = """
 """
 
 
-def tool_tip_demo():
+def tool_tip_demo1():
     wp = jp.WebPage()
     jp.Div(text='Charts with default Highcharts tooltip', classes='m-2 p-2 text-xl bg-blue-500 text-white',a =wp)
     d = jp.Div(classes='flex flex-wrap ', a=wp)
@@ -301,7 +301,7 @@ def tool_tip_demo():
     my_charts[2].options.title.text = 'Split Tooltip'
     return wp
 
-jp.justpy(tool_tip_demo)
+jp.justpy(tool_tip_demo1)
 ```
 
 ### Custom Tooltips
@@ -363,7 +363,7 @@ chart_def = """
 """
 
 
-def tool_tip_demo():
+def tool_tip_demo2():
     wp = jp.WebPage()
     jp.Div(text='Charts with default Highcharts tooltip', classes='m-2 p-2 text-xl bg-blue-500 text-white',a =wp)
     d = jp.Div(classes='flex flex-wrap ', a=wp)
@@ -430,7 +430,7 @@ async def split_tooltip_formatter(self, msg):
     return await self.tooltip_update(tooltip_array, msg.websocket)
 
 
-jp.justpy(tool_tip_demo)
+jp.justpy(tool_tip_demo2)
 ```
 
 The `split_tooltip_formatter` function is a little more complex as can be seen above. A split tooltip means that each series has its own separate popup box and therefore the HTML for each series needs to be returned. The `tooltip_update` method therefore takes as its first argument a list of strings instead of a string as in the other cases. The first string in the list represents the HTML for the x axis value. 

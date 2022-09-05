@@ -21,12 +21,12 @@ import pandas as pd
 # Load data showing percent of women in different majors per year
 wm = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
-def grid_test():
+def grid_test1():
     wp = jp.WebPage()
     wm.jp.ag_grid(a=wp)  # a=wp adds the grid to WebPage wp
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_test1)
 
 ```
 
@@ -50,13 +50,13 @@ wm = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 wm_under_20 = wm[wm.loc[0, wm.loc[0] < 20].index]
 wm_under_20.insert(0, 'Year', wm['Year'])
 
-def grid_test():
+def grid_test2():
     wp = jp.WebPage()
     wm.jp.ag_grid(a=wp)
     wm_under_20.jp.ag_grid(a=wp)
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_test2)
 
 ```
 
@@ -77,7 +77,7 @@ import pandas as pd
 
 wm_df = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
-def grid_test():
+def grid_test3():
     wp = jp.WebPage()
     grid = wm_df.jp.ag_grid(a=wp)
     grid.options.pagination = True
@@ -92,7 +92,7 @@ def grid_test():
         }
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_test3)
 
 ```
 
@@ -118,14 +118,14 @@ title_classes = 'text-2xl text-white bg-blue-500 text-center mb-2 p-2'
 grid_style = 'height: 85vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
 
 @jp.SetRoute('/wm')
-def serve_wm():
+def serve_wm1():
     wp = jp.WebPage()
     jp.Div(text='All Majors', classes=title_classes, a=wp)
     wm.jp.ag_grid(a=wp, style=grid_style)
     return wp
 
 @jp.SetRoute('/wm_20')
-def serve_wm():
+def serve_wm2():
     wp = jp.WebPage()
     jp.Div(text='Only Majors with Women Starting Under 20%', classes=title_classes, a=wp)
     wm_under_20.jp.ag_grid(a=wp, style=grid_style)
