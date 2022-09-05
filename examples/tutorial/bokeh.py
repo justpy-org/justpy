@@ -12,7 +12,6 @@ from bokeh.sampledata.unemployment import data as unemployment
 from bokeh.sampledata.us_counties import data as counties1
 
 
-
 def create_iris_figure(*, width=500, height=500):
     colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
     colors = [colormap[x] for x in flowers['species']]

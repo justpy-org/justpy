@@ -55,6 +55,7 @@ Source = "https://github.com/justpy-org/justpy"
 test = [
   "aiohttp",
   "asynctest",
+  "bokeh",
   "green",
   "pandas",
   "psutil",
