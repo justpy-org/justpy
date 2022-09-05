@@ -30,7 +30,7 @@ class ClickDemo:
 
 async def click_demo():
     clickDemo=ClickDemo()
-    return clickDemo.click_demo
+    return await clickDemo.click_demo()
     
 from  examples.basedemo import Demo
 Demo('click demo',click_demo)
