@@ -20,18 +20,17 @@ class TestDemoStarter(BaseAsynctest):
         '''
         test the demo starter
         '''
-        if Basetest.inPublicCI():
-            # avoid endless wait ...
-            return
+        #if Basetest.inPublicCI():
+        #    # avoid endless wait ...
+        #    return
         
         demoStarter=Demostarter(debug=True,mode="direct")
         await asyncio.sleep(0.5)
 
         await demoStarter.start(limit=None)
-        self.assertEqual(0,len(demoStarter.errors.values()))
+      
         # wait a bit 
         await asyncio.sleep(2.0)
         # stop all servers
         await demoStarter.stop()
-        pass
-    
+        self.assertEqual(0,len(demoStarter.errors.values()))   
