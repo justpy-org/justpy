@@ -28,6 +28,9 @@ class ClickDemo:
         d.additional_properties =['screenX', 'pageY','altKey','which','movementX','button', 'buttons']
         return wp
 
-clickDemo=ClickDemo()
+async def click_demo():
+    clickDemo=ClickDemo()
+    return clickDemo.click_demo
+    
 from  examples.basedemo import Demo
-Demo('click demo',clickDemo.click_demo)
+Demo('click demo',click_demo)

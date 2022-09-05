@@ -29,7 +29,7 @@ async def btn_click(self, msg):
     self.a.components[0].text="Clicked!!!"
 
 
-def grid_test():
+def grid_test_issue270():
     wp = jp.WebPage()
     row_data_div = jp.Div(a=wp, text="Replace me by selecting a row")
     grid = df.jp.ag_grid(a=wp)
@@ -38,6 +38,5 @@ def grid_test():
     btn = jp.Button(text="Click", a=wp, click=btn_click)
     return wp
 
-jp.justpy(grid_test, port=8400)
 from  examples.basedemo import Demo
-Demo('Issue 270 aggrid timestamp value',grid_test)
+Demo('Issue 270 aggrid timestamp value',grid_test_issue270)
