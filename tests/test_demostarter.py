@@ -20,11 +20,10 @@ class TestDemoStarter(BaseAsynctest):
         '''
         test the demo starter
         '''
-        #if Basetest.inPublicCI():
-        #    # avoid endless wait ...
-        #    return
+        if Basetest.inPublicCI(): # avoid endless wait ...
+            return
         
-        demoStarter=Demostarter(debug=True,mode="direct")
+        demoStarter=Demostarter(debug=True)
         await asyncio.sleep(0.5)
 
         with self.subTest("Test demoStarter errors", demoStarter=demoStarter):
