@@ -177,7 +177,8 @@ class Homepage(HTTPEndpoint):
         if isinstance(load_page, Response):
             logging.debug('Returning raw starlette.responses.Response.')
             return load_page
-        assert issubclass(type(load_page), WebPage), 'Function did not return a web page'
+        page_type=type(load_page)
+        assert issubclass(page_type, WebPage), f'Function did not return a web page but a {page_type.__name__}'
         assert len(load_page) > 0 or load_page.html, '\u001b[47;1m\033[93mWeb page is empty, add components\033[0m'
         page_options = {
             'reload_interval': load_page.reload_interval, 

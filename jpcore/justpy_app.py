@@ -51,6 +51,7 @@ class JustpyServer:
                 mode="process"
         self.mode=mode
         self.debug=debug
+        self.running=False
     
     async def start(self,wpfunc,**kwargs):
         '''
@@ -83,8 +84,17 @@ class JustpyServer:
                 kwargs=kwargs,
             )
             self.proc.start()
-            await asyncio.sleep(self.sleep_time)
-            assert self.proc.is_alive()
+            total_sleep=0
+            sleep_1ms=0.001
+            while total_sleep<self.sleep_time:
+                await asyncio.sleep(sleep_1ms)
+                total_sleep+=sleep_1ms
+                if self.proc.is_alive():
+                    if self.debug:
+                        print(f"server at port {self.port} up after {total_sleep}")
+                    break
+            self.runing=self.proc.is_alive
+                
  
     async def stop(self):
         '''
@@ -104,7 +114,7 @@ class JustpyServer:
             await self.server.shutdown()
         if self.thread:
             self.thread.join(timeout=self.sleep_time)
-        if self.proc:
+        if self.proc and self.running:
             pid = self.proc.pid
             parent = psutil.Process(pid)
             for child in parent.children(recursive=True):

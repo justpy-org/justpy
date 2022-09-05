@@ -23,14 +23,13 @@ class TestDemoStarter(BaseAsynctest):
         if Basetest.inPublicCI(): # avoid endless wait ...
             return
         
-        demoStarter=Demostarter(debug=True)
-        await asyncio.sleep(0.5)
+        demoStarter=Demostarter(debug=True,mode="process")
 
-        with self.subTest("Test demoStarter errors", demoStarter=demoStarter):
-            await demoStarter.start(limit=None)
-            self.assertEqual(0,len(demoStarter.errors.values()))
+        await demoStarter.start(limit=2)
       
         # wait a bit 
         await asyncio.sleep(2.0)
         # stop all servers
         await demoStarter.stop()   
+        
+        self.assertEqual(0,len(demoStarter.errors.values()))

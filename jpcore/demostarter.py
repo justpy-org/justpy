@@ -25,6 +25,7 @@ class Demostarter:
         Args:
             debug(bool): if True switch on debug mode
         '''
+        Demo.testmode=True
         self.debug=debug
         self.mode=mode
         script_dir =os.path.dirname(__file__)
@@ -45,29 +46,33 @@ class Demostarter:
         if self.debug:
             print(f"found {len(self.demos)} justpy demo python modules")
                 
-    async def start(self,baseport=11000,limit=None):
+    async def start(self,baseport=11000,limit=None,useGather:bool=False):
         '''
         start the demos from the given baseport optionally limitting the number of demos
         
         Args:
             baseport(int): the port number to start from
             limit(int): the maximum number of demos to start (default: None)
+            userGather(bool): if True try using gather
         '''
-        Demo.testmode=True
         port=baseport
         server=None
+        tasklist=[]
         for i,demo in enumerate(self.demos):
             try:
                 print(f"starting {i+1:3}:{demo}  ...")
                 if server is None:
-                    server=JustpyServer(mode=self.mode,port=port)
+                    server=JustpyServer(mode=self.mode,port=port,debug=self.debug)
                 else:
                     server=server.nextServer()
                     self.servers[server.port]=server
                 demo.port=server.port
                 demo_module=importlib.import_module(demo.pymodule)
                 demo.wp = getattr(demo_module, demo.endpoint)
-                await (demo.start(server))
+                if useGather:
+                    tasklist.append(demo.start(server))
+                else:
+                    await demo.start(server)
             except Exception as ex:
                 self.errors[i]=ex
                 print(f"failed due to exception: {str(ex)}")
@@ -75,6 +80,9 @@ class Demostarter:
                     print(traceback.format_exc())
             if limit is not None and i+1>=limit:
                 break
+        if useGather:
+            demo_results=await asyncio.gather(*tasklist,return_exceptions=True)
+        pass
             
     async def stop(self):
         '''
@@ -114,10 +122,11 @@ def main(argv=None): # IGNORE:C0111
         program_name = os.path.basename(sys.argv[0])
         parser = ArgumentParser(description="justpy demo module starter", formatter_class=RawDescriptionHelpFormatter)
         parser.add_argument("-d", "--debug", dest="debug", action="store_true", help="show debug info")
+        parser.add_argument("-m", "--mode",default=None,help="the server start mode process/direct or None for os specific (default: %(default)s)")
         parser.add_argument("--limit",type=int,default=None,help = "limit the number of demos (default: %(default)s)")
         
         args = parser.parse_args(argv[1:])
-        demostarter=Demostarter(args.debug)
+        demostarter=Demostarter(mode=args.mode,debug=args.debug)
         if args.debug:
             for demo in demostarter.demos:
                 print(demo)
