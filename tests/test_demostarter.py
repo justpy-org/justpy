@@ -17,7 +17,7 @@ class TestDemoStarter(BaseAsynctest):
         test the demo starter
         '''
         demoStarter=Demostarter(debug=True)
-        await demoStarter.start(limit=None)
+        await demoStarter.start(limit=2)
         
         await asyncio.sleep(5.0)
         await demoStarter.stop()
