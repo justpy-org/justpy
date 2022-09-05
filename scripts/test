@@ -1,7 +1,10 @@
 #!/bin/bash
 # WF 2022-08-20
 install_packages() {
-  pip install aiohttp asynctest bokeh green pandas psutil selenium  webdriver-manager
+  # install test packages
+  pip install aiohttp asynctest green psutil selenium  webdriver-manager
+  # install example packages
+  pip install bokeh pandas pydeck
 }
 
 modulewise_test() {

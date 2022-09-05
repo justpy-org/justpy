@@ -55,10 +55,11 @@ Source = "https://github.com/justpy-org/justpy"
 test = [
   "aiohttp",
   "asynctest",
-  "bokeh",
+  "bokeh", # example
   "green",
-  "pandas",
+  "pandas", # example
   "psutil",
+  "pydeck", # example
   "selenium",
   "webdriver-manager"
 ]
