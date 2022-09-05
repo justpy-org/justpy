@@ -4,6 +4,7 @@ Created on 2022-09-02
 @author: wf
 '''
 import asyncio
+import socket
 import re
 import psutil
 import typing
@@ -20,7 +21,7 @@ class JustpyServer:
     
  
     '''
-    def __init__(self,host:str="127.0.0.1",port:int=10000,sleep_time:float=0.5,mode:str=None,debug:bool=False):
+    def __init__(self,host:str=None,port:int=10000,sleep_time:float=0.5,mode:str=None,debug:bool=False):
         '''
         constructor
         
@@ -34,6 +35,9 @@ class JustpyServer:
                 the starlette router is not shutdown properly)
             debug(bool): if True switch debugging on
         '''
+        if host is None:
+            host=socket.getfqdn()
+            #host="127.0.0.1"
         self.host=host
         self.port=port
         self.sleep_time=sleep_time

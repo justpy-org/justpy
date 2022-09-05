@@ -12,6 +12,9 @@ class TestDemoStarter(BaseAsynctest):
     test demo starter
     '''
     
+    async def setUp(self):
+        await BaseAsynctest.setUp(self,with_server=False)
+    
     async def testDemoStarter(self):
         '''
         test the demo starter

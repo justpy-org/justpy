@@ -58,9 +58,9 @@ class Demostarter:
                 self.servers[server.port]=server
             demo.port=server.port
             try:
+                print(f"starting {i+1:3}:{demo}  ...")
                 demo_module=importlib.import_module(demo.pymodule)
                 demo.wp = getattr(demo_module, demo.endpoint)
-                print(f"starting {i+1:3}:{demo}  ...")
                 await (demo.start(server))
             except Exception as ex:
                 self.errors[demo.port]=ex
