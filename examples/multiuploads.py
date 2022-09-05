@@ -16,15 +16,13 @@ def multiupload():
     show a multi upload
     '''
     wp=WebPage()
+    WebPage.tailwind=False
     f=Form(submit=handle_submit, a=wp)
     Input(name="f1", type="file", a=f)
     Input(name="f2", type="file", a=f)
     Input(type="submit", value="OK", a=f)
     wp.file_list=Ol(a=wp)
     return wp
-  
 
-WebPage.tailwind=False
 from  examples.basedemo import Demo
 Demo('multi uploads demo',multiupload)
-
