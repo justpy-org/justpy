@@ -18,7 +18,7 @@ class Demostarter:
     start justpy demos on different ports
     '''
     
-    def __init__(self,debug:bool=False):
+    def __init__(self,mode:str=None,debug:bool=False):
         '''
         constructor
         
@@ -26,6 +26,7 @@ class Demostarter:
             debug(bool): if True switch on debug mode
         '''
         self.debug=debug
+        self.mode=mode
         script_dir =os.path.dirname(__file__)
         justpy_dir= f"{os.path.dirname(script_dir)}/examples"
         if self.debug:
@@ -59,7 +60,7 @@ class Demostarter:
             try:
                 print(f"starting {i+1:3}:{demo}  ...")
                 if server is None:
-                    server=JustpyServer(port=port)
+                    server=JustpyServer(mode=self.mode,port=port)
                 else:
                     server=server.nextServer()
                     self.servers[server.port]=server
