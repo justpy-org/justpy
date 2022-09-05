@@ -20,7 +20,7 @@ class JustpyServer:
     
  
     '''
-    def __init__(self,host:str,port:int,sleep_time:float,mode:str,debug:bool=False):
+    def __init__(self,host:str="127.0.0.1",port:int=10000,sleep_time:float=0.5,mode:str=None,debug:bool=False):
         '''
         constructor
         
@@ -155,14 +155,21 @@ class JustpyApp:
                 self.description=endpointMatch.group(1)
                 self.endpoint=endpointMatch.group(2)
                 self.pymodule=re.search('justpy/(examples/.*)[.]py', self.pymodule_file).group(1)
+                self.pymodule=self.pymodule.replace("/",".")
                 self.isDemo=not "lambda" in self.endpoint
                 return 
         self.isDemo=False
         
-    def start(self,server):
+    async def start(self,server:JustpyServer):
         '''
-        start me
+        start me on the given server
+        
+        Args:
+            server(JustpyServer): the server to start 
         '''
+        if self.wp is None:
+            raise Exception(f"can't start {self.pymodule_file} -wp/endoint is None")
+        return await server.start(self.wp)
           
     def __str__(self):
         text=f"{self.pymodule}:{self.endpoint}:{self.description}"

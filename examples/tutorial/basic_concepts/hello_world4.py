@@ -9,7 +9,6 @@ for i in range(1,11):
 def hello_world4():
     return wp
 
-    You can also put your own CSS on a page and use your own class definitions by setting the `css` attribute of a page.
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("hello_world4",hello_world4)

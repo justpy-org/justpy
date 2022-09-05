@@ -8,7 +8,6 @@ def hello_world3():
         jp.P(text=f'{i}) Hello World!', a=wp, classes=my_paragraph_design)
     return wp
 
-!!! info
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("hello_world3",hello_world3)

@@ -5,7 +5,6 @@ Created on 2022-09-07
 '''
 import argparse
 import socket
-import justpy as jp
 import typing
 
 class Demo(object):
@@ -31,4 +30,5 @@ class Demo(object):
         parser.add_argument('--host',default=socket.getfqdn())
         parser.add_argument('--port',type=int,default=8000)
         args = parser.parse_args()
+        import justpy as jp
         jp.justpy(wp,host=args.host,port=args.port,**kwargs)
