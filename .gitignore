@@ -4,6 +4,9 @@ dist/
 justpy/__pycache__/
 test - Copy/
 examples/justpy.env
+.venv*/
+venv*/
+.env*/
 # 
 # IDEs
 #
@@ -13,6 +16,9 @@ examples/justpy.env
 .settings
 .project
 .pydevproject
+# VS Code
+.vscode/
+*.code-workspace
 # docs
 docs
 # Mac
