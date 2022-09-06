@@ -4,41 +4,88 @@ from addict import Dict
 import itertools
 from urllib.parse import quote
 
-#TODO: May need to call chart.reflow() on resize
-#TODO: Handle formatter functions, for example in dataLabels and others.
-#TODO: Add support for more events like drilldown
+# TODO: May need to call chart.reflow() on resize
+# TODO: Handle formatter functions, for example in dataLabels and others.
+# TODO: Add support for more events like drilldown
 
 # If width of chart not specified it defaults to 600px
 # A JavaScript date is fundamentally specified as the number of milliseconds that have elapsed since midnight on January 1, 1970, UTC
 # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC
 
+
 def make_pairs_list(x_data, y_data):
     return list(map(list, itertools.zip_longest(x_data, y_data)))
+
 
 class HighCharts(JustpyBaseComponent):
 
     # Highcharts.getOptions().colors
-    highcharts_colors = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
+    highcharts_colors = [
+        "#7cb5ec",
+        "#434348",
+        "#90ed7d",
+        "#f7a35c",
+        "#8085e9",
+        "#f15c80",
+        "#e4d354",
+        "#2b908f",
+        "#f45b5b",
+        "#91e8e1",
+    ]
 
     # Theme is One of ['avocado', 'dark-blue', 'dark-green', 'dark-unica', 'gray',
     # 'grid-light', 'grid', 'high-contrast-dark', 'high-contrast-light', 'sand-signika', 'skies', 'sunset']
     # but is set at the WebPage level. All charts on same page have the same theme.
     # Example: wp.highcharts_theme = 'grid'
 
-    vue_type = 'chart'  # The corresponding Vue component
+    vue_type = "chart"  # The corresponding Vue component
 
-    chart_types = ['columnrange', 'cylinder', 'dependencywheel', 'errorbar', 'funnel', 'funnel3d', 'gauge', 'heatmap',
-                   'histogram', 'item', 'line', 'networkgraph', 'organization', 'packedbubble', 'pareto', 'pie',
-                   'polygon', 'pyramid', 'pyramid3d', 'sankey', 'scatter', 'scatter3d', 'solidgauge',
-                   'spline', 'streamgraph', 'sunburst', 'tilemap', 'timeline', 'treemap', 'variablepie', 'variwide',
-                   'vector', 'venn', 'waterfall', 'windbarb', 'wordcloud', 'xrange']
+    chart_types = [
+        "columnrange",
+        "cylinder",
+        "dependencywheel",
+        "errorbar",
+        "funnel",
+        "funnel3d",
+        "gauge",
+        "heatmap",
+        "histogram",
+        "item",
+        "line",
+        "networkgraph",
+        "organization",
+        "packedbubble",
+        "pareto",
+        "pie",
+        "polygon",
+        "pyramid",
+        "pyramid3d",
+        "sankey",
+        "scatter",
+        "scatter3d",
+        "solidgauge",
+        "spline",
+        "streamgraph",
+        "sunburst",
+        "tilemap",
+        "timeline",
+        "treemap",
+        "variablepie",
+        "variwide",
+        "vector",
+        "venn",
+        "waterfall",
+        "windbarb",
+        "wordcloud",
+        "xrange",
+    ]
 
     def __init__(self, **kwargs):
         self.options = Dict()
         self.stock = False
         self.use_cache = True
-        self.classes = ''
-        self.style = ''
+        self.classes = ""
+        self.style = ""
         self.show = True
         self.event_propagation = True
         self.pages = {}
@@ -47,37 +94,46 @@ class HighCharts(JustpyBaseComponent):
         self.tooltip_y = 40
         self.tooltip_debounce = 100  # Default is 100 ms
         self.update_animation = True  # Whether to animate changes when chart is updated
-        self.update_create = False    # Whether to create new chart on update, if false current chart is updated
-        kwargs['temp'] = False  # Force an id to be assigned to chart
+        self.update_create = False  # Whether to create new chart on update, if false current chart is updated
+        kwargs["temp"] = False  # Force an id to be assigned to chart
         super().__init__(**kwargs)
         for k, v in kwargs.items():
-            self.__setattr__(k,v)
-        self.allowed_events = ['tooltip', 'point_click', 'point_select', 'point_unselect', 'series_hide',
-                               'series_show', 'series_click', 'zoom_x', 'zoom_y']
+            self.__setattr__(k, v)
+        self.allowed_events = [
+            "tooltip",
+            "point_click",
+            "point_select",
+            "point_unselect",
+            "series_hide",
+            "series_show",
+            "series_click",
+            "zoom_x",
+            "zoom_y",
+        ]
         for e in self.allowed_events:
-            for prefix in ['', 'on', 'on_']:
+            for prefix in ["", "on", "on_"]:
                 if prefix + e in kwargs.keys():
                     fn = kwargs[prefix + e]
                     if isinstance(fn, str):
-                        fn_string = f'def oneliner{self.id}(self, msg):\n {fn}'
+                        fn_string = f"def oneliner{self.id}(self, msg):\n {fn}"
                         exec(fn_string)
-                        self.on(e, locals()[f'oneliner{self.id}'])
+                        self.on(e, locals()[f"oneliner{self.id}"])
                     else:
                         self.on(e, fn)
                     break
         if type(self.options) != Dict:
             self.options = Dict(self.options)
-        if 'series' not in self.options:
+        if "series" not in self.options:
             self.options.series = []
-        for com in ['a', 'add_to']:
+        for com in ["a", "add_to"]:
             if com in kwargs.keys():
                 kwargs[com].add_component(self)
 
     def __repr__(self):
-        return f'{self.__class__.__name__}(id: {self.id}, vue_type: {self.vue_type}, chart options: {self.options})'
+        return f"{self.__class__.__name__}(id: {self.id}, vue_type: {self.vue_type}, chart options: {self.options})"
 
     def __setattr__(self, key, value):
-        if key == 'options':
+        if key == "options":
             if isinstance(value, str):
                 self.load_json(value)
             else:
@@ -85,15 +141,18 @@ class HighCharts(JustpyBaseComponent):
         else:
             super().__setattr__(key, value)
 
-
     async def chart_update(self, update_dict, websocket):
         # https://api.highcharts.com/class-reference/Highcharts.Chart#update
-        await websocket.send_json({'type': 'chart_update', 'data': update_dict, 'id': self.id})
+        await websocket.send_json(
+            {"type": "chart_update", "data": update_dict, "id": self.id}
+        )
         # So the page itself does not update, only the tooltip, return True not None
         return True
 
     async def tooltip_update(self, tooltip, websocket):
-        await websocket.send_json({'type': 'tooltip_update', 'data': tooltip, 'id': self.id})
+        await websocket.send_json(
+            {"type": "tooltip_update", "data": tooltip, "id": self.id}
+        )
         # So the page itself does not update, only the tooltip, return True not None
         return True
 
@@ -107,7 +166,7 @@ class HighCharts(JustpyBaseComponent):
         Example:
          {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
         """
-        await websocket.send_json({'type': 'draw_crosshair', 'data': point_list})
+        await websocket.send_json({"type": "draw_crosshair", "data": point_list})
         # Return True not None so that the page does not update
         return True
 
@@ -121,7 +180,7 @@ class HighCharts(JustpyBaseComponent):
         Example:
          {'id': chart_id, 'series': msg.series_index, 'point': msg.point_index}
         """
-        await websocket.send_json({'type': 'select_point', 'data': point_list})
+        await websocket.send_json({"type": "select_point", "data": point_list})
         # Return True not None so that the page does not update
         return True
 
@@ -140,34 +199,33 @@ class HighCharts(JustpyBaseComponent):
         return self.options
 
     def load_json_from_file(self, file_name):
-        with open(file_name,'r') as f:
+        with open(file_name, "r") as f:
             self.options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
         return self.options
 
     def convert_object_to_dict(self):
 
         d = {}
-        d['vue_type'] = self.vue_type
-        d['id'] = self.id
-        d['stock'] = self.stock
-        d['use_cache'] = self.use_cache
-        d['show'] = self.show
-        d['classes'] = self.classes
-        d['style'] = self.style
-        d['event_propagation'] = self.event_propagation
-        d['def'] = self.options
-        d['events'] = self.events
-        d['tooltip_fixed'] = self.tooltip_fixed
-        d['tooltip_x'] = self.tooltip_x
-        d['tooltip_y'] = self.tooltip_y
-        d['tooltip_debounce'] = self.tooltip_debounce
-        d['update_animation'] = self.update_animation
-        d['update_create'] = self.update_create
+        d["vue_type"] = self.vue_type
+        d["id"] = self.id
+        d["stock"] = self.stock
+        d["use_cache"] = self.use_cache
+        d["show"] = self.show
+        d["classes"] = self.classes
+        d["style"] = self.style
+        d["event_propagation"] = self.event_propagation
+        d["def"] = self.options
+        d["events"] = self.events
+        d["tooltip_fixed"] = self.tooltip_fixed
+        d["tooltip_x"] = self.tooltip_x
+        d["tooltip_y"] = self.tooltip_y
+        d["tooltip_debounce"] = self.tooltip_debounce
+        d["update_animation"] = self.update_animation
+        d["update_create"] = self.update_create
         return d
 
 
 class HighStock(HighCharts):
-
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
@@ -254,7 +312,7 @@ class Pie(HighCharts):
         super().__init__(**kwargs)
         self.load_json(self._options)
         series = Dict()
-        series.type = 'pie'
+        series.type = "pie"
         series_data = []
         series.data = series_data
         for i, value in enumerate(data):
@@ -311,8 +369,8 @@ class PieSemiCircle(HighCharts):
         super().__init__(**kwargs)
         self.load_json(self._options)
         series = Dict()
-        series.type = 'pie'
-        series.innerSize = '60%'
+        series.type = "pie"
+        series.innerSize = "60%"
         series_data = []
         series.data = series_data
         for i, value in enumerate(data):
@@ -359,7 +417,7 @@ class Scatter(HighCharts):
         super().__init__(**kwargs)
         self.load_json(self._options)
         s = Dict()
-        s.data = list(zip(x,y))
+        s.data = list(zip(x, y))
         self.options.series.append(s)
 
 
@@ -368,6 +426,7 @@ class Scatter(HighCharts):
 
 try:
     import matplotlib.pyplot as plt
+
     _has_matplotlib = True
     import io
 except:
@@ -376,7 +435,6 @@ except:
 if _has_matplotlib:
 
     class Matplotlib(Div):
-
         def __init__(self, **kwargs):
             self.figure = plt.gcf()
             super().__init__(**kwargs)
@@ -389,10 +447,13 @@ if _has_matplotlib:
             output = io.StringIO()
             plt.savefig(output, format="svg")
             # The 'white-space:pre' causes problems in placement of chart on page
-            self.inner_html = output.getvalue().replace('*{stroke-linecap:butt;stroke-linejoin:round;white-space:pre;}',
-                                                        '*{stroke-linecap:butt;stroke-linejoin:round;}')
+            self.inner_html = output.getvalue().replace(
+                "*{stroke-linecap:butt;stroke-linejoin:round;white-space:pre;}",
+                "*{stroke-linecap:butt;stroke-linejoin:round;}",
+            )
             output.close()
             return self.inner_html
+
 
 # --------------------------------------------------------------------
 # deck.gl related objects
@@ -403,6 +464,7 @@ s = """
 
 try:
     import pydeck as pdk
+
     _has_pydeck = True
 except:
     _has_pydeck = False
@@ -411,52 +473,55 @@ if _has_pydeck:
 
     class PyDeckFrame(Iframe):
 
-        vue_type = 'iframejp'
+        vue_type = "iframejp"
 
         def __init__(self, **kwargs):
             self.deck = None
             self.srcdoc = None
-            kwargs['temp'] = False  # Force an id to be assigned to chart
-            self.view_delay = 0  # Additional delay in ms for display after frame has loaded
-            self.transition_duration = 0.1  # Duration of transition between frames in seconds
+            kwargs["temp"] = False  # Force an id to be assigned to chart
+            self.view_delay = (
+                0  # Additional delay in ms for display after frame has loaded
+            )
+            self.transition_duration = (
+                0.1  # Duration of transition between frames in seconds
+            )
             super().__init__(**kwargs)
-
 
         def convert_object_to_dict(self):
             self.srcdoc = quote(self.deck.to_html(as_string=True))
             d = super().convert_object_to_dict()
-            d['view_delay'] = self.view_delay
-            d['transition_duration'] = self.transition_duration
+            d["view_delay"] = self.view_delay
+            d["transition_duration"] = self.transition_duration
             return d
-
 
     class PyDeck(Div):
 
-        vue_type = 'deckgl'
+        vue_type = "deckgl"
 
         def __init__(self, **kwargs):
             self.use_cache = False
             self.deck = None
-            kwargs['temp'] = False  # Force an id to be assigned to chart
+            kwargs["temp"] = False  # Force an id to be assigned to chart
             super().__init__(**kwargs)
 
         def convert_object_to_dict(self):
             d = {}
-            d['vue_type'] = self.vue_type
-            d['id'] = self.id
-            d['use_cache'] = self.use_cache
-            d['show'] = self.show
-            d['classes'] = self.classes
-            d['style'] = self.style
-            d['event_propagation'] = self.event_propagation
-            d['deck'] = self.deck.to_json()
-            d['events'] = self.events
-            d['mapbox_key'] = self.deck.mapbox_key
+            d["vue_type"] = self.vue_type
+            d["id"] = self.id
+            d["use_cache"] = self.use_cache
+            d["show"] = self.show
+            d["classes"] = self.classes
+            d["style"] = self.style
+            d["event_propagation"] = self.event_propagation
+            d["deck"] = self.deck.to_json()
+            d["events"] = self.events
+            d["mapbox_key"] = self.deck.mapbox_key
             return d
 
 
 try:
     import altair as alt
+
     _has_altair = True
 except:
     _has_altair = False
@@ -466,7 +531,7 @@ if _has_altair:
 
     class AltairChart(Div):
 
-        vue_type = 'altairjp'
+        vue_type = "altairjp"
 
         def __init__(self, **kwargs):
             self.use_cache = False
@@ -474,28 +539,30 @@ if _has_altair:
             self.options = {}
             self.vega_source = None
             # self.style = 'width:100%; height: 500px'
-            kwargs['temp'] = False  # Force an id to be assigned to chart
+            kwargs["temp"] = False  # Force an id to be assigned to chart
             super().__init__(**kwargs)
 
         def convert_object_to_dict(self):
             d = {}
-            d['vue_type'] = self.vue_type
-            d['id'] = self.id
-            d['use_cache'] = self.use_cache
-            d['show'] = self.show
-            d['classes'] = self.classes
-            d['style'] = self.style
-            d['event_propagation'] = self.event_propagation
+            d["vue_type"] = self.vue_type
+            d["id"] = self.id
+            d["use_cache"] = self.use_cache
+            d["show"] = self.show
+            d["classes"] = self.classes
+            d["style"] = self.style
+            d["event_propagation"] = self.event_propagation
             if self.vega_source:
-                d['vega_source'] = json.dumps(self.vega_source)
+                d["vega_source"] = json.dumps(self.vega_source)
             else:
-                d['vega_source'] = self.chart.to_json()
-            d['events'] = self.events
-            d['options'] = self.options
+                d["vega_source"] = self.chart.to_json()
+            d["events"] = self.events
+            d["options"] = self.options
             return d
+
 
 try:
     import plotly
+
     _has_plotly = True
 except:
     _has_plotly = False
@@ -505,35 +572,37 @@ if _has_plotly:
 
     class PlotlyChart(Div):
 
-        vue_type = 'plotlyjp'
+        vue_type = "plotlyjp"
 
         def __init__(self, **kwargs):
             self.use_cache = False
             self.chart = None
             self.chart_dict = {}
             self.config = {}
-            kwargs['temp'] = False  # Force an id to be assigned to chart
+            kwargs["temp"] = False  # Force an id to be assigned to chart
             super().__init__(**kwargs)
 
         def convert_object_to_dict(self):
             d = {}
-            d['vue_type'] = self.vue_type
-            d['id'] = self.id
-            d['use_cache'] = self.use_cache
-            d['show'] = self.show
-            d['classes'] = self.classes
-            d['style'] = self.style
-            d['event_propagation'] = self.event_propagation
+            d["vue_type"] = self.vue_type
+            d["id"] = self.id
+            d["use_cache"] = self.use_cache
+            d["show"] = self.show
+            d["classes"] = self.classes
+            d["style"] = self.style
+            d["event_propagation"] = self.event_propagation
             if self.chart:
-                d['chart'] = self.chart.to_json()
+                d["chart"] = self.chart.to_json()
             else:
-                d['chart'] = self.chart_dict
-            d['events'] = self.events
-            d['config'] = self.config
+                d["chart"] = self.chart_dict
+            d["events"] = self.events
+            d["config"] = self.config
             return d
+
 
 try:
     import bokeh
+
     _has_bokeh = True
 except:
     _has_bokeh = False
@@ -543,36 +612,37 @@ if _has_bokeh:
 
     class BokehChart(Div):
 
-        vue_type = 'bokehjp'
+        vue_type = "bokehjp"
 
         def __init__(self, **kwargs):
             self.use_cache = False
             self.chart = None
             self.chart_dict = {}
             self.config = {}
-            kwargs['temp'] = False  # Force an id to be assigned to chart
+            kwargs["temp"] = False  # Force an id to be assigned to chart
             super().__init__(**kwargs)
 
         def convert_object_to_dict(self):
             d = {}
-            d['vue_type'] = self.vue_type
-            d['id'] = self.id
-            d['use_cache'] = self.use_cache
-            d['show'] = self.show
-            d['classes'] = self.classes
-            d['style'] = self.style
-            d['event_propagation'] = self.event_propagation
+            d["vue_type"] = self.vue_type
+            d["id"] = self.id
+            d["use_cache"] = self.use_cache
+            d["show"] = self.show
+            d["classes"] = self.classes
+            d["style"] = self.style
+            d["event_propagation"] = self.event_propagation
             if self.chart:
-                d['chart'] = json.dumps(bokeh.embed.standalone.json_item(self.chart))
+                d["chart"] = json.dumps(bokeh.embed.standalone.json_item(self.chart))
             else:
-                d['chart'] = self.chart_dict
-            d['events'] = self.events
-            d['config'] = self.config
+                d["chart"] = self.chart_dict
+            d["events"] = self.events
+            d["config"] = self.config
             return d
 
 
 try:
     import folium
+
     _has_folium = True
 except:
     _has_folium = False
@@ -581,12 +651,10 @@ except:
 if _has_folium:
 
     class FoliumChart(Div):
-
-
         def __init__(self, **kwargs):
             self.use_cache = False
             self.chart = None
-            kwargs['temp'] = False  # Force an id to be assigned to chart
+            kwargs["temp"] = False  # Force an id to be assigned to chart
             super().__init__(**kwargs)
             self.inner_div = Div(a=self)
 
@@ -595,6 +663,3 @@ if _has_folium:
                 self.inner_html = self.chart._repr_html_()
             d = super().convert_object_to_dict()
             return d
-
-
-

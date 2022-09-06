@@ -2,7 +2,8 @@
 import justpy as jp
 
 wp = jp.WebPage()
-wp.add(jp.Div(text='Hello, world!'))
+wp.add(jp.Div(text="Hello, world!"))
 
-from  examples.basedemo import Demo
-Demo('Issue 469',lambda: wp)
+from examples.basedemo import Demo
+
+Demo("Issue 469", lambda: wp)
