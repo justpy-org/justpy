@@ -78,8 +78,15 @@
 class JustpyCore {
  
   // create a JustpyCore instance
-  constructor(page_options) {
-    this.page_options=page_options
+  constructor(window,title) {
+	this.window=window
+    this.setTitle(title);
   }
   
+  // set the title
+  setTitle(title) {
+	document.title=title;
+	this.title=title;
+	// pass
+  }
 }

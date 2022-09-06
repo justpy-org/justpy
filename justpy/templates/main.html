@@ -5,9 +5,6 @@
     {% if page_options.redirect %}
         location.href = '{{ page_options.redirect|safe }}';
     {%endif %}
-    {% if page_options.title is not none %}
-        document.title = '{{ page_options.title }}';
-    {%endif %}
     {% if page_options.display_url is not none %}
         window.history.pushState("", "", '{{ page_options.display_url }}');
     {%endif %}
@@ -21,7 +18,10 @@
     <script src='/templates/js/{{file_name}}.js'></script>
 {%- endfor %}
     <script>
-    //let justp_core=new JustpyCore(page_options)
+    let justp_core=new JustpyCore(
+    		this, // window
+    		'{{ page_options.title }}' // title
+    	);
     {%- for event in page_options.events %}
         document.addEventListener('{{ event }}', function (evt) {
             console.log(evt);
