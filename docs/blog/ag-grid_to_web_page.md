@@ -145,6 +145,6 @@ AGGRID_ENTERPRISE = True
 
 ## Learn More
 
-In future articles, I will show how to interact with gird events as well as how to create interactive charts that are linked to the gird data.
+In future articles, I will show how to interact with grid events as well as how to create interactive charts that are linked to the gird data.
 
 If you would like to learn more how you can move your pandas data quickly onto a web page without any JavaScript programming, please go to the [JustPy Docs and Tutorials](https://justpy.io/) and feel free to ask me any questions either in the comments below or on [GitHub](https://github.com/elimintz/justpy).
