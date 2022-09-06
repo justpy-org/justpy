@@ -103,10 +103,10 @@ class TodoList(jp.Div):
             jp.Li(text=todo, a=self.ol)
 
 
-def todo_app():
+def todo_app_vue1():
     wp = jp.WebPage(tailwind=False)
     TodoList(a=wp, todos=['Buy groceries', 'Learn JustPy', 'Do errands'])
     return wp
 
-jp.justpy(todo_app)
+jp.justpy(todo_app_vue1)
 ```

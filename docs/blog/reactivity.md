@@ -17,14 +17,14 @@ import justpy as jp
 
 todos = ['Go shopping', 'Learn JustPy', 'Do errands']
 
-def todo_app():
+def todo_app1():
     wp = jp.WebPage(tailwind=False)
     ol = jp.Ol(a=wp)
     for todo in todos:
         jp.Li(text=todo, a=ol)
     return wp
 
-jp.justpy(todo_app)
+jp.justpy(todo_app1)
 
 ```
 
@@ -32,7 +32,7 @@ If you change the `todos` list in your code, nothing will change in your open br
 
 ## First Step to Reactivity
 
-When we use a reactive frontend framework like Vue or React, we can go to the browser console, change a variable, and see the view change in reaction to the variable changing. We cannot do that in JustPy because JustPy programs are Python programs and run on the server, not in the browser. 
+When we use a reactive frontend framework like Vue or React, we can go to the browser console, change a variable, and see the view change in reaction to the variable changing. We cannot do that in JustPy because JustPy programs are Python programs and run on the server, not in the browser.
 
 We can only demonstrate reactivity from within the program. In the example below we let the user add an item to `todos` and change the view.
 
@@ -40,7 +40,7 @@ We can only demonstrate reactivity from within the program. In the example below
 import justpy as jp
 
 
-def todo_app():
+def todo_app2():
     todos = ['Buy groceries', 'Learn JustPy', 'Do errands']
     wp = jp.WebPage(tailwind=False)
     ol = jp.Ol(a=wp)
@@ -54,17 +54,17 @@ def todo_app():
         ol.delete_components()
         for todo in todos:
             jp.Li(text=todo, a=ol)
-    
+
     jp.Button(text='Add Task', a=wp, click=add_task, style='margin-left: 10px')
 
     return wp
 
-jp.justpy(todo_app)
+jp.justpy(todo_app2)
 ```
 
 When the Add Task button is clicked, the add_task event handler deletes the children of `ol` and recreates them based on the new value of `todos`. On the front end, Vue will update the view based on the new values (the WebPage is converted into a Python dictionary which is fed into Vue).
 
-This is still not the full reactivity we are looking for. Yes, the view changes and we are not manipulating the DOM on the frontend, but we are changing instances of objects that represent the DOM on the server side. 
+This is still not the full reactivity we are looking for. Yes, the view changes and we are not manipulating the DOM on the frontend, but we are changing instances of objects that represent the DOM on the server side.
 
 To get to full reactivity we need to create our own components.
 
@@ -88,7 +88,7 @@ class TodoList(jp.Ol):
             jp.Li(text=todo, a=self)
 
 
-def todo_app():
+def todo_app3():
     wp = jp.WebPage(tailwind=False)
     todo_list = TodoList(a=wp, todos=['Buy groceries', 'Learn JustPy', 'Do errands'])
     task = jp.Input(placeholder='Enter task', a=wp)
@@ -101,10 +101,10 @@ def todo_app():
 
     return wp
 
-jp.justpy(todo_app)
+jp.justpy(todo_app3)
 ```
 
-In the component we only modify two methods and inherit all other methods. The `__init__` method is modified to give a default value to the `todos` attribute of the component in case it is not specified as a keyword argument when an instance is created. The second method we modify is the `react` method. This method is run automatically by the framework just before the component is rendered on the server side. Rendering on the server side means converting the object into a Python dictionary that is sent to the frontend in JSON format. 
+In the component we only modify two methods and inherit all other methods. The `__init__` method is modified to give a default value to the `todos` attribute of the component in case it is not specified as a keyword argument when an instance is created. The second method we modify is the `react` method. This method is run automatically by the framework just before the component is rendered on the server side. Rendering on the server side means converting the object into a Python dictionary that is sent to the frontend in JSON format.
 
 Any changes the event handlers or background task have made to attributes of the object, will be reflected on the page. Therefore, all the `add_task` event handler has to do is modify the `todos `attribute of `todo_list` for the result to be reflected on the page. This is full reactivity.
 
@@ -137,11 +137,10 @@ class TodoList(jp.Div):
             jp.Li(text=todo, a=self.ol)
 
 
-def todo_app():
+def todo_app4():
     wp = jp.WebPage(tailwind=False)
     TodoList(a=wp, todos=['Buy groceries', 'Learn JustPy', 'Do errands'])
     return wp
 
-jp.justpy(todo_app)
+jp.justpy(todo_app4)
 ```
-
