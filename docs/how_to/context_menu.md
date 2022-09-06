@@ -18,7 +18,7 @@ def click_out(self, msg):
     self.set_class('hidden')
 
 
-def event_demo():
+def context_event_demo():
     wp = jp.WebPage()
     wp.head_html = """
     <script>
@@ -37,10 +37,9 @@ def event_demo():
     return wp
 
 
-jp.justpy(event_demo)
+jp.justpy(context_event_demo)
 ```
 
 The JavaScript added to the page disables the default behavior of the context menu. Then, you use the mousedown event to detect which button was pressed. In order to do this we modify the element to add additional fields to msg from the JavaScript event.
 
 click__out is also used to hide the simple context menu when there is a click outside of it.
-

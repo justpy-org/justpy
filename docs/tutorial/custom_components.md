@@ -429,14 +429,14 @@ First run the following short program.
 ```python
 import justpy as jp
 
-def hello_test():
+def hello_test1():
     wp = jp.WebPage()
     h = jp.Hello()
     for i in range(5):
         wp.add(h)
     return wp
 
-jp.justpy(hello_test)
+jp.justpy(hello_test1)
 ```
 
 The program puts five Hello elements on the page. Click any one of them. All five will show the number of times any element was clicked because each time through the loop, we add the same element to the page. There may be 5 rendered elements on the page, but for JustPy, these are the same element.
@@ -445,13 +445,13 @@ If we would like there to be independent components on the page, we would write 
 ```python
 import justpy as jp
 
-def hello_test():
+def hello_test2():
     wp = jp.WebPage()
     for i in range(5):
         wp.add(jp.Hello()) # or jp.Hello(a=wp)
     return wp
 
-jp.justpy(hello_test)
+jp.justpy(hello_test2)
 ```
 In this program, each time thorough the loop we create a new Hello element and add it to the page. When any element is clicked, no other element on the page is affected.
 
@@ -479,13 +479,13 @@ In `__init__` we first initialize a counter for the instance. This is a new attr
 ```python
 import justpy as jp
 
-def hello_test():
+def hello_test3():
     wp = jp.WebPage()
     for i in range(5):
         jp.Hello(a=wp, counter=100)
     return wp
 
-jp.justpy(hello_test)
+jp.justpy(hello_test3)
 ```
 
 
@@ -504,13 +504,13 @@ class MyHello(jp.Hello):
         self.classes = 'm-1 p-1 text-6xl text-center text-red-500 bg-yellow-500 hover:bg-yellow-800 cursor-pointer'
         self.text = 'Much Better Hello! (click me)'
 
-def hello_test():
+def hello_test4():
     wp = jp.WebPage()
     for i in range(5):
         MyHello(a=wp, counter=100)
     return wp
 
-jp.justpy(hello_test)
+jp.justpy(hello_test4)
 ```
 
 We define a new component called `MyHello` which inherits from `Hello`. By running the super class `__init__` in the `__init__` of `MyHello`, we get all the functionality of `Hello`. We then just modify the classes and text.

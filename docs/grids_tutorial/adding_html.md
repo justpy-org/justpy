@@ -1,7 +1,7 @@
 # Adding HTML to Cells
 
 If you want to add an image or specific formatting to a cell in the grid, you can do so by using the `html_columns` attribute. Assign to this attribute a list of the column numbers that should be formatted using HTML.
- 
+
 In the example below, special formatting and an image are added to the `price` column.
 
 ```python
@@ -22,11 +22,11 @@ grid_options = {
     ],
 }
 
-def grid_test():
+def grid_add_test():
     wp = jp.WebPage()
     grid = jp.AgGrid(a=wp, options=grid_options)
     grid.html_columns = [2]
     return wp
 
-jp.justpy(grid_test)
+jp.justpy(grid_add_test)
 ```

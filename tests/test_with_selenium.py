@@ -9,7 +9,7 @@ import justpy as jp
 from tests.browser_test import SeleniumBrowsers
 from tests.base_server_test import BaseAsynctest
 from tests.basetest import Basetest
-
+from examples.basedemo import Demo
 
 class TestWithSelenium(BaseAsynctest):
     """
@@ -74,3 +74,29 @@ class TestWithSelenium(BaseAsynctest):
             self.assertEqual(f"I was clicked {i+1} times", div.text)
         self.browser.close()
         await asyncio.sleep(self.server.sleep_time)
+        await self.server.stop()
+        
+    async def testIssue279(self):
+        """
+        see https://github.com/justpy-org/justpy/issues/279
+        
+        """
+        self.browser = SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
+        await asyncio.sleep(self.server.sleep_time)
+        Demo.testmode=True
+        from examples.issues.issue_279_key_error import issue_279
+        await self.server.start(issue_279)
+        url = self.server.getUrl("/")
+        self.browser.get(url)
+        await asyncio.sleep(self.server.sleep_time)
+        buttons = self.browser.find_elements(By.TAG_NAME, "button")
+        debug=True
+        if debug:
+            print(f"found {len(buttons)} buttons")
+        buttons[0].click()
+        await asyncio.sleep(1.0)
+        buttons[1].click()
+        await asyncio.sleep(3.0)
+        self.browser.close()
+        await self.server.stop()
+        
