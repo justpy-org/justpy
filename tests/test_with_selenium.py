@@ -102,8 +102,12 @@ class TestWithSelenium(BaseAsynctest):
             buttons[1].click()
             if debug:
                 print(str(lc))
-            expected="component with id 2 doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
-            self.assertTrue(expected in str(lc))
+            expecteds=[
+                "component with id",
+                "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
+            ]
+            for expected in expecteds:
+                self.assertTrue(expected in str(lc))
         await asyncio.sleep(3.0)
         self.browser.close()
         await self.server.stop()
