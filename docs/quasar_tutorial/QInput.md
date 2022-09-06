@@ -6,7 +6,7 @@ The [Quasar QInput component](https://quasar.dev/vue-components/input) is very v
 
 QInput like Input creates an input event when its value changes.
 
-The program below puts on the page several QInput elements with different features. All are connected using the the same `model` attribute. 
+The program below puts on the page several QInput elements with different features. All are connected using the the same `model` attribute.
 
 ```python
 import justpy as jp
@@ -187,7 +187,7 @@ In some cases the debounce feature may not be sufficient to provide a good user 
 
 You can control this yourself by setting the `disable_input_event` attribute to `True` or use the predefined QInputChange and QInputBlur components. QInputBlur will only update the value of the field when the component loses focus. QInputChange will update the value when the change event is fired. Both are very similar except that change will also fire when the Enter key is pressed and focus remains on the component.
 
-The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputChange and QInputBlur instead of QInput. 
+The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputChange and QInputBlur instead of QInput.
 
 
 ```html
@@ -196,7 +196,7 @@ import justpy as jp
 def my_blur(self, msg):
     self.div.text = self.value
 
-def input_demo(request):
+def input_demo_quasar1(request):
     wp = jp.QuasarPage()
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
@@ -206,7 +206,7 @@ def input_demo(request):
     in1.on('blur', my_blur)
     return wp
 
-jp.justpy(input_demo)
+jp.justpy(input_demo_quasar1)
 ```
 
 ## Yahoo Stock Charts Example
@@ -218,7 +218,7 @@ In the example below we define a component which simplifies entering dates. Clic
 
 Using a ticker and the dates provided by the user, data is retrieved from Yahoo and a chart is displayed.
 
-This is also an example of how you would change a Quasar button to the loading state while data is being retrieved. 
+This is also an example of how you would change a Quasar button to the loading state while data is being retrieved.
 
 ```python
 import justpy as jp

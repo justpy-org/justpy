@@ -22,7 +22,7 @@ jp.justpy(input_demo1)
 
 ## The input Event
 
-The program above is quite boring, it does nothing except allow you to type text into the input field. To make it more interesting, let's have what we type reflected in a paragraph on the page. For this, we need to introduce the `input` event. When you type, each character typed into the input field generates an `input` event (yes, the tag and the event are called the same name). 
+The program above is quite boring, it does nothing except allow you to type text into the input field. To make it more interesting, let's have what we type reflected in a paragraph on the page. For this, we need to introduce the `input` event. When you type, each character typed into the input field generates an `input` event (yes, the tag and the event are called the same name).
 
 Run the following program:
 
@@ -35,35 +35,35 @@ p_classes = 'm-2 p-2 h-32 text-xl border-2'
 async def my_input1(self, msg):
     self.div.text = self.value
 
-async def input_demo1(request):
+async def input_demo2(request):
     wp = jp.WebPage()
     in1 = jp.Input(a=wp, classes=input_classes, placeholder='Please type here')
     in1.div = jp.Div(text='What you type will show up here', classes=p_classes, a=wp)
     in1.on('input', my_input1)
     return wp
 
-jp.justpy(input_demo1)
+jp.justpy(input_demo2)
 ```
 
-The function `input_demo` creates a web page and adds an input element called `in1` to it (ignore the classes, they are there just to make the input element look nicer and do not affect the functionality of the program). 
+The function `input_demo` creates a web page and adds an input element called `in1` to it (ignore the classes, they are there just to make the input element look nicer and do not affect the functionality of the program).
 
-Notice the `placeholder` attribute of `in1`. Before any text is typed into the input field or when it is emptied, the placeholder text is displayed in the field. We then define a div element that is added to the page (using the `a` keyword argument) and assigned to an attribute of `in1`. We saw this technique before. It simplifies event handling as we shall see in a second. 
+Notice the `placeholder` attribute of `in1`. Before any text is typed into the input field or when it is emptied, the placeholder text is displayed in the field. We then define a div element that is added to the page (using the `a` keyword argument) and assigned to an attribute of `in1`. We saw this technique before. It simplifies event handling as we shall see in a second.
 
 Next, we bind the input event of `in1` to the function `my_input` (we could have omitted this line by adding `input=my_input` as a keyword argument when we created `in1`). `my_input` is now the input event handler for `in1`.
 
 The input event occurs each and every time a character is typed into an input element. After every keystroke this function is run (if the debounce period has expired - see below), and it changes the text of the div to the value of the input field.  By assigning the div to an `in1` attribute, we have access to all the variables we need in the event handler.
 
-You may have noticed that there is a delay in the updating of the Div. That is because the component by default sets the `debounce` attribute of the input event to 200ms. This means an input event is generated only after a key has not been pressed for 200ms. 
+You may have noticed that there is a delay in the updating of the Div. That is because the component by default sets the `debounce` attribute of the input event to 200ms. This means an input event is generated only after a key has not been pressed for 200ms.
 
 Try holding the a key down and have it repeated. Only when you lift your finger will the Div update. You can set the `debounce` attribute to the value you prefer in ms, just make sure to take into account the typing speed of your users and the latency of the connection. In general, a higher debounce value means the server will have to handle less communications and that may be an advantage for applications that need to scale.
 
 ## The change Event and the InputOnlyChange Component
 
-The regular Input component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field as the user is typing, it is preferable to use InputOnlyChange instead of Input. 
+The regular Input component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field as the user is typing, it is preferable to use InputOnlyChange instead of Input.
 
-InputOnlyChange does not generate the input event, only the change event. The change event is generated when the field loses focus or the user presses the Enter button. It is not generated when the user types a character. 
+InputOnlyChange does not generate the input event, only the change event. The change event is generated when the field loses focus or the user presses the Enter button. It is not generated when the user types a character.
 
-The example below is the same as the one above except that InputOnlyChange is used instead of Input. 
+The example below is the same as the one above except that InputOnlyChange is used instead of Input.
 
 ```python
 import justpy as jp
@@ -74,7 +74,7 @@ p_classes = 'm-2 p-2 h-32 text-xl border-2'
 def my_input2(self, msg):
     self.div.text = self.value
 
-def input_demo2(request):
+def input_demo3(request):
     wp = jp.WebPage()
     in1 = jp.InputChangeOnly(a=wp, classes=input_classes, placeholder='Please type here')
     in1.div = jp.Div(text='What you type will show up here only when Input element loses focus or you press Enter',
@@ -83,7 +83,7 @@ def input_demo2(request):
     in1.on('change', my_input2)
     return wp
 
-jp.justpy(input_demo2)
+jp.justpy(input_demo3)
 
 ```
 
@@ -102,14 +102,14 @@ p_classes = 'm-2 p-2 h-32 text-xl border-2'
 async def my_input3(self, msg):
     self.div.text = self.value
 
-async def input_demo3(request):
+async def input_demo4(request):
     wp = jp.WebPage()
     in1 = jp.Input(type='number', a=wp, classes=input_classes, placeholder='Please type here')
     in1.div = jp.Div(text='What you type will show up here', classes=p_classes, a=wp)
     in1.on('input', my_input3)
     return wp
 
-jp.justpy(input_demo3)
+jp.justpy(input_demo4)
 ```
 
 In the example above the type of `in1` is set to 'number'. Run the program and verify that only numbers can be input into the element.
@@ -138,7 +138,7 @@ jp.justpy(color_demo)
 
 In the example below we create two sets of [radio buttons](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio).
 
-Later in the tutorial we will see how to create a component for radio buttons which is a more intuitive way to use them. 
+Later in the tutorial we will see how to create a component for radio buttons which is a more intuitive way to use them.
 
 !!! tip
     If you plan to use Quasar with JustPy, checkout the [QOptionGroup component](https://quasar.dev/vue-components/option-group)
@@ -174,13 +174,13 @@ jp.justpy(radio_test1)
 ```
 
 Radio buttons generate the 'change' event on all browsers. They generate the 'input' event just on some. When one is checked the 'change' event is generated.
- 
+
  When one radio button is checked, JustPy automatically un-checks the other radio buttons in the group.
- 
+
  Radio buttons are grouped according to their `name` attribute and the value of their `form` attribute if one is assigned. Buttons with the same name on different assigned forms, will be in different groups. All radio buttons not in any form but with the same name, will be in one group.
- 
+
 !!! note
-    You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page. 
+    You explicitly need to specify the form the buttons are on using the `form` attribute if you want to give button groups in different forms the same name. This is because JustPy does not know which form the button will be added to or has been added to. Alternatively, just have a unique name for each button group on the page.
 
 In the example below, the results of clicking a radio button are shown using the event handler `radio_changed`. Notice that the value of the radio button is always the same. What changes is its `checked` property. The value of a group of radio buttons is the value of the radio button in the group that is checked.
 
@@ -236,7 +236,7 @@ def radio_test2():
     return wp
 
 jp.justpy(radio_test2)
-``` 
+```
 
 ### Checkbox Example
 
@@ -312,7 +312,7 @@ As a rule of thumb, try to limit the usage of keyboard events to a minimum since
 
 ## Using Select
 
-The [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) tag needs to be used together with the option tag. In JustPy these correspond to Select and Option elements. 
+The [select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) tag needs to be used together with the option tag. In JustPy these correspond to Select and Option elements.
 
 The program below creates a select element whose value changes the background color of a Div.
 
@@ -360,18 +360,17 @@ class InputWithDiv(jp.Div):
         self.in1.div = jp.Div(text='What you type will show up here', classes='m-2 p-2 h-32 text-xl border-2', a=self)
 
 
-def input_demo4(request):
+def input_demo5(request):
     wp = jp.WebPage()
     for i in range(10):
         InputWithDiv(a=wp)
     return wp
 
-jp.justpy(input_demo4)
+jp.justpy(input_demo5)
 ```
 
 Try running the program. It will put on the page 10 pairs of input and div elements. If you type into the respective input field, the text will show up in the respective div.
 
-JustPy components are Python classes that inherit from JustPy classes. In the example above, we define the class `InputWithDiv` which inherits from the JustPy class `Div`. In the `__init__` method an input element and another div is added to the basic div, with the appropriate functionality. Now, we have a component, `InputWithDiv`, that we can reuse as we please in any project. 
+JustPy components are Python classes that inherit from JustPy classes. In the example above, we define the class `InputWithDiv` which inherits from the JustPy class `Div`. In the `__init__` method an input element and another div is added to the basic div, with the appropriate functionality. Now, we have a component, `InputWithDiv`, that we can reuse as we please in any project.
 
-If you don't completely understand what is going on, don't worry. We will revisit this in much more detail later. The take home message at this stage is that the way you build complex applications in JustPy is by building components with isolated functionality. Hopefully, if JustPy gains popularity, there will be many components that the community will develop and share. 
-
+If you don't completely understand what is going on, don't worry. We will revisit this in much more detail later. The take home message at this stage is that the way you build complex applications in JustPy is by building components with isolated functionality. Hopefully, if JustPy gains popularity, there will be many components that the community will develop and share.
