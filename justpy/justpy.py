@@ -17,7 +17,7 @@ from .quasarcomponents import *
 #from .misccomponents import *
 from .meadows import *
 from .pandas import *
-from .routing import JpRoute,SetRoute
+from .routing import Route,JpRoute,SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, uuid, sys, os, traceback, fnmatch
 from ssl import PROTOCOL_SSLv23
@@ -88,9 +88,22 @@ templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 component_file_list = create_component_file_list()
 
-template_options = {'tailwind': TAILWIND, 'quasar': QUASAR, 'quasar_version': QUASAR_VERSION, 'highcharts': HIGHCHARTS, 'aggrid': AGGRID, 'aggrid_enterprise': AGGRID_ENTERPRISE,
-                    'static_name': STATIC_NAME, 'component_file_list': component_file_list, 'no_internet': NO_INTERNET,
-                    'katex': KATEX, 'plotly': PLOTLY, 'bokeh': BOKEH, 'deckgl': DECKGL, 'vega': VEGA}
+template_options = {
+    'tailwind': TAILWIND, 
+    'quasar': QUASAR, 
+    'quasar_version': QUASAR_VERSION, 
+    'highcharts': HIGHCHARTS, 
+    'aggrid': AGGRID, 
+    'aggrid_enterprise': AGGRID_ENTERPRISE,
+    'static_name': STATIC_NAME, 
+    'component_file_list': component_file_list, 
+    'no_internet': NO_INTERNET,
+    'katex': KATEX, 
+    'plotly': PLOTLY, 
+    'bokeh': BOKEH, 
+    'deckgl': DECKGL, 
+    'vega': VEGA
+}
 logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(module)s: %(message)s')
 
 # modify middleware handling according to deprecation
@@ -103,7 +116,10 @@ app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAM
 app.mount('/templates', StaticFiles(directory=current_dir + '/templates'), name='templates')
 
 
-def initial_func(request):
+def initial_func(_request):
+    '''
+    default func/endpoint to be called if none has been specified
+    '''
     wp = WebPage()
     Div(text='JustPy says: Page not found', classes='inline-block text-5xl m-3 p-3 text-white bg-blue-600', a=wp)
     return wp
@@ -323,8 +339,6 @@ class JustpyEvents(WebSocketEndpoint):
             print(f'Memory used: {process.memory_info().rss:,}')
             print('************************')
 
-
-
 async def handle_event(data_dict, com_type=0, page_event=False):
     # com_type 0: websocket, con_type 1: ajax
     connection_type = {0: 'websocket', 1: 'ajax'}
@@ -444,7 +458,6 @@ def justpy(func=None, *, start_server:bool=True, websockets:bool=True, host:str=
 
     return func_to_run
 
-
 def convert_dict_to_object(d):
     obj = globals()[d['class_name']]()
     for obj_prop in d['object_props']:
@@ -454,7 +467,6 @@ def convert_dict_to_object(d):
         if k != 'id':
             obj.__dict__[k] = v
     return obj
-
 
 def redirect(url):
     wp = WebPage()
