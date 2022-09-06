@@ -70,7 +70,6 @@ class JustpyServer:
             self.server=jp.getServer()
             self.thread=Thread(target=self.server.run)
             self.thread.start()
-            await asyncio.sleep(self.sleep_time)  # time for the server to start
         elif self.mode=="process":
             needed_kwargs={
                     "host": self.host,
@@ -84,16 +83,7 @@ class JustpyServer:
                 kwargs=kwargs,
             )
             self.proc.start()
-            total_sleep=0
-            sleep_1ms=0.001
-            while total_sleep<self.sleep_time:
-                await asyncio.sleep(sleep_1ms)
-                total_sleep+=sleep_1ms
-                if self.proc.is_alive():
-                    if self.debug:
-                        print(f"server at port {self.port} up after {total_sleep}")
-                    break
-            self.running=self.proc.is_alive
+        await asyncio.sleep(self.sleep_time)  # time for the server to start
  
     async def stop(self):
         '''
@@ -113,7 +103,7 @@ class JustpyServer:
             await self.server.shutdown()
         if self.thread:
             self.thread.join(timeout=self.sleep_time)
-        if self.proc and self.running:
+        if self.proc:
             pid = self.proc.pid
             parent = psutil.Process(pid)
             for child in parent.children(recursive=True):
