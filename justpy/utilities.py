@@ -8,10 +8,20 @@ def print_request(request):
     print(type(request._scope))
     d = dict(request._scope)
     print(d)
-    d.pop('headers')
+    d.pop("headers")
     print(d)
-    fields = ['path', 'method', 'url', 'headers', 'query_params', 'path_params', 'client', 'cookies', 'state']
-    print('*************************************')
+    fields = [
+        "path",
+        "method",
+        "url",
+        "headers",
+        "query_params",
+        "path_params",
+        "client",
+        "cookies",
+        "state",
+    ]
+    print("*************************************")
     for field in fields:
         # print(field, request[field])
         try:
@@ -19,14 +29,27 @@ def print_request(request):
         except:
             print(field, getattr(request, field))
     print(request.url.path, request.url.port, request.url.scheme, dir(request.url))
-    for i,j in request.query_params.items():
-        print(i,j)
-    print('URL related -------')
-    for j in ['components', 'fragment', 'hostname', 'is_secure', 'netloc', 'password', 'path', 'port', 'query', 'replace', 'scheme', 'username']:
+    for i, j in request.query_params.items():
+        print(i, j)
+    print("URL related -------")
+    for j in [
+        "components",
+        "fragment",
+        "hostname",
+        "is_secure",
+        "netloc",
+        "password",
+        "path",
+        "port",
+        "query",
+        "replace",
+        "scheme",
+        "username",
+    ]:
         print(j, getattr(request.url, j))
-    for j in (getattr(request.url, 'components')):
+    for j in getattr(request.url, "components"):
         print(j)
-    print('*************************************')
+    print("*************************************")
 
 
 def run_task(task):
@@ -35,7 +58,6 @@ def run_task(task):
     """
     loop = asyncio.get_event_loop()
     loop.create_task(task)
-
 
 
 async def create_delayed_task(task, delay, loop):
@@ -48,9 +70,3 @@ def print_func_info(*args):
     print(inspect.stack()[1][3])
     for i in args:
         print(i)
-
-
-
-
-
-
