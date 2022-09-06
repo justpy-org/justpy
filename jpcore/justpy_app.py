@@ -84,7 +84,7 @@ class JustpyServer:
                 kwargs=kwargs,
             )
             await asyncio.sleep(self.sleep_time)  # time for the server to start
-            self.server = jp.getServer()
+            self.server = jp.get_server()
             self.thread = Thread(target=self.server.run)
             self.thread.start()
         elif self.mode == "process":
@@ -129,7 +129,7 @@ class JustpyServer:
 
     def nextServer(self):
         """
-        get another similar server with the portnumber incremented by one
+        get another similar server with the port number incremented by one
         """
         next_server = JustpyServer(
             port=self.port + 1,
@@ -177,7 +177,7 @@ class JustpyApp:
         """
         check whether this is a demo
         """
-        self.isDemo = False
+        self.is_demo = False
         if "Demo(" or "Demo (" in self.source:
             endpointMatch = re.search(
                 """Demo[ ]?[(]["'](.*)["'],(.*?)(,.*)*[)]""", self.source
@@ -192,7 +192,7 @@ class JustpyApp:
                 if modulematch:
                     self.pymodule = modulematch.group(2)
                     self.pymodule = self.pymodule.replace("/", ".")
-                    self.isDemo = not "lambda" in self.endpoint
+                    self.is_demo = not "lambda" in self.endpoint
                 return
 
     async def start(self, server: JustpyServer):

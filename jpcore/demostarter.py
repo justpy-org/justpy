@@ -39,7 +39,7 @@ class Demostarter:
         self.errors = {}
         for pymodule_file in pymodule_files:
             demo = JustpyApp(pymodule_file)
-            if demo.isDemo:
+            if demo.is_demo:
                 self.demos.append(demo)
             else:
                 if self.debug:

@@ -472,7 +472,7 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         return dict_to_send
 
 
-def getServer():
+def get_server():
     """
     workaround for global variable jp_server not working as expected
     """
