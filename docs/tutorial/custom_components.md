@@ -1,12 +1,12 @@
 # Creating Your Own Components
 
-The idea behind component programming is simple and compelling: Build a component once, and then reuse it either in the same application or in different applications. 
+The idea behind component programming is simple and compelling: Build a component once, and then reuse it either in the same application or in different applications.
 
 In JustPy, components are Python classes and so are custom components. Creating a component in JustPy means in most cases declaring a new Python class. In some cases, developing complex JustPy components requires also developing a [Vue.js](https://vuejs.org/) component. For example, the `HighCharts` charting component required developing a Vue.js component. For JustPy to support [Quasar](https://quasar.dev/) components, a Vue.js component was also required. It turns out that all Quasar components can be supported with one Vue.js component and that simplified matters considerably.
 
 However, let's start with the basics. Most components require only writing a Python class and no knowledge of Vue.js or JavaScript is required.
 
-Some components described here have features that are covered in other parts of the tutorial. Don't feel the need to finish this section in one go. If you find you need to go to other sections and return later, please do so. 
+Some components described here have features that are covered in other parts of the tutorial. Don't feel the need to finish this section in one go. If you find you need to go to other sections and return later, please do so.
 
 ## Pill Button Component
 
@@ -37,7 +37,7 @@ The only change we make is to redefine `__init__`, the method that is called whe
 
 !!! warning
     The line `super().__init__(**kwargs)` is a **MUST** in component's `__init__`  
-Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it. 
+Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it.
 
 Let's add a custom attribute to the component that will determine the background color of the button.
 
@@ -104,7 +104,7 @@ html_string = """
 
 We will use [`parse_html`](../working_with_html?id=the-parse_html-function) to easily convert this to JustPy commands.
 
-Run the following program. As it does not start a web server, there is no need to load a web page. We will be interested only in the printout. 
+Run the following program. As it does not start a web server, there is no need to load a web page. We will be interested only in the printout.
 
 ```python
 import justpy as jp
@@ -168,13 +168,13 @@ class MyAlert(jp.Div):
         c7 = jp.P(classes='font-bold text-lg', a=c6, text=self.title_text)
         c8 = jp.P(classes='text-sm', a=c6, text=self.body_text)
 
-def alert_test():
+def alert_test1():
     wp = jp.WebPage()
     d = MyAlert(a=wp, classes='m-2 w-1/4', title_text='hello', body_text='How is everybody?')
     d.title_text = 'Shalom'
     return wp
 
-jp.justpy(alert_test)
+jp.justpy(alert_test1)
 ```
 
 !!! warning
@@ -231,7 +231,7 @@ greetings = ['Bonjour', 'Hola', 'Zdravstvuyte', 'Nǐn hǎo', 'Salve', 'Konnichiw
 def translate(self, msg):
     self.title_text = 'Hello'
 
-def alert_test():
+def alert_test2():
     wp = jp.WebPage()
     for greeting in greetings:
         d = MyAlert(a=wp, classes='m-2 w-1/4', title_text='hello', body_text='How is everybody?')
@@ -240,7 +240,7 @@ def alert_test():
     return wp
 
 
-jp.justpy(alert_test)
+jp.justpy(alert_test2)
 ```
 
 At the end of `__init__` we added the two lines:
@@ -302,11 +302,11 @@ def comp_test3():
 jp.justpy(comp_test3)
 ```
 
-In this custom component we are using the template like behavior of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component `Div`. It changes only the `__init__` method and inherits all the others. 
+In this custom component we are using the template like behavior of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component `Div`. It changes only the `__init__` method and inherits all the others.
 
-Notice the `super().__init__(**kwargs)` line in `__init__`. It is required to take care of all the plumbing that goes along with a JustPy component. This line executes the `__init__` of `Div`.  We define the defaults for the component specific attributes before this line so as not to overwrite keyword arguments that the user has provided and are assigned to attributes in the superclass `__init__`. 
+Notice the `super().__init__(**kwargs)` line in `__init__`. It is required to take care of all the plumbing that goes along with a JustPy component. This line executes the `__init__` of `Div`.  We define the defaults for the component specific attributes before this line so as not to overwrite keyword arguments that the user has provided and are assigned to attributes in the superclass `__init__`.
 
-This component works well enough but has a flaw. The `inner_html` attribute is set in `__init__` when the instance is created. If for example, the instance's `day` attribute is changed after `__init__` has run, it would not be reflected in the inner html and the component will not be rendered correctly. 
+This component works well enough but has a flaw. The `inner_html` attribute is set in `__init__` when the instance is created. If for example, the instance's `day` attribute is changed after `__init__` has run, it would not be reflected in the inner html and the component will not be rendered correctly.
 
 To solve this problem, we need to move setting `inner_html` from the time the instance was created to the time it is rendered. Every JustPy component has a method called `react` that is called each time before the object is converted to a dict. The example above can therefore be written as follows:
 
@@ -356,7 +356,7 @@ def comp_test4():
 jp.justpy(comp_test4)
 ```
 
-The `react` method accepts an additional argument to self. The argument `data` is the `data` attribute of the element's direct parent. If the element has no parent, it is the `data` attribute of the page. Using `react` we can have child elements change their behavior when rendered based on the `data` attribute of their parent or the page they are on. 
+The `react` method accepts an additional argument to self. The argument `data` is the `data` attribute of the element's direct parent. If the element has no parent, it is the `data` attribute of the page. Using `react` we can have child elements change their behavior when rendered based on the `data` attribute of their parent or the page they are on.
 
 For example, let's make the color of the component dependent on the `data` attribute of their parent container.
 
@@ -415,14 +415,14 @@ def comp_test5():
 jp.justpy(comp_test5)
 ```
 
-This example is a little more complex as we have added a [Select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) component at the bottom of the page. Try changing the selected color. The color of the `CalendarDate` instances in the second group changes because in the event handler, `change_color` we change the `data` attribute of the parent Div, `d`. 
+This example is a little more complex as we have added a [Select](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) component at the bottom of the page. Try changing the selected color. The color of the `CalendarDate` instances in the second group changes because in the event handler, `change_color` we change the `data` attribute of the parent Div, `d`.
 
 The function `change_color` sets the value of the 'color' key in the data dictionary of the Div that holds the CalendarDate instances to the new value of the `Select` element. In this example, we changed the `react` function so it uses this value instead of `self.color` (which was used in the previous example) to set the color to display.
 
-A few more words about Select: A Select component includes Option components. In this example we add them to the Select using a predefined list of colors. When a specific option is selected, its value attribute becomes the value attribute of the Select. The change in value is acted upon by binding a method to the change event of the Select instance. 
+A few more words about Select: A Select component includes Option components. In this example we add them to the Select using a predefined list of colors. When a specific option is selected, its value attribute becomes the value attribute of the Select. The change in value is acted upon by binding a method to the change event of the Select instance.
 
 ## Hello Component
- 
+
 JustPy comes with a simple Hello component, which we will now examine.
 
 First run the following short program.
@@ -448,7 +448,7 @@ import justpy as jp
 def hello_test():
     wp = jp.WebPage()
     for i in range(5):
-        wp.add(jp.Hello()) # or jp.Hello(a=wp) 
+        wp.add(jp.Hello()) # or jp.Hello(a=wp)
     return wp
 
 jp.justpy(hello_test)
@@ -490,7 +490,7 @@ jp.justpy(hello_test)
 
 
 Since `counter` is initialized to 100, the components will start counting from 100. The call to the super class `__init__` takes care of assigning the keyword arguments. If we had put the initialization of `counter` after the call to the super class `__init__`, the keyword argument would have had no effect.
- 
+
 Next, in the definition of `Hello`, we set the classes of the component to give it some basic design and we set the text. Then we define the click event handler and assign it to the instance. That's it.
 
 Let's say we are not pleased with the Hello message and its colors and want to define a better Hello component. This is how we would do it:
@@ -513,7 +513,7 @@ def hello_test():
 jp.justpy(hello_test)
 ```
 
-We define a new component called `MyHello` which inherits from `Hello`. By running the super class `__init__` in the `__init__` of `MyHello`, we get all the functionality of `Hello`. We then just modify the classes and text. 
+We define a new component called `MyHello` which inherits from `Hello`. By running the super class `__init__` in the `__init__` of `MyHello`, we get all the functionality of `Hello`. We then just modify the classes and text.
 
 
 ## Calculator Component
@@ -583,10 +583,10 @@ The class `__init__` first calls the class `__init__` of the super class (in thi
 After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, `self.calculator_click` which is a static method of the Calculator class (we could have defined the event handler inside the `__init__ `function instead). We also assign to the button `calc` attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.
 
 In this example, for the sake of brevity, we implemented a very simple state machine for the calculator that is not perfect (for example, it does not handle 0 in front of a number), but for our purposes, it will do. The state machine is inside the `calculator_click` event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on `self.text` which is unique for each button.
- 
+
 ### Handling the change event
 
-As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like: 
+As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like:
 
 ```python
 from justpy import Div, Input, Button, WebPage, justpy
@@ -667,7 +667,7 @@ def calculator_test():
 justpy(calculator_test)
 ```
 
-Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do. 
+Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do.
 
 In the click event handler we use a flag called `changed` that is set to `True` by the state machine logic if an operation that changes the value of the calculator occurs.
 
@@ -676,11 +676,11 @@ At the end of the event handler, we check if `changed` is `True`. If it is, we c
 If there is a change event handler, we run the event handler using the `run_event_function` method which is also a basic method of all JustPy components.
 
 This method takes two arguments in addition to `self`. The first is the event type. The second, is the dictionary we want passed as the second positional argument to the event handler. This is what we usually designate as `msg` in our event handlers.
- 
+
  Before calling `run_event_function` we modify some values in `msg` to make it more informative. In general, you would create the appropriate `msg` for how you believe the component will be used. In our case we have added the `button_text` key which stores the text of the last button that was clicked and that generated the change event.
 
 !!! note
-    Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async. 
+    Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async.
 
 ### Adding a <span style="color: red">model</span> attribute
 
@@ -740,7 +740,7 @@ class Calculator(Div):
             except:
                 pass
         if changed:
-            calc.set_model(calc.value)  #******************** updates model 
+            calc.set_model(calc.value)  #******************** updates model
             if calc.has_event_function('change'):
                 calc_msg = msg
                 calc_msg.event_type = 'change'
@@ -773,7 +773,7 @@ def set_model(self, value):
         self.model[0].data[self.model[1]] = value
 ```
 
-The `model` attribute, as we defined it above is one directional. The component only sets `model` value but does not change any of its other attribute values based on changes in `model`. 
+The `model` attribute, as we defined it above is one directional. The component only sets `model` value but does not change any of its other attribute values based on changes in `model`.
 
 ## Tab Group Component
 
@@ -783,19 +783,19 @@ If the `animation` attribute is set to `True`, the transition between tabs is an
 
 A tab is added by calling the `add_tab` method. This method accepts three arguments (in addition to self). The first is the id of the tab. When the tab is selected, its value will become the id of the tab selected. Converesely, when the `value` attribute is set, if a tab with a corresponding id exists, it will be shown.
 
-The second argument is the label to display for the tab's selection. 
+The second argument is the label to display for the tab's selection.
 
 The third argument is the content of the tab.  Typically it would be a container element such as a Div instance that contains other elements.
 
 In this component, the method `convert_object_to_dict`, is overridden. This is the method that executes each time an instance of the component is rendered. It is simpler in this case than using the `react` method that is called by the super class `convert_object_to_dict`. It also allows the flexibility of overriding the `react` method in components that inherit from the Tabs component.
 
-Below we also define another component, TabPills, that inherits from Tabs and just changes the appearance of the tabs label line. It does so by just changing a few class variables. 
+Below we also define another component, TabPills, that inherits from Tabs and just changes the appearance of the tabs label line. It does so by just changing a few class variables.
 
 !!! tip
-    When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design. 
+    When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design.
 
  In the example below we use three tab components to display charts and pictures.
- 
+
 ```python
 from justpy import Div, WebPage, Ul, Li, HighCharts, A, justpy
 import justpy as jp
@@ -1068,7 +1068,7 @@ def table_test():
     return wp
 
 jp.justpy(table_test)
-``` 
+```
 
 ## Quasar QInput Component with Integrated QDate and QTime
 
