@@ -4,12 +4,15 @@ Created on 2022-08-25
 @author: wf
 """
 import asyncio
+import io
 from selenium.webdriver.common.by import By
 import justpy as jp
 from tests.browser_test import SeleniumBrowsers
 from tests.base_server_test import BaseAsynctest
 from tests.basetest import Basetest
 from examples.basedemo import Demo
+from contextlib import redirect_stderr
+from testfixtures import LogCapture
 
 class TestWithSelenium(BaseAsynctest):
     """
@@ -90,12 +93,17 @@ class TestWithSelenium(BaseAsynctest):
         self.browser.get(url)
         await asyncio.sleep(self.server.sleep_time)
         buttons = self.browser.find_elements(By.TAG_NAME, "button")
-        debug=True
+        debug=False
         if debug:
             print(f"found {len(buttons)} buttons")
-        buttons[0].click()
-        await asyncio.sleep(1.0)
-        buttons[1].click()
+        with LogCapture() as lc:
+            buttons[0].click()
+            await asyncio.sleep(1.0)
+            buttons[1].click()
+            if debug:
+                print(str(lc))
+            expected="component with id 2 doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
+            self.assertTrue(expected in str(lc))
         await asyncio.sleep(3.0)
         self.browser.close()
         await self.server.stop()

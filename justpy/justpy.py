@@ -413,21 +413,30 @@ async def handle_event(data_dict, com_type=0, page_event=False):
     if page_event:
         c = p
     else:
-        c = JustpyBaseComponent.instances[event_data["id"]]
-        event_data["target"] = c
+        component_id=event_data["id"]
+        if component_id in JustpyBaseComponent.instances[component_id]:
+            c = JustpyBaseComponent.instances[component_id]
+            event_data["target"] = c
+        else:
+            logging.warning(f"component with id {component_id} doesn't exist (anymore ...) it might have been deleted before the event handling was triggered")
+            c=None
 
     try:
-        before_result = await c.run_event_function("before", event_data, True)
+        if c is not None:
+            before_result = await c.run_event_function("before", event_data, True)
     except:
         pass
     try:
-        if hasattr(c, "on_" + event_data["event_type"]):
-            event_result = await c.run_event_function(
-                event_data["event_type"], event_data, True
-            )
+        if c is not None:
+            if hasattr(c, "on_" + event_data["event_type"]):
+                event_result = await c.run_event_function(
+                    event_data["event_type"], event_data, True
+                )
+            else:
+                event_result = None
+                logging.debug(f"{c} has no {event_data['event_type']} event handler")
         else:
-            event_result = None
-            logging.debug(f"{c} has no {event_data['event_type']} event handler")
+            event_result = None    
         logging.debug(f"Event result:{event_result}")
     except Exception as e:
         # raise Exception(e)
@@ -454,7 +463,8 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         elif com_type == 1:  # Ajax communication
             build_list = p.build_list()
     try:
-        after_result = await c.run_event_function("after", event_data, True)
+        if c is not None:
+            after_result = await c.run_event_function("after", event_data, True)
     except:
         pass
     if com_type == 1 and event_result is None:

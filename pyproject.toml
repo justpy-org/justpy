@@ -61,6 +61,7 @@ test = [
   "psutil",
   "pydeck", # example
   "selenium",
+  "testfixtures",
   "webdriver-manager"
 ]
 

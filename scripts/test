@@ -2,7 +2,7 @@
 # WF 2022-08-20
 install_packages() {
   # install test packages
-  pip install aiohttp asynctest green psutil selenium  webdriver-manager
+  pip install aiohttp asynctest green psutil selenium  testfixtures webdriver-manager
   # install example packages
   pip install bokeh pandas pydeck
 }
