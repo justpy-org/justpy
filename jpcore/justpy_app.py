@@ -93,8 +93,7 @@ class JustpyServer:
                     if self.debug:
                         print(f"server at port {self.port} up after {total_sleep}")
                     break
-            self.runing=self.proc.is_alive
-                
+            self.running=self.proc.is_alive
  
     async def stop(self):
         '''

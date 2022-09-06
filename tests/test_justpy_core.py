@@ -11,7 +11,7 @@ class TestJustpyCore(BaseAsynctest):
     Tests for Justpy Core features
     '''
     async def setUp(self):
-        await BaseAsynctest.setUp(self,port=8122)
+        await BaseAsynctest.setUp(self,port=8122,debug=True)
         
     async def wp_to_test(self):
         '''
