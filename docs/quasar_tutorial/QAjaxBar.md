@@ -13,7 +13,7 @@ async def stop_bar(self, msg):
     await wp.ajax_bar.run_method('stop()', msg.websocket)
 
 
-def bar_example():
+def ajax_bar_example():
     wp = jp.QuasarPage()
     d = jp.Div(classes='q-pa-md', a=wp)
     # temp=False is important because this generates an id for the element that is required for run_method to work
@@ -22,6 +22,6 @@ def bar_example():
     btn_stop = jp.QBtn(color='primary', label='Stop Bar', a=d, click=stop_bar)
     return wp
 
-jp.justpy(bar_example)
+jp.justpy(ajax_bar_example)
 
 ```
