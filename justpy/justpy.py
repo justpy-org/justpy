@@ -414,13 +414,12 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         c = p
     else:
         component_id=event_data["id"]
-        if component_id in JustpyBaseComponent.instances[component_id]:
-            c = JustpyBaseComponent.instances[component_id]
+        c=JustpyBaseComponent.instances.get(component_id,None)
+        if c is not None:
             event_data["target"] = c
         else:
             logging.warning(f"component with id {component_id} doesn't exist (anymore ...) it might have been deleted before the event handling was triggered")
-            c=None
-
+  
     try:
         if c is not None:
             before_result = await c.run_event_function("before", event_data, True)
