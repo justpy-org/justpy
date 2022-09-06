@@ -72,7 +72,7 @@ grid_options = {
         }'''
 }
 
-async def result_ready(self, msg): 
+async def result_ready(self, msg):
     wp = msg.page
 
     if msg.result['menu_action'] == 'new':
@@ -80,27 +80,27 @@ async def result_ready(self, msg):
       row_data['make'] = msg.result['make']
       row_data['model'] = f'test {wp.next_row_id}'
       row_data['price'] = wp.next_row_id * 98765   
-      wp.next_row_id += 1 
+      wp.next_row_id += 1
       await wp.run_javascript(f"""cached_grid_def['g' + {wp.grid.id}].api.applyTransaction({{  add: [{row_data}] }})""")       
 
     elif msg.result['menu_action'] == 'copy':
-      row_data = msg.result['row_data'] 
+      row_data = msg.result['row_data']
       row_data['row_id'] = wp.next_row_id
       wp.next_row_id += 1
-      await wp.run_javascript(f"""cached_grid_def['g' + {wp.grid.id}].api.applyTransaction({{  add: [{row_data}] }})""") 
-    
-    elif msg.result['menu_action'] == 'delete':
-      row_data = msg.result['row_data'] 
-      await wp.run_javascript(f"""cached_grid_def['g' + {wp.grid.id}].api.applyTransaction({{  remove: [{row_data}] }})""") 
+      await wp.run_javascript(f"""cached_grid_def['g' + {wp.grid.id}].api.applyTransaction({{  add: [{row_data}] }})""")
 
-def grid_test3():
+    elif msg.result['menu_action'] == 'delete':
+      row_data = msg.result['row_data']
+      await wp.run_javascript(f"""cached_grid_def['g' + {wp.grid.id}].api.applyTransaction({{  remove: [{row_data}] }})""")
+
+def grid_test_context():
     wp = jp.WebPage()
-    wp.on('result_ready', result_ready) 
+    wp.on('result_ready', result_ready)
     wp.grid = jp.AgGrid(a=wp, options=grid_options)
     wp.next_row_id = len(grid_options['rowData'])
-    wp.grid.evaluate = ['getContextMenuItems', 'getRowNodeId'] 
+    wp.grid.evaluate = ['getContextMenuItems', 'getRowNodeId']
     return wp
 
-jp.justpy(grid_test3)
+jp.justpy(grid_test_context)
 
 ```

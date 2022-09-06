@@ -20,14 +20,14 @@ In `event_demo`, we first create a web page. Then we create a [Div](https://deve
 
 !!! info
     Functions that handle events are called "event handlers". `my_click` is an example of such a function.
- 
+
 !!! warning
-    In JustPy, event handlers **must** have two arguments. 
- 
-The first (I recommend calling it `self`), is the object which generated the event. It is an instance of one of the component classes. In the example above it is `d`, an instance of the class `Div`. The second parameter (I recommend calling it `msg`) is a [dictionary](https://github.com/mewwts/addict "addict is a Python module that gives you dictionaries whose values are both gettable and settable using attributes, in addition to standard item-syntax") that contains information about the event. The items in this dictionary can also be accessed using attribute (dot) notation. To get the event type for example we could write either  `msg['event_type']` or `msg.event_type`. 
- 
+    In JustPy, event handlers **must** have two arguments.
+
+The first (I recommend calling it `self`), is the object which generated the event. It is an instance of one of the component classes. In the example above it is `d`, an instance of the class `Div`. The second parameter (I recommend calling it `msg`) is a [dictionary](https://github.com/mewwts/addict "addict is a Python module that gives you dictionaries whose values are both gettable and settable using attributes, in addition to standard item-syntax") that contains information about the event. The items in this dictionary can also be accessed using attribute (dot) notation. To get the event type for example we could write either  `msg['event_type']` or `msg.event_type`.
+
 In the program below I have added some print commands to the `my_click` function. Run it and see what is printed to the console.
- 
+
 ```python
 import justpy as jp
 
@@ -96,16 +96,16 @@ def event_demo4():
 
 jp.justpy(event_demo4)
 ```
- 
+
  In the example above, there are three event handlers, one each for the `click`, `mouseenter` and `mouseleave` events. All three are bound to the same element, `d`.
- 
- Another way of binding event handlers is demonstrated here. Instead of using the `on` method, you can bind an event handler using a keyword argument that corresponds to the name of the event. In addition to `click` (or some other event name) you can also use `onclick` or, `on_click`. All three options work in the same way. 
- 
+
+ Another way of binding event handlers is demonstrated here. Instead of using the `on` method, you can bind an event handler using a keyword argument that corresponds to the name of the event. In addition to `click` (or some other event name) you can also use `onclick` or, `on_click`. All three options work in the same way.
+
 The above example also introduces the `set_class` method. This method "knows" which Tailwind classes logically cannot apply together (for example, text color can't be both red and blue at the same time) and removes the appropriate classes while adding the class provided as parameter. In the case above, the background can only be one color so the `set_class` method removes the class bg-blue-500 and adds the class bg-red-500.
 
 ## Sharing Event Handlers
 
-### Example 1 
+### Example 1
 
 In many cases it is convenient to share one event handler among several elements. Please run the example below:
 
@@ -128,19 +128,19 @@ def event_demo5():
         b = jp.Button(text=f'Button {i}', a=button_div, classes=button_classes, click=button_click)
         b.message = message
         b.num_clicked = 0
-    return wp 
+    return wp
 
 jp.justpy(event_demo5)
 ```
 
 This program creates 25 buttons on each page. Under the buttons is a message box that provides information about which button was clicked and how many times it was clicked (try clicking the same button several times and see the change in the message box).
- 
+
 Let's delve into the program in more detail. The program has two functions. The function `event_demo` creates the page and returns it when a page is requested. The function `button_click` will handle the click event of all buttons.
-In the first line of `event_demo`, the number of buttons is set (try changing this number and see what happens).  The second line creates a web page. The third line creates a div element (the general purpose HTML container element) named `button_div`. We will use it shortly to contain all the buttons. Notice that using `a=wp` we add `button_div` to the page. 
+In the first line of `event_demo`, the number of buttons is set (try changing this number and see what happens).  The second line creates a web page. The third line creates a div element (the general purpose HTML container element) named `button_div`. We will use it shortly to contain all the buttons. Notice that using `a=wp` we add `button_div` to the page.
 
 The fourth line defines the classes that will be used to format all the buttons. Don't worry if you don't understand what all the Tailwind classes do at this stage, it is not important. The fifth line creates the `message` element and adds it to the page. This element displays information about the button that is clicked.
 
-On the sixth line  the loop that creates all the buttons starts. For each iteration of the loop, a button is created and added to `button_div`. Since `button_div` was previously added to the web page, the buttons will also be displayed on the page. 
+On the sixth line  the loop that creates all the buttons starts. For each iteration of the loop, a button is created and added to `button_div`. Since `button_div` was previously added to the web page, the buttons will also be displayed on the page.
 
 A button in JustPy is just an instance of the `Button `class, and therefore we can assign additional attributes to the instance. That is what we do in the next two lines. We assign to the `message` attribute the `message` element and initialize the `num_clicked` attribute to 0 (these attributes will be used in the `button_click` function as we shall see shortly).
 
@@ -153,7 +153,7 @@ print(button_div.components)
 
 The `components` attribute is a list that holds all the child component instances of the element in the order they will be rendered. It is named "components" because it holds the building blocks of the element (though strictly speaking, the list holds elements which are instances of components).  
 
-Let's take a look now at `button_click`, the second function in our program. When any one of the buttons is clicked, this function is executed. The arguments for `button_click` are the same as those for all event handlers in JustPy. The first argument `self`, is the button. In JustPy, as previously discussed, elements on the page are represented by instances of Python classes. The buttons we created are instances of the `Button` class and therefore in this case `self` will be an instance of the Button class. 
+Let's take a look now at `button_click`, the second function in our program. When any one of the buttons is clicked, this function is executed. The arguments for `button_click` are the same as those for all event handlers in JustPy. The first argument `self`, is the button. In JustPy, as previously discussed, elements on the page are represented by instances of Python classes. The buttons we created are instances of the `Button` class and therefore in this case `self` will be an instance of the Button class.
 
 In the first line of `button_click` we increment the instance attribute that tracks the number of times the specific button was clicked. It was initialized as 0 when we created the button in `event_demo`. The second line changes the text of the message box. Since we conveniently assigned the appropriate div element to the message attribute of all buttons, we know where to find it. It is right there as an attribute of `self`.
 
@@ -163,9 +163,9 @@ The last two lines of `button_click` change the background of the button that wa
 
 ### Example 2   
 
-As the program is written now, once a button is clicked, its background will always be red, even if another button is clicked. If we want only the background of the last clicked button to be red, the event handler needs to set the background of all other buttons back to blue. There are many ways that this could be done but I would like to highlight a method that can be generalized to most cases. 
+As the program is written now, once a button is clicked, its background will always be red, even if another button is clicked. If we want only the background of the last clicked button to be red, the event handler needs to set the background of all other buttons back to blue. There are many ways that this could be done but I would like to highlight a method that can be generalized to most cases.
 
-The web page itself is an instance of a Python class and therefore can have user specified attributes. We will create a list of all the buttons and assign it to the `button_list` attribute of the page. In the event handler we will loop over this list and change the backgrounds to blue after which we will set the background of the clicked button to red. 
+The web page itself is an instance of a Python class and therefore can have user specified attributes. We will create a list of all the buttons and assign it to the `button_list` attribute of the page. In the event handler we will loop over this list and change the backgrounds to blue after which we will set the background of the clicked button to red.
 
 !!! info
     We know which page's `button_list` we need to loop over because the page on which the event originated is always provided to the event handler in `msg.page` by JustPy.
@@ -237,19 +237,19 @@ def event_demo7():
 jp.justpy(event_demo7)
 ```
 
-Instead of just changing the text in `message`, `button_click` creates a `p` element with the text message and adds the element to `message` using the `add_component` method. It is different from `add` because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the `message` div so that most recent messages show up first. Also, in `event_demo` we changed `message` to a div element and added the first message as a p element with text. 
+Instead of just changing the text in `message`, `button_click` creates a `p` element with the text message and adds the element to `message` using the `add_component` method. It is different from `add` because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the `message` div so that most recent messages show up first. Also, in `event_demo` we changed `message` to a div element and added the first message as a p element with text.
 
 ## Inline Event Handlers
 
 In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess to using these functions sometimes for event handlers that are just one or two lines of code.
 
-The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are `self` and `msg`. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of `self`. 
+The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are `self` and `msg`. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of `self`.
 
 ```python
 import justpy as jp
 
 
-def comp_test():
+def event_comp_test():
     wp = jp.WebPage()
     d = jp.Div(text='hello1',
             click='self.text="clicked"',
@@ -261,7 +261,7 @@ def comp_test():
     return wp
 
 
-jp.justpy(comp_test)
+jp.justpy(event_comp_test)
 ```
 
 ## The debounce and throttle Event Modifiers
@@ -298,7 +298,7 @@ jp.justpy(debounce_test)
 The `click__out` event fires when there is a click outside of an element. This is useful for example in the case of dropdown list you would like closed when there is a click outside of the dropdown element.
 
 !!! info
-    Notice the TWO underline characters in `click__out`. 
+    Notice the TWO underline characters in `click__out`.
 
 
 ```python
@@ -361,4 +361,3 @@ def target_test():
 
 jp.justpy(target_test)
 ```
-

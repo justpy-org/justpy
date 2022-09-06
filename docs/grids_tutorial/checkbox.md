@@ -17,7 +17,7 @@ grid_options = """
         resizable: true,
         cellStyle: {textAlign: 'center'},
         headerClass: 'font-bold'
-    }, 
+    },
       columnDefs: [
       {headerName: "Make", field: "make"},
       {headerName: "Model", field: "model"},
@@ -37,12 +37,12 @@ def grid_change(self, msg):
     print(msg)
 
 
-def grid_test2():
+def grid_test_checkbox1():
     wp = jp.WebPage()
     grid = jp.AgGrid(a=wp, options=grid_options)
     grid.on('cellValueChanged', grid_change)
     return wp
 
 
-jp.justpy(grid_test2)
+jp.justpy(grid_test_checkbox1)
 ```
