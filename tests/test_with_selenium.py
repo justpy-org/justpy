@@ -86,15 +86,15 @@ class TestWithSelenium(BaseAsynctest):
         await asyncio.sleep(self.server.sleep_time)
         Demo.testmode=True
         from examples.issues.issue_279_key_error import issue_279
-        await self.server.start(issue_279)
-        url = self.server.getUrl("/")
-        self.browser.get(url)
-        await asyncio.sleep(self.server.sleep_time)
-        buttons = self.browser.find_elements(By.TAG_NAME, "button")
-        debug=True
-        if debug:
-            print(f"found {len(buttons)} buttons")
         with LogCapture() as lc:
+            await self.server.start(issue_279)
+            url = self.server.getUrl("/")
+            self.browser.get(url)
+            await asyncio.sleep(self.server.sleep_time)
+            buttons = self.browser.find_elements(By.TAG_NAME, "button")
+            debug=True
+            if debug:
+                print(f"found {len(buttons)} buttons")
             await asyncio.sleep(0.5)
             buttons[0].click()
             await asyncio.sleep(0.5)
