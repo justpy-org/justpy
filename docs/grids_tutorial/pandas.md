@@ -37,12 +37,12 @@ import pandas as pd
 
 wm_df = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
-def grid_test16():
+def grid_test17():
     wp = jp.WebPage()
     wm_df.jp.ag_grid(a=wp)
     return wp
 
-jp.justpy(grid_test16)
+jp.justpy(grid_test17)
 ```
 
 The JustPy functionality is added to pandas under the namespace "jp". The `ag_grid` method creates a grid based on the frame's data and returns an instance of AgGrid.
@@ -55,7 +55,7 @@ import pandas as pd
 
 wm_df = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
-def grid_test17():
+def grid_test18():
     wp = jp.WebPage()
     grid = wm_df.jp.ag_grid(a=wp)
     grid.options.pagination = True
@@ -70,7 +70,7 @@ def grid_test17():
         }
     return wp
 
-jp.justpy(grid_test17)
+jp.justpy(grid_test18)
 ```
 
 The example above sets the grid to be paginated instead of scrolled. The data is formatted so that any number under 20 is in a bold font and the background of the cell is red. Cells with values between 20 and 50 receive a background of yellow and those above 50 are green.
