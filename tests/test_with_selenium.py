@@ -4,14 +4,12 @@ Created on 2022-08-25
 @author: wf
 """
 import asyncio
-import io
 from selenium.webdriver.common.by import By
 import justpy as jp
 from tests.browser_test import SeleniumBrowsers
 from tests.base_server_test import BaseAsynctest
 from tests.basetest import Basetest
 from examples.basedemo import Demo
-from contextlib import redirect_stderr
 from testfixtures import LogCapture
 
 class TestWithSelenium(BaseAsynctest):
@@ -100,6 +98,7 @@ class TestWithSelenium(BaseAsynctest):
             buttons[0].click()
             await asyncio.sleep(1.0)
             buttons[1].click()
+            await asyncio.sleep(3.0)
             if debug:
                 print(str(lc))
             expecteds=[
@@ -108,7 +107,7 @@ class TestWithSelenium(BaseAsynctest):
             ]
             for expected in expecteds:
                 self.assertTrue(expected in str(lc))
-        await asyncio.sleep(3.0)
+        
         self.browser.close()
         await self.server.stop()
         
