@@ -101,7 +101,7 @@ class TestWithSelenium(BaseAsynctest):
             buttons[1].click()
             await asyncio.sleep(3.2)
             if debug:
-                print(str(lc))
+                print(f"log capture: {str(lc)}")
             expecteds=[
                 "component with id",
                 "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
