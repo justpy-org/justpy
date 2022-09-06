@@ -106,8 +106,8 @@ class TestWithSelenium(BaseAsynctest):
                 "component with id",
                 "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
             ]
-            for expected in expecteds:
-                self.assertTrue(expected in str(lc))
+            for i,expected in enumerate(expecteds):
+                self.assertTrue(expected in str(lc),f"{i}:{expected}")
         
         self.browser.close()
         await self.server.stop()
