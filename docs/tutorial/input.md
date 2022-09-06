@@ -290,7 +290,7 @@ def key_down(self, msg):
     return True  # Don't update the page
 
 
-def focus_test():
+def focus_test_input():
     wp = jp.WebPage()
     d = jp.Div(classes='flex flex-col  m-2', a=wp, style='width: 600 px')
     input_list = []
@@ -305,7 +305,7 @@ def focus_test():
         input_list.append(in1)
     return wp
 
-jp.justpy(focus_test)
+jp.justpy(focus_test_input)
 ```
 
 As a rule of thumb, try to limit the usage of keyboard events to a minimum since they don't work well for mobile users.

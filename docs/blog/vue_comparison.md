@@ -20,13 +20,13 @@ class ButtonCounter(jp.Button):
         self.text = f'You clicked me {self.count} times.'
 
 
-async def button_counter_demo():
+async def button_counter_demo_c():
     wp = jp.WebPage(tailwind=False)
     for i in range(5):
         ButtonCounter(a=wp, count=i, style='margin: 10px')
     return wp
 
-jp.justpy(button_counter_demo)
+jp.justpy(button_counter_demo_c)
 ```
 
 # Vue video example
@@ -68,12 +68,12 @@ class Products(jp.Div):
         self.total_inventory.text = f'Total Inventory: {self.total_products()}'
 
 
-def product_app():
+def product_app_c():
     wp = jp.WebPage(tailwind=False)
     Products(a=wp)
     return wp
 
-jp.justpy(product_app)
+jp.justpy(product_app_c)
 
 ```
 ## Todo list example
@@ -110,7 +110,7 @@ jp.justpy(todo_app)
 ```
 
 
-First things first: JustPY uses Vue on the front end. Without Vue there is no JustPy. 
+First things first: JustPY uses Vue on the front end. Without Vue there is no JustPy.
 
 It is important to understand how JustPy uses Vue to understand the differences between the two. In JustPy, web pages as well as HTML components are represented as instances of classes. The HTML div element is represented by the JustPy class Div.
 
@@ -146,7 +146,7 @@ This dictionary is converted to JSON and sent to the browser. It is then used as
 
 To recap, JustPy creates a JSON object representing the page, and that object is fed into the Vue app which renders the page.
 
-Creating the dictionary on the server side is very cheap computationally. All the rendering heavy lifting is done by Vue. If as a consequence of an event handler a page changes, a new dictionary is sent to the page and again fed to the Vue app which re-renders the required elements. 
+Creating the dictionary on the server side is very cheap computationally. All the rendering heavy lifting is done by Vue. If as a consequence of an event handler a page changes, a new dictionary is sent to the page and again fed to the Vue app which re-renders the required elements.
 
 When
 
@@ -156,10 +156,10 @@ JustPy renders a page in a browser tab using the following steps:
 
 explain how vue is used
 
-This comparison is meant to help people familiar with Vue understand JustPy better. 
+This comparison is meant to help people familiar with Vue understand JustPy better.
 
 JustPy is not a backend or frontend framework. When working with JustPy there is no distinction between the backend and the frontend.
-The reason you would use JustPy instead of Vue is if you are interested working predominantly in Python 
+The reason you would use JustPy instead of Vue is if you are interested working predominantly in Python
 
 This comparison is not meant to convince you to use one or the other
 
@@ -172,9 +172,9 @@ You need to do this with components. A component that is a list. You can make it
 ## List Rendering (v-for)
 
 The Vue.js examples are [here](https://vuejs.org/v2/guide/list.html).
- 
+
 Example of rendering a simple list:
- 
+
  ```python
 import justpy as jp
 
@@ -261,7 +261,7 @@ https://vuejs.org/v2/guide/list.html#Displaying-Filtered-Sorted-Results
 
 
 
-### Reactivity 
+### Reactivity
 
 JustPy is not reactive in the sense that if you change the value of an object, the rendered view will change automatically.
 This manifests itself when items are added or deleted, not when their property changes like text
