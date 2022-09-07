@@ -35,21 +35,21 @@ class TestRouteAndUrlFor(Basetest):
 
     def testRoute(self):
         """
-        test the routing
+        Test the routing
         """
-        self.assertEqual(2, len(JpRoute.routesByPath))
+        self.assertEqual(2, len(JpRoute.routes_by_path))
         debug = self.debug
         # debug=True
-        for route in JpRoute.routesByPath.values():
-            routeAsText = str(route)
+        for route in JpRoute.routes_by_path.values():
+            route_as_text = str(route)
             if debug:
-                print(routeAsText)
+                print(route_as_text)
         for path in ["/bye", "/hello"]:
-            self.assertTrue(path in JpRoute.routesByPath)
+            self.assertTrue(path in JpRoute.routes_by_path)
 
     def testUrlFor(self):
         """
-        test url for functionality
+        Test url for functionality
         """
         app = jp.app
         # see https://www.starlette.io/testclient/

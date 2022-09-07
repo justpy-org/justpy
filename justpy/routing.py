@@ -13,16 +13,16 @@ class JpRoute(starlette.routing.Route):
     """
 
     # map for all routes that are defined
-    routesByPath = {}
+    routes_by_path = {}
 
     @classmethod
     def reset(cls):
-        JpRoute.routesByPath = {}
+        JpRoute.routes_by_path = {}
 
     @classmethod
-    def getFuncForRequest(cls, request):
+    def get_func_for_request(cls, request):
         """
-        get the function for the given request
+        Get the function for the given request
 
         Args:
             request: the starlette request
@@ -31,19 +31,19 @@ class JpRoute(starlette.routing.Route):
             Callable: the function that is bound to the path of the given request
         """
         scope = request.scope
-        return JpRoute.getFuncForScope(scope)
+        return JpRoute.get_func_for_scope(scope)
 
     @classmethod
-    def getFuncForScope(cls, scope):
+    def get_func_for_scope(cls, scope):
         """
-        get the function (endpoint in starlette jargon) for the given scope
+        Get the function (endpoint in starlette jargon) for the given scope
 
         Args:
             path: the path to check
         Returns:
             Callable: the function that is bound to the given path
         """
-        for _path, route in JpRoute.routesByPath.items():
+        for _path, route in JpRoute.routes_by_path.items():
             match, _matchScope = route.matches(scope)
             if match is not starlette.routing.Match.NONE:
                 func_to_run = route.endpoint
@@ -52,12 +52,12 @@ class JpRoute(starlette.routing.Route):
 
     def __init__(self, path: str, endpoint: typing.Callable, **kwargs):
         """
-        constructor
+        Constructor
         """
-        # call super constructor
+        # Call super constructor
         starlette.routing.Route.__init__(self, path=path, endpoint=endpoint, **kwargs)
-        # remember my routes
-        JpRoute.routesByPath[path] = self
+        # Remember my routes
+        JpRoute.routes_by_path[path] = self
 
     def __repr__(self):
         return f"{self.__class__.__name__}(name: {self.name}, path: {self.path}, format: {self.path_format}, func: {self.endpoint.__name__}, regex: {self.path_regex})"
@@ -65,7 +65,7 @@ class JpRoute(starlette.routing.Route):
 
 class Route(JpRoute):
     """
-    legacy compatibility layer - use JpRoute instead
+    Legacy compatibility layer - use JpRoute instead
     """
 
     def __init__(self, path: str, endpoint: typing.Callable, **kwargs):
@@ -79,7 +79,7 @@ class SetRoute:
 
     def __init__(self, route, **kwargs):
         """
-        constructor
+        Constructor
 
         Args:
             route(Route): the starlette route to set
@@ -95,6 +95,6 @@ class SetRoute:
             **_instance_kwargs: Arbitrary keyword arguments (ignored).
 
         """
-        # create a new route
+        # Create a new route
         JpRoute(path=self.route, endpoint=fn, name=self.kwargs.get("name", None))
         return fn

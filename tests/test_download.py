@@ -19,7 +19,7 @@ class TestDownlad(Basetest):
         """
         dbname = "chinook.db"
         url = f"https://elimintz.github.io/{dbname}"
-        os.makedirs(Download.getCachePath(), exist_ok=True)
-        filePath = f"{Download.getCachePath()}/{dbname}"
-        Download.downloadFile(url, dbname, targetDirectory=Download.getCachePath())
+        os.makedirs(Download.get_cache_path(), exist_ok=True)
+        filePath = f"{Download.get_cache_path()}/{dbname}"
+        Download.download_file(url, dbname, targetDirectory=Download.get_cache_path())
         self.assertTrue(os.path.isfile(filePath))
