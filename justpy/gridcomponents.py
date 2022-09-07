@@ -1,4 +1,4 @@
-import yaml
+import hjson
 
 from .htmlcomponents import *
 from addict import Dict
@@ -85,12 +85,12 @@ class AgGrid(JustpyBaseComponent):
         pass
 
     def load_json(self, options_string):
-        self.options = Dict(yaml.full_load(options_string.encode("ascii", "ignore")))
+        self.options = Dict(hjson.loads(options_string.encode("ascii", "ignore")))
         return self.options
 
     def load_json_from_file(self, file_name):
         with open(file_name, "r") as f:
-            self.options = Dict(yaml.full_load(f.read().encode("ascii", "ignore")))
+            self.options = Dict(hjson.loads(f.read().encode("ascii", "ignore")))
         return self.options
 
     def load_pandas_frame(self, df):

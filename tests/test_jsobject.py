@@ -3,7 +3,7 @@ Created on 2022-09-07
 
 @author: hr
 """
-import yaml
+import hjson
 
 from tests.basetest import Basetest
 from addict import Dict
@@ -44,7 +44,7 @@ class TestJavaScriptObject(Basetest):
         data: [5, 7, 3]
     }]
 }"""
-        options = Dict(yaml.full_load(options_string.encode("ascii", "ignore")))
+        options = Dict(hjson.loads(options_string.encode("ascii", "ignore")))
         debug = self.debug
         # debug=True
         if debug:
@@ -67,7 +67,7 @@ class TestJavaScriptObject(Basetest):
     },
     series:[]
 }"""
-        options = Dict(yaml.full_load(options_string.encode("ascii", "ignore")))
+        options = Dict(hjson.loads(options_string.encode("ascii", "ignore")))
         debug = self.debug
         # debug=True
         if debug:
@@ -86,7 +86,7 @@ class TestJavaScriptObject(Basetest):
           "key2":"value"
         }
         """
-        options = yaml.load(dirty_js, yaml.UnsafeLoader)
+        options = hjson.loads(dirty_js)
         self.assertTrue("key2" in options)
         self.assertTrue("key" in options)
 
@@ -101,6 +101,6 @@ class TestJavaScriptObject(Basetest):
           "key2":"value"
         }
         """
-        options = yaml.load(dirty_js, yaml.SafeLoader)
+        options = hjson.loads(dirty_js)
         self.assertTrue("key2" in options)
         self.assertTrue("key" in options)

@@ -6,6 +6,7 @@ Created on 2022-09-05
 from timeit import timeit
 
 import yaml
+import hjson
 import demjson3 as demjson
 
 from tests.basetest import Basetest
@@ -57,6 +58,16 @@ class TestBenchmarkDecode(Basetest):
         """
 
         elapsed = timeit(lambda: yaml.full_load(self.options_string.encode("ascii", "ignore")),
+                         number=1000)
+        print(f'Time: {elapsed:.2f}s')
+        self.assertGreater(elapsed, 0.0)
+
+    def test_decode_time_hjson(self):
+        """
+        test hjson
+        """
+
+        elapsed = timeit(lambda: hjson.loads(self.options_string.encode("ascii", "ignore")),
                          number=1000)
         print(f'Time: {elapsed:.2f}s')
         self.assertGreater(elapsed, 0.0)
