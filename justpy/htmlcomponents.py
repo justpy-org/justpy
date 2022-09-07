@@ -9,7 +9,7 @@ import asyncio
 from .tailwind import Tailwind
 import logging
 import httpx
-from .template import PageOptions
+from jpcore.template import PageOptions
 
 # Dictionary for translating from tag to class
 _tag_class_dict = {}

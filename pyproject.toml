@@ -1,7 +1,9 @@
 # see https://flit.pypa.io/en/latest/pyproject_toml.html
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+#requires = ["flit_core >=3.2,<4"]
+#build-backend = "flit_core.buildapi"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "justpy"
@@ -47,6 +49,8 @@ classifiers=[
     "License :: OSI Approved :: Apache Software License"
     ]
 dynamic = ["version", "description"]   
+[tool.hatch.version]
+path = "justpy/__init__.py"
  
 [project.urls]
 Home = "https://justpy.io/"
@@ -67,3 +71,8 @@ test = [
   "webdriver-manager"
 ]
 
+[tool.hatch.build.targets.wheel]
+packages = [
+  "jpcore",
+  "justpy",
+]

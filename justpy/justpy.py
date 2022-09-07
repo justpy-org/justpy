@@ -14,7 +14,7 @@ from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
-from .template import Context
+from jpcore.template import Context
 
 # from .misccomponents import *
 from .meadows import *

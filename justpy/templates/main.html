@@ -116,16 +116,15 @@
                 case 'websocket_update':
                     websocket_id = msg.data;
                     websocket_ready = true;
-
-                {% if 'page_ready' in page_options.events %}
-                    e = {
-                        'event_type': 'page_ready',
-                        'visibility': document.visibilityState,
-                        'page_id': page_id,
-                        'websocket_id': websocket_id
-                    };
-                    send_to_server(e, 'page_event', false);
-                {% endif %}
+                    if (justpy_core.page_ready) {     
+	                    e = {
+	                        'event_type': 'page_ready',
+	                        'visibility': document.visibilityState,
+	                        'page_id': page_id,
+	                        'websocket_id': websocket_id
+	                    };
+	                    send_to_server(e, 'page_event', false);
+                    }    
                     break;
                 case 'component_update':
                     // update just specific component on the page

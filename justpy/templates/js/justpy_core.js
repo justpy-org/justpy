@@ -78,9 +78,10 @@
 class JustpyCore {
  
   // create a JustpyCore instance
-  constructor(window,title,debug) {
+  constructor(window,title,page_ready,debug) {
 	this.window=window
     this.setTitle(title);
+    this.page_ready=page_ready
     this.debug=debug
   }
   
