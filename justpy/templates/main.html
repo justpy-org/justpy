@@ -143,9 +143,9 @@
                         'request_id': msg.request_id,
                         'result': js_result //JSON.stringify(js_result)
                     };
-                    {% if 'result_ready' in page_options.events %}
+                    if (justpy_core.result_ready) {   
                         if (msg.send) send_to_server(e, 'page_event', false);
-                    {% endif %}
+                    }
                 }
 
                     const jsPromise = (new Promise(function () {
@@ -225,7 +225,7 @@
             send_to_server(e);
         });
     }
-    {%- if page_options.reload_interval %}
+    if (justpy_core.reload_interval_ms >0) {
         setInterval(function () {
             $.ajax({
                 type: "POST",
@@ -239,8 +239,8 @@
                 },
                 dataType: 'json'
             });
-        }, 1000 * {{ page_options.reload_interval }});
-    {%- endif %}
+        }, justpy_core.reload_interval_ms);
+    }    
 
     var app1 = new Vue({
         el: '#components',

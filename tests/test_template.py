@@ -60,6 +60,6 @@ class TestTemplate(Basetest):
         debug=True
         if debug:
             print(js)
-        for param in ["window","title","page_ready","debug"]:
+        for param in ["window","title","page_ready","result_ready","reload_interval","debug"]:
             self.assertTrue(f"// {param}" in js)
         
