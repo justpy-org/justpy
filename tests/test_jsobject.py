@@ -44,10 +44,35 @@ class TestJavaScriptObject(Basetest):
         data: [5, 7, 3]
     }]
 }"""
-        options = Dict(yaml.load(options_string.encode("ascii", "ignore"), Loader=yaml.CLoader))
+        options = Dict(yaml.full_load(options_string.encode("ascii", "ignore")))
         debug = self.debug
         # debug=True
         if debug:
             print(options)
         self.assertTrue("chart" in options)
+        pass
+
+    def test_decode_no_separating_spaces(self):
+        """
+        test JavaScript object decoding
+        """
+        # example options string see
+        # https://www.highcharts.com/docs/getting-started/how-to-set-options
+        options_string = """{
+    title:{
+        text: 'Fruit Consumption'
+    },
+    xAxis: {
+        categories: ['Apples', 'Bananas', 'Oranges']
+    },
+    series:[]
+}"""
+        options = Dict(yaml.full_load(options_string.encode("ascii", "ignore")))
+        debug = self.debug
+        # debug=True
+        if debug:
+            print(options)
+        self.assertTrue("series" in options)
+        self.assertTrue("title" in options)
+        self.assertTrue("text" in options["title"])
         pass

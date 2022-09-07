@@ -124,12 +124,12 @@ class _QInputBase(Input):
         self.value = update_value
 
     def load_json(self, options_string):
-        self.options = yaml.load(options_string.encode("ascii", "ignore"), Loader=yaml.CLoader)
+        self.options = yaml.full_load(options_string.encode("ascii", "ignore"))
         return self.options
 
     def load_json_from_file(self, file_name):
         with open(file_name, "r") as f:
-            self.options = yaml.load(f.read().encode("ascii", "ignore"))
+            self.options = yaml.full_load(f.read().encode("ascii", "ignore"))
         return self.options
 
     def convert_object_to_dict(self):
@@ -2404,12 +2404,12 @@ class QTree(QDiv):
             self.__dict__[key] = value
 
     def load_json(self, options_string):
-        self.nodes = yaml.load(options_string.encode("ascii", "ignore"), Loader=yaml.CLoader)
+        self.nodes = yaml.full_load(options_string.encode("ascii", "ignore"))
         return self.nodes
 
     def load_json_from_file(self, file_name):
         with open(file_name, "r") as f:
-            self.nodes = yaml.load(f.read().encode("ascii", "ignore"))
+            self.nodes = yaml.full_load(f.read().encode("ascii", "ignore"))
         return self.nodes
 
     def convert_object_to_dict(self):
@@ -2567,12 +2567,12 @@ class QTable(QDiv):
             self.__dict__[key] = value
 
     def load_json(self, options_string):
-        self.nodes = yaml.load(options_string.encode("ascii", "ignore"), Loader=yaml.CLoader)
+        self.nodes = yaml.full_load(options_string.encode("ascii", "ignore"))
         return self.nodes
 
     def load_json_from_file(self, file_name):
         with open(file_name, "r") as f:
-            self.nodes = yaml.load(f.read().encode("ascii", "ignore"))
+            self.nodes = yaml.full_load(f.read().encode("ascii", "ignore"))
         return self.nodes
 
     def load_pandas_frame(self, df):

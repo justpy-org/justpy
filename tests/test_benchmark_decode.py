@@ -56,7 +56,7 @@ class TestBenchmarkDecode(Basetest):
         test yaml
         """
 
-        elapsed = timeit(lambda: yaml.load(self.options_string.encode("ascii", "ignore"), Loader=yaml.CLoader),
+        elapsed = timeit(lambda: yaml.full_load(self.options_string.encode("ascii", "ignore")),
                          number=1000)
         print(f'Time: {elapsed:.2f}s')
         self.assertGreater(elapsed, 0.0)
