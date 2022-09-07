@@ -1,23 +1,22 @@
 """
-Created on 2022-08-20
+Created on 2022-09-07
 
-@author: wf
+@author: hr
 """
-import demjson3
+import hjson
 
 from tests.basetest import Basetest
-import demjson3 as demjson
 from addict import Dict
 
 
-class TestDemJson(Basetest):
+class TestJavaScriptObject(Basetest):
     """
-    Tests demjson
+    Tests JavaScript object conversion via PyYaml
     """
 
-    def testDemjson(self):
+    def test_decode(self):
         """
-        test demjson
+        test JavaScript object decoding
         """
         # example options string see
         # https://www.highcharts.com/docs/getting-started/how-to-set-options
@@ -45,7 +44,7 @@ class TestDemJson(Basetest):
         data: [5, 7, 3]
     }]
 }"""
-        options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
+        options = Dict(hjson.loads(options_string.encode("ascii", "ignore")))
         debug = self.debug
         # debug=True
         if debug:
@@ -68,7 +67,7 @@ class TestDemJson(Basetest):
     },
     series:[]
 }"""
-        options = Dict(demjson3.decode(options_string.encode("ascii", "ignore")))
+        options = Dict(hjson.loads(options_string.encode("ascii", "ignore")))
         debug = self.debug
         # debug=True
         if debug:
@@ -76,4 +75,32 @@ class TestDemJson(Basetest):
         self.assertTrue("series" in options)
         self.assertTrue("title" in options)
         self.assertTrue("text" in options["title"])
-        pass
+
+    def test_decode_dirty_js(self):
+        """
+        test decoding of dirty JavaScript objects
+        """
+        dirty_js = """
+             {
+          key: "value",
+          "key2":"value"
+        }
+        """
+        options = hjson.loads(dirty_js)
+        self.assertTrue("key2" in options)
+        self.assertTrue("key" in options)
+
+    def test_decode_dirty_js2(self):
+        """
+        test decoding of dirty JavaScript objects
+        cf. https://stackoverflow.com/questions/34812821/bad-json-keys-are-not-quoted
+        """
+        dirty_js = """
+             {
+          key:"value",
+          "key2":"value"
+        }
+        """
+        options = hjson.loads(dirty_js)
+        self.assertTrue("key2" in options)
+        self.assertTrue("key" in options)

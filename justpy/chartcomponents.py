@@ -1,8 +1,10 @@
+import hjson
+
 from .htmlcomponents import *
-import demjson3 as demjson
 from addict import Dict
 import itertools
 from urllib.parse import quote
+
 
 # TODO: May need to call chart.reflow() on resize
 # TODO: Handle formatter functions, for example in dataLabels and others.
@@ -18,7 +20,6 @@ def make_pairs_list(x_data, y_data):
 
 
 class HighCharts(JustpyBaseComponent):
-
     # Highcharts.getOptions().colors
     highcharts_colors = [
         "#7cb5ec",
@@ -195,12 +196,12 @@ class HighCharts(JustpyBaseComponent):
         pass
 
     def load_json(self, options_string):
-        self.options = Dict(demjson.decode(options_string.encode("ascii", "ignore")))
+        self.options = Dict(hjson.loads(options_string.encode("ascii", "ignore")))
         return self.options
 
     def load_json_from_file(self, file_name):
         with open(file_name, "r") as f:
-            self.options = Dict(demjson.decode(f.read().encode("ascii", "ignore")))
+            self.options = Dict(hjson.loads(f.read().encode("ascii", "ignore")))
         return self.options
 
     def convert_object_to_dict(self):
@@ -227,13 +228,11 @@ class HighCharts(JustpyBaseComponent):
 
 class HighStock(HighCharts):
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
         self.stock = True
 
 
 class Histogram(HighCharts):
-
     _options = """
 {
     title: {
@@ -282,7 +281,6 @@ class Histogram(HighCharts):
 
 
 class Pie(HighCharts):
-
     _options = """
             {
                 chart: {
@@ -327,7 +325,6 @@ class Pie(HighCharts):
 
 
 class PieSemiCircle(HighCharts):
-
     _options = """
             {
                 chart: {
@@ -385,7 +382,6 @@ class PieSemiCircle(HighCharts):
 
 
 class Scatter(HighCharts):
-
     _options = """
     {
     chart: {
@@ -454,7 +450,6 @@ if _has_matplotlib:
             output.close()
             return self.inner_html
 
-
 # --------------------------------------------------------------------
 # deck.gl related objects
 
@@ -470,9 +465,7 @@ except:
     _has_pydeck = False
 
 if _has_pydeck:
-
     class PyDeckFrame(Iframe):
-
         vue_type = "iframejp"
 
         def __init__(self, **kwargs):
@@ -494,8 +487,8 @@ if _has_pydeck:
             d["transition_duration"] = self.transition_duration
             return d
 
-    class PyDeck(Div):
 
+    class PyDeck(Div):
         vue_type = "deckgl"
 
         def __init__(self, **kwargs):
@@ -518,14 +511,12 @@ if _has_pydeck:
             d["mapbox_key"] = self.deck.mapbox_key
             return d
 
-
 try:
     import altair as alt
 
     _has_altair = True
 except:
     _has_altair = False
-
 
 if _has_altair:
 
@@ -559,14 +550,12 @@ if _has_altair:
             d["options"] = self.options
             return d
 
-
 try:
     import plotly
 
     _has_plotly = True
 except:
     _has_plotly = False
-
 
 if _has_plotly:
 
@@ -599,14 +588,12 @@ if _has_plotly:
             d["config"] = self.config
             return d
 
-
 try:
     import bokeh
 
     _has_bokeh = True
 except:
     _has_bokeh = False
-
 
 if _has_bokeh:
 
@@ -639,14 +626,12 @@ if _has_bokeh:
             d["config"] = self.config
             return d
 
-
 try:
     import folium
 
     _has_folium = True
 except:
     _has_folium = False
-
 
 if _has_folium:
 
