@@ -3,14 +3,21 @@ import justpy as jp
 import time
 
 def button_click(self, _msg):
+    """
+    on button click delete the components of the button
+    """
     self.num_clicked += 1
     self.message.text = f'{self.text} clicked. Number of clicks: {self.num_clicked}'
     self.set_class('bg-red-500')
     self.set_class('bg-red-700', 'hover')
     self.button_div.delete_components()
+    # wait a bit so that another button may be clicked
     time.sleep(3)
 
 def issue_279():
+    """
+    show misbehavior of handle_events when a message for a non existing component arrives
+    """
     number_of_buttons = 25
     wp = jp.WebPage()
     button_div = jp.Div(classes='flex m-4 flex-wrap', a=wp)

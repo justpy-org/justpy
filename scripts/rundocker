@@ -93,10 +93,10 @@ do
       shift
       if [ $# -lt 1 ]
       then
-        error "example parameter missing eg. 'dogs'"
+        error "example parameter missing eg. 'examples/dogs.py'"
       fi
       build justpy-dev docker/dev
-      run justpy-dev "python examples/$1.py --host 0.0.0.0" /usr/src/justpy
+      run justpy-dev "python $1 --host 0.0.0.0" /usr/src/justpy
       ;;
     #pull)
     #  build justpy-dev docker/dev

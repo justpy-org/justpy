@@ -4,6 +4,7 @@ Created on 2022-08-25
 @author: wf
 """
 import asyncio
+import selenium.common
 from selenium.webdriver.common.by import By
 import justpy as jp
 from tests.browser_test import SeleniumBrowsers
@@ -86,19 +87,30 @@ class TestWithSelenium(BaseAsynctest):
         await asyncio.sleep(self.server.sleep_time)
         Demo.testmode=True
         from examples.issues.issue_279_key_error import issue_279
+        await self.server.start(issue_279)
+        url = self.server.getUrl("/")
+        self.browser.get(url)
+        await asyncio.sleep(self.server.sleep_time)
+        buttons = self.browser.find_elements(By.TAG_NAME, "button")
+        debug=True
+        if debug:
+            print(f"found {len(buttons)} buttons")
+        await asyncio.sleep(0.5)
+        ok='False'
         with LogCapture() as lc:
-            await self.server.start(issue_279)
-            url = self.server.getUrl("/")
-            self.browser.get(url)
-            await asyncio.sleep(self.server.sleep_time)
-            buttons = self.browser.find_elements(By.TAG_NAME, "button")
-            debug=True
-            if debug:
-                print(f"found {len(buttons)} buttons")
-            await asyncio.sleep(0.5)
-            buttons[0].click()
-            await asyncio.sleep(0.5)
-            buttons[1].click()
+            try:
+                for buttonIndex in [0,1,2,3]:
+                    buttons[buttonIndex].click()
+                    await asyncio.sleep(0.25)
+                await asyncio.sleep(1.0)
+                for buttonIndex in [0,1,2,3]:
+                    buttons[buttonIndex].click()
+                    await asyncio.sleep(0.25)
+            except selenium.common.exceptions.StaleElementReferenceException:
+                if debug:
+                    print("Expected sideeffect: Selenium already complains about missing button")
+                ok=True
+                pass
             await asyncio.sleep(3.2)
             if debug:
                 print(f"log capture: {str(lc)}")
@@ -107,8 +119,11 @@ class TestWithSelenium(BaseAsynctest):
                 "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
             ]
             for i,expected in enumerate(expecteds):
-                self.assertTrue(expected in str(lc),f"{i}:{expected}")
+                if not ok:
+                    self.assertTrue(expected in str(lc),f"{i}:{expected}")
+                else:
+                    if not expected in str(lc):
+                        print(f"{i}:{expected} missing in captured log")
         
         self.browser.close()
         await self.server.stop()
-        
