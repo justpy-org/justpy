@@ -57,10 +57,22 @@ class TestRouteAndUrlFor(Basetest):
         for path in ["/bye", "/hello","/greet/{name}"]:
             self.assertTrue(path in JpRoute.routes_by_path)
             
-    def checkResponse(self,path,expected_code=200):
+    def checkResponse(self,path,expected_code=200,debug:bool=None):
+        """
+        check the response for the given path
+        
+        Args:
+            path(str): the path to check
+            expected_code(int): the HTTP status code to expect
+            debug(bool): if True show debugging info
+        """
+        if debug is None:
+            debug=self.debug
         with TestClient(self.app) as client:
             response = client.get(path)
             self.assertEqual(expected_code, response.status_code)
+        if debug:
+            print(response.text)
         return response
 
     def testUrlFor(self):
@@ -75,10 +87,15 @@ class TestRouteAndUrlFor(Basetest):
         test handling an invalid path
         '''
         response=self.checkResponse("/invalidpath",404)
-        debug=True
-        if debug:
-            print(response.text)
         self.assertEqual(jp.HTML_404_PAGE,response.text)
+        
+    def testStaticPath(self):
+        '''
+        test handling static content
+        '''
+        response=self.checkResponse("/templates/js/justpy_core.js")        
+        self.assertTrue("class JustpyCore" in response.text)
+        response=self.checkResponse("/templates/css/invalid_css.css",404)
     
     def testHtmlContent(self):
         # see https://www.starlette.io/testclient/
