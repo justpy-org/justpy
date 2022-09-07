@@ -21,5 +21,5 @@ class TestDownlad(Basetest):
         url = f"https://elimintz.github.io/{dbname}"
         os.makedirs(Download.get_cache_path(), exist_ok=True)
         filePath = f"{Download.get_cache_path()}/{dbname}"
-        Download.download_file(url, dbname, targetDirectory=Download.get_cache_path())
+        Download.download_file(url, dbname, target_directory=Download.get_cache_path())
         self.assertTrue(os.path.isfile(filePath))
