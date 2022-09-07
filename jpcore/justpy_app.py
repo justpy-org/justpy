@@ -180,7 +180,7 @@ class JustpyApp:
         self.is_demo = False
         if "Demo(" or "Demo (" in self.source:
             endpoint_match = re.search(
-                """Demo[ ]?[(]["'](.*)["'],(.*?)(,.*)*[)]""", self.source
+                """Demo[ ]?[(]["'](.*)["'],\s*(.*?)(,.*)*[)]""", self.source
             )
             if endpoint_match:
                 self.description = endpoint_match.group(1)

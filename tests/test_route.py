@@ -12,6 +12,12 @@ from starlette.testclient import TestClient
 from justpy.routing import JpRoute
 from tests.basetest import Basetest
 
+@jp.SetRoute('/greet/{name}')
+def greeting_function(request):
+    wp = jp.WebPage()
+    name=f"""{request.path_params["name"]}"""
+    wp.add(jp.P(text=f'Hello there, {name}!', classes='text-5xl m-2'))
+    return wp
 
 @jp.SetRoute("/bye", name="bye")
 def bye_function(_request):
@@ -32,35 +38,56 @@ class TestRouteAndUrlFor(Basetest):
     """
     test the url_for functionality
     """
+    
+    def setUp(self, debug=False, profile=True):
+        Basetest.setUp(self, debug=debug, profile=profile)
+        self.app=jp.app
 
     def testRoute(self):
         """
         Test the routing
         """
-        self.assertEqual(2, len(JpRoute.routes_by_path))
+        self.assertEqual(3, len(JpRoute.routes_by_path))
         debug = self.debug
         # debug=True
         for route in JpRoute.routes_by_path.values():
             route_as_text = str(route)
             if debug:
                 print(route_as_text)
-        for path in ["/bye", "/hello"]:
+        for path in ["/bye", "/hello","/greet/{name}"]:
             self.assertTrue(path in JpRoute.routes_by_path)
+            
+    def checkResponse(self,path,expected_code=200):
+        with TestClient(self.app) as client:
+            response = client.get(path)
+            self.assertEqual(expected_code, response.status_code)
+        return response
 
     def testUrlFor(self):
         """
         Test url for functionality
         """
-        app = jp.app
+        #@TODO - not implemented yet
+        pass
+    
+    def testInvalidPath(self):
+        '''
+        test handling an invalid path
+        '''
+        response=self.checkResponse("/invalidpath",404)
+        debug=True
+        if debug:
+            print(response.text)
+        self.assertEqual(jp.HTML_404_PAGE,response.text)
+    
+    def testHtmlContent(self):
         # see https://www.starlette.io/testclient/
-        with TestClient(app) as client:
-            response = client.get("/hello")
-            self.assertEqual(200, response.status_code)
-            debug = self.debug
-            debug = True
-            lines = response.text.split("\n")
-            if debug:
-                print(response.text)
-                print(f"{len(lines)} lines")
-            self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
-            self.assertTrue(len(lines) < 500)
+        response=self.checkResponse("/hello")
+        debug = self.debug
+        debug = True
+        lines = response.text.split("\n")
+        if debug:
+            print(response.text)
+            print(f"{len(lines)} lines")
+        self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
+        self.assertTrue(len(lines) < 500)
