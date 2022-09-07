@@ -93,6 +93,7 @@ class TestJavaScriptObject(Basetest):
     def test_decode_dirty_js2(self):
         """
         test decoding of dirty JavaScript objects
+        cf. https://stackoverflow.com/questions/34812821/bad-json-keys-are-not-quoted
         """
         dirty_js = """
              {
