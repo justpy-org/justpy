@@ -75,4 +75,31 @@ class TestJavaScriptObject(Basetest):
         self.assertTrue("series" in options)
         self.assertTrue("title" in options)
         self.assertTrue("text" in options["title"])
-        pass
+
+    def test_decode_dirty_js(self):
+        """
+        test decoding of dirty JavaScript objects
+        """
+        dirty_js = """
+             {
+          key: "value",
+          "key2":"value"
+        }
+        """
+        options = yaml.load(dirty_js, yaml.UnsafeLoader)
+        self.assertTrue("key2" in options)
+        self.assertTrue("key" in options)
+
+    def test_decode_dirty_js2(self):
+        """
+        test decoding of dirty JavaScript objects
+        """
+        dirty_js = """
+             {
+          key:"value",
+          "key2":"value"
+        }
+        """
+        options = yaml.load(dirty_js, yaml.SafeLoader)
+        self.assertTrue("key2" in options)
+        self.assertTrue("key" in options)
