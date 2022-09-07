@@ -88,11 +88,17 @@ class QDiv(Div):
 
 
 class _QInputBase(Input):
+    """
+    Base Class for Quasar Input
+    """
 
     slots = []
-    evaluate_prop = []
+    
 
     def __init__(self, **kwargs):
+        """
+        constructor
+        """
         self.disable_input_event = False
         super().__init__(**kwargs)
         self.vue_type = "quasar_component"
@@ -100,6 +106,7 @@ class _QInputBase(Input):
         self.disable_events = False
         self.prop_list = []
         self.attributes = []
+        self.evaluate_prop = []
 
     def __setattr__(self, key, value):
         if key == "options":

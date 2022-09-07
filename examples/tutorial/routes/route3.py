@@ -2,7 +2,8 @@
 import justpy as jp
 def greeting_function(request):
     wp = jp.WebPage()
-    wp.add(jp.P(text=f'Hello there, {request.path_params["name"]}!', classes='text-5xl m-2'))
+    name=f"""{request.path_params["name"]}"""
+    wp.add(jp.P(text=f'Hello there, {name}!', classes='text-5xl m-2'))
     return wp
 jp.Route('/hello/{name}', greeting_function)
 
