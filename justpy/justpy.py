@@ -1,5 +1,5 @@
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse, Response
+from starlette.responses import HTMLResponse, JSONResponse, Response
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
 from starlette.endpoints import HTTPEndpoint
@@ -82,7 +82,7 @@ AGGRID = config("AGGRID", cast=bool, default=True)
 AGGRID_ENTERPRISE = config("AGGRID_ENTERPRISE", cast=bool, default=False)
 
 NO_INTERNET = config("NO_INTERNET", cast=bool, default=True)
-
+HTML_404_PAGE = "justpy is sorry - that path doesn't exist"
 
 def create_component_file_list():
     file_list = []
@@ -130,7 +130,7 @@ app.mount(
 
 def initial_func(_request):
     """
-    default func/endpoint to be called if none has been specified
+    Default func/endpoint to be called if none has been specified
     """
     wp = WebPage()
     Div(
@@ -176,7 +176,7 @@ async def justpy_startup():
 @app.route("/{path:path}")
 class Homepage(HTTPEndpoint):
     """
-    justpy main page handler
+    Justpy main page handler
     """
 
     async def get(self, request):
@@ -197,9 +197,10 @@ class Homepage(HTTPEndpoint):
                 request.session_id = request.state.session_id
                 new_cookie = True
                 logging.debug(f"New session_id created: {request.session_id}")
-        func = JpRoute.getFuncForRequest(request)
-        if func:
-            func_to_run = func
+        func = JpRoute.get_func_for_request(request)
+        if not func:
+            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
+        func_to_run = func
         func_parameters = len(inspect.signature(func_to_run).parameters)
         assert (
             func_parameters < 2
@@ -483,7 +484,7 @@ async def handle_event(data_dict, com_type=0, page_event=False):
 
 def get_server():
     """
-    workaround for global variable jp_server not working as expected
+    Workaround for global variable jp_server not working as expected
     """
     return jp_server
 

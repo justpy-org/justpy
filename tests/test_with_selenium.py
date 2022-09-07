@@ -63,7 +63,7 @@ class TestWithSelenium(BaseAsynctest):
         self.browser = SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
         await asyncio.sleep(self.server.sleep_time)
         await self.server.start(self.wp_to_test)
-        url = self.server.getUrl("/")
+        url = self.server.get_url("/")
         self.browser.get(url)
         await asyncio.sleep(self.server.sleep_time)
         divs = self.browser.find_elements(By.TAG_NAME, "div")
@@ -88,7 +88,7 @@ class TestWithSelenium(BaseAsynctest):
         Demo.testmode=True
         from examples.issues.issue_279_key_error import issue_279
         await self.server.start(issue_279)
-        url = self.server.getUrl("/")
+        url = self.server.get_url("/")
         self.browser.get(url)
         await asyncio.sleep(self.server.sleep_time)
         buttons = self.browser.find_elements(By.TAG_NAME, "button")

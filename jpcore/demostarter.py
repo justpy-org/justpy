@@ -33,7 +33,7 @@ class Demostarter:
         justpy_dir = f"{os.path.dirname(script_dir)}/examples"
         if self.debug:
             print(f"collecting examples from {justpy_dir}")
-        pymodule_files = self.findFiles(justpy_dir, ".py")
+        pymodule_files = self.find_files(justpy_dir, ".py")
         self.demos = []
         self.servers = {}
         self.errors = {}
@@ -47,7 +47,7 @@ class Demostarter:
         if self.debug:
             print(f"found {len(self.demos)} justpy demo python modules")
 
-    async def start(self, baseport=11000, limit=None, useGather: bool = False):
+    async def start(self, baseport=11000, limit=None, use_gather: bool = False):
         """
         start the demos from the given baseport optionally limitting the number of demos
 
@@ -65,12 +65,12 @@ class Demostarter:
                 if server is None:
                     server = JustpyServer(mode=self.mode, port=port, debug=self.debug)
                 else:
-                    server = server.nextServer()
+                    server = server.next_server()
                     self.servers[server.port] = server
                 demo.port = server.port
                 demo_module = importlib.import_module(demo.pymodule)
                 demo.wp = getattr(demo_module, demo.endpoint)
-                if useGather:
+                if use_gather:
                     tasklist.append(demo.start(server))
                 else:
                     await demo.start(server)
@@ -81,7 +81,7 @@ class Demostarter:
                     print(traceback.format_exc())
             if limit is not None and i + 1 >= limit:
                 break
-        if useGather:
+        if use_gather:
             demo_results = await asyncio.gather(*tasklist, return_exceptions=True)
         pass
 
@@ -95,9 +95,9 @@ class Demostarter:
             await server.stop()
             self.servers.pop(server.port)
 
-    def findFiles(self, path: str, ext: str) -> list:
+    def find_files(self, path: str, ext: str) -> list:
         """
-        find Files with the given extension in the given path
+        find files with the given extension in the given path
 
         Args:
             path(str): the path to start with
