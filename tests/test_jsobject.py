@@ -60,7 +60,7 @@ class TestJavaScriptObject(Basetest):
         # https://www.highcharts.com/docs/getting-started/how-to-set-options
         options_string = """{
     title:{
-        text: 'Fruit Consumption'
+        text:'Fruit Consumption'
     },
     xAxis: {
         categories: ['Apples', 'Bananas', 'Oranges']
