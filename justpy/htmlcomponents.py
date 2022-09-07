@@ -9,6 +9,7 @@ import asyncio
 from .tailwind import Tailwind
 import logging
 import httpx
+from .template import PageOptions
 
 # Dictionary for translating from tag to class
 _tag_class_dict = {}
@@ -47,7 +48,6 @@ class Register:
     def __call__(self, cls, **kwargs):
         register_component(cls, self.tag, self.attributes)
         return cls
-
 
 class WebPage:
     # TODO: Add page events online, beforeunload, resize

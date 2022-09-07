@@ -14,6 +14,7 @@ from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
+from .template import Context
 
 # from .misccomponents import *
 from .meadows import *
@@ -255,6 +256,9 @@ class Homepage(HTTPEndpoint):
             "page_options": page_options,
             "html": load_page.html,
         }
+        # wrap the context in a context object to make it available
+        context_obj=Context(context)
+        context["context_obj"]=context_obj
         response = templates.TemplateResponse(load_page.template_file, context)
         if SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)

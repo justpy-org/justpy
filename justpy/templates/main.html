@@ -18,10 +18,9 @@
     <script src='/templates/js/{{file_name}}.js'></script>
 {%- endfor %}
     <script>
-    let justp_core=new JustpyCore(
-    		this, // window
-    		'{{ page_options.title }}' // title
-    	);
+    {%- if context_obj %}
+    {{ context_obj.as_javascript() | safe }}
+    {% endif %}
     {%- for event in page_options.events %}
         document.addEventListener('{{ event }}', function (evt) {
             console.log(evt);
@@ -79,11 +78,10 @@
 
         socket.addEventListener('message', function (event) {
             msg = JSON.parse(event.data);
-            {% if page_options.debug %}
+            if (justpy_core.debug) {
                 console.log('Message received from server ', msg);
                 console.log(event);
-            {% endif %}
-
+            }
             let e = {};
             switch (msg.type) {
                 case 'page_update':

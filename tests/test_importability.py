@@ -28,7 +28,7 @@ class TestImportability(Basetest):
             assert justpy
             outputText = outputBuf.getvalue()
         debug = self.debug
-        # debug=True
+        #debug=True
         if debug:
             print(outputText)
         self.assertTrue("Module directory" in outputText)
