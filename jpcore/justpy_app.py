@@ -127,7 +127,7 @@ class JustpyServer:
                 child.kill()
             self.proc.terminate()
 
-    def nextServer(self):
+    def next_server(self):
         """
         get another similar server with the port number incremented by one
         """
@@ -140,7 +140,7 @@ class JustpyServer:
         )
         return next_server
 
-    def getUrl(self, path):
+    def get_url(self, path):
         """
         get the url for the given path
 
@@ -169,35 +169,35 @@ class JustpyApp:
         self.pymodule_file = pymodule_file
         with open(self.pymodule_file, "r") as sourcefile:
             self.source = sourcefile.read()
-            self.checkDemo()
+            self.check_demo()
         self.wp = wp
         self.kwargs = kwargs
 
-    def checkDemo(self):
+    def check_demo(self):
         """
-        check whether this is a demo
+        Check whether this is a demo
         """
         self.is_demo = False
         if "Demo(" or "Demo (" in self.source:
-            endpointMatch = re.search(
+            endpoint_match = re.search(
                 """Demo[ ]?[(]["'](.*)["'],(.*?)(,.*)*[)]""", self.source
             )
-            if endpointMatch:
-                self.description = endpointMatch.group(1)
-                self.endpoint = endpointMatch.group(2)
+            if endpoint_match:
+                self.description = endpoint_match.group(1)
+                self.endpoint = endpoint_match.group(2)
                 # jenkins could have /var/lib/jenkins/jobs/justpy/workspace/examples/charts_tutorial/pandas/women_majors2.py is not a demo
-                modulematch = re.search(
+                module_match = re.search(
                     "justpy/(workspace/)?(examples/.*)[.]py", self.pymodule_file
                 )
-                if modulematch:
-                    self.pymodule = modulematch.group(2)
+                if module_match:
+                    self.pymodule = module_match.group(2)
                     self.pymodule = self.pymodule.replace("/", ".")
                     self.is_demo = not "lambda" in self.endpoint
                 return
 
     async def start(self, server: JustpyServer):
         """
-        start me on the given server
+        Start me on the given server
 
         Args:
             server(JustpyServer): the server to start
