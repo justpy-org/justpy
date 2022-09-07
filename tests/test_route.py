@@ -27,7 +27,7 @@ def bye_function(_request):
 
 
 @jp.SetRoute("/hello", name="hello")
-def hello_function(request):
+def hello_function(_request):
     wp = jp.WebPage()
     wp.add(jp.P(text="Hello there!", classes="text-5xl m-2"))
     # print("request  = ", request.url_for("hello"))
