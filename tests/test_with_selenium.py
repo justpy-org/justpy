@@ -4,6 +4,7 @@ Created on 2022-08-25
 @author: wf
 """
 import asyncio
+import selenium.common
 from selenium.webdriver.common.by import By
 import justpy as jp
 from tests.browser_test import SeleniumBrowsers
@@ -96,13 +97,18 @@ class TestWithSelenium(BaseAsynctest):
             print(f"found {len(buttons)} buttons")
         await asyncio.sleep(0.5)
         with LogCapture() as lc:
-            for buttonIndex in [0,1,2,3]:
-                buttons[buttonIndex].click()
-                await asyncio.sleep(0.25)
-            await asyncio.sleep(1.0)
-            for buttonIndex in [0,1,2,3]:
-                buttons[buttonIndex].click()
-                await asyncio.sleep(0.25)
+            try:
+                for buttonIndex in [0,1,2,3]:
+                    buttons[buttonIndex].click()
+                    await asyncio.sleep(0.25)
+                await asyncio.sleep(1.0)
+                for buttonIndex in [0,1,2,3]:
+                    buttons[buttonIndex].click()
+                    await asyncio.sleep(0.25)
+            except selenium.common.exceptions.StaleElementReferenceException:
+                if debug:
+                    print("Expected sideeffect: Selenium already complains about missing button")
+                pass
             await asyncio.sleep(3.2)
             if debug:
                 print(f"log capture: {str(lc)}")
