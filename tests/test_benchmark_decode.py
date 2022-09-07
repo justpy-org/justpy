@@ -48,8 +48,11 @@ class TestBenchmarkDecode(Basetest):
         """
         test demjson
         """
-        elapsed = timeit(lambda: demjson.decode(self.options_string.encode("ascii", "ignore")), number=1000)
-        print(f'Time: {elapsed:.2f}s')
+        elapsed = timeit(
+            lambda: demjson.decode(self.options_string.encode("ascii", "ignore")),
+            number=1000,
+        )
+        print(f"Time: {elapsed:.2f}s")
         self.assertGreater(elapsed, 0.0)
 
     def test_decode_time_yaml(self):
@@ -57,9 +60,11 @@ class TestBenchmarkDecode(Basetest):
         test yaml
         """
 
-        elapsed = timeit(lambda: yaml.full_load(self.options_string.encode("ascii", "ignore")),
-                         number=1000)
-        print(f'Time: {elapsed:.2f}s')
+        elapsed = timeit(
+            lambda: yaml.full_load(self.options_string.encode("ascii", "ignore")),
+            number=1000,
+        )
+        print(f"Time: {elapsed:.2f}s")
         self.assertGreater(elapsed, 0.0)
 
     def test_decode_time_hjson(self):
@@ -67,7 +72,9 @@ class TestBenchmarkDecode(Basetest):
         test hjson
         """
 
-        elapsed = timeit(lambda: hjson.loads(self.options_string.encode("ascii", "ignore")),
-                         number=1000)
-        print(f'Time: {elapsed:.2f}s')
+        elapsed = timeit(
+            lambda: hjson.loads(self.options_string.encode("ascii", "ignore")),
+            number=1000,
+        )
+        print(f"Time: {elapsed:.2f}s")
         self.assertGreater(elapsed, 0.0)

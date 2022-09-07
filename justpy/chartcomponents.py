@@ -450,6 +450,7 @@ if _has_matplotlib:
             output.close()
             return self.inner_html
 
+
 # --------------------------------------------------------------------
 # deck.gl related objects
 
@@ -465,6 +466,7 @@ except:
     _has_pydeck = False
 
 if _has_pydeck:
+
     class PyDeckFrame(Iframe):
         vue_type = "iframejp"
 
@@ -486,7 +488,6 @@ if _has_pydeck:
             d["view_delay"] = self.view_delay
             d["transition_duration"] = self.transition_duration
             return d
-
 
     class PyDeck(Div):
         vue_type = "deckgl"
@@ -510,6 +511,7 @@ if _has_pydeck:
             d["events"] = self.events
             d["mapbox_key"] = self.deck.mapbox_key
             return d
+
 
 try:
     import altair as alt
@@ -550,6 +552,7 @@ if _has_altair:
             d["options"] = self.options
             return d
 
+
 try:
     import plotly
 
@@ -588,6 +591,7 @@ if _has_plotly:
             d["config"] = self.config
             return d
 
+
 try:
     import bokeh
 
@@ -625,6 +629,7 @@ if _has_bokeh:
             d["events"] = self.events
             d["config"] = self.config
             return d
+
 
 try:
     import folium
