@@ -85,6 +85,8 @@ class TestTemplate(Basetest):
             "page_ready",
             "result_ready",
             "reload_interval",
+            "events",
+            "static_resources_url",
             "debug",
         ]:
-            self.assertTrue(f"// {param}" in js)
+            self.assertIn(f"// {param}", js)

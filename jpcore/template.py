@@ -113,7 +113,7 @@ class Context:
         reload_interval_ms = self.page_options.get_reload_interval_ms()
         static_resources_url = self.get_url_for("static")
         if static_resources_url is None:
-            return "/"
+            static_resources_url = "/"
         javascript = f"""let justpy_core=new JustpyCore(
             this, // window
             {self.page_id_js}, // page_id
@@ -125,7 +125,7 @@ class Context:
             {result_ready}, // result_ready     
             {reload_interval_ms}, // reload_interval
             {self.page_options.events},  // events
-            '{static_resources_url}',
+            '{static_resources_url}',  // static_resources_url
             {debug}   // debug
         );"""
         javascript = textwrap.indent(javascript, indent)
