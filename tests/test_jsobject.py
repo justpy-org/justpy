@@ -11,7 +11,7 @@ from addict import Dict
 
 class TestJavaScriptObject(Basetest):
     """
-    Tests JavaScript object conversion via PyYaml
+    Tests JavaScript object conversion via hjson
     """
 
     def test_decode(self):

@@ -25,8 +25,7 @@ dependencies = [
         'jinja2>=3.1.2', 
         'demjson3>=3.0.5',
         'hjson>=3.1.0',
-        'PyYAML>=6.0',
-        'httpx>=0.23.0', 
+        'httpx>=0.23.0',
         'aiofiles',
         'twine', 
         'wheel'
