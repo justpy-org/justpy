@@ -6,17 +6,14 @@ Created on 2022-09-07
 from tests.basetest import Basetest
 from jpcore.template import Context
 
-
 class TestTemplate(Basetest):
     """
     Tests template handling
     """
-
-    def test_javascript(self):
-        """
-        test javascript generation
-        """
-        context_dict = {
+    
+    def setUp(self, debug=False, profile=True):
+        Basetest.setUp(self, debug=debug, profile=profile)
+        self.context_dict = {
             "html": "",
             "justpy_dict": '[{"attrs": {}, "id": null, "vue_type": "html_component", '
             '"show": true, "events": [], "event_modifiers": {}, "classes": '
@@ -61,14 +58,30 @@ class TestTemplate(Basetest):
             "request": None,
             "use_websockets": "true",
         }
-        context_obj = Context(context_dict)
-        js = context_obj.as_javascript()
+        self.context_obj = Context(self.context_dict)
+
+    def test_html(self):
+        """
+        test html generation
+        """
+        html=self.context_obj.as_html_lines()
+        print(html)
+        
+    def test_javascript(self):
+        """
+        test javascript generation
+        """
+        js = self.context_obj.as_javascript_constructor()
         debug = True
         if debug:
             print(js)
         for param in [
             "window",
+            "page_id",
             "title",
+            "use_websockets",
+            "redirect",
+            "display_url",
             "page_ready",
             "result_ready",
             "reload_interval",
