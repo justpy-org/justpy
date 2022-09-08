@@ -6,7 +6,6 @@ Created on 2022-08-25
 import asyncio
 import selenium.common
 from selenium.webdriver.common.by import By
-import justpy as jp
 from tests.browser_test import SeleniumBrowsers
 from tests.basetest import Basetest
 from examples.basedemo import Demo

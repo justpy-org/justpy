@@ -32,6 +32,6 @@ modulewise_test() {
 }
 
 install_packages
-modulewise_test
+#modulewise_test
 # test importability might fail if we do this ...
-# green tests
+green tests -s 1

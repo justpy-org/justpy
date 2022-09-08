@@ -109,4 +109,4 @@ class TestRouteAndUrlFor(Basetest):
             print(response.text)
             print(f"{len(lines)} lines")
         self.assertTrue(response.text.startswith("<!DOCTYPE html>"))
-        self.assertTrue(len(lines) < 500)
+        self.assertTrue(len(lines) < 80)
