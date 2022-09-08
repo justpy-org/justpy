@@ -109,7 +109,7 @@ class TestWithSelenium(BaseAsynctest):
                 "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered",
             ]
             for i, expected in enumerate(expecteds):
-                self.assertTrue(expected in str(lc), f"{i}:{expected}")
+                self.assertIn(expected, str(lc), f"{i}:{expected}")
 
         self.browser.close()
         await self.server.stop()

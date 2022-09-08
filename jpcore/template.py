@@ -140,6 +140,9 @@ class PageOptions:
         self.events: List[str] = page_options_dict.get("events", [])
 
     def get_debug(self):
+        """
+        Get debug status of the PageOptions
+        """
         return self.page_options_dict.get("debug", False)
 
     def get_page_ready(self):
