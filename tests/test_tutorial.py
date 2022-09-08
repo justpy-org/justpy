@@ -12,6 +12,7 @@ from tests.basetest import Basetest
 from examples.basedemo import Demo
 from testfixtures import LogCapture
 
+
 class TestWithSelenium(BaseAsynctest):
     """
     testing actual browser behavior with selenium
@@ -76,23 +77,24 @@ class TestWithSelenium(BaseAsynctest):
         self.browser.close()
         await asyncio.sleep(self.server.sleep_time)
         await self.server.stop()
-        
+
     async def testIssue279(self):
         """
         see https://github.com/justpy-org/justpy/issues/279
-        
+
         """
         self.browser = SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
         await asyncio.sleep(self.server.sleep_time)
-        Demo.testmode=True
+        Demo.testmode = True
         from examples.issues.issue_279_key_error import issue_279
+
         with LogCapture() as lc:
             await self.server.start(issue_279)
             url = self.server.get_url("/")
             self.browser.get(url)
             await asyncio.sleep(self.server.sleep_time)
             buttons = self.browser.find_elements(By.TAG_NAME, "button")
-            debug=True
+            debug = True
             if debug:
                 print(f"found {len(buttons)} buttons")
             await asyncio.sleep(0.5)
@@ -102,13 +104,12 @@ class TestWithSelenium(BaseAsynctest):
             await asyncio.sleep(3.2)
             if debug:
                 print(f"log capture: {str(lc)}")
-            expecteds=[
+            expecteds = [
                 "component with id",
-                "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
+                "doesn't exist (anymore ...) it might have been deleted before the event handling was triggered",
             ]
-            for i,expected in enumerate(expecteds):
-                self.assertTrue(expected in str(lc),f"{i}:{expected}")
-        
+            for i, expected in enumerate(expecteds):
+                self.assertTrue(expected in str(lc), f"{i}:{expected}")
+
         self.browser.close()
         await self.server.stop()
-        

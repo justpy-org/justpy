@@ -49,6 +49,7 @@ class Register:
         register_component(cls, self.tag, self.attributes)
         return cls
 
+
 class WebPage:
     # TODO: Add page events online, beforeunload, resize
     instances = {}

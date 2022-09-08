@@ -85,6 +85,7 @@ AGGRID_ENTERPRISE = config("AGGRID_ENTERPRISE", cast=bool, default=False)
 NO_INTERNET = config("NO_INTERNET", cast=bool, default=True)
 HTML_404_PAGE = "justpy is sorry - that path doesn't exist"
 
+
 def create_component_file_list():
     file_list = []
     component_dir = os.path.join(STATIC_DIRECTORY, "components")
@@ -257,8 +258,8 @@ class Homepage(HTTPEndpoint):
             "html": load_page.html,
         }
         # wrap the context in a context object to make it available
-        context_obj=Context(context)
-        context["context_obj"]=context_obj
+        context_obj = Context(context)
+        context["context_obj"] = context_obj
         response = templates.TemplateResponse(load_page.template_file, context)
         if SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)
@@ -418,13 +419,15 @@ async def handle_event(data_dict, com_type=0, page_event=False):
     if page_event:
         c = p
     else:
-        component_id=event_data["id"]
-        c=JustpyBaseComponent.instances.get(component_id,None)
+        component_id = event_data["id"]
+        c = JustpyBaseComponent.instances.get(component_id, None)
         if c is not None:
             event_data["target"] = c
         else:
-            logging.warning(f"component with id {component_id} doesn't exist (anymore ...) it might have been deleted before the event handling was triggered")
-  
+            logging.warning(
+                f"component with id {component_id} doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
+            )
+
     try:
         if c is not None:
             before_result = await c.run_event_function("before", event_data, True)
@@ -440,7 +443,7 @@ async def handle_event(data_dict, com_type=0, page_event=False):
                 event_result = None
                 logging.debug(f"{c} has no {event_data['event_type']} event handler")
         else:
-            event_result = None    
+            event_result = None
         logging.debug(f"Event result:{event_result}")
     except Exception as e:
         # raise Exception(e)
