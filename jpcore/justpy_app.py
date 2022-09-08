@@ -99,6 +99,7 @@ class JustpyServer:
                 args=(wpfunc,),
                 kwargs=kwargs,
             )
+            self.proc.daemon = True
             self.proc.start()
         await asyncio.sleep(self.sleep_time)  # time for the server to start
 
@@ -124,7 +125,7 @@ class JustpyServer:
             pid = self.proc.pid
             parent = psutil.Process(pid)
             for child in parent.children(recursive=True):
-                child.kill()
+                child.terminate()
             self.proc.terminate()
 
     def next_server(self):
