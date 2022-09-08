@@ -3,6 +3,12 @@ Created on 2022-09-07
 
 @author: wf
 """
+import textwrap
+from typing import List
+
+from starlette.requests import Request
+
+
 class Context:
     """
     legacy context handler, encapsulates context
@@ -23,8 +29,22 @@ class Context:
         self.redirect_js=self.get_js_option("redirect","")
         self.display_url_js=self.get_js_option("display_url","")
         justpy_dict_js=str(self.context_dict.get("justpy_dict","[]"))
-        self.justpy_dict_js=justpy_dict_js.replace('</' + 'script>', '</" + "script>') 
-        
+        self.justpy_dict_js=justpy_dict_js.replace('</' + 'script>', '</" + "script>')
+
+    def get_url_for(self, name: str, path: str = None):
+        """
+        get url for the given route name
+        Args:
+            name: name of the route
+            path: path params
+        """
+        url = None
+        request = self.context_dict.get("request")
+        if request is not None and isinstance(request, Request):
+            if path is None:
+                path = ""
+            url = request.url_for(name, path=path)
+        return url
     def get_js_option(self,key,default_value):
         """
         get the page_option with the given key as javascript using the
@@ -91,18 +111,22 @@ class Context:
         page_ready = str(self.page_options.get_page_ready()).lower()
         result_ready = str(self.page_options.get_result_ready()).lower()
         reload_interval_ms = self.page_options.get_reload_interval_ms()
-        javascript = f"""{indent}let justpy_core=new JustpyCore(
-      this, // window
-      page_id, // page_id
-      '{self.title_js}', // title
-      use_websockets, // use_websockets
-      '{self.redirect_js}', // redirect
-      '{self.display_url_js}', // display_url
-      {page_ready}, // page_ready
-      {result_ready}, // result_ready     
-      {reload_interval_ms}, // reload_interval
-      {debug}   // debug
-    );"""
+        static_resources_url = self.get_url_for("static")
+        javascript = f"""let justpy_core=new JustpyCore(
+            this, // window
+            {self.page_id_js}, // page_id
+            '{self.title_js}', // title
+            '{self.use_websockets_js}', // use_websockets
+            '{self.redirect_js}', // redirect
+            '{self.display_url_js}', // display_url
+            {page_ready}, // page_ready
+            {result_ready}, // result_ready     
+            {reload_interval_ms}, // reload_interval
+            {self.page_options.events},  // events
+            '{static_resources_url}',
+            {debug}   // debug
+        );"""
+        javascript = textwrap.indent(javascript, indent)
         return javascript
 
 
@@ -113,7 +137,7 @@ class PageOptions:
 
     def __init__(self, page_options_dict: dict):
         self.page_options_dict = page_options_dict
-        self.events = page_options_dict["events"]
+        self.events: List[str] = page_options_dict.get("events", [])
 
     def get_debug(self):
         return self.page_options_dict.get("debug", False)
