@@ -159,7 +159,7 @@ class HighCharts(JustpyBaseComponent):
 
     async def draw_crosshair(self, point_list, websocket):
         """
-        point_list is list of of dictionaries  whose keys are:
+        point_list is list of dictionaries  whose keys are:
         'id': the chart id
         'series': the series index
         'point': the point index

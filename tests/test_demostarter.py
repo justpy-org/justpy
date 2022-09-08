@@ -32,5 +32,5 @@ class TestDemoStarter(BaseAsynctest):
         await asyncio.sleep(2.0)
         # stop all servers
         await demoStarter.stop()
-
-        self.assertEqual(0, len(demoStarter.errors.values()))
+        with self.subTest("testDemoStarter", demoStarter=demoStarter):
+            self.assertEqual(0, len(demoStarter.errors.values()))
