@@ -15,13 +15,20 @@ install_packages() {
 # test module by module
 #
 modulewise_test() {
+  foundErrors=0
   for testmodule in tests/test*.py
   do
     echo "testing $testmodule ..."
     # see https://github.com/CleanCut/green/issues/263
     #green $testmodule -s1
     python -m unittest $testmodule
+    exit_code=$?
+    foundErrors=$((foundErrors+exit_code))
   done
+  if [[ $foundErrors -gt 0 ]]
+  then
+    exit 1
+  fi
 }
 
 install_packages
