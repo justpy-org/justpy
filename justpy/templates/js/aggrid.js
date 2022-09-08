@@ -139,7 +139,7 @@ Vue.component('grid', {
     },
     updated() {
         if (JSON.stringify(this.$props.jp_props.def) != cached_grid_def[this.$props.jp_props.id]) {
-            grid_to_destroy = cached_grid_def['g' + this.$props.jp_props.id];
+            var grid_to_destroy = cached_grid_def['g' + this.$props.jp_props.id];
             grid_to_destroy.api.destroy();
             this.grid_change(); // Explore option to check difference and update with api instead of destroying and creating new grid
         }
