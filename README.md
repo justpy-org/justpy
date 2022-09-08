@@ -8,48 +8,7 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues/?q=is%3Aissue+is%3Aclosed)
 [![License](https://img.shields.io/github/license/elimintz/justpy.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-## Docs and Tutorials
-[JustPy Docs and Tutorials](https://justpy.io)
 
-## Live Demos
-[nicegui](https://nicegui.io/)
-
-[justpy demos](https://jpdemo.bitplan.com)
-
-### Examples
-[clickdemo.py](https://github.com/justpy-org/justpy/blob/master/examples/clickdemo.py)
-
-![clickdemo](https://user-images.githubusercontent.com/1336221/187233892-c97aa972-4445-4e12-a3a6-3a23538247b1.gif)
-
-[dogs.py](https://github.com/justpy-org/justpy/blob/master/examples/dogs.py)
-
-![dogs_animated](https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif)
-
-[blackjack.py](https://github.com/justpy-org/justpy/blob/master/examples/blackjack.py)
-
-![blackjack_animated](https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif)
-
-## Questions and Discussions
-Please file Bugs you found checking the issues Badge Link above.
-
-Questions which involve details of upstream frameworks such as 
-Quasar, Tailwind, Highcharts are best ask involving a larger community via 
-
-[stackoverflow questions](https://stackoverflow.com/questions/tagged/justpy)
-
-and tagging your question with both "justpy" and the tag or the specific library your are asking a question for
-
-Our github dicussions are categorized. Please use the Category "Ideas" for feature requests. 
-[github discussions](https://github.com/elimintz/justpy/discussions)
-
-## Trying out with docker
-```bash
-git clone https://github.com/justpy-org/justpy
-scripts/rundocker -h
-scripts/rundocker test
-scripts/rundocker example examples/dogs.py
-scripts/rundocker dev
-```
 ## Introduction
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs. 
@@ -67,6 +26,36 @@ JustPy supports visualization using [matplotlib](https://justpy.io/#/tutorial/ma
 JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifies building web sites based on pandas analysis. JustPy comes with a [pandas extension](https://justpy.io/#/charts_tutorial/pandas?id=using-the-pandas-extension) that makes it simple to create interactive charts and grids from pandas data structures.
 
 For updates and news please follow the [JustPy Twitter account](https://twitter.com/justpyframework)
+
+## Docs and Tutorials
+[JustPy Docs and Tutorials](https://justpy.io)
+
+## Live Demos
+[NiceGUI](https://nicegui.io/)
+
+[JustPy demos](https://jpdemo.bitplan.com)
+
+### Examples
+[clickdemo.py](https://github.com/justpy-org/justpy/blob/master/examples/clickdemo.py)
+
+![clickdemo](https://user-images.githubusercontent.com/1336221/187233892-c97aa972-4445-4e12-a3a6-3a23538247b1.gif)
+
+[dogs.py](https://github.com/justpy-org/justpy/blob/master/examples/dogs.py)
+
+![dogs_animated](https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif)
+
+[blackjack.py](https://github.com/justpy-org/justpy/blob/master/examples/blackjack.py)
+
+![blackjack_animated](https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif)
+
+## Questions and Discussions
+Please file bugs you found checking the issues Badge Link above.
+
+Questions which involve details of upstream frameworks such as 
+Quasar, Tailwind, Highcharts are best asked involving a larger community via [Stackoverflow](https://stackoverflow.com/questions/tagged/justpy). Make sure to tag your question with both "justpy" and the tag or the specific library your are asking a question for.
+
+Our [Github discussions](https://github.com/elimintz/justpy/discussions) are categorized. Please use the Category "Ideas" for feature requests. 
+
 
 ## Hello World!
 
@@ -102,7 +91,16 @@ def hello_world():
 jp.justpy(hello_world)
 ```
 
-Many other examples can be found in the [tutorial](https://justpy.io/#/tutorial/getting_started)
+Many other examples can be found in the [tutorial](https://justpy.io/#/tutorial/getting_started).
+
+## Trying out with docker
+```bash
+git clone https://github.com/justpy-org/justpy
+scripts/rundocker -h
+scripts/rundocker test
+scripts/rundocker example examples/dogs.py
+scripts/rundocker dev
+```
 
 ## Under the Hood
 
@@ -114,6 +112,7 @@ JustPy's frontend (which is transparent to JustPy developers) is built using:
 * [Vue.js](https://vuejs.org/) - "The Progressive JavaScript Framework"
 
 The way JustPy removes the frontend/backend distinction is by intercepting the relevant events on the frontend and sending them to the backend to be processed. 
+
 
 ## License 
 
