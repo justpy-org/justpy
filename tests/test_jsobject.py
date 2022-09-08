@@ -3,12 +3,16 @@ Created on 2022-09-07
 
 @author: hr
 """
+import os
+import unittest
 from timeit import timeit
 
 import hjson
 
 from tests.basetest import Basetest
 from addict import Dict
+
+SLOW_TESTS = bool(os.environ.get('JP_SLOW_TESTS', False))
 
 
 class TestJavaScriptObject(Basetest):
@@ -108,6 +112,7 @@ class TestJavaScriptObject(Basetest):
         self.assertTrue("key2" in options)
         self.assertTrue("key" in options)
 
+    @unittest.skipIf(not SLOW_TESTS, "JP_SLOW_TESTS")
     def test_decode_time(self):
         """
         test decoding time
