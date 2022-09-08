@@ -79,12 +79,12 @@ class JustpyCore {
  
   // create a JustpyCore instance
   constructor(window,title,page_ready,result_ready,reload_interval_ms,debug) {
-	this.window=window
+	this.window=window;
     this.setTitle(title);
-    this.page_ready=page_ready
-    this.result_ready=result_ready
-    this.reload_interval_ms=reload_interval_ms
-    this.debug=debug
+    this.page_ready=page_ready;
+    this.result_ready=result_ready;
+    this.reload_interval_ms=reload_interval_ms;
+    this.debug=debug;
   }
   
   // set the title
