@@ -112,6 +112,8 @@ class Context:
         result_ready = str(self.page_options.get_result_ready()).lower()
         reload_interval_ms = self.page_options.get_reload_interval_ms()
         static_resources_url = self.get_url_for("static")
+        if static_resources_url is None:
+            return "/"
         javascript = f"""let justpy_core=new JustpyCore(
             this, // window
             {self.page_id_js}, // page_id
