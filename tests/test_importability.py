@@ -10,7 +10,7 @@ from tests.basetest import Basetest
 import io
 from contextlib import redirect_stdout
 import pprint
-
+import sys
 
 class TestImportability(Basetest):
     """
@@ -28,9 +28,10 @@ class TestImportability(Basetest):
             assert justpy
             outputText = outputBuf.getvalue()
         debug = self.debug
-        # debug=True
+        jp_refcount=sys.getrefcount("justpy")
+        debug=True
         if debug:
-            print(outputText)
+            print(f"{jp_refcount}:{outputText}")
         self.assertTrue("Module directory" in outputText)
         self.assertTrue("Application directory" in outputText)
         # https://stackoverflow.com/questions/34861137/list-all-the-elements-in-a-python-namespace
