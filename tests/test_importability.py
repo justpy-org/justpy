@@ -32,8 +32,9 @@ class TestImportability(Basetest):
         debug=True
         if debug:
             print(f"{jp_refcount}:{outputText}")
-        self.assertTrue("Module directory" in outputText)
-        self.assertTrue("Application directory" in outputText)
+        if jp_refcount<=16:
+            self.assertTrue("Module directory" in outputText)
+            self.assertTrue("Application directory" in outputText)
         # https://stackoverflow.com/questions/34861137/list-all-the-elements-in-a-python-namespace
         names = dir(justpy)
         if debug:
