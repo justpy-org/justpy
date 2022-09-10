@@ -11,7 +11,7 @@ import traceback
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from examples.basedemo import Demo
-from jpcore.justpy_app import JustpyApp, JustpyServer
+from jpcore.justpy_app import JustpyDemoApp, JustpyServer
 
 
 class Demostarter:
@@ -38,7 +38,7 @@ class Demostarter:
         self.servers = {}
         self.errors = {}
         for pymodule_file in pymodule_files:
-            demo = JustpyApp(pymodule_file)
+            demo = JustpyDemoApp(pymodule_file)
             if demo.is_demo:
                 self.demos.append(demo)
             else:

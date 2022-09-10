@@ -11,10 +11,91 @@ import typing
 from sys import platform
 from multiprocessing import Process
 from threading import Thread
+from starlette.applications import Starlette
+from starlette.routing import Route,Match
 
 # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
 # https://github.com/encode/uvicorn/discussions/1103
 # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
+class JustpyApp(Starlette):
+    """
+    a justpy application is a special Starlette application
+    
+      uses starlette Routing
+
+    see
+       https://www.starlette.io/routing/
+
+       https://github.com/encode/starlette/blob/master/starlette/routing.py
+    """
+    app=None
+
+    def __init__(self,**kwargs):
+        # https://www.starlette.io/applications/
+        Starlette.__init__(self,**kwargs)
+        JustpyApp.app=self
+        
+    def get_func_for_request(self, request):
+        """
+        Get the function for the given request
+
+        Args:
+            request: the starlette request
+
+        Returns:
+            Callable: the function that is bound to the path of the given request
+        """
+        scope = request.scope
+        return self.get_func_for_scope(scope)
+    
+    def get_func_for_scope(self, scope):
+        """
+        Get the function (endpoint in starlette jargon) for the given scope
+
+        Args:
+            path: the path to check
+        Returns:
+            Callable: the function that is bound to the given path
+        """
+        for route in self.getRoutesByPriority():
+            if isinstance(route,Route):
+                match, _matchScope = route.matches(scope)
+                if match is not Match.NONE:
+                    func_to_run = route.endpoint
+                    return func_to_run
+        return None
+    
+    def prioritize_routes(self):
+        """
+        modify the routes priority
+        """
+        self.router.routes=self.getRoutesByPriority()
+    
+    def getRoutesByPriority(self):
+        """
+        get the routes by priority
+        """
+        routes=self.router.routes
+        routes_by_priority=[]
+        homepage_names=["default","Homepage"]
+        homepages=[]
+        for route in routes:
+            if isinstance(route,Route) and route.name and route.name in homepage_names:
+                homepages.append(route)
+            else:
+                routes_by_priority.append(route)
+        for homepage in homepages:
+            routes_by_priority.append(homepage)
+        return routes_by_priority
+    
+    def routeAsText(self,route):
+        """
+        get a string representation of the given route
+        """
+        text= f"{route.__class__.__name__}(name: {route.name}, path: {route.path}, format: {route.path_format},  regex: {route.path_regex})"
+        if isinstance(route,Route):
+            text+=f"func: {route.endpoint.__name__}"
+        return text
 
 
 class JustpyServer:
@@ -155,7 +236,7 @@ class JustpyServer:
         return url
 
 
-class JustpyApp:
+class JustpyDemoApp:
     """
     a justpy application
     """

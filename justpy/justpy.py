@@ -15,6 +15,7 @@ from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
 from jpcore.template import Context
+from jpcore.justpy_app import JustpyApp
 
 # from .misccomponents import *
 from .meadows import *
@@ -123,7 +124,7 @@ logging.basicConfig(level=LOGGING_LEVEL, format="%(levelname)s %(module)s: %(mes
 middleware = [Middleware(GZipMiddleware)]
 if SSL_KEYFILE and SSL_CERTFILE:
     middleware.append(Middleware(HTTPSRedirectMiddleware))
-app = Starlette(middleware=middleware, debug=DEBUG)
+app = JustpyApp(middleware=middleware, debug=DEBUG)
 app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
 app.mount(
     "/templates", StaticFiles(directory=current_dir + "/templates"), name="templates"
