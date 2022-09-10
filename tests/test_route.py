@@ -11,8 +11,13 @@ import justpy as jp
 from starlette.testclient import TestClient
 from justpy.routing import JpRoute
 from tests.basetest import Basetest
+from starlette.responses import PlainTextResponse
 
+@jp.app.route("/plaintext")
+async def plainText(_request):
+    return PlainTextResponse("Plaintext")
 
+@jp.app.route("/greet/{name}")
 @jp.SetRoute("/greet/{name}")
 def greeting_function(request):
     wp = jp.WebPage()
@@ -20,21 +25,20 @@ def greeting_function(request):
     wp.add(jp.P(text=f"Hello there, {name}!", classes="text-5xl m-2"))
     return wp
 
-
+#@jp.app.route("/bye")
 @jp.SetRoute("/bye", name="bye")
 def bye_function(_request):
     wp = jp.WebPage()
     wp.add(jp.P(text="Bye bye!", classes="text-5xl m-2"))
     return wp
 
-
+#@jp.app.route("/hello")
 @jp.SetRoute("/hello", name="hello")
 def hello_function(_request):
     wp = jp.WebPage()
     wp.add(jp.P(text="Hello there!", classes="text-5xl m-2"))
     # print("request  = ", request.url_for("hello"))
     return wp
-
 
 class TestRouteAndUrlFor(Basetest):
     """
@@ -44,16 +48,25 @@ class TestRouteAndUrlFor(Basetest):
     def setUp(self, debug=False, profile=True):
         Basetest.setUp(self, debug=debug, profile=profile)
         self.app = jp.app
+        self.app.prioritize_routes()
+        
+    def testStarletteRoutes(self):
+        debug=True
+        for i,route in enumerate(self.app.router.routes):
+            route_as_text = self.app.route_as_text(route)
+            if debug:
+                print(f"{i}:{route_as_text}")
+            
 
-    def testRoute(self):
+    def testJpRoute(self):
         """
         Test the routing
         """
         self.assertEqual(3, len(JpRoute.routes_by_path))
         debug = self.debug
-        # debug=True
+        debug=True
         for route in JpRoute.routes_by_path.values():
-            route_as_text = str(route)
+            route_as_text = self.app.route_as_text(route)
             if debug:
                 print(route_as_text)
         for path in ["/bye", "/hello", "/greet/{name}"]:
@@ -70,6 +83,8 @@ class TestRouteAndUrlFor(Basetest):
         """
         if debug is None:
             debug = self.debug
+        if debug:
+            print(f"checking response for {path}")
         with TestClient(self.app) as client:
             response = client.get(path)
             self.assertEqual(expected_code, response.status_code)
@@ -83,6 +98,14 @@ class TestRouteAndUrlFor(Basetest):
         """
         # @TODO - not implemented yet
         pass
+    
+    def testResponses(self):
+        
+        for path in [
+            "/plaintext",
+            #"/hello","/greet/eli","/bye"
+            ]:
+            _response=self.checkResponse(path,debug=True)
 
     def testInvalidPath(self):
         """

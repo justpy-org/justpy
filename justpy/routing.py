@@ -1,6 +1,6 @@
 import starlette.routing
 import typing
-
+from jpcore.justpy_app import JustpyApp
 
 class JpRoute(starlette.routing.Route):
     """
@@ -96,5 +96,7 @@ class SetRoute:
 
         """
         # Create a new route
+        #app=JustpyApp.app
         JpRoute(path=self.route, endpoint=fn, name=self.kwargs.get("name", None))
+#       app.add_route(path=self.route, route=fn, name=self.kwargs.get("name", None))
         return fn

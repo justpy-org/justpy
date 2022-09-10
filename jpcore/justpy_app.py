@@ -88,7 +88,7 @@ class JustpyApp(Starlette):
             routes_by_priority.append(homepage)
         return routes_by_priority
     
-    def routeAsText(self,route):
+    def route_as_text(self,route):
         """
         get a string representation of the given route
         """
