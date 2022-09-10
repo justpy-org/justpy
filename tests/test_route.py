@@ -17,6 +17,13 @@ from starlette.responses import PlainTextResponse
 async def plainText(_request):
     return PlainTextResponse("Plaintext")
 
+@jp.app.route("/urlFor/{name}")
+async def urlFor(request):
+    name=request.path_params["name"]
+    print(f"calling url_for {name}")
+    url=request.url_for(name)
+    return PlainTextResponse(url)
+
 @jp.app.route("/greet/{name}")
 @jp.SetRoute("/greet/{name}")
 def greeting_function(request):
@@ -96,8 +103,16 @@ class TestRouteAndUrlFor(Basetest):
         """
         Test url for functionality
         """
-        # @TODO - not implemented yet
-        pass
+        for name,url in [
+            ("plainText","plaintext"),
+            #("hello_function","hello")
+            ]:
+            path=f"/urlFor/{name}"
+            response=self.checkResponse(path)
+            urlfor=response.text
+            print(urlfor)
+            self.assertEqual(urlfor,f"http://testserver/{url}")
+            pass
     
     def testResponses(self):
         
