@@ -181,28 +181,30 @@ class Homepage(HTTPEndpoint):
     """
     Justpy main page handler
     """
-
     async def get(self, request):
-        # Handle web requests
-        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-        if SESSIONS:
-            new_cookie = False
-            if session_cookie:
-                try:
-                    session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
-                except:
-                    return PlainTextResponse("Bad Session")
-                request.state.session_id = session_id
-                request.session_id = session_id
-            else:
-                # Create new session_id
-                request.state.session_id = str(uuid.uuid4().hex)
-                request.session_id = request.state.session_id
-                new_cookie = True
-                logging.debug(f"New session_id created: {request.session_id}")
+        """
+        main justpy request handler 
+        """
+        new_cookie=self.handle_session_cookie(request)
+        response=await self.get_response_for_request(request,new_cookie)
+        if LATENCY:
+            await asyncio.sleep(LATENCY / 1000)
+        return response
+    
+    async def get_response_for_request(self,request,new_cookie:bool):
+        """
+        get the page for the given request
+        
+        Args:
+            request: the request to handle
+            new_cookie(bool): True if a new cookie needs to be set
+            
+        Returns:
+            Response: a Response for the request
+        """
         func = JpRoute.get_func_for_request(request)
         if not func:
-            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
+            return HTMLResponse(content=HTML_404_PAGE, status_code=404),None
         func_to_run = func
         func_parameters = len(inspect.signature(func_to_run).parameters)
         assert (
@@ -218,6 +220,7 @@ class Homepage(HTTPEndpoint):
                 load_page = func_to_run(request)
             else:
                 load_page = func_to_run()
+        # @TODO does this really still make sense after refactoring the routing?
         if isinstance(load_page, Response):
             logging.debug("Returning raw starlette.responses.Response.")
             return load_page
@@ -262,6 +265,19 @@ class Homepage(HTTPEndpoint):
         context_obj = Context(context)
         context["context_obj"] = context_obj
         response = templates.TemplateResponse(load_page.template_file, context)
+        self.set_cookie(request,response,load_page,new_cookie)
+        return response
+    
+    def set_cookie(self,request,response,load_page,new_cookie:bool):
+        """
+        set the cookie_value
+        
+        Args:
+            request: the request 
+            response: the response to be sent
+            load_page(WebPage): the WebPage to handle
+            new_cookie(bool): True if there is a new cookie
+        """
         if SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)
             cookie_value = cookie_value.decode("utf-8")
@@ -270,10 +286,34 @@ class Homepage(HTTPEndpoint):
             )
             for k, v in load_page.cookies.items():
                 response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
-        if LATENCY:
-            await asyncio.sleep(LATENCY / 1000)
-        return response
-
+    
+    def handle_session_cookie(self,request)->bool:
+        """
+        handle the session cookie for this request
+        
+        Returns:
+            True if a new cookie and session has been created
+        """
+        # Handle web requests
+        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
+        new_cookie=None
+        if SESSIONS:
+            new_cookie = False
+            if session_cookie:
+                try:
+                    session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
+                except:
+                    return PlainTextResponse("Bad Session")
+                request.state.session_id = session_id
+                request.session_id = session_id
+            else:
+                # Create new session_id
+                request.state.session_id = str(uuid.uuid4().hex)
+                request.session_id = request.state.session_id
+                new_cookie = True
+                logging.debug(f"New session_id created: {request.session_id}")
+        return new_cookie
+        
     async def post(self, request):
         # Handles post method. Used in Ajax mode for events when websockets disabled
         if request["path"] == "/zzz_justpy_ajax":
