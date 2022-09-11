@@ -13,6 +13,8 @@ from multiprocessing import Process
 from threading import Thread
 from starlette.applications import Starlette
 from starlette.routing import Route,Match
+from starlette.endpoints import HTTPEndpoint
+from jpcore.justpy_config import LATENCY
 
 # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
 # https://github.com/encode/uvicorn/discussions/1103
@@ -97,6 +99,26 @@ class JustpyApp(Starlette):
             text+=f"func: {route.endpoint.__name__}"
         return text
 
+class JustpyEndpoint(HTTPEndpoint):
+    """
+    Justpy specific HTTPEndpoint/app (ASGI application)
+    """
+    
+    def __init__(self,scope,receive,send):
+        """ 
+        constructor
+        """
+        HTTPEndpoint.__init__(self,scope, receive, send)
+        
+    async def get(self, request):
+        """
+        main justpy request handler 
+        """
+        new_cookie=self.handle_session_cookie(request)
+        response=await self.get_response_for_request(request,new_cookie)
+        if LATENCY:
+            await asyncio.sleep(LATENCY / 1000)
+        return response
 
 class JustpyServer:
     """

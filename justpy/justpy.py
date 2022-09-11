@@ -15,7 +15,8 @@ from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
 from jpcore.template import Context
-from jpcore.justpy_app import JustpyApp
+from jpcore.justpy_app import JustpyApp,JustpyEndpoint
+from jpcore.justpy_config import DEBUG,HOST,PORT,CRASH,LATENCY
 
 # from .misccomponents import *
 from .meadows import *
@@ -37,14 +38,9 @@ print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
 jp_server = None
 
 config = Config("justpy.env")
-DEBUG = config("DEBUG", cast=bool, default=True)
-CRASH = config("CRASH", cast=bool, default=False)
 MEMORY_DEBUG = config("MEMORY_DEBUG", cast=bool, default=False)
 if MEMORY_DEBUG:
     import psutil
-LATENCY = config("LATENCY", cast=int, default=0)
-if LATENCY:
-    print(f"Simulating latency of {LATENCY} ms")
 SESSIONS = config("SESSIONS", cast=bool, default=True)
 SESSION_COOKIE_NAME = config("SESSION_COOKIE_NAME", cast=str, default="jp_token")
 SECRET_KEY = config(
@@ -56,8 +52,7 @@ UVICORN_LOGGING_LEVEL = config("UVICORN_LOGGING_LEVEL", default="WARNING").lower
 COOKIE_MAX_AGE = config(
     "COOKIE_MAX_AGE", cast=int, default=60 * 60 * 24 * 7
 )  # One week in seconds
-HOST = config("HOST", cast=str, default="127.0.0.1")
-PORT = config("PORT", cast=int, default=8000)
+
 SSL_VERSION = config("SSL_VERSION", default=PROTOCOL_SSLv23)
 SSL_KEYFILE = config("SSL_KEYFILE", default="")
 SSL_CERTFILE = config("SSL_CERTFILE", default="")
@@ -177,19 +172,10 @@ async def justpy_startup():
 
 
 @app.route("/{path:path}")
-class Homepage(HTTPEndpoint):
+class Homepage(JustpyEndpoint):
     """
     Justpy main page handler
     """
-    async def get(self, request):
-        """
-        main justpy request handler 
-        """
-        new_cookie=self.handle_session_cookie(request)
-        response=await self.get_response_for_request(request,new_cookie)
-        if LATENCY:
-            await asyncio.sleep(LATENCY / 1000)
-        return response
     
     async def get_response_for_request(self,request,new_cookie:bool):
         """
