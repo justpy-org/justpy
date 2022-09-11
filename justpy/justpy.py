@@ -205,25 +205,29 @@ class Homepage(HTTPEndpoint):
         func = JpRoute.get_func_for_request(request)
         if not func:
             return HTMLResponse(content=HTML_404_PAGE, status_code=404)
-        func_to_run = func
-        func_parameters = len(inspect.signature(func_to_run).parameters)
-        assert (
-            func_parameters < 2
-        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
-        if inspect.iscoroutinefunction(func_to_run):
-            if func_parameters == 1:
-                load_page = await func_to_run(request)
-            else:
-                load_page = await func_to_run()
-        else:
-            if func_parameters == 1:
-                load_page = func_to_run(request)
-            else:
-                load_page = func_to_run()
+        load_page=await self.get_page_for_func(request,func)
         # @TODO does this really still make sense after refactoring the routing?
         if isinstance(load_page, Response):
             logging.debug("Returning raw starlette.responses.Response.")
             return load_page
+        # @TODO - shouldn't we return proper error response pages instead
+        # of relying on the exception handling via assertions here?
+        response=self.get_response_for_load_page(request,load_page) 
+        self.set_cookie(request,response,load_page,new_cookie)
+        return response
+    
+    def get_response_for_load_page(self,request,load_page):
+        """
+        get the response for the given webpage
+        
+        Args:
+            request(Request): the request to handle
+            load_page(WebPage): the webpage to wrap with justpy and  
+            return as a full HtmlResponse
+        
+        Returns:
+            Reponse: the response for the given load_page
+        """
         page_type = type(load_page)
         assert issubclass(
             page_type, WebPage
@@ -265,8 +269,34 @@ class Homepage(HTTPEndpoint):
         context_obj = Context(context)
         context["context_obj"] = context_obj
         response = templates.TemplateResponse(load_page.template_file, context)
-        self.set_cookie(request,response,load_page,new_cookie)
         return response
+    
+    async def get_page_for_func(self,request,func):
+        """
+        get the Webpage for the given func
+        
+        Args:
+            request: the request to pass to the given function
+            func: the function
+        """
+        # @TODO - get rid of the global func_to_run concept that isn't
+        # in scope here (anymore) anyways
+        func_to_run = func
+        func_parameters = len(inspect.signature(func_to_run).parameters)
+        assert (
+            func_parameters < 2
+        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
+        if inspect.iscoroutinefunction(func_to_run):
+            if func_parameters == 1:
+                load_page = await func_to_run(request)
+            else:
+                load_page = await func_to_run()
+        else:
+            if func_parameters == 1:
+                load_page = func_to_run(request)
+            else:
+                load_page = func_to_run()
+        return load_page
     
     def set_cookie(self,request,response,load_page,new_cookie:bool):
         """
