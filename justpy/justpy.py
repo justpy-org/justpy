@@ -204,7 +204,7 @@ class Homepage(HTTPEndpoint):
         """
         func = JpRoute.get_func_for_request(request)
         if not func:
-            return HTMLResponse(content=HTML_404_PAGE, status_code=404),None
+            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
         func_to_run = func
         func_parameters = len(inspect.signature(func_to_run).parameters)
         assert (
