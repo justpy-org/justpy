@@ -133,7 +133,7 @@ class JustpyEndpoint(HTTPEndpoint):
         Returns:
             Response: a Response for the request
         """
-        import justpy.routing.JpRoute as JpRoute
+        from justpy.routing import JpRoute
         func = JpRoute.get_func_for_request(request)
         #func = request.get_func_for_request(request)
         if not func:
