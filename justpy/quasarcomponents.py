@@ -45,32 +45,6 @@ class QuasarPage(WebPage):
         await self.run_javascript("Quasar.AppFullscreen.toggle()")
         return True
 
-
-class QuasarMeadowsPage(QuasarPage):
-    # https://tailwindui.com/components
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.meadows = True
-        self.meadows_data = {
-            "if": [],
-            "show": [],
-            "attrs": [],
-            "for": [],
-            "class": [],
-            "class_evaluate": [],
-            "refs": Dict({}),
-            "event_handler_count": 0,
-            "events": Dict({}),
-        }
-
-    async def on_disconnect(self, websocket=None):
-        if self.delete_flag:
-            self.delete_components()
-            del self.meadows_data
-            self.remove_page()
-
-
 class QDiv(Div):
     slots = []
 

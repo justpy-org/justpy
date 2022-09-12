@@ -29,8 +29,6 @@ class JustPy:
     loop = None
     LOGGING_LEVEL = logging.DEBUG
     component_registry = {}
-    # Meadows
-    meadows = False
     
 class WebPage(BaseWebPage):
     """
@@ -86,31 +84,6 @@ class TailwindUIPage(WebPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.template_file = "tailwindui.html"
-
-class MeadowsPage(WebPage):
-    # https://tailwindui.com/components
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.meadows = True
-        self.meadows_data = {
-            "if": [],
-            "show": [],
-            "attrs": [],
-            "for": [],
-            "class": [],
-            "class_evaluate": [],
-            "refs": Dict({}),
-            "event_handler_count": 0,
-            "events": Dict({}),
-        }
-
-    async def on_disconnect(self, websocket=None):
-        if self.delete_flag:
-            self.delete_components()
-            del self.meadows_data
-            self.remove_page()
-
 
 class JustpyBaseComponent(Tailwind):
     next_id = 1
@@ -172,9 +145,8 @@ class JustpyBaseComponent(Tailwind):
         debounce=None,
         throttle=None,
         immediate=False,
-        meadows=False,
     ):
-        if meadows or event_type in self.allowed_events:
+        if event_type in self.allowed_events:
             cls = JustpyBaseComponent
             if not self.id:
                 self.id = cls.next_id

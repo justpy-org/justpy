@@ -21,11 +21,10 @@ from jpcore.justpy_config import SSL_CERTFILE, SSL_KEYFILE, SSL_VERSION, STATIC_
 from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, UVICORN_LOGGING_LEVEL, VEGA
 JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 # from .misccomponents import *
-from .meadows import *
 from .pandas import *
 from .routing import Route, JpRoute, SetRoute
 from .utilities import run_task, create_delayed_task
-import uvicorn, logging, uuid, sys, os, traceback, fnmatch
+import uvicorn, logging, sys, os, traceback, fnmatch
 
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
@@ -376,8 +375,6 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         )
         logging.info("%s", traceback.format_exc())
 
-    if p.meadows:
-        await update_lists(p)
     # If page is not to be updated, the event_function should return anything but None
     if event_result is None:
         if com_type == 0:  # WebSockets communication

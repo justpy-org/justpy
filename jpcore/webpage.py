@@ -56,7 +56,6 @@ class WebPage:
             False  # Set to True for Quasar dark mode (use for other dark modes also)
         )
         self.data = {}
-        self.meadows = False
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
             self.__setattr__(k, v)
@@ -240,8 +239,8 @@ class WebPage:
             object_list.append(d)
         return object_list
 
-    def on(self, event_type, func, *, meadows=False):
-        if event_type in self.allowed_events or meadows:
+    def on(self, event_type, func, *):
+        if event_type in self.allowed_events:
             if inspect.ismethod(func):
                 setattr(self, "on_" + event_type, func)
             else:
