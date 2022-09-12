@@ -4,6 +4,7 @@ Created on 2022-09-02
 @author: wf
 """
 import asyncio
+import logging
 import socket
 import re
 import psutil
@@ -14,7 +15,8 @@ from threading import Thread
 from starlette.applications import Starlette
 from starlette.routing import Route,Match
 from starlette.endpoints import HTTPEndpoint
-from jpcore.justpy_config import LATENCY
+from starlette.responses import HTMLResponse, Response
+from jpcore.justpy_config import HTML_404_PAGE,LATENCY
 
 # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
 # https://github.com/encode/uvicorn/discussions/1103
@@ -118,6 +120,33 @@ class JustpyEndpoint(HTTPEndpoint):
         response=await self.get_response_for_request(request,new_cookie)
         if LATENCY:
             await asyncio.sleep(LATENCY / 1000)
+        return response
+    
+    async def get_response_for_request(self,request,new_cookie:bool):
+        """
+        get the page for the given request
+        
+        Args:
+            request: the request to handle
+            new_cookie(bool): True if a new cookie needs to be set
+            
+        Returns:
+            Response: a Response for the request
+        """
+        import justpy.JpRoute as JpRoute
+        func = JpRoute.get_func_for_request(request)
+        #func = request.get_func_for_request(request)
+        if not func:
+            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
+        load_page=await self.get_page_for_func(request,func)
+        # @TODO does this really still make sense after refactoring the routing?
+        if isinstance(load_page, Response):
+            logging.debug("Returning raw starlette.responses.Response.")
+            return load_page
+        # @TODO - shouldn't we return proper error response pages instead
+        # of relying on the exception handling via assertions here?
+        response=self.get_response_for_load_page(request,load_page) 
+        self.set_cookie(request,response,load_page,new_cookie)
         return response
 
 class JustpyServer:

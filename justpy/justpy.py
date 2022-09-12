@@ -16,7 +16,7 @@ from .gridcomponents import *
 from .quasarcomponents import *
 from jpcore.template import Context
 from jpcore.justpy_app import JustpyApp,JustpyEndpoint
-from jpcore.justpy_config import DEBUG,HOST,PORT,CRASH,LATENCY
+from jpcore.justpy_config import CRASH,DEBUG,HOST,LATENCY,PORT
 
 # from .misccomponents import *
 from .meadows import *
@@ -79,8 +79,6 @@ AGGRID = config("AGGRID", cast=bool, default=True)
 AGGRID_ENTERPRISE = config("AGGRID_ENTERPRISE", cast=bool, default=False)
 
 NO_INTERNET = config("NO_INTERNET", cast=bool, default=True)
-HTML_404_PAGE = "justpy is sorry - that path doesn't exist"
-
 
 def create_component_file_list():
     file_list = []
@@ -177,30 +175,6 @@ class Homepage(JustpyEndpoint):
     Justpy main page handler
     """
     
-    async def get_response_for_request(self,request,new_cookie:bool):
-        """
-        get the page for the given request
-        
-        Args:
-            request: the request to handle
-            new_cookie(bool): True if a new cookie needs to be set
-            
-        Returns:
-            Response: a Response for the request
-        """
-        func = JpRoute.get_func_for_request(request)
-        if not func:
-            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
-        load_page=await self.get_page_for_func(request,func)
-        # @TODO does this really still make sense after refactoring the routing?
-        if isinstance(load_page, Response):
-            logging.debug("Returning raw starlette.responses.Response.")
-            return load_page
-        # @TODO - shouldn't we return proper error response pages instead
-        # of relying on the exception handling via assertions here?
-        response=self.get_response_for_load_page(request,load_page) 
-        self.set_cookie(request,response,load_page,new_cookie)
-        return response
     
     def get_response_for_load_page(self,request,load_page):
         """

@@ -13,3 +13,4 @@ CRASH = config("CRASH", cast=bool, default=False)
 LATENCY = config("LATENCY", cast=int, default=0)
 if LATENCY:
     print(f"Simulating latency of {LATENCY} ms")
+HTML_404_PAGE = "justpy is sorry - that path doesn't exist"
