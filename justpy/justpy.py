@@ -16,69 +16,32 @@ from .gridcomponents import *
 from .quasarcomponents import *
 from jpcore.template import Context
 from jpcore.justpy_app import JustpyApp,JustpyEndpoint
-from jpcore.justpy_config import CRASH,DEBUG,HOST,LATENCY,PORT
-
+from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
+from jpcore.justpy_config import DEBUG,DECKGL, FAVICON, HIGHCHARTS,HOST,KATEX, LATENCY,LOGGING_LEVEL
+from jpcore.justpy_config import MEMORY_DEBUG, NO_INTERNET, PLOTLY, PORT, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
+from jpcore.justpy_config import SSL_CERTFILE, SSL_KEYFILE, SSL_VERSION, STATIC_DIRECTORY,STATIC_NAME, STATIC_ROUTE
+from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, UVICORN_LOGGING_LEVEL, VEGA
+JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 # from .misccomponents import *
 from .meadows import *
 from .pandas import *
 from .routing import Route, JpRoute, SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, uuid, sys, os, traceback, fnmatch
-from ssl import PROTOCOL_SSLv23
 
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
 print(current_dir.replace("\\", "/"))
 print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
 
+TEMPLATES_DIRECTORY = config(
+    "TEMPLATES_DIRECTORY", cast=str, default=current_dir + "/templates"
+)
 #
 # globals
 #
 # uvicorn Server
 jp_server = None
-
-config = Config("justpy.env")
-MEMORY_DEBUG = config("MEMORY_DEBUG", cast=bool, default=False)
-if MEMORY_DEBUG:
-    import psutil
-SESSIONS = config("SESSIONS", cast=bool, default=True)
-SESSION_COOKIE_NAME = config("SESSION_COOKIE_NAME", cast=str, default="jp_token")
-SECRET_KEY = config(
-    "SECRET_KEY", default="$$$my_secret_string$$$"
-)  # Make sure to change when deployed
-LOGGING_LEVEL = config("LOGGING_LEVEL", default=logging.WARNING)
-JustPy.LOGGING_LEVEL = LOGGING_LEVEL
-UVICORN_LOGGING_LEVEL = config("UVICORN_LOGGING_LEVEL", default="WARNING").lower()
-COOKIE_MAX_AGE = config(
-    "COOKIE_MAX_AGE", cast=int, default=60 * 60 * 24 * 7
-)  # One week in seconds
-
-SSL_VERSION = config("SSL_VERSION", default=PROTOCOL_SSLv23)
-SSL_KEYFILE = config("SSL_KEYFILE", default="")
-SSL_CERTFILE = config("SSL_CERTFILE", default="")
-
-TEMPLATES_DIRECTORY = config(
-    "TEMPLATES_DIRECTORY", cast=str, default=current_dir + "/templates"
-)
-STATIC_DIRECTORY = config("STATIC_DIRECTORY", cast=str, default=os.getcwd())
-STATIC_ROUTE = config("STATIC_MOUNT", cast=str, default="/static")
-STATIC_NAME = config("STATIC_NAME", cast=str, default="static")
-FAVICON = config(
-    "FAVICON", cast=str, default=""
-)  # If False gets value from https://elimintz.github.io/favicon.png
-TAILWIND = config("TAILWIND", cast=bool, default=True)
-QUASAR = config("QUASAR", cast=bool, default=False)
-QUASAR_VERSION = config("QUASAR_VERSION", cast=str, default=None)
-HIGHCHARTS = config("HIGHCHARTS", cast=bool, default=True)
-KATEX = config("KATEX", cast=bool, default=False)
-VEGA = config("VEGA", cast=bool, default=False)
-BOKEH = config("BOKEH", cast=bool, default=False)
-PLOTLY = config("PLOTLY", cast=bool, default=False)
-DECKGL = config("DECKGL", cast=bool, default=False)
-AGGRID = config("AGGRID", cast=bool, default=True)
-AGGRID_ENTERPRISE = config("AGGRID_ENTERPRISE", cast=bool, default=False)
-
-NO_INTERNET = config("NO_INTERNET", cast=bool, default=True)
 
 def create_component_file_list():
     file_list = []
@@ -420,10 +383,10 @@ class JustpyEvents(WebSocketEndpoint):
             )
             print("WebPages: ", len(WebPage.instances), WebPage.instances)
             print("Sockets: ", len(WebPage.sockets), WebPage.sockets)
+            import psutil
             process = psutil.Process(os.getpid())
             print(f"Memory used: {process.memory_info().rss:,}")
             print("************************")
-
 
 async def handle_event(data_dict, com_type=0, page_event=False):
     # com_type 0: websocket, con_type 1: ajax
