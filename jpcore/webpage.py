@@ -239,7 +239,15 @@ class WebPage:
             object_list.append(d)
         return object_list
 
-    def on(self, event_type, func, *):
+    def on(self, event_type, func):
+        """
+        add an event of the given event_type  with the given function
+        
+        Args:
+            event_type(str): the type of the event without on_prefix
+            func(Callable): the function to call
+            
+        """
         if event_type in self.allowed_events:
             if inspect.ismethod(func):
                 setattr(self, "on_" + event_type, func)
