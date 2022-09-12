@@ -12,6 +12,7 @@ from starlette.testclient import TestClient
 from justpy.routing import JpRoute
 from tests.basetest import Basetest
 from starlette.responses import PlainTextResponse
+from jpcore.justpy_config import HTML_404_PAGE
 
 @jp.app.route("/plaintext")
 async def plainText(_request):
@@ -127,7 +128,7 @@ class TestRouteAndUrlFor(Basetest):
         test handling an invalid path
         """
         response = self.checkResponse("/invalidpath", 404)
-        self.assertEqual(jp.HTML_404_PAGE, response.text)
+        self.assertEqual(HTML_404_PAGE, response.text)
 
     def testStaticPath(self):
         """
