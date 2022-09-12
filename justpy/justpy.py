@@ -8,14 +8,12 @@ from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
-from starlette.config import Config
-from itsdangerous import Signer
 from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
 from jpcore.template import Context
-from jpcore.justpy_app import JustpyApp,JustpyEndpoint
+from jpcore.justpy_app import cookie_signer, JustpyApp,JustpyEndpoint
 from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
 from jpcore.justpy_config import DEBUG,DECKGL, FAVICON, HIGHCHARTS,HOST,KATEX, LATENCY,LOGGING_LEVEL
 from jpcore.justpy_config import MEMORY_DEBUG, NO_INTERNET, PLOTLY, PORT, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
@@ -113,10 +111,6 @@ def server_error_func(request):
     )
     return wp
 
-
-cookie_signer = Signer(str(SECRET_KEY))
-
-
 @app.on_event("startup")
 async def justpy_startup():
     WebPage.loop = asyncio.get_event_loop()
@@ -194,78 +188,7 @@ class Homepage(JustpyEndpoint):
         response = templates.TemplateResponse(load_page.template_file, context)
         return response
     
-    async def get_page_for_func(self,request,func):
-        """
-        get the Webpage for the given func
-        
-        Args:
-            request: the request to pass to the given function
-            func: the function
-        """
-        # @TODO - get rid of the global func_to_run concept that isn't
-        # in scope here (anymore) anyways
-        func_to_run = func
-        func_parameters = len(inspect.signature(func_to_run).parameters)
-        assert (
-            func_parameters < 2
-        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
-        if inspect.iscoroutinefunction(func_to_run):
-            if func_parameters == 1:
-                load_page = await func_to_run(request)
-            else:
-                load_page = await func_to_run()
-        else:
-            if func_parameters == 1:
-                load_page = func_to_run(request)
-            else:
-                load_page = func_to_run()
-        return load_page
     
-    def set_cookie(self,request,response,load_page,new_cookie:bool):
-        """
-        set the cookie_value
-        
-        Args:
-            request: the request 
-            response: the response to be sent
-            load_page(WebPage): the WebPage to handle
-            new_cookie(bool): True if there is a new cookie
-        """
-        if SESSIONS and new_cookie:
-            cookie_value = cookie_signer.sign(request.state.session_id)
-            cookie_value = cookie_value.decode("utf-8")
-            response.set_cookie(
-                SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True
-            )
-            for k, v in load_page.cookies.items():
-                response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
-    
-    def handle_session_cookie(self,request)->bool:
-        """
-        handle the session cookie for this request
-        
-        Returns:
-            True if a new cookie and session has been created
-        """
-        # Handle web requests
-        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-        new_cookie=None
-        if SESSIONS:
-            new_cookie = False
-            if session_cookie:
-                try:
-                    session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
-                except:
-                    return PlainTextResponse("Bad Session")
-                request.state.session_id = session_id
-                request.session_id = session_id
-            else:
-                # Create new session_id
-                request.state.session_id = str(uuid.uuid4().hex)
-                request.session_id = request.state.session_id
-                new_cookie = True
-                logging.debug(f"New session_id created: {request.session_id}")
-        return new_cookie
         
     async def post(self, request):
         # Handles post method. Used in Ajax mode for events when websockets disabled

@@ -4,19 +4,25 @@ Created on 2022-09-02
 @author: wf
 """
 import asyncio
+import inspect
 import logging
 import socket
 import re
 import psutil
 import typing
+import uuid
 from sys import platform
 from multiprocessing import Process
 from threading import Thread
 from starlette.applications import Starlette
 from starlette.routing import Route,Match
 from starlette.endpoints import HTTPEndpoint
-from starlette.responses import HTMLResponse, Response
-from jpcore.justpy_config import HTML_404_PAGE,LATENCY
+from starlette.responses import HTMLResponse, PlainTextResponse, Response
+from jpcore.justpy_config import COOKIE_MAX_AGE,HTML_404_PAGE,LATENCY, SECRET_KEY, SESSIONS, SESSION_COOKIE_NAME
+from itsdangerous import Signer
+
+# TODO refacto to object oriented version where this is a property of some instance of some class
+cookie_signer = Signer(str(SECRET_KEY))
 
 # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
 # https://github.com/encode/uvicorn/discussions/1103
@@ -148,6 +154,79 @@ class JustpyEndpoint(HTTPEndpoint):
         response=self.get_response_for_load_page(request,load_page) 
         self.set_cookie(request,response,load_page,new_cookie)
         return response
+    
+    async def get_page_for_func(self,request,func):
+        """
+        get the Webpage for the given func
+        
+        Args:
+            request: the request to pass to the given function
+            func: the function
+        """
+        # @TODO - get rid of the global func_to_run concept that isn't
+        # in scope here (anymore) anyways
+        func_to_run = func
+        func_parameters = len(inspect.signature(func_to_run).parameters)
+        assert (
+            func_parameters < 2
+        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
+        if inspect.iscoroutinefunction(func_to_run):
+            if func_parameters == 1:
+                load_page = await func_to_run(request)
+            else:
+                load_page = await func_to_run()
+        else:
+            if func_parameters == 1:
+                load_page = func_to_run(request)
+            else:
+                load_page = func_to_run()
+        return load_page
+    
+    def set_cookie(self,request,response,load_page,new_cookie:bool):
+        """
+        set the cookie_value
+        
+        Args:
+            request: the request 
+            response: the response to be sent
+            load_page(WebPage): the WebPage to handle
+            new_cookie(bool): True if there is a new cookie
+        """
+        if SESSIONS and new_cookie:
+            cookie_value = cookie_signer.sign(request.state.session_id)
+            cookie_value = cookie_value.decode("utf-8")
+            response.set_cookie(
+                SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True
+            )
+            for k, v in load_page.cookies.items():
+                response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
+    
+    def handle_session_cookie(self,request)->bool:
+        """
+        handle the session cookie for this request
+        
+        Returns:
+            True if a new cookie and session has been created
+        """
+        # Handle web requests
+        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
+        new_cookie=None
+        if SESSIONS:
+            new_cookie = False
+            if session_cookie:
+                try:
+                    session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
+                except:
+                    return PlainTextResponse("Bad Session")
+                request.state.session_id = session_id
+                request.session_id = session_id
+            else:
+                # Create new session_id
+                request.state.session_id = str(uuid.uuid4().hex)
+                request.session_id = request.state.session_id
+                new_cookie = True
+                logging.debug(f"New session_id created: {request.session_id}")
+        return new_cookie
 
 class JustpyServer:
     """
