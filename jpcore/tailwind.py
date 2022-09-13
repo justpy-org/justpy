@@ -2,6 +2,9 @@
 
 
 class Tailwind:
+    """
+    handle css classes to be attached to components
+    """
     # TODO: Customization - https://tailwindcss.com/docs/configuration
     pseudo_classes = [
         "hover",

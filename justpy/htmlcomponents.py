@@ -6,7 +6,7 @@ from html.entities import name2codepoint
 from html import unescape
 from jinja2 import Template
 import asyncio
-from .tailwind import Tailwind
+from jpcore.tailwind import Tailwind
 import logging
 import httpx
 from jpcore.template import PageOptions
@@ -86,6 +86,9 @@ class TailwindUIPage(WebPage):
         self.template_file = "tailwindui.html"
 
 class JustpyBaseComponent(Tailwind):
+    """
+    the base class for all Justpy components
+    """
     next_id = 1
     instances = {}
     temp_flag = True
