@@ -7,13 +7,12 @@ from starlette.middleware import Middleware
 from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.staticfiles import StaticFiles
-from starlette.templating import Jinja2Templates
 from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
-from jpcore.template import Context
-from jpcore.justpy_app import cookie_signer, JustpyApp,JustpyEndpoint
+
+from jpcore.justpy_app import cookie_signer, template_options, handle_event, JustpyApp,JustpyEndpoint
 from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
 from jpcore.justpy_config import DEBUG,DECKGL, FAVICON, HIGHCHARTS,HOST,KATEX, LATENCY,LOGGING_LEVEL
 from jpcore.justpy_config import MEMORY_DEBUG, NO_INTERNET, PLOTLY, PORT, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
@@ -24,52 +23,18 @@ JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 from .pandas import *
 from .routing import Route, JpRoute, SetRoute
 from .utilities import run_task, create_delayed_task
-import uvicorn, logging, sys, os, traceback, fnmatch
+import uvicorn, logging, sys, os, traceback
 
-current_module = sys.modules[__name__]
-current_dir = os.path.dirname(current_module.__file__)
-print(current_dir.replace("\\", "/"))
-print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
-
-TEMPLATES_DIRECTORY = config(
-    "TEMPLATES_DIRECTORY", cast=str, default=current_dir + "/templates"
-)
 #
 # globals
 #
 # uvicorn Server
 jp_server = None
+current_module = sys.modules[__name__]
+current_dir = os.path.dirname(current_module.__file__)
+print(current_dir.replace("\\", "/"))
+print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
 
-def create_component_file_list():
-    file_list = []
-    component_dir = os.path.join(STATIC_DIRECTORY, "components")
-    if os.path.isdir(component_dir):
-        for file in os.listdir(component_dir):
-            if fnmatch.fnmatch(file, "*.js"):
-                file_list.append(f"/components/{file}")
-    return file_list
-
-
-templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
-
-component_file_list = create_component_file_list()
-
-template_options = {
-    "tailwind": TAILWIND,
-    "quasar": QUASAR,
-    "quasar_version": QUASAR_VERSION,
-    "highcharts": HIGHCHARTS,
-    "aggrid": AGGRID,
-    "aggrid_enterprise": AGGRID_ENTERPRISE,
-    "static_name": STATIC_NAME,
-    "component_file_list": component_file_list,
-    "no_internet": NO_INTERNET,
-    "katex": KATEX,
-    "plotly": PLOTLY,
-    "bokeh": BOKEH,
-    "deckgl": DECKGL,
-    "vega": VEGA,
-}
 logging.basicConfig(level=LOGGING_LEVEL, format="%(levelname)s %(module)s: %(message)s")
 
 # modify middleware handling according to deprecation
@@ -131,97 +96,6 @@ class Homepage(JustpyEndpoint):
     Justpy main page handler
     """
     
-    
-    def get_response_for_load_page(self,request,load_page):
-        """
-        get the response for the given webpage
-        
-        Args:
-            request(Request): the request to handle
-            load_page(WebPage): the webpage to wrap with justpy and  
-            return as a full HtmlResponse
-        
-        Returns:
-            Reponse: the response for the given load_page
-        """
-        page_type = type(load_page)
-        assert issubclass(
-            page_type, WebPage
-        ), f"Function did not return a web page but a {page_type.__name__}"
-        assert (
-            len(load_page) > 0 or load_page.html
-        ), "\u001b[47;1m\033[93mWeb page is empty, add components\033[0m"
-        page_options = {
-            "reload_interval": load_page.reload_interval,
-            "body_style": load_page.body_style,
-            "body_classes": load_page.body_classes,
-            "css": load_page.css,
-            "head_html": load_page.head_html,
-            "body_html": load_page.body_html,
-            "display_url": load_page.display_url,
-            "dark": load_page.dark,
-            "title": load_page.title,
-            "redirect": load_page.redirect,
-            "highcharts_theme": load_page.highcharts_theme,
-            "debug": load_page.debug,
-            "events": load_page.events,
-            "favicon": load_page.favicon if load_page.favicon else FAVICON,
-        }
-        if load_page.use_cache:
-            page_dict = load_page.cache
-        else:
-            page_dict = load_page.build_list()
-        template_options["tailwind"] = load_page.tailwind
-        context = {
-            "request": request,
-            "page_id": load_page.page_id,
-            "justpy_dict": json.dumps(page_dict, default=str),
-            "use_websockets": json.dumps(WebPage.use_websockets),
-            "options": template_options,
-            "page_options": page_options,
-            "html": load_page.html,
-        }
-        # wrap the context in a context object to make it available
-        context_obj = Context(context)
-        context["context_obj"] = context_obj
-        response = templates.TemplateResponse(load_page.template_file, context)
-        return response
-    
-    
-        
-    async def post(self, request):
-        # Handles post method. Used in Ajax mode for events when websockets disabled
-        if request["path"] == "/zzz_justpy_ajax":
-            data_dict = await request.json()
-            # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
-            if data_dict["event_data"]["event_type"] == "beforeunload":
-                return await self.on_disconnect(data_dict["event_data"]["page_id"])
-
-            session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-            if SESSIONS and session_cookie:
-                session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
-                data_dict["event_data"]["session_id"] = session_id
-
-            # data_dict['event_data']['session'] = request.session
-            msg_type = data_dict["type"]
-            data_dict["event_data"]["msg_type"] = msg_type
-            page_event = True if msg_type == "page_event" else False
-            result = await handle_event(data_dict, com_type=1, page_event=page_event)
-            if result:
-                if LATENCY:
-                    await asyncio.sleep(LATENCY / 1000)
-                return JSONResponse(result)
-            else:
-                return JSONResponse(False)
-
-    async def on_disconnect(self, page_id):
-        logging.debug(f"In disconnect Homepage")
-        await WebPage.instances[
-            page_id
-        ].on_disconnect()  # Run the specific page disconnect function
-        return JSONResponse(False)
-
-
 @app.websocket_route("/")
 class JustpyEvents(WebSocketEndpoint):
 
@@ -309,99 +183,6 @@ class JustpyEvents(WebSocketEndpoint):
             process = psutil.Process(os.getpid())
             print(f"Memory used: {process.memory_info().rss:,}")
             print("************************")
-
-async def handle_event(data_dict, com_type=0, page_event=False):
-    # com_type 0: websocket, con_type 1: ajax
-    connection_type = {0: "websocket", 1: "ajax"}
-    logging.info(
-        "%s %s %s", "In event handler:", connection_type[com_type], str(data_dict)
-    )
-    event_data = data_dict["event_data"]
-    try:
-        p = WebPage.instances[event_data["page_id"]]
-    except:
-        logging.warning("No page to load")
-        return
-    event_data["page"] = p
-    if com_type == 0:
-        event_data["websocket"] = WebPage.sockets[event_data["page_id"]][
-            event_data["websocket_id"]
-        ]
-    # The page_update event is generated by the reload_interval Ajax call
-    if event_data["event_type"] == "page_update":
-        build_list = p.build_list()
-        return {"type": "page_update", "data": build_list}
-
-    if page_event:
-        c = p
-    else:
-        component_id = event_data["id"]
-        c = JustpyBaseComponent.instances.get(component_id, None)
-        if c is not None:
-            event_data["target"] = c
-        else:
-            logging.warning(
-                f"component with id {component_id} doesn't exist (anymore ...) it might have been deleted before the event handling was triggered"
-            )
-
-    try:
-        if c is not None:
-            before_result = await c.run_event_function("before", event_data, True)
-    except:
-        pass
-    try:
-        if c is not None:
-            if hasattr(c, "on_" + event_data["event_type"]):
-                event_result = await c.run_event_function(
-                    event_data["event_type"], event_data, True
-                )
-            else:
-                event_result = None
-                logging.debug(f"{c} has no {event_data['event_type']} event handler")
-        else:
-            event_result = None
-        logging.debug(f"Event result:{event_result}")
-    except Exception as e:
-        # raise Exception(e)
-        if CRASH:
-            print(traceback.format_exc())
-            sys.exit(1)
-        event_result = None
-        # logging.info('%s %s', 'Event result:', '\u001b[47;1m\033[93mAttempting to run event handler:' + str(e) + '\033[0m')
-        logging.info(
-            "%s %s",
-            "Event result:",
-            "\u001b[47;1m\033[93mError in event handler:\033[0m",
-        )
-        logging.info("%s", traceback.format_exc())
-
-    # If page is not to be updated, the event_function should return anything but None
-    if event_result is None:
-        if com_type == 0:  # WebSockets communication
-            if LATENCY:
-                await asyncio.sleep(LATENCY / 1000)
-            await p.update()
-        elif com_type == 1:  # Ajax communication
-            build_list = p.build_list()
-    try:
-        if c is not None:
-            after_result = await c.run_event_function("after", event_data, True)
-    except:
-        pass
-    if com_type == 1 and event_result is None:
-        dict_to_send = {
-            "type": "page_update",
-            "data": build_list,
-            "page_options": {
-                "display_url": p.display_url,
-                "title": p.title,
-                "redirect": p.redirect,
-                "open": p.open,
-                "favicon": p.favicon,
-            },
-        }
-        return dict_to_send
-
 
 def get_server():
     """
