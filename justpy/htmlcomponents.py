@@ -10,6 +10,7 @@ from jpcore.tailwind import Tailwind
 import logging
 import httpx
 from jpcore.template import PageOptions
+from jpcore.component import Component
 from jpcore.webpage import WebPage as BaseWebPage
 
 # Dictionary for translating from tag to class
@@ -85,17 +86,18 @@ class TailwindUIPage(WebPage):
         super().__init__(**kwargs)
         self.template_file = "tailwindui.html"
 
-class JustpyBaseComponent(Tailwind):
+class JustpyBaseComponent(Component):
     """
     the base class for all Justpy components
     """
-    next_id = 1
-    instances = {}
     temp_flag = True
     delete_flag = True
     needs_deletion = False
 
     def __init__(self, **kwargs):
+        """
+        constructor
+        """
         cls = JustpyBaseComponent
         temp = kwargs.get("temp", cls.temp_flag)
         delete_flag = kwargs.get("delete_flag", cls.delete_flag)
