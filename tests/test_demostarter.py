@@ -8,6 +8,7 @@ from tests.basetest import Basetest
 from jpcore.demostarter import Demostarter
 import unittest
 import asyncio
+import pprint
 
 class TestDemoStarter(BaseAsynctest):
     """
@@ -16,6 +17,24 @@ class TestDemoStarter(BaseAsynctest):
 
     async def setUp(self):
         await BaseAsynctest.setUp(self, with_server=False)
+        
+    def testVideos(self):
+        """
+        test video availability
+        """
+        demoStarter = Demostarter(debug=True, mode="process")
+        lod=demoStarter.as_list_of_dicts()
+        debug=True
+        if debug:
+            pprint.pprint(lod)
+        foundVideos=0
+        for record in lod:
+            video=record.get("video")
+            if video:
+                foundVideos+=1
+        if debug:
+            print(f"found {foundVideos} videos")
+        self.assertTrue(foundVideos>=3)
 
     @unittest.skipIf(Basetest.inPublicCI(), "demostarter ")
     async def testDemoStarter(self):

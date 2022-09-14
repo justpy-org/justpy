@@ -327,9 +327,9 @@ class JustpyApp(Starlette):
         assert issubclass(
             page_type, WebPage
         ), f"Function did not return a web page but a {page_type.__name__}"
-        assert (
-            len(load_page) > 0 or load_page.html
-        ), "\u001b[47;1m\033[93mWeb page is empty, add components\033[0m"
+        if len(load_page) == 0 and not load_page.html:
+            error_html="""<span style="color:red">Web page is empty - you might want to add components</span>"""
+            return HTMLResponse(error_html, 500)
         page_options = {
             "reload_interval": load_page.reload_interval,
             "body_style": load_page.body_style,
@@ -600,24 +600,30 @@ class JustpyServer:
         url = f"http://{self.host}:{self.port}{path}"
         return url
 
-
 class JustpyDemoApp:
     """
     a justpy application
     """
 
-    def __init__(self, pymodule_file, wpfunc: typing.Callable = None, debug:bool=False,**kwargs):
+    def __init__(self,examples_dir:str,pymodule_file:str, wpfunc: typing.Callable = None, debug:bool=False,**kwargs):
         """
         Args:
+            examples_dir(str): the root directory for the examples
             pymodule_file(str): the python module path where the app resides
             wpfunc(Callable): the webpage function to call
             debug(bool): if True switch on debug mode
             **kwargs: further keyword arguments to pass to the webpage function
         """
+        self.examples_dir=examples_dir
         self.pymodule_file = pymodule_file
         with open(self.pymodule_file, "r") as sourcefile:
             self.source = sourcefile.read()
             self.check_demo()
+        source_file=pymodule_file
+        self.source_file=source_file.replace(self.examples_dir+"/","")
+        self.source_link=f"""<a href="https://github.com/justpy-org/justpy/blob/master/examples/{self.source_file}">{self.source_file}</a>"""
+        self.video_url=None
+        self.name=os.path.basename(self.source_file).replace(".py","")
         self.wpfunc = wpfunc
         self.debug=debug
         self.kwargs = kwargs

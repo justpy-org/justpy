@@ -5,6 +5,7 @@ Created on 2022-09-22
 """
 import asyncio
 import importlib
+import json
 import os
 import sys
 import traceback
@@ -29,23 +30,72 @@ class Demostarter:
         Demo.testmode = True
         self.debug = debug
         self.mode = mode
-        script_dir = os.path.dirname(__file__)
-        justpy_dir = f"{os.path.dirname(script_dir)}/examples"
+        self.script_dir = os.path.dirname(__file__)
+        self.justpy_dir = f"{os.path.dirname(self.script_dir)}/examples"
+        self.video_json_file=f"{os.path.dirname(self.script_dir)}/tutorial/videos.json"
         if self.debug:
-            print(f"collecting examples from {justpy_dir}")
-        pymodule_files = self.find_files(justpy_dir, ".py")
+            print(f"collecting examples from {self.justpy_dir}")
+        pymodule_files = self.find_files(self.justpy_dir, ".py")
         self.demos = []
+        self.demos_by_name={}
+        self.demos_by_source_file={}
         self.servers = {}
         self.errors = {}
         for pymodule_file in pymodule_files:
-            demo = JustpyDemoApp(pymodule_file,debug=debug)
+            demo = JustpyDemoApp(examples_dir=self.justpy_dir,pymodule_file=pymodule_file,debug=debug)
             if demo.is_demo:
                 self.demos.append(demo)
+                self.demos_by_name[demo.name]=demo
+                self.demos_by_source_file[demo.source_file]=demo
             else:
                 if self.debug:
                     print(f"{pymodule_file} is not a demo")
+        self.add_video_links()
         if self.debug:
             print(f"found {len(self.demos)} justpy demo python modules")
+            
+    def add_video_links(self):
+        """
+        add video links to the demos
+        """
+        with open(self.video_json_file) as json_file:
+            video_json = json.load(json_file)
+            if "videos" in video_json:
+                for i,video_record in enumerate(video_json["videos"]):
+                    name=video_record.get("name",None)
+                    url=video_record.get("url",None)
+                    if name and url:
+                        if name in self.demos_by_source_file:
+                            demo=self.demos_by_source_file[name]
+                            demo.video_url=url
+                        elif name in self.demos_by_name:
+                            demo=self.demos_by_name[name]
+                            demo.video_url=url
+                    else:
+                        raise Exception(f"name or url missing for video #{i}")
+                    
+            pass
+        
+            
+    def as_list_of_dicts(self,video_size=128)->list:
+        """
+        convert me to a list of dicts for tabular display
+        
+        Returns:
+            list: a list of records/dicts with information about the demos
+        """
+        lod=[]
+        for i,demo in enumerate(self.demos):
+            video_link=""
+            if demo.video_url:
+                video_link=f"""<a href="{demo.video_url}"><img src="{demo.video_url}" alt="video for {demo.name}" style="width:{video_size}px;height:{video_size}px;"></a>"""
+            record={
+                "#":i+1,
+                "video": video_link,
+                "source": demo.source_link,
+            }
+            lod.append(record)
+        return lod
 
     def start(self,limit=None, use_gather: bool = False):
         """

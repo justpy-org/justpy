@@ -1,0 +1,16 @@
+{
+    "videos" : [
+        {
+            "name": "clickdemo.py",
+            "url": "https://user-images.githubusercontent.com/1336221/187233892-c97aa972-4445-4e12-a3a6-3a23538247b1.gif"
+        },
+        {
+            "name": "dogs.py",
+            "url": "https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif"
+        },
+        {
+            "name": "blackjack.py",
+            "url": "https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif"
+        }    
+    ]
+}
