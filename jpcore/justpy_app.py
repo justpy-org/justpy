@@ -270,8 +270,10 @@ class JustpyApp(Starlette):
                 Response: a HTMLResponse applying the justpy infrastructure
             
             """
+            new_cookie=self.handle_session_cookie(request)
             wp=func(request)
             response=self.get_response_for_load_page(request, wp)
+            self.set_cookie(request, response, wp, new_cookie)
             return response
     
         # return the decorated function, thus allowing access to the func
@@ -332,6 +334,52 @@ class JustpyApp(Starlette):
         context["context_obj"] = context_obj
         response = templates.TemplateResponse(load_page.template_file, context)
         return response
+    
+    def handle_session_cookie(self,request)->bool:
+        """
+        handle the session cookie for this request
+        
+        Returns:
+            True if a new cookie and session has been created
+        """
+        # Handle web requests
+        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
+        new_cookie=None
+        if SESSIONS:
+            new_cookie = False
+            if session_cookie:
+                try:
+                    session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
+                except:
+                    return PlainTextResponse("Bad Session")
+                request.state.session_id = session_id
+                request.session_id = session_id
+            else:
+                # Create new session_id
+                request.state.session_id = str(uuid.uuid4().hex)
+                request.session_id = request.state.session_id
+                new_cookie = True
+                logging.debug(f"New session_id created: {request.session_id}")
+        return new_cookie
+    
+    def set_cookie(self,request,response,load_page,new_cookie:bool):
+        """
+        set the cookie_value
+        
+        Args:
+            request: the request 
+            response: the response to be sent
+            load_page(WebPage): the WebPage to handle
+            new_cookie(bool): True if there is a new cookie
+        """
+        if SESSIONS and new_cookie:
+            cookie_value = cookie_signer.sign(request.state.session_id)
+            cookie_value = cookie_value.decode("utf-8")
+            response.set_cookie(
+                SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True
+            )
+            for k, v in load_page.cookies.items():
+                response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
 
 class JustpyEndpoint(HTTPEndpoint):
     """
@@ -348,7 +396,8 @@ class JustpyEndpoint(HTTPEndpoint):
         """
         main justpy request handler 
         """
-        new_cookie=self.handle_session_cookie(request)
+        app=request.app
+        new_cookie=app.handle_session_cookie(request)
         response=await self.get_response_for_request(request,new_cookie)
         if LATENCY:
             await asyncio.sleep(LATENCY / 1000)
@@ -379,7 +428,7 @@ class JustpyEndpoint(HTTPEndpoint):
         # of relying on the exception handling via assertions here?
         app=request.app
         response=app.get_response_for_load_page(request,load_page) 
-        self.set_cookie(request,response,load_page,new_cookie)
+        app.set_cookie(request,response,load_page,new_cookie)
         return response
     
     async def get_page_for_func(self,request,func):
@@ -441,52 +490,6 @@ class JustpyEndpoint(HTTPEndpoint):
             page_id
         ].on_disconnect()  # Run the specific page disconnect function
         return JSONResponse(False)
-    
-    def set_cookie(self,request,response,load_page,new_cookie:bool):
-        """
-        set the cookie_value
-        
-        Args:
-            request: the request 
-            response: the response to be sent
-            load_page(WebPage): the WebPage to handle
-            new_cookie(bool): True if there is a new cookie
-        """
-        if SESSIONS and new_cookie:
-            cookie_value = cookie_signer.sign(request.state.session_id)
-            cookie_value = cookie_value.decode("utf-8")
-            response.set_cookie(
-                SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True
-            )
-            for k, v in load_page.cookies.items():
-                response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
-    
-    def handle_session_cookie(self,request)->bool:
-        """
-        handle the session cookie for this request
-        
-        Returns:
-            True if a new cookie and session has been created
-        """
-        # Handle web requests
-        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-        new_cookie=None
-        if SESSIONS:
-            new_cookie = False
-            if session_cookie:
-                try:
-                    session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
-                except:
-                    return PlainTextResponse("Bad Session")
-                request.state.session_id = session_id
-                request.session_id = session_id
-            else:
-                # Create new session_id
-                request.state.session_id = str(uuid.uuid4().hex)
-                request.session_id = request.state.session_id
-                new_cookie = True
-                logging.debug(f"New session_id created: {request.session_id}")
-        return new_cookie
 
 class JustpyServer:
     """
