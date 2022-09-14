@@ -307,8 +307,8 @@ class JustpyApp(Starlette):
             """
             new_cookie=self.handle_session_cookie(request)
             wp=func(request)
-            response=self.get_response_for_load_page(request, wp)
-            self.set_cookie(request, response, wp, new_cookie)
+            response = self.get_response_for_load_page(request, wp)
+            response = self.set_cookie(request, response, wp, new_cookie)
             return response
     
         # return the decorated function, thus allowing access to the func
@@ -397,7 +397,7 @@ class JustpyApp(Starlette):
                 logging.debug(f"New session_id created: {request.session_id}")
         return new_cookie
     
-    def set_cookie(self,request,response,load_page,new_cookie:bool):
+    def set_cookie(self, request, response, load_page, new_cookie: typing.Union[bool, Response]):
         """
         set the cookie_value
         
@@ -405,8 +405,10 @@ class JustpyApp(Starlette):
             request: the request 
             response: the response to be sent
             load_page(WebPage): the WebPage to handle
-            new_cookie(bool): True if there is a new cookie
+            new_cookie(bool|Response): True if there is a new cookie. Or Response if cookie was invalid
         """
+        if isinstance(new_cookie, Response):
+            return new_cookie
         if SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)
             cookie_value = cookie_value.decode("utf-8")
@@ -415,6 +417,7 @@ class JustpyApp(Starlette):
             )
             for k, v in load_page.cookies.items():
                 response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
+        return response
 
 class JustpyEndpoint(HTTPEndpoint):
     """
