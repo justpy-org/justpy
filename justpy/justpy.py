@@ -90,7 +90,7 @@ async def justpy_startup():
     print(f"JustPy ready to go on {protocol}://{HOST}:{PORT}")
 
 
-@app.route("/{path:path}")
+@app.route("/")
 class Homepage(JustpyEndpoint):
     """
     Justpy main page handler

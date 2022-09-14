@@ -250,81 +250,33 @@ class JustpyApp(Starlette):
         if isinstance(route,Route):
             text+=f"func: {route.endpoint.__name__}"
         return text
-
-class JustpyEndpoint(HTTPEndpoint):
-    """
-    Justpy specific HTTPEndpoint/app (ASGI application)
-    """
     
-    def __init__(self,scope,receive,send):
-        """ 
-        constructor
+    def response(self,func:typing.Callable):
         """
-        HTTPEndpoint.__init__(self,scope, receive, send)
-        
-    async def get(self, request):
-        """
-        main justpy request handler 
-        """
-        new_cookie=self.handle_session_cookie(request)
-        response=await self.get_response_for_request(request,new_cookie)
-        if LATENCY:
-            await asyncio.sleep(LATENCY / 1000)
-        return response
-    
-    async def get_response_for_request(self,request,new_cookie:bool):
-        """
-        get the page for the given request
+        response decorator converts a function to a response
         
         Args:
-            request: the request to handle
-            new_cookie(bool): True if a new cookie needs to be set
+            func(typing.Callable): the function to convert to a reponse
+        """
+        def funcResponse(request)->HTMLResponse:
+            """
+            decorator function to apply the function to the request and
+            return it as a response
             
-        Returns:
-            Response: a Response for the request
-        """
-        from justpy.routing import JpRoute
-        func = JpRoute.get_func_for_request(request)
-        #func = request.get_func_for_request(request)
-        if not func:
-            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
-        load_page=await self.get_page_for_func(request,func)
-        # @TODO does this really still make sense after refactoring the routing?
-        if isinstance(load_page, Response):
-            logging.debug("Returning raw starlette.responses.Response.")
-            return load_page
-        # @TODO - shouldn't we return proper error response pages instead
-        # of relying on the exception handling via assertions here?
-        response=self.get_response_for_load_page(request,load_page) 
-        self.set_cookie(request,response,load_page,new_cookie)
-        return response
+            Args:
+                request(Request): the request to apply the function to
+                
+            Returns:
+                Response: a HTMLResponse applying the justpy infrastructure
+            
+            """
+            wp=func(request)
+            response=self.get_response_for_load_page(request, wp)
+            return response
     
-    async def get_page_for_func(self,request,func):
-        """
-        get the Webpage for the given func
-        
-        Args:
-            request: the request to pass to the given function
-            func: the function
-        """
-        # @TODO - get rid of the global func_to_run concept that isn't
-        # in scope here (anymore) anyways
-        func_to_run = func
-        func_parameters = len(inspect.signature(func_to_run).parameters)
-        assert (
-            func_parameters < 2
-        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
-        if inspect.iscoroutinefunction(func_to_run):
-            if func_parameters == 1:
-                load_page = await func_to_run(request)
-            else:
-                load_page = await func_to_run()
-        else:
-            if func_parameters == 1:
-                load_page = func_to_run(request)
-            else:
-                load_page = func_to_run()
-        return load_page
+        # return the decorated function, thus allowing access to the func
+        # parameter in the funcResponse later when applied 
+        return funcResponse
     
     def get_response_for_load_page(self,request,load_page):
         """
@@ -380,6 +332,83 @@ class JustpyEndpoint(HTTPEndpoint):
         context["context_obj"] = context_obj
         response = templates.TemplateResponse(load_page.template_file, context)
         return response
+
+class JustpyEndpoint(HTTPEndpoint):
+    """
+    Justpy specific HTTPEndpoint/app (ASGI application)
+    """
+    
+    def __init__(self,scope,receive,send):
+        """ 
+        constructor
+        """
+        HTTPEndpoint.__init__(self,scope, receive, send)
+        
+    async def get(self, request):
+        """
+        main justpy request handler 
+        """
+        new_cookie=self.handle_session_cookie(request)
+        response=await self.get_response_for_request(request,new_cookie)
+        if LATENCY:
+            await asyncio.sleep(LATENCY / 1000)
+        return response
+    
+    async def get_response_for_request(self,request,new_cookie:bool):
+        """
+        get the page for the given request
+        
+        Args:
+            request: the request to handle
+            new_cookie(bool): True if a new cookie needs to be set
+            
+        Returns:
+            Response: a Response for the request
+        """
+        from justpy.routing import JpRoute
+        func = JpRoute.get_func_for_request(request)
+        #func = request.get_func_for_request(request)
+        if not func:
+            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
+        load_page=await self.get_page_for_func(request,func)
+        # @TODO does this really still make sense after refactoring the routing?
+        if isinstance(load_page, Response):
+            logging.debug("Returning raw starlette.responses.Response.")
+            return load_page
+        # @TODO - shouldn't we return proper error response pages instead
+        # of relying on the exception handling via assertions here?
+        app=request.app
+        response=app.get_response_for_load_page(request,load_page) 
+        self.set_cookie(request,response,load_page,new_cookie)
+        return response
+    
+    async def get_page_for_func(self,request,func):
+        """
+        get the Webpage for the given func
+        
+        Args:
+            request: the request to pass to the given function
+            func: the function
+        """
+        # @TODO - get rid of the global func_to_run concept that isn't
+        # in scope here (anymore) anyways
+        func_to_run = func
+        func_parameters = len(inspect.signature(func_to_run).parameters)
+        assert (
+            func_parameters < 2
+        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
+        if inspect.iscoroutinefunction(func_to_run):
+            if func_parameters == 1:
+                load_page = await func_to_run(request)
+            else:
+                load_page = await func_to_run()
+        else:
+            if func_parameters == 1:
+                load_page = func_to_run(request)
+            else:
+                load_page = func_to_run()
+        return load_page
+    
         
     async def post(self, request):
         # Handles post method. Used in Ajax mode for events when websockets disabled

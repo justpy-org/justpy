@@ -59,7 +59,7 @@ class WebPage:
         WebPage.instances[self.page_id] = self
         for k, v in kwargs.items():
             self.__setattr__(k, v)
-
+            
     def __repr__(self):
         return f"{self.__class__.__name__}(page_id: {self.page_id}, number of components: {len(self.components)}, reload interval: {self.reload_interval})"
 
