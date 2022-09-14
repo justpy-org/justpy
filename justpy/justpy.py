@@ -21,7 +21,7 @@ from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, UVICORN_LOGGIN
 JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 # from .misccomponents import *
 from .pandas import *
-from .routing import Route, JpRoute, SetRoute
+from .routing import SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, sys, os, traceback
 
@@ -90,11 +90,11 @@ async def justpy_startup():
     print(f"JustPy ready to go on {protocol}://{HOST}:{PORT}")
 
 
-@app.route("/")
-class Homepage(JustpyEndpoint):
-    """
-    Justpy main page handler
-    """
+#@app.route("/")
+#class Homepage(JustpyEndpoint):
+#    """
+#    Justpy main page handler
+#    """
     
 @app.route("/zzz_justpy_ajax")
 class AjaxEndpoint(JustpyEndpoint):
@@ -237,7 +237,7 @@ def justpy(
         WebPage.use_websockets = True
     else:
         WebPage.use_websockets = False
-    JpRoute("/", func_to_run, name="default")
+    app.add_jproute("/", func_to_run)
     for k, v in kwargs.items():
         template_options[k.lower()] = v
 

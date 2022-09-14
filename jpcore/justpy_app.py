@@ -251,6 +251,18 @@ class JustpyApp(Starlette):
             text+=f"func: {route.endpoint.__name__}"
         return text
     
+    def add_jproute(self,path:str,wpfunc:typing.Callable):
+        """
+        add a route for the given Webpage returning func
+        
+        Args:
+            path(str): the path to use as route
+            wpfunc(typing.Callable): a Webpage returning func
+        """
+        endpoint=self.response(wpfunc)
+        name=wpfunc.__name__
+        self.router.add_route(path,endpoint,name=name,include_in_schema=False)
+    
     def jproute(self,
         path: str,
         name: typing.Optional[str] = None)-> typing.Callable:  # pragma: nocover
@@ -290,8 +302,11 @@ class JustpyApp(Starlette):
         """
         response decorator converts a function to a response
         
+        see also https://github.com/justpy-org/justpy/issues/532
+        castAsEndPoint
+        
         Args:
-            func(typing.Callable): the function to convert to a reponse
+            func(typing.Callable): the function (returning a WebPage) to convert to a response
         """
         async def funcResponse(request)->HTMLResponse:
             """
