@@ -47,14 +47,11 @@ class TestClickDemoWithSelenium(BaseSeleniumTest):
         ]
         return wp
 
+    # @unittest.skipIf(BaseClienttest.inPublicCI(), "clickdemo switched off in PublicCI")
     async def testClickDemo(self):
         """
         this will actually start a firefox browser and the websocket reload dialog will appear
         """
-        # do not run automatically in CI yet
-        # need to fix
-        # if Basetest.inPublicCI():
-        #    return
         await self.server.start(self.wp_to_test)
         url = self.server.get_url("/")
         self.browser.get(url)

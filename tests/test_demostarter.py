@@ -6,6 +6,7 @@ Created on 2022-09-05
 from tests.base_server_test import BaseAsynctest
 from tests.basetest import Basetest
 from jpcore.demostarter import Demostarter
+import unittest
 import asyncio
 
 class TestDemoStarter(BaseAsynctest):
@@ -16,13 +17,11 @@ class TestDemoStarter(BaseAsynctest):
     async def setUp(self):
         await BaseAsynctest.setUp(self, with_server=False)
 
+    @unittest.skipIf(Basetest.inPublicCI(), "demostarter ")
     async def testDemoStarter(self):
         """
         test the demo starter
         """
-        if Basetest.inPublicCI():  # avoid endless wait ...
-            return
-
         demoStarter = Demostarter(debug=True, mode="process")
 
         await demoStarter.start(limit=2)
