@@ -251,6 +251,41 @@ class JustpyApp(Starlette):
             text+=f"func: {route.endpoint.__name__}"
         return text
     
+    def jproute(self,
+        path: str,
+        name: typing.Optional[str] = None)-> typing.Callable:  # pragma: nocover
+        """ 
+        justpy route decorator
+        
+        function will we "wrapped" as a response and a route added
+        
+        Args:
+            func(typing.Callable): the function to convert to a reponse
+        """
+        
+        def routeResponse(func:typing.Callable)-> typing.Callable:
+            """
+            decorator for the given func
+            
+            Args:
+                func(typing.Callable)
+                
+            Returns:
+                Callable: an endpoint that has been routed
+            
+            """
+            endpoint=self.response(func)
+            self.router.add_route(
+                path,
+                endpoint,
+                name=name if name is not None else func.__name__,
+                include_in_schema=False,
+            )
+            self.route(path)
+            return endpoint
+        
+        return routeResponse
+    
     def response(self,func:typing.Callable):
         """
         response decorator converts a function to a response

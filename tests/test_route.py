@@ -9,7 +9,6 @@ and https://github.com/justpy-org/justpy/issues/389
 """
 from tests.base_client_test import BaseClienttest
 import justpy as jp
-from justpy.routing import JpRoute
 from starlette.responses import PlainTextResponse
 from jpcore.justpy_config import HTML_404_PAGE
 
@@ -32,8 +31,7 @@ def greeting_function(request):
     wp.add(jp.P(text=f"Hello there, {name}!", classes="text-5xl m-2"))
     return wp
 
-@jp.app.route("/bye")
-@jp.app.response
+@jp.app.jproute("/bye")
 def bye_function(_request):
     wp = jp.WebPage()
     wp.add(jp.P(text="Bye bye!", classes="text-5xl m-2"))
@@ -89,8 +87,9 @@ class TestRouteAndUrlFor(BaseClienttest):
         """
         for name,url in [
             ("plainText","plaintext"),
-            #("hello_function","hello")
-            ]:
+            ("hello","hello"),
+            ("bye_function","bye")
+        ]:
             path=f"/urlFor/{name}"
             response=self.checkResponse(path)
             urlfor=response.text
