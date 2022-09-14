@@ -182,65 +182,14 @@ class JustpyApp(Starlette):
 
        https://github.com/encode/starlette/blob/master/starlette/routing.py
     """
+    # @Todo - legacy for SetRoute 
     app=None
 
     def __init__(self,**kwargs):
         # https://www.starlette.io/applications/
         Starlette.__init__(self,**kwargs)
+        # @Todo - legacy for SetRoute 
         JustpyApp.app=self
-        
-    def get_func_for_request(self, request):
-        """
-        Get the function for the given request
-
-        Args:
-            request: the starlette request
-
-        Returns:
-            Callable: the function that is bound to the path of the given request
-        """
-        scope = request.scope
-        return self.get_func_for_scope(scope)
-    
-    def get_func_for_scope(self, scope):
-        """
-        Get the function (endpoint in starlette jargon) for the given scope
-
-        Args:
-            path: the path to check
-        Returns:
-            Callable: the function that is bound to the given path
-        """
-        for route in self.getRoutesByPriority():
-            if isinstance(route,Route):
-                match, _matchScope = route.matches(scope)
-                if match is not Match.NONE:
-                    func_to_run = route.endpoint
-                    return func_to_run
-        return None
-    
-    def prioritize_routes(self):
-        """
-        modify the routes priority
-        """
-        self.router.routes=self.getRoutesByPriority()
-    
-    def getRoutesByPriority(self):
-        """
-        get the routes by priority
-        """
-        routes=self.router.routes
-        routes_by_priority=[]
-        homepage_names=["default","Homepage"]
-        homepages=[]
-        for route in routes:
-            if isinstance(route,Route) and route.name and route.name in homepage_names:
-                homepages.append(route)
-            else:
-                routes_by_priority.append(route)
-        for homepage in homepages:
-            routes_by_priority.append(homepage)
-        return routes_by_priority
     
     def route_as_text(self,route):
         """
@@ -326,6 +275,8 @@ class JustpyApp(Starlette):
             wp = await self.get_page_for_func(request, func)
             response = self.get_response_for_load_page(request, wp)
             response = self.set_cookie(request, response, wp, new_cookie)
+            if LATENCY:
+                await asyncio.sleep(LATENCY / 1000)
             return response
     
         # return the decorated function, thus allowing access to the func
@@ -464,7 +415,7 @@ class JustpyApp(Starlette):
                 response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
         return response
 
-class JustpyEndpoint(HTTPEndpoint):
+class JustpyAjaxEndpoint(HTTPEndpoint):
     """
     Justpy specific HTTPEndpoint/app (ASGI application)
     """
@@ -474,46 +425,6 @@ class JustpyEndpoint(HTTPEndpoint):
         constructor
         """
         HTTPEndpoint.__init__(self,scope, receive, send)
-        
-    async def get(self, request):
-        """
-        main justpy request handler 
-        """
-        app=request.app
-        new_cookie=app.handle_session_cookie(request)
-        response=await self.get_response_for_request(request,new_cookie)
-        if LATENCY:
-            await asyncio.sleep(LATENCY / 1000)
-        return response
-    
-    async def get_response_for_request(self,request,new_cookie:bool):
-        """
-        get the page for the given request
-        
-        Args:
-            request: the request to handle
-            new_cookie(bool): True if a new cookie needs to be set
-            
-        Returns:
-            Response: a Response for the request
-        """
-        from justpy.routing import JpRoute
-        func = JpRoute.get_func_for_request(request)
-        #func = request.get_func_for_request(request)
-        if not func:
-            return HTMLResponse(content=HTML_404_PAGE, status_code=404)
-        app=request.app
-        load_page=await app.get_page_for_func(request,func)
-        # @TODO does this really still make sense after refactoring the routing?
-        if isinstance(load_page, Response):
-            logging.debug("Returning raw starlette.responses.Response.")
-            return load_page
-        # @TODO - shouldn't we return proper error response pages instead
-        # of relying on the exception handling via assertions here?
-        app=request.app
-        response=app.get_response_for_load_page(request,load_page) 
-        app.set_cookie(request,response,load_page,new_cookie)
-        return response
 
     async def post(self, request):
         """
@@ -522,28 +433,27 @@ class JustpyEndpoint(HTTPEndpoint):
         Args:
             request(Request): the request to handle
         """
-        if request["path"] == "/zzz_justpy_ajax":
-            data_dict = await request.json()
-            # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
-            if data_dict["event_data"]["event_type"] == "beforeunload":
-                return await self.on_disconnect(data_dict["event_data"]["page_id"])
+        data_dict = await request.json()
+        # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
+        if data_dict["event_data"]["event_type"] == "beforeunload":
+            return await self.on_disconnect(data_dict["event_data"]["page_id"])
 
-            session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-            if SESSIONS and session_cookie:
-                session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
-                data_dict["event_data"]["session_id"] = session_id
+        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
+        if SESSIONS and session_cookie:
+            session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
+            data_dict["event_data"]["session_id"] = session_id
 
-            # data_dict['event_data']['session'] = request.session
-            msg_type = data_dict["type"]
-            data_dict["event_data"]["msg_type"] = msg_type
-            page_event = True if msg_type == "page_event" else False
-            result = await handle_event(data_dict, com_type=1, page_event=page_event)
-            if result:
-                if LATENCY:
-                    await asyncio.sleep(LATENCY / 1000)
-                return JSONResponse(result)
-            else:
-                return JSONResponse(False)
+        # data_dict['event_data']['session'] = request.session
+        msg_type = data_dict["type"]
+        data_dict["event_data"]["msg_type"] = msg_type
+        page_event = True if msg_type == "page_event" else False
+        result = await handle_event(data_dict, com_type=1, page_event=page_event)
+        if result:
+            if LATENCY:
+                await asyncio.sleep(LATENCY / 1000)
+            return JSONResponse(result)
+        else:
+            return JSONResponse(False)
 
     async def on_disconnect(self, page_id):
         logging.debug(f"In disconnect Homepage")

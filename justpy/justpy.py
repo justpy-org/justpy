@@ -12,7 +12,7 @@ from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
 
-from jpcore.justpy_app import cookie_signer, template_options, handle_event, JustpyApp,JustpyEndpoint
+from jpcore.justpy_app import cookie_signer, template_options, handle_event, JustpyApp,JustpyAjaxEndpoint
 from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
 from jpcore.justpy_config import DEBUG,DECKGL, FAVICON, HIGHCHARTS,HOST,KATEX, LATENCY,LOGGING_LEVEL
 from jpcore.justpy_config import MEMORY_DEBUG, NO_INTERNET, PLOTLY, PORT, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
@@ -89,15 +89,9 @@ async def justpy_startup():
     protocol = "https" if SSL_KEYFILE else "http"
     print(f"JustPy ready to go on {protocol}://{HOST}:{PORT}")
 
-
-#@app.route("/")
-#class Homepage(JustpyEndpoint):
-#    """
-#    Justpy main page handler
-#    """
     
 @app.route("/zzz_justpy_ajax")
-class AjaxEndpoint(JustpyEndpoint):
+class AjaxEndpoint(JustpyAjaxEndpoint):
     """
     Justpy ajax handler
     """
