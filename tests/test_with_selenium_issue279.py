@@ -6,9 +6,6 @@ Created on 2022-08-25
 import asyncio
 import selenium.common
 from selenium.webdriver.common.by import By
-from tests.browser_test import SeleniumBrowsers
-from tests.basetest import Basetest
-from examples.basedemo import Demo
 from testfixtures import LogCapture
 from tests.base_selenium_test import BaseSeleniumTest
 
@@ -25,9 +22,7 @@ class TestIssue279WithSelenium(BaseSeleniumTest):
         see https://github.com/justpy-org/justpy/issues/279
 
         """
-        self.browser = SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
-        await asyncio.sleep(self.server.sleep_time)
-        Demo.testmode = True
+        self.browser = await self.getBrowserForDemo()
         from examples.issues.issue_279_key_error import issue_279
 
         await self.server.start(issue_279)

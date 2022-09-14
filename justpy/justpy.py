@@ -96,6 +96,12 @@ class Homepage(JustpyEndpoint):
     Justpy main page handler
     """
     
+@app.route("/zzz_justpy_ajax")
+class AjaxEndpoint(JustpyEndpoint):
+    """
+    Justpy ajax handler
+    """
+    
 @app.websocket_route("/")
 class JustpyEvents(WebSocketEndpoint):
 
@@ -231,7 +237,7 @@ def justpy(
         WebPage.use_websockets = True
     else:
         WebPage.use_websockets = False
-    JpRoute("/{path:path}", func_to_run, name="default")
+    JpRoute("/", func_to_run, name="default")
     for k, v in kwargs.items():
         template_options[k.lower()] = v
 

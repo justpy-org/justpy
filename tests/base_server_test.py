@@ -37,7 +37,7 @@ class BaseAsynctest(asynctest.TestCase):
             profile(bool): if True time for test is profiled
         """
         if sleep_time is None:
-            sleep_time = 2.0 if Basetest.inPublicCI() else 0.5
+            sleep_time = 2.0 if Basetest.inPublicCI() else 0.75
         self.sleep_time = sleep_time
         self.server = None
         if with_server:

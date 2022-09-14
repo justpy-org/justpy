@@ -9,6 +9,9 @@ import inspect
 from types import MethodType
 
 class WebPage:
+    """
+    a web page
+    """ 
     # TODO: Add page events online, beforeunload, resize
     instances = {}
     sockets = {}

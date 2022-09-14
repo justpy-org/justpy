@@ -5,10 +5,14 @@ Created on 2022-09-08
 '''
 import asyncio
 from tests.base_server_test import BaseAsynctest
-from tests.basetest import Basetest
 from tests.browser_test import SeleniumBrowsers
+from tests.basetest import Basetest
+from examples.basedemo import Demo
 
 class BaseSeleniumTest(BaseAsynctest):
+    """
+    Base class for Selenium tests
+    """
     
     async def setUp(
         self, 
@@ -22,3 +26,13 @@ class BaseSeleniumTest(BaseAsynctest):
         await BaseAsynctest.setUp(self, port=port, host=host, sleep_time=sleep_time, with_server=with_server, debug=debug, profile=profile, mode=mode)
         await asyncio.sleep(self.server.sleep_time)
         self.browser = SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
+        
+    async def getBrowserForDemo(self):
+        """
+        get the browser for a Demo test
+        """
+        browser=SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
+        await asyncio.sleep(self.server.sleep_time)
+        Demo.testmode = True
+        return browser
+        

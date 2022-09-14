@@ -495,7 +495,12 @@ class JustpyEndpoint(HTTPEndpoint):
     
         
     async def post(self, request):
-        # Handles post method. Used in Ajax mode for events when websockets disabled
+        """
+        Handles post method. Used in Ajax mode for events when websockets disabled
+        
+        Args:
+            request(Request): the request to handle
+        """
         if request["path"] == "/zzz_justpy_ajax":
             data_dict = await request.json()
             # {'type': 'event', 'event_data': {'event_type': 'beforeunload', 'page_id': 0}}
@@ -572,7 +577,7 @@ class JustpyServer:
         self.debug = debug
         self.running = False
 
-    async def start(self, wpfunc, **kwargs):
+    async def start(self, wpfunc,websockets: bool = True, **kwargs):
         """
         start a justpy server for the given webpage function wpfunc
 
@@ -590,6 +595,7 @@ class JustpyServer:
                 host=self.host,
                 port=self.port,
                 start_server=False,
+                websockets=websockets,
                 kwargs=kwargs,
             )
             await asyncio.sleep(self.sleep_time)  # time for the server to start
