@@ -8,7 +8,6 @@ from tests.basetest import Basetest
 from jpcore.demostarter import Demostarter
 import asyncio
 
-
 class TestDemoStarter(BaseAsynctest):
     """
     test demo starter

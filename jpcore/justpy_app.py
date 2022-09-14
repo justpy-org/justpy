@@ -315,13 +315,16 @@ class JustpyApp(Starlette):
         # parameter in the funcResponse later when applied 
         return funcResponse
 
-    async def get_page_for_func(self, request, func):
+    async def get_page_for_func(self, request, func:typing.Callable)->WebPage:
         """
         get the Webpage for the given func
 
         Args:
             request: the request to pass to the given function
             func: the function
+            
+        Returns:
+            WebPage: the Webpage returned by the given function
         """
         # @TODO - get rid of the global func_to_run concept that isn't
         # in scope here (anymore) anyways
@@ -338,7 +341,7 @@ class JustpyApp(Starlette):
                 load_page = func_to_run(request)
             else:
                 load_page = func_to_run()
-        return
+        return load_page
 
     def get_response_for_load_page(self,request,load_page):
         """
