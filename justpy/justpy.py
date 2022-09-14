@@ -24,7 +24,7 @@ from .pandas import *
 from .routing import SetRoute
 from .utilities import run_task, create_delayed_task
 import uvicorn, logging, sys, os, traceback
-
+import typing
 #
 # globals
 #
@@ -189,6 +189,15 @@ def get_server():
     Workaround for global variable jp_server not working as expected
     """
     return jp_server
+
+def Route(path:str,wpfunc:typing.Callable):
+    """
+    legacy Route handling
+    
+    Args:
+        path:str
+    """
+    app.add_jproute(path,wpfunc)
 
 
 def justpy(
