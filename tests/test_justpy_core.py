@@ -6,7 +6,6 @@ Created on 2022-08-24
 import justpy as jp
 from tests.base_server_test import BaseAsynctest
 
-
 class TestJustpyCore(BaseAsynctest):
     """
     Tests for Justpy Core features

@@ -2,7 +2,7 @@
 <html>
   <!--This is a justpy application using the tailwind.html template-->
   <head>
-{%- include 'favicon.html' %}
+{% include 'favicon.html' %}
 {%- if options.tailwind %}
     {%- if not options.no_internet %}
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.0/dist/base.min.css">
@@ -45,9 +45,9 @@
     </head>
     <body style="{{ page_options.body_style }}" class="{{ page_options.body_classes }}">
     {{ page_options.body_html | safe }}
-    <div id="components">
-    </div>
-    {%- include 'main.html' %}
+      <div id="components">
+      </div>
+    {%- include 'main.html' -%}
   </body>
 </html>
 {%- else %}{{ html | safe }}
