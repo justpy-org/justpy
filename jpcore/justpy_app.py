@@ -293,7 +293,7 @@ class JustpyApp(Starlette):
         Args:
             func(typing.Callable): the function to convert to a reponse
         """
-        def funcResponse(request)->HTMLResponse:
+        async def funcResponse(request)->HTMLResponse:
             """
             decorator function to apply the function to the request and
             return it as a response
@@ -305,8 +305,8 @@ class JustpyApp(Starlette):
                 Response: a HTMLResponse applying the justpy infrastructure
             
             """
-            new_cookie=self.handle_session_cookie(request)
-            wp=func(request)
+            new_cookie = self.handle_session_cookie(request)
+            wp = await self.get_page_for_func(request, func)
             response = self.get_response_for_load_page(request, wp)
             response = self.set_cookie(request, response, wp, new_cookie)
             return response
@@ -314,7 +314,32 @@ class JustpyApp(Starlette):
         # return the decorated function, thus allowing access to the func
         # parameter in the funcResponse later when applied 
         return funcResponse
-    
+
+    async def get_page_for_func(self, request, func):
+        """
+        get the Webpage for the given func
+
+        Args:
+            request: the request to pass to the given function
+            func: the function
+        """
+        # @TODO - get rid of the global func_to_run concept that isn't
+        # in scope here (anymore) anyways
+        func_to_run = func
+        func_parameters = len(inspect.signature(func_to_run).parameters)
+        assert (func_parameters < 2), f"Function {func_to_run.__name__} cannot have more than one parameter"
+        if inspect.iscoroutinefunction(func_to_run):
+            if func_parameters == 1:
+                load_page = await func_to_run(request)
+            else:
+                load_page = await func_to_run()
+        else:
+            if func_parameters == 1:
+                load_page = func_to_run(request)
+            else:
+                load_page = func_to_run()
+        return
+
     def get_response_for_load_page(self,request,load_page):
         """
         get the response for the given webpage
@@ -370,7 +395,7 @@ class JustpyApp(Starlette):
         response = templates.TemplateResponse(load_page.template_file, context)
         return response
     
-    def handle_session_cookie(self,request)->bool:
+    def handle_session_cookie(self,request) -> typing.Union[bool, Response]:
         """
         handle the session cookie for this request
         
@@ -457,7 +482,8 @@ class JustpyEndpoint(HTTPEndpoint):
         #func = request.get_func_for_request(request)
         if not func:
             return HTMLResponse(content=HTML_404_PAGE, status_code=404)
-        load_page=await self.get_page_for_func(request,func)
+        app=request.app
+        load_page=await app.get_page_for_func(request,func)
         # @TODO does this really still make sense after refactoring the routing?
         if isinstance(load_page, Response):
             logging.debug("Returning raw starlette.responses.Response.")
@@ -468,35 +494,7 @@ class JustpyEndpoint(HTTPEndpoint):
         response=app.get_response_for_load_page(request,load_page) 
         app.set_cookie(request,response,load_page,new_cookie)
         return response
-    
-    async def get_page_for_func(self,request,func):
-        """
-        get the Webpage for the given func
-        
-        Args:
-            request: the request to pass to the given function
-            func: the function
-        """
-        # @TODO - get rid of the global func_to_run concept that isn't
-        # in scope here (anymore) anyways
-        func_to_run = func
-        func_parameters = len(inspect.signature(func_to_run).parameters)
-        assert (
-            func_parameters < 2
-        ), f"Function {func_to_run.__name__} cannot have more than one parameter"
-        if inspect.iscoroutinefunction(func_to_run):
-            if func_parameters == 1:
-                load_page = await func_to_run(request)
-            else:
-                load_page = await func_to_run()
-        else:
-            if func_parameters == 1:
-                load_page = func_to_run(request)
-            else:
-                load_page = func_to_run()
-        return load_page
-    
-        
+
     async def post(self, request):
         """
         Handles post method. Used in Ajax mode for events when websockets disabled
