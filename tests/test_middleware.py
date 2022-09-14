@@ -31,7 +31,7 @@ class TestMiddleWare(BaseClienttest):
     
     def setUp(self, debug=False, profile=True):
         BaseClienttest.setUp(self, debug=debug, profile=profile)
-        self.app.prioritize_routes()
+        #self.app.prioritize_routes()
     
     def test_middleware(self):
         """

@@ -38,6 +38,6 @@ class TestJustpyApp(BaseClienttest):
             _d = jp.Div(text='I am justpy webpage', a=wp)
             return wp
 
-        self.app.prioritize_routes()
+        #self.app.prioritize_routes()
         _response=self.checkResponse("/webpage",debug=False)
         self.assertIn("Bad Session", _response.text)
