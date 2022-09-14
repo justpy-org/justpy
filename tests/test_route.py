@@ -72,7 +72,7 @@ class TestRouteAndUrlFor(BaseClienttest):
         Test the routing
         """
         routes=self.app.router.routes
-        self.assertEqual(9,len(routes))
+        self.assertTrue(len(routes)>=9)
         debug = self.debug
         debug=True
         for path in ["/bye", "/hello", "/greet/{name}"]:
