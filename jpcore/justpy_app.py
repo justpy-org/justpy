@@ -21,7 +21,7 @@ from sys import platform
 from multiprocessing import Process
 from threading import Thread
 from starlette.applications import Starlette
-from starlette.routing import Route,Match
+from starlette.routing import Route,request_response
 from starlette.endpoints import HTTPEndpoint
 from starlette.responses import HTMLResponse, JSONResponse,PlainTextResponse, Response
 from starlette.templating import Jinja2Templates
@@ -606,18 +606,20 @@ class JustpyDemoApp:
     a justpy application
     """
 
-    def __init__(self, pymodule_file, wp: typing.Callable = None, **kwargs):
+    def __init__(self, pymodule_file, wpfunc: typing.Callable = None, debug:bool=False,**kwargs):
         """
         Args:
             pymodule_file(str): the python module path where the app resides
-            wp(Callable): the webpage function to call
+            wpfunc(Callable): the webpage function to call
+            debug(bool): if True switch on debug mode
             **kwargs: further keyword arguments to pass to the webpage function
         """
         self.pymodule_file = pymodule_file
         with open(self.pymodule_file, "r") as sourcefile:
             self.source = sourcefile.read()
             self.check_demo()
-        self.wp = wp
+        self.wpfunc = wpfunc
+        self.debug=debug
         self.kwargs = kwargs
 
     def check_demo(self):
@@ -626,12 +628,12 @@ class JustpyDemoApp:
         """
         self.is_demo = False
         if "Demo(" or "Demo (" in self.source:
-            endpoint_match = re.search(
+            func_match = re.search(
                 """Demo[ ]?[(]["'](.*)["'],\s*(.*?)(,.*)*[)]""", self.source
             )
-            if endpoint_match:
-                self.description = endpoint_match.group(1)
-                self.endpoint = endpoint_match.group(2)
+            if func_match:
+                self.description = func_match.group(1)
+                self.wpfunc_name = func_match.group(2)
                 # jenkins could have /var/lib/jenkins/jobs/justpy/workspace/examples/charts_tutorial/pandas/women_majors2.py is not a demo
                 module_match = re.search(
                     "justpy/(workspace/)?(examples/.*)[.]py", self.pymodule_file
@@ -639,20 +641,27 @@ class JustpyDemoApp:
                 if module_match:
                     self.pymodule = module_match.group(2)
                     self.pymodule = self.pymodule.replace("/", ".")
-                    self.is_demo = not "lambda" in self.endpoint
+                    self.is_demo = not "lambda" in self.wpfunc_name
                 return
 
-    async def start(self, server: JustpyServer):
+    def mount(self, app:JustpyApp):
         """
-        Start me on the given server
+        mount me on the given app
 
         Args:
-            server(JustpyServer): the server to start
+            app(JustpyApp): the app to mount me on
         """
-        if self.wp is None:
-            raise Exception(f"can't start {self.pymodule_file} -wp/endoint is None")
-        return await server.start(self.wp)
+        if self.wpfunc is None:
+            raise Exception(f"can't start {self.pymodule_file} -wpfunc/endoint is None")
+        # https://fastapi.tiangolo.com/advanced/sub-applications/
+        name=self.wpfunc.__name__
+        endpoint=app.response(self.wpfunc)
+        # https://github.com/encode/starlette/issues/734
+        mount_app=request_response(endpoint)
+        if self.debug:
+            print(f"mounting  {str(self)}")
+        app.mount(f"/{name}",mount_app,name)
 
     def __str__(self):
-        text = f"{self.pymodule}:{self.endpoint}:{self.description}"
+        text = f"{self.pymodule}:{self.wpfunc_name}:{self.description}"
         return text

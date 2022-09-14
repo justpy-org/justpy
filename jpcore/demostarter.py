@@ -11,8 +11,8 @@ import traceback
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from examples.basedemo import Demo
-from jpcore.justpy_app import JustpyDemoApp, JustpyServer
-
+from jpcore.justpy_app import JustpyDemoApp
+import justpy as jp
 
 class Demostarter:
     """
@@ -38,7 +38,7 @@ class Demostarter:
         self.servers = {}
         self.errors = {}
         for pymodule_file in pymodule_files:
-            demo = JustpyDemoApp(pymodule_file)
+            demo = JustpyDemoApp(pymodule_file,debug=debug)
             if demo.is_demo:
                 self.demos.append(demo)
             else:
@@ -47,33 +47,26 @@ class Demostarter:
         if self.debug:
             print(f"found {len(self.demos)} justpy demo python modules")
 
-    async def start(self, baseport=11000, limit=None, use_gather: bool = False):
+    def start(self,limit=None, use_gather: bool = False):
         """
-        start the demos from the given baseport optionally limitting the number of demos
+        start the demos  optionally limitting the number of demos
 
         Args:
-            baseport(int): the port number to start from
             limit(int): the maximum number of demos to start (default: None)
             userGather(bool): if True try using gather
         """
-        port = baseport
-        server = None
-        tasklist = []
+        tasklist=[]
+        jp.justpy(start_server=False)
+        app=jp.app
         for i, demo in enumerate(self.demos):
             try:
-                print(f"starting {i+1:3}:{demo}  ...")
-                if server is None:
-                    server = JustpyServer(mode=self.mode, port=port, debug=self.debug)
-                else:
-                    server = server.next_server()
-                    self.servers[server.port] = server
-                demo.port = server.port
+                print(f"mounting {i+1:3}:{demo}  ...")
                 demo_module = importlib.import_module(demo.pymodule)
-                demo.wp = getattr(demo_module, demo.endpoint)
+                demo.wpfunc = getattr(demo_module, demo.wpfunc_name)
                 if use_gather:
-                    tasklist.append(demo.start(server))
+                    tasklist.append(demo.mount(app))
                 else:
-                    await demo.start(server)
+                    demo.mount(app)
             except Exception as ex:
                 self.errors[i] = ex
                 print(f"failed due to exception: {str(ex)}")
@@ -81,8 +74,10 @@ class Demostarter:
                     print(traceback.format_exc())
             if limit is not None and i + 1 >= limit:
                 break
-        if use_gather:
-            demo_results = await asyncio.gather(*tasklist, return_exceptions=True)
+        server=jp.get_server()
+        server.run()
+        #if use_gather:
+        #    demo_results = await asyncio.gather(*tasklist, return_exceptions=True)
         pass
 
     async def stop(self):
@@ -147,7 +142,7 @@ def main(argv=None):  # IGNORE:C0111
         if args.debug:
             for demo in demostarter.demos:
                 print(demo)
-        asyncio.run(demostarter.start(limit=args.limit))
+        demostarter.start(limit=args.limit)
     except Exception as e:
         indent = len(program_name) * " "
         sys.stderr.write(program_name + ": " + repr(e) + "\n")
