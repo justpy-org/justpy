@@ -42,6 +42,10 @@ logging.basicConfig(level=LOGGING_LEVEL, format="%(levelname)s %(module)s: %(mes
 middleware = [Middleware(GZipMiddleware)]
 if SSL_KEYFILE and SSL_CERTFILE:
     middleware.append(Middleware(HTTPSRedirectMiddleware))
+#@TODO     
+# implement https://github.com/justpy-org/justpy/issues/535
+#if SESSIONS:
+#    middleware.append(Middleware(SessionMiddleware, secret_key=SECRET_KEY))
 app = JustpyApp(middleware=middleware, debug=DEBUG)
 app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
 app.mount(
