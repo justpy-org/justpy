@@ -16,6 +16,7 @@ install_packages() {
 #
 modulewise_test() {
   foundErrors=0
+  foundTests=0
   for testmodule in tests/test*.py
   do
     echo "testing $testmodule ..."
@@ -24,7 +25,9 @@ modulewise_test() {
     python -m unittest $testmodule
     exit_code=$?
     foundErrors=$((foundErrors+exit_code))
+    foundTests=$((foundTests+1))
   done
+  echo "$foundErrors/$foundTests justpy module unit tests failed" 1>&2
   if [[ $foundErrors -gt 0 ]]
   then
     exit 1
@@ -32,6 +35,15 @@ modulewise_test() {
 }
 
 install_packages
-#modulewise_test
+export PYTHON_PATH="."
+while [  "$1" != ""  ]
+do
+  option="$1"
+  case $option in
+    -m|--module)
+      modulewise_test
+      exit 0
+  esac
+done
 # test importability might fail if we do this ...
 green tests -s 1
