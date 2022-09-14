@@ -1,10 +1,10 @@
-import starlette.routing
 import typing
 from jpcore.justpy_app import JustpyApp
 
 class SetRoute:
     """
     Justpy specific route annotation
+    
     """
 
     def __init__(self, route, **kwargs):

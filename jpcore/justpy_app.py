@@ -251,16 +251,18 @@ class JustpyApp(Starlette):
             text+=f"func: {route.endpoint.__name__}"
         return text
     
-    def add_jproute(self,path:str,wpfunc:typing.Callable):
+    def add_jproute(self,path:str,wpfunc:typing.Callable,name:str=None):
         """
         add a route for the given Webpage returning func
         
         Args:
             path(str): the path to use as route
             wpfunc(typing.Callable): a Webpage returning func
+            name(str): the name of the route
         """
         endpoint=self.response(wpfunc)
-        name=wpfunc.__name__
+        if name is None:
+            name=wpfunc.__name__
         self.router.add_route(path,endpoint,name=name,include_in_schema=False)
     
     def jproute(self,
