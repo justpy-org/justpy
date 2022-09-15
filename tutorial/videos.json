@@ -11,6 +11,10 @@
         {
             "name": "blackjack.py",
             "url": "https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif"
-        }    
+        },
+      	{
+            "name": "tutorial/handling_events/out_test.py",
+            "url": "https://user-images.githubusercontent.com/95085996/187909520-370c8bff-6977-422b-b9ec-bb97999f4056.gif"
+        }
     ]
 }

@@ -12,7 +12,7 @@ from jpcore.justpy_app import JustpyDemoApp
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
-from justpy import parse_html
+from justpy import parse_html, QBtn
 
 class BaseWebPage():
     """
@@ -58,6 +58,7 @@ class BaseWebPage():
         self.wp.head_html = '<link rel="stylesheet" href="/templates/css/pygments.css">'
         # RGB 49 65 153
         color="bg-indigo-800"
+        #  <q-btn glossy label="Tutorial" classes="q-mr-sm" name="tutorial-btn"></q-btn>
         self.bp = parse_html(
         f"""
 <div class="q-pa-md">
@@ -66,6 +67,7 @@ class BaseWebPage():
         <q-toolbar name="toolbar">
             <q-btn flat round dense icon="menu"/>
             <q-toolbar-title>Justpy examples</q-toolbar-title>
+            <q-space />
         </q-toolbar>
     </q-header>
     <q-page-container style="overflow: hidden;">
@@ -80,8 +82,17 @@ class BaseWebPage():
         a=self.wp,
     )
         self.main_page = self.bp.name_dict["main_page"]
+        self.toolbar=self.bp.name_dict["toolbar"]
+        #self.tutorial_btn = self.bp.name_dict["tutorial-btn"]
+        #self.tutorial_btn.on("click",self.on_tutorial_btn_click)
         # put into html
         self.errors=jp.Div(a=self.main_page)
+        
+    def on_tutorial_btn_click(self,msg):
+        """
+        tutorial button has been clicked
+        """
+        
 
 class DemoDisplay(BaseWebPage):
     """
@@ -132,6 +143,8 @@ class DemoBrowser(BaseWebPage):
         browser for justpy demos
         """
         self.setup()
+        self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
+  
         video_size=192
         lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
         df=pd.DataFrame(lod)
@@ -150,7 +163,20 @@ class DemoBrowser(BaseWebPage):
         self.ag_grid.html_columns = [1,2,3]
         self.wp.on("page_ready", self.onSizeColumnsToFit)
         return self.wp
-    
+          
+    async def on_mount_all_btn_click(self,_msg):
+        """
+        mount all button has been clicked
+        """
+        print("mount all has been clicked")
+        for demo in self.demo_starter.demos:
+            try:
+                demo.mount(jp.app)
+                demo.status="✅"
+            except Exception as ex:
+                self.handleException(ex)
+        await self.wp.update()
+            
     def show_demo(self,request):
         """
         show a demo by name

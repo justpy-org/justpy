@@ -6,6 +6,7 @@ Created on 2022-09-02
 import asyncio
 import fnmatch
 import inspect
+import importlib
 import json
 import logging
 import os
@@ -626,6 +627,7 @@ class JustpyDemoApp:
         self.name=os.path.basename(self.source_file).replace(".py","")
         self.wpfunc = wpfunc
         self.debug=debug
+        self.status=""
         self.kwargs = kwargs
 
     def check_demo(self):
@@ -657,6 +659,8 @@ class JustpyDemoApp:
         Args:
             app(JustpyApp): the app to mount me on
         """
+        demo_module = importlib.import_module(self.pymodule)
+        self.wpfunc = getattr(demo_module, self.wpfunc_name)
         if self.wpfunc is None:
             raise Exception(f"can't start {self.pymodule_file} -wpfunc/endoint is None")
         # https://fastapi.tiangolo.com/advanced/sub-applications/

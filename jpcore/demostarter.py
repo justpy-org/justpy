@@ -95,9 +95,10 @@ class Demostarter:
                 "name": demo_link,
                 "video": video_link,
                 "source": demo.source_link,
+                "status": demo.status
             }
             lod.append(record)
-        return lod
+        return lod      
 
     def start(self,limit=None, use_gather: bool = False):
         """
@@ -113,8 +114,6 @@ class Demostarter:
         for i, demo in enumerate(self.demos):
             try:
                 print(f"mounting {i+1:3}:{demo}  ...")
-                demo_module = importlib.import_module(demo.pymodule)
-                demo.wpfunc = getattr(demo_module, demo.wpfunc_name)
                 if use_gather:
                     tasklist.append(demo.mount(app))
                 else:
