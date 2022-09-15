@@ -32,6 +32,7 @@ from jpcore.justpy_config import DECKGL, FAVICON, HIGHCHARTS,HTML_404_PAGE,KATEX
 from jpcore.justpy_config import NO_INTERNET, PLOTLY, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
 from jpcore.justpy_config import STATIC_DIRECTORY,STATIC_NAME
 from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, VEGA
+from jpcore.justpy_config import COMPONENT_ENGINE_TYPE
 from jpcore.template import Context
 from jpcore.webpage import WebPage
 from itsdangerous import Signer
@@ -359,6 +360,8 @@ class JustpyApp(Starlette):
             "options": template_options,
             "page_options": page_options,
             "html": load_page.html,
+            "component_engine_type": COMPONENT_ENGINE_TYPE
+            
         }
         # wrap the context in a context object to make it available
         context_obj = Context(context)
