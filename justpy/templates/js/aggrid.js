@@ -32,7 +32,9 @@ Vue.component('grid', {
             cached_grid_def[this.$props.jp_props.id] = j;
             grid_def.onGridReady = grid_ready;
             grid_def.popupParent = document.querySelector('body');
-            this.evaluate_formatters(grid_def);
+            // @FIXME causes https://github.com/justpy-org/justpy/issues/467
+            // and https://github.com/justpy-org/justpy/issues/369
+            // this.evaluate_formatters(grid_def);
             for (const field of this.$props.jp_props.evaluate) {
                 eval('grid_def[field] = ' + grid_def[field]);
             }
