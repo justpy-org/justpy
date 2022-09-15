@@ -16,5 +16,25 @@
             "name": "tutorial/handling_events/out_test.py",
             "url": "https://user-images.githubusercontent.com/95085996/187909520-370c8bff-6977-422b-b9ec-bb97999f4056.gif"
         }
+        {
+            "name": "examples/tutorial/html_components/html_comps5.py",
+            "url": "https://user-images.githubusercontent.com/95085996/187999454-584716d7-6868-485e-a825-e4a44982ed06.gif"
+        }
+        {
+            "name": "examples/tutorial/html_components/html_comps6.py",
+            "url": "https://user-images.githubusercontent.com/95085996/187999493-90cbb377-2794-4a73-9f7e-2770f3c91de0.gif"
+        }
+        {
+            "name": "examples/tutorial/html_components/link_demo2.py",
+            "url": "https://user-images.githubusercontent.com/95085996/187999560-0db3fa8b-5701-4342-b4fb-84d4d3730dd1.gif"
+        }
+        {
+            "name": "examples/tutorial/html_components/show_demo.py",
+            "url": "https://user-images.githubusercontent.com/95085996/187999674-3b5bcdc9-8351-4c22-be50-5b6ee0514d43.gif"
+        }
+        {
+            "name": "examples/tutorial/input/input_demo2.py",
+            "url": "https://user-images.githubusercontent.com/95085996/187999722-0ca9e532-e0ef-4c86-b71c-8e71d8749326.gif"
+        }
     ]
 }
