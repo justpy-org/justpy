@@ -17,14 +17,15 @@ readme = "README.md"
 # flit_core.config.ConfigError: license field should be <class 'dict'>, not <class 'str'>
 license = { file="LICENSE" }
 dependencies = [
-        'starlette>=0.20.4', 
-        'uvicorn>=0.18.3', 
-        'itsdangerous>=2.1.2', 
-        'websockets',
         'addict>=2.4.0', 
+        'itsdangerous>=2.1.2', 
         'jinja2>=3.1.2', 
         'hjson>=3.1.0',
         'httpx>=0.23.0',
+        'psutil>=5.9.2',
+        'starlette>=0.20.4', 
+        'uvicorn>=0.18.3', 
+        'websockets',
         'aiofiles',
         'twine', 
         'wheel'
@@ -62,7 +63,6 @@ test = [
   "bokeh", # example
   "green",
   "pandas", # example
-  "psutil",
   "pydeck", # example
   "pygments", # demo_browser
   "selenium",

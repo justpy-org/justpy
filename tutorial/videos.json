@@ -35,6 +35,75 @@
         {
             "name": "tutorial/input/input_demo2.py",
             "url": "https://user-images.githubusercontent.com/95085996/187999722-0ca9e532-e0ef-4c86-b71c-8e71d8749326.gif"
+        },
+        {
+            "name": "tutorial/handling_events/comp_test.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190395221-ece357c8-34eb-42da-ba81-86efad596cf3.gif"
+        },
+        {
+            "name": "tutorial/handling_events/debounce_test.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190397654-5a1ce1af-5b79-467d-8ade-16333a663d3b.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_comp_test.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190400892-9b26c191-63d2-4360-bfea-e21f5057c087.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_demo1.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190401851-b50e720e-19d1-4882-ba56-2753dcaf2974.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_demo2.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190403221-a2fd246d-6816-4d30-901d-92ab6a5afd44.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_demo4.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190404228-64ec501d-7e6f-4076-ad29-27e4b62a841c.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_demo5.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190404851-7db02062-0914-4bb1-a4c0-652acf3fd5df.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_demo6.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190405180-c21b9245-6cdd-488c-88a1-33c9ce0da7f7.gif"
+        },
+        {
+            "name": "tutorial/handling_events/event_demo7.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190405624-f100776f-024d-4592-972a-243f90c6bb94.gif"
+        },
+        {
+            "name": "examples/tutorial/handling_events/target_test.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190407193-f94eee73-7d9d-4419-bffe-3099238c5bc1.gif"
+        },
+        {
+            "name": "tutorial/html_components/html_comps4.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190408680-adacd6f4-a724-47f1-888b-4958aef5d66c.gif"
+        },
+        {
+            "name": "tutorial/html_components/link_demo1.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190409307-7b0f0739-ed23-4ea5-8ed5-92853eea122e.gif"
+        },
+        {
+            "name": "tutorial/html_components/list_demo.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190410256-23b50221-cca4-45ee-8133-c54928408bb7.gif"
+        },
+        {
+            "name": "tutorial/after_demo.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190411043-059bc4f4-02ba-49bb-8bbf-e61c6b109683.gif"
+        },
+        {
+            "name": "tutorial/routes/route1.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190412782-05da8fa4-89b1-4e2a-a3c3-f27f84b96ce4.gif"
+        },
+        {
+            "name": "tutorial/routes/route2.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190413790-e831aa6b-253d-4a3a-8c4e-f20793d80539.gif"
+        },
+        {
+            "name": "tutorial/routes/route3.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190414403-26955069-9b3d-421b-99f6-8ad1f83a5c25.gif"
         }
+         
     ]
 }

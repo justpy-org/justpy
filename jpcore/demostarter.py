@@ -91,7 +91,7 @@ class Demostarter:
                 video_link=f"""<a href="{demo.video_url}"><img src="{demo.video_url}" alt="video for {demo.name}" style="width:{video_size}px;height:{video_size}px;"></a>"""
             demo_link=f"""<a href="/demo/{demo.name}" target="_blank">{demo.name}</a>"""   
             if demo.try_it_url:
-                try_it_link=f"""<a href="{demo.try_it_url}" <a href="{demo.video_url}">try {demo.name}</a>"""
+                try_it_link=f"""<a href="{demo.try_it_url}" target="_blank">try {demo.name}</a>"""
             record={
                 "#":i+1,
                 "name": demo_link,

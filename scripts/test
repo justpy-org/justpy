@@ -6,7 +6,7 @@
 #
 install_packages() {
   # install test packages
-  pip install aiohttp asynctest green psutil selenium  testfixtures webdriver-manager
+  pip install aiohttp asynctest green selenium  testfixtures webdriver-manager
   # install example packages
   pip install bokeh pandas pydeck pygments
 }

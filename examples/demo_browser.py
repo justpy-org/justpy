@@ -33,6 +33,20 @@ class BaseWebPage():
         """
         self.errors.inner_html=msg_html
         
+    def get_html_error(self,ex)->str:
+        """
+        get the html error message for the given exception
+        """
+        error_msg=str(ex)
+        trace=""
+        if self.debug:
+            trace=traceback.format_exc()
+        if self.debug:
+            print(error_msg)
+            print(trace)
+        error_msg_html=f"❌{error_msg}<pre>{trace}</pre>"
+        return error_msg_html
+      
     def handleException(self,ex):
         '''
         handle the given exception
@@ -40,16 +54,8 @@ class BaseWebPage():
         Args:
             ex(Exception): the exception to handle
         '''
-        errorMsg=str(ex)
-        trace=""
-        if self.debug:
-            trace=traceback.format_exc()
-        if self.debug:
-            print(errorMsg)
-            print(trace)
-        errorMsgHtml=f"{errorMsg}<pre>{trace}</pre>"
-        self.showError(errorMsgHtml)
-        
+        error_msg_html=self.get_html_error(ex)
+        self.showError(error_msg_html)
         
     def setup(self):
         """
@@ -73,6 +79,10 @@ class BaseWebPage():
     </q-header>
     <q-page-container style="overflow: hidden;">
         <q-page padding name="main_page" style="overflow: hidden;">
+            <div class="row">
+              <div class="col-sm-12 name="error-display">
+              </div>
+            </div  
         </q-page>
     </q-page-container>    
     <q-footer class="{color} text-white">
@@ -87,13 +97,7 @@ class BaseWebPage():
         #self.tutorial_btn = self.bp.name_dict["tutorial-btn"]
         #self.tutorial_btn.on("click",self.on_tutorial_btn_click)
         # put into html
-        self.errors=jp.Div(a=self.main_page)
-        
-    def on_tutorial_btn_click(self,msg):
-        """
-        tutorial button has been clicked
-        """
-        
+        self.errors=self.bp.name_dict["error-display"]
 
 class DemoDisplay(BaseWebPage):
     """
@@ -106,6 +110,7 @@ class DemoDisplay(BaseWebPage):
         Args:
             demo:JustpyDemoApp: the demo to be displayed
         """
+        BaseWebPage.__init__(self)
         self.demo=demo
         self.lexer=get_lexer_by_name("python")
         self.formatter=HtmlFormatter()
@@ -116,8 +121,11 @@ class DemoDisplay(BaseWebPage):
         return my WebPage
         """
         self.setup()
-        self.source_code_div=jp.Div(a=self.main_page)
+        self.sourceFrame=jp.QDiv(a=self.main_page,classes="row")
+        self.source_code_div=jp.QDiv(a=self.sourceFrame,classes="col-sm-6")
         self.source_code_div.inner_html=self.syntax_highlighted_code
+        self.statusDiv=jp.QDiv(a=self.main_page)
+        self.statusDiv.inner_html=self.demo.status
         return self.wp
 
 class DemoBrowser(BaseWebPage):
@@ -125,6 +133,7 @@ class DemoBrowser(BaseWebPage):
     Browser for demos
     """
     def __init__(self):
+        BaseWebPage.__init__(self)
         self.demo_starter=Demostarter()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         
@@ -177,8 +186,8 @@ class DemoBrowser(BaseWebPage):
                 index = row_data["#"]
                 demo=self.demo_starter.demos[index-1]
                 self.mount(demo,index)
-            except Exception as ex:
-                self.handleException(ex)
+            except BaseException as ex:
+                demo.status=self.get_html_error(ex)
             pass
         
     def mount(self,demo,index):
@@ -189,12 +198,15 @@ class DemoBrowser(BaseWebPage):
             demo(JustpyDemoApp): the demo to mount
             index(int): the index of the demo
         """
-        total=len(self.demo_starter.demos)
-        print (f"mounting {index}/{total}:{demo}")
-        demo.mount(jp.app)
-        demo.try_it_url=f"/{demo.name}"
-        demo.status="✅"
-          
+        try:
+            total=len(self.demo_starter.demos)
+            print (f"mounting {index}/{total}:{demo}")
+            demo.mount(jp.app)
+            demo.try_it_url=f"/{demo.name}"
+            demo.status="✅"
+        except BaseException as ex:
+            demo.status=self.get_html_error(ex)
+              
     async def on_mount_all_btn_click(self,_msg):
         """
         mount all button has been clicked
@@ -202,10 +214,7 @@ class DemoBrowser(BaseWebPage):
         total=len(self.demo_starter.demos)
         print(f"mount all has been clicked ... trying to mount {total} demos ")
         for i,demo in enumerate(self.demo_starter.demos):
-            try:
-                self.mount(demo,i+1)
-            except BaseException as ex:
-                self.handleException(ex)
+            self.mount(demo,i+1)
         await self.wp.update()
             
     def show_demo(self,request):
