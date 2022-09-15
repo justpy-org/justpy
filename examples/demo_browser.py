@@ -22,6 +22,7 @@ class BaseWebPage():
         """
         constructor
         """
+        self.debug=True
         
     def showError(self,msg_html:str):
         """
@@ -145,7 +146,7 @@ class DemoBrowser(BaseWebPage):
         self.setup()
         self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
         
-        video_size=192
+        video_size=512
         lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
         df=pd.DataFrame(lod)
         style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
@@ -202,8 +203,7 @@ class DemoBrowser(BaseWebPage):
         print(f"mount all has been clicked ... trying to mount {total} demos ")
         for i,demo in enumerate(self.demo_starter.demos):
             try:
-                print (f"mounting {i+1}/{total}:{demo}")
-                self.mount(demo)
+                self.mount(demo,i+1)
             except BaseException as ex:
                 self.handleException(ex)
         await self.wp.update()
