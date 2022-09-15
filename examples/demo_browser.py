@@ -69,7 +69,7 @@ class BaseWebPage():
         self.bp = parse_html(
         f"""
 <div class="q-pa-md">
-  <q-layout view="HHH lpr Fff" container  style="height: 95vh" class="shadow-2 rounded-borders">
+  <q-layout view="HHH lpr Fff" container  style="height: 99vh" class="shadow-2 rounded-borders">
     <q-header reveal class="{color}">
         <q-toolbar name="toolbar">
             <q-btn flat round dense icon="menu"/>
@@ -93,6 +93,7 @@ class BaseWebPage():
         a=self.wp,
     )
         self.main_page = self.bp.name_dict["main_page"]
+        self.footer = self.bp.name_dict["footer"]
         self.toolbar=self.bp.name_dict["toolbar"]
         #self.tutorial_btn = self.bp.name_dict["tutorial-btn"]
         #self.tutorial_btn.on("click",self.on_tutorial_btn_click)
@@ -121,12 +122,74 @@ class DemoDisplay(BaseWebPage):
         return my WebPage
         """
         self.setup()
-        self.sourceFrame=jp.QDiv(a=self.main_page,classes="row")
-        self.source_code_div=jp.QDiv(a=self.sourceFrame,classes="col-sm-6")
+        self.container = jp.QDiv(a=self.main_page)
+        self.demo_description = jp.QDiv(a=self.container, classes="row")
+        self.demo_desc = jp.QDiv(a=self.demo_description, text=self.demo.name, classes="centered")
+
+        self.sourceFrame=jp.QDiv(a=self.container, classes="row")
+        # display code
+        self.source_code_div=jp.QDiv(a=self.sourceFrame, classes="col-6")
         self.source_code_div.inner_html=self.syntax_highlighted_code
-        self.statusDiv=jp.QDiv(a=self.main_page)
-        self.statusDiv.inner_html=self.demo.status
+        # display preview
+        self.preview_div = jp.QDiv(a=self.sourceFrame, classes="col-6")
+        self.toggle_btn = jp.QBtnToggle(
+                a=self.preview_div,
+                classes="row q-ma-md",
+                toggle_color='blue',
+                push=True,
+                glossy=True,
+                input=self.toggle_preview,
+                value='video',
+        )
+        self.toggle_btn.options.append({'label': "Video demo", 'value': "video"})
+        self.toggle_btn.options.append({'label': "Live demo", 'value': "live"})
+        self.preview_container = jp.QDiv(a=self.preview_div, classes="row")
+        self._showVideoDemo()
+        # demo status
+        self._showDemoStatus()
         return self.wp
+
+    def toggle_preview(self, msg):
+        """
+        toggle between demo video and iframe preview
+        """
+        if self.toggle_btn.value == "live":
+            self._showLiveDemo()
+        else:
+            self._showVideoDemo()
+
+    def _showDemoStatus(self):
+        """
+        shows the status of the live demo
+        """
+        jp.QDiv(a=self.footer, text=f"Status{self.demo.status}")
+
+
+    def _showVideoDemo(self):
+        """
+        Display a video demonstrating the demo
+        """
+        self.preview_container.delete_components()
+        self.preview_video = jp.QImg(
+                a=self.preview_container,
+                src=self.demo.video_url,
+                alt=self.demo.description,
+                classes="row",
+                style="max-width: 800px"
+        )
+
+    def _showLiveDemo(self):
+        """
+        Display an iframe showing the demo
+        """
+        self.preview_container.delete_components()
+        jp.Iframe(
+                a=self.preview_container,
+                src=f"/{self.demo.wpfunc.__name__}",
+                classes="col-grow",
+                style="overflow:hidden; height:100vh; width:100%;"
+        )
+
 
 class DemoBrowser(BaseWebPage):
     """
