@@ -64,6 +64,7 @@ test = [
   "pandas", # example
   "psutil",
   "pydeck", # example
+  "pygments", # demo_browser
   "selenium",
   "testfixtures",
   "webdriver-manager"
