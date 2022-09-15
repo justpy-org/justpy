@@ -39,6 +39,8 @@ class TestTemplate(Basetest):
                 "vega": False,
             },
             "page_id": 0,
+            "frontend_engine_type": "vue",
+            "frontend_engine_libs": ['html_component', 'quasar_component', 'chartjp', 'aggrid', 'iframejp', 'deckgl', 'altairjp', 'plotlyjp', 'bokehjp', 'katexjp', 'editorjp', 'component_generator']
             "page_options": {
                 "body_classes": "",
                 "body_html": "",
