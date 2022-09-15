@@ -79,6 +79,10 @@ class BaseWebPage():
     </q-header>
     <q-page-container style="overflow: hidden;">
         <q-page padding name="main_page" style="overflow: hidden;">
+            <div class="row">
+              <div class="col-sm-12 name="error-display">
+              </div>
+            </div  
         </q-page>
     </q-page-container>    
     <q-footer class="{color} text-white">
@@ -93,13 +97,7 @@ class BaseWebPage():
         #self.tutorial_btn = self.bp.name_dict["tutorial-btn"]
         #self.tutorial_btn.on("click",self.on_tutorial_btn_click)
         # put into html
-        self.errors=jp.Div(a=self.main_page)
-        
-    def on_tutorial_btn_click(self,msg):
-        """
-        tutorial button has been clicked
-        """
-        
+        self.errors=self.bp.name_dict["error-display"]
 
 class DemoDisplay(BaseWebPage):
     """
@@ -123,8 +121,11 @@ class DemoDisplay(BaseWebPage):
         return my WebPage
         """
         self.setup()
-        self.source_code_div=jp.Div(a=self.main_page)
+        self.sourceFrame=jp.QDiv(a=self.main_page,classes="row")
+        self.source_code_div=jp.QDiv(a=self.sourceFrame,classes="col-sm-6")
         self.source_code_div.inner_html=self.syntax_highlighted_code
+        self.statusDiv=jp.QDiv(a=self.main_page)
+        self.statusDiv.inner_html=self.demo.status
         return self.wp
 
 class DemoBrowser(BaseWebPage):
