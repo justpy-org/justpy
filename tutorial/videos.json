@@ -103,6 +103,26 @@
         {
             "name": "tutorial/routes/route3.py",
             "url": "https://user-images.githubusercontent.com/95085996/190414403-26955069-9b3d-421b-99f6-8ad1f83a5c25.gif"
+        },
+        {
+            "name": "charts_tutorial/pandas/women_majors1.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190432374-5769fc82-0bc3-48ab-ad99-98d1707422c0.gif"
+        },
+        {
+            "name": "charts_tutorial/pandas/women_majors2.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190433206-f1231d39-8a8b-4b4a-8313-8f573c3b16c1.gif"
+        },
+        {
+            "name": "charts_tutorial/pandas/women_majors3.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190436327-1766751c-66b6-4c31-b6f3-9ffea0fe2143.gif"
+        },
+        {
+            "name": "charts_tutorial/stock_charts/stock_test1.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190441705-7b66ac45-1ac0-4f34-9d5b-4925ad5c2704.gif"
+        },
+        {
+            "name": "charts_tutorial/stock_charts/stock_test2.py",
+            "url": "https://user-images.githubusercontent.com/95085996/190446527-07cfb87a-67d3-44a6-904e-0bf5ebe1c94b.gif"
         }
          
     ]
