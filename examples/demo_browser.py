@@ -202,7 +202,7 @@ class DemoBrowser(BaseWebPage):
             total=len(self.demo_starter.demos)
             print (f"mounting {index}/{total}:{demo}")
             demo.mount(jp.app)
-            demo.try_it_url=f"/{demo.name}"
+            demo.try_it_url=f"/{demo.wpfunc.__name__}"
             demo.status="✅"
         except BaseException as ex:
             demo.status=self.get_html_error(ex)
