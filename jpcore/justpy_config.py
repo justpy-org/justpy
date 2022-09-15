@@ -54,4 +54,4 @@ AGGRID_ENTERPRISE = config("AGGRID_ENTERPRISE", cast=bool, default=False)
 
 NO_INTERNET = config("NO_INTERNET", cast=bool, default=True)
 
-COMPONENT_ENGINE_TYPE = config("COMPONENT_ENGINE_TYPE", cast=str, default="vue")
+FRONTEND_ENGINE_TYPE = config("FRONTEND_ENGINE_TYPE", cast=str, default="vue")

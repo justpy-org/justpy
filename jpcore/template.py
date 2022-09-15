@@ -25,7 +25,8 @@ class Context:
         self.page_options = PageOptions(context_dict.get("page_options", {}))
         self.use_websockets_js=self.context_dict.get("use_websockets","true")
         self.page_id_js=context_dict["page_id"]
-        self.component_engine_type = context_dict["component_engine_type"]
+        self.component_engine_type = context_dict["frontend_engine_type"]
+        self.frontend_engine_libs = context_dict["frontend_engine_libs"]
         self.title_js=self.get_js_option("title", "JustPy")
         self.redirect_js=self.get_js_option("redirect","")
         self.display_url_js=self.get_js_option("display_url","")
@@ -60,8 +61,7 @@ class Context:
         """
         generate the html lines for justpy to work 
         """
-        html=self.as_script_src(f"component_generator", subdir=self.component_engine_type)
-        html+=self.as_script_src("justpy_core")
+        html=self.as_script_src("justpy_core")
         html+=f"""{indent}<script>
 {indent}  var page_id = {self.page_id_js};
 {indent}  var use_websockets = {self.use_websockets_js};
@@ -83,20 +83,10 @@ class Context:
         """
         srcs = ""
         srcs +=self.as_script_src("event_handler", indent)
-        #TODO: read from component dir 
-        for file_name in [
-            "html_component",
-            "quasar_component",
-            "chartjp",
-            "aggrid",
-            "iframejp",
-            "deckgl",
-            "altairjp",
-            "plotlyjp",
-            "bokehjp",
-            "katexjp",
-            "editorjp",
-        ]:
+        
+        #TODO: read from component dir
+                
+        for file_name in self.frontend_engine_libs:
             srcs +=self.as_script_src(file_name, indent, subdir=self.component_engine_type)
         return srcs
     
