@@ -144,7 +144,7 @@ class DemoBrowser(BaseWebPage):
         """
         self.setup()
         self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
-  
+        
         video_size=192
         lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
         df=pd.DataFrame(lod)
@@ -160,20 +160,51 @@ class DemoBrowser(BaseWebPage):
         }
     }""" % video_size
         self.ag_grid=df.jp.ag_grid(a=self.main_page,style=style,options=grid_options )
-        self.ag_grid.html_columns = [1,2,3]
+        self.ag_grid.html_columns = [1,2,3,4]
+        self.ag_grid.on('rowSelected', self.row_selected)
+        self.ag_grid.options.columnDefs[0].checkboxSelection = True
         self.wp.on("page_ready", self.onSizeColumnsToFit)
         return self.wp
+    
+    async def row_selected(self,msg):
+        """
+        a grid row has been selected
+        """
+        if msg.selected:
+            try:
+                row_data = msg.data
+                index = row_data["#"]
+                demo=self.demo_starter.demos[index-1]
+                self.mount(demo,index)
+            except Exception as ex:
+                self.handleException(ex)
+            pass
+        
+    def mount(self,demo,index):
+        """
+        mount the given demo at the given index
+        
+        Args:
+            demo(JustpyDemoApp): the demo to mount
+            index(int): the index of the demo
+        """
+        total=len(self.demo_starter.demos)
+        print (f"mounting {index}/{total}:{demo}")
+        demo.mount(jp.app)
+        demo.try_it_url=f"/{demo.name}"
+        demo.status="✅"
           
     async def on_mount_all_btn_click(self,_msg):
         """
         mount all button has been clicked
         """
-        print("mount all has been clicked")
-        for demo in self.demo_starter.demos:
+        total=len(self.demo_starter.demos)
+        print(f"mount all has been clicked ... trying to mount {total} demos ")
+        for i,demo in enumerate(self.demo_starter.demos):
             try:
-                demo.mount(jp.app)
-                demo.status="✅"
-            except Exception as ex:
+                print (f"mounting {i+1}/{total}:{demo}")
+                self.mount(demo)
+            except BaseException as ex:
                 self.handleException(ex)
         await self.wp.update()
             

@@ -624,6 +624,7 @@ class JustpyDemoApp:
         self.source_file=source_file.replace(self.examples_dir+"/","")
         self.source_link=f"""<a href="https://github.com/justpy-org/justpy/blob/master/examples/{self.source_file}">{self.source_file}</a>"""
         self.video_url=None
+        self.try_it_url=None
         self.name=os.path.basename(self.source_file).replace(".py","")
         self.wpfunc = wpfunc
         self.debug=debug
