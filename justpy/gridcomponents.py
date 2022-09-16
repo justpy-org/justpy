@@ -45,6 +45,7 @@ class AgGrid(JustpyBaseComponent):
         )
         self.theme = "ag-theme-balham"  # one of ag-theme-balham, ag-theme-balham-dark, ag-theme-material
         self.html_columns = []
+        self.row_data_converter = None  # optional function to convert row data; signature: (rowIndex, colIndex, colKey, cellValue) -> newValue
         kwargs["temp"] = False
         super().__init__(**kwargs)
         for k, v in kwargs.items():
@@ -140,10 +141,13 @@ class AgGrid(JustpyBaseComponent):
         d["classes"] = self.classes + " " + self.theme
         d["style"] = self.style
         options = self.options.deepcopy()
-        for row in options.get("rowData", []):
-            for k, v in row.items():
-                if _has_pandas and isinstance(v, Timestamp):
-                    row[k] = str(v)
+        for row_idx, row_dict in enumerate(options.get("rowData", [])):
+            for col_idx, (col_key, val) in enumerate(row_dict.items()):
+                if callable(self.row_data_converter):
+                    val = self.row_data_converter(row_idx, col_idx, col_key, val)
+                    row_dict[col_key] = val
+                if _has_pandas and isinstance(val, Timestamp):
+                    row_dict[col_key] = str(val)
         d["def"] = options
         d["auto_size"] = self.auto_size
         d["events"] = self.events
