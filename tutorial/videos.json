@@ -127,6 +127,11 @@
         {  
         	"name": "tutorial/matplotlib/plot_test1.py",
             "url": "https://user-images.githubusercontent.com/1336221/190603282-529a607c-ad1d-42c9-bcc4-be3415af0dc2.png"
-       	} 
+       	},
+       	{  
+        	"name": "quasar_tutorial/QRating/rating_test1.py",
+        	"url": "https://user-images.githubusercontent.com/1336221/190608483-fd434d41-6445-4d1d-8dcf-221f1f538b09.png"
+        }
+       	
     ]
 }

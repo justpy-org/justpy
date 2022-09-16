@@ -230,6 +230,14 @@ class DemoBrowser(BaseWebPage):
         
         video_size=512
         lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
+        for record in lod:
+            index=record["#"]
+            demo=self.demo_starter.demos[index-1]
+            example=self.tutorial_manager.examples_by_name.get(demo.name,None)
+            tutorial_link=""
+            if example is not None:
+                tutorial_link=f"""<a href={example.github_url} target="_blank">{example.header}</a>"""
+            record["tutorial"]=tutorial_link
         df=pd.DataFrame(lod)
         style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
         grid_options = """{
@@ -243,7 +251,7 @@ class DemoBrowser(BaseWebPage):
         }
     }""" % video_size
         self.ag_grid=df.jp.ag_grid(a=self.main_page,style=style,options=grid_options )
-        self.ag_grid.html_columns = [1,2,3,4]
+        self.ag_grid.html_columns = [1,2,3,4,5,6]
         self.ag_grid.on('rowSelected', self.row_selected)
         self.ag_grid.options.columnDefs[0].checkboxSelection = True
         self.wp.on("page_ready", self.onSizeColumnsToFit)
