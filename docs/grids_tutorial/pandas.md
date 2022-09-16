@@ -31,6 +31,7 @@ Mouseover one of the column headers and click on the "three horizontal lines" <i
 JustPy comes with a pandas extension that makes loading panadas frames into a grid compatible with the Pandas syntax.
 The program below is equivalent to the one above:
 
+### load women_majors.csv with pandas
 ```python
 import justpy as jp
 import pandas as pd
@@ -49,6 +50,7 @@ The JustPy functionality is added to pandas under the namespace "jp". The `ag_gr
 
 The grid can be further modified after it is created:
 
+### load women_majors.csv with pandas and modify after creation
 ```python
 import justpy as jp
 import pandas as pd

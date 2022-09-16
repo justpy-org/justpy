@@ -21,7 +21,7 @@ class TestTutorial(Basetest):
         for i,tutorial in enumerate(tm.tutorials.values()):
             print (f"{i+1:3}:{tutorial.name} ({len(tutorial.lines):4} lines)")
             for j,example in enumerate(tutorial.examples.values()):
-                print (f"  {j+1:2}:{example.name} ({example.header})")
+                print (f"  {j+1:2}:{example.name} ({example.header}) - {example.github_url}")
         header_missing=0
         for i,tutorial in enumerate(tm.tutorials.values()):
             for j,example in enumerate(tutorial.examples.values()):

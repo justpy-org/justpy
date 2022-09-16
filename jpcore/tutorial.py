@@ -5,6 +5,7 @@ Created on 2022-09-16
 '''
 import os
 import re
+import urllib
 from jpcore.utilities import find_files
 
 class TutorialManager:
@@ -45,6 +46,7 @@ class Tutorial:
         self.examples={}
         self.path=path
         self.name=path.replace(docs_dir+"/","")
+        self.github_url=f"https://github.com/justpy-org/justpy/blob/master/docs/{self.name}"
         with open(self.path, "r") as markup_file:
             self.markup = markup_file.read()
         self.lines=self.markup.split("\n")
@@ -82,4 +84,8 @@ class Example:
         self.name=name
         self.header=header
         self.lines=lines
+        self.github_url=None
+        if self.header is not None:
+            anchor=urllib.parse.quote_plus(self.header)
+            self.github_url=f"{self.tutorial.github_url}#{anchor}"
         

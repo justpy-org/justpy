@@ -173,7 +173,7 @@ You need to do this with components. A component that is a list. You can make it
 
 The Vue.js examples are [here](https://vuejs.org/v2/guide/list.html).
 
-Example of rendering a simple list:
+### Example of rendering a simple list
 
  ```python
 import justpy as jp
@@ -190,7 +190,7 @@ def for_example1():
 jp.justpy(for_example1)
 ```
 
-Second example with index:
+### Second example of rendering a list with index
 
 ```python
 import justpy as jp
@@ -234,7 +234,7 @@ def for_example3():
 jp.justpy(for_example3)
 
 ```
-With index:
+### Rendering an object with index
 
 
 ```python

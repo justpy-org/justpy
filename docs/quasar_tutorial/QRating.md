@@ -27,7 +27,7 @@ jp.justpy(rating_test1)
 
 ```
 
-With tooltips
+## QRating With tooltips
 
 ```python
 import justpy as jp

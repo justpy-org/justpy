@@ -93,6 +93,7 @@ Please go to https://api.highcharts.com/highcharts/chart.type and follow the lin
 
 If you simply copy the object like I did  below, you will get an error. Run the program and see for yourself there is an issue.
 
+### highcharts example
 ```python
 import justpy as jp
 
@@ -134,7 +135,7 @@ jp.justpy(create_chart_test3)
 ```
 
 The problem is that the value of the `tooltip.formatter` key is a JavaScript function definition. JustPy does not support this. We will soon see how to define tooltip formatters in JustPy, but for now, please remove the whole tooltip section and run the program. Your program should look like this:
-
+### highcharts example with removed tooltip section
 ```python
 import justpy as jp
 
