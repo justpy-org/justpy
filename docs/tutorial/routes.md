@@ -17,7 +17,7 @@ def hello_function1():
 
 jp.Route('/hello', hello_function1)
 
-jp.justpy()
+jp.justpy()#route_hello
 ```
 Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument of `justpy.` If no argument is provided to `justpy`, the framework shows the 'Page not found' message.
 
@@ -38,7 +38,7 @@ def bye_function1():
 
 jp.Route('/hello', hello_function2)
 
-jp.justpy(bye_function1)
+jp.justpy(bye_function1)#route_hello2
 ```
 
 Type different URLs into the browser and see what happens. Unless the path is exactly '/hello', the `bye_function` will run and 'Goodbye!' will be displayed.
@@ -66,7 +66,7 @@ def bye_function2():
     return wp
 
 
-jp.justpy()
+jp.justpy()#route_hello3
 ```
 
 The SetRoute decorator accepts as a parameter the route and assigns the decorated function to it. The program above defines two routes, '/hello' and '/bye'. URLs that do not include these exact routes, will cause the 'Page not found' message to appear.
@@ -82,7 +82,7 @@ def greeting_function(request):
     wp.add(jp.P(text=f'Hello there, {request.path_params["name"]}!', classes='text-5xl m-2'))
     return wp
 jp.Route('/hello/{name}', greeting_function)
-jp.justpy()
+jp.justpy()#route_hello4
 ```
 
 For more examples using path and url parameters see [request object](/tutorials/request_object.md).

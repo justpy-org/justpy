@@ -14,7 +14,7 @@ class TestTutorial(Basetest):
     
     def check_tutorial(self,tm,ds,debug=False):
         """
-        check the tutorial against the demo starte
+        check the tutorial against the demo starter
         """
         if debug:
             print(f"found {len(tm.tutorials)} tutorials with {tm.total_examples} examples ({tm.total_lines} lines)")
@@ -27,6 +27,10 @@ class TestTutorial(Basetest):
         demo_missing=0
         for i,tutorial in enumerate(tm.tutorials.values()):
             for j,example in enumerate(tutorial.examples.values()):
+                if example.option is not None:
+                    if debug:
+                        print(f"{tutorial.name} {example.name} option {example.option} used")
+                        pass
                 if not example.name in ds.demos_by_name:
                     demo_missing+=1
                     if debug:
@@ -42,6 +46,13 @@ class TestTutorial(Basetest):
         if debug:
             print(f"{demo_missing} demos missing {header_missing} headers missing {html_used} x html used")
         self.assertEqual(0,header_missing+html_used)
+        for demo_name in ds.demos_by_name:
+            if not demo_name in tm.examples_by_name:
+                if "issue_" in demo_name:
+                    continue
+                if debug:
+                    print(f"❌ {demo_name} not linked to tutorial examples")
+            
     
     def test_tutorial_manager(self):
         """

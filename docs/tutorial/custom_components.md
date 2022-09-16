@@ -691,7 +691,7 @@ This method takes two arguments in addition to `self`. The first is the event ty
 !!! note
     Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async.
 
-### Adding a <span style="color: red">model</span> attribute
+### Adding a model attribute
 
 To make Calculator complete, we will also add handling of the `model` attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the `model_update` method from the example below and see what happens.
 

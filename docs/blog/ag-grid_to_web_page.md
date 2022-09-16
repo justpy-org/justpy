@@ -4,7 +4,7 @@
 
 ## Introduction
 
-[Pandas](https://pandas.pydata.org/) is "a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language". It is used by millions of programmer. 
+[Pandas](https://pandas.pydata.org/) is "a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language". It is used by millions of programmer.
 
 [ag-Grid](https://www.ag-grid.com/) bills itself as "The Best JavaScript Grid in the World" and its extensive list of features as well as its speed make arguing against this assertion difficult.
 
@@ -30,7 +30,7 @@ jp.justpy(grid_test1)
 
 ```
 
-That is it. That is the whole program. 
+That is it. That is the whole program.
 
 To run this program you need to have Python version 3.6 or higher and you need to install the pandas and justpy packages. Then, you would create a file with your favorite text editor and copy and paste the program above. If you called the file `grid.py` you would type `python3 grid.py` in the command line or you could use an IDE. By default, you would access the web page by pointing your browser to http://127.0.0.1:8000 (it is easy to change the IP address and port that the application uses if you wish)
 
@@ -98,9 +98,9 @@ jp.justpy(grid_test3)
 
 ## Routes and Multiple Pages
 
-With JustPy it is simple to serve girds with different data based on the URL.
+With JustPy it is simple to serve grids with different data based on the URL.
 
-In the example below the URL http://127.0.0.1/wm will serve the full grid while the URL http://127.0.0.1/wm_20 will serve a grid only with the majors in which women started under 20%. 
+In the example below the URL http://127.0.0.1/wm will serve the full grid while the URL http://127.0.0.1/wm_20 will serve a grid only with the majors in which women started under 20%.
 
 
 ```python
@@ -131,10 +131,10 @@ def serve_wm2():
     wm_under_20.jp.ag_grid(a=wp, style=grid_style)
     return wp
 
-jp.justpy()
+jp.justpy()#women_majors_route_example
 ```
 
-## ag-Grid Enterprise 
+## ag-Grid Enterprise
 
 By default, JustPy uses the ag-Grid community version which is a free to use product distributed under the MIT License. If you would like to try the enterprise version, create a file called `justpy.env` in the directory where your program file and include in it the following:
 

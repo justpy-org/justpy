@@ -34,6 +34,9 @@ class TutorialManager:
             self.total_lines+=len(tutorial.lines)
             self.total_examples+=len(tutorial.examples)
             for example in tutorial.examples.values():
+                if example.name in self.examples_by_name:
+                    duplicate_example=self.examples_by_name[example.name]
+                    raise Exception(f"duplicate example name '{example.name}' {example.tutorial.name} and {duplicate_example.tutorial.name}")
                 self.examples_by_name[example.name]=example
         
 class Tutorial:
@@ -71,11 +74,16 @@ class Tutorial:
             else:
                 python_code.append(line)
                 justpy_match = re.search(
-                    """jp.justpy[(]([a-zA-Z_0-9]*)[,)]""", line
+                    """^(jp[.])?justpy[(]([a-zA-Z_0-9]*)([,]\s*(.*))?[)]([#].*)?""", line
                 )
                 if justpy_match:
-                    example_name = justpy_match.group(1)
-                    example=Example(self,example_name,header,python_code)
+                    example_name = justpy_match.group(2)
+                    example_option=justpy_match.group(4)
+                    example_comment=justpy_match.group(5)
+                    if not example_name:
+                        example_name=example_comment
+                        pass
+                    example=Example(self,name=example_name,option=example_option,header=header,lines=python_code)
                     self.examples[example.name]=example
                     header=None
                     python_code=[]
@@ -86,18 +94,20 @@ class Example:
     an example
     """
     
-    def __init__(self,tutorial:Tutorial,name:str,header:str,lines:list):
+    def __init__(self,tutorial:Tutorial,name:str,option:str=None,header:str="",lines:list=[]):
         """
         constructor
         
         Args:
             tutorial(Tutorial): the tutorial that i am part of
             name(str): the name of the example
+            option(str): option
             header(str): the header/description of the example
             lines(list): the source code lines
         """
         self.tutorial=tutorial
         self.name=name
+        self.option=option
         self.header=header
         self.lines=lines
         self.github_url=None
