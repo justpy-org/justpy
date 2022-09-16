@@ -44,4 +44,4 @@ def grid_test_issue500():
 
 from examples.basedemo import Demo
 
-Demo("Issue 500 aggrid timestamp value", grid_test_issue500)
+Demo("Issue 500 aggrid uuid value", grid_test_issue500)
