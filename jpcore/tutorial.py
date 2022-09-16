@@ -26,12 +26,15 @@ class TutorialManager:
         self.docs_dir=docs_dir
         self.total_lines=0
         self.total_examples=0
+        self.examples_by_name={}
         self.tutorial_files = find_files(self.docs_dir, ".md")
         for tutorial_file_path in self.tutorial_files:
             tutorial=Tutorial(docs_dir,tutorial_file_path)
             self.tutorials[tutorial.name]=tutorial
             self.total_lines+=len(tutorial.lines)
             self.total_examples+=len(tutorial.examples)
+            for example in tutorial.examples.values():
+                self.examples_by_name[example.name]=example
         
 class Tutorial:
     """

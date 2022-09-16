@@ -123,7 +123,10 @@
         {
             "name": "charts_tutorial/stock_charts/stock_test2.py",
             "url": "https://user-images.githubusercontent.com/95085996/190446527-07cfb87a-67d3-44a6-904e-0bf5ebe1c94b.gif"
-        }
-         
+        },
+        {  
+        	"name": "tutorial/matplotlib/plot_test1.py",
+            "url": "https://user-images.githubusercontent.com/1336221/190603282-529a607c-ad1d-42c9-bcc4-be3415af0dc2.png"
+       	} 
     ]
 }

@@ -10,6 +10,7 @@ import pandas as pd
 import socket
 import traceback
 from jpcore.demostarter import Demostarter
+from jpcore.tutorial import TutorialManager,Example
 from jpcore.justpy_app import JustpyDemoApp
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
@@ -106,15 +107,17 @@ class DemoDisplay(BaseWebPage):
     """
     display for a single demo
     """
-    def __init__(self,demo:JustpyDemoApp):
+    def __init__(self,demo:JustpyDemoApp,example:Example=None):
         """
         constructor
         
         Args:
             demo:JustpyDemoApp: the demo to be displayed
+            example:Example: the tutorial example this might relate to
         """
         BaseWebPage.__init__(self)
         self.demo=demo
+        self.example=example
         self.lexer=get_lexer_by_name("python")
         self.formatter=HtmlFormatter()
         self.syntax_highlighted_code=highlight(self.demo.source,self.lexer, self.formatter)    
@@ -127,7 +130,8 @@ class DemoDisplay(BaseWebPage):
         self.container = jp.QDiv(a=self.main_page)
         self.demo_description = jp.QDiv(a=self.container, classes="row")
         self.demo_desc = jp.QDiv(a=self.demo_description, text=self.demo.name, classes="centered")
-
+        if self.example:
+            self.example_div = jp.A(a=self.demo_description,text=self.example.header,href=self.example.github_url)
         self.sourceFrame=jp.QDiv(a=self.container, classes="row")
         # display code
         self.source_code_div=jp.QDiv(a=self.sourceFrame, classes="col-6")
@@ -198,8 +202,12 @@ class DemoBrowser(BaseWebPage):
     Browser for demos
     """
     def __init__(self):
+        """
+        constructor
+        """
         BaseWebPage.__init__(self)
         self.demo_starter=Demostarter()
+        self.tutorial_manager=TutorialManager()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         
     async def onSizeColumnsToFit(self,_msg:dict):   
@@ -290,7 +298,8 @@ class DemoBrowser(BaseWebPage):
             demo_name=request.path_params["demo_name"]
             if demo_name in self.demo_starter.demos_by_name:
                 demo=self.demo_starter.demos_by_name[demo_name]
-                demo_display=DemoDisplay(demo)
+                example=self.tutorial_manager.examples_by_name.get(demo_name,None)
+                demo_display=DemoDisplay(demo,example)
                 return demo_display.web_page()    
             else:
                 self.showError(f"example {demo_name} not found")
