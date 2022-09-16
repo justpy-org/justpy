@@ -19,6 +19,7 @@ This guide/tutorial is far from complete and I will be adding examples to it ove
 
 ## Example
 
+### QBtn example
 The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page.
 
 ```python

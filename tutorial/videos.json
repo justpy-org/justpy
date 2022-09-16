@@ -131,7 +131,10 @@
        	{  
         	"name": "quasar_tutorial/QRating/rating_test1.py",
         	"url": "https://user-images.githubusercontent.com/1336221/190608483-fd434d41-6445-4d1d-8dcf-221f1f538b09.png"
+        },
+        {
+        	"name": "tutorial/basic_concepts/hello_world3.py",
+        	"url": "https://user-images.githubusercontent.com/1336221/190648952-8469573a-5ecd-401e-981b-2744bcc4f3f6.png"
         }
-       	
     ]
 }

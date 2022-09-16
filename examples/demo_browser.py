@@ -5,8 +5,11 @@ Created on 2022-09-14
 '''
 import argparse
 import asyncio
+import gc
 import justpy as jp
+import os
 import pandas as pd
+import psutil
 import socket
 import traceback
 from jpcore.demostarter import Demostarter
@@ -60,6 +63,15 @@ class BaseWebPage():
         error_msg_html=self.get_html_error(ex)
         self.showError(error_msg_html)
         
+    async def onPageReady(self,_msg:dict):   
+        """
+        react on page_ready event
+        """
+        process = psutil.Process(os.getpid())
+        gc.collect()
+        mem_message=(f'memory: {process.memory_info().rss:,} bytes')
+        self.title_status.inner_html=mem_message
+        
     def setup(self):
         """
         prepare basic page infrastructure
@@ -77,6 +89,7 @@ class BaseWebPage():
         <q-toolbar name="toolbar">
             <q-btn flat round dense icon="menu"/>
             <q-toolbar-title>Justpy examples</q-toolbar-title>
+            <span class="label bg-primary text-white" name="title-status"></span>
             <q-space />
         </q-toolbar>
     </q-header>
@@ -98,10 +111,12 @@ class BaseWebPage():
         self.main_page = self.bp.name_dict["main_page"]
         self.footer = self.bp.name_dict["footer"]
         self.toolbar=self.bp.name_dict["toolbar"]
+        self.title_status=self.bp.name_dict["title-status"]
         #self.tutorial_btn = self.bp.name_dict["tutorial-btn"]
         #self.tutorial_btn.on("click",self.on_tutorial_btn_click)
         # put into html
         self.errors=self.bp.name_dict["error-display"]
+        self.wp.on("page_ready", self.onPageReady)
 
 class DemoDisplay(BaseWebPage):
     """
@@ -157,7 +172,7 @@ class DemoDisplay(BaseWebPage):
         self._showDemoStatus()
         return self.wp
 
-    def toggle_preview(self, msg):
+    def toggle_preview(self, _msg):
         """
         toggle between demo video and iframe preview
         """
@@ -171,7 +186,6 @@ class DemoDisplay(BaseWebPage):
         shows the status of the live demo
         """
         jp.QDiv(a=self.footer, text=f"Status{self.demo.status}")
-
 
     def _showVideoDemo(self):
         """
@@ -211,6 +225,7 @@ class DemoBrowser(BaseWebPage):
         self.demo_starter=Demostarter()
         self.tutorial_manager=TutorialManager()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
+        self.mounted={}
         
     async def onSizeColumnsToFit(self,_msg:dict):   
         """
@@ -222,6 +237,15 @@ class DemoBrowser(BaseWebPage):
                 await self.ag_grid.run_api('sizeColumnsToFit()', self.wp)
         except Exception as ex:
             self.handleException(ex)
+            
+    async def onPageReady(self,_msg:dict):   
+        """
+        react on page_ready event
+        """
+        await self.onSizeColumnsToFit(_msg)
+        await super().onPageReady(_msg)
+        self.footer.text=f"{len(self.mounted)} apps mounted"
+        
         
     def web_page(self):
         """
@@ -256,7 +280,6 @@ class DemoBrowser(BaseWebPage):
         self.ag_grid.html_columns = [1,2,3,4,5,6]
         self.ag_grid.on('rowSelected', self.row_selected)
         self.ag_grid.options.columnDefs[0].checkboxSelection = True
-        self.wp.on("page_ready", self.onSizeColumnsToFit)
         return self.wp
     
     async def row_selected(self,msg):
@@ -287,6 +310,7 @@ class DemoBrowser(BaseWebPage):
             demo.mount(jp.app)
             demo.try_it_url=f"/{demo.wpfunc.__name__}"
             demo.status="✅"
+            self.mounted[demo.name]=demo
         except BaseException as ex:
             demo.status=self.get_html_error(ex)
               
