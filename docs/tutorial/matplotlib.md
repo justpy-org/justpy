@@ -1,13 +1,14 @@
 # Creating matplotlib Charts
 
-The most popular Python plotting library is [matplotlib](https://matplotlib.org/index.html). Chances are that if you are interested in visualization, you have already used it. 
+The most popular Python plotting library is [matplotlib](https://matplotlib.org/index.html). Chances are that if you are interested in visualization, you have already used it.
 
-JustPy includes in its standard component library the component Matplotlib that makes it simple to include matplotlib charts in a web page without having to change any matplotlib command. 
+JustPy includes in its standard component library the component Matplotlib that makes it simple to include matplotlib charts in a web page without having to change any matplotlib command.
 
 ## The Matplotlib component
 
 Run the following example that uses the Matplotlib component:
 
+### matplotlib.pyplot example
 ```python
 import justpy as jp
 import matplotlib.pyplot as plt
@@ -19,7 +20,7 @@ def plot_test1():
     plt.xlabel('x data')
     plt.ylabel('y data')
     jp.Matplotlib(a=wp)
-    
+
     # If memory may be an issue, don't forget to close figures not in use anymore
     plt.close()
     return wp
@@ -27,27 +28,27 @@ def plot_test1():
 jp.justpy(plot_test1)
 ```
 
-The line `jp.Matplotlib(a=wp)` creates a Matplotlib instance and adds it to `wp`. 
+The line `jp.Matplotlib(a=wp)` creates a Matplotlib instance and adds it to `wp`.
 
 !!! tip
-    If you call Matplotlib where you would normally call `plt.show()` the chart instance is created reflecting all the matplotlib commands issued so far. 
+    If you call Matplotlib where you would normally call `plt.show()` the chart instance is created reflecting all the matplotlib commands issued so far.
 
-The Matplotlib component is a modified Div component whose `inner_html` attribute is set to the SVG representation of a [matplotlib figure](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.figure.Figure.html). 
+The Matplotlib component is a modified Div component whose `inner_html` attribute is set to the SVG representation of a [matplotlib figure](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.figure.Figure.html).
 
 If a matplotlib figure is not specified explicitly when a Matplotlib instance is created (like in the example above), Matplotlib uses the current figure. If you want to put some other figure on the page use the `figure` keyword when creating the instance or use the `set_figure(figure)` method of the component after creation.
 
 !!! tip
-    Don't forget to close matplotlib figures that are not in use. This will not affect any JustPy Matplotlib instances as the SVG representation that was created from the figure is distinct from the figure and will not be deleted. 
+    Don't forget to close matplotlib figures that are not in use. This will not affect any JustPy Matplotlib instances as the SVG representation that was created from the figure is distinct from the figure and will not be deleted.
 
 In the example below, the first chart created is displayed second and the second chart created is displayed first.
-
+### matplotlib.pyplot example with display order
 ```python
 import justpy as jp
 import matplotlib.pyplot as plt
 
 def plot_test2():
     wp = jp.WebPage()
-    
+
     first_figure = plt.figure()
     plt.plot([0, 1, 4, 9], marker='*', markersize=20, markeredgecolor='red')
     plt.title('First Figure Showing Second')
@@ -78,6 +79,7 @@ jp.justpy(plot_test2)
 
 In the example below, each time the button is clicked, another point is added to the chart. This is done by creating a new figure in the event handler and setting the figure of the component to this new figure. In effect, the `inner_html` attribute of the element is set to the SVG of the new figure.
 
+### matplotlib chart update using inner_html of SVG figure
 ```python
 import justpy as jp
 import matplotlib.pyplot as plt
@@ -85,7 +87,7 @@ import matplotlib.pyplot as plt
 
 def plot_test3():
     wp = jp.WebPage()
-    
+
     f = plt.figure()
     plt.plot([0, 1, 4, 9], marker='*', markersize=20, markeredgecolor='red')
     plt.title('Matplotlib Example')
@@ -119,7 +121,7 @@ jp.justpy(plot_test3)
 ```
 
 The chart component itself is a JustPy component so it responds also to events. In the example below, clicking the button adds a point to the chart while clicking the chart subtracts a point.
-
+### matplotlib chart adding a point on an event
 ```python
 import justpy as jp
 import matplotlib.pyplot as plt
@@ -177,6 +179,7 @@ jp.justpy(plot_test4)
 
 The program below is very similar to the example above except that it puts the same chart element several times on the page. Since it is the same element, the event handlers modify all the charts.
 
+### matplotlib chart with several copies on same page
 ```python
 import justpy as jp
 import matplotlib.pyplot as plt
@@ -234,6 +237,8 @@ jp.justpy(plot_test5)
 ```
 
 If we want to treat each chart separately in the event handlers we need to modify the program. In the program below clicking the button adds a point to all charts while clicking each chart subtracts a point only from the chart clicked.
+
+### matplotlib chart with event treatment per chart
 
 ```python
 import justpy as jp
@@ -296,16 +301,16 @@ In order to handle each chart separately, we create 20 distinct chart elements a
 
 ## Creating matplotlib charts with pandas
 
-Pandas provides a [visualization layer](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html) over matplotlib. 
+Pandas provides a [visualization layer](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html) over matplotlib.
 
-Since pandas creates matplotlib plots, the Matplotlib component works in this case as well. Simply call Matplotlib when in your code you would normally call `plt.show()`. 
+Since pandas creates matplotlib plots, the Matplotlib component works in this case as well. Simply call Matplotlib when in your code you would normally call `plt.show()`.
 
 !!! tip
     If you create matplotlib charts within request handlers, don't forget to close the matplotlib figures associated with them in order to conserve memory and make your application scalable.
 
 !!! note
     The example below takes about 15 seconds to load a request, it is not hanging
-
+### pandas load to matplotlib.plot
 ```python
 import justpy as jp
 import pandas as pd
@@ -363,7 +368,7 @@ jp.justpy(plot_test7)
 If you don't need to customize the chart for each request, you can speed up your website's response time by generating the charts once and serving the same chart elements with each request.
 
 Here is the program above modified in this fashion:
-
+### pandas load to matplotlib.plot with preloading
 ```python
 import justpy as jp
 import pandas as pd
@@ -422,7 +427,7 @@ def plot_test8():
 
 jp.justpy(plot_test8)
 ```
- 
+
 ## Creating charts with seaborn
 
 > [Seaborn](https://seaborn.pydata.org/index.html) is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics.
@@ -432,7 +437,7 @@ Seaborn allows you to create beautiful visualizations with few lines of code.
 Again, since seaborn, like pandas' visualization, is based on matplotlib, Matplotlib (the JustPy component) works well also with seaborn.
 
 Following are a few examples taken from the [seaborn introduction](https://seaborn.pydata.org/introduction.html):
-
+### seaborn example
 ```python
 import justpy as jp
 import seaborn as sns
@@ -442,7 +447,7 @@ import seaborn as sns
 def create_page():
     wp = jp.WebPage(delete_flag=False)
     chart_classes = 'm-2'
-    
+
     jp.Div(text='Tips Dataset', a=wp, classes='text-white bg-blue-500 text-center text-xl')
     sns.set()
     tips = sns.load_dataset("tips")
@@ -492,4 +497,3 @@ def plot_test9():
 
 jp.justpy(plot_test9)
 ```
-

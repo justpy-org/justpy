@@ -5,6 +5,8 @@
 The `model` attribute is a special one in JustPy. You don't need to use it, but if you do, it may make your code more concise and readable. It is an elegant and simple way to share data between independent components (it was inspired by the [`v-model`](https://vuejs.org/v2/api/#v-model) directive in Vue.js and works in a similar manner).
 
 Try running the following program and typing into the input field in the browser:
+
+### Input field demo
 ```python
 import justpy as jp
 
@@ -32,7 +34,7 @@ In the case of a Div element the relation is only one way. Its text attribute is
 If an element has an input event, the model attribute works in two directions, otherwise just in one. For two directional elements the attribute changed is value while for one directional ones the attribute changed is text.
 
 How is this useful? Let's put three divs on the page instead of just one:
-
+### Input field demo with three divs
 ```python
 import justpy as jp
 
@@ -50,6 +52,8 @@ jp.justpy(input_demo_model2)
 Since all Div instances have the same model, they change when we type. Without the model attribute, implementing this would be more verbose.
 
 Now let's duplicate the Inputs. Let's have five Inputs instead of one:
+
+### Input field demo with five Inputs
 ```python
 import justpy as jp
 
@@ -68,6 +72,8 @@ jp.justpy(input_demo_model3)
 Type into any one of the five Input fields and see what happens. Since all elements share the same model, they all change in tandem. We didn't need to write any event handler.
 
 Let's make a small modification to the program and add a reset button that will clear all the elements on the page:
+
+### Input field demo with reset button
 ```python
 import justpy as jp
 
@@ -105,6 +111,7 @@ With the `model` and `data` attributes you can easily propagate a change in one 
 
 The following program is the base one we will expand on. It uses `model` in the same way as examples above.
 
+### use of model
 ```python
 import justpy as jp
 
@@ -130,6 +137,7 @@ When you type text into `middle_input` it shows up in the four corners of the wi
 If we want the corners to show the text "Nothing typed yet" when `middle_input` is empty, the best way to implement this, is by creating a new component with a more sophisticated `model` handling method.
 
 The program would look like this:
+### more sophisticated use of model
 ```python
 import justpy as jp
 
@@ -206,4 +214,4 @@ def model_demo3():
 jp.justpy(model_demo3)
 ```
 
- We add the two attributes `repeat` and `initial_text` to `MyDiv`. The first, `repeat` determines how many time the model value will be repeated in the text. We give each corner a different value. 
+ We add the two attributes `repeat` and `initial_text` to `MyDiv`. The first, `repeat` determines how many time the model value will be repeated in the text. We give each corner a different value.

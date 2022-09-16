@@ -2,9 +2,11 @@
 
 ## The Basics
 
-In all the examples above, any [URL](https://en.wikipedia.org/wiki/URL) typed into the browser would render the same page. Usually, when we develop a web application, we want different URLs to load different pages. In other words, we want to define different request handlers to handle different URLs. In this part of the tutorial we will show how to do this using JustPy. 
+In all the examples above, any [URL](https://en.wikipedia.org/wiki/URL) typed into the browser would render the same page. Usually, when we develop a web application, we want different URLs to load different pages. In other words, we want to define different request handlers to handle different URLs. In this part of the tutorial we will show how to do this using JustPy.
 
 Please run the following program:
+
+### Setting a route with jp.Route
 ```python
 import justpy as jp
 
@@ -17,9 +19,10 @@ jp.Route('/hello', hello_function1)
 
 jp.justpy()
 ```
-Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument of `justpy.` If no argument is provided to `justpy`, the framework shows the 'Page not found' message. 
+Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument of `justpy.` If no argument is provided to `justpy`, the framework shows the 'Page not found' message.
 
 Try running the following program:
+### Setting a route with jp.Route - default route + /hello
 ```python
 import justpy as jp
 
@@ -39,7 +42,7 @@ jp.justpy(bye_function1)
 ```
 
 Type different URLs into the browser and see what happens. Unless the path is exactly '/hello', the `bye_function` will run and 'Goodbye!' will be displayed.
- 
+
 !!! warning
     All paths must start with '/', otherwise an error occurs.
 
@@ -66,7 +69,7 @@ def bye_function2():
 jp.justpy()
 ```
 
-The SetRoute decorator accepts as a parameter the route and assigns the decorated function to it. The program above defines two routes, '/hello' and '/bye'. URLs that do not include these exact routes, will cause the 'Page not found' message to appear. 
+The SetRoute decorator accepts as a parameter the route and assigns the decorated function to it. The program above defines two routes, '/hello' and '/bye'. URLs that do not include these exact routes, will cause the 'Page not found' message to appear.
 
 ## Using Route Parameters
 

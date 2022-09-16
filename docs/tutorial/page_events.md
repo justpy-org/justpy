@@ -3,17 +3,17 @@
 As of version 0.1.2 pages support three events:
 
 * click - fires when page is clicked
-* [visibilitychange](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event) - fires when the page gains or loses visibility 
+* [visibilitychange](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event) - fires when the page gains or loses visibility
 * page_ready - fires after a page is ready with an established websocket connection
 
 Added in version 0.1.3:
 
 * result_ready: fires when a result from the [`run_javascript`](/reference/webpage/#async-def-run_javascriptself-javascript_string-request_id-sendtrue) method is available.
 
-In the first example below, `page_ready` is used to load a page with 3,000 Div elements in a staggered manner in order to improve the user experience. 
+In the first example below, `page_ready` is used to load a page with 3,000 Div elements in a staggered manner in order to improve the user experience.
 
 Try the '/stagger' route and see how it compares to the default.
-
+### loading 3000 div elements in a staggered manner
 
 ```python
 import justpy as jp
@@ -47,6 +47,8 @@ jp.justpy(loading_page_no_stagger)
 ```
 
 In the following example the result of running JavaScript in the browser is obtained:
+
+### run_javascript example
 
 ```python
 import justpy as jp

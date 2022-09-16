@@ -12,6 +12,7 @@ Some components described here have features that are covered in other parts of 
 
 Our first component is a very simple one. It is a Button that is formatted to look like a [pill](https://tailwindcss.com/components/buttons#pill).
 
+### Custom Component PillButton - Button looking like a pill
 ```python
 import justpy as jp
 
@@ -41,7 +42,7 @@ Without it, the instances of the components will not be created correctly. In mo
 
 Let's add a custom attribute to the component that will determine the background color of the button.
 
-
+### Custom Component PillButton  with background color attribute
 ```python
 import justpy as jp
 
@@ -260,6 +261,7 @@ We now have a component, `MyAlert` that we can reuse as we please in any project
 
 Here is an example of a simple date card component based on [this](https://tailwindcomponents.com/component/calendar-date) design.
 
+### CalendarDate custom component
 ```python
 import justpy as jp
 
@@ -310,6 +312,7 @@ This component works well enough but has a flaw. The `inner_html` attribute is s
 
 To solve this problem, we need to move setting `inner_html` from the time the instance was created to the time it is rendered. Every JustPy component has a method called `react` that is called each time before the object is converted to a dict. The example above can therefore be written as follows:
 
+### CalendarDate custom component using react
 ```python
 import justpy as jp
 
@@ -359,7 +362,7 @@ jp.justpy(custom_comp_test4)
 The `react` method accepts an additional argument to self. The argument `data` is the `data` attribute of the element's direct parent. If the element has no parent, it is the `data` attribute of the page. Using `react` we can have child elements change their behavior when rendered based on the `data` attribute of their parent or the page they are on.
 
 For example, let's make the color of the component dependent on the `data` attribute of their parent container.
-
+### CalendarDate custom component color dependent on data attribute of parent container
 ```python
 import justpy as jp
 
@@ -426,6 +429,8 @@ A few more words about Select: A Select component includes Option components. In
 JustPy comes with a simple Hello component, which we will now examine.
 
 First run the following short program.
+
+### 5 x times jp.Hello
 ```python
 import justpy as jp
 
@@ -442,6 +447,7 @@ jp.justpy(hello_test1)
 The program puts five Hello elements on the page. Click any one of them. All five will show the number of times any element was clicked because each time through the loop, we add the same element to the page. There may be 5 rendered elements on the page, but for JustPy, these are the same element.
 
 If we would like there to be independent components on the page, we would write the program in the following way:
+### 5 x times jp.Hello as independent elements
 ```python
 import justpy as jp
 
@@ -476,6 +482,7 @@ Again, JustPy components are Python classes. In our case, `Hello` inherits from 
 
 In `__init__` we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class `__init__`, in our case the `__init__` of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class `__init__` after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
 
+### 5 x times jp.Hello with a default counter value
 ```python
 import justpy as jp
 
@@ -494,6 +501,8 @@ Since `counter` is initialized to 100, the components will start counting from 1
 Next, in the definition of `Hello`, we set the classes of the component to give it some basic design and we set the text. Then we define the click event handler and assign it to the instance. That's it.
 
 Let's say we are not pleased with the Hello message and its colors and want to define a better Hello component. This is how we would do it:
+
+### 5 x times customized MyHello based on jp.Hello
 ```python
 import justpy as jp
 

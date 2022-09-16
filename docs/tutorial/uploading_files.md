@@ -15,7 +15,7 @@ In the example above, when the element is clicked, the file 'image1.png' from th
 
 ### Dynamic Content
 
-The download link does not have to be static. In the example below, the href is a non-static route that responds to a user request and inserts text into the page that is returned. Since the text is assigned to the `html` attribute of the page, this overrides all other page options and just the text is returned. 
+The download link does not have to be static. In the example below, the href is a non-static route that responds to a user request and inserts text into the page that is returned. Since the text is assigned to the `html` attribute of the page, this overrides all other page options and just the text is returned.
 
 Run it and look at the files created each time. They will be different based on the time they were downloaded.
 
@@ -43,8 +43,8 @@ def create_file():
 jp.justpy(download_test1)
 
 ```
- 
-## Uploading Files 
+
+## Uploading Files
 
 Uploading files is a three step process.
 
@@ -90,19 +90,19 @@ In the case of an Input element for file selection, JustPy adds to `msg` a list 
 
 Run the program above to see some examples of these values.
 
-Note that the content of the files is not available to the change event handler. Only when a form with the element has been submitted, does JustPy actually read the files and insert their content in the `msg` of the submit event handler. 
+Note that the content of the files is not available to the change event handler. Only when a form with the element has been submitted, does JustPy actually read the files and insert their content in the `msg` of the submit event handler.
 
-Again the information is found in `msg.files` but with an additional key called `file_content`. The value under this key is the file content in  [base64 format](https://docs.python.org/3/library/base64.html). Files in this format are in printable ASCII characters and can be included in WebSocket messages and HTTP POST requests. 
+Again the information is found in `msg.files` but with an additional key called `file_content`. The value under this key is the file content in  [base64 format](https://docs.python.org/3/library/base64.html). Files in this format are in printable ASCII characters and can be included in WebSocket messages and HTTP POST requests.
 
 !!! note
     When using Websockets there is currently a 1 MByte limit on total upload size in one request after the base64 conversion. If you want a large limit, run the upload page or the application with `websockets=false`
 
-The program below lets users upload image files and displays thumbnails of the files uploaded. When the thumbnails are clicked, the file that was uploaded is downloaded. 
+The program below lets users upload image files and displays thumbnails of the files uploaded. When the thumbnails are clicked, the file that was uploaded is downloaded.
 
 Each user's files are stored in a directory that is unique for each session.
 
-The ThumbNail component defined in the program is an [A component](../html_components?id=html-links) that includes an Img component. 
-
+The ThumbNail component defined in the program is an [A component](../html_components?id=html-links) that includes an Img component.
+### upload image files and display thumbnails of the files uploaded
 ```python
 import justpy as jp
 import base64

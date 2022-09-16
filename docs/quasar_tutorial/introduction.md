@@ -19,8 +19,8 @@ This guide/tutorial is far from complete and I will be adding examples to it ove
 
 ## Example
 
-The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page. 
- 
+The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page.
+
 ```python
 import justpy as jp
 import random
@@ -49,9 +49,9 @@ The program uses the JustPy QBtn component which is based on the [Quasar QBtn co
 
 ## props of Quasar components
 
-The JustPy component usually supports all the Quasar component options (in the Quasar docs these are called `props`). In JustPy these are designated by setting the attributes of the element. This can be done at creation using keywords or later using standard attribute assignment. 
+The JustPy component usually supports all the Quasar component options (in the Quasar docs these are called `props`). In JustPy these are designated by setting the attributes of the element. This can be done at creation using keywords or later using standard attribute assignment.
 
-Quasar props are in kebab case: `icon-right` 
+Quasar props are in kebab case: `icon-right`
 In JustPy the attribute names are in snake case: `icon_right`
 
 If a quasar prop is set just by specifying it, in JustPy you set the corresponding attribute to `True`.
@@ -219,6 +219,8 @@ JustPy supports the following Quasar Vue directives:
 
 !!! info "Use QDiv instead of Div if you want to apply directives on an element."
 
+### QDiv to apply Quasar Directives
+
 ```python
 import justpy as jp
 
@@ -234,6 +236,7 @@ jp.justpy(quasar_example3)
 ```
 
 The value of the directive can be a dictionary for configuring more options:
+### QDiv directive as dictionary
 
 ```python
 import justpy as jp
@@ -282,4 +285,3 @@ def bar_example():
 jp.justpy(bar_example)
 
 ```
-

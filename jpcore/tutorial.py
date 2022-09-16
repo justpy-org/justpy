@@ -5,7 +5,6 @@ Created on 2022-09-16
 '''
 import os
 import re
-import urllib
 from jpcore.utilities import find_files
 
 class TutorialManager:
@@ -51,19 +50,32 @@ class Tutorial:
             self.markup = markup_file.read()
         self.lines=self.markup.split("\n")
         header=None
+        python_code=[]
+        in_python_code=False
         for line in self.lines:
-            header_match= re.search("^#+\s*(.*)",line)
-            if header_match:
-                header=header_match.group(1)
-                pass
-            justpy_match = re.search(
-                """jp.justpy[(]([a-zA-Z_0-9]*)[,)]""", line
-            )
-            if justpy_match:
-                example_name = justpy_match.group(1)
-                example=Example(self,example_name,header,[])
-                self.examples[example.name]=example
-                header=None
+            if line.startswith("```python"):
+                in_python_code=True
+                continue
+            if line.startswith("```"):
+                in_python_code=False
+                continue
+            if not in_python_code:
+                header_match= re.search("^#+\s*(.*)",line)
+                if header_match:
+                    header=header_match.group(1)
+                    pass
+            else:
+                python_code.append(line)
+                justpy_match = re.search(
+                    """jp.justpy[(]([a-zA-Z_0-9]*)[,)]""", line
+                )
+                if justpy_match:
+                    example_name = justpy_match.group(1)
+                    example=Example(self,example_name,header,python_code)
+                    self.examples[example.name]=example
+                    header=None
+                    python_code=[]
+                    in_python_code=False
 
 class Example:
     """
@@ -86,6 +98,6 @@ class Example:
         self.lines=lines
         self.github_url=None
         if self.header is not None:
-            anchor=urllib.parse.quote_plus(self.header)
+            anchor=self.header.lower().replace(" ","-")
             self.github_url=f"{self.tutorial.github_url}#{anchor}"
         

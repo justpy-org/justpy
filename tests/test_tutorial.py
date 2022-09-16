@@ -31,6 +31,7 @@ class TestTutorial(Basetest):
                         print(f"❌ docs/{tutorial.name} {example.name} - header missing")
         if debug:
             print(f"{header_missing} headers missing")
+        self.assertEqual(0,header_missing)
     
     def test_tutorial_manager(self):
         """

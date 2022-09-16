@@ -1,6 +1,7 @@
 # Handling Events
 In this part of the tutorial you will learn how to deal with user generated events such as a mouse click. JustPy deals with such events by binding a function to an event. When the event occurs, the function is executed. Please run the following program and click on 'Not clicked yet':
 
+## event handling demo
 ```python
 import justpy as jp
 
@@ -28,6 +29,7 @@ The first (I recommend calling it `self`), is the object which generated the eve
 
 In the program below I have added some print commands to the `my_click` function. Run it and see what is printed to the console.
 
+## event handling demo with printing to console
 ```python
 import justpy as jp
 
