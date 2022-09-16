@@ -40,6 +40,8 @@ The program above activates a web server that returns a web page with 'Hello wor
 
 Here is a slightly modified version in which 'Hello world!' changes to 'I was clicked!' when it is clicked.
 
+### Hello world with click
+
 ```python
 import justpy as jp
 

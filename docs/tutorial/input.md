@@ -185,7 +185,7 @@ Radio buttons generate the 'change' event on all browsers. They generate the 'in
 In the example below, the results of clicking a radio button are shown using the event handler `radio_changed`. Notice that the value of the radio button is always the same. What changes is its `checked` property. The value of a group of radio buttons is the value of the radio button in the group that is checked.
 
 To make all the radio buttons in the group available to the event handler, when we create them, we also create a list that holds all the radio buttons in the group. We assign this list to an attribute of each radio button element (in our case `btn_list`). In the event handler we iterate over this list to report which radio button is pressed.
-
+### Radio Button Example with radio_changed event handler
 
 ```python
 import justpy as jp

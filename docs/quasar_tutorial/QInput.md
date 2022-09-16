@@ -8,6 +8,7 @@ QInput like Input creates an input event when its value changes.
 
 The program below puts on the page several QInput elements with different features. All are connected using the the same `model` attribute.
 
+### Several QInput elements
 ```python
 import justpy as jp
 
@@ -85,6 +86,8 @@ jp.justpy(input_test7)
 ```
 
 Or better yet, as a reusable component
+
+### PasswordWithToggle as a reusable component
 
 ```python
 import justpy as jp
@@ -169,6 +172,7 @@ jp.justpy(input_test10)
 
 You can also use QInput's internal validation prop `rules`. The prop needs to be a list that contains a string that represents JavaScript functions. See the [examples](https://quasar.dev/vue-components/input#Internal-validation) in the Quasar documentation
 
+### QInput internal validation with rules
 ```python
 import justpy as jp
 

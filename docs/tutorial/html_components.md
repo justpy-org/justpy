@@ -1,8 +1,8 @@
 # HTML Components
 
-JustPY supports components corresponding to HTML and SVG tags. The name of the component is the same as the name of the HTML tag with the first letter capitalized. For example, we already saw the `Div` and `P` components that correspond to the the `div` and `p` HTML tags. JustPy supports all tags that put elements on the page and are not deprecated in HTML 5. 
+JustPY supports components corresponding to HTML and SVG tags. The name of the component is the same as the name of the HTML tag with the first letter capitalized. For example, we already saw the `Div` and `P` components that correspond to the the `div` and `p` HTML tags. JustPy supports all tags that put elements on the page and are not deprecated in HTML 5.
 
-Here is a simple example with three HTML components. 
+## Simple example with three HTML components
 
 ```python
 import justpy as jp
@@ -15,13 +15,15 @@ def html_comps1():
     return wp
 
 jp.justpy(html_comps1)
-``` 
+```
 
-* The [i](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/i) HTML tag displays text typically in italics. 
-* The [br](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br) HTML tag produces a line break. 
-* The [strong](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong) HTML tag is typically rendered in bold type. 
+* The [i](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/i) HTML tag displays text typically in italics.
+* The [br](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br) HTML tag produces a line break.
+* The [strong](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong) HTML tag is typically rendered in bold type.
 
 The JustPy function `get_tag`, creates an instance of a component based on the HTML tag. Its first argument is a string with the tag and the rest of the arguments are the identical optional keyword arguments for the class `__init__` method. The program below is equivalent to the one above:
+
+## Simple example with three HTML components using get_tag
 
 ```python
 import justpy as jp
@@ -40,6 +42,9 @@ jp.justpy(html_comps2)
 ```
 
 It is also possible to get the same formatting using the the `Div` component with the appropriate Tailwind classes:
+
+## Tailwind formatting with Div
+
 ```python
 import justpy as jp
 
@@ -141,13 +146,14 @@ The program renders on the page a progression of images of the **Python Powered*
 
 The images are added inside a loop. In each iteration of the loop, an image is added to the page. The `src` attribute designates where to fetch the image from, in our case the [python.org](https://www.python.org) website. As you see in this example, you can combine Tailwind classes (or any CSS classes) with setting the `style` attribute. Here, the style is set to [rotate](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate) the image based on the loop variable. We also set the height and width attributes of the image to 100.
 
-The program then sets the `degree` attribute of the image to the loop variable. It will be used in the event handlers that define the interaction with the mouse. 
+The program then sets the `degree` attribute of the image to the loop variable. It will be used in the event handlers that define the interaction with the mouse.
 
 !!! note
     `degree` is a different kind of attribute than `src`, `height`, and `width`. It is a user defined attribute that is not part of the HTML specification. In the JustPy component definitions, attributes that are part of the HTML specification are explicitly identified and handled accordingly.
 
 The mouse event handlers change the `style` and `class` attributes of the element as needed using the `degree` attribute of the image if required. For clarity, the event handlers are defined inside the loop, but they could be defined just once outside the loop or outside the request handler. We could also set the attributes as keyword arguments and the result is the following:
 
+## Setting Attributes with keyword arguments
 ```python
 import justpy as jp
 
@@ -161,7 +167,7 @@ def no_rotate2(self, msg):
     self.degree = 0
     self.set_class('bg-red-200')
 
-def html_comps():
+def html_comps7():
     wp = jp.WebPage()
     for degree in range(0, 361, 10):
         jp.Img(src='https://www.python.org/static/community_logos/python-powered-h-140x182.png', a=wp,
@@ -169,7 +175,7 @@ def html_comps():
                 degree=degree, mouseenter=straighten2, mouseleave=rotate_back2, click=no_rotate2)
     return wp
 
-jp.justpy(html_comps)
+jp.justpy(html_comps7)
 ```
 
 ## HTML Links
@@ -177,6 +183,8 @@ jp.justpy(html_comps)
 In JustPy you create hyperlinks using the `A` component which corresponds to the [`a` HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
 
 The `A` component is also named `Link` (in case you want to use a more descriptive name).
+
+### simple python.org link
 
 ```python
 import justpy as jp
@@ -190,10 +198,11 @@ jp.justpy(link_demo1)
 
 ```
 
-The link above goes to the Python.org web page. If you want the link to open in a new window, set the `target` attribute of the `A` component instance to '_blank' 
+The link above goes to the Python.org web page. If you want the link to open in a new window, set the `target` attribute of the `A` component instance to '_blank'
 
-If you want to link to an element on the page, use the `bookmark` attribute and assign to it the element you want to link to. If you want to scroll to the element, instead of jumping instantly, set the `scroll` attribute to `True`. 
+If you want to link to an element on the page, use the `bookmark` attribute and assign to it the element you want to link to. If you want to scroll to the element, instead of jumping instantly, set the `scroll` attribute to `True`.
 
+### scroll example
 ```python
 import justpy as jp
 
@@ -282,5 +291,3 @@ def show_demo():
 
 jp.justpy(show_demo)
 ```
-
-

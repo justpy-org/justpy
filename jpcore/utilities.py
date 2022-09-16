@@ -1,6 +1,28 @@
+"""
+utilities for justpy
+"""
 import asyncio
 import inspect
+import os
 
+def find_files(path: str, ext: str) -> list:
+        """
+        find files with the given extension in the given path
+
+        Args:
+            path(str): the path to start with
+            ext(str): the extension to search for
+
+        Returns:
+            list: a list of files found
+        """
+        foundFiles = []
+        for root, _dirs, files in os.walk(path, topdown=False):
+            for name in files:
+                if name.endswith(ext):
+                    filepath = os.path.join(root, name)
+                    foundFiles.append(filepath)
+        return foundFiles
 
 def print_request(request):
     # See https://www.starlette.io/routing/ for path_params

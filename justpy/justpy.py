@@ -22,7 +22,7 @@ JustPy.LOGGING_LEVEL = LOGGING_LEVEL
 # from .misccomponents import *
 from .pandas import *
 from .routing import SetRoute
-from .utilities import run_task, create_delayed_task
+from jpcore.utilities import run_task, create_delayed_task
 import uvicorn, logging, sys, os, traceback
 import typing
 #

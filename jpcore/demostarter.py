@@ -12,6 +12,7 @@ from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from examples.basedemo import Demo
 from jpcore.justpy_app import JustpyDemoApp
+from jpcore.utilities import find_files
 import justpy as jp
 
 class Demostarter:
@@ -34,7 +35,7 @@ class Demostarter:
         self.video_json_file=f"{os.path.dirname(self.script_dir)}/tutorial/videos.json"
         if self.debug:
             print(f"collecting examples from {self.justpy_dir}")
-        pymodule_files = self.find_files(self.justpy_dir, ".py")
+        pymodule_files = find_files(self.justpy_dir, ".py")
         self.demos = []
         self.demos_by_name={}
         self.demos_by_source_file={}
@@ -143,26 +144,6 @@ class Demostarter:
                 print(f"stopping server at port {server.port} ...")
             await server.stop()
             self.servers.pop(server.port)
-
-    def find_files(self, path: str, ext: str) -> list:
-        """
-        find files with the given extension in the given path
-
-        Args:
-            path(str): the path to start with
-            ext(str): the extension to search for
-
-        Returns:
-            list: a list of files found
-        """
-        foundFiles = []
-        for root, _dirs, files in os.walk(path, topdown=False):
-            for name in files:
-                if name.endswith(ext):
-                    filepath = os.path.join(root, name)
-                    foundFiles.append(filepath)
-        return foundFiles
-
 
 def main(argv=None):  # IGNORE:C0111
     """main program."""
