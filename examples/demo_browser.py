@@ -129,9 +129,11 @@ class DemoDisplay(BaseWebPage):
         self.setup()
         self.container = jp.QDiv(a=self.main_page)
         self.demo_description = jp.QDiv(a=self.container, classes="row")
-        self.demo_desc = jp.QDiv(a=self.demo_description, text=self.demo.name, classes="centered")
+        self.demo_desc = jp.QDiv(a=self.demo_description, classes="centered")
+        self.demo_desc.inner_html=self.demo.source_link+"&nbsp;"
         if self.example:
-            self.example_div = jp.A(a=self.demo_description,text=self.example.header,href=self.example.github_url)
+            jp.Br(a=self.demo_description)
+            self.example_link = jp.A(a=self.demo_description,text=self.example.header,href=self.example.github_url)
         self.sourceFrame=jp.QDiv(a=self.container, classes="row")
         # display code
         self.source_code_div=jp.QDiv(a=self.sourceFrame, classes="col-6")
