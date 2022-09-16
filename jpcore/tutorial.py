@@ -63,6 +63,7 @@ class Tutorial:
                 header_match= re.search("^#+\s*(.*)",line)
                 if header_match:
                     header=header_match.group(1)
+                    header=header.strip()
                     pass
             else:
                 python_code.append(line)
@@ -98,6 +99,11 @@ class Example:
         self.lines=lines
         self.github_url=None
         if self.header is not None:
-            anchor=self.header.lower().replace(" ","-")
+            # https://stackoverflow.com/questions/72536973/how-are-github-markdown-anchor-links-constructed
+            lower=self.header.strip().lower().replace(" ","-")
+            anchor=""
+            for c in lower:
+                if c.isalnum() or c in "-_":
+                    anchor+=c
             self.github_url=f"{self.tutorial.github_url}#{anchor}"
         

@@ -8,7 +8,7 @@ If you don't need any events associated with your HTML just set the `inner_html`
 
 In order to interact with the HTML, you need to use `parse_html` to convert the HTML to JustPy commands that create the appropriate elements. You can then assign event handlers to the elements.
 
-##  The <span style="color: red;">inner_html</span> Attribute
+##  The inner_html Attribute
 
 You can set the content of an element by assigning a HTML string to the element's `inner_html` attribute. This is the preferred method if you don't need to interact with the HTML. As a general rule, if you are not using the `name_dict` attribute created by `parse_html`, you probably should use `inner_html` instead.
 
@@ -58,7 +58,7 @@ jp.justpy(html_demo)
 If the `html` attribute is set, all other additions to the page will be ignored.
 
 
-## The <span style="color: red;">parse_html</span> Function
+## The parse_html Function
 
 To convert HTML to JustPy elements, use the `parse_html` function.
 
@@ -91,7 +91,7 @@ The printout shows that `c` is a `Div` component that has 3 child components tha
 
 There are several way to access the child components. For example, in our specific case the first paragraph is the first child of `c` and therefore can be accessed as `c.components[0]`.
 
-### The <span style="color: red;">name_dict</span> dictionary
+### The name_dict dictionary
 
 A more general way to access parsed elements is to use the `name` attribute inside the HTML. The function `parse_html` attaches to the component it returns an attribute called `name_dict`, that as its name implies, is a dictionary whose keys are the name attributes and its values are the components they correspond to.
 
@@ -128,7 +128,7 @@ If more than one element is given the same name in the HTML text, the dictionary
 Along with parse_html there are two additional functions in JustPy to parse HTML: `parse_html_file` parses a file instead of a string and `parse_html_file_async` is a co-routine that does the same asynchronously.  
 
 
-### The <span style="color: red;">commands</span> attribute
+### The commands attribute
 
 The `commands` attribute is created by `parse_html` and includes a list of the Python commands (represented as strings) needed to create the element in the JustPy framework.
 

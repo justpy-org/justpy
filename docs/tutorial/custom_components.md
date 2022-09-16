@@ -187,7 +187,7 @@ When you run the program above, notice that the title of the MyAlert instance is
 !!! note
     As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the `convert_object_to_dict` method that each component class has.
 
-## The <span style="color: red">react</span> Method
+## The react Method
 
 Every JustPy component supports the `react` method. It is run just just before a class instance is converted to a dictionary. It receives two arguments, the instance and the `data` attribute of its parent element or that of the `WebPage` if it has no parent. In base JustPy elements, `react` does nothing. It is there to be overridden in user defined components.
 

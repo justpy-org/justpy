@@ -23,15 +23,20 @@ class TestTutorial(Basetest):
             for j,example in enumerate(tutorial.examples.values()):
                 print (f"  {j+1:2}:{example.name} ({example.header}) - {example.github_url}")
         header_missing=0
+        html_used=0
         for i,tutorial in enumerate(tm.tutorials.values()):
             for j,example in enumerate(tutorial.examples.values()):
                 if example.header is None:
                     header_missing+=1
                     if debug:
                         print(f"❌ docs/{tutorial.name} {example.name} - header missing")
+                elif "<" in example.header:
+                    if debug:
+                        print(f"❌ docs/{tutorial.name} {example.name} {example.header} - contains html markup")
+                        html_used+=1
         if debug:
-            print(f"{header_missing} headers missing")
-        self.assertEqual(0,header_missing)
+            print(f"{header_missing} headers missing {html_used} x html used")
+        self.assertEqual(0,header_missing+html_used)
     
     def test_tutorial_manager(self):
         """
