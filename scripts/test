@@ -8,7 +8,7 @@ install_packages() {
   # install test packages
   pip install aiohttp asynctest green selenium  testfixtures webdriver-manager
   # install example packages
-  pip install bokeh matplotlib pandas pydeck pygments seaborn
+  pip install bokeh matplotlib pandas plotly pydeck pygments seaborn
 }
 
 #

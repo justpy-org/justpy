@@ -64,6 +64,7 @@ test = [
   "green",
   "matplotlib", #example
   "pandas", # example
+  "plotly", # example
   "pydeck", # example
   "pygments", # demo_browser
   "seaborn", # example

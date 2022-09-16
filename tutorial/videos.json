@@ -135,6 +135,10 @@
         {
         	"name": "tutorial/basic_concepts/hello_world3.py",
         	"url": "https://user-images.githubusercontent.com/1336221/190648952-8469573a-5ecd-401e-981b-2744bcc4f3f6.png"
+        },
+        {
+        	"name": "tutorial/plotly/plotly_test.py",
+        	"url": "https://user-images.githubusercontent.com/1336221/190658278-de6446ba-1eb8-4167-ab36-5b82ebb32ed6.gif"
         }
     ]
 }
