@@ -3,9 +3,11 @@ Created on 2022-09-14
 
 @author: wf
 '''
+import argparse
 import asyncio
 import justpy as jp
 import pandas as pd
+import socket
 import traceback
 from jpcore.demostarter import Demostarter
 from jpcore.justpy_app import JustpyDemoApp
@@ -294,7 +296,11 @@ class DemoBrowser(BaseWebPage):
                 self.showError(f"example {demo_name} not found")
         self.showError("no example demo name specified")
 
+parser = argparse.ArgumentParser(description="Justpy Examples browser")
+parser.add_argument("--host", default=socket.getfqdn())
+parser.add_argument("--port", type=int, default=8000)
+args = parser.parse_args()
 demo_browser=DemoBrowser()
-jp.justpy(demo_browser.web_page)
+jp.justpy(demo_browser.web_page,host=args.host, port=args.port)
 
 
