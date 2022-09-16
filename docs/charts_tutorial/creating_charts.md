@@ -60,6 +60,7 @@ Try for example, changing the text of the chart title in `my_chart_def` and runn
 
 Let's do something a little more complex. Change `create_chart_test1` in the above example to the following:
 ```python
+import justpy as jp
 def create_chart_test2():
     wp = jp.WebPage()
     for chart_type in ['bar', 'column', 'line', 'spline']:
