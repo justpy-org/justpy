@@ -246,7 +246,6 @@ class DemoBrowser(BaseWebPage):
         await super().onPageReady(_msg)
         self.footer.text=f"{len(self.mounted)} apps mounted"
         
-        
     def web_page(self):
         """
         browser for justpy demos

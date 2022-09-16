@@ -45,6 +45,7 @@ class Context:
                 path = ""
             url = request.url_for(name, path=path)
         return url
+    
     def get_js_option(self,key,default_value):
         """
         get the page_option with the given key as javascript using the
@@ -138,6 +139,9 @@ class PageOptions:
     """
 
     def __init__(self, page_options_dict: dict):
+        """
+        constructor
+        """
         self.page_options_dict = page_options_dict
         self.events: List[str] = page_options_dict.get("events", [])
 
