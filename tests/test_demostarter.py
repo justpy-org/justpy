@@ -18,12 +18,12 @@ class TestDemoStarter(BaseAsynctest):
     async def setUp(self):
         await BaseAsynctest.setUp(self, with_server=False)
         
-    def testVideos(self):
+    def test_videos(self):
         """
         test video availability
         """
-        demoStarter = Demostarter(debug=True, mode="process")
-        lod=demoStarter.as_list_of_dicts()
+        demo_starter = Demostarter(debug=True, mode="process")
+        lod=demo_starter.as_list_of_dicts()
         debug=True
         if debug:
             pprint.pprint(lod)
@@ -34,10 +34,21 @@ class TestDemoStarter(BaseAsynctest):
                 foundVideos+=1
         if debug:
             print(f"found {foundVideos} videos")
-        self.assertTrue(foundVideos>=3)
+        self.assertTrue(foundVideos>=30)
+        
+    def test_example_sources(self):
+        """
+        test example source handling
+        """
+        demo_starter = Demostarter()
+        debug=self.debug
+        debug=True
+        for demo in demo_starter.demos:
+            if debug:
+                print(demo)
 
     @unittest.skipIf(Basetest.inPublicCI(), "demostarter ")
-    async def testDemoStarter(self):
+    async def test_demo_starter(self):
         """
         test the demo starter
         """

@@ -11,7 +11,7 @@ import traceback
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from examples.basedemo import Demo
-from jpcore.justpy_app import JustpyDemoApp
+from jpcore.demoapp import JustpyDemoApp
 from jpcore.utilities import find_files
 import justpy as jp
 
@@ -32,7 +32,7 @@ class Demostarter:
         self.mode = mode
         self.script_dir = os.path.dirname(__file__)
         self.justpy_dir = f"{os.path.dirname(self.script_dir)}/examples"
-        self.video_json_file=f"{os.path.dirname(self.script_dir)}/tutorial/videos.json"
+        self.example_json_file=f"{os.path.dirname(self.script_dir)}/tutorial/examples.json"
         if self.debug:
             print(f"collecting examples from {self.justpy_dir}")
         pymodule_files = find_files(self.justpy_dir, ".py")
@@ -58,21 +58,21 @@ class Demostarter:
         """
         add video links to the demos
         """
-        with open(self.video_json_file) as json_file:
-            video_json = json.load(json_file)
-            if "videos" in video_json:
-                for i,video_record in enumerate(video_json["videos"]):
+        with open(self.example_json_file) as json_file:
+            example_json = json.load(json_file)
+            if "examples" in example_json:
+                for i,video_record in enumerate(example_json["examples"]):
                     name=video_record.get("name",None)
-                    url=video_record.get("url",None)
-                    if name and url:
+                    video_url=video_record.get("video_url",None)
+                    if name and video_url:
                         if name in self.demos_by_source_file:
                             demo=self.demos_by_source_file[name]
-                            demo.video_url=url
+                            demo.video_url=video_url
                         elif name in self.demos_by_name:
                             demo=self.demos_by_name[name]
-                            demo.video_url=url
+                            demo.video_url=video_url
                     else:
-                        raise Exception(f"name or url missing for video #{i}")
+                        raise Exception(f"name or url missing for example #{i}")
                     
             pass
         
@@ -95,9 +95,10 @@ class Demostarter:
                 try_it_link=f"""<a href="{demo.try_it_url}" target="_blank">try {demo.name}</a>"""
             record={
                 "#":i+1,
+                "→": demo.example_source.img_link,
                 "name": demo_link,
                 "try it": try_it_link,
-                "video": video_link,
+                #"video": video_link,
                 "source": demo.source_link,
                 "status": demo.status
             }

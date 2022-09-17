@@ -6,7 +6,7 @@ Created on 2022-09-16
 import os
 import re
 from jpcore.utilities import find_files
-
+from jpcore.example import Example, ExampleSource
 class TutorialManager:
     """
     justpy tutorial
@@ -39,7 +39,7 @@ class TutorialManager:
                     raise Exception(f"duplicate example name '{example.name}' {example.tutorial.name} and {duplicate_example.tutorial.name}")
                 self.examples_by_name[example.name]=example
         
-class Tutorial:
+class Tutorial():
     """
     a single tutorial file
     """
@@ -83,40 +83,18 @@ class Tutorial:
                     if not example_name:
                         example_name=example_comment
                         pass
-                    example=Example(self,name=example_name,option=example_option,header=header,lines=python_code)
+                    example_source=ExampleSource("tutorial")
+                    if header is not None:
+                        # https://stackoverflow.com/questions/72536973/how-are-github-markdown-anchor-links-constructed
+                        lower=header.strip().lower().replace(" ","-")
+                        anchor=""
+                        for c in lower:
+                            if c.isalnum() or c in "-_":
+                                anchor+=c
+                        example_source.url=f"{self.github_url}#{anchor}"
+                        example_source.description=header
+                    example=Example(example_source,name=example_name,option=example_option,header=header,lines=python_code)
                     self.examples[example.name]=example
                     header=None
                     python_code=[]
                     in_python_code=False
-
-class Example:
-    """
-    an example
-    """
-    
-    def __init__(self,tutorial:Tutorial,name:str,option:str=None,header:str="",lines:list=[]):
-        """
-        constructor
-        
-        Args:
-            tutorial(Tutorial): the tutorial that i am part of
-            name(str): the name of the example
-            option(str): option
-            header(str): the header/description of the example
-            lines(list): the source code lines
-        """
-        self.tutorial=tutorial
-        self.name=name
-        self.option=option
-        self.header=header
-        self.lines=lines
-        self.github_url=None
-        if self.header is not None:
-            # https://stackoverflow.com/questions/72536973/how-are-github-markdown-anchor-links-constructed
-            lower=self.header.strip().lower().replace(" ","-")
-            anchor=""
-            for c in lower:
-                if c.isalnum() or c in "-_":
-                    anchor+=c
-            self.github_url=f"{self.tutorial.github_url}#{anchor}"
-        

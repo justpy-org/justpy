@@ -14,7 +14,7 @@ import socket
 import traceback
 from jpcore.demostarter import Demostarter
 from jpcore.tutorial import TutorialManager,Example
-from jpcore.justpy_app import JustpyDemoApp
+from jpcore.demoapp import JustpyDemoApp
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
@@ -148,7 +148,9 @@ class DemoDisplay(BaseWebPage):
         self.demo_desc.inner_html=self.demo.source_link+"&nbsp;"
         if self.example:
             jp.Br(a=self.demo_description)
-            self.example_link = jp.A(a=self.demo_description,text=self.example.header,href=self.example.github_url)
+            example_source=self.example.example_source
+            self.example_link = jp.Div()
+            self.example_link.inner_html=example_source.img_link
         self.sourceFrame=jp.QDiv(a=self.container, classes="row")
         # display code
         self.source_code_div=jp.QDiv(a=self.sourceFrame, classes="col-6")
@@ -251,34 +253,36 @@ class DemoBrowser(BaseWebPage):
         browser for justpy demos
         """
         self.setup()
-        self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
-        
-        video_size=512
-        lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
-        for record in lod:
-            index=record["#"]
-            demo=self.demo_starter.demos[index-1]
-            example=self.tutorial_manager.examples_by_name.get(demo.name,None)
-            tutorial_link=""
-            if example is not None:
-                tutorial_link=f"""<a href={example.github_url} target="_blank">{example.header}</a>"""
-            record["tutorial"]=tutorial_link
-        df=pd.DataFrame(lod)
-        style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
-        grid_options = """{
-          'rowHeight': %s,
-        defaultColDef: {
-            filter: true,
-            sortable: true,
-            resizable: true,
-            cellStyle: {textAlign: 'left'},
-            headerClass: 'font-bold'
-        }
-    }""" % video_size
-        self.ag_grid=df.jp.ag_grid(a=self.main_page,style=style,options=grid_options )
-        self.ag_grid.html_columns = [1,2,3,4,5,6]
-        self.ag_grid.on('rowSelected', self.row_selected)
-        self.ag_grid.options.columnDefs[0].checkboxSelection = True
+        try:
+            self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
+            
+            video_size=512
+            icon_size=32
+            lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
+            for record in lod:
+                index=record["#"]
+                demo=self.demo_starter.demos[index-1]
+                example=self.tutorial_manager.examples_by_name.get(demo.name,None)
+                if example is not None:
+                    record["→"]=example.example_source.img_link
+            df=pd.DataFrame(lod)
+            style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
+            grid_options = """{
+              'rowHeight': %s,
+            defaultColDef: {
+                filter: true,
+                sortable: true,
+                resizable: true,
+                cellStyle: {textAlign: 'left'},
+                headerClass: 'font-bold'
+            }
+        }""" % icon_size
+            self.ag_grid=df.jp.ag_grid(a=self.main_page,style=style,options=grid_options )
+            self.ag_grid.html_columns = [1,2,3,4,5]
+            self.ag_grid.on('rowSelected', self.row_selected)
+            self.ag_grid.options.columnDefs[0].checkboxSelection = True
+        except Exception as ex:
+            self.handleException(ex)
         return self.wp
     
     async def row_selected(self,msg):
@@ -344,5 +348,4 @@ parser.add_argument("--port", type=int, default=8000)
 args = parser.parse_args()
 demo_browser=DemoBrowser()
 jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
-
 
