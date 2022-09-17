@@ -23,14 +23,10 @@ class TestDemoStarter(BaseAsynctest):
         test video availability
         """
         demo_starter = Demostarter(debug=True, mode="process")
-        lod=demo_starter.as_list_of_dicts()
         debug=True
-        if debug:
-            pprint.pprint(lod)
         foundVideos=0
-        for record in lod:
-            video=record.get("video")
-            if video:
+        for demo in demo_starter.demos:
+            if demo.video_url is not None:
                 foundVideos+=1
         if debug:
             print(f"found {foundVideos} videos")
