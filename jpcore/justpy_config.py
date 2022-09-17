@@ -51,5 +51,5 @@ PLOTLY = config("PLOTLY", cast=bool, default=False)
 DECKGL = config("DECKGL", cast=bool, default=False)
 AGGRID = config("AGGRID", cast=bool, default=True)
 AGGRID_ENTERPRISE = config("AGGRID_ENTERPRISE", cast=bool, default=False)
-
 NO_INTERNET = config("NO_INTERNET", cast=bool, default=True)
+FRONTEND_ENGINE_TYPE = config("FRONTEND_ENGINE_TYPE", cast=str, default="vue")
