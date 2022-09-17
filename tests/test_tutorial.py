@@ -21,7 +21,7 @@ class TestTutorial(Basetest):
         for i,tutorial in enumerate(tm.tutorials.values()):
             print (f"{i+1:3}:{tutorial.name} ({len(tutorial.lines):4} lines)")
             for j,example in enumerate(tutorial.examples.values()):
-                print (f"  {j+1:2}:{example.name} ({example.header}) - {example.github_url}")
+                print (f"  {j+1:2}:{example.name} ({example.header}) - {example.example_source.url}")
         header_missing=0
         html_used=0
         demo_missing=0
@@ -46,14 +46,12 @@ class TestTutorial(Basetest):
         if debug:
             print(f"{demo_missing} demos missing {header_missing} headers missing {html_used} x html used")
         self.assertEqual(0,header_missing+html_used)
-        for demo_name in ds.demos_by_name:
-            if not demo_name in tm.examples_by_name:
-                if "issue_" in demo_name:
-                    continue
-                if debug:
-                    print(f"❌ {demo_name} not linked to tutorial examples")
-            
-    
+        for demo in ds.demos:
+            if not demo.name in tm.examples_by_name:
+                if demo.example_source.source_type=="tutorial":
+                    if debug:
+                        print(f"❌ {demo.name} not linked to tutorial examples")
+                
     def test_tutorial_manager(self):
         """
         test the tutorial manager
