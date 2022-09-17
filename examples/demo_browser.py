@@ -72,7 +72,7 @@ class BaseWebPage():
         mem_message=(f'memory: {process.memory_info().rss:,} bytes')
         self.title_status.inner_html=mem_message
         
-    def setup(self):
+    def setup(self,extra_html=""):
         """
         prepare basic page infrastructure
         """
@@ -93,6 +93,7 @@ class BaseWebPage():
             <q-space />
         </q-toolbar>
     </q-header>
+    %s
     <q-page-container style="overflow: hidden;">
         <q-page padding name="main_page" style="overflow: hidden;">
             <div class="row">
@@ -105,7 +106,7 @@ class BaseWebPage():
         <div class="text-white q-pa-xs" style="height: 30px;" name="footer"></div>
     </q-footer>
 </div>
-""",
+""" %   extra_html,
         a=self.wp,
     )
         self.main_page = self.bp.name_dict["main_page"]
@@ -249,22 +250,62 @@ class DemoBrowser(BaseWebPage):
         await super().onPageReady(_msg)
         self.footer.text=f"{len(self.mounted)} apps mounted"
         
+    async def add_demo(self,demo:JustpyDemoApp,video_size:512):
+        """
+        add a demo (potentially with video) to the thumbnail list
+        """
+        video_link=demo.video_link(video_size=video_size)
+        list_item_html = f"""<q-item clickable v-ripple>
+                            <q-item-section avatar>{demo.example_source.img_link}</q-item-section>
+                            <q-item-section>
+                                {video_link}
+                            </q-item-section>
+                            <q-item-section avatar> 
+                              <q-btn class="gt-xs text-grey-8" size="12px" flat dense round icon="delete" name="delete"/>
+                            </q-item-section>
+                            <q-separator spaced ></q-separator>
+                        </q-item>"""
+        list_item = parse_html(list_item_html)
+        delete_button=list_item.name_dict["delete"]
+        delete_button.video_list=self.video_list
+        delete_button.list_item=list_item
+        list_item.name = demo.name
+        list_item.video_url = demo.video_url
+        self.video_list.add_component(list_item,0)
+        def delete_list_item(btn, _msg):
+            """
+            delete a list item
+            """
+            btn.video_list.remove(btn.list_item)
+            pass
+        list_item.name_dict["delete"].on("click", delete_list_item)
+        
     def web_page(self):
         """
         browser for justpy demos
         """
-        self.setup()
+        extra_html="""  <q-drawer name="drawer" width=784 breakpoint=700 show-if-above elevated content-class="bg-white text-blue">
+            <q-scroll-area class="fit">
+                <div class="q-pa-sm">
+                    <q-list name="thumbnail_list">
+                    </q-list>
+                </div>
+            </q-scroll-area>
+    </q-drawer>"""
+        self.setup(extra_html)
         try:
+            self.video_list=self.bp.name_dict["thumbnail_list"]
             self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
             
-            video_size=512
+            self.video_size=512
             icon_size=32
-            lod=self.demo_starter.as_list_of_dicts(video_size=video_size)
+            lod=self.demo_starter.as_list_of_dicts()
             for record in lod:
                 index=record["#"]
                 demo=self.demo_starter.demos[index-1]
                 example=self.tutorial_manager.examples_by_name.get(demo.name,None)
                 if example is not None:
+                    demo.example_source=example.example_source
                     record["→"]=example.example_source.img_link
             df=pd.DataFrame(lod)
             style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
@@ -295,10 +336,13 @@ class DemoBrowser(BaseWebPage):
                 row_data = msg.data
                 index = row_data["#"]
                 demo=self.demo_starter.demos[index-1]
-                self.mount(demo,index)
-            except BaseException as ex:
-                demo.status=self.get_html_error(ex)
-            pass
+                try:
+                    self.mount(demo,index)
+                except BaseException as ex:
+                    demo.status=self.get_html_error(ex)
+                await self.add_demo(demo,self.video_size)
+            except Exception as ex:
+                self.handleException(ex)
         
     def mount(self,demo,index):
         """

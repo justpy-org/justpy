@@ -63,6 +63,29 @@ class JustpyDemoApp:
                     self.pymodule = self.pymodule.replace("/", ".")
                     self.is_demo = not "lambda" in self.wpfunc_name                   
                 return
+            
+    def video_link(self,target_url:str=None,alt:str=None,title:str=None,video_size=512):
+        """
+        get a video link for this demo 
+        
+        Args:
+            target_url(str): the url the video link should refer to
+            alt(str): the alt image name to display - default is derived from demo name
+            title(str): the tooltip/title to show - default is derived from demo name
+            video_size(int): the size of the video - default: 512
+            
+        """
+        video_url=self.video_url
+        if video_url is None: 
+            video_url="https://user-images.githubusercontent.com/1336221/190849659-1f998e61-9cf7-4824-9767-6711d9d6ed56.jpg"
+        if target_url is None:
+            target_url=self.try_it_url if self.try_it_url is not None else self.video_url
+        if alt is None:
+            alt=f"animation for {self.name}"
+        if title is None:
+            title=f"animation for {self.name}"
+        video_link=f"""<a href="{target_url}" target="_blank"><img src="{video_url}" alt="{alt}" style="width:{video_size}px;height:{video_size}px;"></a>"""
+        return video_link
 
     def mount(self, app:JustpyApp, name:str=None):
         """

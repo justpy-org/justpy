@@ -77,7 +77,7 @@ class Demostarter:
             pass
         
             
-    def as_list_of_dicts(self,video_size=128)->list:
+    def as_list_of_dicts(self)->list:
         """
         convert me to a list of dicts for tabular display
         
@@ -86,10 +86,7 @@ class Demostarter:
         """
         lod=[]
         for i,demo in enumerate(self.demos):
-            video_link=""
             try_it_link=""
-            if demo.video_url:
-                video_link=f"""<a href="{demo.video_url}"><img src="{demo.video_url}" alt="video for {demo.name}" style="width:{video_size}px;height:{video_size}px;"></a>"""
             demo_link=f"""<a href="/demo/{demo.name}" target="_blank">{demo.name}</a>"""   
             if demo.try_it_url:
                 try_it_link=f"""<a href="{demo.try_it_url}" target="_blank">try {demo.name}</a>"""
@@ -98,7 +95,7 @@ class Demostarter:
                 "→": demo.example_source.img_link,
                 "name": demo_link,
                 "try it": try_it_link,
-                #"video": video_link,
+                "📹": "✅" if demo.video_url is not None else "❌",
                 "source": demo.source_link,
                 "status": demo.status
             }

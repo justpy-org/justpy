@@ -521,12 +521,17 @@ class HTMLBaseComponent(JustpyBaseComponent):
 
 
 class Div(HTMLBaseComponent):
-    # A general purpose container
-    # This is a component that other components can be added to
+    """ 
+    A general purpose html container
+    This is a component that other components can be added to
+    """
 
     html_tag = "div"
 
     def __init__(self, **kwargs):
+        """
+        constructor
+        """
         self.html_entity = False
         self.children = []
         super().__init__(**kwargs)
@@ -544,6 +549,14 @@ class Div(HTMLBaseComponent):
         return self.components[index]
 
     def add_component(self, child, position=None, slot=None):
+        """
+        add a component
+        
+        Args:
+            child: the component to add
+            position: the position to add to (append if None) 
+            slot: if given set the slot of the child
+        """
         if slot:
             child.slot = slot
         if position is None:
