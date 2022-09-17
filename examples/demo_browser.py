@@ -142,15 +142,16 @@ class DemoDisplay(BaseWebPage):
         return my WebPage
         """
         self.setup()
+        example_source=self.demo.example_source
         self.container = jp.QDiv(a=self.main_page)
         self.demo_description = jp.QDiv(a=self.container, classes="row")
+        self.example_source_link = jp.Div(a=self.demo_description)
+        self.example_source_link.inner_html=example_source.img_link
         self.demo_desc = jp.QDiv(a=self.demo_description, classes="centered")
-        self.demo_desc.inner_html=self.demo.source_link+"&nbsp;"
+        self.demo_desc.inner_html=self.demo.source_link 
         if self.example:
-            jp.Br(a=self.demo_description)
-            example_source=self.example.example_source
-            self.example_link = jp.Div()
-            self.example_link.inner_html=example_source.img_link
+            # special handling for tutorial code
+            pass
         self.sourceFrame=jp.QDiv(a=self.container, classes="row")
         # display code
         self.source_code_div=jp.QDiv(a=self.sourceFrame, classes="col-6")

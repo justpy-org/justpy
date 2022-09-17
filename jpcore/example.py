@@ -39,7 +39,7 @@ class ExampleSource:
         
     @property
     def img_link(self):
-        img_link=f"""<a href="{self.url}"><img src="{self.logo_url}" alt="{self.description}" style="width:{self.icon_size}px;height:{self.icon_size}px;"></a>"""
+        img_link=f"""<a href="{self.url}" target="_blank"><img src="{self.logo_url}" alt="{self.description}" title="{self.description}" style="width:{self.icon_size}px;height:{self.icon_size}px;"></a>"""
         return img_link
         
     @classmethod

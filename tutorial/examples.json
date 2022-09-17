@@ -139,6 +139,10 @@
         {
         	"name": "tutorial/plotly/plotly_test.py",
         	"video_url": "https://user-images.githubusercontent.com/1336221/190658278-de6446ba-1eb8-4167-ab36-5b82ebb32ed6.gif"
+        },
+        {
+            "name": "issues/issue_500_aggrid_uuid.py",
+        	"video_url": "https://user-images.githubusercontent.com/1336221/190847534-b8d37794-d49c-4d79-b949-04930c8ecec4.gif"
         }
     ]
 }
