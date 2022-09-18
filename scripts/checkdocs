@@ -1,5 +1,5 @@
 #!/bin/bash
 # WF 2022-09-18
 # check docs created by mkdocs
-pip install mkdocs
+pip install mkdocs mkdocs-material
 mkdocs serve
