@@ -1,0 +1,106 @@
+site_name: JustPy
+site_description: An object-oriented, component based, high-level Python Web Framework that requires no front-end programming
+repo_name: justpy
+repo_url: https://github.com/elimintz/justpy
+
+nav:
+    - What is JustPy: 'README.md'
+    - 'Tutorial':
+        - Getting Started: 'tutorial/getting_started.md'
+        - Basic Concepts: 'tutorial/basic_concepts.md'
+        - Handling Events: 'tutorial/handling_events.md'
+        - HTML Components: 'tutorial/html_components.md'
+        - Routes: 'tutorial/routes.md'
+        - Input Component: 'tutorial/input.md'
+        - The <b>model</b> and <b>data</b> Attributes: 'tutorial/model_and_data.md'
+        - Parsing and Using HTML: 'tutorial/working_with_html.md'
+        - Pushing Data to Web Pages: 'tutorial/pushing_data.md'
+        - Creating Your Own Components: 'tutorial/custom_components.md'
+        - The before and after Events: 'tutorial/before_after_events.md'
+        - The Request Object: 'tutorial/request_object.md'
+        - Forms: 'tutorial/form.md'
+        - Drag and Drop: 'tutorial/drag_and_drop.md'
+        - Tailwind: 'tutorial/tailwind.md'
+        - Transitions: 'tutorial/transitions.md'
+        - SVG Components: 'tutorial/svg_components.md'
+        - Matplotlib Charting: 'tutorial/matplotlib.md'
+        - Altair Charting: tutorial\altair.md
+        - Bokeh Charting: tutorial\bokeh.md
+        - Equations: tutorial\equations.md
+        - Markdown: tutorial\markdown.md
+        - Plotly Charting: tutorial\plotly.md
+        - Pudeck Charting: tutorial\pydeck.md
+        - Ajax vs. WebSockets: 'tutorial/ajax.md'
+        - Sessions: 'tutorial/sessions.md'
+        - Static Files: 'tutorial/static.md'
+        - Page Events: 'tutorial/page_events.md'
+        - Configuration: 'tutorial/configuration.md'
+        - Downloading and Uploading Files: 'tutorial/uploading_files.md'
+        - Deployment: 'tutorial/deployment.md'
+        - Advanced Components: 'tutorial/advanced_components.md'
+    - Highcharts Guide:
+        - Introduction: 'charts_tutorial/introduction.md'
+        - Creating Charts: 'charts_tutorial/creating_charts.md'
+        - Using Pandas to Create Charts: 'charts_tutorial/pandas.md'
+        - Stock Charts: 'charts_tutorial/stock_charts.md'
+        - Updating Charts: 'charts_tutorial/updating_charts.md'
+        - Tooltips: 'charts_tutorial/tooltips.md'
+        - Chart Events: 'charts_tutorial/chart_events.md'
+        - Iris Dataset Visualization: 'charts_tutorial/iris.md'
+        - Chart Components: 'charts_tutorial/chart_components.md'
+    - ag-Grid Guide:
+        - Introduction: 'grids_tutorial/introduction.md'
+        - Creating Grids: 'grids_tutorial/creating_grids.md'
+        - Adding HTML to Cells: 'grids_tutorial/adding_html.md'
+        - Using Pandas to Create Grids: 'grids_tutorial/pandas.md'
+        - Displaying Database Tables and Query Results: 'grids_tutorial/database.md'
+        - Grid Events: 'grids_tutorial/grid_events.md'
+        - Rendering Checkboxes: 'grids_tutorial/checkbox.md'
+        - Evaluating Fields using JavaScript: 'grids_tutorial/field_evaluation.md'
+        - Running Grid API Commands: 'grids_tutorial/grid_api.md'
+    - Quasar Guide:
+        - Introduction: 'quasar_tutorial/introduction.md'
+        - Notifications: 'quasar_tutorial/notify.md'
+        - QDialog: 'quasar_tutorial/QDialog.md'
+        - QInput: 'quasar_tutorial/QInput.md'
+        - QDate and QTime: 'quasar_tutorial/QDate.md'
+        - QOptionGroup: 'quasar_tutorial/QOptionGroup.md'
+        - QBtnToggle: 'quasar_tutorial/QBtnToggle.md'
+        - QExpansionItem: 'quasar_tutorial/QExpansionItem.md'
+        - QSplitter: 'quasar_tutorial/QSplitter.md'
+        - QRating: 'quasar_tutorial/QRating.md'
+        - QColor: 'quasar_tutorial/QColor.md'
+        - QList: 'quasar_tutorial/QList.md'
+        - QAjaxBar: 'quasar_tutorial/QAjaxBar.md'
+        - QTree: 'quasar_tutorial/QTree.md'
+        - Components not Working: 'quasar_tutorial/not_working.md'
+    - Reference:
+        - WebPage class: 'reference/webpage.md'
+        - HTML Components: 'reference/htmlcomponent.md'
+        - The justpy Command: 'reference/justpy.md'
+        - Configuration Variables: 'reference/configuration.md'
+        - Notes: 'reference/notes.md'
+    - How To:
+          - Monitor User Activity: 'how_to/monitor_idle.md'
+          - Use Different Fonts: 'how_to/change_font.md'
+          - Reload Page: 'how_to/reload_pages.md'
+          - Use Decorators with Request Handlers: 'how_to/login_decorator.md'
+          - Creating Select Elements: 'how_to/create_select.md'
+          - Quasar Full Screen Mode: 'how_to/quasar_full_screen.md'
+    - Blog:
+          - From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python: 'blog/ag-grid_to_web_page.md'
+          - Reactivity in JustPy: 'blog/reactivity.md'
+          - Vue.js Examples in JustPy: 'blog/vue_examples.md'
+
+google_analytics: ['UA-155125345-1', 'justpy.io']
+theme:
+    name: material
+    palette:
+      primary: 'blue'
+      accent: 'red'
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: True
+edit_uri: ""

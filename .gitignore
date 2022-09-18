@@ -20,7 +20,7 @@ venv*/
 .vscode/
 *.code-workspace
 # docs
-docs
+#docs
 # Mac
 .DS_Store
 # selenium test logs
