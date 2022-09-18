@@ -92,12 +92,12 @@ nav:
           - Reactivity in JustPy: 'blog/reactivity.md'
           - Vue.js Examples in JustPy: 'blog/vue_examples.md'
 
-google_analytics: ['UA-155125345-1', 'justpy.io']
+#google_analytics: ['UA-155125345-1', 'justpy.io']
 theme:
-    name: material
-    palette:
-      primary: 'blue'
-      accent: 'red'
+    name: readthedocs
+#    palette:
+#      primary: 'blue'
+#      accent: 'red'
 markdown_extensions:
   - admonition
   - codehilite
