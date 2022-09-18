@@ -80,4 +80,4 @@ For news and updates please follow the [JustPy Twitter account](https://twitter.
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-Copyright (c) 2019, 2020, 2021 Eliezer Mintz
+Copyright (c) 2019-2022 Eliezer Mintz

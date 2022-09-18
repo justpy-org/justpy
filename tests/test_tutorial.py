@@ -60,4 +60,6 @@ class TestTutorial(Basetest):
         ds=Demostarter()
         debug=True
         self.check_tutorial(tm,ds,debug=debug)
-        self.assertTrue(len(tm.tutorials)>=86)
+        if debug:
+            print(f"found {len(tm.tutorials)} tutorial files")
+        self.assertTrue(len(tm.tutorials)>=70)
