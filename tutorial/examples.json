@@ -150,6 +150,10 @@
     {
       "name": "examples/issues/issue_50_ag_grid_cell_value_changed.py",
       "video_url": "https://user-images.githubusercontent.com/1336221/190888180-a28e070b-9225-4b00-bc5d-f5ddc6a1bc96.gif"
+    },
+    {
+      "name": "examples/tutorial/tailwind/text_colors.py",
+      "video_url": "https://user-images.githubusercontent.com/1336221/190890796-2c942a93-3ec5-4eda-aadb-3e09baebe625.png"
     }
   ]
 }
