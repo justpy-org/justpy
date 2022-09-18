@@ -199,7 +199,8 @@ def Route(path:str,wpfunc:typing.Callable):
     legacy Route handling
     
     Args:
-        path:str
+        path (str): the path of the route to add
+        wpfunc(Callable): a WebPage returning function to be added
     """
     app.add_jproute(path,wpfunc)
 
@@ -272,6 +273,9 @@ def justpy(
 
 
 def convert_dict_to_object(d):
+    """
+    convert the given dict to an object
+    """
     obj = globals()[d["class_name"]]()
     for obj_prop in d["object_props"]:
         obj.add(convert_dict_to_object(obj_prop))
@@ -282,7 +286,16 @@ def convert_dict_to_object(d):
     return obj
 
 
-def redirect(url):
+def redirect(url:str)->WebPage:
+    """
+    redirect to the given url
+    
+    Args:
+        url(str): the url to redirect to
+        
+    Returns:
+        a WebPage with a single Div that hat the redirect
+    """
     wp = WebPage()
     wp.add(Div())
     wp.redirect = url

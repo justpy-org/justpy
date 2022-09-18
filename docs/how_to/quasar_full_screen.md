@@ -1,4 +1,4 @@
-# How ot Toggle Full Screen Mode in Quasar
+# How to Toggle Full Screen Mode in Quasar
 
 ```python
 import justpy as jp

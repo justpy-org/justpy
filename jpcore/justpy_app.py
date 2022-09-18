@@ -32,6 +32,7 @@ from jpcore.justpy_config import DECKGL, FAVICON, HIGHCHARTS,HTML_404_PAGE,KATEX
 from jpcore.justpy_config import NO_INTERNET, PLOTLY, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
 from jpcore.justpy_config import STATIC_DIRECTORY,STATIC_NAME
 from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, VEGA
+from jpcore.justpy_config import FRONTEND_ENGINE_TYPE
 from jpcore.template import Context
 from jpcore.webpage import WebPage
 from itsdangerous import Signer
@@ -52,6 +53,13 @@ def create_component_file_list():
 component_file_list = create_component_file_list()
 grand_parent = pathlib.Path(__file__).parent.parent.resolve()
 template_dir=f"{grand_parent}/justpy/templates"
+
+lib_dir = os.path.join(template_dir, "js", FRONTEND_ENGINE_TYPE)
+# remove .js extension
+FRONTEND_ENGINE_LIBS = [fn[:-3]
+                        for fn in os.listdir(lib_dir)
+                        if fnmatch.fnmatch(fn, "*.js")
+                        ]
 
 TEMPLATES_DIRECTORY = config(
     "TEMPLATES_DIRECTORY", cast=str, default=template_dir
@@ -359,6 +367,8 @@ class JustpyApp(Starlette):
             "options": template_options,
             "page_options": page_options,
             "html": load_page.html,
+            "frontend_engine_type": FRONTEND_ENGINE_TYPE,
+            "frontend_engine_libs": FRONTEND_ENGINE_LIBS
         }
         # wrap the context in a context object to make it available
         context_obj = Context(context)

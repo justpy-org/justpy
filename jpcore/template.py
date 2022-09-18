@@ -25,6 +25,8 @@ class Context:
         self.page_options = PageOptions(context_dict.get("page_options", {}))
         self.use_websockets_js=self.context_dict.get("use_websockets","true")
         self.page_id_js=context_dict["page_id"]
+        self.component_engine_type = context_dict["frontend_engine_type"]
+        self.frontend_engine_libs = context_dict["frontend_engine_libs"]
         self.title_js=self.get_js_option("title", "JustPy")
         self.redirect_js=self.get_js_option("redirect","")
         self.display_url_js=self.get_js_option("display_url","")
@@ -71,8 +73,8 @@ class Context:
         html+=f"{indent}<script>\n{self.as_javascript_setup(indent)}\n{indent}</script>\n"
         return html
     
-    def as_script_src(self,file_name:str,indent:str="  "):
-        src= f"{indent}<script src='/templates/js/{file_name}.js'></script>\n"
+    def as_script_src(self,file_name:str, indent:str="  ", subdir=""):
+        src= f"{indent}<script src='/templates/js/{subdir}/{file_name}.js'></script>\n"
         return src
     
     def as_script_srcs(self,indent:str="  "):
@@ -80,21 +82,9 @@ class Context:
         generate a list of javascript files to be imported
         """
         srcs = ""
-        for file_name in [
-            "event_handler",
-            "html_component",
-            "quasar_component",
-            "chartjp",
-            "aggrid",
-            "iframejp",
-            "deckgl",
-            "altairjp",
-            "plotlyjp",
-            "bokehjp",
-            "katexjp",
-            "editorjp",
-        ]:
-            srcs +=self.as_script_src(file_name,indent)
+        srcs +=self.as_script_src("event_handler", indent)
+        for file_name in self.frontend_engine_libs:
+            srcs +=self.as_script_src(file_name, indent, subdir=self.component_engine_type)
         return srcs
     
     def as_javascript_setup(self,indent):
