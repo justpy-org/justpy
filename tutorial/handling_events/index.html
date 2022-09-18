@@ -1,40 +1,17 @@
 
-
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="An object-oriented, component based, high-level Python Web Framework that requires no front-end programming">
       
       
       
-      
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.2">
     
     
       
@@ -42,127 +19,122 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
-      
-        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
-      
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9f9400aa.min.css">
       
         
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
         
-        <meta name="theme-color" content="#2196f3">
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
       
-    
-    
-      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
-    
-    
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-    
-    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+
     
     
     
       
         
-<script>
-  window.ga = window.ga || function() {
-    (ga.q = ga.q || []).push(arguments)
-  }
-  ga.l = +new Date
-  /* Setup integration and send page view */
-  ga("create", "UA-155125345-1", "justpy.io")
-  ga("set", "anonymizeIp", true)
-  ga("send", "pageview")
-  /* Register handler to log search on blur */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (document.forms.search) {
-      var query = document.forms.search.query
-      query.addEventListener("blur", function() {
-        if (this.value) {
-          var path = document.location.pathname;
-          ga("send", "pageview", path + "?q=" + this.value)
-        }
-      })
-    }
-  })
-</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
     
     
   </head>
   
-    
-    
-    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="red">
   
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
-        
-      </defs>
-    </svg>
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue" data-md-color-accent="red">
+  
+    
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-    
-      <a href="#handling-events" tabindex="0" class="md-skip">
-        Skip to content
-      </a>
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="JustPy" aria-label="JustPy" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon"></i>
-          
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#handling-events" class="md-skip">
+          Skip to content
         </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
-            <span class="md-header-nav__topic">
-              JustPy
-            </span>
-            <span class="md-header-nav__topic">
-              
-                Handling Events
-              
-            </span>
-          
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="JustPy" class="md-header__button md-logo" aria-label="JustPy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            JustPy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Handling Events
+            
+          </span>
         </div>
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-          
-<div class="md-search" data-md-component="search" role="dialog">
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="__search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
-      </button>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -170,71 +142,59 @@
     </div>
   </div>
 </div>
-        
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
   <div class="md-source__repository">
     justpy
   </div>
 </a>
-          </div>
-        </div>
-      
-    </div>
+      </div>
+    
   </nav>
+  
 </header>
     
-    <div class="md-container">
+    <div class="md-container" data-md-component="container">
+      
       
         
+          
+        
       
-      
-      <main class="md-main" role="main">
-        <div class="md-main__inner md-grid" data-md-component="container">
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../.." title="JustPy" class="md-nav__button md-logo">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="JustPy" class="md-nav__button md-logo" aria-label="JustPy" data-md-component="logo">
       
-        <i class="md-icon"></i>
-      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
     </a>
     JustPy
   </label>
   
     <div class="md-nav__source">
-      
-
-
-  
-
-<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
+      <a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
   <div class="md-source__repository">
     justpy
   </div>
@@ -247,12 +207,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../.." title="What is JustPy" class="md-nav__link">
-      What is JustPy
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        What is JustPy
+      </a>
+    </li>
+  
 
     
       
@@ -260,77 +223,111 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+  
+  
     
-    <label class="md-nav__link" for="nav-2">
-      Tutorial
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        Tutorial
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../getting_started/" title="Getting Started" class="md-nav__link">
-      Getting Started
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../basic_concepts/" title="Basic Concepts" class="md-nav__link">
-      Basic Concepts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basic_concepts/" class="md-nav__link">
+        Basic Concepts
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item md-nav__item--active">
+            
+          
+            
+              
+  
+  
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Handling Events
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Handling Events
-      </label>
-    
-    <a href="./" title="Handling Events" class="md-nav__link md-nav__link--active">
-      Handling Events
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary">
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#event-handling-demo" class="md-nav__link">
+    event handling demo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-handling-demo-with-printing-to-console" class="md-nav__link">
+    event handling demo with printing to console
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#additional-event-properties" class="md-nav__link">
@@ -351,7 +348,7 @@
     Sharing Event Handlers
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Sharing Event Handlers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -408,1064 +405,1320 @@
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
-    
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../html_components/" title="HTML Components" class="md-nav__link">
-      HTML Components
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../routes/" title="Routes" class="md-nav__link">
-      Routes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../input/" title="Input Component" class="md-nav__link">
-      Input Component
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The <b>model</b> and <b>data</b> Attributes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../working_with_html/" title="Parsing and Using HTML" class="md-nav__link">
-      Parsing and Using HTML
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../pushing_data/" title="Pushing Data to Web Pages" class="md-nav__link">
-      Pushing Data to Web Pages
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../custom_components/" title="Creating Your Own Components" class="md-nav__link">
-      Creating Your Own Components
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../before_after_events/" title="The before and after Events" class="md-nav__link">
-      The before and after Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../request_object/" title="The Request Object" class="md-nav__link">
-      The Request Object
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../form/" title="Forms" class="md-nav__link">
-      Forms
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../drag_and_drop/" title="Drag and Drop" class="md-nav__link">
-      Drag and Drop
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../tailwind/" title="Tailwind" class="md-nav__link">
-      Tailwind
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../transitions/" title="Transitions" class="md-nav__link">
-      Transitions
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../svg_components/" title="SVG Components" class="md-nav__link">
-      SVG Components
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../matplotlib/" title="Matplotlib Charting" class="md-nav__link">
-      Matplotlib Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../plotly/" title="Plotly Charting" class="md-nav__link">
-      Plotly Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../altair/" title="Altair Charting" class="md-nav__link">
-      Altair Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../bokeh/" title="Bokeh Charting" class="md-nav__link">
-      Bokeh Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../equations/" title="Equations" class="md-nav__link">
-      Equations
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../markdown/" title="Markdown" class="md-nav__link">
-      Markdown
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
-      Ajax vs. WebSockets
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../sessions/" title="Sessions" class="md-nav__link">
-      Sessions
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../static/" title="Static Files" class="md-nav__link">
-      Static Files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../page_events/" title="Page Events" class="md-nav__link">
-      Page Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../configuration/" title="Configuration" class="md-nav__link">
-      Configuration
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../uploading_files/" title="Downloading and Uploading Files" class="md-nav__link">
-      Downloading and Uploading Files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../deployment/" title="Deployment" class="md-nav__link">
-      Deployment
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../advanced_components/" title="Advanced Components" class="md-nav__link">
-      Advanced Components
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../html_components/" class="md-nav__link">
+        HTML Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../routes/" class="md-nav__link">
+        Routes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input/" class="md-nav__link">
+        Input Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model_and_data/" class="md-nav__link">
+        The <b>model</b> and <b>data</b> Attributes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../working_with_html/" class="md-nav__link">
+        Parsing and Using HTML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pushing_data/" class="md-nav__link">
+        Pushing Data to Web Pages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom_components/" class="md-nav__link">
+        Creating Your Own Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../before_after_events/" class="md-nav__link">
+        The before and after Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../request_object/" class="md-nav__link">
+        The Request Object
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../form/" class="md-nav__link">
+        Forms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drag_and_drop/" class="md-nav__link">
+        Drag and Drop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tailwind/" class="md-nav__link">
+        Tailwind
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transitions/" class="md-nav__link">
+        Transitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../svg_components/" class="md-nav__link">
+        SVG Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matplotlib/" class="md-nav__link">
+        Matplotlib Charting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../altair/" class="md-nav__link">
+        Altair Charting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bokeh/" class="md-nav__link">
+        Bokeh Charting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../equations/" class="md-nav__link">
+        Equations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../markdown/" class="md-nav__link">
+        Markdown
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotly/" class="md-nav__link">
+        Plotly Charting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pydeck/" class="md-nav__link">
+        Pudeck Charting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ajax/" class="md-nav__link">
+        Ajax vs. WebSockets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/" class="md-nav__link">
+        Sessions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../static/" class="md-nav__link">
+        Static Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../page_events/" class="md-nav__link">
+        Page Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uploading_files/" class="md-nav__link">
+        Downloading and Uploading Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        Deployment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced_components/" class="md-nav__link">
+        Advanced Components
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      Highcharts Guide
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        Highcharts Guide
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Highcharts Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Highcharts Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Highcharts Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/creating_charts/" class="md-nav__link">
+        Creating Charts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/pandas/" class="md-nav__link">
+        Using Pandas to Create Charts
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/introduction/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/stock_charts/" class="md-nav__link">
+        Stock Charts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/updating_charts/" class="md-nav__link">
+        Updating Charts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/tooltips/" class="md-nav__link">
+        Tooltips
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/creating_charts/" title="Creating Charts" class="md-nav__link">
-      Creating Charts
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/chart_events/" class="md-nav__link">
+        Chart Events
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/iris/" class="md-nav__link">
+        Iris Dataset Visualization
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/chart_components/" class="md-nav__link">
+        Chart Components
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/pandas/" title="Using Pandas to Create Charts" class="md-nav__link">
-      Using Pandas to Create Charts
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/stock_charts/" title="Stock Charts" class="md-nav__link">
-      Stock Charts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/updating_charts/" title="Updating Charts" class="md-nav__link">
-      Updating Charts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/tooltips/" title="Tooltips" class="md-nav__link">
-      Tooltips
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/chart_events/" title="Chart Events" class="md-nav__link">
-      Chart Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/iris/" title="Iris Dataset Visualization" class="md-nav__link">
-      Iris Dataset Visualization
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/chart_components/" title="Chart Components" class="md-nav__link">
-      Chart Components
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
-    
-    <label class="md-nav__link" for="nav-4">
-      ag-Grid Guide
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
-        ag-Grid Guide
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          ag-Grid Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ag-Grid Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          ag-Grid Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/creating_grids/" class="md-nav__link">
+        Creating Grids
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/adding_html/" class="md-nav__link">
+        Adding HTML to Cells
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/introduction/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/pandas/" class="md-nav__link">
+        Using Pandas to Create Grids
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/database/" class="md-nav__link">
+        Displaying Database Tables and Query Results
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/grid_events/" class="md-nav__link">
+        Grid Events
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
-      Creating Grids
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/checkbox/" class="md-nav__link">
+        Rendering Checkboxes
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/field_evaluation/" class="md-nav__link">
+        Evaluating Fields using JavaScript
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/grid_api/" class="md-nav__link">
+        Running Grid API Commands
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/adding_html/" title="Adding HTML to Cells" class="md-nav__link">
-      Adding HTML to Cells
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
-      Using Pandas to Create Grids
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/database/" title="Displaying Database Tables and Query Results" class="md-nav__link">
-      Displaying Database Tables and Query Results
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/grid_events/" title="Grid Events" class="md-nav__link">
-      Grid Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/checkbox/" title="Rendering Checkboxes" class="md-nav__link">
-      Rendering Checkboxes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/field_evaluation/" title="Evaluating Fields using JavaScript" class="md-nav__link">
-      Evaluating Fields using JavaScript
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/grid_api/" title="Running Grid API Commands" class="md-nav__link">
-      Running Grid API Commands
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Quasar Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Quasar Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Quasar Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/notify/" class="md-nav__link">
+        Notifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
     
-    <label class="md-nav__link" for="nav-5">
-      Quasar Guide
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        Quasar Guide
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          Quasar Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Quasar Components" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Quasar Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/quasar_components/#qajaxbar" class="md-nav__link">
+        QAjaxBar
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/quasar_components/#qbtntoggle" class="md-nav__link">
+        QBtnToggle
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QDialog/" class="md-nav__link">
+        QDialog
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/introduction/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QInput/" class="md-nav__link">
+        QInput
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QDate/" class="md-nav__link">
+        QDate and QTime
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QOptionGroup/" class="md-nav__link">
+        QOptionGroup
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/notify/" title="Notifications" class="md-nav__link">
-      Notifications
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QExpansionItem/" class="md-nav__link">
+        QExpansionItem
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QSplitter/" class="md-nav__link">
+        QSplitter
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QRating/" class="md-nav__link">
+        QRating
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QDialog/" title="QDialog" class="md-nav__link">
-      QDialog
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QColor/" class="md-nav__link">
+        QColor
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QList/" class="md-nav__link">
+        QList
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QTree/" class="md-nav__link">
+        QTree
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QInput/" title="QInput" class="md-nav__link">
-      QInput
-    </a>
-  </li>
-
-        
+            
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/not_working/" class="md-nav__link">
+        Components not Working
+      </a>
+    </li>
+  
+
+            
           
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QDate/" title="QDate and QTime" class="md-nav__link">
-      QDate and QTime
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QOptionGroup/" title="QOptionGroup" class="md-nav__link">
-      QOptionGroup
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QBtnToggle/" title="QBtnToggle" class="md-nav__link">
-      QBtnToggle
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QExpansionItem/" title="QExpansionItem" class="md-nav__link">
-      QExpansionItem
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QSplitter/" title="QSplitter" class="md-nav__link">
-      QSplitter
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QRating/" title="QRating" class="md-nav__link">
-      QRating
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QColor/" title="QColor" class="md-nav__link">
-      QColor
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QList/" title="QList" class="md-nav__link">
-      QList
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QAjaxBar/" title="QAjaxBar" class="md-nav__link">
-      QAjaxBar
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QTree/" title="QTree" class="md-nav__link">
-      QTree
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
-      Components not Working
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
-    
-    <label class="md-nav__link" for="nav-6">
-      Reference
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
-        Reference
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/webpage/" class="md-nav__link">
+        WebPage class
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/htmlcomponent/" class="md-nav__link">
+        HTML Components
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/justpy/" class="md-nav__link">
+        The justpy Command
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../reference/webpage/" title="WebPage class" class="md-nav__link">
-      WebPage class
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/configuration/" class="md-nav__link">
+        Configuration Variables
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/notes/" class="md-nav__link">
+        Notes
+      </a>
+    </li>
+  
+
+            
           
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/htmlcomponent/" title="HTML Components" class="md-nav__link">
-      HTML Components
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/justpy/" title="The justpy Command" class="md-nav__link">
-      The justpy Command
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/configuration/" title="Configuration Variables" class="md-nav__link">
-      Configuration Variables
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/notes/" title="Notes" class="md-nav__link">
-      Notes
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
-    
-    <label class="md-nav__link" for="nav-7">
-      How To
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-7">
-        How To
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          How To
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How To" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          How To
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/monitor_idle/" class="md-nav__link">
+        Monitor User Activity
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/change_font/" class="md-nav__link">
+        Use Different Fonts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/reload_pages/" class="md-nav__link">
+        Reload Page
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
-      Monitor User Activity
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/login_decorator/" class="md-nav__link">
+        Use Decorators with Request Handlers
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/create_select/" class="md-nav__link">
+        Creating Select Elements
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/quasar_full_screen/" class="md-nav__link">
+        Quasar Full Screen Mode
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
-      Use Different Fonts
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/reload_pages/" title="Reload Page" class="md-nav__link">
-      Reload Page
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/login_decorator/" title="Use Decorators with Request Handlers" class="md-nav__link">
-      Use Decorators with Request Handlers
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/create_select/" title="Creating Select Elements" class="md-nav__link">
-      Creating Select Elements
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/quasar_full_screen/" title="Quasar Full Screen Mode" class="md-nav__link">
-      Quasar Full Screen Mode
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
-    
-    <label class="md-nav__link" for="nav-8">
-      Blog
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-8">
-        Blog
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/ag-grid_to_web_page/" class="md-nav__link">
+        From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/reactivity/" class="md-nav__link">
+        Reactivity in JustPy
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/vue_examples/" class="md-nav__link">
+        Vue.js Examples in JustPy
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
-      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
-      Reactivity in JustPy
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
-      Vue.js Examples in JustPy
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
   </ul>
@@ -1475,18 +1728,38 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary">
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#event-handling-demo" class="md-nav__link">
+    event handling demo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-handling-demo-with-printing-to-console" class="md-nav__link">
+    event handling demo with printing to console
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#additional-event-properties" class="md-nav__link">
@@ -1507,7 +1780,7 @@
     Sharing Event Handlers
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Sharing Event Handlers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1564,10 +1837,6 @@
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
@@ -1576,27 +1845,29 @@
               </div>
             
           
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
-                
-                <h1 id="handling-events">Handling Events<a class="headerlink" href="#handling-events" title="Permanent link">&para;</a></h1>
+                  
+
+
+<h1 id="handling-events">Handling Events<a class="headerlink" href="#handling-events" title="Permanent link">&para;</a></h1>
 <p>In this part of the tutorial you will learn how to deal with user generated events such as a mouse click. JustPy deals with such events by binding a function to an event. When the event occurs, the function is executed. Please run the following program and click on 'Not clicked yet':</p>
+<h2 id="event-handling-demo">event handling demo<a class="headerlink" href="#event-handling-demo" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">my_click1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked&#39;</span>
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-48 text-xl m-2 p-1 bg-blue-500 text-white&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo1</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>In <code>event_demo</code>, we first create a web page. Then we create a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div">Div</a> element named <code>d</code> whose content is the string "Not clicked yet" and add it to the page (we also add some Tailwind classes for formatting). Then, using the <code>on</code> method, we bind the function <code>my_click</code>, which we defined earlier, to the click event and return the page. When the the element on the page is clicked, JustPy runs the function <code>my_click</code>.</p>
 <div class="admonition info">
@@ -1605,53 +1876,52 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In JustPy, event handlers <strong>must</strong> have two arguments. </p>
+<p>In JustPy, event handlers <strong>must</strong> have two arguments.</p>
 </div>
-<p>The first (I recommend calling it <code>self</code>), is the object which generated the event. It is an instance of one of the component classes. In the example above it is <code>d</code>, an instance of the class <code>Div</code>. The second parameter (I recommend calling it <code>msg</code>) is a <a href="https://github.com/mewwts/addict" title="addict is a Python module that gives you dictionaries whose values are both gettable and settable using attributes, in addition to standard item-syntax">dictionary</a> that contains information about the event. The items in this dictionary can also be accessed using attribute (dot) notation. To get the event type for example we could write either  <code>msg['event_type']</code> or <code>msg.event_type</code>. </p>
+<p>The first (I recommend calling it <code>self</code>), is the object which generated the event. It is an instance of one of the component classes. In the example above it is <code>d</code>, an instance of the class <code>Div</code>. The second parameter (I recommend calling it <code>msg</code>) is a <a href="https://github.com/mewwts/addict" title="addict is a Python module that gives you dictionaries whose values are both gettable and settable using attributes, in addition to standard item-syntax">dictionary</a> that contains information about the event. The items in this dictionary can also be accessed using attribute (dot) notation. To get the event type for example we could write either  <code>msg['event_type']</code> or <code>msg.event_type</code>.</p>
 <p>In the program below I have added some print commands to the <code>my_click</code> function. Run it and see what is printed to the console.</p>
+<h2 id="event-handling-demo-with-printing-to-console">event handling demo with printing to console<a class="headerlink" href="#event-handling-demo-with-printing-to-console" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">my_click2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked&#39;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">event_type</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">&#39;event_type&#39;</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-xl m-2 p-2 bg-blue-500 text-white&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo2</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h2 id="additional-event-properties">Additional Event Properties<a class="headerlink" href="#additional-event-properties" title="Permanent link">&para;</a></h2>
 <p>JustPy does not pass all the JavaScript event properties by default since in most cases they are not needed. If you need additional properties from the JavasScript event, use the <code>additional_properties</code> attribute. In the example below, more fields are added to <code>msg</code>.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">my_click3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked&#39;</span>
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo3</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">wp</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-48 text-xl m-2 p-1 bg-blue-500 text-white&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click3</span><span class="p">)</span>
     <span class="n">d</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;screenX&#39;</span><span class="p">,</span> <span class="s1">&#39;pageY&#39;</span><span class="p">,</span><span class="s1">&#39;altKey&#39;</span><span class="p">,</span><span class="s1">&#39;which&#39;</span><span class="p">,</span><span class="s1">&#39;movementX&#39;</span><span class="p">,</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="s1">&#39;buttons&#39;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo3</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h2 id="multiple-events">Multiple Events<a class="headerlink" href="#multiple-events" title="Permanent link">&para;</a></h2>
 <p>The same element can handle multiple events. Run the following and move the mouse in and out of the element on the page. Click the element also.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">my_click4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-blue-500&#39;</span><span class="p">)</span>
 
@@ -1664,51 +1934,49 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-teal-500&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo4</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-64 text-2xl m-2 p-2 bg-blue-500 text-white&#39;</span><span class="p">,</span>
-             <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">,</span> <span class="n">mouseenter</span><span class="o">=</span><span class="n">my_mouseenter</span><span class="p">,</span> <span class="n">mouseleave</span><span class="o">=</span><span class="n">my_mouseleave</span><span class="p">)</span>
+             <span class="n">click</span><span class="o">=</span><span class="n">my_click4</span><span class="p">,</span> <span class="n">mouseenter</span><span class="o">=</span><span class="n">my_mouseenter</span><span class="p">,</span> <span class="n">mouseleave</span><span class="o">=</span><span class="n">my_mouseleave</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo4</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>In the example above, there are three event handlers, one each for the <code>click</code>, <code>mouseenter</code> and <code>mouseleave</code> events. All three are bound to the same element, <code>d</code>.</p>
-<p>Another way of binding event handlers is demonstrated here. Instead of using the <code>on</code> method, you can bind an event handler using a keyword argument that corresponds to the name of the event. In addition to <code>click</code> (or some other event name) you can also use <code>onclick</code> or, <code>on_click</code>. All three options work in the same way. </p>
+<p>Another way of binding event handlers is demonstrated here. Instead of using the <code>on</code> method, you can bind an event handler using a keyword argument that corresponds to the name of the event. In addition to <code>click</code> (or some other event name) you can also use <code>onclick</code> or, <code>on_click</code>. All three options work in the same way.</p>
 <p>The above example also introduces the <code>set_class</code> method. This method "knows" which Tailwind classes logically cannot apply together (for example, text color can't be both red and blue at the same time) and removes the appropriate classes while adding the class provided as parameter. In the case above, the background can only be one color so the <code>set_class</code> method removes the class bg-blue-500 and adds the class bg-red-500.</p>
 <h2 id="sharing-event-handlers">Sharing Event Handlers<a class="headerlink" href="#sharing-event-handlers" title="Permanent link">&para;</a></h2>
 <h3 id="example-1">Example 1<a class="headerlink" href="#example-1" title="Permanent link">&para;</a></h3>
 <p>In many cases it is convenient to share one event handler among several elements. Please run the example below:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">button_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">button_click1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">num_clicked</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.text}</span><span class="s1"> clicked. Number of clicks: </span><span class="si">{self.num_clicked}</span><span class="s1">&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1"> clicked. Number of clicks: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_clicked</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-red-500&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-red-700&#39;</span><span class="p">,</span> <span class="s1">&#39;hover&#39;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo5</span><span class="p">():</span>
     <span class="n">number_of_buttons</span> <span class="o">=</span> <span class="mi">25</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">button_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex m-4 flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="n">button_classes</span> <span class="o">=</span> <span class="s1">&#39;w-32 mr-2 mb-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full&#39;</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;No button clicked yet&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl border m-4 p-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number_of_buttons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">button_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">button_click</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">button_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">button_click1</span><span class="p">)</span>
         <span class="n">b</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
         <span class="n">b</span><span class="o">.</span><span class="n">num_clicked</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="n">wp</span> 
+    <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo5</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>This program creates 25 buttons on each page. Under the buttons is a message box that provides information about which button was clicked and how many times it was clicked (try clicking the same button several times and see the change in the message box).</p>
 <p>Let's delve into the program in more detail. The program has two functions. The function <code>event_demo</code> creates the page and returns it when a page is requested. The function <code>button_click</code> will handle the click event of all buttons.
-In the first line of <code>event_demo</code>, the number of buttons is set (try changing this number and see what happens).  The second line creates a web page. The third line creates a div element (the general purpose HTML container element) named <code>button_div</code>. We will use it shortly to contain all the buttons. Notice that using <code>a=wp</code> we add <code>button_div</code> to the page. </p>
+In the first line of <code>event_demo</code>, the number of buttons is set (try changing this number and see what happens).  The second line creates a web page. The third line creates a div element (the general purpose HTML container element) named <code>button_div</code>. We will use it shortly to contain all the buttons. Notice that using <code>a=wp</code> we add <code>button_div</code> to the page.</p>
 <p>The fourth line defines the classes that will be used to format all the buttons. Don't worry if you don't understand what all the Tailwind classes do at this stage, it is not important. The fifth line creates the <code>message</code> element and adds it to the page. This element displays information about the button that is clicked.</p>
-<p>On the sixth line  the loop that creates all the buttons starts. For each iteration of the loop, a button is created and added to <code>button_div</code>. Since <code>button_div</code> was previously added to the web page, the buttons will also be displayed on the page. </p>
+<p>On the sixth line  the loop that creates all the buttons starts. For each iteration of the loop, a button is created and added to <code>button_div</code>. Since <code>button_div</code> was previously added to the web page, the buttons will also be displayed on the page.</p>
 <p>A button in JustPy is just an instance of the <code>Button</code>class, and therefore we can assign additional attributes to the instance. That is what we do in the next two lines. We assign to the <code>message</code> attribute the <code>message</code> element and initialize the <code>num_clicked</code> attribute to 0 (these attributes will be used in the <code>button_click</code> function as we shall see shortly).</p>
 <p>After the loop, the web page is returned, and the framework renders it to the user's browser.
 It may seem that the loop is erasing previous buttons by redefining the variable <code>b</code>. That is not the case because each time through the loop a new button is created and is added to the component list of <code>button_div</code> (using the keyword argument notation: <code>a=button_div</code>). At the end of the loop, <code>button_div</code> has 25 distinct child component instances. You can verify this by adding the following two lines just before the <code>return</code> statement of <code>event_demo</code> and re-running the program:</p>
@@ -1716,15 +1984,14 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 <span class="nb">print</span><span class="p">(</span><span class="n">button_div</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>The <code>components</code> attribute is a list that holds all the child component instances of the element in the order they will be rendered. It is named "components" because it holds the building blocks of the element (though strictly speaking, the list holds elements which are instances of components).  </p>
-<p>Let's take a look now at <code>button_click</code>, the second function in our program. When any one of the buttons is clicked, this function is executed. The arguments for <code>button_click</code> are the same as those for all event handlers in JustPy. The first argument <code>self</code>, is the button. In JustPy, as previously discussed, elements on the page are represented by instances of Python classes. The buttons we created are instances of the <code>Button</code> class and therefore in this case <code>self</code> will be an instance of the Button class. </p>
+<p>Let's take a look now at <code>button_click</code>, the second function in our program. When any one of the buttons is clicked, this function is executed. The arguments for <code>button_click</code> are the same as those for all event handlers in JustPy. The first argument <code>self</code>, is the button. In JustPy, as previously discussed, elements on the page are represented by instances of Python classes. The buttons we created are instances of the <code>Button</code> class and therefore in this case <code>self</code> will be an instance of the Button class.</p>
 <p>In the first line of <code>button_click</code> we increment the instance attribute that tracks the number of times the specific button was clicked. It was initialized as 0 when we created the button in <code>event_demo</code>. The second line changes the text of the message box. Since we conveniently assigned the appropriate div element to the message attribute of all buttons, we know where to find it. It is right there as an attribute of <code>self</code>.</p>
 <p><strong>Please skip this paragraph if you are not familiar with JavaScript:</strong> Contrast this with the JavaScript methods of getting elements by id or class or using some more complex DOM query. In most cases we don't need to query the Python representation of the DOM if we anticipate in advance which elements an event handler will require.</p>
 <p>The last two lines of <code>button_click</code> change the background of the button that was clicked to red and change the background of the button when it is hovered.</p>
 <h3 id="example-2">Example 2<a class="headerlink" href="#example-2" title="Permanent link">&para;</a></h3>
-<p>As the program is written now, once a button is clicked, its background will always be red, even if another button is clicked. If we want only the background of the last clicked button to be red, the event handler needs to set the background of all other buttons back to blue. There are many ways that this could be done but I would like to highlight a method that can be generalized to most cases. </p>
-<p>The web page itself is an instance of a Python class and therefore can have user specified attributes. We will create a list of all the buttons and assign it to the <code>button_list</code> attribute of the page. In the event handler we will loop over this list and change the backgrounds to blue after which we will set the background of the clicked button to red. </p>
+<p>As the program is written now, once a button is clicked, its background will always be red, even if another button is clicked. If we want only the background of the last clicked button to be red, the event handler needs to set the background of all other buttons back to blue. There are many ways that this could be done but I would like to highlight a method that can be generalized to most cases.</p>
+<p>The web page itself is an instance of a Python class and therefore can have user specified attributes. We will create a list of all the buttons and assign it to the <code>button_list</code> attribute of the page. In the event handler we will loop over this list and change the backgrounds to blue after which we will set the background of the clicked button to red.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>We know which page's <code>button_list</code> we need to loop over because the page on which the event originated is always provided to the event handler in <code>msg.page</code> by JustPy.</p>
@@ -1732,16 +1999,16 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 <p>The result looks like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">button_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">button_click2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">num_clicked</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.text}</span><span class="s1"> clicked. Number of clicks: </span><span class="si">{self.num_clicked}</span><span class="s1">&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1"> clicked. Number of clicks: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_clicked</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">button_list</span><span class="p">:</span>
         <span class="n">button</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-blue-500&#39;</span><span class="p">)</span>
         <span class="n">button</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-blue-700&#39;</span><span class="p">,</span> <span class="s1">&#39;hover&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-red-500&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-red-700&#39;</span><span class="p">,</span> <span class="s1">&#39;hover&#39;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo6</span><span class="p">():</span>
     <span class="n">number_of_buttons</span> <span class="o">=</span> <span class="mi">25</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">button_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex m-4 flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
@@ -1749,25 +2016,24 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="n">message</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;No button clicked yet&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-2xl border m-4 p-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="n">button_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number_of_buttons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">button_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">button_click</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">button_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">button_click2</span><span class="p">)</span>
         <span class="n">b</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
         <span class="n">b</span><span class="o">.</span><span class="n">num_clicked</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">button_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
     <span class="n">wp</span><span class="o">.</span><span class="n">button_list</span> <span class="o">=</span> <span class="n">button_list</span>   <span class="c1"># The list will now be referenced by the WebPage instance attribute</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo6</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h3 id="example-3-event-changes-elements-on-page">Example 3 - Event changes elements on page<a class="headerlink" href="#example-3-event-changes-elements-on-page" title="Permanent link">&para;</a></h3>
 <p>Events can also change the elements on the page itself, adding or removing them as necessary. As a concrete example let's change the program above to display a log of buttons that were clicked instead of just one line of information.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">button_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">button_click3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">num_clicked</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="c1"># self.message.text = f&#39;{self.text} clicked. Number of clicks: {self.num_clicked}&#39;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.text}</span><span class="s1"> clicked. Number of clicks: </span><span class="si">{self.num_clicked}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1"> clicked. Number of clicks: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_clicked</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">button_list</span><span class="p">:</span>
         <span class="n">button</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-blue-500&#39;</span><span class="p">)</span>
@@ -1775,7 +2041,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-red-500&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;bg-red-700&#39;</span><span class="p">,</span> <span class="s1">&#39;hover&#39;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">event_demo</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_demo7</span><span class="p">():</span>
     <span class="n">number_of_buttons</span> <span class="o">=</span> <span class="mi">25</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">button_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex m-4 flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
@@ -1784,25 +2050,24 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="n">message</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;No button clicked yet&#39;</span><span class="p">))</span>
     <span class="n">button_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number_of_buttons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">button_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">button_click</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">button_div</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">button_classes</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">button_click3</span><span class="p">)</span>
         <span class="n">b</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
         <span class="n">b</span><span class="o">.</span><span class="n">num_clicked</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">button_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
     <span class="n">wp</span><span class="o">.</span><span class="n">button_list</span> <span class="o">=</span> <span class="n">button_list</span>   <span class="c1"># The list will now be referenced by the WebPage instance attribute</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_demo7</span><span class="p">)</span>
 </code></pre></div>
 
-
-<p>Instead of just changing the text in <code>message</code>, <code>button_click</code> creates a <code>p</code> element with the text message and adds the element to <code>message</code> using the <code>add_component</code> method. It is different from <code>add</code> because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the <code>message</code> div so that most recent messages show up first. Also, in <code>event_demo</code> we changed <code>message</code> to a div element and added the first message as a p element with text. </p>
+<p>Instead of just changing the text in <code>message</code>, <code>button_click</code> creates a <code>p</code> element with the text message and adds the element to <code>message</code> using the <code>add_component</code> method. It is different from <code>add</code> because it allows adding a component at any position. Here, we are adding the new log info at the beginning of the <code>message</code> div so that most recent messages show up first. Also, in <code>event_demo</code> we changed <code>message</code> to a div element and added the first message as a p element with text.</p>
 <h2 id="inline-event-handlers">Inline Event Handlers<a class="headerlink" href="#inline-event-handlers" title="Permanent link">&para;</a></h2>
 <p>In a very non-Pythonic manner, JustPy supports inserting inline functions as event handlers when creating an element. I confess to using these functions sometimes for event handlers that are just one or two lines of code.</p>
-<p>The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are <code>self</code> and <code>msg</code>. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of <code>self</code>. </p>
+<p>The function itself is represented as a string, not a real Python function. Statements are separated by the semicolon. The function assumes that the two arguments are <code>self</code> and <code>msg</code>. The namespace is that of the JustPy package. If you want the function to have access to a variable, assign it to an attribute of <code>self</code>.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 
-<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">event_comp_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello1&#39;</span><span class="p">,</span>
             <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;clicked&quot;&#39;</span><span class="p">,</span>
@@ -1814,9 +2079,8 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="k">return</span> <span class="n">wp</span>
 
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">event_comp_test</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h2 id="the-debounce-and-throttle-event-modifiers">The debounce and throttle Event Modifiers<a class="headerlink" href="#the-debounce-and-throttle-event-modifiers" title="Permanent link">&para;</a></h2>
 <p>Sometimes you need to debounce or throttle on event. To do this, use the <code>debounce</code> and <code>throttle</code> keyword arguments of the <code>on</code> method. The value is the wait time in milliseconds. If you want the debounce to be leading edge, set the <code>immediate</code> attribute of <code>on</code> to <code>True</code>.</p>
@@ -1828,7 +2092,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
         <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">info_div</span><span class="o">.</span><span class="n">add_first</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.counter}</span><span class="s1">) </span><span class="si">{msg.event_type}</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">info_div</span><span class="o">.</span><span class="n">add_first</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s1">) </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">event_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">debounce_test</span><span class="p">():</span>
@@ -1843,12 +2107,11 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">debounce_test</span><span class="p">)</span>
 </code></pre></div>
 
-
 <h2 id="the-click__out-event">The click__out Event<a class="headerlink" href="#the-click__out-event" title="Permanent link">&para;</a></h2>
 <p>The <code>click__out</code> event fires when there is a click outside of an element. This is useful for example in the case of dropdown list you would like closed when there is a click outside of the dropdown element.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Notice the TWO underline characters in <code>click__out</code>. </p>
+<p>Notice the TWO underline characters in <code>click__out</code>.</p>
 </div>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
@@ -1860,17 +2123,16 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;click in&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;text-red-500&#39;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">test_out</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">out_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1">) Div&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 p-4 text-xl border w-32&#39;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">) Div&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 p-4 text-xl border w-32&#39;</span><span class="p">)</span>
         <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click__out&#39;</span><span class="p">,</span> <span class="n">click_out</span><span class="p">)</span>
         <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">click_in</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">test_out</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">out_test</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h2 id="event-handlers-defined-in-components">Event Handlers Defined in Components<a class="headerlink" href="#event-handlers-defined-in-components" title="Permanent link">&para;</a></h2>
 <p>This section reflects changes introduced in version 0.1.0</p>
@@ -1888,7 +2150,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
-            <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39; m-2 p-2 border text-blue text-lg&#39;</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39; m-2 p-2 border text-blue text-lg&#39;</span><span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">i</span>
             <span class="n">b</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_clicked</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;info will go here&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
@@ -1896,7 +2158,7 @@ It may seem that the loop is erasing previous buttons by redefining the variable
     <span class="k">def</span> <span class="nf">button_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">info_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{msg.target.num}</span><span class="s1"> was clicked&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Button </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">num</span><span class="si">}</span><span class="s1"> was clicked&#39;</span>
 
 <span class="k">def</span> <span class="nf">target_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
@@ -1905,79 +2167,83 @@ It may seem that the loop is erasing previous buttons by redefining the variable
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">target_test</span><span class="p">)</span>
 </code></pre></div>
-                
-                  
-                
-                
-              
-              
-                
 
 
-              
-            </article>
-          </div>
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
+        
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
         
-          <a href="../basic_concepts/" title="Basic Concepts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Basic Concepts
+        <a href="../basic_concepts/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Basic Concepts" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
               </span>
+              Basic Concepts
             </div>
-          </a>
+          </div>
+        </a>
+      
+      
         
-        
-          <a href="../html_components/" title="HTML Components" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                HTML Components
+        <a href="../html_components/" class="md-footer__link md-footer__link--next" aria-label="Next: HTML Components" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
               </span>
+              HTML Components
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        powered by
-        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs</a>
-      </div>
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
     
-      <script src="../../assets/javascripts/application.c33a9706.js"></script>
-      
-      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>
       
     
   </body>

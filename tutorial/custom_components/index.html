@@ -1,40 +1,17 @@
 
-
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
       
         <meta name="description" content="An object-oriented, component based, high-level Python Web Framework that requires no front-end programming">
       
       
       
-      
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.pipeline.stopwords" content="True">
-      
-        <meta name="lang:search.pipeline.trimmer" content="True">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.2">
     
     
       
@@ -42,127 +19,122 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
-      
-        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
-      
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9f9400aa.min.css">
       
         
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
         
-        <meta name="theme-color" content="#2196f3">
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
       
-    
-    
-      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
-    
-    
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-    
-    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+
     
     
     
       
         
-<script>
-  window.ga = window.ga || function() {
-    (ga.q = ga.q || []).push(arguments)
-  }
-  ga.l = +new Date
-  /* Setup integration and send page view */
-  ga("create", "UA-155125345-1", "justpy.io")
-  ga("set", "anonymizeIp", true)
-  ga("send", "pageview")
-  /* Register handler to log search on blur */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (document.forms.search) {
-      var query = document.forms.search.query
-      query.addEventListener("blur", function() {
-        if (this.value) {
-          var path = document.location.pathname;
-          ga("send", "pageview", path + "?q=" + this.value)
-        }
-      })
-    }
-  })
-</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
     
     
   </head>
   
-    
-    
-    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="red">
   
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
-        
-      </defs>
-    </svg>
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue" data-md-color-accent="red">
+  
+    
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-    
-      <a href="#creating-your-own-components" tabindex="0" class="md-skip">
-        Skip to content
-      </a>
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="JustPy" aria-label="JustPy" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon"></i>
-          
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creating-your-own-components" class="md-skip">
+          Skip to content
         </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
-            <span class="md-header-nav__topic">
-              JustPy
-            </span>
-            <span class="md-header-nav__topic">
-              
-                Creating Your Own Components
-              
-            </span>
-          
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="JustPy" class="md-header__button md-logo" aria-label="JustPy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            JustPy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Creating Your Own Components
+            
+          </span>
         </div>
       </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-          
-<div class="md-search" data-md-component="search" role="dialog">
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="__search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
-      </button>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
+        <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -170,71 +142,59 @@
     </div>
   </div>
 </div>
-        
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
-
-
-  
-
-<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
   <div class="md-source__repository">
     justpy
   </div>
 </a>
-          </div>
-        </div>
-      
-    </div>
+      </div>
+    
   </nav>
+  
 </header>
     
-    <div class="md-container">
+    <div class="md-container" data-md-component="container">
+      
       
         
+          
+        
       
-      
-      <main class="md-main" role="main">
-        <div class="md-main__inner md-grid" data-md-component="container">
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../.." title="JustPy" class="md-nav__button md-logo">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="JustPy" class="md-nav__button md-logo" aria-label="JustPy" data-md-component="logo">
       
-        <i class="md-icon"></i>
-      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
     </a>
     JustPy
   </label>
   
     <div class="md-nav__source">
-      
-
-
-  
-
-<a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-source="github">
-  
-    <div class="md-source__icon">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <use xlink:href="#__github" width="24" height="24"></use>
-      </svg>
-    </div>
-  
+      <a href="https://github.com/elimintz/justpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
   <div class="md-source__repository">
     justpy
   </div>
@@ -247,12 +207,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../.." title="What is JustPy" class="md-nav__link">
-      What is JustPy
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        What is JustPy
+      </a>
+    </li>
+  
 
     
       
@@ -260,166 +223,220 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+  
+  
     
-    <label class="md-nav__link" for="nav-2">
-      Tutorial
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        Tutorial
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../getting_started/" title="Getting Started" class="md-nav__link">
-      Getting Started
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../basic_concepts/" title="Basic Concepts" class="md-nav__link">
-      Basic Concepts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../handling_events/" title="Handling Events" class="md-nav__link">
-      Handling Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../html_components/" title="HTML Components" class="md-nav__link">
-      HTML Components
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../routes/" title="Routes" class="md-nav__link">
-      Routes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../input/" title="Input Component" class="md-nav__link">
-      Input Component
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../model_and_data/" title="The model and data Attributes" class="md-nav__link">
-      The <b>model</b> and <b>data</b> Attributes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../working_with_html/" title="Parsing and Using HTML" class="md-nav__link">
-      Parsing and Using HTML
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../pushing_data/" title="Pushing Data to Web Pages" class="md-nav__link">
-      Pushing Data to Web Pages
-    </a>
-  </li>
-
-        
-          
-          
-          
-
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basic_concepts/" class="md-nav__link">
+        Basic Concepts
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item md-nav__item--active">
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../handling_events/" class="md-nav__link">
+        Handling Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../html_components/" class="md-nav__link">
+        HTML Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../routes/" class="md-nav__link">
+        Routes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input/" class="md-nav__link">
+        Input Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model_and_data/" class="md-nav__link">
+        The <b>model</b> and <b>data</b> Attributes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../working_with_html/" class="md-nav__link">
+        Parsing and Using HTML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pushing_data/" class="md-nav__link">
+        Pushing Data to Web Pages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Creating Your Own Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Creating Your Own Components
-      </label>
-    
-    <a href="./" title="Creating Your Own Components" class="md-nav__link md-nav__link--active">
-      Creating Your Own Components
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary">
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#pill-button-component" class="md-nav__link">
     Pill Button Component
   </a>
+  
+    <nav class="md-nav" aria-label="Pill Button Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-component-pillbutton-button-looking-like-a-pill" class="md-nav__link">
+    Custom Component PillButton - Button looking like a pill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-component-pillbutton-with-background-color-attribute" class="md-nav__link">
+    Custom Component PillButton  with background color attribute
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -442,12 +459,73 @@
     Date Card Component
   </a>
   
+    <nav class="md-nav" aria-label="Date Card Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#calendardate-custom-component" class="md-nav__link">
+    CalendarDate custom component
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calendardate-custom-component-using-react" class="md-nav__link">
+    CalendarDate custom component using react
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calendardate-custom-component-color-dependent-on-data-attribute-of-parent-container" class="md-nav__link">
+    CalendarDate custom component color dependent on data attribute of parent container
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
   <a href="#hello-component" class="md-nav__link">
     Hello Component
   </a>
+  
+    <nav class="md-nav" aria-label="Hello Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-jphello" class="md-nav__link">
+    5 x times jp.Hello
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-jphello-as-independent-elements" class="md-nav__link">
+    5 x times jp.Hello as independent elements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-jphello-with-a-default-counter-value" class="md-nav__link">
+    5 x times jp.Hello with a default counter value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-customized-myhello-based-on-jphello" class="md-nav__link">
+    5 x times customized MyHello based on jp.Hello
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -456,7 +534,7 @@
     Calculator Component
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Calculator Component">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -513,980 +591,1222 @@
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../before_after_events/" class="md-nav__link">
+        The before and after Events
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../request_object/" class="md-nav__link">
+        The Request Object
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../form/" class="md-nav__link">
+        Forms
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../before_after_events/" title="The before and after Events" class="md-nav__link">
-      The before and after Events
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drag_and_drop/" class="md-nav__link">
+        Drag and Drop
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tailwind/" class="md-nav__link">
+        Tailwind
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transitions/" class="md-nav__link">
+        Transitions
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../request_object/" title="The Request Object" class="md-nav__link">
-      The Request Object
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../svg_components/" class="md-nav__link">
+        SVG Components
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matplotlib/" class="md-nav__link">
+        Matplotlib Charting
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../altair/" class="md-nav__link">
+        Altair Charting
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../form/" title="Forms" class="md-nav__link">
-      Forms
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bokeh/" class="md-nav__link">
+        Bokeh Charting
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../equations/" class="md-nav__link">
+        Equations
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../markdown/" class="md-nav__link">
+        Markdown
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../drag_and_drop/" title="Drag and Drop" class="md-nav__link">
-      Drag and Drop
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotly/" class="md-nav__link">
+        Plotly Charting
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pydeck/" class="md-nav__link">
+        Pudeck Charting
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ajax/" class="md-nav__link">
+        Ajax vs. WebSockets
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../tailwind/" title="Tailwind" class="md-nav__link">
-      Tailwind
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/" class="md-nav__link">
+        Sessions
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../static/" class="md-nav__link">
+        Static Files
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../page_events/" class="md-nav__link">
+        Page Events
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../transitions/" title="Transitions" class="md-nav__link">
-      Transitions
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uploading_files/" class="md-nav__link">
+        Downloading and Uploading Files
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        Deployment
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../svg_components/" title="SVG Components" class="md-nav__link">
-      SVG Components
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced_components/" class="md-nav__link">
+        Advanced Components
+      </a>
+    </li>
+  
+
+            
           
-          
-
-
-  <li class="md-nav__item">
-    <a href="../matplotlib/" title="Matplotlib Charting" class="md-nav__link">
-      Matplotlib Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../plotly/" title="Plotly Charting" class="md-nav__link">
-      Plotly Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../altair/" title="Altair Charting" class="md-nav__link">
-      Altair Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../bokeh/" title="Bokeh Charting" class="md-nav__link">
-      Bokeh Charting
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../equations/" title="Equations" class="md-nav__link">
-      Equations
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../markdown/" title="Markdown" class="md-nav__link">
-      Markdown
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../ajax/" title="Ajax vs. WebSockets" class="md-nav__link">
-      Ajax vs. WebSockets
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../sessions/" title="Sessions" class="md-nav__link">
-      Sessions
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../static/" title="Static Files" class="md-nav__link">
-      Static Files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../page_events/" title="Page Events" class="md-nav__link">
-      Page Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../configuration/" title="Configuration" class="md-nav__link">
-      Configuration
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../uploading_files/" title="Downloading and Uploading Files" class="md-nav__link">
-      Downloading and Uploading Files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../deployment/" title="Deployment" class="md-nav__link">
-      Deployment
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../advanced_components/" title="Advanced Components" class="md-nav__link">
-      Advanced Components
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      Highcharts Guide
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        Highcharts Guide
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Highcharts Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Highcharts Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Highcharts Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/creating_charts/" class="md-nav__link">
+        Creating Charts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/pandas/" class="md-nav__link">
+        Using Pandas to Create Charts
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/introduction/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/stock_charts/" class="md-nav__link">
+        Stock Charts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/updating_charts/" class="md-nav__link">
+        Updating Charts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/tooltips/" class="md-nav__link">
+        Tooltips
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/creating_charts/" title="Creating Charts" class="md-nav__link">
-      Creating Charts
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/chart_events/" class="md-nav__link">
+        Chart Events
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/iris/" class="md-nav__link">
+        Iris Dataset Visualization
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../charts_tutorial/chart_components/" class="md-nav__link">
+        Chart Components
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/pandas/" title="Using Pandas to Create Charts" class="md-nav__link">
-      Using Pandas to Create Charts
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/stock_charts/" title="Stock Charts" class="md-nav__link">
-      Stock Charts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/updating_charts/" title="Updating Charts" class="md-nav__link">
-      Updating Charts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/tooltips/" title="Tooltips" class="md-nav__link">
-      Tooltips
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/chart_events/" title="Chart Events" class="md-nav__link">
-      Chart Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/iris/" title="Iris Dataset Visualization" class="md-nav__link">
-      Iris Dataset Visualization
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../charts_tutorial/chart_components/" title="Chart Components" class="md-nav__link">
-      Chart Components
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
-    
-    <label class="md-nav__link" for="nav-4">
-      ag-Grid Guide
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
-        ag-Grid Guide
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          ag-Grid Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ag-Grid Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          ag-Grid Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/creating_grids/" class="md-nav__link">
+        Creating Grids
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/adding_html/" class="md-nav__link">
+        Adding HTML to Cells
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/introduction/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/pandas/" class="md-nav__link">
+        Using Pandas to Create Grids
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/database/" class="md-nav__link">
+        Displaying Database Tables and Query Results
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/grid_events/" class="md-nav__link">
+        Grid Events
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/creating_grids/" title="Creating Grids" class="md-nav__link">
-      Creating Grids
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/checkbox/" class="md-nav__link">
+        Rendering Checkboxes
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/field_evaluation/" class="md-nav__link">
+        Evaluating Fields using JavaScript
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grids_tutorial/grid_api/" class="md-nav__link">
+        Running Grid API Commands
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/adding_html/" title="Adding HTML to Cells" class="md-nav__link">
-      Adding HTML to Cells
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/pandas/" title="Using Pandas to Create Grids" class="md-nav__link">
-      Using Pandas to Create Grids
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/database/" title="Displaying Database Tables and Query Results" class="md-nav__link">
-      Displaying Database Tables and Query Results
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/grid_events/" title="Grid Events" class="md-nav__link">
-      Grid Events
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/checkbox/" title="Rendering Checkboxes" class="md-nav__link">
-      Rendering Checkboxes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/field_evaluation/" title="Evaluating Fields using JavaScript" class="md-nav__link">
-      Evaluating Fields using JavaScript
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../grids_tutorial/grid_api/" title="Running Grid API Commands" class="md-nav__link">
-      Running Grid API Commands
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Quasar Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Quasar Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Quasar Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/notify/" class="md-nav__link">
+        Notifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
     
-    <label class="md-nav__link" for="nav-5">
-      Quasar Guide
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        Quasar Guide
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          Quasar Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Quasar Components" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Quasar Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/quasar_components/#qajaxbar" class="md-nav__link">
+        QAjaxBar
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/quasar_components/#qbtntoggle" class="md-nav__link">
+        QBtnToggle
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QDialog/" class="md-nav__link">
+        QDialog
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/introduction/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QInput/" class="md-nav__link">
+        QInput
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QDate/" class="md-nav__link">
+        QDate and QTime
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QOptionGroup/" class="md-nav__link">
+        QOptionGroup
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/notify/" title="Notifications" class="md-nav__link">
-      Notifications
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QExpansionItem/" class="md-nav__link">
+        QExpansionItem
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QSplitter/" class="md-nav__link">
+        QSplitter
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QRating/" class="md-nav__link">
+        QRating
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QDialog/" title="QDialog" class="md-nav__link">
-      QDialog
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QColor/" class="md-nav__link">
+        QColor
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QList/" class="md-nav__link">
+        QList
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/QTree/" class="md-nav__link">
+        QTree
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QInput/" title="QInput" class="md-nav__link">
-      QInput
-    </a>
-  </li>
-
-        
+            
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quasar_tutorial/not_working/" class="md-nav__link">
+        Components not Working
+      </a>
+    </li>
+  
+
+            
           
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QDate/" title="QDate and QTime" class="md-nav__link">
-      QDate and QTime
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QOptionGroup/" title="QOptionGroup" class="md-nav__link">
-      QOptionGroup
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QBtnToggle/" title="QBtnToggle" class="md-nav__link">
-      QBtnToggle
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QExpansionItem/" title="QExpansionItem" class="md-nav__link">
-      QExpansionItem
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QSplitter/" title="QSplitter" class="md-nav__link">
-      QSplitter
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QRating/" title="QRating" class="md-nav__link">
-      QRating
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QColor/" title="QColor" class="md-nav__link">
-      QColor
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QList/" title="QList" class="md-nav__link">
-      QList
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QAjaxBar/" title="QAjaxBar" class="md-nav__link">
-      QAjaxBar
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/QTree/" title="QTree" class="md-nav__link">
-      QTree
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../quasar_tutorial/not_working/" title="Components not Working" class="md-nav__link">
-      Components not Working
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
-    
-    <label class="md-nav__link" for="nav-6">
-      Reference
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
-        Reference
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/webpage/" class="md-nav__link">
+        WebPage class
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/htmlcomponent/" class="md-nav__link">
+        HTML Components
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/justpy/" class="md-nav__link">
+        The justpy Command
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../reference/webpage/" title="WebPage class" class="md-nav__link">
-      WebPage class
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/configuration/" class="md-nav__link">
+        Configuration Variables
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/notes/" class="md-nav__link">
+        Notes
+      </a>
+    </li>
+  
+
+            
           
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/htmlcomponent/" title="HTML Components" class="md-nav__link">
-      HTML Components
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/justpy/" title="The justpy Command" class="md-nav__link">
-      The justpy Command
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/configuration/" title="Configuration Variables" class="md-nav__link">
-      Configuration Variables
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../reference/notes/" title="Notes" class="md-nav__link">
-      Notes
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
-    
-    <label class="md-nav__link" for="nav-7">
-      How To
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-7">
-        How To
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          How To
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How To" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          How To
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/monitor_idle/" class="md-nav__link">
+        Monitor User Activity
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/change_font/" class="md-nav__link">
+        Use Different Fonts
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/reload_pages/" class="md-nav__link">
+        Reload Page
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../how_to/monitor_idle/" title="Monitor User Activity" class="md-nav__link">
-      Monitor User Activity
-    </a>
-  </li>
-
-        
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/login_decorator/" class="md-nav__link">
+        Use Decorators with Request Handlers
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/create_select/" class="md-nav__link">
+        Creating Select Elements
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how_to/quasar_full_screen/" class="md-nav__link">
+        Quasar Full Screen Mode
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../how_to/change_font/" title="Use Different Fonts" class="md-nav__link">
-      Use Different Fonts
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/reload_pages/" title="Reload Page" class="md-nav__link">
-      Reload Page
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/login_decorator/" title="Use Decorators with Request Handlers" class="md-nav__link">
-      Use Decorators with Request Handlers
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/create_select/" title="Creating Select Elements" class="md-nav__link">
-      Creating Select Elements
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../how_to/quasar_full_screen/" title="Quasar Full Screen Mode" class="md-nav__link">
-      Quasar Full Screen Mode
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
+  
+  
+  
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
-    
-    <label class="md-nav__link" for="nav-8">
-      Blog
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-8">
-        Blog
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/ag-grid_to_web_page/" class="md-nav__link">
+        From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/reactivity/" class="md-nav__link">
+        Reactivity in JustPy
+      </a>
+    </li>
+  
+
+            
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/vue_examples/" class="md-nav__link">
+        Vue.js Examples in JustPy
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../../blog/ag-grid_to_web_page/" title="From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python" class="md-nav__link">
-      From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python
-    </a>
-  </li>
-
-        
+            
           
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../blog/reactivity/" title="Reactivity in JustPy" class="md-nav__link">
-      Reactivity in JustPy
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../blog/vue_examples/" title="Vue.js Examples in JustPy" class="md-nav__link">
-      Vue.js Examples in JustPy
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
+        </ul>
+      </nav>
+    </li>
+  
 
     
   </ul>
@@ -1496,23 +1816,49 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary">
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#pill-button-component" class="md-nav__link">
     Pill Button Component
   </a>
+  
+    <nav class="md-nav" aria-label="Pill Button Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-component-pillbutton-button-looking-like-a-pill" class="md-nav__link">
+    Custom Component PillButton - Button looking like a pill
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-component-pillbutton-with-background-color-attribute" class="md-nav__link">
+    Custom Component PillButton  with background color attribute
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1535,12 +1881,73 @@
     Date Card Component
   </a>
   
+    <nav class="md-nav" aria-label="Date Card Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#calendardate-custom-component" class="md-nav__link">
+    CalendarDate custom component
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calendardate-custom-component-using-react" class="md-nav__link">
+    CalendarDate custom component using react
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calendardate-custom-component-color-dependent-on-data-attribute-of-parent-container" class="md-nav__link">
+    CalendarDate custom component color dependent on data attribute of parent container
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
   <a href="#hello-component" class="md-nav__link">
     Hello Component
   </a>
+  
+    <nav class="md-nav" aria-label="Hello Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-jphello" class="md-nav__link">
+    5 x times jp.Hello
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-jphello-as-independent-elements" class="md-nav__link">
+    5 x times jp.Hello as independent elements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-jphello-with-a-default-counter-value" class="md-nav__link">
+    5 x times jp.Hello with a default counter value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-x-times-customized-myhello-based-on-jphello" class="md-nav__link">
+    5 x times customized MyHello based on jp.Hello
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1549,7 +1956,7 @@
     Calculator Component
   </a>
   
-    <nav class="md-nav">
+    <nav class="md-nav" aria-label="Calculator Component">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1606,10 +2013,6 @@
   
 </li>
       
-      
-      
-      
-      
     </ul>
   
 </nav>
@@ -1618,18 +2021,21 @@
               </div>
             
           
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
-                
-                <h1 id="creating-your-own-components">Creating Your Own Components<a class="headerlink" href="#creating-your-own-components" title="Permanent link">&para;</a></h1>
-<p>The idea behind component programming is simple and compelling: Build a component once, and then reuse it either in the same application or in different applications. </p>
+                  
+
+
+<h1 id="creating-your-own-components">Creating Your Own Components<a class="headerlink" href="#creating-your-own-components" title="Permanent link">&para;</a></h1>
+<p>The idea behind component programming is simple and compelling: Build a component once, and then reuse it either in the same application or in different applications.</p>
 <p>In JustPy, components are Python classes and so are custom components. Creating a component in JustPy means in most cases declaring a new Python class. In some cases, developing complex JustPy components requires also developing a <a href="https://vuejs.org/">Vue.js</a> component. For example, the <code>HighCharts</code> charting component required developing a Vue.js component. For JustPy to support <a href="https://quasar.dev/">Quasar</a> components, a Vue.js component was also required. It turns out that all Quasar components can be supported with one Vue.js component and that simplified matters considerably.</p>
 <p>However, let's start with the basics. Most components require only writing a Python class and no knowledge of Vue.js or JavaScript is required.</p>
-<p>Some components described here have features that are covered in other parts of the tutorial. Don't feel the need to finish this section in one go. If you find you need to go to other sections and return later, please do so. </p>
+<p>Some components described here have features that are covered in other parts of the tutorial. Don't feel the need to finish this section in one go. If you find you need to go to other sections and return later, please do so.</p>
 <h2 id="pill-button-component">Pill Button Component<a class="headerlink" href="#pill-button-component" title="Permanent link">&para;</a></h2>
 <p>Our first component is a very simple one. It is a Button that is formatted to look like a <a href="https://tailwindcss.com/components/buttons#pill">pill</a>.</p>
+<h3 id="custom-component-pillbutton-button-looking-like-a-pill">Custom Component PillButton - Button looking like a pill<a class="headerlink" href="#custom-component-pillbutton-button-looking-like-a-pill" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">PillButton</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
@@ -1639,15 +2045,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">custom_comp_test1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
         <span class="n">PillButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Pill Button&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;I was clicked&quot;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">custom_comp_test1</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>Our new component, PillButton, inherits from Button and therefore will have all the attributes and functionality of Button.</p>
 <p>The only change we make is to redefine <code>__init__</code>, the method that is called when an instance is created. In this case the method calls the <code>__init__</code> of the super class (Button in our case) and then sets the classes that format the button.</p>
@@ -1655,8 +2060,9 @@
 <p class="admonition-title">Warning</p>
 <p>The line <code>super().__init__(**kwargs)</code> is a <strong>MUST</strong> in component's <code>__init__</code>  </p>
 </div>
-<p>Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it. </p>
+<p>Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it.</p>
 <p>Let's add a custom attribute to the component that will determine the background color of the button.</p>
+<h3 id="custom-component-pillbutton-with-background-color-attribute">Custom Component PillButton  with background color attribute<a class="headerlink" href="#custom-component-pillbutton-with-background-color-attribute" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">PillButton</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
@@ -1664,17 +2070,16 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{self.bg_color}</span><span class="s1">-500 hover:bg-</span><span class="si">{self.bg_color}</span><span class="s1">-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span><span class="si">}</span><span class="s1">-500 hover:bg-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span><span class="si">}</span><span class="s1">-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">custom_comp_test2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;pink&#39;</span><span class="p">]:</span>
         <span class="n">PillButton</span><span class="p">(</span><span class="n">bg_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Pill Button&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="s1">&#39;self.text=&quot;I was clicked&quot;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">custom_comp_test2</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>When we create the PillButton instances we set the attribute <code>bg_color</code>. Each of the four PillButton instances will have a different background color.</p>
 <p>Notice that the default for <code>bg_color</code> is 'blue' and it is set before the line <code>super().__init__(**kwargs)</code>. This allows it to be overwritten by the keyword arguments. Try moving the line setting the default after the line calling the super and see what happens.</p>
@@ -1685,9 +2090,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{self.bg_color}</span><span class="s1">-500 hover:bg-</span><span class="si">{self.bg_color}</span><span class="s1">-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span><span class="si">}</span><span class="s1">-500 hover:bg-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bg_color</span><span class="si">}</span><span class="s1">-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>Both methods work the same as Python uses the class attribute if it does not find an instance attribute.</p>
 <h2 id="alert-component">Alert Component<a class="headerlink" href="#alert-component" title="Permanent link">&para;</a></h2>
@@ -1709,9 +2113,8 @@
 <span class="s2">&quot;&quot;&quot;</span>
 </code></pre></div>
 
-
 <p>We will use <a href="../working_with_html?id=the-parse_html-function"><code>parse_html</code></a> to easily convert this to JustPy commands.</p>
-<p>Run the following program. As it does not start a web server, there is no need to load a web page. We will be interested only in the printout. </p>
+<p>Run the following program. As it does not start a web server, there is no need to load a web page. We will be interested only in the printout.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="c1"># Example based on https://tailwindcss.com/components/alerts/#top-accent-border</span>
@@ -1735,7 +2138,6 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>The printout is the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">root</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="n">c1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;alert&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
@@ -1747,7 +2149,6 @@
 <span class="n">c7</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;font-bold&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c6</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Our privacy policy has changed&#39;</span><span class="p">)</span>
 <span class="n">c8</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-sm&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c6</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Make sure you know how these changes affect you.&#39;</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>These are the JustPy commands required to duplicate the elements defined in the HTML. We are now are ready to define our component. We will call it <code>MyAlert</code>.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -1772,15 +2173,14 @@
         <span class="n">c7</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;font-bold text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c6</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title_text</span><span class="p">)</span>
         <span class="n">c8</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-sm&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c6</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">body_text</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">alert_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">alert_test1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">MyAlert</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 w-1/4&#39;</span><span class="p">,</span> <span class="n">title_text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">body_text</span><span class="o">=</span><span class="s1">&#39;How is everybody?&#39;</span><span class="p">)</span>
     <span class="n">d</span><span class="o">.</span><span class="n">title_text</span> <span class="o">=</span> <span class="s1">&#39;Shalom&#39;</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">alert_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">alert_test1</span><span class="p">)</span>
 </code></pre></div>
-
 
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1792,7 +2192,7 @@
 <p class="admonition-title">Note</p>
 <p>As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the <code>convert_object_to_dict</code> method that each component class has.</p>
 </div>
-<h2 id="the-react-method">The <span style="color: red">react</span> Method<a class="headerlink" href="#the-react-method" title="Permanent link">&para;</a></h2>
+<h2 id="the-react-method">The react Method<a class="headerlink" href="#the-react-method" title="Permanent link">&para;</a></h2>
 <p>Every JustPy component supports the <code>react</code> method. It is run just just before a class instance is converted to a dictionary. It receives two arguments, the instance and the <code>data</code> attribute of its parent element or that of the <code>WebPage</code> if it has no parent. In base JustPy elements, <code>react</code> does nothing. It is there to be overridden in user defined components.</p>
 <p>The modified program looks like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -1833,7 +2233,7 @@
 <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">title_text</span> <span class="o">=</span> <span class="s1">&#39;Hello&#39;</span>
 
-<span class="k">def</span> <span class="nf">alert_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">alert_test2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">greeting</span> <span class="ow">in</span> <span class="n">greetings</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">MyAlert</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 w-1/4&#39;</span><span class="p">,</span> <span class="n">title_text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">body_text</span><span class="o">=</span><span class="s1">&#39;How is everybody?&#39;</span><span class="p">)</span>
@@ -1842,15 +2242,13 @@
     <span class="k">return</span> <span class="n">wp</span>
 
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">alert_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">alert_test2</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>At the end of <code>__init__</code> we added the two lines:</p>
 <div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">title_p</span> <span class="o">=</span> <span class="n">c7</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">body_p</span> <span class="o">=</span> <span class="n">c8</span>
 </code></pre></div>
-
 
 <p>These two attributes now hold the paragraphs where the title and body will be placed.
 In the <code>react</code> method, the <code>text</code> attributes of the paragraphs are set. Just as a precaution, the <code>text</code> attribute of the parent element is set to the empty string (if it is not empty, the text will be rendered and the result will not be what we want).</p>
@@ -1858,6 +2256,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>We now have a component, <code>MyAlert</code> that we can reuse as we please in any project (and of course share with our fellow programmers).</p>
 <h2 id="date-card-component">Date Card Component<a class="headerlink" href="#date-card-component" title="Permanent link">&para;</a></h2>
 <p>Here is an example of a simple date card component based on <a href="https://tailwindcomponents.com/component/calendar-date">this</a> design.</p>
+<h3 id="calendardate-custom-component">CalendarDate custom component<a class="headerlink" href="#calendardate-custom-component" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">CalendarDate</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
@@ -1871,20 +2270,20 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inner_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        &lt;div class=&quot;w-24 rounded-t overflow-hidden bg-white text-center m-2 cursor-default&quot;&gt;</span>
-<span class="s2">            &lt;div class=&quot;bg-</span><span class="si">{self.color}</span><span class="s2">-500 text-white py-1&quot;&gt;</span>
-<span class="s2">                </span><span class="si">{self.month}</span><span class="s2"></span>
+<span class="s2">            &lt;div class=&quot;bg-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">-500 text-white py-1&quot;&gt;</span>
+<span class="s2">                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">month</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">            &lt;/div&gt;</span>
 <span class="s2">            &lt;div class=&quot;pt-1 border-l border-r&quot;&gt;</span>
-<span class="s2">                &lt;span class=&quot;text-4xl font-bold&quot;&gt;</span><span class="si">{self.day}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                &lt;span class=&quot;text-4xl font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
 <span class="s2">            &lt;/div&gt;</span>
 <span class="s2">            &lt;div class=&quot;pb-2 px-2 border-l border-r border-b rounded-b flex justify-between&quot;&gt;</span>
-<span class="s2">                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{self.weekday}</span><span class="s2">&lt;/span&gt;</span>
-<span class="s2">                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{self.year}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weekday</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
 <span class="s2">            &lt;/div&gt;</span>
 <span class="s2">        &lt;/div&gt;</span>
 <span class="s2">        &quot;&quot;&quot;</span>
 
-<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">custom_comp_test3</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">year</span> <span class="o">=</span> <span class="mi">2019</span>
     <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb&#39;</span>
@@ -1896,14 +2295,14 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="n">CalendarDate</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;2005&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">custom_comp_test3</span><span class="p">)</span>
 </code></pre></div>
 
-
-<p>In this custom component we are using the template like behavior of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component <code>Div</code>. It changes only the <code>__init__</code> method and inherits all the others. </p>
-<p>Notice the <code>super().__init__(**kwargs)</code> line in <code>__init__</code>. It is required to take care of all the plumbing that goes along with a JustPy component. This line executes the <code>__init__</code> of <code>Div</code>.  We define the defaults for the component specific attributes before this line so as not to overwrite keyword arguments that the user has provided and are assigned to attributes in the superclass <code>__init__</code>. </p>
-<p>This component works well enough but has a flaw. The <code>inner_html</code> attribute is set in <code>__init__</code> when the instance is created. If for example, the instance's <code>day</code> attribute is changed after <code>__init__</code> has run, it would not be reflected in the inner html and the component will not be rendered correctly. </p>
+<p>In this custom component we are using the template like behavior of Python f-strings to create a date card with some features that can be changed. This simple component inherits from the component <code>Div</code>. It changes only the <code>__init__</code> method and inherits all the others.</p>
+<p>Notice the <code>super().__init__(**kwargs)</code> line in <code>__init__</code>. It is required to take care of all the plumbing that goes along with a JustPy component. This line executes the <code>__init__</code> of <code>Div</code>.  We define the defaults for the component specific attributes before this line so as not to overwrite keyword arguments that the user has provided and are assigned to attributes in the superclass <code>__init__</code>.</p>
+<p>This component works well enough but has a flaw. The <code>inner_html</code> attribute is set in <code>__init__</code> when the instance is created. If for example, the instance's <code>day</code> attribute is changed after <code>__init__</code> has run, it would not be reflected in the inner html and the component will not be rendered correctly.</p>
 <p>To solve this problem, we need to move setting <code>inner_html</code> from the time the instance was created to the time it is rendered. Every JustPy component has a method called <code>react</code> that is called each time before the object is converted to a dict. The example above can therefore be written as follows:</p>
+<h3 id="calendardate-custom-component-using-react">CalendarDate custom component using react<a class="headerlink" href="#calendardate-custom-component-using-react" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">CalendarDate</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
@@ -1919,21 +2318,21 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="k">def</span> <span class="nf">react</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inner_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                        &lt;div class=&quot;w-24 rounded-t overflow-hidden bg-white text-center m-2 cursor-default&quot;&gt;</span>
-<span class="s2">                            &lt;div class=&quot;bg-</span><span class="si">{self.color}</span><span class="s2">-500 text-white py-1&quot;&gt;</span>
-<span class="s2">                                </span><span class="si">{self.month}</span><span class="s2"></span>
+<span class="s2">                            &lt;div class=&quot;bg-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">-500 text-white py-1&quot;&gt;</span>
+<span class="s2">                                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">month</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">                            &lt;/div&gt;</span>
 <span class="s2">                            &lt;div class=&quot;pt-1 border-l border-r&quot;&gt;</span>
-<span class="s2">                                &lt;span class=&quot;text-4xl font-bold&quot;&gt;</span><span class="si">{self.day}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                                &lt;span class=&quot;text-4xl font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
 <span class="s2">                            &lt;/div&gt;</span>
 <span class="s2">                            &lt;div class=&quot;pb-2 px-2 border-l border-r border-b rounded-b flex justify-between&quot;&gt;</span>
-<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{self.weekday}</span><span class="s2">&lt;/span&gt;</span>
-<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{self.year}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weekday</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
 <span class="s2">                            &lt;/div&gt;</span>
 <span class="s2">                        &lt;/div&gt;</span>
 <span class="s2">                        &quot;&quot;&quot;</span>
 
 
-<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">custom_comp_test4</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">year</span> <span class="o">=</span> <span class="mi">2019</span>
     <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb&#39;</span>
@@ -1946,12 +2345,12 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="n">c</span><span class="o">.</span><span class="n">day</span> <span class="o">+=</span> <span class="mi">1</span>    <span class="c1"># Notice how the date starts from 6 and not from 5.</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">custom_comp_test4</span><span class="p">)</span>
 </code></pre></div>
 
-
-<p>The <code>react</code> method accepts an additional argument to self. The argument <code>data</code> is the <code>data</code> attribute of the element's direct parent. If the element has no parent, it is the <code>data</code> attribute of the page. Using <code>react</code> we can have child elements change their behavior when rendered based on the <code>data</code> attribute of their parent or the page they are on. </p>
+<p>The <code>react</code> method accepts an additional argument to self. The argument <code>data</code> is the <code>data</code> attribute of the element's direct parent. If the element has no parent, it is the <code>data</code> attribute of the page. Using <code>react</code> we can have child elements change their behavior when rendered based on the <code>data</code> attribute of their parent or the page they are on.</p>
 <p>For example, let's make the color of the component dependent on the <code>data</code> attribute of their parent container.</p>
+<h3 id="calendardate-custom-component-color-dependent-on-data-attribute-of-parent-container">CalendarDate custom component color dependent on data attribute of parent container<a class="headerlink" href="#calendardate-custom-component-color-dependent-on-data-attribute-of-parent-container" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">CalendarDate</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
@@ -1967,15 +2366,15 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="k">def</span> <span class="nf">react</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inner_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                        &lt;div class=&quot;w-24 rounded-t overflow-hidden bg-white text-center m-2 cursor-default&quot;&gt;</span>
-<span class="s2">                            &lt;div class=&quot;bg-</span><span class="si">{data[&#39;color&#39;]}</span><span class="s2">-500 text-white py-1&quot;&gt;</span>
-<span class="s2">                                </span><span class="si">{self.month}</span><span class="s2"></span>
+<span class="s2">                            &lt;div class=&quot;bg-</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">-500 text-white py-1&quot;&gt;</span>
+<span class="s2">                                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">month</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">                            &lt;/div&gt;</span>
 <span class="s2">                            &lt;div class=&quot;pt-1 border-l border-r&quot;&gt;</span>
-<span class="s2">                                &lt;span class=&quot;text-4xl font-bold&quot;&gt;</span><span class="si">{self.day}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                                &lt;span class=&quot;text-4xl font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
 <span class="s2">                            &lt;/div&gt;</span>
 <span class="s2">                            &lt;div class=&quot;pb-2 px-2 border-l border-r border-b rounded-b flex justify-between&quot;&gt;</span>
-<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{self.weekday}</span><span class="s2">&lt;/span&gt;</span>
-<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{self.year}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weekday</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">                                &lt;span class=&quot;text-xs font-bold&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">&lt;/span&gt;</span>
 <span class="s2">                            &lt;/div&gt;</span>
 <span class="s2">                        &lt;/div&gt;</span>
 <span class="s2">                        &quot;&quot;&quot;</span>
@@ -1984,7 +2383,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="k">def</span> <span class="nf">change_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
 
-<span class="k">def</span> <span class="nf">comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">custom_comp_test5</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">year</span> <span class="o">=</span> <span class="mi">2019</span>
     <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb&#39;</span>
@@ -2000,45 +2399,44 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
                   <span class="n">change</span><span class="o">=</span><span class="n">change_color</span><span class="p">)</span>
     <span class="n">s</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
     <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
-        <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{color}</span><span class="s1">-600&#39;</span><span class="p">))</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;bg-</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">-600&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">comp_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">custom_comp_test5</span><span class="p">)</span>
 </code></pre></div>
 
-
-<p>This example is a little more complex as we have added a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">Select</a> component at the bottom of the page. Try changing the selected color. The color of the <code>CalendarDate</code> instances in the second group changes because in the event handler, <code>change_color</code> we change the <code>data</code> attribute of the parent Div, <code>d</code>. </p>
+<p>This example is a little more complex as we have added a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">Select</a> component at the bottom of the page. Try changing the selected color. The color of the <code>CalendarDate</code> instances in the second group changes because in the event handler, <code>change_color</code> we change the <code>data</code> attribute of the parent Div, <code>d</code>.</p>
 <p>The function <code>change_color</code> sets the value of the 'color' key in the data dictionary of the Div that holds the CalendarDate instances to the new value of the <code>Select</code> element. In this example, we changed the <code>react</code> function so it uses this value instead of <code>self.color</code> (which was used in the previous example) to set the color to display.</p>
-<p>A few more words about Select: A Select component includes Option components. In this example we add them to the Select using a predefined list of colors. When a specific option is selected, its value attribute becomes the value attribute of the Select. The change in value is acted upon by binding a method to the change event of the Select instance. </p>
+<p>A few more words about Select: A Select component includes Option components. In this example we add them to the Select using a predefined list of colors. When a specific option is selected, its value attribute becomes the value attribute of the Select. The change in value is acted upon by binding a method to the change event of the Select instance.</p>
 <h2 id="hello-component">Hello Component<a class="headerlink" href="#hello-component" title="Permanent link">&para;</a></h2>
 <p>JustPy comes with a simple Hello component, which we will now examine.</p>
 <p>First run the following short program.</p>
+<h3 id="5-x-times-jphello">5 x times jp.Hello<a class="headerlink" href="#5-x-times-jphello" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">hello_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">hello_test1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
         <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test1</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>The program puts five Hello elements on the page. Click any one of them. All five will show the number of times any element was clicked because each time through the loop, we add the same element to the page. There may be 5 rendered elements on the page, but for JustPy, these are the same element.</p>
 <p>If we would like there to be independent components on the page, we would write the program in the following way:</p>
+<h3 id="5-x-times-jphello-as-independent-elements">5 x times jp.Hello as independent elements<a class="headerlink" href="#5-x-times-jphello-as-independent-elements" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">hello_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">hello_test2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-        <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">())</span> <span class="c1"># or jp.Hello(a=wp) </span>
+        <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">())</span> <span class="c1"># or jp.Hello(a=wp)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test2</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>In this program, each time thorough the loop we create a new Hello element and add it to the page. When any element is clicked, no other element on the page is affected.</p>
 <p>Let's look more closely at the <code>Hello</code> component. This is the way it is defined:</p>
@@ -2051,30 +2449,30 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Hello! (click me)&#39;</span>
 
         <span class="k">def</span> <span class="nf">click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Hello! I was clicked </span><span class="si">{self.counter}</span><span class="s1"> times&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Hello! I was clicked </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s1"> times&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">click</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>Again, JustPy components are Python classes. In our case, <code>Hello</code> inherits from <code>Div</code> and only changes <code>Div</code>'s <code>__init__</code>.</p>
 <p>In <code>__init__</code> we first initialize a counter for the instance. This is a new attribute that is not initialized by <code>Div</code>. Then we call the super class <code>__init__</code>, in our case the <code>__init__</code> of Div. This call provides <code>Hello</code> with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class <code>__init__</code> after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:</p>
+<h3 id="5-x-times-jphello-with-a-default-counter-value">5 x times jp.Hello with a default counter value<a class="headerlink" href="#5-x-times-jphello-with-a-default-counter-value" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="k">def</span> <span class="nf">hello_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">hello_test3</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
         <span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">counter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test3</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>Since <code>counter</code> is initialized to 100, the components will start counting from 100. The call to the super class <code>__init__</code> takes care of assigning the keyword arguments. If we had put the initialization of <code>counter</code> after the call to the super class <code>__init__</code>, the keyword argument would have had no effect.</p>
 <p>Next, in the definition of <code>Hello</code>, we set the classes of the component to give it some basic design and we set the text. Then we define the click event handler and assign it to the instance. That's it.</p>
 <p>Let's say we are not pleased with the Hello message and its colors and want to define a better Hello component. This is how we would do it:</p>
+<h3 id="5-x-times-customized-myhello-based-on-jphello">5 x times customized MyHello based on jp.Hello<a class="headerlink" href="#5-x-times-customized-myhello-based-on-jphello" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">MyHello</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">):</span>
@@ -2084,17 +2482,16 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="s1">&#39;m-1 p-1 text-6xl text-center text-red-500 bg-yellow-500 hover:bg-yellow-800 cursor-pointer&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Much Better Hello! (click me)&#39;</span>
 
-<span class="k">def</span> <span class="nf">hello_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">hello_test4</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
         <span class="n">MyHello</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">counter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test4</span><span class="p">)</span>
 </code></pre></div>
 
-
-<p>We define a new component called <code>MyHello</code> which inherits from <code>Hello</code>. By running the super class <code>__init__</code> in the <code>__init__</code> of <code>MyHello</code>, we get all the functionality of <code>Hello</code>. We then just modify the classes and text. </p>
+<p>We define a new component called <code>MyHello</code> which inherits from <code>Hello</code>. By running the super class <code>__init__</code> in the <code>__init__</code> of <code>MyHello</code>, we get all the functionality of <code>Hello</code>. We then just modify the classes and text.</p>
 <h2 id="calculator-component">Calculator Component<a class="headerlink" href="#calculator-component" title="Permanent link">&para;</a></h2>
 <h3 id="base-component">Base component<a class="headerlink" href="#base-component" title="Permanent link">&para;</a></h3>
 <p>We will build a calculator component in stages. First, we will create a component that does not handle events or the model attribute. Please run the following example.</p>
@@ -2149,14 +2546,13 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>First let's look at the function <code>calculator_test</code>. This function creates a WebPage and adds ten instances of the Calculator component to it. Try changing the number of calculators on the page by changing the argument to range. Once a JustPy component has been defined, it is simple to reuse it. The Calculator component can be used now in multiple projects.</p>
 <p>JustPy components are Python classes. The Calculator component is therefore a Python class. The Calculator class inherits from Div so Calculator is endowed from the start will all the features and capabilities of the Div component. These features are used in  <code>__init__</code>, in order to add the other components needed to implement the calculator.</p>
 <p>The class <code>__init__</code> first calls the class <code>__init__</code> of the super class (in this case Div). If a class inherits from another JustPy component, you must run the <code>__init__</code> of the super class. It then sets the value attribute to 0 and adds two Input components, one for the tape and one for the result. The two Inputs are assigned to instance attributes for future reference and added to self (which is a Div and therefore other components can be added to it). The Inputs are also designated readonly so that the user cannot type in them.</p>
 <p>After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, <code>self.calculator_click</code> which is a static method of the Calculator class (we could have defined the event handler inside the <code>__init__</code>function instead). We also assign to the button <code>calc</code> attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.</p>
 <p>In this example, for the sake of brevity, we implemented a very simple state machine for the calculator that is not perfect (for example, it does not handle 0 in front of a number), but for our purposes, it will do. The state machine is inside the <code>calculator_click</code> event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on <code>self.text</code> which is unique for each button.</p>
 <h3 id="handling-the-change-event">Handling the change event<a class="headerlink" href="#handling-the-change-event" title="Permanent link">&para;</a></h3>
-<p>As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like: </p>
+<p>As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
 
 <span class="k">class</span> <span class="nc">Calculator</span><span class="p">(</span><span class="n">Div</span><span class="p">):</span>
@@ -2235,8 +2631,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test</span><span class="p">)</span>
 </code></pre></div>
 
-
-<p>Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do. </p>
+<p>Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do.</p>
 <p>In the click event handler we use a flag called <code>changed</code> that is set to <code>True</code> by the state machine logic if an operation that changes the value of the calculator occurs.</p>
 <p>At the end of the event handler, we check if <code>changed</code> is <code>True</code>. If it is, we check whether the instance has a change event handler. We do this by using the method <code>has_event_function</code> which is a basic method of all JustPy components.</p>
 <p>If there is a change event handler, we run the event handler using the <code>run_event_function</code> method which is also a basic method of all JustPy components.</p>
@@ -2244,9 +2639,9 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>Before calling <code>run_event_function</code> we modify some values in <code>msg</code> to make it more informative. In general, you would create the appropriate <code>msg</code> for how you believe the component will be used. In our case we have added the <code>button_text</code> key which stores the text of the last button that was clicked and that generated the change event.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Please note that <code>run_event_function</code> is an async method and therefore since <code>calculator_click</code> awaits it, it needs to be a coroutine also and is defined using async. </p>
+<p>Please note that <code>run_event_function</code> is an async method and therefore since <code>calculator_click</code> awaits it, it needs to be a coroutine also and is defined using async.</p>
 </div>
-<h3 id="adding-a-model-attribute">Adding a <span style="color: red">model</span> attribute<a class="headerlink" href="#adding-a-model-attribute" title="Permanent link">&para;</a></h3>
+<h3 id="adding-a-model-attribute">Adding a model attribute<a class="headerlink" href="#adding-a-model-attribute" title="Permanent link">&para;</a></h3>
 <p>To make Calculator complete, we will also add handling of the <code>model</code> attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the <code>model_update</code> method from the example below and see what happens.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
 
@@ -2301,7 +2696,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">pass</span>
         <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
-            <span class="n">calc</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>  <span class="c1">#******************** updates model </span>
+            <span class="n">calc</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>  <span class="c1">#******************** updates model</span>
             <span class="k">if</span> <span class="n">calc</span><span class="o">.</span><span class="n">has_event_function</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">):</span>
                 <span class="n">calc_msg</span> <span class="o">=</span> <span class="n">msg</span>
                 <span class="n">calc_msg</span><span class="o">.</span><span class="n">event_type</span> <span class="o">=</span> <span class="s1">&#39;change&#39;</span>
@@ -2324,7 +2719,6 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>Notice that we have added a call to the method <code>set_model</code> in the click event handler. This method checks if the component has a model attribute and if so, sets it to the method's argument.  </p>
 <p>The <code>set_model</code> method is defined as follows:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -2332,19 +2726,18 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
-
-<p>The <code>model</code> attribute, as we defined it above is one directional. The component only sets <code>model</code> value but does not change any of its other attribute values based on changes in <code>model</code>. </p>
+<p>The <code>model</code> attribute, as we defined it above is one directional. The component only sets <code>model</code> value but does not change any of its other attribute values based on changes in <code>model</code>.</p>
 <h2 id="tab-group-component">Tab Group Component<a class="headerlink" href="#tab-group-component" title="Permanent link">&para;</a></h2>
 <p>This component allows inserting content in tabs and displaying it based on the tab selected.</p>
 <p>If the <code>animation</code> attribute is set to <code>True</code>, the transition between tabs is animated. The type of animation and its speed can also be set.</p>
 <p>A tab is added by calling the <code>add_tab</code> method. This method accepts three arguments (in addition to self). The first is the id of the tab. When the tab is selected, its value will become the id of the tab selected. Converesely, when the <code>value</code> attribute is set, if a tab with a corresponding id exists, it will be shown.</p>
-<p>The second argument is the label to display for the tab's selection. </p>
+<p>The second argument is the label to display for the tab's selection.</p>
 <p>The third argument is the content of the tab.  Typically it would be a container element such as a Div instance that contains other elements.</p>
 <p>In this component, the method <code>convert_object_to_dict</code>, is overridden. This is the method that executes each time an instance of the component is rendered. It is simpler in this case than using the <code>react</code> method that is called by the super class <code>convert_object_to_dict</code>. It also allows the flexibility of overriding the <code>react</code> method in components that inherit from the Tabs component.</p>
-<p>Below we also define another component, TabPills, that inherits from Tabs and just changes the appearance of the tabs label line. It does so by just changing a few class variables. </p>
+<p>Below we also define another component, TabPills, that inherits from Tabs and just changes the appearance of the tabs label line. It does so by just changing a few class variables.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design. </p>
+<p>When creating custom components, it makes sense to make the design a function of class variables. This simplifies creating new components with a different design.</p>
 </div>
 <p>In the example below we use three tab components to display charts and pictures.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">Ul</span><span class="p">,</span> <span class="n">Li</span><span class="p">,</span> <span class="n">HighCharts</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">justpy</span>
@@ -2399,17 +2792,17 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="k">def</span> <span class="nf">set_content_div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;relative overflow-hidden border&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;height: </span><span class="si">{self.content_height}</span><span class="s1">px&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;height: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">content_height</span><span class="si">}</span><span class="s1">px&#39;</span>
 
     <span class="k">def</span> <span class="nf">set_content_animate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">animation_speed</span>  <span class="c1"># Component in this will be centered</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div_classes</span><span class="p">,</span> <span class="n">animation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">animation_next</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.wrapper_style}</span><span class="s1"> z-index: 50;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="p">)</span>
+                                   <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapper_style</span><span class="si">}</span><span class="s1"> z-index: 50;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div_classes</span><span class="p">,</span> <span class="n">animation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">animation_prev</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                   <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.wrapper_style}</span><span class="s1"> z-index: 0;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="p">)</span>
+                                   <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapper_style</span><span class="si">}</span><span class="s1"> z-index: 0;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tab_by_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous_value</span><span class="p">)[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div_classes</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="p">,</span>
@@ -2417,7 +2810,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
             <span class="bp">self</span><span class="o">.</span><span class="n">wrapper_div</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">set_classes</span><span class="p">(</span><span class="s1">&#39;relative overflow-hidden border&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;height: </span><span class="si">{self.content_height}</span><span class="s1">px&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_div</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;height: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">content_height</span><span class="si">}</span><span class="s1">px&#39;</span>
 
 
     <span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2524,7 +2917,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="k">def</span> <span class="nf">tab_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;in change&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">tab_comp_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">tab_comp_test1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tab&#39;</span><span class="p">:</span> <span class="s1">&#39;id2556&#39;</span><span class="p">})</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">Tabs</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-3/4 m-4&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">animation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">content_height</span><span class="o">=</span><span class="mi">550</span><span class="p">)</span>
@@ -2532,23 +2925,23 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
         <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">Tabs</span><span class="o">.</span><span class="n">wrapper_style</span><span class="p">,</span> <span class="n">delete_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 1000px;&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">,</span> <span class="n">use_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">chart_type</span>
-        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Chart of Type {chart_type.capitalize()}&#39;</span>
-        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Subtitle {chart_type.capitalize()}&#39;</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">add_tab</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id</span><span class="si">{chart_type}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{chart_type}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Chart of Type </span><span class="si">{</span><span class="n">chart_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Subtitle </span><span class="si">{</span><span class="n">chart_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">add_tab</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id</span><span class="si">{</span><span class="n">chart_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chart_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 
     <span class="n">d_flex</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>  <span class="c1"># Container for the two dog pictures tabs</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">Tabs</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d_flex</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39; w-1/2 m-4&#39;</span><span class="p">,</span> <span class="n">animation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">content_height</span><span class="o">=</span><span class="mi">550</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;tab&#39;</span><span class="p">],</span> <span class="n">change</span><span class="o">=</span><span class="n">tab_change</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">pic_id</span> <span class="ow">in</span> <span class="n">pics_papillons</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">Tabs</span><span class="o">.</span><span class="n">wrapper_style</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://images.dog.ceo/breeds/papillon/n02086910_</span><span class="si">{pic_id}</span><span class="s1">.jpg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">add_tab</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id</span><span class="si">{pic_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Pic </span><span class="si">{pic_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://images.dog.ceo/breeds/papillon/n02086910_</span><span class="si">{</span><span class="n">pic_id</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">add_tab</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id</span><span class="si">{</span><span class="n">pic_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Pic </span><span class="si">{</span><span class="n">pic_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">TabsPills</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d_flex</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-1/2 m-4&#39;</span><span class="p">,</span> <span class="n">animation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">content_height</span><span class="o">=</span><span class="mi">550</span><span class="p">,</span> <span class="n">change</span><span class="o">=</span><span class="n">tab_change</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">pic_id</span> <span class="ow">in</span> <span class="n">pics_french_bulldogs</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">Tabs</span><span class="o">.</span><span class="n">wrapper_style</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://images.dog.ceo/breeds/bulldog-french/n02108915_</span><span class="si">{pic_id}</span><span class="s1">.jpg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">add_tab</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id</span><span class="si">{pic_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Pic </span><span class="si">{pic_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://images.dog.ceo/breeds/bulldog-french/n02108915_</span><span class="si">{</span><span class="n">pic_id</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">add_tab</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id</span><span class="si">{</span><span class="n">pic_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Pic </span><span class="si">{</span><span class="n">pic_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 
     <span class="n">input_classes</span> <span class="o">=</span> <span class="s2">&quot;w-1/3 m-2 bg-gray-200 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500&quot;</span>
 
@@ -2557,9 +2950,8 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="k">return</span> <span class="n">wp</span>
 
 
-<span class="n">justpy</span><span class="p">(</span><span class="n">tab_comp_test</span><span class="p">)</span>
+<span class="n">justpy</span><span class="p">(</span><span class="n">tab_comp_test1</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h2 id="table-component">Table Component<a class="headerlink" href="#table-component" title="Permanent link">&para;</a></h2>
 <p>The AutoTable component takes a list of lists and formats it into a nice looking table. The first list is used as the headers for the table.</p>
@@ -2618,7 +3010,6 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">table_test</span><span class="p">)</span>
 </code></pre></div>
 
-
 <h2 id="quasar-qinput-component-with-integrated-qdate-and-qtime">Quasar QInput Component with Integrated QDate and QTime<a class="headerlink" href="#quasar-qinput-component-with-integrated-qdate-and-qtime" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
@@ -2671,7 +3062,6 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test</span><span class="p">)</span>
 </code></pre></div>
 
-
 <h2 id="component-to-link-chart-and-grid">Component to Link Chart and Grid<a class="headerlink" href="#component-to-link-chart-and-grid" title="Permanent link">&para;</a></h2>
 <p>Please see <a href="grids_tutorial/grid_events?id=linking-a-chart-and-a-grid-using-grid-events">linking charts and grids</a> for an explanation.</p>
 <p>When you use ag-Grid's filtering and sorting options, the results are not just reflected in the grid, but also in the chart.</p>
@@ -2719,79 +3109,83 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test</span><span class="p">)</span>
 </code></pre></div>
-                
-                  
-                
-                
-              
-              
-                
 
 
-              
-            </article>
-          </div>
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
+        
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
         
-          <a href="../pushing_data/" title="Pushing Data to Web Pages" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Pushing Data to Web Pages
+        <a href="../pushing_data/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Pushing Data to Web Pages" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
               </span>
+              Pushing Data to Web Pages
             </div>
-          </a>
+          </div>
+        </a>
+      
+      
         
-        
-          <a href="../before_after_events/" title="The before and after Events" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                The before and after Events
+        <a href="../before_after_events/" class="md-footer__link md-footer__link--next" aria-label="Next: The before and after Events" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
               </span>
+              The before and after Events
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        powered by
-        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs</a>
-      </div>
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
     
-      <script src="../../assets/javascripts/application.c33a9706.js"></script>
-      
-      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>
       
     
   </body>

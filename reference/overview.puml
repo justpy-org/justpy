@@ -1,0 +1,94 @@
+hide circle
+package python {
+  package starlette {
+     package endpoints {
+        class HTTPEndpoint {
+        }
+    }
+    package routing {
+       class Route {
+       }
+    }
+  }
+  package jpcore {
+     package webpage {
+         class WebPage {
+         }
+     }
+    package tailwind {
+         class Tailwind {
+         }
+    }
+   package component {
+        class Component {
+        }
+   }
+    package justpy_app {    
+        class JustpyApp {
+        }
+        class JustpyEndpoint {
+        }
+        class JustpyServer {
+        }
+       class JustpyDemoApp {
+       }
+    }
+  }
+ HTTPEndpoint <|--  JustpyEndpoint
+  package justpy {
+  package chartcomponents {
+   class HighCharts {
+   }
+  }
+  package gridcomponents {
+   class AgGrid {
+    }
+  }
+  package htmlcomponents {
+    class JustPy {
+    }
+    class Register {
+    }
+    class WebPage { 
+    }
+   class JustpyBaseComponent {
+   }
+ }
+ JustpyApp	<|-- app
+ Tailwind <|-- Component
+ Component <|-- JustpyBaseComponent 
+ JustpyBaseComponent <|-- HighCharts
+ JustpyBaseComponent <|--  AgGrid
+ package justpy {
+  class Homepage {
+    get()
+    post()
+     on_disconnect()
+  }
+  note top of app: singleton Starlette endpoint
+  object app {
+  }
+ JustpyEndpoint <|--   Homepage
+  class JustpyEvents {
+     handle_event()
+     getServer()
+     justpy()
+    convert_dict_to_object()
+    redirect()
+  }
+ }
+}
+package javascript {
+   note top of global: This isn't object oriented yet
+   package global {
+     class global {
+        send_to_server(e,event_type,debug_flag)
+        eventHandler(props,event,form_data,aux)
+     }
+   }
+   package Vue {
+      note top of app1: singleton Vue component that is at the root of the DOM tree
+      object app1 {
+     }
+  }
+}
