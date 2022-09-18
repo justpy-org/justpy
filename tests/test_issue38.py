@@ -42,9 +42,9 @@ class TestIssue38(BaseSeleniumTest):
         self.in1.on('change', self.my_input3)
         return wp
 
-    async def testClickDemo(self):
+    async def test_issue_38(self):
         """
-        this will actually start a firefox browser and the websocket reload dialog will appear
+        test when the issue occurs that input and input display differ
         """
         await self.server.start(self.input_demo4)
         url = self.server.get_url("/")
