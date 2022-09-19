@@ -69,7 +69,7 @@ nav:
             - QDate and QTime: 'quasar_tutorial/quasar_components/#qdate-and-qtime'
             - QDialog: 'quasar_tutorial/quasar_components/#qdialog'
             - QExpansionItem: 'quasar_tutorial/quasar_components/#qexpansionitem'
-            - QInput: 'quasar_tutorial/quasar_components/#qinput.md'
+            - QInput: 'quasar_tutorial/quasar_components/#qinput'
             - QList: 'quasar_tutorial/quasar_components/#qlist-and-qitem'
             - QOptionGroup: 'quasar_tutorial/quasar_components/#qoptiongroup'
             - QRating: 'quasar_tutorial/quasar_components/#qrating'
