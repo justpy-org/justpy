@@ -133,6 +133,7 @@ Vue.component('grid', {
                     if (dataChangeEvents.includes(event_name)) {
                         e.data = grid_def.api.getDataAsCsv();
                     }
+                    delete e.source;   // the source property cannot be stringified see https://github.com/justpy-org/justpy/issues/304
                     send_to_server(e, 'event');
                 }
             }
