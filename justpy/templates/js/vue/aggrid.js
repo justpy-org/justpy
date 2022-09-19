@@ -21,15 +21,19 @@ Vue.component('grid', {
             }
         },
         grid_change() {
-            var j = JSON.stringify(this.$props.jp_props.def);
-            var grid_def = JSON.parse(j);  // Deep copy the grid definition
-            for (let i = 0; i < this.$props.jp_props.html_columns.length; i++) {
-                if (grid_def.columnDefs[this.$props.jp_props.html_columns[i]].cellRenderer === undefined)
-                grid_def.columnDefs[this.$props.jp_props.html_columns[i]].cellRenderer = function (params) {
-                    return params.value ? params.value : '';
-                };
+            let jp_component_id = this.$props.jp_props.id;
+            let j = JSON.stringify(this.$props.jp_props.def);
+            let grid_def = JSON.parse(j);  // Deep copy the grid definition
+            // Define a default cell renderer if none is defined
+            for (const column of this.$props.jp_props.html_columns) {
+                if (grid_def.columnDefs[column].cellRenderer === undefined){
+                    grid_def.columnDefs[column].cellRenderer = function (params) {
+                        return params.value ? params.value : '';
+                    };
+                }
+
             }
-            cached_grid_def[this.$props.jp_props.id] = j;
+            cached_grid_def[jp_component_id] = j;
             grid_def.onGridReady = grid_ready;
             grid_def.popupParent = document.querySelector('body');
             // @FIXME causes https://github.com/justpy-org/justpy/issues/467
@@ -72,8 +76,8 @@ Vue.component('grid', {
             };
 
 
-            new agGrid.Grid(document.getElementById(this.$props.jp_props.id.toString()), grid_def);  // the api calls are added to grid_def
-            cached_grid_def['g' + this.$props.jp_props.id] = grid_def;
+            new agGrid.Grid(document.getElementById(jp_component_id.toString()), grid_def);  // the api calls are added to grid_def
+            cached_grid_def['g' + jp_component_id] = grid_def;
             var auto_size = this.$props.jp_props.auto_size;
 
 
@@ -108,29 +112,28 @@ Vue.component('grid', {
                         'firstRow', 'lastRow', 'clientWidth', 'clientHeight', 'started', 'finished', 'direction', 'top',
                         'left', 'animate', 'keepRenderedRows', 'newData', 'newPage', 'source', 'visible', 'pinned',
                         'filterInstance', 'rowPinned', 'forceBrowserFocus'];
-                    for (let i = 0; i < more_properties.length; i++) {
-                        let property = more_properties[i];
-                        if (!(typeof event_obj[property] === "undefined")) {
+                    for (let property of more_properties) {
+                        if (typeof event_obj[property] !== "undefined") {
                             e[property] = event_obj[property];
                         }
                     }
-                    if (!(typeof event_obj.column === "undefined")) {
+                    if (typeof event_obj.column !== "undefined") {
                         e.colId = event_obj.column.colId;
                     }
-                    if (!(typeof event_obj.node === "undefined")) {
+                    if (typeof event_obj.node !== "undefined") {
                         let node_properties = ['selected', 'rowHeight'];
-                        for (let i = 0; i < node_properties.length; i++) {
-                            let property = node_properties[i];
+                        for (let property of node_properties) {
                             if (!(typeof event_obj.node[property] === "undefined")) {
                                 e[property] = event_obj.node[property];
                             }
                         }
                         e.selected = event_obj.node.selected;
                     }
-
-                    if (['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd'].includes(event_name)) {
+                    const dataChangeEvents = ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd'];
+                    if (dataChangeEvents.includes(event_name)) {
                         e.data = grid_def.api.getDataAsCsv();
                     }
+                    delete e.source;   // the source property cannot be stringified see https://github.com/justpy-org/justpy/issues/304
                     send_to_server(e, 'event');
                 }
             }
@@ -140,7 +143,7 @@ Vue.component('grid', {
         this.grid_change();
     },
     updated() {
-        if (JSON.stringify(this.$props.jp_props.def) != cached_grid_def[this.$props.jp_props.id]) {
+        if (JSON.stringify(this.$props.jp_props.def) !== cached_grid_def[this.$props.jp_props.id]) {
             var grid_to_destroy = cached_grid_def['g' + this.$props.jp_props.id];
             grid_to_destroy.api.destroy();
             this.grid_change(); // Explore option to check difference and update with api instead of destroying and creating new grid

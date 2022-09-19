@@ -70,6 +70,13 @@ class AgGrid(JustpyBaseComponent):
         else:
             super().__setattr__(key, value)
 
+    @property
+    def grid_id(self) -> str:
+        """
+        component id of the grid
+        """
+        return "g" + self.id
+
     def on(self, event_type, func, **kwargs):
         # https://www.ag-grid.com/javascript-grid-events/
         self.allowed_events.append(event_type)
@@ -113,35 +120,36 @@ class AgGrid(JustpyBaseComponent):
         )
 
     async def run_api(self, command, page):
-        await page.run_javascript(f"""cached_grid_def['g' + {self.id}].api.{command}""")
+        await page.run_javascript(f"""cached_grid_def[{self.grid_id}].api.{command}""")
 
     async def select_all_rows(self, page):
         await page.run_javascript(
-            f"""cached_grid_def['g' + {self.id}].api.selectAll()"""
+            f"""cached_grid_def[{self.grid_id}].api.selectAll()"""
         )
 
     async def deselect_rows(self, page):
         await page.run_javascript(
-            f"""cached_grid_def['g' + {self.id}].api.deselectAll()"""
+            f"""cached_grid_def[{self.grid_id}].api.deselectAll()"""
         )
 
     async def apply_transaction(self, transaction, page):
         await page.run_javascript(
-            f"""cached_grid_def['g' + {self.id}].api.applyTransaction({transaction.__repr__()})"""
+            f"""cached_grid_def[{self.grid_id}].api.applyTransaction({transaction.__repr__()})"""
         )
 
     def convert_object_to_dict(self):
         """
         convert object to dict
         """
-        d = {}
+        d = dict()
         d["vue_type"] = self.vue_type
         d["id"] = self.id
         d["show"] = self.show
         d["classes"] = self.classes + " " + self.theme
         d["style"] = self.style
         options = self.options.deepcopy()
-        for row_idx, row_dict in enumerate(options.get("rowData", [])):
+        rows = options.get("rowData", [])
+        for row_idx, row_dict in enumerate(rows):
             for col_idx, (col_key, val) in enumerate(row_dict.items()):
                 if callable(self.row_data_converter):
                     val = self.row_data_converter(row_idx, col_idx, col_key, val)
