@@ -29,18 +29,27 @@
 
 ![blackjack_animated](https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif)
 
-## Questions and Discussions
-Please file Bugs you found checking the issues Badge Link above.
+## If you have Questions, Suggestions or would like to get in touch
+If you have a question about JustPy you are welcome to check
+[stackoverflow questions tagged justpy](https://stackoverflow.com/questions/tagged/justpy) and
+Especially questions which involve details of upstream frameworks such as
+[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), Highcharts, Pandas, Plotly, Quasar, Tailwind and others are best ask involving the larger stackoverflow 
+community and tagging your question with both "justpy" and the tag of 
+the specific library your are asking a question for such as "ag-grid", "highcharts","quasar", "pandas"
+and others.
 
-Questions which involve details of upstream frameworks such as
-Quasar, Tailwind, Highcharts are best ask involving a larger community via
-
-[stackoverflow questions](https://stackoverflow.com/questions/tagged/justpy)
-
-and tagging your question with both "justpy" and the tag or the specific library your are asking a question for
+If you'd like to specifically address the JustPy contributors the 
+[github dicussions](https://github.com/justpy-org/justpy/discussions/new) are place to ask questions,
+propose new features and generally get in touch with the contributors.
 
 Our github dicussions are categorized. Please use the Category "Ideas" for feature requests.
-[github discussions](https://github.com/elimintz/justpy/discussions)
+
+Issues and Pull Requests are also welcome. Please make sure that you follow the stackoverflow style guidelines when
+posting issues. A good way to do this is to state the problem as a stackoverflow question first. This way a larger audience
+is able to discuss solutions and work arounds and find out which part of the technology stack you are using is actually involved
+in the issue you'd like to get resolved.
+
+If your followed the procedure you are welcome to [open an issue](https://github.com/justpy-org/justpy/issues/new/choose) in the [JustPy Github repository](https://github.com/justpy-org/justpy) 
 
 ## Trying out with docker
 ```bash

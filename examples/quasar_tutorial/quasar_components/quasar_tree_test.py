@@ -1,8 +1,4 @@
-# QTree
-
-Quasars [Qtree](https://quasar.dev/vue-components/tree) component allows displaying hierarchical data in a tree structure.
-
-```python
+# Justpy Tutorial demo quasar_tree_test from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 async def expand_tree(self, msg):
@@ -12,7 +8,7 @@ async def collapse_tree(self, msg):
     return await self.tree.run_method('collapseAll()', msg.websocket)
 
 
-def tree_test():
+def quasar_tree_test():
     wp = jp.QuasarPage()
     d = jp.Div(classes="q-pa-md q-gutter-sm", a=wp)
     node_string = """
@@ -70,5 +66,6 @@ def tree_test():
     b2.tree = tree
     return wp
 
-jp.justpy(tree_test)
-```
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("quasar_tree_test",quasar_tree_test)

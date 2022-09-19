@@ -1,14 +1,4 @@
-# QDialog
-
-Quasar provides a versatile [QDialog component](https://quasar.dev/vue-components/dialog). Checkout the many options in the Quasar documentation.
-
-In the program below, two examples are implemented. 
-
-When a Dialog is closed by the user, it generates an input event.
-
-The `v-close-popup` directive closes the dialog automatically when the associated button is clicked. Use `v_close_popup` in JustPy commands.
-
-```python
+# Justpy Tutorial demo dialog_test from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 alert_dialog_html = """
@@ -74,6 +64,6 @@ def dialog_test():
 
     return wp
 
-jp.justpy(dialog_test)
-
-```
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("dialog_test",dialog_test)
