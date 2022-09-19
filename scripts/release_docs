@@ -1,0 +1,18 @@
+#!/bin/bash
+# WF 2022-09-19
+# release a new version of the docs
+mkdocs build
+jp_dir=$(pwd)
+docs_dir="$HOME/source/html/justpy"
+if [ -f "$docs_dir" ]
+then
+  echo "$docs_dir doesn't exist"
+  echo "please create it with"
+  echo "git clone https://github.com/justpy-org/justpy --branch gh-pages --single-branch"
+  exit 1
+fi
+cd "$docs_dir"
+echo "syncing $jp_dir to $docs_dir ..."
+rsync -avz $jp_dir/site/*  --delete .
+git commit -a -m "new release by $USER"
+git push 
