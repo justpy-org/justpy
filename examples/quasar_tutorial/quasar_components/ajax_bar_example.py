@@ -1,7 +1,4 @@
-# QAjaxBar
-
-
-```python
+# Justpy Tutorial demo ajax_bar_example from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 async def start_bar(self, msg):
@@ -22,6 +19,6 @@ def ajax_bar_example():
     btn_stop = jp.QBtn(color='primary', label='Stop Bar', a=d, click=stop_bar)
     return wp
 
-jp.justpy(ajax_bar_example)
-
-```
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("ajax_bar_example",ajax_bar_example)

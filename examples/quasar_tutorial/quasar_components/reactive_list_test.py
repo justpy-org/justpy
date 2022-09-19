@@ -1,8 +1,4 @@
-# QList and QItem
-
-Use the [QList component](https://quasar.dev/vue-components/option-group)  to group items in a list.
-
-```python
+# Justpy Tutorial demo reactive_list_test from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 def check_box_clicked(self, msg):
@@ -38,7 +34,6 @@ def reactive_list_test():
 
     return wp
 
-jp.justpy(reactive_list_test)
-
-```
-
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("reactive_list_test",reactive_list_test)

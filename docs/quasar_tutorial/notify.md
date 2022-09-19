@@ -1,6 +1,6 @@
 # Notifications
 
-Notification are created by a special component that does not wrap a quasar component but activates the quasar [notify](https://quasar.dev/quasar-plugins/notify) utility.
+Notifications are created by a special component that does not wrap a quasar component but activates the quasar [notify](https://quasar.dev/quasar-plugins/notify) utility.
 
 !!! warning
     Add an 'after' event to any button that activates the notification that sets the `notify` attribute back to false. Otherwise, the notification will appear every update. Alternatively, await page update in event and then set notify to `False`.
@@ -95,7 +95,7 @@ def btn_click(self, msg):
 def btn_after(self, msg):
     self.notification.notify = False
 
-def notify_test():
+def quasar_notify_test():
     wp = jp.QuasarPage()
     c = jp.parse_html(page_html, a=wp)
     for direction in directions:
@@ -106,6 +106,6 @@ def notify_test():
     return wp
 
 
-jp.justpy(notify_test)
+jp.justpy(quasar_notify_test)
 
 ```

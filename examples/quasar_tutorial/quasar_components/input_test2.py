@@ -1,9 +1,4 @@
-# QColor
-
-The [Color Picker](https://quasar.dev/vue-components/color-picker) can be used to select colors.
-
-
-```python
+# Justpy Tutorial demo input_test2 from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 def color_change(self, msg):
@@ -28,5 +23,6 @@ def input_test2():
     return wp
 
 
-jp.justpy(input_test2)
-```
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("input_test2",input_test2)

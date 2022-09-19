@@ -1,39 +1,4 @@
-# QExpansionItem Examples
-
-
-## Example 1
-
-Three expansion items are defined in a loop. All three are added to a QList instance. Each expansion item includes a QCard with a QCardSection with text. 
- 
-```python
-import justpy as jp
-
-sample_text = """
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-            eveniet doloribus ullam aliquid.
-"""
-
-def quasar_example4():
-    wp = jp.QuasarPage()
-    d = jp.Div(classes="q-pa-md", style="max-width: 350px", a=wp)
-    item_list = jp.QList(classes="rounded-borders", padding=True, bordered=True, a=d)
-    for info in [("perm_identity", "Account settings"), ("signal_wifi_off", "Wifi settings"), ("drafts", "Drafts")]:
-        expansion_item = jp.QExpansionItem(icon=info[0], label=info[1], a=item_list, header_class='text-purple',
-                                           dense=True, dense_toggle=True, expand_separator=True)
-        card= jp.QCard(a=expansion_item)
-        jp.QCardSection(text=sample_text, a=card)
-
-    return wp
-
-jp.justpy(quasar_example4)
-```
-
-## Example 2
-
-In this example we define a custom component base on QExpansionItem. This component adds an image from the site [Lorem Picsum](https://picsum.photos/) to the expansion item and in addition formats the expansion item.
-
-```python
+# Justpy Tutorial demo quasar_expansion_item2 from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 class My_expansion(jp.QExpansionItem):
@@ -52,7 +17,7 @@ class My_expansion(jp.QExpansionItem):
         My_expansion.image_num += 1
 
 
-def expansion_test(request):
+def quasar_expansion_item2(request):
     wp = jp.QuasarPage(dark=False)
     d = jp.Div(classes="q-pa-md ", style="max-width: 500px", a=wp)
     jp.Link(href='https://quasar.dev/vue-components/expansion-item', text='Quasar Expansion Item Example', target='_blank',
@@ -81,5 +46,6 @@ def expansion_test(request):
     return wp
 
 
-jp.justpy(expansion_test)
-```
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("quasar_expansion_item2",quasar_expansion_item2)

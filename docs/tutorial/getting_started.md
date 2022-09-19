@@ -7,12 +7,24 @@ In addition, a basic understanding of HTML is required ([HTML - Getting Started]
 !!! info
     The examples in this tutorial use [Python f-strings](https://realpython.com/python-f-strings/) which were added in Python 3.6
 
-!!! tip
-    If you have a question about JustPy please open an issue in the [JustPy Github repository](https://github.com/elimintz/justpy) or post a question with the tag `[justpy]` to [stack overflow](https://stackoverflow.com/). I will try to answer promptly.
+## Demo-Browser
+The example code from this tutorial is available in the [examples](https://github.com/justpy-org/justpy/tree/master/examples) directory of
+justpy. There is also a demo browser available which you might want to start.
+
+We recommend starting the demo-browser in a docker environment using the command
+```
+scripts/rundocker example examples/demo_browser.py
+```
+
+You can also start the demo-browser directly via the commandline as
+```
+jpdemo
+```
+(as soon as [issue 555](https://github.com/justpy-org/justpy/issues/555) is implemented
 
 ## Installation
 
-First, make sure that the version of `python3` you have is 3.6 or higher:
+First, make sure that the version of `python3` you have is 3.7 or higher:
 `$ python3 --version`
 
 If not, upgrade your Python interpreter.

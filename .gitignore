@@ -25,3 +25,5 @@ venv*/
 .DS_Store
 # selenium test logs
 geckodriver.log
+# mkdocs
+site

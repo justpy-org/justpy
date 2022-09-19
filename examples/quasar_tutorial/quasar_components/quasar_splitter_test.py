@@ -1,20 +1,9 @@
-# QSplitter
-
-The [QSplitter component](https://quasar.dev/vue-components/splitter) allows containers to be split vertically and/or horizontally through a draggable separator bar.
-
-This component has three scoped slots or slots for short: `['before_slot', 'after_slot', 'separator_slot']` 
-
-QSplitter generates an input event when the the user changes the panes. 
-
-In the example below change the the panes and see the value of the splitter refelected in the chip at the bottom of the page and in the avatar that was put in the `separator_slot`.
-
-
-```python
+# Justpy Tutorial demo quasar_splitter_test from docs/quasar_tutorial/quasar_components.md
 import justpy as jp
 
 lorem = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.'
 
-def splitter_test():
+def quasar_splitter_test():
     wp = jp.QuasarPage()
 
     before = jp.Div(classes='q-pa-md')
@@ -47,6 +36,6 @@ def splitter_test():
 
     return wp
 
-jp.justpy(splitter_test)
-
-```
+# initialize the demo
+from  examples.basedemo import Demo
+Demo ("quasar_splitter_test",quasar_splitter_test)
