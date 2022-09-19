@@ -8,7 +8,7 @@ JustPy is an object-oriented, component based, high-level Python Web Framework t
 Unlike other web frameworks, JustPy has no front-end/back-end distinction. All programming is done on the back-end allowing a simpler, more productive, and more Pythonic web development experience. JustPy removes the front-end/back-end distinction by intercepting the relevant events on the front-end and sending them to the back-end to be processed.
 
 !!! note
-    The best way to understand JustPy is to follow the [tutorial](/docs/tutorial/getting_started) in which there are many examples.
+    The best way to understand JustPy is to follow the [tutorial](/tutorial/getting_started) in which there are many examples.
 
 In JustPy, elements on the web page are instances of component classes. A component in JustPy is a Python class that allows you to instantiate reusable custom elements whose functionality and design is encapsulated away from the rest of your code.
 
