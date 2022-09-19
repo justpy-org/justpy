@@ -51,6 +51,8 @@ class Tutorial():
         self.examples={}
         self.path=path
         self.name=path.replace(docs_dir+"/","")
+        tutorial_path=self.name.replace(".md","")
+        self.tutorial_url=f"https://justpy.io/{tutorial_path}"
         self.github_url=f"https://github.com/justpy-org/justpy/blob/master/docs/{self.name}"
         with open(self.path, "r") as markup_file:
             self.markup = markup_file.read()
@@ -91,7 +93,7 @@ class Tutorial():
                         for c in lower:
                             if c.isalnum() or c in "-_":
                                 anchor+=c
-                        example_source.url=f"{self.github_url}#{anchor}"
+                        example_source.url=f"{self.tutorial_url}#{anchor}"
                         example_source.description=header
                     example=Example(example_source,name=example_name,option=example_option,header=header,lines=python_code)
                     self.examples[example.name]=example
