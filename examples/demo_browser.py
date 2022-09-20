@@ -254,14 +254,20 @@ class DemoBrowser(BaseWebPage):
             await super().onPageReady(_msg)
             if self.page_load_count==0:
                 for i,demo_name in enumerate(
-                        ["plot_test4",
+                        ["stock_test2",
+                         "plot_test4",
                          "plotly_test",
+                         "women_majors3",
                          "blackjack",
                          "dogs"]
                     ):
                     demo=self.demo_starter.demos_by_name[demo_name]
                     await self.add_demo(demo,i+1)
                 pass
+            else:
+                for i,demo in enumerate(self.mounted):
+                    await self.add_demo_tolist(demo)
+                    
             self.page_load_count+=1
             self.footer.text=f"{len(self.mounted)} apps mounted {self.page_load_count} page loads"
         except Exception as ex:
