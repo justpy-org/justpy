@@ -13,7 +13,7 @@ from argparse import RawDescriptionHelpFormatter
 from examples.basedemo import Demo
 from jpcore.demoapp import JustpyDemoApp
 from jpcore.utilities import find_files
-import justpy as jp
+
 
 class Demostarter:
     """
@@ -110,6 +110,7 @@ class Demostarter:
             limit(int): the maximum number of demos to start (default: None)
             userGather(bool): if True try using gather
         """
+        import justpy as jp
         tasklist=[]
         jp.justpy(start_server=False)
         app=jp.app
