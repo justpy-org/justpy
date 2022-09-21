@@ -80,7 +80,7 @@ class TestTutorial(Basetest):
         test updating a demo from the turtorial source
         """
         debug=False
-        for demo_name in ["women_majors1"]:
+        for demo_name in ["stock_test2"]:
             demo=self.ds.demos_by_name[demo_name]
             tutorial_example=self.tm.examples_by_name[demo_name]
             tutorial_source=tutorial_example.example_source
@@ -117,4 +117,4 @@ class TestTutorial(Basetest):
         if debug:
             print(f"❌ {failed_checks}/{len(self.ds.demos)} examples are not in sync with the tutorial content")
         #self.assertEqual(0,failed_checks)
-        self.assertTrue(failed_checks<=17)
+        self.assertTrue(failed_checks<=16)
