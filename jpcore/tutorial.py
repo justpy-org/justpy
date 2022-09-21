@@ -7,8 +7,7 @@ import os
 import re
 from jpcore.utilities import find_files
 from jpcore.example import Example, ExampleSource
-from statsmodels.tsa.statespace import representation
-from pip._vendor.pygments.unistring import Me
+
 class TutorialManager:
     """
     justpy tutorial
