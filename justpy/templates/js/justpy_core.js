@@ -98,7 +98,7 @@ class JustpyCore {
      * @param window
      * @param {number} page_id - id of the page
      * @param title - title of the document
-     * @param {boolean} use_websockets
+     * @param {boolean} use_websockets - If true use web sockets for communication otherwise ajax is used
      * @param redirect
      * @param display_url
      * @param page_ready
