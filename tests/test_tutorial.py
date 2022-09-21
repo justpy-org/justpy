@@ -6,11 +6,17 @@ Created on 2022-09-16
 from tests.basetest import Basetest
 from jpcore.tutorial import TutorialManager
 from jpcore.demostarter import Demostarter
+from jpcore.example import ExampleSource
 
 class TestTutorial(Basetest):
     """
     test synchronization between Tutorial and examples
     """
+    
+    def setUp(self, debug=False, profile=True):
+        Basetest.setUp(self, debug=debug, profile=profile)
+        self.tm=TutorialManager()
+        self.ds=Demostarter()
     
     def check_tutorial(self,tm,ds,debug=False):
         """
@@ -56,10 +62,49 @@ class TestTutorial(Basetest):
         """
         test the tutorial manager
         """
-        tm=TutorialManager()
-        ds=Demostarter()
         debug=True
-        self.check_tutorial(tm,ds,debug=debug)
+        self.check_tutorial(self.tm,self.ds,debug=debug)
         if debug:
-            print(f"found {len(tm.tutorials)} tutorial files")
-        self.assertTrue(len(tm.tutorials)>=70)
+            print(f"found {len(self.tm.tutorials)} tutorial files")
+        self.assertTrue(len(self.tm.tutorials)>=70)
+        
+    def test_update_from_tutorial(self):
+        """
+        test updating a demo from the turtorial source
+        """
+        debug=True
+        for demo_name in ["women_majors1"]:
+            demo=self.ds.demos_by_name[demo_name]
+            tutorial_example=self.tm.examples_by_name[demo_name]
+            tutorial_source=tutorial_example.example_source
+            target_path=f"/tmp/{demo_name}.py"
+            demo.update_from_tutorial(tutorial_source=tutorial_source,target_path=target_path)
+            update_source=ExampleSource(description=f"test for {demo_name}.py") 
+            update_source.read_source(target_path)
+            if debug:
+                for i,line in enumerate(update_source.lines):
+                    print (f"{i+1:3} {line}")
+        
+    def test_tutorial_diff(self):
+        """
+        test the tutorial examples for matching with the tutorial source code
+        """
+        debug=True
+        failed_checks=0
+        for demo in self.ds.demos:
+            if demo.name in self.tm.examples_by_name:
+                tutorial_example=self.tm.examples_by_name[demo.name]
+                tutorial_source=tutorial_example.example_source
+                problems=demo.same_as_tutorial(tutorial_source,debug=False)
+                if len(problems)>0:
+                    failed_checks+=1
+                    if debug:
+                        print (demo.pymodule_file)
+                        print (tutorial_example.tutorial)
+                        print (tutorial_source.url)
+                    for i,problem in enumerate(problems):
+                        if debug:
+                            print(f"  {i+1:2}:{problem}")
+        if debug:
+            print(f"❌ {failed_checks}/{len(self.ds.demos)} examples are not in sync with the tutorial content")
+        self.assertEqual(0,failed_checks)

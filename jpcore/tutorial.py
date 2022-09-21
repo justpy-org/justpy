@@ -7,6 +7,8 @@ import os
 import re
 from jpcore.utilities import find_files
 from jpcore.example import Example, ExampleSource
+from statsmodels.tsa.statespace import representation
+from pip._vendor.pygments.unistring import Me
 class TutorialManager:
     """
     justpy tutorial
@@ -63,6 +65,7 @@ class Tutorial():
         for line in self.lines:
             if line.startswith("```python"):
                 in_python_code=True
+                python_code=[]
                 continue
             if line.startswith("```"):
                 in_python_code=False
@@ -86,6 +89,7 @@ class Tutorial():
                         example_name=example_comment
                         pass
                     example_source=ExampleSource("tutorial")
+                    example_source.lines=python_code
                     if header is not None:
                         # https://stackoverflow.com/questions/72536973/how-are-github-markdown-anchor-links-constructed
                         lower=header.strip().lower().replace(" ","-")
@@ -96,7 +100,18 @@ class Tutorial():
                         example_source.url=f"{self.tutorial_url}#{anchor}"
                         example_source.description=header
                     example=Example(example_source,name=example_name,option=example_option,header=header,lines=python_code)
+                    example.tutorial=self
                     self.examples[example.name]=example
                     header=None
                     python_code=[]
                     in_python_code=False
+                    
+    def __str__(self):
+        """
+        return my text representation
+        
+        Returns:
+            str: a text representation of me
+        """
+        text=self.path
+        return text
