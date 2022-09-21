@@ -7,12 +7,13 @@ import asyncio
 import unittest
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
 import justpy as jp
 from tests.base_selenium_test import BaseSeleniumTest
 
 
 
-@unittest.skipIf(True, "Issue occurs allways since it is the cause on type conversions")
 class TestIssue38(BaseSeleniumTest):
     """
     testing issue 38
@@ -50,12 +51,26 @@ class TestIssue38(BaseSeleniumTest):
         url = self.server.get_url("/")
         self.browser.get(url)
         await asyncio.sleep(self.server.sleep_time)
+        display_div_locator = (By.NAME, "displayDiv")
         input_field = self.browser.find_elements(By.NAME, "inputField")[0]
-        display_div = self.browser.find_elements(By.NAME, "displayDiv")[0]
+        display_div = self.browser.find_elements(*display_div_locator)[0]
+        wait_browser= self.get_waiting_browser(self.browser, 2)
         value = ""
-        for i in range(1,20):
+        # For the numbers of length 16 the issue does not occur
+        # after adding the 17 char the input field starts to diverge
+        for i in range(1,18):
             value += "1"
             input_field.send_keys("1")
             display_div.click()  # lose focus
-            await asyncio.sleep(self.server.sleep_time)
-            self.assertEqual(value, display_div.text, f"After {i} numbers the issue occurs")
+            self.assertTrue(
+                    wait_browser.until(
+                            EC.text_to_be_present_in_element(
+                                    locator=display_div_locator,
+                                    text_=value
+                            )),
+                    f"After {i} numbers the issue occurs (unexpected)")
+        # now value and the input_field are not the same → chang input_field to verify
+        value += "1"
+        input_field.send_keys("1")
+        display_div.click()  # lose focus
+        self.assertNotEqual(value, display_div.text)
