@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 
 import justpy as jp
 from tests.base_selenium_test import BaseSeleniumTest
-
+from selenium.webdriver.support import expected_conditions as EC
 
 class TestIssue304(BaseSeleniumTest):
     """
@@ -24,7 +24,6 @@ class TestIssue304(BaseSeleniumTest):
         close selenium browser and stop server
         """
         self.browser.close()
-        await asyncio.sleep(self.server.sleep_time)
         await self.server.stop()
 
     async def test_issue_30(self):
@@ -34,20 +33,36 @@ class TestIssue304(BaseSeleniumTest):
         await self.server.start(self.issue_page)
         url = self.server.get_url("/")
         self.browser.get(url)
-        await asyncio.sleep(self.server.sleep_time)
-        test_row_clicked = self.browser.find_elements(By.NAME, "test_row_clicked")[0]
-        test_row_double_clicked = self.browser.find_elements(By.NAME, "test_row_double_clicked")[0]
+        timeout = 5
+        driver = self.get_waiting_browser(self.browser)
+        # wait until a row is clickable
+        self.assertTrue(
+                driver.until(
+                        EC.element_to_be_clickable((By.CLASS_NAME, "ag-cell"))
+                ),
+                "After loading the page an ag-cell should be clickable"
+        )
         # click cells since the row div does not register a click
         cells = self.browser.find_elements(By.CLASS_NAME, "ag-cell")
         cells[18*2].click()
         # test row single click
-        await asyncio.sleep(self.server.sleep_time)
-        self.assertEqual("Clicked", test_row_clicked.text)
+        self.assertTrue(
+                driver.until(
+                        EC.text_to_be_present_in_element(
+                                locator=(By.NAME, "test_row_clicked"),
+                                text_="Clicked")
+                )
+        )
         # test row double click
         action_chains = ActionChains(self.browser)
         action_chains.double_click(cells[18*3]).perform()
-        await asyncio.sleep(self.server.sleep_time)
-        self.assertEqual("Clicked", test_row_double_clicked.text)
+        self.assertTrue(
+                driver.until(
+                        EC.text_to_be_present_in_element(
+                                locator=(By.NAME, "test_row_double_clicked"),
+                                text_="Clicked")
+                )
+        )
 
     @unittest.skipIf(True, "Only for manual testing")
     def test_manual(self):

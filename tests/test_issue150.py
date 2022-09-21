@@ -6,7 +6,10 @@ Created on 2022-09-17
 import asyncio
 import unittest
 
+from selenium.common import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+
 import justpy as jp
 from tests.base_selenium_test import BaseSeleniumTest
 
@@ -50,15 +53,25 @@ class TestIssue150(BaseSeleniumTest):
         await self.server.start(self.issue_page)
         url = self.server.get_url("/")
         self.browser.get(url)
-        await asyncio.sleep(self.server.sleep_time)
+        driver = self.get_waiting_browser(self.browser)
         input_field = self.browser.find_elements(By.TAG_NAME, "i")[0]
         input_field.click()
-        await asyncio.sleep(self.server.sleep_time)
-        day_fields = self.browser.find_elements(By.CLASS_NAME, "q-date__calendar-item")
+        day_fields_locator = (By.CLASS_NAME, "q-date__calendar-item")
+        driver.until(EC.element_to_be_clickable(day_fields_locator))
+        day_fields = self.browser.find_elements(*day_fields_locator)
         day_fields[20].click()
-        await asyncio.sleep(self.server.sleep_time)
-        count_date_changes = self.browser.find_elements(By.NAME, "count_date_changes")[0]
-        self.assertEqual("1", count_date_changes.text)
+        click_count_locator = (By.NAME, "count_date_changes")
+        # check that the click was registered
+        self.assertTrue(
+                driver.until(
+                        EC.text_to_be_present_in_element(
+                                locator=click_count_locator,
+                                text_="1")))
+        # check that the infinite loop does not start → count_date_changes should not change its value
+        self.assertRaises(
+                TimeoutException,
+                lambda: driver.until_not(
+                        EC.text_to_be_present_in_element(locator=click_count_locator, text_="1")))
 
     @unittest.skipIf(True, "Only for manual testing")
     def test_manual(self):
