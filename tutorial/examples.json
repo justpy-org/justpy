@@ -218,6 +218,50 @@
     {
       "name": "tutorial/model_and_data/model_demo1.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/191040776-11d44bc8-3b44-43b8-85bd-00e53671794b.gif"
+    },
+    {
+      "name": "tutorial/working_with_html/inner_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193000575-ff6bf338-8a4d-4752-9caa-79d603299dba.png"
+    },
+    {
+      "name": "tutorial/working_with_html/html_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193001679-35b8b2f3-b0ad-4eba-bab9-2fcf97796afd.png"
+    },
+    {
+      "name": "tutorial/working_with_html/parse_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193002170-ae5cdb95-4539-4b33-aa95-df97e8d039fe.png"
+    },
+    {
+      "name": "tutorial/working_with_html/parse_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193004223-7a38dfd4-d9ac-467c-981a-c78c41526086.gif"
+    },
+    {
+      "name": "tutorial/working_with_html/commands_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193006098-47e47ac7-3d48-4edd-86ca-628a43552933.png"
+    },
+    {
+      "name": "tutorial/working_with_html/commands_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193006448-cbdd06f3-456a-49d5-8998-2a566f69da6c.png"
+    },
+    {
+      "name": "tutorial/pushing_data/clock_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193007248-7e02d543-6eae-4602-81bb-b90e1b006b1d.gif"
+    },
+    {
+      "name": "tutorial/pushing_data/joint_edit.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193012839-8eba50dc-3c0d-4a79-99d6-a402a5de9935.gif"
+    },
+    {
+      "name": "tutorial/pushing_data/message_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193014625-382abb7c-75e3-4e9d-8fe7-327ddf4dabbb.gif"
+    },
+    {
+      "name": "",
+      "video_url": ""
+    },
+    {
+      "name": "",
+      "video_url": ""
     }
   ]
 }
