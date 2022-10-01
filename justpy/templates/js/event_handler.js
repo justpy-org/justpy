@@ -128,6 +128,12 @@ function eventHandler(props, event, form_data, aux) {
     }
 }
 
+/**
+ * send given event data to the justpy server
+ * @param e - event data
+ * @param {string} event_type - type of the event
+ * @param {boolean} debug_flag - If true show debug messages in the console
+ */
 function send_to_server(e, event_type, debug_flag) {
     if (debug_flag) {
         console.log('Sending message to server:');
@@ -135,19 +141,23 @@ function send_to_server(e, event_type, debug_flag) {
     }
     if (use_websockets) {
         if (web_socket_closed) {
+            if (debug_flag) {
+                console.log('Abort send_to_server (web socket is closed) → reloading site');
+            }
             reload_site();
             return;
         }
+        const data = JSON.stringify({'type': event_type, 'event_data': e});
         if (websocket_ready) {
-            socket.send(JSON.stringify({'type': event_type, 'event_data': e}));
+            socket.send(data);
         } else {
             setTimeout(function () {
-                socket.send(JSON.stringify({'type': event_type, 'event_data': e}));
+                socket.send(data);
             }, 1000);
         }
     } else {
 
-        d = JSON.stringify({'type': 'event', 'event_data': e});
+        d = JSON.stringify({'type': 'event', 'event_data': e});  // ToDo: can this statement be removed? It is unused and present since the first version of justpy (works without - side effects unknown)
         $.ajax({
             type: "POST",
             url: "/zzz_justpy_ajax",
@@ -172,7 +182,7 @@ function send_to_server(e, event_type, debug_flag) {
                 // if there is a message
                 if (msg) {
 					// replace my components with the data in the message
-					// this is where the whole page is rebuild
+					// this is where the whole page is rebuilt
 					app1.justpyComponents = msg.data;
 				}
             },

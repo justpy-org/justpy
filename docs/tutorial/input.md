@@ -113,7 +113,10 @@ jp.justpy(input_demo4)
 ```
 
 In the example above the type of `in1` is set to 'number'. Run the program and verify that only numbers can be input into the element.
-
+> Note: `jp.Input(type='number'...` mimics the behavior of [HTML input number](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number) thus the value is converted to a javascript [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) after updating the value.
+> This means large numbers can not be handled accurately as they are bound to the accuracy of [double-precision 64-bit binary format IEEE 754](https://en.wikipedia.org/wiki/Double-precision_floating-point_format).
+> In python use float to have the same value as displayed in the input field.
+> For details see [Issue#38](https://github.com/justpy-org/justpy/issues/38)
 ### Color Example
 
 The Input component also allows you to choose colors.

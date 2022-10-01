@@ -3,11 +3,13 @@ Created on 2022-09-14
 
 @author: wf
 '''
-import argparse
+from argparse import ArgumentParser
+from argparse import RawDescriptionHelpFormatter
 import asyncio
 import gc
 import justpy as jp
 import os
+import sys
 import pandas as pd
 import psutil
 import socket
@@ -230,6 +232,7 @@ class DemoBrowser(BaseWebPage):
         self.tutorial_manager=TutorialManager()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         self.mounted={}
+        self.page_load_count=0
         
     async def onSizeColumnsToFit(self,_msg:dict):   
         """
@@ -246,13 +249,47 @@ class DemoBrowser(BaseWebPage):
         """
         react on page_ready event
         """
-        await self.onSizeColumnsToFit(_msg)
-        await super().onPageReady(_msg)
-        self.footer.text=f"{len(self.mounted)} apps mounted"
-        
-    async def add_demo(self,demo:JustpyDemoApp,video_size:512):
+        try:
+            await self.onSizeColumnsToFit(_msg)
+            await super().onPageReady(_msg)
+            if self.page_load_count==0:
+                for i,demo_name in enumerate(
+                        ["stock_test2",
+                         "plot_test4",
+                         "plotly_test",
+                         "women_majors3",
+                         "blackjack",
+                         "dogs"]
+                    ):
+                    demo=self.demo_starter.demos_by_name[demo_name]
+                    await self.add_demo(demo,i+1)
+                pass
+            else:
+                for i,demo in enumerate(self.mounted):
+                    await self.add_demo_tolist(demo)
+                    
+            self.page_load_count+=1
+            self.footer.text=f"{len(self.mounted)} apps mounted {self.page_load_count} page loads"
+        except Exception as ex:
+            self.handleException(ex)
+            
+    async def add_demo(self,demo:JustpyDemoApp,index:int):
+        """
+        mount and add demo to list
+        """
+        try:
+            self.mount(demo,index)
+        except BaseException as ex:
+            demo.status=self.get_html_error(ex)
+        await self.add_demo_tolist(demo,self.video_size)
+    
+    async def add_demo_tolist(self,demo:JustpyDemoApp,video_size:int=512):
         """
         add a demo (potentially with video) to the thumbnail list
+        
+        Args:
+            demo(JustpyDemoApp): the demo app to add
+            video_size(int): the size of the video (default: 512)
         """
         video_link=demo.video_link(video_size=video_size)
         list_item_html = f"""<q-item clickable v-ripple>
@@ -336,21 +373,17 @@ class DemoBrowser(BaseWebPage):
                 row_data = msg.data
                 index = row_data["#"]
                 demo=self.demo_starter.demos[index-1]
-                try:
-                    self.mount(demo,index)
-                except BaseException as ex:
-                    demo.status=self.get_html_error(ex)
-                await self.add_demo(demo,self.video_size)
+                await self.add_demo(demo,index)
             except Exception as ex:
                 self.handleException(ex)
         
-    def mount(self,demo,index):
+    def mount(self,demo,index:int):
         """
-        mount the given demo at the given index
+        mount the given demo 
         
         Args:
             demo(JustpyDemoApp): the demo to mount
-            index(int): the index of the demo
+            index(int): the index to mount the demo at
         """
         try:
             total=len(self.demo_starter.demos)
@@ -387,10 +420,33 @@ class DemoBrowser(BaseWebPage):
                 self.showError(f"example {demo_name} not found")
         self.showError("no example demo name specified")
 
-parser = argparse.ArgumentParser(description="Justpy Examples browser")
-parser.add_argument("--host", default=socket.getfqdn())
-parser.add_argument("--port", type=int, default=8000)
-args = parser.parse_args()
-demo_browser=DemoBrowser()
-jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
+def main(argv=None):  # IGNORE:C0111
+    """main program."""
+
+    if argv is None:
+        argv = sys.argv
+    try:
+        program_name = os.path.basename(sys.argv[0])
+        parser = ArgumentParser(
+            description="Justpy Examples browser",
+            formatter_class=RawDescriptionHelpFormatter,
+        )
+        parser.add_argument(
+            "-d", "--debug", dest="debug", action="store_true", help="show debug info"
+        )
+        parser.add_argument("--host", default=socket.getfqdn())
+        parser.add_argument("--port", type=int, default=8000)
+        args = parser.parse_args(argv[1:])
+        demo_browser=DemoBrowser()
+        jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
+    except Exception as e:
+        indent = len(program_name) * " "
+        sys.stderr.write(program_name + ": " + repr(e) + "\n")
+        sys.stderr.write(indent + "  for help use --help")
+        if args.debug:
+            print(traceback.format_exc())
+        return 2    
+
+if __name__ == "__main__":
+    sys.exit(main())
 

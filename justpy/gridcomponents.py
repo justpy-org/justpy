@@ -75,7 +75,7 @@ class AgGrid(JustpyBaseComponent):
         """
         component id of the grid
         """
-        return "g" + self.id
+        return f"g{self.id}"
 
     def on(self, event_type, func, **kwargs):
         # https://www.ag-grid.com/javascript-grid-events/

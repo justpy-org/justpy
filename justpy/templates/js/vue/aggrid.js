@@ -95,6 +95,12 @@ Vue.component('grid', {
             var events = this.$props.jp_props.events;
             var props = this.$props;
 
+            /**
+             * Gloabal event listener for the grid
+             * only listens to events included in $props.jp_props.events
+             * @param {string} event_name - name of the event
+             * @param event_obj
+             */
             function global_listener(event_name, event_obj) {
                 if (events.includes(event_name)) {
                     var event_fields = ['data', 'rowIndex', 'type', 'value']; // for cellClicked and rowClicked

@@ -154,6 +154,114 @@
     {
       "name": "examples/tutorial/tailwind/text_colors.py",
       "video_url": "https://user-images.githubusercontent.com/1336221/190890796-2c942a93-3ec5-4eda-aadb-3e09baebe625.png"
+    },
+    {
+      "name": "tutorial/input/input_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191027206-9361905b-0254-429b-bc4c-bd19cb8f2b06.gif"
+    },
+    {
+      "name": "tutorial/input/input_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191028190-732947ed-5342-48a3-b9b4-37ca52befdad.gif"
+    },
+    {
+      "name": "tutorial/input/input_demo3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191028850-bb025814-449a-40c2-abd8-5cdb651c8ee7.gif"
+    },
+    {
+      "name": "tutorial/input/input_demo4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191029504-5b3c2352-3161-4c20-b98b-8ebbf907c892.gif"
+    },
+    {
+      "name": "tutorial/input/color_demo.py",
+      "video_url": "(https://user-images.githubusercontent.com/95085996/191030382-d212d969-9503-4924-8ff7-ab682b302b4b.gif"
+    },
+    {
+      "name": "tutorial/input/radio_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191030883-cabed1bb-cbff-43f4-b095-a7e90cc48642.gif"
+    },
+    {
+      "name": "tutorial/input/radio_test2.py",
+      "video_url": "ttps://user-images.githubusercontent.com/95085996/191032427-4953cd6e-f858-42cb-84dc-9424bfbf5f8e.gif"
+    },
+    {
+      "name": "tutorial/input/check_test.py ",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191032964-92a5e5c4-dd46-4627-99a2-065b7a5ee456.gif"
+    },
+    {
+      "name": "tutorial/input/focus_test_input.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191033812-505015a1-abe2-4071-9d4d-9b43203e8cfb.gif"
+    },
+    {
+      "name": "tutorial/input/comp_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191034349-53232222-7116-4b46-9ee7-a0955a808478.gif"
+    },
+    {
+      "name": "tutorial/input/input_demo5.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191035060-3e175675-bb49-4b45-bce0-9483edb93cbb.gif"
+    },
+    {
+      "name": "tutorial/model_and_data/input_demo_model1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191038507-4a81f17c-81b6-40b7-b9db-06b21c67ae7e.gif"
+    },
+    {
+      "name": "tutorial/model_and_data/input_demo_model2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191038905-c222a58e-c91f-4aa9-aba7-f8c668401167.gif"
+    },
+    {
+      "name": "tutorial/model_and_data/input_demo_model3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191039469-9303606b-30e1-4197-ac75-715b4fce5b83.gif"
+    },
+    {
+      "name": "tutorial/model_and_data/input_demo_model4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191039973-6eb40b58-51e7-4bda-892d-60e91009e2bb.gif"
+    },
+    {
+      "name": "tutorial/model_and_data/model_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/191040776-11d44bc8-3b44-43b8-85bd-00e53671794b.gif"
+    },
+    {
+      "name": "tutorial/working_with_html/inner_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193000575-ff6bf338-8a4d-4752-9caa-79d603299dba.png"
+    },
+    {
+      "name": "tutorial/working_with_html/html_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193001679-35b8b2f3-b0ad-4eba-bab9-2fcf97796afd.png"
+    },
+    {
+      "name": "tutorial/working_with_html/parse_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193002170-ae5cdb95-4539-4b33-aa95-df97e8d039fe.png"
+    },
+    {
+      "name": "tutorial/working_with_html/parse_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193004223-7a38dfd4-d9ac-467c-981a-c78c41526086.gif"
+    },
+    {
+      "name": "tutorial/working_with_html/commands_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193006098-47e47ac7-3d48-4edd-86ca-628a43552933.png"
+    },
+    {
+      "name": "tutorial/working_with_html/commands_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193006448-cbdd06f3-456a-49d5-8998-2a566f69da6c.png"
+    },
+    {
+      "name": "tutorial/pushing_data/clock_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193007248-7e02d543-6eae-4602-81bb-b90e1b006b1d.gif"
+    },
+    {
+      "name": "tutorial/pushing_data/joint_edit.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193012839-8eba50dc-3c0d-4a79-99d6-a402a5de9935.gif"
+    },
+    {
+      "name": "tutorial/pushing_data/message_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193014625-382abb7c-75e3-4e9d-8fe7-327ddf4dabbb.gif"
+    },
+    {
+      "name": "",
+      "video_url": ""
+    },
+    {
+      "name": "",
+      "video_url": ""
     }
   ]
 }

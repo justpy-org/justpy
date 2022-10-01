@@ -41,11 +41,26 @@ class ExampleSource:
     def img_link(self):
         img_link=f"""<a href="{self.url}" target="_blank"><img src="{self.logo_url}" alt="{self.description}" title="{self.description}" style="width:{self.icon_size}px;height:{self.icon_size}px;"></a>"""
         return img_link
+    
+    def read_source(self,path:str):
+        """
+        read the source from the given path
+        
+        Args:
+            path(str): the path to the module file
+        """
+        with open(path, "r") as source_file:
+            self.source = source_file.read()
+        self.lines=self.source.split("\n")
         
     @classmethod
     def of_path(cls,path:str):
         """
         derive a example source type from the given path
+        
+        Args:
+            path(str): the path to the module file
+            
         """
         issue_match=re.search("issue_([0-9]+)",path)
         if issue_match:
@@ -60,6 +75,7 @@ class ExampleSource:
                 example_source=ExampleSource("stackoverflow",description=f"stackoverflow question {stackoverflow_number}",url=stackoverflow_url)
             else:
                 example_source=ExampleSource()
+        example_source.read_source(path)
         return example_source
     
     def __str__(self):
@@ -69,7 +85,7 @@ class ExampleSource:
         Returns:
             str: a text representation
         """
-        text=self.source_type
+        text=f"{self.source_type}:{self.description}({len(self.lines)} lines)" 
         return text
         
 class Example:
@@ -92,4 +108,14 @@ class Example:
         self.name=name
         self.option=option
         self.header=header
-        self.lines=lines
+        self.example_source.lines=lines
+        
+    def __str__(self):
+        """
+        return my string representation
+        
+        Returns:
+            str: a text representation
+        """
+        text=f"{self.name}"
+        return text
