@@ -31,7 +31,7 @@ def custom_comp_test3():
     month = 'Feb'
     d = jp.Div(classes='flex flex-wrap', a=wp)
     for day in range(1,11):
-        CalendarDate(day=day, month=month, year=year, color='teal', a=d, animation='bounceIn')
+        CalendarDate(day=day, month=month, year=year, color='pink', a=d, animation='bounceIn')
     d = jp.Div(classes='flex flex-wrap', a=wp)
     for day in range(5, 26):
         CalendarDate(day=day, month='Jul', year='2005', color='yellow', a=d)
