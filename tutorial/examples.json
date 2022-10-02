@@ -256,12 +256,56 @@
       "video_url": "https://user-images.githubusercontent.com/95085996/193014625-382abb7c-75e3-4e9d-8fe7-327ddf4dabbb.gif"
     },
     {
-      "name": "",
-      "video_url": ""
+      "name": "tutorial/pushing_data/count_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193037141-8e47df6e-8c3c-4339-a0e8-8164234c1b47.gif"
     },
     {
-      "name": "",
-      "video_url": ""
+      "name": "tutorial/custom_components/custom_comp_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193037748-7e8ab66e-9106-4cc7-a376-a9bd94753309.gif"
+    },
+    {
+      "name": "tutorial/custom_components/custom_comp_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193044152-d5ce79db-39c7-4a17-b272-e1dd9a39f4eb.gif"
+    },
+    {
+      "name": "tutorial/custom_components/alert_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193048077-f5ceb4ab-007d-469a-a7c2-264964e0d2f4.png"
+    },
+    {
+      "name": "tutorial/custom_components/alert_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193407832-123bcc9c-2251-460e-ab26-53adb2e8836a.gif"
+    },
+    {
+      "name": "tutorial/custom_components/custom_comp_test3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193408500-d5075077-f6ec-47f7-bf9f-87ce3440d9eb.gif"
+    },
+    {
+      "name": "tutorial/custom_components/custom_comp_test4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193409364-5204e6ca-ab3e-41c6-bd89-a63c76dc356f.gif"
+    },
+    {
+      "name": "tutorial/custom_components/custom_comp_test5.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193417815-6595a144-f232-4d05-b583-841823739a59.gif"
+    },
+    {
+      "name": "tutorial/custom_components/hello_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193418009-a7753608-3761-4a32-8020-1e422b543e98.gif"
+    },
+    {
+      "name": "tutorial/custom_components/hello_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193418095-29bcdde1-d9f9-4ea6-ae00-d8045f066893.gif"
+    },
+    {
+      "name": "tutorial/custom_components/hello_test3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193418363-f8a06156-da07-4574-9806-b9937ae636b5.gif"
+    },
+    {
+      "name": "tutorial/custom_components/hello_test4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193418646-d8852970-39f1-4d2e-9a84-b2066136a508.gif"
+    },
+    {
+      "name": "tutorial/custom_components/calculator_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/193464975-6a705c16-219f-4666-9f64-5555bd6bd9ba.gif"
     }
   ]
 }
