@@ -531,7 +531,7 @@ We define a new component called `MyHello` which inherits from `Hello`. By runni
 
 We will build a calculator component in stages. First, we will create a component that does not handle events or the model attribute. Please run the following example.
 ```python
-
+import justpy as jp
 from justpy import Div, Input, Button, WebPage, justpy
 
 class Calculator(Div):
@@ -574,16 +574,16 @@ class Calculator(Div):
                 pass
 
 
-def calculator_test():
+def calculator_test1():
     wp = WebPage()
     for i in range(10):
         c = Calculator(a=wp, classes='m-1 border inline-block', style='width: 250px')
     return wp
 
-justpy(calculator_test)
+jp.justpy(calculator_test1)
 ```
 
-First let's look at the function `calculator_test`. This function creates a WebPage and adds ten instances of the Calculator component to it. Try changing the number of calculators on the page by changing the argument to range. Once a JustPy component has been defined, it is simple to reuse it. The Calculator component can be used now in multiple projects.
+First let's look at the function `calculator_test1`. This function creates a WebPage and adds ten instances of the Calculator component to it. Try changing the number of calculators on the page by changing the argument to range. Once a JustPy component has been defined, it is simple to reuse it. The Calculator component can be used now in multiple projects.
 
 JustPy components are Python classes. The Calculator component is therefore a Python class. The Calculator class inherits from Div so Calculator is endowed from the start will all the features and capabilities of the Div component. These features are used in  `__init__`, in order to add the other components needed to implement the calculator.
 
@@ -599,6 +599,7 @@ As it is currently defined, Calculator does not support any useful events. We wo
 
 ```python
 from justpy import Div, Input, Button, WebPage, justpy
+import justpy as jp
 
 class Calculator(Div):
 
@@ -666,14 +667,14 @@ def calc_change(self, msg):
     print(msg)
     self.d.text = self.value
 
-def calculator_test():
+def calculator_test2():
     wp = WebPage()
     c = Calculator(a=wp, classes='m-1 border inline-block', style='width: 250px', change=calc_change)
     d = Div(classes='border m-2 p-1 w-64 text-xl', text='0', a=wp)
     c.d = d
     return wp
 
-justpy(calculator_test)
+jp.justpy(calculator_test2)
 ```
 
 Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do.
@@ -697,6 +698,7 @@ To make Calculator complete, we will also add handling of the `model` attribute 
 
 ```python
 from justpy import Div, Input, Button, WebPage, justpy
+import justpy as jp
 
 class Calculator(Div):
 
@@ -762,14 +764,14 @@ class Calculator(Div):
     def model_update(self):
         pass
 
-def calculator_test():
+def calculator_test3():
     wp = WebPage(data={'value': 0})
     Calculator(a=wp, classes='m-1 border inline-block', style='width: 250px', model=[wp, 'value'])
     for i in range(5):
         Div(classes='border m-2 p-1 w-64 text-xl', text='0', a=wp, model=[wp, 'value'])
     return wp
 
-justpy(calculator_test)
+jp.justpy(calculator_test3)
 ```
 
 Notice that we have added a call to the method `set_model` in the click event handler. This method checks if the component has a model attribute and if so, sets it to the method's argument.  
@@ -1016,7 +1018,7 @@ def tab_comp_test1():
     return wp
 
 
-justpy(tab_comp_test1)
+jp.justpy(tab_comp_test1)
 ```
 
 ## Table Component
