@@ -2,7 +2,7 @@
 
 In version 0.0.9 initial drag and drop support has been added. This feature should be considered experimental and I welcome input on how to improve it.
 
-In the example below, a image can be dragged and dropped between containers on screen. 
+In the example below, an image can be dragged and dropped between containers on screen. 
 
 JustPy elements now support the 'dragstart', 'dragover', and 'drop' events.
 
