@@ -1,5 +1,31 @@
 # Justpy Tutorial demo create_chart_test2 from docs/charts_tutorial/creating_charts.md
 import justpy as jp
+
+my_chart_def = """
+{
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+        }, {
+            name: 'John',
+            data: [5, 7, 3]
+        }]
+}
+"""
 def create_chart_test2():
     wp = jp.WebPage()
     for chart_type in ['bar', 'column', 'line', 'spline']:
