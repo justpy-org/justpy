@@ -13,9 +13,9 @@ def convert_date1(date_string):
 
 def stock_test1(request):
     wp = jp.WebPage()
-    ticker = request.query_params.get("ticker", "MSFT")
-    if ticker not in ["AAPL", "IBM", "INTC", "MSFT"]:
-        ticker = "MSFT"
+    ticker = request.query_params.get("ticker", "msft")
+    if ticker not in ["aapl", "ibm", "intc", "msft"]:
+        ticker = "msft"
     data = pd.read_csv(f"https://elimintz.github.io/stocks/{ticker.upper()}.csv")
     chart = jp.HighStock(a=wp, classes="m-1 p-2 border w-10/12")
     o = chart.options
