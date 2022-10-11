@@ -117,11 +117,11 @@
     },
     {
       "name": "charts_tutorial/stock_charts/stock_test1.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/190441705-7b66ac45-1ac0-4f34-9d5b-4925ad5c2704.gif"
+      "video_url": "https://user-images.githubusercontent.com/95085996/195196223-efa2d502-cc87-4cc8-b80c-637c9af4ea1e.gif"
     },
     {
       "name": "charts_tutorial/stock_charts/stock_test2.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/190446527-07cfb87a-67d3-44a6-904e-0bf5ebe1c94b.gif"
+      "video_url": "https://user-images.githubusercontent.com/95085996/195199865-b8eacc55-644a-4a97-bb7e-f0c91ae9f857.gif"
     },
     {
       "name": "tutorial/matplotlib/plot_test1.py",
@@ -346,6 +346,58 @@
     {
       "name": "tutorial/request_object/dog_pic3.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/194595929-f9708822-c262-4b64-b07e-6c161e674996.gif"
+    },
+    {
+      "name": "tutorial/form/form_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194642369-52e17c8f-5ec6-4f3d-b0cd-f84bd60447a0.gif"
+    },
+    {
+      "name": "tutorial/drag_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194644962-ec77d380-9620-4cb7-a5a1-12c1d9c87c53.gif"
+    },
+    {
+      "name": "tutorial/tailwind/text_colors.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194646558-5120855c-f4af-41a1-8cb0-0264e2741218.gif"
+    },
+    {
+      "name": "tutorial/svg_components/svg_demo1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194771669-3386e4f8-f5aa-4196-a501-c56d40862bd2.png"
+    },
+    {
+      "name": "tutorial/svg_components/svg_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194771903-27423318-a083-4966-be6e-4de401ffa961.gif"
+    },
+    {
+      "name": "tutorial/svg_components/svg_demo3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194776058-5f3d6103-b3e4-46f6-b3c8-0b978d4e625b.gif"
+    },
+    {
+      "name": "charts_tutorial/creating_charts/create_chart_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194852171-12707a23-b9dc-43fe-bfd7-6996c7485445.gif"
+    },
+    {
+      "name": "charts_tutorial/creating_charts/create_chart_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194856111-86f46a4e-4bdc-46ea-aa07-6f052155f4db.gif"
+    },
+    {
+      "name": "charts_tutorial/creating_charts/create_chart_test4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194858047-54572b6b-8277-4339-a480-ab76b0f11608.gif"
+    },
+    {
+      "name": "charts_tutorial/creating_charts/sine_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194861116-3f0f5cea-1f56-4e6b-80b9-35331742e76c.gif"
+    },
+    {
+      "name": "charts_tutorial/creating_charts/create_chart_test5.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/194865394-5c2a2648-1da3-4d73-801c-493f6cb35ff2.gif"
+    },
+    {
+      "name": "charts_tutorial/updating_charts/chart_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195203883-76cdbc1a-2484-4332-a3e1-fd1e6f0c4ce6.gif"
+    },
+    {
+      "name": "",
+      "video_url": ""
     }
   ]
 }
