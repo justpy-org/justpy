@@ -38,7 +38,6 @@ def women_majors2():
     o.legend.layout = 'proximate'
     o.legend.align = 'right'
     o.plotOptions.series.marker.enabled = False
-    o.series[3].type = 'column'
     return wp
 
 # initialize the demo
