@@ -63,6 +63,7 @@ def tool_tip_demo1():
     my_charts[2].options.title.text = 'Split Tooltip'
     return wp
 
+
 # initialize the demo
 from  examples.basedemo import Demo
 Demo ("tool_tip_demo1",tool_tip_demo1)

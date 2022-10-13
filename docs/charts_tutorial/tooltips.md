@@ -79,8 +79,8 @@ The second argument to the tooltip formatter (`msg` in our case) has values spec
 - `msg.y` - The y coordinate of the point
 - `msg.color` - The color of the point
 - `msg.series_name` - The name of the series the point is in
-- `msg.series_index` - The index the series the point is in
-- `msg.point_index` - The index the point in its series
+- `msg.series_index` - The index of the series the point is in
+- `msg.point_index` - The index of the point in its series
 
 Let's use some of the fields above to create a more informative tooltip. Please replace `tooltip_formatter1` with this new version and run the program:
 
@@ -308,7 +308,7 @@ jp.justpy(tool_tip_demo1)
 
 In the example below we add three additional charts with custom tooltips to the page. In total, there are now six charts on the page. The first three use the default Highcharts tooltip and the second three use custom tooltips. The first custom tooltip is of type single, the second is of type shared and the third is a split tooltip.
 
-For single and shared tooltip handlers the first argument ofthe  `tooltip_update` is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.
+For single and shared tooltip handlers the first argument of the  `tooltip_update` is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.
 
 In the case of shared and split tooltips, the `msg` argument of the tooltip formatter includes a list of the properties of all the points with the corresponding x value. It is accessed as `msg.points`. As you will see in the example below, we iterate over this list in the tooltip handlers to generate the required output.
 
