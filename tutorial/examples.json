@@ -145,7 +145,7 @@
     },
     {
       "name": "tutorial/matplotlib/plot_test4.py",
-      "video_url": "https://user-images.githubusercontent.com/1336221/190870644-a7962895-dbbb-4d76-ad1f-e0f1e1b7c960.gif"
+      "video_url": "https://user-images.githubusercontent.com/95085996/195892877-6dfce064-c885-415f-ba5f-869ed5b561bc.gif"
     },
     {
       "name": "examples/issues/issue_50_ag_grid_cell_value_changed.py",
@@ -422,6 +422,22 @@
     {
       "name": "charts_tutorial/chart_components/scatter_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/195833130-acb6ba3a-487e-4b27-b9a8-91ec5a623d80.gif"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195888841-6d63ecb8-5b6a-459c-9cd9-a2a9eff4a2e7.png"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195891178-6a514189-cc6e-4b0f-8eb7-6b9ecf8de6a1.gif"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test5.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195893769-a8b76813-ccb7-47ce-bec3-7ae750462c80.gif"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test6.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195894763-3ac13aef-166e-418a-b0ac-07cbe6224989.gif"
     },
     {
       "name": "",
