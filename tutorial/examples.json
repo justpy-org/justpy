@@ -396,6 +396,34 @@
       "video_url": "https://user-images.githubusercontent.com/95085996/195203883-76cdbc1a-2484-4332-a3e1-fd1e6f0c4ce6.gif"
     },
     {
+      "name": "charts_tutorial/tooltips/chart_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195618253-95f2f0af-6e1e-4d55-a2ad-eee6ad172ed7.gif"
+    },
+    {
+      "name": "charts_tutorial/tooltips/chart_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195622910-07b805c6-9b99-4b0e-8d37-297b9eff926c.gif"
+    },
+    {
+      "name": "charts_tutorial/tooltips/chart_test3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195623873-78f99fcd-8c2c-4e4c-81cf-4475e4552590.gif"
+    },
+    {
+      "name": "charts_tutorial/iris/iris_data.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195683279-0b81a539-2e1b-4cca-8d2b-02bc5b76b378.gif"
+    },
+    {
+      "name": "charts_tutorial/chart_components/pie_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195820662-0d25d620-9125-4610-b06a-eda4eb3d7a56.gif"
+    },
+    {
+      "name": "charts_tutorial/chart_components/histogram_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195830539-b742f835-c7d2-4b1d-a702-a460971cc49b.gif"
+    },
+    {
+      "name": "charts_tutorial/chart_components/scatter_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195833130-acb6ba3a-487e-4b27-b9a8-91ec5a623d80.gif"
+    },
+    {
       "name": "",
       "video_url": ""
     }
