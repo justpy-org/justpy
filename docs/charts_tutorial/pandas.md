@@ -93,7 +93,6 @@ def women_majors2():
     o.legend.layout = 'proximate'
     o.legend.align = 'right'
     o.plotOptions.series.marker.enabled = False
-
     return wp
 
 jp.justpy(women_majors2)

@@ -77,7 +77,7 @@ class TestTutorial(Basetest):
         
     def test_update_from_tutorial(self):
         """
-        test updating a demo from the turtorial source
+        test updating a demo from the tutorial source
         """
         debug=False
         for demo_name in ["stock_test2"]:

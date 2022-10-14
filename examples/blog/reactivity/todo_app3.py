@@ -3,6 +3,7 @@ import justpy as jp
 
 
 class TodoList(jp.Ol):
+
     def __init__(self, **kwargs):
         self.todos = []
         super().__init__(**kwargs)

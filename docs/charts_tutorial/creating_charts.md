@@ -37,7 +37,7 @@ my_chart_def = """
 
 def create_chart_test1():
     wp = jp.WebPage()
-    my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border', style='width: 600px')
+    my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border", style="width: 600px")
     my_chart.options = my_chart_def
     return wp
 
@@ -61,13 +61,42 @@ Try for example, changing the text of the chart title in `my_chart_def` and runn
 Let's do something a little more complex. Change `create_chart_test1` in the above example to the following:
 ```python
 import justpy as jp
+
+# Example from https://www.highcharts.com/docs/getting-started/your-first-chart
+my_chart_def = """
+{
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            }
+        },
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+        }, {
+            name: 'John',
+            data: [5, 7, 3]
+        }]
+}
+"""
+
+
 def create_chart_test2():
     wp = jp.WebPage()
-    for chart_type in ['bar', 'column', 'line', 'spline']:
-        my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
+    for chart_type in ["bar", "column", "line", "spline"]:
+        my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border w-1/2", options=my_chart_def)
         my_chart.options.chart.type = chart_type
-        my_chart.options.title.text = f'Chart of Type {chart_type.capitalize()}'
-        my_chart.options.subtitle.text = f'Subtitle {chart_type.capitalize()}'
+        my_chart.options.title.text = f"Chart of Type {chart_type.capitalize()}"
+        my_chart.options.subtitle.text = f"Subtitle {chart_type.capitalize()}"
     return wp
 
 jp.justpy(create_chart_test2)
@@ -127,10 +156,12 @@ my_chart_def = """
 }
 """
 
+
 def create_chart_test3():
     wp = jp.WebPage()
-    my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
+    my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border w-1/2", options=my_chart_def)
     return wp
+
 
 jp.justpy(create_chart_test3)
 ```
@@ -163,12 +194,14 @@ my_chart_def = """
 }
 """
 
+
 def create_chart_test4():
     wp = jp.WebPage()
-    my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
-    my_chart.options.series[0].name = 'Tourists in \'000'
-    my_chart.options.title.text = 'Tourists in Middle Earth'
+    my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border w-1/2", options=my_chart_def)
+    my_chart.options.series[0].name = "'Tourists in \'000'"
+    my_chart.options.title.text = "Tourists in Middle Earth"
     return wp
+
 
 jp.justpy(create_chart_test4)
 ```
@@ -200,14 +233,14 @@ import numpy as np
 
 def sine_test():
     wp = jp.WebPage()
-    chart = jp.HighCharts(a=wp, classes='border m-2 p-2 w-3/4')
+    chart = jp.HighCharts(a=wp, classes="border m-2 p-2 w-3/4")
     o = chart.options
-    o.title.text = 'Sines Galore'
+    o.title.text = "Sines Galore"
     x = np.linspace(-np.pi, np.pi, 201)
     for frequency in range(1,11):
         y = np.sin(frequency * x)
         s = jp.Dict()
-        s.name = f'F{frequency}'
+        s.name = f"F{frequency}"
         s.data = list(zip(x, y))
         o.series.append(s)
     return wp
@@ -232,16 +265,17 @@ import justpy as jp
 # https://github.com/elimintz/elimintz.github.io/tree/master/charts
 # Try https://127.0.0.1:8000/ + any one of the entries in charts
 # For example: http://127.0.0.1:8000/bubbles
-charts = ['org', 'bubbles', 'item', 'timeline', 'states', 'browsers', 'wheel']
+charts = ["org", "bubbles", "item", "timeline", "states", "browsers", "wheel"]
 
-@jp.SetRoute('/{chart_name}')
+
+@jp.SetRoute("/{chart_name}")
 async def create_chart_test5(request):
     wp = jp.WebPage()
-    chart_name = request.path_params.get('chart_name', 'item')   # Default chart is item
+    chart_name = request.path_params.get("chart_name", "item")   # Default chart is item
     if chart_name not in charts:
-        chart_name = 'item'
-    chart_options = await jp.get(f'https://elimintz.github.io/charts/{chart_name}', 'text')
-    my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-3/4', options=chart_options)
+        chart_name = "item"
+    chart_options = await jp.get(f"https://elimintz.github.io/charts/{chart_name}", "text")
+    my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border w-3/4", options=chart_options)
     return wp
 
 jp.justpy(create_chart_test5)

@@ -24,13 +24,15 @@ my_chart_def = """
 }
 """
 
+
 def create_chart_test4():
     wp = jp.WebPage()
-    my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
-    my_chart.options.series[0].name = 'Tourists in \'000'
-    my_chart.options.title.text = 'Tourists in Middle Earth'
+    my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border w-1/2", options=my_chart_def)
+    my_chart.options.series[0].name = "'Tourists in \'000'"
+    my_chart.options.title.text = "Tourists in Middle Earth"
     return wp
 
+
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("create_chart_test4",create_chart_test4)
+from examples.basedemo import Demo
+Demo("create_chart_test4", create_chart_test4)

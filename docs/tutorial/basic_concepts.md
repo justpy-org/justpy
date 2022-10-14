@@ -12,7 +12,7 @@ A JustPy element is an instance of a component class.
 ```python
 import justpy as jp
 p = jp.P()
-p.text = 'Hello!'
+p.text = "Hello!"
 ```
 
 In the example above, `p` is an instance of the class `P`. Its text attribute is set to 'Hello!'.
@@ -24,7 +24,7 @@ The above is similar to the HTML element:
 You can set the JustPy element attributes when the element is created (synonym for instantiated) using keyword arguments to make code shorter and clearer:
 ```python
 import justpy as jp
-p = jp.P(text='Hello!')
+p = jp.P(text="Hello!")
 ```
 
 Just creating an element is not very useful. We need to get it on a web page and into the user's browser tab. We will do this next.
@@ -43,7 +43,7 @@ Let's create an element and add it to the page:
 ```python
 import justpy as jp
 wp = jp.WebPage()
-p = jp.P(text='Hello World!')
+p = jp.P(text="Hello World!")
 wp.add(p)  # Same as p.add_to(wp), wp = wp + p, wp += p
 ```
 
@@ -53,7 +53,7 @@ Since adding an element to a page is very common, there is a way to do so using 
 ```python
 import justpy as jp
 wp = jp.WebPage()
-p = jp.P(text='Hello World!', a=wp)
+p = jp.P(text="Hello World!", a=wp)
 ```
 
 This code snippet has the same functionality as the one above it.
@@ -81,7 +81,7 @@ import justpy as jp
 
 def hello_world1():
     wp = jp.WebPage()
-    p = jp.P(text='Hello World!', a=wp)
+    p = jp.P(text="Hello World!", a=wp)
     return wp
 
 jp.justpy(hello_world1)
@@ -107,7 +107,7 @@ import justpy as jp
 def hello_world2():
     wp = jp.WebPage()
     for i in range(1,11):
-        jp.P(text=f'{i}) Hello World!', a=wp, style=f'font-size: {10*i}px')
+        jp.P(text=f"{i}) Hello World!", a=wp, style=f"font-size: {10*i}px")
     return wp
 
 jp.justpy(hello_world2)
@@ -125,7 +125,7 @@ The `style` attribute in JustPy is the same as the HTML [style](https://develope
 
 For example, change the style assignment to:
 ```python
-style=f'color: blue; font-size: {10*i}px'
+style=f"color: blue; font-size: {10*i}px"
 ```
 and see what happens.
 
@@ -146,7 +146,7 @@ def hello_world3():
     wp = jp.WebPage()
     my_paragraph_design = "w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
     for i in range(1,11):
-        jp.P(text=f'{i}) Hello World!', a=wp, classes=my_paragraph_design)
+        jp.P(text=f"{i}) Hello World!", a=wp, classes=my_paragraph_design)
     return wp
 
 jp.justpy(hello_world3)
@@ -164,7 +164,7 @@ import justpy as jp
 wp = jp.WebPage(delete_flag=False)
 my_paragraph_design = "w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 for i in range(1,11):
-    jp.P(text=f'{i}) Hello World!', a=wp, classes=my_paragraph_design)
+    jp.P(text=f"{i}) Hello World!", a=wp, classes=my_paragraph_design)
 
 def hello_world4():
     return wp
