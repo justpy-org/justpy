@@ -29,8 +29,8 @@ cat $tutorial | awk -v target=$target -v tutorial=$tutorial '
       print lines[line] >> pyfile
     }
     print "# initialize the demo" >> pyfile
-    print "from  examples.basedemo import Demo" >> pyfile
-    demo="Demo (\x22" pname "\x22,"
+    print "from examples.basedemo import Demo" >> pyfile
+    demo="Demo(\x22" pname "\x22, "
     gsub ("jp.justpy[(]",demo,$0)
     print >> pyfile
   }

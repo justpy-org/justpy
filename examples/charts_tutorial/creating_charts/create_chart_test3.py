@@ -30,11 +30,13 @@ my_chart_def = """
 }
 """
 
+
 def create_chart_test3():
     wp = jp.WebPage()
-    my_chart = jp.HighCharts(a=wp, classes='m-2 p-2 border w-1/2', options=my_chart_def)
+    my_chart = jp.HighCharts(a=wp, classes="m-2 p-2 border w-1/2", options=my_chart_def)
     return wp
 
+
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("create_chart_test3",create_chart_test3)
+from examples.basedemo import Demo
+Demo("create_chart_test3", create_chart_test3)
