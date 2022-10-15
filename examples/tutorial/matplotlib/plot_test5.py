@@ -8,6 +8,7 @@ def plot_test5():
     print(f'start {plt.get_fignums()}')
     f = plt.figure(figsize=(2, 2))
     plt.plot([0, 1, 4, 9], marker='*', markersize=20, markeredgecolor='red')
+    print(f'start {plt.get_fignums()}')
     plt.title('Matplotlib Example')
     plt.xlabel('x data')
     plt.ylabel('y data')

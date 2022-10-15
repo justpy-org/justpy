@@ -296,7 +296,7 @@ def plot_test6():
 jp.justpy(plot_test6)
 ```
 
-In order to handle each chart separately, we create 20 distinct chart elements and assign to the button the list of the chart elements we created and then iterate over the charts in the button's click event handler.
+In order to handle each chart separately, we create 5 distinct chart elements and assign to the button the list of the chart elements we created and then iterate over the charts in the button's click event handler.
 
 
 ## Creating matplotlib charts with pandas
