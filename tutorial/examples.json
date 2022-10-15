@@ -438,6 +438,34 @@
     {
       "name": "tutorial/matplotlib/plot_test6.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/195894763-3ac13aef-166e-418a-b0ac-07cbe6224989.gif"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test7.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195991993-fc8a2d8e-2e73-45c5-8657-a6740f9a5cd2.gif"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test8.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195992063-06b4f3c3-f778-4eb0-a553-e13e272676c6.gif"
+    },
+    {
+      "name": "tutorial/matplotlib/plot_test9.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195992550-02c4c5a3-d28b-400d-a489-599a53d79fce.gif"
+    },
+    {
+      "name": "tutorial/altair/altair_chart_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195993857-452b7516-c70d-4049-bd67-6390f64238ce.gif"
+    },
+    {
+      "name": "tutorial/equations/eq_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195995503-58091c57-8cea-40ab-ba59-24aff353dfb1.gif"
+    },
+    {
+      "name": "tutorial/plotly/plotly_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195996372-cce2ec7a-fe23-46bb-8c65-f3ea3cbf0d15.gif"
+    },
+    {
+      "name": "tutorial/pydeck/pydeck_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/195996927-da459218-934b-4c26-8970-1ebe51b98c0b.gif"
     }
   ]
 }
