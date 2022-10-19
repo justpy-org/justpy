@@ -52,24 +52,27 @@ class JustpyDemoApp:
         """
         self.is_demo = False
         if "Demo(" or "Demo (" in self.source:
-            if self.debug:
-                print(f"found Demo( in {self.pymodule_file}")
+            #if self.debug:
+            #    print(f"found Demo( in {self.pymodule_file}")
             func_match = re.search(
                 """Demo[ ]?[(]["'](.*)["'],\s*(.*?)(,.*)*[)]""", self.source
             )
             if func_match:
+                #len_groups = len(func_match.groups())
                 self.description = func_match.group(1)
                 self.wpfunc_name = func_match.group(2)
+                self.wpfunc_params=func_match.group(3)
                 # jenkins could have /var/lib/jenkins/jobs/justpy/workspace/examples/charts_tutorial/pandas/women_majors2.py is not a demo
                 module_match = re.search(
-                    "justpy/(workspace/)?(examples/.*)[.]py", self.pymodule_file
+                    "(examples/.*)[.]py", self.pymodule_file
                 )
-                if self.debug:
-                    print(f"found {self.wpfunc_name}:{self.description} in {self.pymodule_file}")
                 if module_match:
-                    self.pymodule = module_match.group(2)
+                    self.pymodule = module_match.group(1)
                     self.pymodule = self.pymodule.replace("/", ".")
                     self.is_demo = not "lambda" in self.wpfunc_name                   
+                    if self.debug and self.is_demo:
+                        print(f"found {self.wpfunc_name}:{self.description} in module {self.pymodule} {self.pymodule_file}")
+                        print(f"with params {self.wpfunc_params}")
                 return
             
     def video_link(self,target_url:str=None,alt:str=None,title:str=None,video_size=512):

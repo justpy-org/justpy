@@ -7,24 +7,25 @@ import argparse
 import socket
 import typing
 
-
 class Demo(object):
     """
     Base class for justpy demos to allow selecting host and port from commandline
     """
-
     testmode = False
 
-    def __init__(self, name: str, wp: typing.Callable, **kwargs):
+    def __init__(self, name: str, wp_func: typing.Callable, **kwargs):
         """
         Constructor
 
         Args:
             name(str): the name of the demo
-            host(int): the port to runt he demo at (defaut:8000)
-            wp(callable): the webpage callback
+            host(int): the port to run the demo at (default:8000)
+            wp_func(callable): the webpage callback
             **kwargs: further keyword arguments
         """
+        self.name=name
+        self.wp_func=wp_func
+        self.kwargs=kwargs
         # make sure Demo code may be tested without automatically starting
         if Demo.testmode:
             return
@@ -34,4 +35,4 @@ class Demo(object):
         args = parser.parse_args()
         import justpy as jp
 
-        jp.justpy(wp, host=args.host, port=args.port, **kwargs)
+        jp.justpy(wp_func, host=args.host, port=args.port, **kwargs)
