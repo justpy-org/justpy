@@ -15,7 +15,15 @@ except:
 
 
 class AgGrid(JustpyBaseComponent):
-    # https://www.ag-grid.com/javascript-grid-features/
+    """
+    
+    support for 
+    https://www.ag-grid.com
+    
+    see
+    https://www.ag-grid.com/javascript-grid-features/
+    
+    """
 
     vue_type = "grid"
     default_grid_options = {
@@ -34,6 +42,9 @@ class AgGrid(JustpyBaseComponent):
     }
 
     def __init__(self, **kwargs):
+        """
+        constructor
+        """
         self.options = Dict(self.default_grid_options)
         self.classes = ""
         self.style = "height: 99vh; width: 99%; margin: 0.25rem; padding: 0.25rem;"
@@ -102,6 +113,12 @@ class AgGrid(JustpyBaseComponent):
         return self.options
 
     def load_pandas_frame(self, df):
+        """
+        load the given pandas dataframe
+        
+        Args:
+            df: the dataframe to load
+        """
         assert _has_pandas, f"Pandas not installed, cannot load frame"
         self.options.columnDefs = []
         for i in df.columns:
