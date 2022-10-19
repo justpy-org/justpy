@@ -21,6 +21,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 from justpy import parse_html, QBtn
+from pydevd_file_utils import setup_client_server_paths
 
 class BaseWebPage():
     """
@@ -218,7 +219,6 @@ class DemoDisplay(BaseWebPage):
                 style="overflow:hidden; height:100vh; width:100%;"
         )
 
-
 class DemoBrowser(BaseWebPage):
     """
     Browser for demos
@@ -237,6 +237,30 @@ class DemoBrowser(BaseWebPage):
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         self.mounted={}
         self.page_load_count=0
+        
+    def optionalDebug(self,args):   
+        '''
+        start the remote debugger if the arguments specify so
+        
+        Args:
+            args(): The command line arguments
+        '''
+        if args.debugServer:
+            import pydevd
+            print (args.debugPathMapping,flush=True)
+            if args.debugPathMapping:
+                if len(args.debugPathMapping)==2:
+                    remotePath=args.debugPathMapping[0] # path on the remote debugger side
+                    localPath=args.debugPathMapping[1]  # path on the local machine where the code runs
+                    MY_PATHS_FROM_ECLIPSE_TO_PYTHON = [
+                        (remotePath, localPath),
+                    ]
+                    setup_client_server_paths(MY_PATHS_FROM_ECLIPSE_TO_PYTHON)
+                    #os.environ["PATHS_FROM_ECLIPSE_TO_PYTHON"]='[["%s", "%s"]]' % (remotePath,localPath)
+                    #print("trying to debug with PATHS_FROM_ECLIPSE_TO_PYTHON=%s" % os.environ["PATHS_FROM_ECLIPSE_TO_PYTHON"]);
+         
+            pydevd.settrace(args.debugServer, port=args.debugPort,stdoutToServer=True, stderrToServer=True)
+            print("command line args are: %s" % str(sys.argv))
         
     async def onSizeColumnsToFit(self,_msg:dict):   
         """
@@ -423,6 +447,7 @@ class DemoBrowser(BaseWebPage):
             else:
                 self.showError(f"example {demo_name} not found")
         self.showError("no example demo name specified")
+        
 
 def main(argv=None):  # IGNORE:C0111
     """main program."""
@@ -447,6 +472,12 @@ def main(argv=None):  # IGNORE:C0111
             default=os.getcwd(),
             help="path to the examples (default: %(default)s)",
         )
+        parser.add_argument('--debugServer',
+                                     help="remote debug Server")
+        parser.add_argument('--debugPort',type=int,
+                                     help="remote debug Port",default=5678)
+        parser.add_argument('--debugPathMapping',nargs='+',help="remote debug Server path mapping - needs two arguments 1st: remotePath 2nd: local Path")
+   
         parser.add_argument("--host", default=socket.getfqdn())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args(argv[1:])
@@ -454,6 +485,7 @@ def main(argv=None):  # IGNORE:C0111
         if args.heroku:
             args.port=os.environ["PORT"]
             args.host="0.0.0.0"
+        demo_browser.optionalDebug(args)
         jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
     except Exception as e:
         indent = len(program_name) * " "
