@@ -51,6 +51,8 @@ class JustpyDemoApp:
         """
         self.is_demo = False
         if "Demo(" or "Demo (" in self.source:
+            if self.debug:
+                print(f"found Demo( in {self.pymodule_file}")
             func_match = re.search(
                 """Demo[ ]?[(]["'](.*)["'],\s*(.*?)(,.*)*[)]""", self.source
             )
