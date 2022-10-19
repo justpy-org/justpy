@@ -27,6 +27,7 @@ class JustpyDemoApp:
             debug(bool): if True switch on debug mode
             **kwargs: further keyword arguments to pass to the webpage function
         """
+        self.debug=debug
         self.examples_dir=examples_dir
         self.pymodule_file = pymodule_file
         self.example_source=ExampleSource.of_path(pymodule_file)
