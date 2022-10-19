@@ -441,11 +441,10 @@ def main(argv=None):  # IGNORE:C0111
         parser.add_argument(
             "--heroku", action="store_true", help="in heroku environment pick up port from env variable and set host to 0.0.0.0"
         )
-        script_dir = os.path.dirname(__file__)
         parser.add_argument(
             "-p",
             "--path",
-            default=os.path.dirname(script_dir),
+            default=os.getcwd(),
             help="path to the examples (default: %(default)s)",
         )
         parser.add_argument("--host", default=socket.getfqdn())
