@@ -64,6 +64,8 @@ class JustpyDemoApp:
                 module_match = re.search(
                     "justpy/(workspace/)?(examples/.*)[.]py", self.pymodule_file
                 )
+                if self.debug:
+                    print(f"found {self.wpfunc_name}:{self.description} in {self.pymodule_file}")
                 if module_match:
                     self.pymodule = module_match.group(2)
                     self.pymodule = self.pymodule.replace("/", ".")
