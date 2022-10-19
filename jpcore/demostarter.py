@@ -181,7 +181,7 @@ def main(argv=None):  # IGNORE:C0111
         )
 
         args = parser.parse_args(argv[1:])
-        demostarter = Demostarter(mode=args.mode, debug=args.debug)
+        demostarter = Demostarter(base_path=args.path,mode=args.mode, debug=args.debug)
         if args.debug:
             for demo in demostarter.demos:
                 print(demo)

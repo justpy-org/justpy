@@ -223,12 +223,15 @@ class DemoBrowser(BaseWebPage):
     """
     Browser for demos
     """
-    def __init__(self):
+    def __init__(self,base_path:str=None):
         """
         constructor
+        
+        Args:
+            base_path(str): the path to search examples in
         """
         BaseWebPage.__init__(self)
-        self.demo_starter=Demostarter()
+        self.demo_starter=Demostarter(base_path=base_path)
         self.tutorial_manager=TutorialManager()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         self.mounted={}
@@ -434,10 +437,17 @@ def main(argv=None):  # IGNORE:C0111
         parser.add_argument(
             "-d", "--debug", dest="debug", action="store_true", help="show debug info"
         )
+        script_dir = os.path.dirname(__file__)
+        parser.add_argument(
+            "-p",
+            "--path",
+            default=os.path.dirname(script_dir),
+            help="path to the examples (default: %(default)s)",
+        )
         parser.add_argument("--host", default=socket.getfqdn())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args(argv[1:])
-        demo_browser=DemoBrowser()
+        demo_browser=DemoBrowser(base_path=args.path)
         jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
     except Exception as e:
         indent = len(program_name) * " "
