@@ -223,15 +223,16 @@ class DemoBrowser(BaseWebPage):
     """
     Browser for demos
     """
-    def __init__(self,base_path:str=None):
+    def __init__(self,base_path:str=None,debug:bool=False):
         """
         constructor
         
         Args:
             base_path(str): the path to search examples in
+            debug(bool): if True switchon debugging
         """
         BaseWebPage.__init__(self)
-        self.demo_starter=Demostarter(base_path=base_path)
+        self.demo_starter=Demostarter(base_path=base_path,debug=debug)
         self.tutorial_manager=TutorialManager()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         self.mounted={}
@@ -437,6 +438,9 @@ def main(argv=None):  # IGNORE:C0111
         parser.add_argument(
             "-d", "--debug", dest="debug", action="store_true", help="show debug info"
         )
+        parser.add_argument(
+            "--heroku", action="store_true", help="in heroku environment pick up port from env variable and set host to 0.0.0.0"
+        )
         script_dir = os.path.dirname(__file__)
         parser.add_argument(
             "-p",
@@ -447,7 +451,10 @@ def main(argv=None):  # IGNORE:C0111
         parser.add_argument("--host", default=socket.getfqdn())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args(argv[1:])
-        demo_browser=DemoBrowser(base_path=args.path)
+        demo_browser=DemoBrowser(base_path=args.path,debug=args.debug)
+        if args.heroku:
+            args.port=os.environ["PORT"]
+            args.host="0.0.0.0"
         jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
     except Exception as e:
         indent = len(program_name) * " "
