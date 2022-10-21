@@ -13,7 +13,6 @@ from examples.basedemo import Demo
 from jpcore.demoapp import JustpyDemoApp
 from jpcore.utilities import find_files
 
-
 class Demostarter:
     """
     start justpy demos on different ports
@@ -32,11 +31,11 @@ class Demostarter:
         self.mode = mode
         self.script_dir = os.path.dirname(__file__)
         if base_path is None:
-            base_path=self.script_dir
+            base_path=os.path.dirname(self.script_dir)
         if base_path.endswith("/examples"):
             base_path=os.path.dirname(base_path)
         self.justpy_dir = f"{base_path}/examples"
-        self.example_json_file=f"{base_path}/tutorial/examples.json"
+        self.example_json_file=f"{self.justpy_dir}/examples.json"
         if self.debug:
             print(f"collecting examples from {self.justpy_dir}")
         pymodule_files = find_files(self.justpy_dir, ".py")
