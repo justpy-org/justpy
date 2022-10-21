@@ -32,7 +32,9 @@ class Demostarter:
         self.mode = mode
         self.script_dir = os.path.dirname(__file__)
         if base_path is None:
-            base_path=os.path.dirname(self.script_dir)
+            base_path=self.script_dir
+        if base_path.endswith("/examples"):
+            base_path=os.path.dirname(base_path)
         self.justpy_dir = f"{base_path}/examples"
         self.example_json_file=f"{base_path}/tutorial/examples.json"
         if self.debug:
