@@ -28,6 +28,7 @@ justpy-demo-wf
 follow the instructions to get your git repository
 
 ### add files
+see https://github.com/justpy-org/justpy/tree/master/tutorial/heroku
 #### Procfile
 ```bash
 web: python examples/demo_browser.py --heroku -d 
