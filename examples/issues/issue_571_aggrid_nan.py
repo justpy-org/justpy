@@ -83,8 +83,12 @@ class TestIssue571():
         await self.wp.update()
         self.lod[2]["age"] = np.nan
         self.grid.load_lod(lod=self.lod,columnDefs=self.columnDefs)
+        
+    @classmethod
+    def test_issue571(cls):
+        testIssue571=TestIssue571()
+        return testIssue571.grid_test_issue571()
     
 
 from examples.basedemo import Demo
-testIssue571=TestIssue571()
-Demo("Issue 500 aggrid uuid value", testIssue571.grid_test_issue571)
+Demo("Issue 500 aggrid uuid value", TestIssue571.test_issue571)
