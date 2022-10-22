@@ -88,10 +88,6 @@
       "video_url": "https://user-images.githubusercontent.com/95085996/190410256-23b50221-cca4-45ee-8133-c54928408bb7.gif"
     },
     {
-      "name": "tutorial/after_demo.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/190411043-059bc4f4-02ba-49bb-8bbf-e61c6b109683.gif"
-    },
-    {
       "name": "tutorial/routes/route1.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/190412782-05da8fa4-89b1-4e2a-a3c3-f27f84b96ce4.gif"
     },
@@ -136,17 +132,9 @@
       "video_url": "https://user-images.githubusercontent.com/1336221/190648952-8469573a-5ecd-401e-981b-2744bcc4f3f6.png"
     },
     {
-      "name": "tutorial/plotly/plotly_test.py",
-      "video_url": "https://user-images.githubusercontent.com/1336221/190658278-de6446ba-1eb8-4167-ab36-5b82ebb32ed6.gif"
-    },
-    {
       "name": "issues/issue_500_aggrid_uuid.py",
       "video_url": "https://user-images.githubusercontent.com/1336221/190847534-b8d37794-d49c-4d79-b949-04930c8ecec4.gif"
     },
-    {
-      "name": "issues/issue_578_new_aggrid.py",
-      "video_url": "https://user-images.githubusercontent.com/1336221/197249361-32a594f4-7adf-4ba5-ba25-457d21b377cd.gif"
-    },     
     {
       "name": "tutorial/matplotlib/plot_test4.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/195892877-6dfce064-c885-415f-ba5f-869ed5b561bc.gif"
