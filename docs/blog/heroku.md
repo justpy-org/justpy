@@ -75,7 +75,11 @@ rsync -avz justpy/examples $pwd
 ```
 #### get the justpy examples
 ```bash
+# make script executable
+chmod +x getjustpy
+# git clone justpy and rsync examples directory to local directory
 ./getjustpy
+# add justpy examples copy
 git add examples
 ```
 #### commit and push
