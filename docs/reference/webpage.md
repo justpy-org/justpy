@@ -21,7 +21,7 @@ Example:
 ```python
 import justpy as jp
 wp = jp.WebPage()
-wp.use_websockets = False
+WebPage.use_websockets = False
 ```
 
 Disables Websockets and uses Ajax instead for the page.
