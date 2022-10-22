@@ -84,11 +84,11 @@ class TestIssue571():
         self.lod[2]["age"] = np.nan
         self.grid.load_lod(lod=self.lod,columnDefs=self.columnDefs)
         
-    @classmethod
-    def test_issue571(cls):
-        testIssue571=TestIssue571()
-        return testIssue571.grid_test_issue571()
+
+def test_issue571():
+    testIssue571=TestIssue571()
+    return testIssue571.grid_test_issue571()
     
 
 from examples.basedemo import Demo
-Demo("Issue 500 aggrid uuid value", TestIssue571.test_issue571)
+Demo("Issue 500 aggrid uuid value", test_issue571)
