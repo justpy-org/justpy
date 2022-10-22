@@ -82,6 +82,11 @@ chmod +x getjustpy
 # add justpy examples copy
 git add examples
 ```
+#### change PYTHONPATH via config (see also below)
+```bash
+heroku config:set PYTHONPATH=.
+```
+
 #### commit and push
 ```
 git commit -am "initial check in"
@@ -98,7 +103,7 @@ http://justpy-demo-wf.herokuapp.com/
 heroku logs --tail
 ```
 
-###restart
+### restart
 ```bash
 heroku restart
 ```
