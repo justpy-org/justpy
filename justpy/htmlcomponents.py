@@ -837,7 +837,8 @@ class InputChangeOnly(Input):
 
     def convert_object_to_dict(self):
         d = super().convert_object_to_dict()
-        d["events"].remove("input")
+        if "input" in d["events"]:
+            d["events"].remove("input")
         if "change" not in d["events"]:
             d["events"].append("change")
         return d
