@@ -10,7 +10,6 @@ import gc
 import justpy as jp
 import os
 import sys
-import pandas as pd
 import psutil
 import socket
 import traceback
@@ -293,7 +292,7 @@ class DemoBrowser(BaseWebPage):
                     await self.add_demo(demo,i+1)
                 pass
             else:
-                for i,demo in enumerate(self.mounted):
+                for i,demo in enumerate(self.mounted.values()):
                     await self.add_demo_tolist(demo)
                     
             self.page_load_count+=1
@@ -319,6 +318,9 @@ class DemoBrowser(BaseWebPage):
             demo(JustpyDemoApp): the demo app to add
             video_size(int): the size of the video (default: 512)
         """
+        if isinstance(demo, str):
+            print(f"{demo} is a string not a JustpyDemoApp")
+            return
         video_link=demo.video_link(video_size=video_size)
         list_item_html = f"""<q-item clickable v-ripple>
                             <q-item-section avatar>{demo.example_source.img_link}</q-item-section>
@@ -337,6 +339,7 @@ class DemoBrowser(BaseWebPage):
         list_item.name = demo.name
         list_item.video_url = demo.video_url
         self.video_list.add_component(list_item,0)
+        
         def delete_list_item(btn, _msg):
             """
             delete a list item
@@ -364,15 +367,6 @@ class DemoBrowser(BaseWebPage):
             
             self.video_size=512
             icon_size=32
-            lod=self.demo_starter.as_list_of_dicts()
-            for record in lod:
-                index=record["#"]
-                demo=self.demo_starter.demos[index-1]
-                example=self.tutorial_manager.examples_by_name.get(demo.name,None)
-                if example is not None:
-                    demo.example_source=example.example_source
-                    record["→"]=example.example_source.img_link
-            df=pd.DataFrame(lod)
             style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
             grid_options = """{
               'rowHeight': %s,
@@ -384,14 +378,41 @@ class DemoBrowser(BaseWebPage):
                 headerClass: 'font-bold'
             }
         }""" % icon_size
-            self.ag_grid=df.jp.ag_grid(a=self.main_page,style=style,options=grid_options )
-            self.ag_grid.html_columns = [1,2,3,4,5]
-            self.ag_grid.on('rowSelected', self.row_selected)
-            self.ag_grid.options.columnDefs[0].checkboxSelection = True
+            self.ag_grid=jp.AgGrid(a=self.main_page,style=style,options=grid_options )
+            self.reload_grid()
         except Exception as ex:
             self.handleException(ex)
         return self.wp
     
+    def get_lod(self):
+        self.lod=self.demo_starter.as_list_of_dicts()
+        for record in self.lod:
+            index=record["#"]
+            demo=self.demo_starter.demos[index-1]
+            example=self.tutorial_manager.examples_by_name.get(demo.name,None)
+            if example is not None:
+                demo.example_source=example.example_source
+                record["→"]=example.example_source.img_link
+
+    def reload_grid(self):
+        self.get_lod()
+        self.columnDefs= []
+        if len(self.lod)>0:
+            first=self.lod[0]
+            for key in first.keys():
+                self.columnDefs.append({
+                    'headerName': key, 
+                    'field': key}
+                )
+        #self.columnDefs= [
+        #        {'headerName': 'Name', 'field': 'name'},
+        #        {'headerName': 'Age', 'field': 'age'},
+        #]
+        self.columnDefs[0]["checkboxSelection"] = True
+        self.ag_grid.load_lod(lod=self.lod, columnDefs=self.columnDefs)
+        self.ag_grid.html_columns = [1,2,3,4,5]
+        self.ag_grid.on('rowSelected', self.row_selected)
+  
     async def row_selected(self,msg):
         """
         a grid row has been selected
@@ -402,6 +423,7 @@ class DemoBrowser(BaseWebPage):
                 index = row_data["#"]
                 demo=self.demo_starter.demos[index-1]
                 await self.add_demo(demo,index)
+                self.reload_grid()
             except Exception as ex:
                 self.handleException(ex)
         
