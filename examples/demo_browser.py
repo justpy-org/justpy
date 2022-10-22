@@ -13,6 +13,7 @@ import sys
 import psutil
 import socket
 import traceback
+import itertools
 from jpcore.demostarter import Demostarter
 from jpcore.tutorial import TutorialManager,Example
 from jpcore.demoapp import JustpyDemoApp
@@ -236,6 +237,9 @@ class DemoBrowser(BaseWebPage):
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         self.mounted={}
         self.page_load_count=0
+        self.endMount = 10
+        self.startMount = 0
+
         
     def optionalDebug(self,args):   
         '''
@@ -362,9 +366,12 @@ class DemoBrowser(BaseWebPage):
     </q-drawer>"""
         self.setup(extra_html)
         try:
+
             self.video_list=self.bp.name_dict["thumbnail_list"]
             self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
-            
+            self.slider = jp.QRange(a=self.toolbar, classes='m-8 p-2', style='width: 600px', input=self.change_range, label=True,
+                                     label_always=True,value=[1, 10], min=1, max=len(self.demo_starter.demos), snap=True, markers=True)
+            self.mount_range_btn = QBtn(label=f'Mount range', a=self.toolbar, classes="q-mr-sm",click=self.on_mount_range_btn_click)
             self.video_size=512
             icon_size=32
             style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
@@ -453,8 +460,28 @@ class DemoBrowser(BaseWebPage):
         print(f"mount all has been clicked ... trying to mount {total} demos ")
         for i,demo in enumerate(self.demo_starter.demos):
             self.mount(demo,i+1)
+
         await self.wp.update()
-            
+
+    async def on_mount_range_btn_click(self,_msg):
+        """
+        mount all button has been clicked
+        """
+        #total=len(self.demo_starter.demos)
+
+        print(f"mount range has been clicked ... trying to mount {self.endMount-self.startMount +1}  demos between {self.startMount} and {self.endMount}")
+        for i,demo in enumerate(self.demo_starter.demos[self.startMount-1 : self.endMount-1], self.startMount):
+            self.mount(demo, i)
+        self.reload_grid()
+        await self.wp.update()
+
+    def change_range(self, _msg):
+        self.endMount = max(_msg.value.values())
+        self.startMount = min(_msg.value.values())
+        print(f'{self.startMount} - {self.endMount}')
+
+
+
     def show_demo(self,request):
         """
         show a demo by name
