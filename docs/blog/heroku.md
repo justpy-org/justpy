@@ -101,12 +101,12 @@ heroku logs --tail
 ###restart
 ```bash
 heroku restart
-``
+```
 
 ### Configs
 ```bash
 heroku config:set PYTHONPATH=.
-``
+```
 
 # Demo
 http://justpy-demo.herokuapp.com/
