@@ -91,6 +91,7 @@ heroku config:set PYTHONPATH=.
 #### commit and push
 ```
 git commit -am "initial check in"
+# try with "main" if it won't work with "master"
 git push heroku master
 ```
 
