@@ -2,7 +2,7 @@
 # heroku  justpy demo browser dependencies
 #
 # install justpy
-justpy>=0.10.1
+justpy>=0.10.2
 # install dependencies for examples
 bokeh
 matplotlib

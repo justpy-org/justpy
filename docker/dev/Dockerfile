@@ -26,4 +26,5 @@ RUN git clone https://github.com/elimintz/justpy
 # pip install green testing environment
 # https://pypi.org/project/green/
 RUN pip install green
-RUN pip install pandas
+# install requirements for demo browser
+RUN pip install pandas bokeh matplotlib plotly pydeck pygments seaborn vega_datasets pydevd
