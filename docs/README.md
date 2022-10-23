@@ -26,7 +26,7 @@ Hopefully, JustPy will enable teaching web development in introductory Python co
 If you have a question about JustPy you are welcome to check
 [stackoverflow questions tagged justpy](https://stackoverflow.com/questions/tagged/justpy) and
 Especially questions which involve details of upstream frameworks such as
-[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), [highcharts](https://www.highcharts.com/), [pandas](https://pandas.pydata.org/), [plotly](https://plotly.com/python/),[quasar] (https://quasar.dev/), [tailwind](https://tailwindcss.com/) and others are best ask involving the larger [stackoverflow](https://stackoverflow.com/) community and tagging your question with both "justpy" and the tag of the specific library your are asking a question for such as "ag-grid", "highcharts","quasar", "pandas"
+[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), [highcharts](https://www.highcharts.com/), [pandas](https://pandas.pydata.org/), [plotly](https://plotly.com/python/), [quasar](https://quasar.dev/), [tailwind](https://tailwindcss.com/) and others are best ask involving the larger [stackoverflow](https://stackoverflow.com/) community and tagging your question with both "justpy" and the tag of the specific library your are asking a question for such as "ag-grid", "highcharts","quasar", "pandas"
 and others.
 
 If you'd like to specifically address the JustPy contributors the
