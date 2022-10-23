@@ -1793,13 +1793,12 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>JustPy is configured by settings in the justpy.env file. The file is not strictly required, as there are defaults for all settings.</p>
 <p>Here is an example of a configuration file:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">HIGHCHARTS</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">AGGRID</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">LOGGING_LEVEL</span> <span class="o">=</span> <span class="n">DEBUG</span>
-<span class="n">LATENCY</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s1">&#39;$$$my_secret_string$$$&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">HIGHCHARTS</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">AGGRID</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">LOGGING_LEVEL</span> <span class="o">=</span> <span class="n">DEBUG</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">LATENCY</span> <span class="o">=</span> <span class="mi">50</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s1">&#39;$$$my_secret_string$$$&#39;</span>
 </code></pre></div>
-
 <p>Since the default for whether to include the Highcharts library is <code>True</code>, the first line is not required (neither are the second or fifth).</p>
 <h2 id="simulating-latency">Simulating Latency<a class="headerlink" href="#simulating-latency" title="Permanent link">&para;</a></h2>
 <p>The <code>LATENCY</code> option is one I like to work with. When it is set, JustPy adds the specified milliseconds to each communication between the server and the web pages. In this way you can simulate locally the effect of network latency and see if it hinders the user experience.</p>
@@ -1810,9 +1809,8 @@ The downside is that between versions of JustPy, the JavaScript libraries will n
 <h2 id="quasar-version">Quasar Version<a class="headerlink" href="#quasar-version" title="Permanent link">&para;</a></h2>
 <p>New in version 0.1.0</p>
 <p>You can specify the Quasar version to use:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">QUASAR_VERSION</span> <span class="o">=</span> <span class="s1">&#39;1.9.4&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QUASAR_VERSION</span> <span class="o">=</span> <span class="s1">&#39;1.9.4&#39;</span>
 </code></pre></div>
-
 <p>When <code>NO_INTERNET</code> is true, version 1.9.4 is used.</p>
 
 

@@ -1839,42 +1839,40 @@
 <p><a href="https://justpy.io">JustPy</a> is a Python package that allows you to build web applications without any JavaScript programming (I am the creator of JustPy). JustPy comes with a <a href="https://pandas.pydata.org/pandas-docs/stable/development/extending.html">Pandas extension</a> that makes it very easy to insert the data from a DataFrame into an ag-Grid and into a web application.</p>
 <h2 id="basic-example">Basic Example<a class="headerlink" href="#basic-example" title="Permanent link">&para;</a></h2>
 <p>The following program reads a a CSV file into a DataFrame and creates a web application that serves a web page with the ag-Grid. The <a href="http://www.randalolson.com/2014/06/14/percentage-of-bachelors-degrees-conferred-to-women-by-major-1970-2012/">data</a> describes the percentage of bachelor's degrees conferred to women by major in the years 1970-2012.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="c1"># Load data showing percent of women in different majors per year</span>
-<span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">grid_test1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>  <span class="c1"># a=wp adds the grid to WebPage wp</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Load data showing percent of women in different majors per year</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span> <span class="nf">grid_test1</span><span class="p">():</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>  <span class="c1"># a=wp adds the grid to WebPage wp</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test1</span><span class="p">)</span>
 </code></pre></div>
-
 <p>That is it. That is the whole program.</p>
 <p>To run this program you need to have Python version 3.6 or higher and you need to install the pandas and justpy packages. Then, you would create a file with your favorite text editor and copy and paste the program above. If you called the file <code>grid.py</code> you would type <code>python3 grid.py</code> in the command line or you could use an IDE. By default, you would access the web page by pointing your browser to http://127.0.0.1:8000 (it is easy to change the IP address and port that the application uses if you wish)</p>
 <p>For a more detailed explanation on how to get started using JustPy please see <a href="https://justpy.io/#/tutorial/getting_started">Getting Started</a> from the tutorial.</p>
 <p>Once the page loads, move the mouse to any of the column headers to try the interactive features of the grid.</p>
 <h2 id="several-grids-on-a-page">Several Grids on a Page<a class="headerlink" href="#several-grids-on-a-page" title="Permanent link">&para;</a></h2>
 <p>You can put as many ag-Grids on the page as you like. Below, we create another DataFrame only with the majors in which women started at less than 20% and put the original DataFrame and the new DataFrame on the page. Scroll down the browser tab to see the second grid.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">wm_under_20</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-<span class="n">wm_under_20</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">])</span>
-
-<span class="k">def</span> <span class="nf">grid_test2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">wm_under_20</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">wm_under_20</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">wm_under_20</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">])</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span> <span class="nf">grid_test2</span><span class="p">():</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">wm_under_20</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test2</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="customizing-grids">Customizing Grids<a class="headerlink" href="#customizing-grids" title="Permanent link">&para;</a></h2>
 <p>You can also specify further options for the ag-Grid after its creation. The Python class of JustPy that models the ag-Grid has an <code>options</code> attribute that is identical in structure to the JavaScript one. When it is modified, the grid on the page will reflect these changes.</p>
 <p>In the program below we change the options so that:
@@ -1882,68 +1880,65 @@
  2) The grid page size is automatically determined based on the browser tab size
  3) The 'Year' column is formatted with CSS classes (JustPy comes with <a href="https://tailwindcss.com/">Tailwind CSS</a> classes out of th box)
  4) Each data cell is conditionally formatted based on its value</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">wm_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">grid_test3</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">wm_df</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">pagination</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">paginationAutoPageSize</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cellClass</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;text-white&#39;</span><span class="p">,</span> <span class="s1">&#39;bg-blue-500&#39;</span><span class="p">,</span> <span class="s1">&#39;hover:bg-blue-200&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="n">col_def</span><span class="o">.</span><span class="n">cellClassRules</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;font-bold&#39;</span><span class="p">:</span> <span class="s1">&#39;x &lt; 20&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;bg-red-300&#39;</span><span class="p">:</span> <span class="s1">&#39;x &lt; 20&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;bg-yellow-300&#39;</span><span class="p">:</span> <span class="s1">&#39;x &gt;= 20 &amp;&amp; x &lt; 50&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;bg-green-300&#39;</span><span class="p">:</span> <span class="s1">&#39;x &gt;= 50&#39;</span>
-        <span class="p">}</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test3</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">wm_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">def</span> <span class="nf">grid_test3</span><span class="p">():</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">wm_df</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">pagination</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">paginationAutoPageSize</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cellClass</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;text-white&#39;</span><span class="p">,</span> <span class="s1">&#39;bg-blue-500&#39;</span><span class="p">,</span> <span class="s1">&#39;hover:bg-blue-200&#39;</span><span class="p">]</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="n">col_def</span><span class="o">.</span><span class="n">cellClassRules</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            <span class="s1">&#39;font-bold&#39;</span><span class="p">:</span> <span class="s1">&#39;x &lt; 20&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="s1">&#39;bg-red-300&#39;</span><span class="p">:</span> <span class="s1">&#39;x &lt; 20&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            <span class="s1">&#39;bg-yellow-300&#39;</span><span class="p">:</span> <span class="s1">&#39;x &gt;= 20 &amp;&amp; x &lt; 50&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>            <span class="s1">&#39;bg-green-300&#39;</span><span class="p">:</span> <span class="s1">&#39;x &gt;= 50&#39;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="p">}</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test3</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="routes-and-multiple-pages">Routes and Multiple Pages<a class="headerlink" href="#routes-and-multiple-pages" title="Permanent link">&para;</a></h2>
 <p>With JustPy it is simple to serve grids with different data based on the URL.</p>
 <p>In the example below the URL http://127.0.0.1/wm will serve the full grid while the URL http://127.0.0.1/wm_20 will serve a grid only with the majors in which women started under 20%.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">wm_under_20</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-<span class="n">wm_under_20</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">])</span>
-
-<span class="c1"># Tailwind classes to format header div</span>
-<span class="n">title_classes</span> <span class="o">=</span> <span class="s1">&#39;text-2xl text-white bg-blue-500 text-center mb-2 p-2&#39;</span>
-
-<span class="c1"># Change grid default style to change height</span>
-<span class="n">grid_style</span> <span class="o">=</span> <span class="s1">&#39;height: 85vh; width: 99%; margin: 0.25rem; padding: 0.25rem;&#39;</span>
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/wm&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">serve_wm1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;All Majors&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">title_classes</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">grid_style</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/wm_20&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">serve_wm2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Only Majors with Women Starting Under 20%&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">title_classes</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">wm_under_20</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">grid_style</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#women_majors_route_example</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">wm_under_20</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">wm_under_20</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">])</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Tailwind classes to format header div</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">title_classes</span> <span class="o">=</span> <span class="s1">&#39;text-2xl text-white bg-blue-500 text-center mb-2 p-2&#39;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># Change grid default style to change height</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">grid_style</span> <span class="o">=</span> <span class="s1">&#39;height: 85vh; width: 99%; margin: 0.25rem; padding: 0.25rem;&#39;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/wm&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="k">def</span> <span class="nf">serve_wm1</span><span class="p">():</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;All Majors&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">title_classes</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">grid_style</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/wm_20&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="k">def</span> <span class="nf">serve_wm2</span><span class="p">():</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Only Majors with Women Starting Under 20%&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">title_classes</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    <span class="n">wm_under_20</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">grid_style</span><span class="p">)</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#women_majors_route_example</span>
 </code></pre></div>
-
 <h2 id="ag-grid-enterprise">ag-Grid Enterprise<a class="headerlink" href="#ag-grid-enterprise" title="Permanent link">&para;</a></h2>
 <p>By default, JustPy uses the ag-Grid community version which is a free to use product distributed under the MIT License. If you would like to try the enterprise version, create a file called <code>justpy.env</code> in the directory where your program file and include in it the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">AGGRID</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">AGGRID_ENTERPRISE</span> <span class="o">=</span> <span class="kc">True</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">AGGRID</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">AGGRID_ENTERPRISE</span> <span class="o">=</span> <span class="kc">True</span>
 </code></pre></div>
-
 <h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <p>In future articles, I will show how to interact with grid events as well as how to create interactive charts that are linked to the gird data.</p>
 <p>If you would like to learn more how you can move your pandas data quickly onto a web page without any JavaScript programming, please go to the <a href="https://justpy.io/">JustPy Docs and Tutorials</a> and feel free to ask me any questions either in the comments below or on <a href="https://github.com/elimintz/justpy">GitHub</a>.</p>

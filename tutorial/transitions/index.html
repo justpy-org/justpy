@@ -1710,73 +1710,70 @@
 </div>
 <p>A CSS transition is defined by three sets of classes. The first set of classes are classes that are associated with the element throughout the transition process. The second set of classes defines the initial state of the element. The third set of classes defines the end state of the element after the transition has ended.</p>
 <p>You can apply these three sets of classes to three types of element states. The 'enter' state applies when an element transitions from hidden to not hidden. The 'leave' state applies when an element transitions from not hidden to hidden. The 'load' state applies when the page is initially loaded.</p>
-<p>These classes are stored in a dictionary of the form:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">transition_dict</span> <span class="o">=</span> <span class="p">{</span>
-<span class="s1">&#39;enter&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span>  
-<span class="s1">&#39;enter_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;enter_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;leave&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;leave_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;leave_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;load&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;load_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;load_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<p>These classes are stored in a dictionary of the form:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">transition_dict</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s1">&#39;enter&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span>  
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s1">&#39;enter_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s1">&#39;enter_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s1">&#39;leave&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s1">&#39;leave_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s1">&#39;leave_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s1">&#39;load&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s1">&#39;load_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s1">&#39;load_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+</code></pre></div></p>
 <p>To enable transitions on an element, assign this dictionary to the element's <code>transition</code> attribute.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
-<span class="n">d</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">transition_dict</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">d</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">transition_dict</span>
 </code></pre></div>
-
 <p>The transition dictionary does not need to have all the keys shown above. If you want a transition only when the element loads the dictionary could look like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">transition_dict</span> <span class="o">=</span> <span class="p">{</span>
-<span class="s1">&#39;load&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;load_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
-<span class="s1">&#39;load_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">transition_dict</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s1">&#39;load&#39;</span><span class="p">:</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span><span class="p">,</span> 
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s1">&#39;load_start&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span><span class="p">,</span> 
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s1">&#39;load_end&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
 </code></pre></div>
-
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>If you want to transition a Quasar element, encompass it inside a Div and transition the Div.</p>
 </div>
 <p>In the example below, 10 Divs are transitioned each time the button is clicked:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">toggle_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">div_list</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">has_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">):</span>
-            <span class="n">d</span><span class="o">.</span><span class="n">remove_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">d</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">transition_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">tran</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">()</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">load</span> <span class="o">=</span> <span class="s2">&quot;transition ease-out duration-1000&quot;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">load_start</span> <span class="o">=</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">load_end</span> <span class="o">=</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">enter</span> <span class="o">=</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">enter_start</span> <span class="o">=</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">enter_end</span> <span class="o">=</span> <span class="s1">&#39;opacity-100 transform scale-1000&#39;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">leave</span> <span class="o">=</span> <span class="s2">&quot;transition ease-out duration-1000&quot;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">leave_start</span> <span class="o">=</span> <span class="s1">&#39;opacity-100 transform scale-1000&#39;</span>
-    <span class="n">tran</span><span class="o">.</span><span class="n">leave_end</span> <span class="o">=</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span>
-    <span class="n">div_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">flex_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">flex_div</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 150px; width:200px&#39;</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39; test&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-        <span class="n">d</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">tran</span>
-        <span class="n">d</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="s1">&#39;border text-xl m-2 h-16 w-16 bg-blue-500&#39;</span>
-        <span class="n">div_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Click here&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_simple</span> <span class="o">+</span> <span class="s1">&#39; m-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">toggle_hidden</span><span class="p">)</span>
-    <span class="n">b</span><span class="o">.</span><span class="n">div_list</span> <span class="o">=</span> <span class="n">div_list</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">transition_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">def</span> <span class="nf">toggle_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">div_list</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">has_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>            <span class="n">d</span><span class="o">.</span><span class="n">remove_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>            <span class="n">d</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">def</span> <span class="nf">transition_test</span><span class="p">():</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="n">tran</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">()</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">load</span> <span class="o">=</span> <span class="s2">&quot;transition ease-out duration-1000&quot;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">load_start</span> <span class="o">=</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">load_end</span> <span class="o">=</span> <span class="s1">&#39;opacity-100 transform scale-100&#39;</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">enter</span> <span class="o">=</span> <span class="s1">&#39;transition ease-out duration-1000&#39;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">enter_start</span> <span class="o">=</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">enter_end</span> <span class="o">=</span> <span class="s1">&#39;opacity-100 transform scale-1000&#39;</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">leave</span> <span class="o">=</span> <span class="s2">&quot;transition ease-out duration-1000&quot;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">leave_start</span> <span class="o">=</span> <span class="s1">&#39;opacity-100 transform scale-1000&#39;</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    <span class="n">tran</span><span class="o">.</span><span class="n">leave_end</span> <span class="o">=</span> <span class="s1">&#39;opacity-0 transform scale-0&#39;</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="n">div_list</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    <span class="n">flex_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>        <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">flex_div</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 150px; width:200px&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39; test&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>        <span class="n">d</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">tran</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>        <span class="n">d</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="s1">&#39;border text-xl m-2 h-16 w-16 bg-blue-500&#39;</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>        <span class="n">div_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>    <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Click here&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_simple</span> <span class="o">+</span> <span class="s1">&#39; m-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">toggle_hidden</span><span class="p">)</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>    <span class="n">b</span><span class="o">.</span><span class="n">div_list</span> <span class="o">=</span> <span class="n">div_list</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">transition_test</span><span class="p">)</span>
 </code></pre></div>
 
 

@@ -1873,35 +1873,33 @@ in the issue you'd like to get resolved.</p>
 <p>If you followed the procedure you are welcome to <a href="https://github.com/justpy-org/justpy/issues/new/choose">open an issue</a> in the <a href="https://github.com/justpy-org/justpy">JustPy Github repository</a></p>
 <h2 id="hello-world-example">Hello World! example<a class="headerlink" href="#hello-world-example" title="Permanent link">&para;</a></h2>
 <p>This is a simple hello world example for justpy.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_world_readme</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world_readme</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span> <span class="nf">hello_world_readme</span><span class="p">():</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world_readme</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The program above activates a web server that returns a web page with 'Hello world!' for any request. Locally, you would direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ to see the result.</p>
 <p>Here is a slightly modified version in which 'Hello world!' changes to 'I was clicked!' when it is clicked.</p>
 <h3 id="hello-world-with-click">Hello world with click<a class="headerlink" href="#hello-world-with-click" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked!&#39;</span>
-
-<span class="k">def</span> <span class="nf">hello_world_readme2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world_readme2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;I was clicked!&#39;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">def</span> <span class="nf">hello_world_readme2</span><span class="p">():</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world_readme2</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="under-the-hood">Under the Hood<a class="headerlink" href="#under-the-hood" title="Permanent link">&para;</a></h2>
 <p>JustPy's backend is built using:</p>
 <ul>

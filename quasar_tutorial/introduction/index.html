@@ -1912,172 +1912,166 @@
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <h3 id="qbtn-example">QBtn example<a class="headerlink" href="#qbtn-example" title="Permanent link">&para;</a></h3>
 <p>The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">random</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="s1">&#39;secondary&#39;</span><span class="p">,</span> <span class="s1">&#39;accent&#39;</span><span class="p">,</span> <span class="s1">&#39;dark&#39;</span><span class="p">,</span> <span class="s1">&#39;positive&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;negative&#39;</span><span class="p">,</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">])</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span>
-    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">dark</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">dark</span>
-    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">set_dark_mode</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">dark</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">quasar_example1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">dark</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Load page in dark mode</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md q-gutter-sm&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;On Left&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">,</span> <span class="n">icon_right</span><span class="o">=</span><span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;On Right&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="n">icon_right</span><span class="o">=</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;On Left and Right&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Br</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stacked&#39;</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">glossy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">random</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="s1">&#39;secondary&#39;</span><span class="p">,</span> <span class="s1">&#39;accent&#39;</span><span class="p">,</span> <span class="s1">&#39;dark&#39;</span><span class="p">,</span> <span class="s1">&#39;positive&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                <span class="s1">&#39;negative&#39;</span><span class="p">,</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">])</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">dark</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">dark</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">set_dark_mode</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">dark</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">def</span> <span class="nf">quasar_example1</span><span class="p">():</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">dark</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Load page in dark mode</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md q-gutter-sm&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;On Left&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;secondary&#39;</span><span class="p">,</span> <span class="n">icon_right</span><span class="o">=</span><span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;On Right&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="n">icon_right</span><span class="o">=</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;On Left and Right&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Br</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">icon</span><span class="o">=</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stacked&#39;</span><span class="p">,</span> <span class="n">stack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">glossy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example1</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The program uses the JustPy QBtn component which is based on the <a href="https://quasar.dev/vue-components/button">Quasar QBtn component</a>. Click the buttons and notice the ripple effect which is part of the Material specification.</p>
 <h2 id="props-of-quasar-components">props of Quasar components<a class="headerlink" href="#props-of-quasar-components" title="Permanent link">&para;</a></h2>
 <p>The JustPy component usually supports all the Quasar component options (in the Quasar docs these are called <code>props</code>). In JustPy these are designated by setting the attributes of the element. This can be done at creation using keywords or later using standard attribute assignment.</p>
 <p>Quasar props are in kebab case: <code>icon-right</code>
 In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 <p>If a quasar prop is set just by specifying it, in JustPy you set the corresponding attribute to <code>True</code>.</p>
-<p>For example, if a Quasar button is defined like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">q-btn</span> <span class="na">round</span> <span class="na">color</span><span class="o">=</span><span class="s">&quot;primary&quot;</span> <span class="na">icon</span><span class="o">=</span><span class="s">&quot;shopping_cart&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-
-<p>In JustPy it would look like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="nb">round</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;shopping_cart&#39;</span><span class="p">)</span> <span class="c1"># round is set to True</span>
-</code></pre></div>
-
+<p>For example, if a Quasar button is defined like this:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">q-btn</span> <span class="na">round</span> <span class="na">color</span><span class="o">=</span><span class="s">&quot;primary&quot;</span> <span class="na">icon</span><span class="o">=</span><span class="s">&quot;shopping_cart&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div></p>
+<p>In JustPy it would look like this:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="nb">round</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;shopping_cart&#39;</span><span class="p">)</span> <span class="c1"># round is set to True</span>
+</code></pre></div></p>
 <h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">&para;</a></h2>
 <p>Quasar components have also slots in addition to props. JustPy supports most of the slots.</p>
 <p>Slots differ from attributes at they contain content in the form of an element as their value.</p>
 <p>In the example below we add an icon to several QInput slots.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">input_test1</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">c1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">c2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-gutter-md&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;max-width: 300px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c1</span><span class="p">)</span>
-    <span class="n">icon1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-    <span class="n">icon2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;append&#39;</span><span class="p">,</span> <span class="s1">&#39;prepend&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">]:</span>
-        <span class="n">in1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QInput</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">slot</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Icon is in slot &quot;</span><span class="si">{</span><span class="n">slot</span><span class="si">}</span><span class="s1">&quot; and &quot;after&quot;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c2</span><span class="p">,</span> <span class="n">after_slot</span><span class="o">=</span><span class="n">icon2</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">slot</span> <span class="o">+</span> <span class="s1">&#39;_slot&#39;</span><span class="p">,</span> <span class="n">icon1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">def</span> <span class="nf">input_test1</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">c1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">c2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-gutter-md&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;max-width: 300px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c1</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">icon1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">icon2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;append&#39;</span><span class="p">,</span> <span class="s1">&#39;prepend&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">]:</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="n">in1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QInput</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">slot</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Icon is in slot &quot;</span><span class="si">{</span><span class="n">slot</span><span class="si">}</span><span class="s1">&quot; and &quot;after&quot;&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">c2</span><span class="p">,</span> <span class="n">after_slot</span><span class="o">=</span><span class="n">icon2</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="nb">setattr</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">slot</span> <span class="o">+</span> <span class="s1">&#39;_slot&#39;</span><span class="p">,</span> <span class="n">icon1</span><span class="p">)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test1</span><span class="p">)</span>
 </code></pre></div>
-
-<p>To insert content into a slot use the regular attribute assignment syntax. To insert element <code>e</code> in slot <code>append</code> of element <code>in1</code>  you could write:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">in1</span><span class="o">.</span><span class="n">append_slot</span> <span class="o">=</span> <span class="n">e</span>
-</code></pre></div>
-
+<p>To insert content into a slot use the regular attribute assignment syntax. To insert element <code>e</code> in slot <code>append</code> of element <code>in1</code>  you could write:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">in1</span><span class="o">.</span><span class="n">append_slot</span> <span class="o">=</span> <span class="n">e</span>
+</code></pre></div></p>
 <p>Just add '_slot' to the slot name and treat it as an instance attribute.</p>
 <h2 id="parsing-quasar-tags">Parsing Quasar Tags<a class="headerlink" href="#parsing-quasar-tags" title="Permanent link">&para;</a></h2>
 <p>The JustPy <code>parse_html</code> function recognizes Quasar tags. This is convenient as it allows using examples in the Quasar documentation. The example below was taken from the <a href="https://quasar.dev/vue-components/list-and-list-items">QList documentation</a>.</p>
 <p>The parsing function also generates the <code>commands</code> attribute which is a list of JutPy commands required to generate the HTML. In the example below we print these commands.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-
-<span class="n">html_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;div class=&quot;q-pa-md&quot; style=&quot;max-width: 350px&quot;&gt;</span>
-<span class="s2">    &lt;q-list bordered&gt;</span>
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-icon color=&quot;primary&quot; name=&quot;bluetooth&quot; /&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-
-<span class="s2">        &lt;q-item-section&gt;Icon as avatar&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar color=&quot;teal&quot; text-color=&quot;white&quot; icon=&quot;bluetooth&quot; /&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-
-<span class="s2">        &lt;q-item-section&gt;Avatar-type icon&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar rounded color=&quot;purple&quot; text-color=&quot;white&quot; icon=&quot;bluetooth&quot; /&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-
-<span class="s2">        &lt;q-item-section&gt;Rounded avatar-type icon&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar color=&quot;primary&quot; text-color=&quot;white&quot;&gt;</span>
-<span class="s2">            R</span>
-<span class="s2">          &lt;/q-avatar&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-
-<span class="s2">        &lt;q-item-section&gt;Letter avatar-type&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-separator /&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar&gt;</span>
-<span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/boy-avatar.png&quot;&gt;</span>
-<span class="s2">          &lt;/q-avatar&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-<span class="s2">        &lt;q-item-section&gt;Image avatar&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar square&gt;</span>
-<span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/boy-avatar.png&quot;&gt;</span>
-<span class="s2">          &lt;/q-avatar&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-<span class="s2">        &lt;q-item-section&gt;Image square avatar&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar rounded&gt;</span>
-<span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/boy-avatar.png&quot;&gt;</span>
-<span class="s2">          &lt;/q-avatar&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-<span class="s2">        &lt;q-item-section&gt;Image rounded avatar&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-separator /&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section avatar&gt;</span>
-<span class="s2">          &lt;q-avatar rounded&gt;</span>
-<span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/mountains.jpg&quot;&gt;</span>
-<span class="s2">          &lt;/q-avatar&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-<span class="s2">        &lt;q-item-section&gt;List item&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-
-<span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
-<span class="s2">        &lt;q-item-section thumbnail&gt;</span>
-<span class="s2">          &lt;img src=&quot;https://cdn.quasar.dev/img/mountains.jpg&quot;&gt;</span>
-<span class="s2">        &lt;/q-item-section&gt;</span>
-<span class="s2">        &lt;q-item-section&gt;List item&lt;/q-item-section&gt;</span>
-<span class="s2">      &lt;/q-item&gt;</span>
-<span class="s2">    &lt;/q-list&gt;</span>
-<span class="s2">  &lt;/div&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">def</span> <span class="nf">quasar_example2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">html_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="s2">&lt;div class=&quot;q-pa-md&quot; style=&quot;max-width: 350px&quot;&gt;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="s2">    &lt;q-list bordered&gt;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="s2">          &lt;q-icon color=&quot;primary&quot; name=&quot;bluetooth&quot; /&gt;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="s2">        &lt;q-item-section&gt;Icon as avatar&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="s2">          &lt;q-avatar color=&quot;teal&quot; text-color=&quot;white&quot; icon=&quot;bluetooth&quot; /&gt;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="s2">        &lt;q-item-section&gt;Avatar-type icon&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="s2">          &lt;q-avatar rounded color=&quot;purple&quot; text-color=&quot;white&quot; icon=&quot;bluetooth&quot; /&gt;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="s2">        &lt;q-item-section&gt;Rounded avatar-type icon&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="s2">          &lt;q-avatar color=&quot;primary&quot; text-color=&quot;white&quot;&gt;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="s2">            R</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="s2">          &lt;/q-avatar&gt;</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="s2">        &lt;q-item-section&gt;Letter avatar-type&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="s2">      &lt;q-separator /&gt;</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a><span class="s2">          &lt;q-avatar&gt;</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a><span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/boy-avatar.png&quot;&gt;</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a><span class="s2">          &lt;/q-avatar&gt;</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="s2">        &lt;q-item-section&gt;Image avatar&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a><span class="s2">          &lt;q-avatar square&gt;</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a><span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/boy-avatar.png&quot;&gt;</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a><span class="s2">          &lt;/q-avatar&gt;</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a><span class="s2">        &lt;q-item-section&gt;Image square avatar&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a><span class="s2">          &lt;q-avatar rounded&gt;</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a><span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/boy-avatar.png&quot;&gt;</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a><span class="s2">          &lt;/q-avatar&gt;</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a><span class="s2">        &lt;q-item-section&gt;Image rounded avatar&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a>
+<a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a><span class="s2">      &lt;q-separator /&gt;</span>
+<a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a>
+<a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a><span class="s2">        &lt;q-item-section avatar&gt;</span>
+<a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a><span class="s2">          &lt;q-avatar rounded&gt;</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a><span class="s2">            &lt;img src=&quot;https://cdn.quasar.dev/img/mountains.jpg&quot;&gt;</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a><span class="s2">          &lt;/q-avatar&gt;</span>
+<a id="__codelineno-5-77" name="__codelineno-5-77" href="#__codelineno-5-77"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-78" name="__codelineno-5-78" href="#__codelineno-5-78"></a><span class="s2">        &lt;q-item-section&gt;List item&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-79" name="__codelineno-5-79" href="#__codelineno-5-79"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-80" name="__codelineno-5-80" href="#__codelineno-5-80"></a>
+<a id="__codelineno-5-81" name="__codelineno-5-81" href="#__codelineno-5-81"></a><span class="s2">      &lt;q-item clickable v-ripple&gt;</span>
+<a id="__codelineno-5-82" name="__codelineno-5-82" href="#__codelineno-5-82"></a><span class="s2">        &lt;q-item-section thumbnail&gt;</span>
+<a id="__codelineno-5-83" name="__codelineno-5-83" href="#__codelineno-5-83"></a><span class="s2">          &lt;img src=&quot;https://cdn.quasar.dev/img/mountains.jpg&quot;&gt;</span>
+<a id="__codelineno-5-84" name="__codelineno-5-84" href="#__codelineno-5-84"></a><span class="s2">        &lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-85" name="__codelineno-5-85" href="#__codelineno-5-85"></a><span class="s2">        &lt;q-item-section&gt;List item&lt;/q-item-section&gt;</span>
+<a id="__codelineno-5-86" name="__codelineno-5-86" href="#__codelineno-5-86"></a><span class="s2">      &lt;/q-item&gt;</span>
+<a id="__codelineno-5-87" name="__codelineno-5-87" href="#__codelineno-5-87"></a><span class="s2">    &lt;/q-list&gt;</span>
+<a id="__codelineno-5-88" name="__codelineno-5-88" href="#__codelineno-5-88"></a><span class="s2">  &lt;/div&gt;</span>
+<a id="__codelineno-5-89" name="__codelineno-5-89" href="#__codelineno-5-89"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-90" name="__codelineno-5-90" href="#__codelineno-5-90"></a>
+<a id="__codelineno-5-91" name="__codelineno-5-91" href="#__codelineno-5-91"></a><span class="k">def</span> <span class="nf">quasar_example2</span><span class="p">():</span>
+<a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
+<a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-5-97" name="__codelineno-5-97" href="#__codelineno-5-97"></a>
+<a id="__codelineno-5-98" name="__codelineno-5-98" href="#__codelineno-5-98"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example2</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="quasar-directives">Quasar Directives<a class="headerlink" href="#quasar-directives" title="Permanent link">&para;</a></h2>
 <p>JustPy supports the following Quasar Vue directives:
 'v-close-popup', 'v-close-menu', 'v-ripple', 'v-model', 'v-close-dialog'</p>
@@ -2088,34 +2082,32 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 <p class="admonition-title">Use QDiv instead of Div if you want to apply directives on an element.</p>
 </div>
 <h3 id="qdiv-to-apply-quasar-directives">QDiv to apply Quasar Directives<a class="headerlink" href="#qdiv-to-apply-quasar-directives" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">quasar_example3</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md row justify-center&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">v_ripple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;relative-position flex flex-center text-white bg-primary&#39;</span><span class="p">,</span>
-                <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 3px; cursor: pointer; height: 150px; width: 80%;&#39;</span><span class="p">,</span>
-                <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Click/tap me&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example3</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">def</span> <span class="nf">quasar_example3</span><span class="p">():</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md row justify-center&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">v_ripple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;relative-position flex flex-center text-white bg-primary&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>                <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 3px; cursor: pointer; height: 150px; width: 80%;&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>                <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Click/tap me&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example3</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The value of the directive can be a dictionary for configuring more options:</p>
 <h3 id="qdiv-directive-as-dictionary">QDiv directive as dictionary<a class="headerlink" href="#qdiv-directive-as-dictionary" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="c1"># https://quasar.dev/vue-directives/material-ripple#Ripple-API</span>
-
-<span class="k">def</span> <span class="nf">ripple_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md q-gutter-md row justify-center&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">v_ripple</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;orange-5&#39;</span><span class="p">},</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;relative-position container bg-grey-3 text-black inline flex flex-center&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-                 <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 50%; cursor: pointer; width: 150px; height: 150px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">ripple_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># https://quasar.dev/vue-directives/material-ripple#Ripple-API</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">def</span> <span class="nf">ripple_test</span><span class="p">():</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md q-gutter-md row justify-center&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">v_ripple</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;orange-5&#39;</span><span class="p">},</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;relative-position container bg-grey-3 text-black inline flex flex-center&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>                 <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 50%; cursor: pointer; width: 150px; height: 150px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">ripple_test</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="running-quasar-component-methods">Running Quasar Component Methods<a class="headerlink" href="#running-quasar-component-methods" title="Permanent link">&para;</a></h2>
 <p>In order to run Quasar methods use the <code>run_method</code> method of the JustPy Quasar component.</p>
 <p>The following example runs the start() and stop() methods of <a href="https://quasar.dev/vue-components/ajax-bar#QAjaxBar-API">QAjaxBar</a></p>
@@ -2123,27 +2115,27 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 <p class="admonition-title">Warning</p>
 <p>You must set <code>temp=False</code> when the component is created because this generates an id for the element without which <code>run_method</code> will not work</p>
 </div>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">start_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
-    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;start()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">stop_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
-    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;stop()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">bar_example</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="c1"># temp=False is important because this generates an id for the element that is required for run_method to work</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QAjaxBar</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;accent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;10px&#39;</span><span class="p">,</span> <span class="n">skip_hijack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">btn_start</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Start Bar&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">start_bar</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;margin-right: 20px&#39;</span><span class="p">)</span>
-    <span class="n">btn_stop</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stop Bar&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">stop_bar</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">bar_example</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">start_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;start()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">stop_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span><span class="o">.</span><span class="n">run_method</span><span class="p">(</span><span class="s1">&#39;stop()&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="k">def</span> <span class="nf">bar_example</span><span class="p">():</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="c1"># temp=False is important because this generates an id for the element that is required for run_method to work</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">ajax_bar</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QAjaxBar</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;accent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;10px&#39;</span><span class="p">,</span> <span class="n">skip_hijack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="n">btn_start</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Start Bar&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">start_bar</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;margin-right: 20px&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    <span class="n">btn_stop</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stop Bar&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">stop_bar</span><span class="p">)</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">bar_example</span><span class="p">)</span>
 </code></pre></div>
 
 

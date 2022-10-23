@@ -1714,31 +1714,31 @@
 </ul>
 <h1 id="webpage-write-method">WebPage <code>write</code> Method<a class="headerlink" href="#webpage-write-method" title="Permanent link">&para;</a></h1>
 <p>You can use the <code>write</code> method to put markdown directly on a page. The method accepts one argument, a markdown formatted string. The method returns the component that is added to the page.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-
-<span class="k">def</span> <span class="nf">add_item_to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">list_item_num</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">markdown</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">wp</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">markdown</span><span class="si">}</span><span class="se">\n</span><span class="s1">* *Item* **</span><span class="si">{</span><span class="n">wp</span><span class="o">.</span><span class="n">list_item_num</span><span class="si">}</span><span class="s1">**&#39;</span>
-
-
-<span class="k">def</span> <span class="nf">md_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Add Item to List&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_bordered</span> <span class="o">+</span> <span class="s1">&#39; m-4 p-2&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_item_to_list</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">md</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">markdown</span><span class="o">=</span><span class="s1">&#39;# My List&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2&#39;</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">list_item_num</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">md_write_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;# Hello world!&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">md_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">def</span> <span class="nf">add_item_to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">list_item_num</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">markdown</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">wp</span><span class="o">.</span><span class="n">md</span><span class="o">.</span><span class="n">markdown</span><span class="si">}</span><span class="se">\n</span><span class="s1">* *Item* **</span><span class="si">{</span><span class="n">wp</span><span class="o">.</span><span class="n">list_item_num</span><span class="si">}</span><span class="s1">**&#39;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">def</span> <span class="nf">md_test</span><span class="p">():</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Add Item to List&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_bordered</span> <span class="o">+</span> <span class="s1">&#39; m-4 p-2&#39;</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_item_to_list</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">md</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">markdown</span><span class="o">=</span><span class="s1">&#39;# My List&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">list_item_num</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">def</span> <span class="nf">md_write_test</span><span class="p">():</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;# Hello world!&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">md_test</span><span class="p">)</span>
 </code></pre></div>
 
 

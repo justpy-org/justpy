@@ -1702,27 +1702,27 @@
 
 
 <h1 id="forcing-a-hard-reload">Forcing a Hard Reload<a class="headerlink" href="#forcing-a-hard-reload" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/hard_reload&#39;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">hard_reload</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">page_type</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Pages reloaded&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-2xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">page_type</span> <span class="o">==</span> <span class="s1">&#39;main&#39;</span><span class="p">:</span>
-            <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="k">def</span> <span class="nf">main_page</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">page_type</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
-    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">now</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-2xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">main_page</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/hard_reload&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">hard_reload</span><span class="p">():</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">page_type</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Pages reloaded&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-2xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">page_type</span> <span class="o">==</span> <span class="s1">&#39;main&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>            <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">def</span> <span class="nf">main_page</span><span class="p">():</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">page_type</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">now</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-2xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">main_page</span><span class="p">)</span>
 </code></pre></div>
 
 

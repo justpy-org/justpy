@@ -1707,62 +1707,62 @@
 <p><a href="https://altair-viz.github.io/">Altair charts</a> are supported by JustPy using the <code>AltairChart</code> component.</p>
 <p>The <code>AltairChart</code> component supports visualization of any <a href="https://vega.github.io/vega/">Vega</a> defined object. Instead of setting the component's <code>chart</code> attribute, set the <code>vega_source</code> attribute with the Vega language definition. </p>
 <p>In the example below, in addition to the default route, the "/line" route is also defined. It is an example of how a slider can be used to change a chart.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
-<span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-
-<span class="c1"># Load a simple dataset as a pandas DataFrame</span>
-<span class="kn">from</span> <span class="nn">vega_datasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="n">cars</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
-
-<span class="n">car_chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower&#39;</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Origin&#39;</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-    <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
-<span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">altair_chart_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">altair_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AltairChart</span><span class="p">(</span><span class="n">chart</span><span class="o">=</span><span class="n">car_chart</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-8&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="k">def</span> <span class="nf">change_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">chart</span> <span class="o">=</span> <span class="n">create_chart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">create_chart</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">as_</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
-        <span class="n">sin</span><span class="o">=</span><span class="s1">&#39;sin(datum.x)&#39;</span><span class="p">,</span>
-        <span class="n">cos</span><span class="o">=</span><span class="s1">&#39;cos(datum.x)&#39;</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">transform_fold</span><span class="p">(</span>
-        <span class="p">[</span><span class="s1">&#39;sin&#39;</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">]</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:Q&#39;</span><span class="p">,</span>
-        <span class="n">y</span><span class="o">=</span><span class="s1">&#39;value:Q&#39;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;key:N&#39;</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-        <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
-    <span class="p">)</span>
-
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/line&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">line_chart</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QSlider</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-8 p-2&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 500px&#39;</span><span class="p">,</span><span class="nb">input</span><span class="o">=</span><span class="n">change_limit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label_always</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-               <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">snap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AltairChart</span><span class="p">(</span><span class="n">chart</span><span class="o">=</span><span class="n">create_chart</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 p-2&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">altair_chart_test</span><span class="p">,</span> <span class="n">VEGA</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Load a simple dataset as a pandas DataFrame</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">from</span> <span class="nn">vega_datasets</span> <span class="kn">import</span> <span class="n">data</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">cars</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">car_chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Origin&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">def</span> <span class="nf">altair_chart_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">altair_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AltairChart</span><span class="p">(</span><span class="n">chart</span><span class="o">=</span><span class="n">car_chart</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-8&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="k">def</span> <span class="nf">change_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">chart</span> <span class="o">=</span> <span class="n">create_chart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">def</span> <span class="nf">create_chart</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">source</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">as_</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="k">return</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="n">sin</span><span class="o">=</span><span class="s1">&#39;sin(datum.x)&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="n">cos</span><span class="o">=</span><span class="s1">&#39;cos(datum.x)&#39;</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="p">)</span><span class="o">.</span><span class="n">transform_fold</span><span class="p">(</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="p">[</span><span class="s1">&#39;sin&#39;</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">]</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:Q&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        <span class="n">y</span><span class="o">=</span><span class="s1">&#39;value:Q&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;key:N&#39;</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="p">)</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/line&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="k">def</span> <span class="nf">line_chart</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QSlider</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-8 p-2&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 500px&#39;</span><span class="p">,</span><span class="nb">input</span><span class="o">=</span><span class="n">change_limit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label_always</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>               <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">snap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AltairChart</span><span class="p">(</span><span class="n">chart</span><span class="o">=</span><span class="n">create_chart</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 p-2&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">altair_chart_test</span><span class="p">,</span> <span class="n">VEGA</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 
 

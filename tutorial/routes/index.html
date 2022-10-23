@@ -1820,38 +1820,36 @@
 <p>In all the examples above, any <a href="https://en.wikipedia.org/wiki/URL">URL</a> typed into the browser would render the same page. Usually, when we develop a web application, we want different URLs to load different pages. In other words, we want to define different request handlers to handle different URLs. In this part of the tutorial we will show how to do this using JustPy.</p>
 <p>Please run the following program:</p>
 <h3 id="setting-a-route-with-jproute">Setting a route with jp.Route<a class="headerlink" href="#setting-a-route-with-jproute" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_function1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello there!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">,</span> <span class="n">hello_function1</span><span class="p">)</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#route_hello</span>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span> <span class="nf">hello_function1</span><span class="p">():</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello there!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">,</span> <span class="n">hello_function1</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#route_hello</span>
 </code></pre></div>
-
-<p>Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument of <code>justpy.</code> If no argument is provided to <code>justpy</code>, the framework shows the 'Page not found' message.</p>
+Unless you go specifically to http://127.0.0.1:8000/hello you will get the 'Page not found' JustPy message. When a request arrives, JustPy checks if the route in the URL matches any of the defined routes. If it does, it runs the appropriate function and if not, it runs the function provided as the argument of <code>justpy.</code> If no argument is provided to <code>justpy</code>, the framework shows the 'Page not found' message.</p>
 <p>Try running the following program:</p>
 <h3 id="setting-a-route-with-jproute-default-route-hello">Setting a route with jp.Route - default route + /hello<a class="headerlink" href="#setting-a-route-with-jproute-default-route-hello" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_function2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello there!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="k">def</span> <span class="nf">bye_function1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Goodbye!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">,</span> <span class="n">hello_function2</span><span class="p">)</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">bye_function1</span><span class="p">)</span><span class="c1">#route_hello2</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">def</span> <span class="nf">hello_function2</span><span class="p">():</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello there!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span> <span class="nf">bye_function1</span><span class="p">():</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Goodbye!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">,</span> <span class="n">hello_function2</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">bye_function1</span><span class="p">)</span><span class="c1">#route_hello2</span>
 </code></pre></div>
-
 <p>Type different URLs into the browser and see what happens. Unless the path is exactly '/hello', the <code>bye_function</code> will run and 'Goodbye!' will be displayed.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1859,36 +1857,34 @@
 </div>
 <h2 id="using-decorators">Using Decorators<a class="headerlink" href="#using-decorators" title="Permanent link">&para;</a></h2>
 <p>It is common in Python web frameworks to use decorators to assign functions to routes because it is convenient and makes the code more readable. JustPy also supports assigning routes using decorators:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello_function3</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello there!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/bye&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">bye_function2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Goodbye!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#route_hello3</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">def</span> <span class="nf">hello_function3</span><span class="p">():</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello there!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/bye&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">def</span> <span class="nf">bye_function2</span><span class="p">():</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Goodbye!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#route_hello3</span>
 </code></pre></div>
-
 <p>The SetRoute decorator accepts as a parameter the route and assigns the decorated function to it. The program above defines two routes, '/hello' and '/bye'. URLs that do not include these exact routes, will cause the 'Page not found' message to appear.</p>
 <h2 id="using-route-parameters">Using Route Parameters<a class="headerlink" href="#using-route-parameters" title="Permanent link">&para;</a></h2>
 <p>It is possible to use <a href="https://www.starlette.io/routing/">Starlette routing syntax</a> to define routes with parameters. Parameters are exposed in the <code>request.path.params</code> dictionary:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="k">def</span> <span class="nf">greeting_function</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Hello there, </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-<span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello/</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">greeting_function</span><span class="p">)</span>
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#route_hello4</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span> <span class="nf">greeting_function</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Hello there, </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-5xl m-2&#39;</span><span class="p">))</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">jp</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s1">&#39;/hello/</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">greeting_function</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">()</span><span class="c1">#route_hello4</span>
 </code></pre></div>
-
 <p>For more examples using path and url parameters see <a href="/tutorials/request_object.md">request object</a>.</p>
 
 

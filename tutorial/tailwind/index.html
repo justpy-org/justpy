@@ -1785,23 +1785,22 @@
 <p>The JustPy <code>Tailwind</code> class has two dictionaries: <code>tw_dict</code> and <code>tw_reverse_dict</code></p>
 <p>The first dictionary's keys are the Tailwind categories of utility classes and the value is a list of all utility classes in the category. The reverse dictionary keys are the utility classes and the value is the category they belong to. These dictionaries are used to implement the <code>set_class</code> and <code>set_classes</code> methods.</p>
 <p>They can also be used to do the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">text_colors</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap m-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">jp</span><span class="o">.</span><span class="n">Tailwind</span><span class="o">.</span><span class="n">tw_dict</span><span class="p">[</span><span class="s1">&#39;text_color&#39;</span><span class="p">]:</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1"> font-mono p-1 text-lg bg-blue-100 hover:bg-red-500 w-48&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">text_colors</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span> <span class="nf">text_colors</span><span class="p">():</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap m-2&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">jp</span><span class="o">.</span><span class="n">Tailwind</span><span class="o">.</span><span class="n">tw_dict</span><span class="p">[</span><span class="s1">&#39;text_color&#39;</span><span class="p">]:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1"> font-mono p-1 text-lg bg-blue-100 hover:bg-red-500 w-48&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">text_colors</span><span class="p">)</span>
 </code></pre></div>
-
 <p>This program shows the names and colors of all Tailwind text colors.</p>
 <h2 id="disabling-tailwind">Disabling Tailwind<a class="headerlink" href="#disabling-tailwind" title="Permanent link">&para;</a></h2>
-<p>To disable Tailwind add the following line to the configuration file justpy.env:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">TAILWIND</span> <span class="o">=</span> <span class="kc">False</span>
-</code></pre></div>
+<p>To disable Tailwind add the following line to the configuration file justpy.env:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">TAILWIND</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div></p>
 
 
 

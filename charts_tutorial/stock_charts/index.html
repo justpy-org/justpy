@@ -1754,137 +1754,134 @@
 <p class="admonition-title">Warning</p>
 <p>You need to install pandas to run the program</p>
 </div>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-
-<span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">convert_date1</span><span class="p">(</span><span class="n">date_string</span><span class="p">):</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_string</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">date</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
-
-
-<span class="k">def</span> <span class="nf">stock_test1</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">ticker</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ticker&quot;</span><span class="p">,</span> <span class="s2">&quot;msft&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ticker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;aapl&quot;</span><span class="p">,</span> <span class="s2">&quot;ibm&quot;</span><span class="p">,</span> <span class="s2">&quot;intc&quot;</span><span class="p">,</span> <span class="s2">&quot;msft&quot;</span><span class="p">]:</span>
-        <span class="n">ticker</span> <span class="o">=</span> <span class="s2">&quot;msft&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://elimintz.github.io/stocks/</span><span class="si">{</span><span class="n">ticker</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
-    <span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighStock</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-1 p-2 border w-10/12&quot;</span><span class="p">)</span>
-    <span class="n">o</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">options</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Historical Stock Price&quot;</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">legend</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;layout&quot;</span><span class="p">:</span> <span class="s2">&quot;proximate&quot;</span><span class="p">}</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">rangeSelector</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Set default range to 1 year</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">convert_date1</span><span class="p">))</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Adj Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">ticker</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">jp</span><span class="o">.</span><span class="n">make_pairs_list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)})</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">series</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">]</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">valueDecimals</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Price displayed by tooltip will have 2 decimal values</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">stock_test1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">datetime</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">def</span> <span class="nf">convert_date1</span><span class="p">(</span><span class="n">date_string</span><span class="p">):</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_string</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">date</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">def</span> <span class="nf">stock_test1</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">ticker</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ticker&quot;</span><span class="p">,</span> <span class="s2">&quot;msft&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="k">if</span> <span class="n">ticker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;aapl&quot;</span><span class="p">,</span> <span class="s2">&quot;ibm&quot;</span><span class="p">,</span> <span class="s2">&quot;intc&quot;</span><span class="p">,</span> <span class="s2">&quot;msft&quot;</span><span class="p">]:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="n">ticker</span> <span class="o">=</span> <span class="s2">&quot;msft&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://elimintz.github.io/stocks/</span><span class="si">{</span><span class="n">ticker</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighStock</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-1 p-2 border w-10/12&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="n">o</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">options</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">o</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Historical Stock Price&quot;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">o</span><span class="o">.</span><span class="n">legend</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;layout&quot;</span><span class="p">:</span> <span class="s2">&quot;proximate&quot;</span><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">o</span><span class="o">.</span><span class="n">rangeSelector</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Set default range to 1 year</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">convert_date1</span><span class="p">))</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Adj Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">ticker</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">jp</span><span class="o">.</span><span class="n">make_pairs_list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)})</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">o</span><span class="o">.</span><span class="n">series</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">]</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="n">s</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">valueDecimals</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Price displayed by tooltip will have 2 decimal values</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">stock_test1</span><span class="p">)</span>
 </code></pre></div>
-
-<p>I used <a href="https://finance.yahoo.com">yahoo finance</a> to download data in CSV format. The first few lines of the file look like this:</p>
-<div class="codehilite"><pre><span></span><code>Date,Open,High,Low,Close,Adj Close,Volume
-2005-01-03,4.627143,4.650714,4.471428,4.520714,3.945287,172998000
-2005-01-04,4.556428,4.676429,4.497857,4.567143,3.985806,274202600
-2005-01-05,4.604286,4.660714,4.575000,4.607143,4.020715,170108400
-2005-01-06,4.619286,4.636428,4.523571,4.610714,4.023832,176388800
-2005-01-07,4.642857,4.973571,4.625000,4.946429,4.316814,556862600
-2005-01-10,4.987857,5.050000,4.848571,4.925714,4.298736,431327400
-2005-01-11,4.875000,4.939286,4.581429,4.611429,4.024456,652906800
-2005-01-12,4.675000,4.707143,4.521429,4.675714,4.080557,479925600
-2005-01-13,5.265000,5.315714,4.980714,4.985714,4.351099,791179200
-2005-01-14,5.017857,5.122857,4.942143,5.014286,4.376033,442685600
-2005-01-18,4.989286,5.050000,4.839286,5.046429,4.404085,251615000
-2005-01-19,5.035000,5.104286,4.982143,4.991428,4.356086,187973800
-2005-01-20,4.975000,5.090714,4.962143,5.032857,4.392241,228730600
-</code></pre></div>
-
+<p>I used <a href="https://finance.yahoo.com">yahoo finance</a> to download data in CSV format. The first few lines of the file look like this:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Date,Open,High,Low,Close,Adj Close,Volume
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>2005-01-03,4.627143,4.650714,4.471428,4.520714,3.945287,172998000
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2005-01-04,4.556428,4.676429,4.497857,4.567143,3.985806,274202600
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2005-01-05,4.604286,4.660714,4.575000,4.607143,4.020715,170108400
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>2005-01-06,4.619286,4.636428,4.523571,4.610714,4.023832,176388800
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>2005-01-07,4.642857,4.973571,4.625000,4.946429,4.316814,556862600
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>2005-01-10,4.987857,5.050000,4.848571,4.925714,4.298736,431327400
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>2005-01-11,4.875000,4.939286,4.581429,4.611429,4.024456,652906800
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>2005-01-12,4.675000,4.707143,4.521429,4.675714,4.080557,479925600
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>2005-01-13,5.265000,5.315714,4.980714,4.985714,4.351099,791179200
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>2005-01-14,5.017857,5.122857,4.942143,5.014286,4.376033,442685600
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>2005-01-18,4.989286,5.050000,4.839286,5.046429,4.404085,251615000
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>2005-01-19,5.035000,5.104286,4.982143,4.991428,4.356086,187973800
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>2005-01-20,4.975000,5.090714,4.962143,5.032857,4.392241,228730600
+</code></pre></div></p>
 <p>The program uses pandas to read a CSV file corresponding to the ticker parameter (only the tickers MSFT, AAPL, IBM and INTC have data behind them, the rest default to MSFT). Try http://127.0.0.1:8000/?ticker=intc for example.</p>
 <p>The program needs to convert the dates to support the Highcharts (standard JavaScript) format which is number of milliseconds since the Epoch (1/1/1970). The short function convert_date1 does this using the Python datetime library. We use <code>map</code> to apply <code>convert_date1</code> to all values in the 'Date' column in order to generate the list of x values for the series.</p>
 <h2 id="stock-chart-with-volume">Stock Chart with Volume<a class="headerlink" href="#stock-chart-with-volume" title="Permanent link">&para;</a></h2>
-<p>The CSV file contains additional data, not just the end of day price. We will now create a more sophisticated chart that uses this data.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-
-<span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">grouping_units</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;week&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]]</span>
-
-<span class="n">chart_dict</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;rangeSelector&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-    <span class="s2">&quot;yAxis&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">},</span>
-            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;OHLC&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;60%&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;lineWidth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s2">&quot;resize&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">},</span>
-            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Volume&quot;</span><span class="p">},</span>
-            <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="s2">&quot;65%&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;35%&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;lineWidth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;split&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-    <span class="s2">&quot;series&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;candlestick&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;valueDecimals&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
-            <span class="s2">&quot;dataGrouping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">grouping_units</span><span class="p">},</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;column&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Volume&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;yAxis&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;dataGrouping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">grouping_units</span><span class="p">},</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">}</span>
-
-
-<span class="k">def</span> <span class="nf">convert_date2</span><span class="p">(</span><span class="n">date_string</span><span class="p">):</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_string</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">date</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">stock_test2</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">highcharts_theme</span><span class="o">=</span><span class="s2">&quot;grid&quot;</span><span class="p">)</span>
-    <span class="n">ticker</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ticker&quot;</span><span class="p">,</span> <span class="s2">&quot;MSFT&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">ticker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;IBM&quot;</span><span class="p">,</span> <span class="s2">&quot;INTC&quot;</span><span class="p">,</span> <span class="s2">&quot;MSFT&quot;</span><span class="p">]:</span>
-        <span class="n">ticker</span> <span class="o">=</span> <span class="s2">&quot;MSFT&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">jp</span><span class="o">.</span><span class="n">JustPy</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span>
-        <span class="kc">None</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;https://elimintz.github.io/stocks/</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&quot;</span>
-    <span class="p">)</span>
-    <span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighStock</span><span class="p">(</span>
-        <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span>
-        <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-1 p-2 border w-10/12&quot;</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="n">chart_dict</span><span class="p">,</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;height: 600px&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">o</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">options</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2"> Historical Prices&quot;</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">convert_date2</span><span class="p">))</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-        <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Open&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;High&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Low&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">])</span>
-    <span class="p">)</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">ticker</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Volume&quot;</span><span class="p">]))</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">stock_test2</span><span class="p">)</span>
-</code></pre></div>
-
+<p>The CSV file contains additional data, not just the end of day price. We will now create a more sophisticated chart that uses this data.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span> <span class="nn">datetime</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">grouping_units</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;week&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">chart_dict</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="s2">&quot;rangeSelector&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="s2">&quot;yAxis&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="p">{</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>            <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">},</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;OHLC&quot;</span><span class="p">},</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;60%&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="s2">&quot;lineWidth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            <span class="s2">&quot;resize&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="p">},</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="p">{</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>            <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">},</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Volume&quot;</span><span class="p">},</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>            <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="s2">&quot;65%&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;35%&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>            <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>            <span class="s2">&quot;lineWidth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>        <span class="p">},</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="p">],</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;split&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>    <span class="s2">&quot;series&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>        <span class="p">{</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;candlestick&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>            <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;valueDecimals&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>            <span class="s2">&quot;dataGrouping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">grouping_units</span><span class="p">},</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>        <span class="p">},</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>        <span class="p">{</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;column&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Volume&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>            <span class="s2">&quot;yAxis&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>            <span class="s2">&quot;dataGrouping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">grouping_units</span><span class="p">},</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>        <span class="p">},</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>    <span class="p">],</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="p">}</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="k">def</span> <span class="nf">convert_date2</span><span class="p">(</span><span class="n">date_string</span><span class="p">):</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>    <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_string</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">date</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">stock_test2</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">highcharts_theme</span><span class="o">=</span><span class="s2">&quot;grid&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a>    <span class="n">ticker</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ticker&quot;</span><span class="p">,</span> <span class="s2">&quot;MSFT&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a>    <span class="k">if</span> <span class="n">ticker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;IBM&quot;</span><span class="p">,</span> <span class="s2">&quot;INTC&quot;</span><span class="p">,</span> <span class="s2">&quot;MSFT&quot;</span><span class="p">]:</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>        <span class="n">ticker</span> <span class="o">=</span> <span class="s2">&quot;MSFT&quot;</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>    <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">jp</span><span class="o">.</span><span class="n">JustPy</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span>
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>        <span class="kc">None</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;https://elimintz.github.io/stocks/</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&quot;</span>
+<a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>    <span class="p">)</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>    <span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighStock</span><span class="p">(</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>        <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>        <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-1 p-2 border w-10/12&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>        <span class="n">options</span><span class="o">=</span><span class="n">chart_dict</span><span class="p">,</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a>        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;height: 600px&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>    <span class="p">)</span>
+<a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a>    <span class="n">o</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">options</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a>    <span class="n">o</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2"> Historical Prices&quot;</span>
+<a id="__codelineno-2-65" name="__codelineno-2-65" href="#__codelineno-2-65"></a>    <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">convert_date2</span><span class="p">))</span>
+<a id="__codelineno-2-66" name="__codelineno-2-66" href="#__codelineno-2-66"></a>    <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+<a id="__codelineno-2-67" name="__codelineno-2-67" href="#__codelineno-2-67"></a>        <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Open&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;High&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Low&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">])</span>
+<a id="__codelineno-2-68" name="__codelineno-2-68" href="#__codelineno-2-68"></a>    <span class="p">)</span>
+<a id="__codelineno-2-69" name="__codelineno-2-69" href="#__codelineno-2-69"></a>    <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">ticker</span>
+<a id="__codelineno-2-70" name="__codelineno-2-70" href="#__codelineno-2-70"></a>    <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Volume&quot;</span><span class="p">]))</span>
+<a id="__codelineno-2-71" name="__codelineno-2-71" href="#__codelineno-2-71"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-2-72" name="__codelineno-2-72" href="#__codelineno-2-72"></a>
+<a id="__codelineno-2-73" name="__codelineno-2-73" href="#__codelineno-2-73"></a>
+<a id="__codelineno-2-74" name="__codelineno-2-74" href="#__codelineno-2-74"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">stock_test2</span><span class="p">)</span>
+</code></pre></div></p>
 <p>The chart is defined in this case using a standard Python dictionary. When assigned to the chart <code>options</code> attribute, it is automatically converted to a Dict in order to enable dot notation.</p>
 <p>In this example, reading the remote CSV file is done in a non-blocking manner (if you are unfamiliar with <code>asyncio</code>, please skip this paragraph). The loop that JustPy runs in can be found in <code>JustPy.loop</code>. It is used to run <code>pd.read_csv</code> in the default thread or process pool. In order to allow awaiting a coroutine, <code>stock_test</code> is also defined as a coroutine using the <code>async</code> keyword.</p>
 <p>The chart has two series with two different Y axis. The first series is a <a href="https://www.investopedia.com/trading/candlestick-charting-what-is-it/">candlestick</a> series and shows the OHLC (open high low close) data succinctly, and the second series is a simple column series that shows the volume. The data list for each series is created by zipping together the appropriate columns of the pandas frame.</p>

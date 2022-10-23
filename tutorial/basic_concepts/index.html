@@ -1838,43 +1838,37 @@ Out of the box, JustPy comes with many components. You can use the available Jus
 and also build more complex components using other components as building blocks.</p>
 <p>In JustPy, components are implemented as Python classes. When you define a new component, you do so by defining a new Python class.</p>
 <p>A JustPy element is an instance of a component class.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello!&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">()</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello!&quot;</span>
 </code></pre></div>
-
 <p>In the example above, <code>p</code> is an instance of the class <code>P</code>. Its text attribute is set to 'Hello!'.
-The above is similar to the HTML element:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<p>You can set the JustPy element attributes when the element is created (synonym for instantiated) using keyword arguments to make code shorter and clearer:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+The above is similar to the HTML element:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<p>You can set the JustPy element attributes when the element is created (synonym for instantiated) using keyword arguments to make code shorter and clearer:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
 <p>Just creating an element is not very useful. We need to get it on a web page and into the user's browser tab. We will do this next.</p>
 <h2 id="justpy-web-pages">JustPy Web Pages<a class="headerlink" href="#justpy-web-pages" title="Permanent link">&para;</a></h2>
-<p>In JustPy, web pages are instances of the JustPy class <code>WebPage</code>. You create a web page the same way you create any class instance in Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-</code></pre></div>
-
+<p>In JustPy, web pages are instances of the JustPy class <code>WebPage</code>. You create a web page the same way you create any class instance in Python:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+</code></pre></div></p>
 <p>In the example above we created the web page <code>wp</code>. It is an empty web page that does not contain any elements.</p>
-<p>Let's create an element and add it to the page:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
-<span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># Same as p.add_to(wp), wp = wp + p, wp += p</span>
-</code></pre></div>
-
+<p>Let's create an element and add it to the page:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># Same as p.add_to(wp), wp = wp + p, wp += p</span>
+</code></pre></div></p>
 <p>In the example above, we create a web page. Then we create a <code>p</code> element and add it to the page using the <code>add</code> method.</p>
-<p>Since adding an element to a page is very common, there is a way to do so using the keyword argument <code>a</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-</code></pre></div>
-
+<p>Since adding an element to a page is very common, there is a way to do so using the keyword argument <code>a</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+</code></pre></div></p>
 <p>This code snippet has the same functionality as the one above it.</p>
 <h2 id="justpy-requests">JustPy Requests<a class="headerlink" href="#justpy-requests" title="Permanent link">&para;</a></h2>
 <p>So far we have created a page and added an element to it. We haven't yet loaded the page into the user's browser.</p>
@@ -1889,16 +1883,15 @@ This function must return a web page which is then rendered in the browser that 
 The framework takes care of the rest.</p>
 <p>Here is a basic example:</p>
 <h2 id="first-hello-world">First Hello World<a class="headerlink" href="#first-hello-world" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_world1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">def</span> <span class="nf">hello_world1</span><span class="p">():</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world1</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The function <code>hello_world1</code> creates a web page, adds a paragraph element to it and returns the page.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1909,17 +1902,16 @@ The framework takes care of the rest.</p>
 You should see 'Hello World!' in your browser.</p>
 <h2 id="more-hello-world">More Hello World<a class="headerlink" href="#more-hello-world" title="Permanent link">&para;</a></h2>
 <p>Saying hello once isn't enough! We would like to say "hello" ten times. We also want to let the user know how many times we said "hello". More specifically, we would like "Hello World!" to show up ten times on the page and be enumerated. In addition, we would like to use a bigger font each time.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_world2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s2">px&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">def</span> <span class="nf">hello_world2</span><span class="p">():</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s2">px&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world2</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Run the program above and look at the result in your browser.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1928,11 +1920,10 @@ You should see 'Hello World!' in your browser.</p>
 <p>Two JustPy servers cannot run at the same time on the same port.</p>
 <p>The P instances are created inside a loop with the loop index being used to give each paragraph some different text and a different font size.</p>
 <p>The <code>style</code> attribute in JustPy is the same as the HTML <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style">style</a> attribute. It allows using <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> properties to style the element.</p>
-<p>For example, change the style assignment to:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;color: blue; font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s2">px&quot;</span>
+<p>For example, change the style assignment to:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;color: blue; font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s2">px&quot;</span>
 </code></pre></div>
-
-<p>and see what happens.</p>
+and see what happens.</p>
 <h2 id="tailwind-and-justpy">Tailwind and JustPy<a class="headerlink" href="#tailwind-and-justpy" title="Permanent link">&para;</a></h2>
 <p>Another way to style elements is to use classes.
 By default, instances of WebPage support styling using <a href="https://tailwindcss.com/">Tailwind</a> classes. If you are familiar with CSS, checkout Tailwind. For me, it is a joy to work with.</p>
@@ -1941,35 +1932,33 @@ By default, instances of WebPage support styling using <a href="https://tailwind
 <p>You can also put your own CSS on a page and use your own class definitions by setting the <code>css</code> attribute of a page.</p>
 </div>
 <p>Let's use Tailwind classes to style our page:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_world3</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">my_paragraph_design</span> <span class="o">=</span> <span class="s2">&quot;w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world3</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">def</span> <span class="nf">hello_world3</span><span class="p">():</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="n">my_paragraph_design</span> <span class="o">=</span> <span class="s2">&quot;w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world3</span><span class="p">)</span>
 </code></pre></div>
-
 <p>In this program Tailwind classes are used to make the output a little nicer. The JustPy attribute <code>classes</code> is equivalent to the HTML attribute <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class">class</a> (which is a reserved word in Python).</p>
 <h2 id="creating-web-pages-once">Creating Web Pages Once<a class="headerlink" href="#creating-web-pages-once" title="Permanent link">&para;</a></h2>
 <p>You may have noticed that since we have been serving the same page to everyone, there is no need to create a new page each time a request is made.
-We can create a page one time, and serve the same page for all requests:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">my_paragraph_design</span> <span class="o">=</span> <span class="s2">&quot;w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">hello_world4</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world4</span><span class="p">)</span>
-</code></pre></div>
-
+We can create a page one time, and serve the same page for all requests:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">my_paragraph_design</span> <span class="o">=</span> <span class="s2">&quot;w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="k">def</span> <span class="nf">hello_world4</span><span class="p">():</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world4</span><span class="p">)</span>
+</code></pre></div></p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>When you define a page that is going to be rendered in more than one browser tab or page, you need to set its <code>delete_flag</code> to <code>False</code>.</p>

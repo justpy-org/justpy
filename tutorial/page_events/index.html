@@ -1775,65 +1775,64 @@
 <p>In the first example below, <code>page_ready</code> is used to load a page with 3,000 Div elements in a staggered manner in order to improve the user experience.</p>
 <p>Try the '/stagger' route and see how it compares to the default.</p>
 <h3 id="loading-3000-div-elements-in-a-staggered-manner">loading 3000 div elements in a staggered manner<a class="headerlink" href="#loading-3000-div-elements-in-a-staggered-manner" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">page_ready_div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3001</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Div </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;border m-2 p-2 text-xs&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
-
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s2">&quot;/stagger&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">loading_page_stagger_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;page_ready&quot;</span><span class="p">,</span> <span class="n">page_ready_div</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;flex flex-wrap&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="k">def</span> <span class="nf">loading_page_no_stagger</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;flex flex-wrap&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3001</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Div </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;border m-2 p-2 text-xs&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">loading_page_no_stagger</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">asyncio</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">page_ready_div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3001</span><span class="p">):</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Div </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;border m-2 p-2 text-xs&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s2">&quot;/stagger&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">def</span> <span class="nf">loading_page_stagger_test</span><span class="p">():</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;page_ready&quot;</span><span class="p">,</span> <span class="n">page_ready_div</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;flex flex-wrap&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">def</span> <span class="nf">loading_page_no_stagger</span><span class="p">():</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;flex flex-wrap&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3001</span><span class="p">):</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Div </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;border m-2 p-2 text-xs&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">loading_page_no_stagger</span><span class="p">)</span>
 </code></pre></div>
-
 <p>In the following example the result of running JavaScript in the browser is obtained:</p>
 <h3 id="run_javascript-example">run_javascript example<a class="headerlink" href="#run_javascript-example" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">js_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">a = 3;</span>
-<span class="s2">b = 5;</span>
-<span class="s2">c = a * b;</span>
-<span class="s2">d = {r: c, appName: navigator.appName, appVersion: navigator.appVersion}</span>
-
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">page_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_javascript</span><span class="p">(</span><span class="n">js_string</span><span class="p">))</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">result_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">result_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The result is: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span>
-
-
-<span class="k">def</span> <span class="nf">result_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;page_ready&quot;</span><span class="p">,</span> <span class="n">page_ready</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;result_ready&quot;</span><span class="p">,</span> <span class="n">result_ready</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">result_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Result will go here&quot;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-4 p-2 text-xl&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">js_string</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">result_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">js_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="s2">a = 3;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s2">b = 5;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="s2">c = a * b;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s2">d = {r: c, appName: navigator.appName, appVersion: navigator.appVersion}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">page_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_javascript</span><span class="p">(</span><span class="n">js_string</span><span class="p">))</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">result_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">result_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The result is: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="k">def</span> <span class="nf">result_test</span><span class="p">():</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;page_ready&quot;</span><span class="p">,</span> <span class="n">page_ready</span><span class="p">)</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;result_ready&quot;</span><span class="p">,</span> <span class="n">result_ready</span><span class="p">)</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">result_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Result will go here&quot;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-4 p-2 text-xl&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">js_string</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">result_test</span><span class="p">)</span>
 </code></pre></div>
 
 

@@ -1786,16 +1786,14 @@ In addition, a basic understanding of HTML is required (<a href="https://develop
 <h2 id="demo-browser">Demo-Browser<a class="headerlink" href="#demo-browser" title="Permanent link">&para;</a></h2>
 <p>The example code from this tutorial is available in the <a href="https://github.com/justpy-org/justpy/tree/master/examples">examples</a> directory of
 justpy. There is also a demo browser available which you might want to start.</p>
-<p>We recommend starting the demo-browser in a docker environment using the command</p>
-<div class="codehilite"><pre><span></span><code>scripts/rundocker example examples/demo_browser.py
-</code></pre></div>
-
-<p>You can also start the demo-browser directly via the commandline via</p>
-<div class="codehilite"><pre><span></span><code>git clone https://github.com/justpy-org/justpy
-cd justpy
-scripts/jpdemo
-</code></pre></div>
-
+<p>We recommend starting the demo-browser in a docker environment using the command
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>scripts/rundocker example examples/demo_browser.py
+</code></pre></div></p>
+<p>You can also start the demo-browser directly via the commandline via
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git clone https://github.com/justpy-org/justpy
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cd justpy
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>scripts/jpdemo
+</code></pre></div></p>
 <p>We intend to make the demo browser via pip install with <a href="https://github.com/justpy-org/justpy/issues/555">issue 555</a> so that the
 git clone might not be necessary anymore.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
@@ -1804,34 +1802,31 @@ git clone might not be necessary anymore.</p>
 <p>If not, upgrade your Python interpreter.</p>
 <p>It is probably best to run the programs in this tutorial in a virtual environment so that your system wide Python interpreter is not affected, though this is not a requirement.
 The following commands create a directory for this tutorial, then create a virtual environment named jp and activate it and finally install JustPy and its dependencies:</p>
-<div class="codehilite"><pre><span></span><code>$ mkdir jptutorial
-$ <span class="nb">cd</span> jptutorial
-$ python3 -m venv jp
-$ <span class="nb">source</span> jp/bin/activate
-<span class="o">(</span>jp<span class="o">)</span> $ pip install justpy
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ mkdir jptutorial
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$ cd jptutorial
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>$ python3 -m venv jp
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$ source jp/bin/activate
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>(jp) $ pip install justpy
 </code></pre></div>
-
 <p>On Microsoft Windows, the activation command for the virtual environment is <code>jp\Scripts\activate</code> instead of the source command above.</p>
 <p>Now, using your favorite code editor, create a file in the jptutorial directory called test.py that includes the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world</span><span class="p">)</span>
 </code></pre></div>
-
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can easily copy the code by hovering over it and then clicking 'Copy to clipboard' in the upper right corner</p>
 </div>
 <h2 id="running-the-program">Running the Program<a class="headerlink" href="#running-the-program" title="Permanent link">&para;</a></h2>
 <p>To run the program execute the following command:</p>
-<div class="codehilite"><pre><span></span><code>$ python3 test.py
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ python3 test.py
 </code></pre></div>
-
 <p>Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/</p>
 <p>This refers to port 8000 on the local machine and should work in most environments.</p>
 <p>You should see 'Hello!' in your browser. Click it a few times also. It should report the number of times it has been clicked.</p>

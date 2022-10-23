@@ -1707,24 +1707,21 @@
 <p><code>func</code> - Function to run if no route assigned functions are available. This is the default function to run if the URL is not recognized as a designated route. If no function is provided, the framework displays the 'Page not found' message.</p>
 <p>All other arguments are keyword arguments.</p>
 <p><code>start_server</code> - If <code>False</code>, the uvicorn server is not started. </p>
-<p>Use this if you want to run the uvicorn server from the command line:</p>
-<div class="codehilite"><pre><span></span><code>uvicorn --host 0.0.0.0 --port 8000 test:app
+<p>Use this if you want to run the uvicorn server from the command line:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uvicorn --host 0.0.0.0 --port 8000 test:app
 </code></pre></div>
-
-<p>You need to explicitly specify the host and port (as well as any other uvicorn option you require) since the configuration file values are not used in this case.</p>
-<p>If test.py is your main program file where you import justpy then for the above to run you need to add the following line to it after importing justpy:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">app</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">app</span> <span class="c1"># assuming import justpy as jp</span>
-</code></pre></div>
-
+You need to explicitly specify the host and port (as well as any other uvicorn option you require) since the configuration file values are not used in this case.</p>
+<p>If test.py is your main program file where you import justpy then for the above to run you need to add the following line to it after importing justpy:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">app</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">app</span> <span class="c1"># assuming import justpy as jp</span>
+</code></pre></div></p>
 <p>This exposes the starlette app to uvicorn. </p>
 <p><code>websockets</code> - If <code>False</code>, all pages in the application will use Ajax instead of Websockets by default.</p>
 <p><code>host</code> - Set to the configuration file HOST setting by default. If not specified in configuration file, it is `127.0.0.1'</p>
 <p><code>port</code> - Set to the configuration file PORT setting by default. If not specified in configuration file, it is 8000</p>
 <p><code>startup</code> - The function to run before starting the web server. The async loop has already been started but the web server will not start until the function terminates.</p>
 <p>All other keyword arguments are used to set the template options. You can these also in the configuration file.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">template_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tailwind&#39;</span><span class="p">:</span> <span class="n">TAILWIND</span><span class="p">,</span> <span class="s1">&#39;quasar&#39;</span><span class="p">:</span> <span class="n">QUASAR</span><span class="p">,</span> <span class="s1">&#39;highcharts&#39;</span><span class="p">:</span> <span class="n">HIGHCHARTS</span><span class="p">,</span> <span class="s1">&#39;aggrid&#39;</span><span class="p">:</span> <span class="n">AGGRID</span><span class="p">,</span> <span class="s1">&#39;static_name&#39;</span><span class="p">:</span> <span class="n">STATIC_NAME</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">template_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tailwind&#39;</span><span class="p">:</span> <span class="n">TAILWIND</span><span class="p">,</span> <span class="s1">&#39;quasar&#39;</span><span class="p">:</span> <span class="n">QUASAR</span><span class="p">,</span> <span class="s1">&#39;highcharts&#39;</span><span class="p">:</span> <span class="n">HIGHCHARTS</span><span class="p">,</span> <span class="s1">&#39;aggrid&#39;</span><span class="p">:</span> <span class="n">AGGRID</span><span class="p">,</span> <span class="s1">&#39;static_name&#39;</span><span class="p">:</span> <span class="n">STATIC_NAME</span><span class="p">}</span>
 </code></pre></div>
-
 <p>For example, if you don't want Highcharts to be loaded, set the keyword parameter <code>highcharts</code> to <code>False</code>.</p>
 
 

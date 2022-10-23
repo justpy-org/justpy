@@ -2009,18 +2009,16 @@
 
 <h1 id="using-justpy-with-heroku">Using justpy with heroku<a class="headerlink" href="#using-justpy-with-heroku" title="Permanent link">&para;</a></h1>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><code>npm install -g heroku
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>npm install -g heroku
 </code></pre></div>
-
 <h2 id="getting-started-with-python-in-general">Getting started with python in general<a class="headerlink" href="#getting-started-with-python-in-general" title="Permanent link">&para;</a></h2>
 <p>If you'd like to try out how python apps work in general in heroku
 you might want to check
 https://devcenter.heroku.com/articles/getting-started-with-python</p>
 <h2 id="credentials">Credentials<a class="headerlink" href="#credentials" title="Permanent link">&para;</a></h2>
-<p>see $HOME/.netrc after</p>
-<div class="codehilite"><pre><span></span><code>heroku login
-</code></pre></div>
-
+<p>see $HOME/.netrc after
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>heroku login
+</code></pre></div></p>
 <h2 id="create-personal-heroku-justpy-demo-app">Create personal heroku justpy demo app<a class="headerlink" href="#create-personal-heroku-justpy-demo-app" title="Permanent link">&para;</a></h2>
 <h3 id="create-an-app-in-heroku-and-check-it-out-with-git">create an app in heroku and check it out with git<a class="headerlink" href="#create-an-app-in-heroku-and-check-it-out-with-git" title="Permanent link">&para;</a></h3>
 <p>https://dashboard.heroku.com/apps
@@ -2033,85 +2031,76 @@ follow the instructions to get your git repository</p>
 <h3 id="add-files">add files<a class="headerlink" href="#add-files" title="Permanent link">&para;</a></h3>
 <p>see https://github.com/justpy-org/justpy/tree/master/tutorial/heroku</p>
 <h4 id="procfile">Procfile<a class="headerlink" href="#procfile" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>web: python examples/demo_browser.py --heroku -d 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>web: python examples/demo_browser.py --heroku -d 
 </code></pre></div>
-
 <h4 id="requirementstxt">requirements.txt<a class="headerlink" href="#requirementstxt" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># WF 2022-10-19</span>
-<span class="c1"># heroku  justpy demo browser dependencies</span>
-<span class="c1">#</span>
-<span class="c1"># install justpy</span>
-justpy&gt;<span class="o">=</span><span class="m">0</span>.10.1
-<span class="c1"># install dependencies for examples</span>
-bokeh
-matplotlib
-pandas
-plotly
-pydeck
-pygments
-seaborn
-vega_datasets
-<span class="c1"># debugging</span>
-pydevd
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># WF 2022-10-19</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># heroku  justpy demo browser dependencies</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">#</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># install justpy</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>justpy&gt;<span class="o">=</span><span class="m">0</span>.10.1
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># install dependencies for examples</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>bokeh
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>matplotlib
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>pandas
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>plotly
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>pydeck
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>pygments
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>seaborn
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>vega_datasets
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1"># debugging</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>pydevd
 </code></pre></div>
-
 <h4 id="getjustpy">getjustpy<a class="headerlink" href="#getjustpy" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># WF 2022-10-19</span>
-<span class="c1"># get the justpy examples and tutorial files</span>
-<span class="c1"># remember the current directory</span>
-<span class="nv">pwd</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
-<span class="c1"># url of justpy repository</span>
-<span class="nv">giturl</span><span class="o">=</span>https://github.com/justpy-org/justpy
-<span class="c1"># get a temporary directory</span>
-<span class="nv">gitdir</span><span class="o">=</span><span class="k">$(</span>mktemp -u<span class="k">)</span>
-mkdir -p <span class="nv">$gitdir</span>
-<span class="c1"># switch to the temporary directory</span>
-<span class="nb">cd</span> <span class="nv">$gitdir</span>
-<span class="k">if</span> <span class="o">[</span> ! -d justpy <span class="o">]</span>
-<span class="k">then</span>
-  <span class="nb">echo</span> <span class="s2">&quot;cloning to </span><span class="nv">$gitdir</span><span class="s2">&quot;</span>
-  git clone --depth<span class="o">=</span><span class="m">1</span> <span class="nv">$giturl</span>
-<span class="k">fi</span>
-rm -rf justpy/.git
-rsync -avz justpy/examples <span class="nv">$pwd</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># WF 2022-10-19</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># get the justpy examples and tutorial files</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># remember the current directory</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nv">pwd</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># url of justpy repository</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nv">giturl</span><span class="o">=</span>https://github.com/justpy-org/justpy
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># get a temporary directory</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="nv">gitdir</span><span class="o">=</span><span class="k">$(</span>mktemp -u<span class="k">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>mkdir -p <span class="nv">$gitdir</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># switch to the temporary directory</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="nb">cd</span> <span class="nv">$gitdir</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">if</span> <span class="o">[</span> ! -d justpy <span class="o">]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="k">then</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>  <span class="nb">echo</span> <span class="s2">&quot;cloning to </span><span class="nv">$gitdir</span><span class="s2">&quot;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>  git clone --depth<span class="o">=</span><span class="m">1</span> <span class="nv">$giturl</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="k">fi</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>rm -rf justpy/.git
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>rsync -avz justpy/examples <span class="nv">$pwd</span>
 </code></pre></div>
-
 <h4 id="get-the-justpy-examples">get the justpy examples<a class="headerlink" href="#get-the-justpy-examples" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="c1"># make script executable</span>
-chmod +x getjustpy
-<span class="c1"># git clone justpy and rsync examples directory to local directory</span>
-./getjustpy
-<span class="c1"># add justpy examples copy</span>
-git add examples
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># make script executable</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>chmod +x getjustpy
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># git clone justpy and rsync examples directory to local directory</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>./getjustpy
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># add justpy examples copy</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>git add examples
 </code></pre></div>
-
 <h4 id="change-pythonpath-via-config-see-also-below">change PYTHONPATH via config (see also below)<a class="headerlink" href="#change-pythonpath-via-config-see-also-below" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code>heroku config:set <span class="nv">PYTHONPATH</span><span class="o">=</span>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>heroku config:set <span class="nv">PYTHONPATH</span><span class="o">=</span>.
 </code></pre></div>
-
 <h4 id="commit-and-push">commit and push<a class="headerlink" href="#commit-and-push" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nv">git</span><span class="w"> </span><span class="nv">commit</span><span class="w"> </span><span class="o">-</span><span class="nv">am</span><span class="w"> </span><span class="s2">&quot;initial check in&quot;</span><span class="w"></span>
-#<span class="w"> </span><span class="nv">try</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">won</span><span class="err">&#39;t work with &quot;master&quot;</span>
-<span class="err">git push heroku master</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git commit -am &quot;initial check in&quot;
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a># try with &quot;main&quot; if it won&#39;t work with &quot;master&quot;
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>git push heroku master
 </code></pre></div>
-
 <h3 id="try-out">try out<a class="headerlink" href="#try-out" title="Permanent link">&para;</a></h3>
 <p>replace "wf" with you own suffix
 http://justpy-demo-wf.herokuapp.com/</p>
 <h2 id="further-commands">Further commands<a class="headerlink" href="#further-commands" title="Permanent link">&para;</a></h2>
 <h3 id="status-log">Status Log<a class="headerlink" href="#status-log" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>heroku logs --tail
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>heroku logs --tail
 </code></pre></div>
-
 <h3 id="restart">restart<a class="headerlink" href="#restart" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>heroku restart
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>heroku restart
 </code></pre></div>
-
 <h3 id="configs">Configs<a class="headerlink" href="#configs" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>heroku config:set <span class="nv">PYTHONPATH</span><span class="o">=</span>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>heroku config:set <span class="nv">PYTHONPATH</span><span class="o">=</span>.
 </code></pre></div>
-
 <h1 id="demo">Demo<a class="headerlink" href="#demo" title="Permanent link">&para;</a></h1>
 <p>http://justpy-demo.herokuapp.com/</p>
 

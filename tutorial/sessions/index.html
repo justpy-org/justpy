@@ -1778,20 +1778,18 @@
 <h1 id="sessions-in-justpy">Sessions in JustPy<a class="headerlink" href="#sessions-in-justpy" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>JustPy supports secure, server based sessions.</p>
-<p>Sessions are supported by default. If you want to disable them, add the line:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">SESSIONS</span> <span class="o">=</span> <span class="kc">False</span>
+<p>Sessions are supported by default. If you want to disable them, add the line:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">SESSIONS</span> <span class="o">=</span> <span class="kc">False</span>
 </code></pre></div>
-
-<p>to the configuration file, justpy.env</p>
+to the configuration file, justpy.env</p>
 <p>In the configuration file. You can also set the name of the cookie JustPy will use by setting the value of
 <code>SESSION_COOKIE_NAME</code>. The default value is 'jp_token'. The max age of the cookie in seconds is set using <code>COOKIE_MAX_AGE</code>, default is 7 days.</p>
-<p>Your justpy.env file could include for example:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">SESSIONS</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">SESSION_COOKIE_NAME</span> <span class="o">=</span> <span class="s2">&quot;my_cookie_name&quot;</span>
-<span class="n">COOKIE_MAX_AGE</span> <span class="o">=</span> <span class="mi">108000</span>
-<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&quot;my_very_secret_key_that_only_I_know&quot;</span>
-</code></pre></div>
-
+<p>Your justpy.env file could include for example:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">SESSIONS</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">SESSION_COOKIE_NAME</span> <span class="o">=</span> <span class="s2">&quot;my_cookie_name&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">COOKIE_MAX_AGE</span> <span class="o">=</span> <span class="mi">108000</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&quot;my_very_secret_key_that_only_I_know&quot;</span>
+</code></pre></div></p>
 <p>When a request is received and sessions are enabled, JustPy checks if a session cookie already exits. If not, a new unique session id is generated (using <a href="https://docs.python.org/3/library/uuid.html">uuid4</a>).</p>
 <p>The value of the JustPy cookie is signed using the python package <a href="https://palletsprojects.com/p/itsdangerous/"><code>itsdangerous</code></a>.  In order to do so, a secret key needs to be provided. Set the secret key by setting the value of <code>SECRET_KEY</code> in the configuration file justpy.env. JustPy comes with a default value ("$$$my_secret_string$$$") but be sure to change this for production. </p>
 <p>The advantage of signing the cookie is that cookie tampering  can be detected. If JustPy detects that the cookie was tampered with, a  <strong>Bad Cookie</strong> response is returned to the browser. </p>
@@ -1813,149 +1811,148 @@
 server restarts, you would use a permanent data store like a a shelve or database to hold session data.</p>
 <p>In this example, for each session, a tally is kept of the number of visits and the number of clicks.
 JustPy provides the session id as part of the information that event handlers receive. If the standard <code>msg</code> argument is used, then the session id can be found in <code>msg.session_id</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">session_dict</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="k">def</span> <span class="nf">session_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-   <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-   <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session_dict</span><span class="p">:</span>
-        <span class="n">session_dict</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;visits&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;events&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
-   <span class="n">session_data</span> <span class="o">=</span> <span class="n">session_dict</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
-   <span class="n">session_data</span><span class="p">[</span><span class="s1">&#39;visits&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-   <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;My session id: </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-1 text-xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-   <span class="n">visits_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of visits: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;visits&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-1 text-xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-   <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of Click Events: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-   <span class="n">b</span><span class="o">.</span><span class="n">visits_div</span> <span class="o">=</span> <span class="n">visits_div</span>
-
-   <span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-       <span class="n">session_data</span> <span class="o">=</span> <span class="n">session_dict</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
-       <span class="n">session_data</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of Click Events: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">visits_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Number of visits: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;visits&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
-
-   <span class="n">b</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
-   <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">session_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">session_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">def</span> <span class="nf">session_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session_dict</span><span class="p">:</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="n">session_dict</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;visits&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;events&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>   <span class="n">session_data</span> <span class="o">=</span> <span class="n">session_dict</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>   <span class="n">session_data</span><span class="p">[</span><span class="s1">&#39;visits&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>   <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;My session id: </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-1 text-xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>   <span class="n">visits_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of visits: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;visits&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-1 text-xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>   <span class="n">b</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of Click Events: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>   <span class="n">b</span><span class="o">.</span><span class="n">visits_div</span> <span class="o">=</span> <span class="n">visits_div</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>   <span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>       <span class="n">session_data</span> <span class="o">=</span> <span class="n">session_dict</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>       <span class="n">session_data</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>       <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of Click Events: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>       <span class="bp">self</span><span class="o">.</span><span class="n">visits_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Number of visits: </span><span class="si">{</span><span class="n">session_data</span><span class="p">[</span><span class="s2">&quot;visits&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>   <span class="n">b</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>   <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">session_test</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Run the program above. Close, open and reload browser tabs and click the button. The session information persists.</p>
 <h2 id="login-example">Login Example<a class="headerlink" href="#login-example" title="Permanent link">&para;</a></h2>
 <p>The example below shows how you could implement a very simple login/logout mechanism. </p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-
-<span class="n">login_form_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;div class=&quot;w-full max-w-xs&quot;&gt;</span>
-<span class="s2">  &lt;form class=&quot;bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4&quot;&gt;</span>
-<span class="s2">    &lt;div class=&quot;mb-4&quot;&gt;</span>
-<span class="s2">      &lt;label class=&quot;block text-gray-700 text-sm font-bold mb-2&quot; for=&quot;username&quot;&gt;</span>
-<span class="s2">        Username</span>
-<span class="s2">      &lt;/label&gt;</span>
-<span class="s2">      &lt;input class=&quot;shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline&quot;  type=&quot;text&quot; placeholder=&quot;Username&quot; name=&quot;user_name&quot;&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">    &lt;div class=&quot;mb-6&quot;&gt;</span>
-<span class="s2">      &lt;label class=&quot;block text-gray-700 text-sm font-bold mb-2&quot; for=&quot;password&quot;&gt;</span>
-<span class="s2">        Password</span>
-<span class="s2">      &lt;/label&gt;</span>
-<span class="s2">      &lt;input class=&quot;shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline&quot; name=&quot;password&quot; type=&quot;password&quot; placeholder=&quot;******************&quot;&gt;</span>
-<span class="s2">      &lt;p class=&quot;text-red-500 text-xs italic&quot;&gt;The password is &#39;password&#39;&lt;/p&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">    &lt;div class=&quot;flex items-center justify-between&quot;&gt;</span>
-<span class="s2">      &lt;button class=&quot;bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline&quot; type=&quot;button&quot; name=&quot;sign_in_btn&quot;&gt;</span>
-<span class="s2">        Sign In</span>
-<span class="s2">      &lt;/button&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">  &lt;/form&gt;</span>
-<span class="s2">  &lt;p class=&quot;text-center text-gray-500 text-xs&quot;&gt;</span>
-<span class="s2">    Example from https://tailwindcss.com/components/forms</span>
-<span class="s2">  &lt;/p&gt;</span>
-<span class="s2">&lt;/div&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">alert_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;div role=&quot;alert&quot; class=&quot;m-1 p-1 w-1/3&quot;&gt;</span>
-<span class="s2">  &lt;div class=&quot;bg-red-500 text-white font-bold rounded-t px-4 py-2&quot;&gt;</span>
-<span class="s2">    Password is incorrect</span>
-<span class="s2">  &lt;/div&gt;</span>
-<span class="s2">  &lt;div class=&quot;border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700&quot;&gt;</span>
-<span class="s2">    &lt;p&gt;Please enter password again.&lt;/p&gt;</span>
-<span class="s2">  &lt;/div&gt;</span>
-<span class="s2">&lt;/div&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">users</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">login_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">session_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span>
-    <span class="k">if</span> <span class="n">session_id</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">users</span><span class="p">[</span><span class="n">session_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]:</span>
-            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Your session id is: </span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-xl &#39;</span><span class="p">)</span>
-            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;You are already logged in...&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-2l&#39;</span><span class="p">)</span>
-            <span class="n">log_out_btn</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Logout&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_bordered</span> <span class="o">+</span> <span class="s1">&#39; m-1 p-1&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-            <span class="n">log_out_btn</span><span class="o">.</span><span class="n">s_id</span> <span class="o">=</span> <span class="n">session_id</span>
-
-            <span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-                <span class="n">users</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">redirect</span> <span class="o">=</span> <span class="s1">&#39;/login_test&#39;</span>
-
-            <span class="n">log_out_btn</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">log_out</span><span class="p">)</span>
-
-            <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">users</span><span class="p">[</span><span class="n">session_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">users</span><span class="p">[</span><span class="n">session_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">logged_in</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">login_page</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>  <span class="c1"># Return different page if not logged in</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">login_page</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">users</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">login_test</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">display_url</span> <span class="o">=</span> <span class="s1">&#39;login_page&#39;</span>  <span class="c1"># Sets the url to display in browser without reloading page</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Please login&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 w-1/4 text-xl font-semibold&#39;</span><span class="p">)</span>
-    <span class="n">login_form</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">login_form_html</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 w-1/4&#39;</span><span class="p">)</span>
-    <span class="n">alert</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">alert_html</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">session_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Session goes here&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">sign_in_btn</span> <span class="o">=</span> <span class="n">login_form</span><span class="o">.</span><span class="n">name_dict</span><span class="p">[</span><span class="s1">&#39;sign_in_btn&#39;</span><span class="p">]</span>
-    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">user_name</span> <span class="o">=</span> <span class="n">login_form</span><span class="o">.</span><span class="n">name_dict</span><span class="p">[</span><span class="s1">&#39;user_name&#39;</span><span class="p">]</span>
-    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span>
-    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">alert</span> <span class="o">=</span> <span class="n">alert</span>
-
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">sign_in_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">login_form</span><span class="o">.</span><span class="n">name_dict</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;password&#39;</span><span class="p">:</span>
-            <span class="n">session_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span> <span class="o">+</span> <span class="s1">&#39; logged in successfully&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alert</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">login_successful</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">session_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span> <span class="o">+</span> <span class="s1">&#39; login not successful&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alert</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">sign_in_click</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">login_successful</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">s_id</span><span class="p">):</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">delete_components</span><span class="p">()</span>
-    <span class="n">users</span><span class="p">[</span><span class="n">s_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">display_url</span> <span class="o">=</span> <span class="s1">&#39;login_successful&#39;</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Login successful. You are now logged in&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-2xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">redirect</span> <span class="o">=</span> <span class="s1">&#39;/login_test&#39;</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">login_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span> <span class="nn">asyncio</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">login_form_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="s2">&lt;div class=&quot;w-full max-w-xs&quot;&gt;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="s2">  &lt;form class=&quot;bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4&quot;&gt;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="s2">    &lt;div class=&quot;mb-4&quot;&gt;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="s2">      &lt;label class=&quot;block text-gray-700 text-sm font-bold mb-2&quot; for=&quot;username&quot;&gt;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="s2">        Username</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="s2">      &lt;/label&gt;</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="s2">      &lt;input class=&quot;shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline&quot;  type=&quot;text&quot; placeholder=&quot;Username&quot; name=&quot;user_name&quot;&gt;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="s2">    &lt;/div&gt;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="s2">    &lt;div class=&quot;mb-6&quot;&gt;</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="s2">      &lt;label class=&quot;block text-gray-700 text-sm font-bold mb-2&quot; for=&quot;password&quot;&gt;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="s2">        Password</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="s2">      &lt;/label&gt;</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="s2">      &lt;input class=&quot;shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline&quot; name=&quot;password&quot; type=&quot;password&quot; placeholder=&quot;******************&quot;&gt;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="s2">      &lt;p class=&quot;text-red-500 text-xs italic&quot;&gt;The password is &#39;password&#39;&lt;/p&gt;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="s2">    &lt;/div&gt;</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="s2">    &lt;div class=&quot;flex items-center justify-between&quot;&gt;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="s2">      &lt;button class=&quot;bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline&quot; type=&quot;button&quot; name=&quot;sign_in_btn&quot;&gt;</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="s2">        Sign In</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="s2">      &lt;/button&gt;</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="s2">    &lt;/div&gt;</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="s2">  &lt;/form&gt;</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="s2">  &lt;p class=&quot;text-center text-gray-500 text-xs&quot;&gt;</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="s2">    Example from https://tailwindcss.com/components/forms</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="s2">  &lt;/p&gt;</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="n">alert_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="s2">&lt;div role=&quot;alert&quot; class=&quot;m-1 p-1 w-1/3&quot;&gt;</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="s2">  &lt;div class=&quot;bg-red-500 text-white font-bold rounded-t px-4 py-2&quot;&gt;</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="s2">    Password is incorrect</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="s2">  &lt;/div&gt;</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="s2">  &lt;div class=&quot;border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700&quot;&gt;</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="s2">    &lt;p&gt;Please enter password again.&lt;/p&gt;</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="s2">  &lt;/div&gt;</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>
+<a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="n">users</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>
+<a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">login_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>    <span class="n">session_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>    <span class="k">if</span> <span class="n">session_id</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a>        <span class="k">if</span> <span class="n">users</span><span class="p">[</span><span class="n">session_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]:</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Your session id is: </span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-xl &#39;</span><span class="p">)</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>            <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;You are already logged in...&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-2l&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>            <span class="n">log_out_btn</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Logout&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">jp</span><span class="o">.</span><span class="n">Styles</span><span class="o">.</span><span class="n">button_bordered</span> <span class="o">+</span> <span class="s1">&#39; m-1 p-1&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>            <span class="n">log_out_btn</span><span class="o">.</span><span class="n">s_id</span> <span class="o">=</span> <span class="n">session_id</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>
+<a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>            <span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>                <span class="n">users</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>                <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">redirect</span> <span class="o">=</span> <span class="s1">&#39;/login_test&#39;</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>
+<a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>            <span class="n">log_out_btn</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">log_out</span><span class="p">)</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>
+<a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>            <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>            <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>        <span class="n">users</span><span class="p">[</span><span class="n">session_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>        <span class="n">users</span><span class="p">[</span><span class="n">session_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>        <span class="n">logged_in</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">logged_in</span><span class="p">:</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>        <span class="k">return</span> <span class="k">await</span> <span class="n">login_page</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>  <span class="c1"># Return different page if not logged in</span>
+<a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a>
+<a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">login_page</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a>        <span class="k">if</span> <span class="n">users</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]:</span>
+<a id="__codelineno-3-76" name="__codelineno-3-76" href="#__codelineno-3-76"></a>            <span class="k">return</span> <span class="k">await</span> <span class="n">login_test</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77" href="#__codelineno-3-77"></a>    <span class="k">except</span><span class="p">:</span>
+<a id="__codelineno-3-78" name="__codelineno-3-78" href="#__codelineno-3-78"></a>        <span class="k">pass</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79" href="#__codelineno-3-79"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80" href="#__codelineno-3-80"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">display_url</span> <span class="o">=</span> <span class="s1">&#39;login_page&#39;</span>  <span class="c1"># Sets the url to display in browser without reloading page</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81" href="#__codelineno-3-81"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Please login&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 w-1/4 text-xl font-semibold&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82" href="#__codelineno-3-82"></a>    <span class="n">login_form</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">login_form_html</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 w-1/4&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-83" name="__codelineno-3-83" href="#__codelineno-3-83"></a>    <span class="n">alert</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">alert_html</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-84" name="__codelineno-3-84" href="#__codelineno-3-84"></a>    <span class="n">session_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Session goes here&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-85" name="__codelineno-3-85" href="#__codelineno-3-85"></a>    <span class="n">sign_in_btn</span> <span class="o">=</span> <span class="n">login_form</span><span class="o">.</span><span class="n">name_dict</span><span class="p">[</span><span class="s1">&#39;sign_in_btn&#39;</span><span class="p">]</span>
+<a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a>    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">user_name</span> <span class="o">=</span> <span class="n">login_form</span><span class="o">.</span><span class="n">name_dict</span><span class="p">[</span><span class="s1">&#39;user_name&#39;</span><span class="p">]</span>
+<a id="__codelineno-3-87" name="__codelineno-3-87" href="#__codelineno-3-87"></a>    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span>
+<a id="__codelineno-3-88" name="__codelineno-3-88" href="#__codelineno-3-88"></a>    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">alert</span> <span class="o">=</span> <span class="n">alert</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89" href="#__codelineno-3-89"></a>
+<a id="__codelineno-3-90" name="__codelineno-3-90" href="#__codelineno-3-90"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">sign_in_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-3-91" name="__codelineno-3-91" href="#__codelineno-3-91"></a>        <span class="k">if</span> <span class="n">login_form</span><span class="o">.</span><span class="n">name_dict</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;password&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-92" name="__codelineno-3-92" href="#__codelineno-3-92"></a>            <span class="n">session_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span> <span class="o">+</span> <span class="s1">&#39; logged in successfully&#39;</span>
+<a id="__codelineno-3-93" name="__codelineno-3-93" href="#__codelineno-3-93"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">alert</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-94" name="__codelineno-3-94" href="#__codelineno-3-94"></a>            <span class="k">return</span> <span class="k">await</span> <span class="n">login_successful</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
+<a id="__codelineno-3-95" name="__codelineno-3-95" href="#__codelineno-3-95"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96" href="#__codelineno-3-96"></a>            <span class="n">session_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session_id</span> <span class="o">+</span> <span class="s1">&#39; login not successful&#39;</span>
+<a id="__codelineno-3-97" name="__codelineno-3-97" href="#__codelineno-3-97"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">alert</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-98" name="__codelineno-3-98" href="#__codelineno-3-98"></a>
+<a id="__codelineno-3-99" name="__codelineno-3-99" href="#__codelineno-3-99"></a>    <span class="n">sign_in_btn</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="n">sign_in_click</span><span class="p">)</span>
+<a id="__codelineno-3-100" name="__codelineno-3-100" href="#__codelineno-3-100"></a>
+<a id="__codelineno-3-101" name="__codelineno-3-101" href="#__codelineno-3-101"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-3-102" name="__codelineno-3-102" href="#__codelineno-3-102"></a>
+<a id="__codelineno-3-103" name="__codelineno-3-103" href="#__codelineno-3-103"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">login_successful</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="n">s_id</span><span class="p">):</span>
+<a id="__codelineno-3-104" name="__codelineno-3-104" href="#__codelineno-3-104"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">delete_components</span><span class="p">()</span>
+<a id="__codelineno-3-105" name="__codelineno-3-105" href="#__codelineno-3-105"></a>    <span class="n">users</span><span class="p">[</span><span class="n">s_id</span><span class="p">][</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-106" name="__codelineno-3-106" href="#__codelineno-3-106"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">display_url</span> <span class="o">=</span> <span class="s1">&#39;login_successful&#39;</span>
+<a id="__codelineno-3-107" name="__codelineno-3-107" href="#__codelineno-3-107"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Login successful. You are now logged in&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 p-1 text-2xl&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-3-108" name="__codelineno-3-108" href="#__codelineno-3-108"></a>    <span class="k">await</span> <span class="n">wp</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<a id="__codelineno-3-109" name="__codelineno-3-109" href="#__codelineno-3-109"></a>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-3-110" name="__codelineno-3-110" href="#__codelineno-3-110"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">redirect</span> <span class="o">=</span> <span class="s1">&#39;/login_test&#39;</span>
+<a id="__codelineno-3-111" name="__codelineno-3-111" href="#__codelineno-3-111"></a>
+<a id="__codelineno-3-112" name="__codelineno-3-112" href="#__codelineno-3-112"></a>
+<a id="__codelineno-3-113" name="__codelineno-3-113" href="#__codelineno-3-113"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">login_test</span><span class="p">)</span>
 </code></pre></div>
 
 

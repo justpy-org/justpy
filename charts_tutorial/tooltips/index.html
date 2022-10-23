@@ -1861,49 +1861,47 @@
 <h2 id="basic-use">Basic Use<a class="headerlink" href="#basic-use" title="Permanent link">&para;</a></h2>
 <p>The tooltip is the popup that is shown when you hover over a point on the chart. It provides one of the advantages of using interactive charts as it makes the chart more informative.</p>
 <p>Highcharts allows defining a tooltip using a very versatile formatting function (in JavaScript). JustPy allows writing tooltip formatters for Highcharts charts in Python just like any other event handler. Let's look at a concrete example.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">{</span>
-<span class="s2">    chart: {</span>
-<span class="s2">        type: &#39;column&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    title: {</span>
-<span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
-<span class="s2">        },</span>
-<span class="s2">    xAxis: {</span>
-<span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
-<span class="s2">    },</span>
-<span class="s2">    series: [{</span>
-<span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
-<span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
-<span class="s2">    }]</span>
-<span class="s2">}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My tooltip!&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">chart_test1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="c1"># First chart</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">css</span> <span class="o">=</span> <span class="s1">&#39;.h-chart {height: 300px;}&#39;</span>
-    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
-    <span class="c1"># Second chart</span>
-    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s2">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s2">    chart: {</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s2">        type: &#39;column&#39;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s2">    },</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s2">    title: {</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s2">        },</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s2">    xAxis: {</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s2">    },</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s2">    series: [{</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="s2">    }]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="s2">}</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My tooltip!&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">def</span> <span class="nf">chart_test1</span><span class="p">():</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="c1"># First chart</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">css</span> <span class="o">=</span> <span class="s1">&#39;.h-chart {height: 300px;}&#39;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="c1"># Second chart</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter1</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test1</span><span class="p">)</span>
 </code></pre></div>
-
 <p>In this example we put two charts on the page. They are identical except for their subtitle and the fact that that the second one has a custom tooltip formatter. </p>
 <p>The tooltip formatting function (the handler for the tooltip event) is called <code>tooltip_formatter1</code> and has one line in it:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My tooltip!&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My tooltip!&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
 </code></pre></div>
-
 <p>This line returns the result of running the method <code>tooltip_update</code> of the HighCharts component. The method has two arguments (in addition to self). The first is an HTML string which determines the content of the tooltip and the second is the websocket over which this HTML needs to be transmitted. The websocket of the page on which the event occurred can be found in <code>msg.websocket</code> and this is the websocket we use (<code>msg</code> is the second argument of the event handler).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1912,9 +1910,8 @@
 <h2 id="tooltip-debouncing">Tooltip Debouncing<a class="headerlink" href="#tooltip-debouncing" title="Permanent link">&para;</a></h2>
 <p>If you quickly mouseover several points on charts with user defined formatters, you will see the "Loading…" inscription instead of the information you expect. Only when no new tooltip event occurs for 100ms (0.1 second), JustPy notifies its backend that a tooltip event has happened. This prevents the server from being inundated with irrelevant tooltip requests as the user moves the mouse over the chart.</p>
 <p>The debouncing delay can be changed by setting the attribute <code>tooltip_debounce</code> which is by default 100ms. The following command changes the debounce period to 500ms:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_debounce</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># Assign value of debounce period in ms</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_debounce</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># Assign value of debounce period in ms</span>
 </code></pre></div>
-
 <h2 id="using-point-data-to-format-tooltip">Using Point Data to Format Tooltip<a class="headerlink" href="#using-point-data-to-format-tooltip" title="Permanent link">&para;</a></h2>
 <p>So far, the tooltip we return for all points is the same. That is not very interesting. We would like the tooltip to be much more descriptive.</p>
 <p>The second argument to the tooltip formatter (<code>msg</code> in our case) has values specific to tooltip events to assist us with this. In addition to the usual fields it contains the fields:
@@ -1926,330 +1923,322 @@
 - <code>msg.series_index</code> - The index the series the point is in
 - <code>msg.point_index</code> - The index the point in its series</p>
 <p>Let's use some of the fields above to create a more informative tooltip. Please replace <code>tooltip_formatter1</code> with this new version and run the program:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;div style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">;&quot;&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="s2">    &lt;div style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">;&quot;&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="s2">    &lt;div&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="s2">    &lt;div&gt;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="s2">    &quot;&quot;&quot;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
 </code></pre></div>
-
 <p>We use the Python f-string template like features to create a tooltip that includes information about each point. Notice how <code>msg.color</code> is used to give the series name the color of the point. In charts with multiple series, this becomes very useful.</p>
-<p>There is another way to create the HTML string used to update the tooltip. Try using the following <code>tooltip_formatter2</code> instead of the one above:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s1">;&#39;</span><span class="p">)</span>
-    <span class="n">d2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
-    <span class="n">d3</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">, y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="n">d1</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span> <span class="o">+</span> <span class="n">d2</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span> <span class="o">+</span> <span class="n">d3</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-</code></pre></div>
-
+<p>There is another way to create the HTML string used to update the tooltip. Try using the following <code>tooltip_formatter2</code> instead of the one above:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s1">;&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">d2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">d3</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">, y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="n">d1</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span> <span class="o">+</span> <span class="n">d2</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span> <span class="o">+</span> <span class="n">d3</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+</code></pre></div></p>
 <p>This time we create JustPy components and then use the <code>to_html()</code> method to convert them to HTML. Both methods work well and you should use the one you are most comfortable with.</p>
 <h2 id="tooltip-positioning">Tooltip Positioning<a class="headerlink" href="#tooltip-positioning" title="Permanent link">&para;</a></h2>
 <p>You may have noticed in the example above, that the tooltip covers part of the column instead of showing up above it. When we create custom tooltips, we need to help Highcharts position them correctly. We do this using the <code>tooltip_x</code> and <code>tooltip_y</code> attributes of the JustPy HighCharts class. These attributes determine the offset in pixels for the tooltip relative to where Higcharts estimates it needs to show it. In practice, you will need to experiment with different values to get the positioning you want.</p>
 <p>Here is the same example as above but with the tooltip position changed:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">{</span>
-<span class="s2">    chart: {</span>
-<span class="s2">        type: &#39;column&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    title: {</span>
-<span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
-<span class="s2">        },</span>
-<span class="s2">    xAxis: {</span>
-<span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
-<span class="s2">    },</span>
-<span class="s2">    series: [{</span>
-<span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
-<span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
-<span class="s2">    }</span>
-<span class="s2">    ]</span>
-<span class="s2">}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;div style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">;&quot;&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">chart_test2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="c1"># First chart</span>
-    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
-
-    <span class="c1"># Second chart</span>
-    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter4</span><span class="p">)</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">80</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">55</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="s2">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="s2">    chart: {</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="s2">        type: &#39;column&#39;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="s2">    },</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="s2">    title: {</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s2">        },</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="s2">    xAxis: {</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="s2">    },</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="s2">    series: [{</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="s2">    }</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="s2">    ]</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="s2">}</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="s2">    &lt;div style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">;&quot;&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="s2">    &lt;div&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="s2">    &lt;div&gt;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="s2">    &quot;&quot;&quot;</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="k">def</span> <span class="nf">chart_test2</span><span class="p">():</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>    <span class="c1"># First chart</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    <span class="c1"># Second chart</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter4</span><span class="p">)</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">80</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">55</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test2</span><span class="p">)</span>
 </code></pre></div>
-
-<p>We added the lines:</p>
-<div class="codehilite"><pre><span></span><code>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">80</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">55</span>
+<p>We added the lines:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">80</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">55</span>
 </code></pre></div>
-
-<p>to get the desired positioning. </p>
+to get the desired positioning. </p>
 <h2 id="fixed-tooltip">Fixed Tooltip<a class="headerlink" href="#fixed-tooltip" title="Permanent link">&para;</a></h2>
 <p>A tooltip can be fixed to one position. This is done by setting the chart attribute <code>tooltip_fixed</code> to <code>True</code>. When the tooltip is fixed, <code>tooltip_x</code> and <code>tooltip_y</code> designate the absolute position in the chart to place the tooltip. </p>
 <p>Here is the example above but this time with a fixed tooltip:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">{</span>
-<span class="s2">    chart: {</span>
-<span class="s2">        type: &#39;column&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    title: {</span>
-<span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
-<span class="s2">        },</span>
-<span class="s2">    xAxis: {</span>
-<span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
-<span class="s2">    },</span>
-<span class="s2">    series: [{</span>
-<span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
-<span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
-<span class="s2">    }</span>
-<span class="s2">    ]</span>
-<span class="s2">}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;div style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">;&quot;&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">chart_test3</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="c1"># First chart</span>
-    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
-
-    <span class="c1"># Second chart</span>
-    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter5</span><span class="p">)</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_fixed</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test3</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s2">{</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="s2">    chart: {</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s2">        type: &#39;column&#39;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="s2">    },</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="s2">    title: {</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="s2">        text: &#39;Tourists in Middle Earth&#39;</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="s2">        },</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="s2">    xAxis: {</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="s2">        categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;]</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="s2">    },</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="s2">    series: [{</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="s2">        name: &quot;Tourists in &#39;000&quot;,</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="s2">        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="s2">    }</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="s2">    ]</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="s2">}</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="s2">    &lt;div style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">;&quot;&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="s2">    &lt;div&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="s2">    &lt;div&gt;x: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> y: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="s2">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="k">def</span> <span class="nf">chart_test3</span><span class="p">():</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>    <span class="c1"># First chart</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>    <span class="n">chart1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>    <span class="n">chart1</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Default Tooltip&#39;</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>    <span class="c1"># Second chart</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>    <span class="n">chart2</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Custom Tooltip&#39;</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">tooltip_formatter5</span><span class="p">)</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_fixed</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">100</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="mi">100</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">chart_test3</span><span class="p">)</span>
 </code></pre></div>
-
-<p>The lines that make the difference are:</p>
-<div class="codehilite"><pre><span></span><code>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_fixed</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="mi">100</span>
-</code></pre></div>
-
+<p>The lines that make the difference are:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_fixed</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_y</span> <span class="o">=</span> <span class="mi">100</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">chart2</span><span class="o">.</span><span class="n">tooltip_x</span> <span class="o">=</span> <span class="mi">100</span>
+</code></pre></div></p>
 <h2 id="shared-and-split-tooltips">Shared and Split Tooltips<a class="headerlink" href="#shared-and-split-tooltips" title="Permanent link">&para;</a></h2>
 <h3 id="default-tooltips">Default Tooltips<a class="headerlink" href="#default-tooltips" title="Permanent link">&para;</a></h3>
 <p>Highcharts supports shared and split tooltips in addition to the regular tooltip. To see the difference between the three, run the example below which includes the same chart three times, each time with a different kind of tooltip. This is how the Highcharts default tooltip looks like.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="c1"># https://www.highcharts.com/demo/line-basic</span>
-<span class="n">chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">{</span>
-<span class="s2"> chart: {</span>
-<span class="s2">        type: &#39;spline&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    title: {</span>
-<span class="s2">        text: &#39;&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    subtitle: {</span>
-<span class="s2">        text: &#39;JustPy Tooltip Demo&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    yAxis: {</span>
-<span class="s2">        title: {</span>
-<span class="s2">            text: &#39;Number of Employees&#39;</span>
-<span class="s2">        }</span>
-<span class="s2">    },</span>
-<span class="s2">    legend: {</span>
-<span class="s2">        layout: &#39;vertical&#39;,</span>
-<span class="s2">        align: &#39;right&#39;,</span>
-<span class="s2">        verticalAlign: &#39;middle&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    plotOptions: {</span>
-<span class="s2">        series: {</span>
-<span class="s2">            pointStart: 2010</span>
-<span class="s2">        }</span>
-<span class="s2">    },</span>
-<span class="s2">    series: [{</span>
-<span class="s2">        name: &#39;Installation&#39;,</span>
-<span class="s2">        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Manufacturing&#39;,</span>
-<span class="s2">        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Sales &amp; Distribution&#39;,</span>
-<span class="s2">        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Project Development&#39;,</span>
-<span class="s2">        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Other&#39;,</span>
-<span class="s2">        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]</span>
-<span class="s2">    }]</span>
-<span class="s2">}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-
-<span class="k">def</span> <span class="nf">tool_tip_demo1</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with default Highcharts tooltip&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip&#39;</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip&#39;</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip&#39;</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tool_tip_demo1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># https://www.highcharts.com/demo/line-basic</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="s2">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="s2"> chart: {</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="s2">        type: &#39;spline&#39;</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="s2">    },</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="s2">    title: {</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="s2">        text: &#39;&#39;</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="s2">    },</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="s2">    subtitle: {</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="s2">        text: &#39;JustPy Tooltip Demo&#39;</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="s2">    },</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="s2">    yAxis: {</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="s2">        title: {</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="s2">            text: &#39;Number of Employees&#39;</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="s2">        }</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="s2">    },</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="s2">    legend: {</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="s2">        layout: &#39;vertical&#39;,</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="s2">        align: &#39;right&#39;,</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="s2">        verticalAlign: &#39;middle&#39;</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="s2">    },</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="s2">    plotOptions: {</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="s2">        series: {</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="s2">            pointStart: 2010</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="s2">        }</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="s2">    },</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="s2">    series: [{</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="s2">        name: &#39;Installation&#39;,</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="s2">        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="s2">    }, {</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="s2">        name: &#39;Manufacturing&#39;,</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="s2">        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="s2">    }, {</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a><span class="s2">        name: &#39;Sales &amp; Distribution&#39;,</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="s2">        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="s2">    }, {</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="s2">        name: &#39;Project Development&#39;,</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="s2">        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="s2">    }, {</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="s2">        name: &#39;Other&#39;,</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="s2">        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="s2">    }]</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a><span class="s2">}</span>
+<a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a>
+<a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>
+<a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a><span class="k">def</span> <span class="nf">tool_tip_demo1</span><span class="p">():</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with default Highcharts tooltip&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a>    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a>        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
+<a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip&#39;</span>
+<a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip&#39;</span>
+<a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip&#39;</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a>
+<a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tool_tip_demo1</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="custom-tooltips">Custom Tooltips<a class="headerlink" href="#custom-tooltips" title="Permanent link">&para;</a></h3>
 <p>In the example below we add three additional charts with custom tooltips to the page. In total, there are now six charts on the page. The first three use the default Highcharts tooltip and the second three use custom tooltips. The first custom tooltip is of type single, the second is of type shared and the third is a split tooltip.</p>
 <p>For single and shared tooltip handlers the first argument ofthe  <code>tooltip_update</code> is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.</p>
 <p>In the case of shared and split tooltips, the <code>msg</code> argument of the tooltip formatter includes a list of the properties of all the points with the corresponding x value. It is accessed as <code>msg.points</code>. As you will see in the example below, we iterate over this list in the tooltip handlers to generate the required output.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="c1"># https://www.highcharts.com/demo/line-basic</span>
-<span class="n">chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">{</span>
-<span class="s2"> chart: {</span>
-<span class="s2">        type: &#39;spline&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    title: {</span>
-<span class="s2">        text: &#39;&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    subtitle: {</span>
-<span class="s2">        text: &#39;JustPy Tooltip Demo&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    yAxis: {</span>
-<span class="s2">        title: {</span>
-<span class="s2">            text: &#39;Number of Employees&#39;</span>
-<span class="s2">        }</span>
-<span class="s2">    },</span>
-<span class="s2">    legend: {</span>
-<span class="s2">        layout: &#39;vertical&#39;,</span>
-<span class="s2">        align: &#39;right&#39;,</span>
-<span class="s2">        verticalAlign: &#39;middle&#39;</span>
-<span class="s2">    },</span>
-<span class="s2">    plotOptions: {</span>
-<span class="s2">        series: {</span>
-<span class="s2">            pointStart: 2010</span>
-<span class="s2">        }</span>
-<span class="s2">    },</span>
-<span class="s2">    series: [{</span>
-<span class="s2">        name: &#39;Installation&#39;,</span>
-<span class="s2">        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Manufacturing&#39;,</span>
-<span class="s2">        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Sales &amp; Distribution&#39;,</span>
-<span class="s2">        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Project Development&#39;,</span>
-<span class="s2">        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]</span>
-<span class="s2">    }, {</span>
-<span class="s2">        name: &#39;Other&#39;,</span>
-<span class="s2">        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]</span>
-<span class="s2">    }]</span>
-<span class="s2">}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-
-<span class="k">def</span> <span class="nf">tool_tip_demo2</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with default Highcharts tooltip&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip&#39;</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip&#39;</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip&#39;</span>
-
-    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with user defined tooltip formatter functions&#39;</span><span class="p">,</span>
-           <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
-
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip - Formatter Example&#39;</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip - Formatter Example&#39;</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip - Formatter Example&#39;</span>
-
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">simple_tooltip_formatter</span><span class="p">)</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">shared_tooltip_formatter</span><span class="p">)</span>
-    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">split_tooltip_formatter</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">simple_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;div class=&quot;text-red-500&quot;&gt;</span>
-<span class="s2">    &lt;div&gt;&lt;span style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;&gt;&amp;#x25CF;&amp;nbsp;&lt;/span&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;Year: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;div&gt;Number of employees: </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">shared_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;text-white bg-blue-400&quot;</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">tooltip_div</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
-        <span class="n">point_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">tooltip_div</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;&amp;#x25CF; </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-white&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of employees: </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_div</span><span class="o">.</span><span class="n">to_html</span><span class="p">(),</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">split_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="n">tooltip_array</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;The x value is </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
-        <span class="n">point_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">()</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&amp;#x25CF;&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-white&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of employees: </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
-        <span class="n">tooltip_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_div</span><span class="o">.</span><span class="n">to_html</span><span class="p">())</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_array</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tool_tip_demo2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># https://www.highcharts.com/demo/line-basic</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="s2">{</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="s2"> chart: {</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="s2">        type: &#39;spline&#39;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="s2">    },</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="s2">    title: {</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="s2">        text: &#39;&#39;</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="s2">    },</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="s2">    subtitle: {</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s2">        text: &#39;JustPy Tooltip Demo&#39;</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s2">    },</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s2">    yAxis: {</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="s2">        title: {</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="s2">            text: &#39;Number of Employees&#39;</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="s2">        }</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="s2">    },</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="s2">    legend: {</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="s2">        layout: &#39;vertical&#39;,</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="s2">        align: &#39;right&#39;,</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="s2">        verticalAlign: &#39;middle&#39;</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="s2">    },</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="s2">    plotOptions: {</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="s2">        series: {</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="s2">            pointStart: 2010</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="s2">        }</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="s2">    },</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="s2">    series: [{</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="s2">        name: &#39;Installation&#39;,</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="s2">        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="s2">    }, {</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="s2">        name: &#39;Manufacturing&#39;,</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="s2">        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="s2">    }, {</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="s2">        name: &#39;Sales &amp; Distribution&#39;,</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="s2">        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="s2">    }, {</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="s2">        name: &#39;Project Development&#39;,</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="s2">        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="s2">    }, {</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a><span class="s2">        name: &#39;Other&#39;,</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a><span class="s2">        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="s2">    }]</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="s2">}</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>
+<a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a>
+<a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="k">def</span> <span class="nf">tool_tip_demo2</span><span class="p">():</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with default Highcharts tooltip&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap &#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-10-54" name="__codelineno-10-54" href="#__codelineno-10-54"></a>    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-10-55" name="__codelineno-10-55" href="#__codelineno-10-55"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-10-56" name="__codelineno-10-56" href="#__codelineno-10-56"></a>        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
+<a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-10-58" name="__codelineno-10-58" href="#__codelineno-10-58"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-10-59" name="__codelineno-10-59" href="#__codelineno-10-59"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-10-60" name="__codelineno-10-60" href="#__codelineno-10-60"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip&#39;</span>
+<a id="__codelineno-10-61" name="__codelineno-10-61" href="#__codelineno-10-61"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip&#39;</span>
+<a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip&#39;</span>
+<a id="__codelineno-10-63" name="__codelineno-10-63" href="#__codelineno-10-63"></a>
+<a id="__codelineno-10-64" name="__codelineno-10-64" href="#__codelineno-10-64"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Charts with user defined tooltip formatter functions&#39;</span><span class="p">,</span>
+<a id="__codelineno-10-65" name="__codelineno-10-65" href="#__codelineno-10-65"></a>           <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 text-xl bg-blue-500 text-white&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-10-66" name="__codelineno-10-66" href="#__codelineno-10-66"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;flex flex-wrap&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-10-67" name="__codelineno-10-67" href="#__codelineno-10-67"></a>    <span class="n">my_charts</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-10-68" name="__codelineno-10-68" href="#__codelineno-10-68"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-10-69" name="__codelineno-10-69" href="#__codelineno-10-69"></a>        <span class="n">my_charts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_def</span><span class="p">))</span>
+<a id="__codelineno-10-70" name="__codelineno-10-70" href="#__codelineno-10-70"></a>
+<a id="__codelineno-10-71" name="__codelineno-10-71" href="#__codelineno-10-71"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-10-72" name="__codelineno-10-72" href="#__codelineno-10-72"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-10-73" name="__codelineno-10-73" href="#__codelineno-10-73"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-10-74" name="__codelineno-10-74" href="#__codelineno-10-74"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Simple Tooltip - Formatter Example&#39;</span>
+<a id="__codelineno-10-75" name="__codelineno-10-75" href="#__codelineno-10-75"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Shared Tooltip - Formatter Example&#39;</span>
+<a id="__codelineno-10-76" name="__codelineno-10-76" href="#__codelineno-10-76"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Split Tooltip - Formatter Example&#39;</span>
+<a id="__codelineno-10-77" name="__codelineno-10-77" href="#__codelineno-10-77"></a>
+<a id="__codelineno-10-78" name="__codelineno-10-78" href="#__codelineno-10-78"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">simple_tooltip_formatter</span><span class="p">)</span>
+<a id="__codelineno-10-79" name="__codelineno-10-79" href="#__codelineno-10-79"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">shared_tooltip_formatter</span><span class="p">)</span>
+<a id="__codelineno-10-80" name="__codelineno-10-80" href="#__codelineno-10-80"></a>    <span class="n">my_charts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;tooltip&#39;</span><span class="p">,</span> <span class="n">split_tooltip_formatter</span><span class="p">)</span>
+<a id="__codelineno-10-81" name="__codelineno-10-81" href="#__codelineno-10-81"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-10-82" name="__codelineno-10-82" href="#__codelineno-10-82"></a>
+<a id="__codelineno-10-83" name="__codelineno-10-83" href="#__codelineno-10-83"></a>
+<a id="__codelineno-10-84" name="__codelineno-10-84" href="#__codelineno-10-84"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">simple_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-10-85" name="__codelineno-10-85" href="#__codelineno-10-85"></a>    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-10-86" name="__codelineno-10-86" href="#__codelineno-10-86"></a><span class="s2">    &lt;div class=&quot;text-red-500&quot;&gt;</span>
+<a id="__codelineno-10-87" name="__codelineno-10-87" href="#__codelineno-10-87"></a><span class="s2">    &lt;div&gt;&lt;span style=&quot;color: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;&gt;&amp;#x25CF;&amp;nbsp;&lt;/span&gt;</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-10-88" name="__codelineno-10-88" href="#__codelineno-10-88"></a><span class="s2">    &lt;div&gt;Year: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-10-89" name="__codelineno-10-89" href="#__codelineno-10-89"></a><span class="s2">    &lt;div&gt;Number of employees: </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/div&gt;</span>
+<a id="__codelineno-10-90" name="__codelineno-10-90" href="#__codelineno-10-90"></a><span class="s2">    &lt;/div&gt;</span>
+<a id="__codelineno-10-91" name="__codelineno-10-91" href="#__codelineno-10-91"></a><span class="s2">    &quot;&quot;&quot;</span>
+<a id="__codelineno-10-92" name="__codelineno-10-92" href="#__codelineno-10-92"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_html</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-10-93" name="__codelineno-10-93" href="#__codelineno-10-93"></a>
+<a id="__codelineno-10-94" name="__codelineno-10-94" href="#__codelineno-10-94"></a>
+<a id="__codelineno-10-95" name="__codelineno-10-95" href="#__codelineno-10-95"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">shared_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-10-96" name="__codelineno-10-96" href="#__codelineno-10-96"></a>    <span class="n">tooltip_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;text-white bg-blue-400&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-97" name="__codelineno-10-97" href="#__codelineno-10-97"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">tooltip_div</span><span class="p">)</span>
+<a id="__codelineno-10-98" name="__codelineno-10-98" href="#__codelineno-10-98"></a>    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+<a id="__codelineno-10-99" name="__codelineno-10-99" href="#__codelineno-10-99"></a>        <span class="n">point_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">tooltip_div</span><span class="p">)</span>
+<a id="__codelineno-10-100" name="__codelineno-10-100" href="#__codelineno-10-100"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;&amp;#x25CF; </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-white&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+<a id="__codelineno-10-101" name="__codelineno-10-101" href="#__codelineno-10-101"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of employees: </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+<a id="__codelineno-10-102" name="__codelineno-10-102" href="#__codelineno-10-102"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_div</span><span class="o">.</span><span class="n">to_html</span><span class="p">(),</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-10-103" name="__codelineno-10-103" href="#__codelineno-10-103"></a>
+<a id="__codelineno-10-104" name="__codelineno-10-104" href="#__codelineno-10-104"></a>
+<a id="__codelineno-10-105" name="__codelineno-10-105" href="#__codelineno-10-105"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">split_tooltip_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-10-106" name="__codelineno-10-106" href="#__codelineno-10-106"></a>    <span class="n">tooltip_array</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;The x value is </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+<a id="__codelineno-10-107" name="__codelineno-10-107" href="#__codelineno-10-107"></a>    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+<a id="__codelineno-10-108" name="__codelineno-10-108" href="#__codelineno-10-108"></a>        <span class="n">point_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">()</span>
+<a id="__codelineno-10-109" name="__codelineno-10-109" href="#__codelineno-10-109"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&amp;#x25CF;&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;bg-white&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+<a id="__codelineno-10-110" name="__codelineno-10-110" href="#__codelineno-10-110"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">series_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+<a id="__codelineno-10-111" name="__codelineno-10-111" href="#__codelineno-10-111"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Year: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+<a id="__codelineno-10-112" name="__codelineno-10-112" href="#__codelineno-10-112"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of employees: </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">point_div</span><span class="p">)</span>
+<a id="__codelineno-10-113" name="__codelineno-10-113" href="#__codelineno-10-113"></a>        <span class="n">tooltip_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_div</span><span class="o">.</span><span class="n">to_html</span><span class="p">())</span>
+<a id="__codelineno-10-114" name="__codelineno-10-114" href="#__codelineno-10-114"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip_update</span><span class="p">(</span><span class="n">tooltip_array</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">websocket</span><span class="p">)</span>
+<a id="__codelineno-10-115" name="__codelineno-10-115" href="#__codelineno-10-115"></a>
+<a id="__codelineno-10-116" name="__codelineno-10-116" href="#__codelineno-10-116"></a>
+<a id="__codelineno-10-117" name="__codelineno-10-117" href="#__codelineno-10-117"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tool_tip_demo2</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The <code>split_tooltip_formatter</code> function is a little more complex as can be seen above. A split tooltip means that each series has its own separate popup box and therefore the HTML for each series needs to be returned. The <code>tooltip_update</code> method therefore takes as its first argument a list of strings instead of a string as in the other cases. The first string in the list represents the HTML for the x axis value. </p>
 
 

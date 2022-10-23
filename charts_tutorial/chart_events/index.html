@@ -1824,35 +1824,33 @@
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
 <h3 id="async-def-draw_crosshairself-point_list-websocket"><code>async def draw_crosshair(self, point_list, websocket)</code><a class="headerlink" href="#async-def-draw_crosshairself-point_list-websocket" title="Permanent link">&para;</a></h3>
 <p>Draw crosshairs for designated points.</p>
-<div class="codehilite"><pre><span></span><code>    <span class="k">async</span> <span class="k">def</span> <span class="nf">draw_crosshair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_list</span><span class="p">,</span> <span class="n">websocket</span><span class="p">):</span>
-        <span class="c1"># data is list of of dictionaries  whose keys are:</span>
-        <span class="c1"># &#39;id&#39;: the chart id </span>
-        <span class="c1"># &#39;series&#39;: the series index</span>
-        <span class="c1"># &#39;point&#39;: the point index </span>
-        <span class="c1">#  Values are  all integers</span>
-        <span class="c1"># Example:</span>
-        <span class="c1"># {&#39;id&#39;: chart_id, &#39;series&#39;: msg.series_index, &#39;point&#39;: msg.point_index}</span>
-        <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send_json</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;draw_crosshair&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">point_list</span><span class="p">})</span>
-        <span class="c1"># So the page itself does not update, only the tooltip, return True not None</span>
-        <span class="k">return</span> <span class="kc">True</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">draw_crosshair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_list</span><span class="p">,</span> <span class="n">websocket</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        <span class="c1"># data is list of of dictionaries  whose keys are:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="c1"># &#39;id&#39;: the chart id </span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="c1"># &#39;series&#39;: the series index</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="c1"># &#39;point&#39;: the point index </span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="c1">#  Values are  all integers</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="c1"># Example:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="c1"># {&#39;id&#39;: chart_id, &#39;series&#39;: msg.series_index, &#39;point&#39;: msg.point_index}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send_json</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;draw_crosshair&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">point_list</span><span class="p">})</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="c1"># So the page itself does not update, only the tooltip, return True not None</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
-
 <p>See example of usage in <a href="../iris">Iris Flower Dataset Visualization</a></p>
 <h3 id="async-def-select_pointself-point_list-websocket"><code>async def select_point(self, point_list, websocket)</code><a class="headerlink" href="#async-def-select_pointself-point_list-websocket" title="Permanent link">&para;</a></h3>
 <p>Selects designated points.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">select_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_list</span><span class="p">,</span> <span class="n">websocket</span><span class="p">):</span>
-    <span class="c1"># data is list of of dictionaries  whose keys are:</span>
-    <span class="c1"># &#39;id&#39;: the chart id </span>
-    <span class="c1"># &#39;series&#39;: the series index</span>
-    <span class="c1"># &#39;point&#39;: the point index </span>
-    <span class="c1">#  Values are  all integers</span>
-    <span class="c1"># Example:</span>
-    <span class="c1"># {&#39;id&#39;: chart_id, &#39;series&#39;: msg.series_index, &#39;point&#39;: msg.point_index}</span>
-    <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send_json</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;select_point&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">point_list</span><span class="p">})</span>
-    <span class="c1"># So the page itself does not update, only the tooltip, return True not None</span>
-    <span class="k">return</span> <span class="kc">True</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">select_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_list</span><span class="p">,</span> <span class="n">websocket</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1"># data is list of of dictionaries  whose keys are:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="c1"># &#39;id&#39;: the chart id </span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="c1"># &#39;series&#39;: the series index</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="c1"># &#39;point&#39;: the point index </span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="c1">#  Values are  all integers</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="c1"># Example:</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="c1"># {&#39;id&#39;: chart_id, &#39;series&#39;: msg.series_index, &#39;point&#39;: msg.point_index}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send_json</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;select_point&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">point_list</span><span class="p">})</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="c1"># So the page itself does not update, only the tooltip, return True not None</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div>
-
 <p>See example of usage in <a href="../iris">Iris Flower Dataset Visualization</a></p>
 
 

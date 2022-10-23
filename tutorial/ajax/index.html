@@ -1765,17 +1765,16 @@
 <h2 id="using-ajax-to-handle-events">Using Ajax to Handle Events<a class="headerlink" href="#using-ajax-to-handle-events" title="Permanent link">&para;</a></h2>
 <p>By default, JustPy uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSockets</a> as the communication protocol between the frontend and the backend. The advantage of WebSockets is that it allows the server to "push" data to the browser. </p>
 <p>There may be applications where either you do not want to or cannot use WebSockets (due to hosting limitations for example). In the <code>justpy</code> command if the <code>websockets</code> keyword argument is set to <code>False</code>, web pages will not attempt to establish a WebSockets connection with the server. Instead, events and pertinent data will be sent to the backend using Ajax. Your program will still be able to respond to UI events in the browser but will not be able to push data to browsers (you will not be able to implement chat like applications for example).</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">def</span> <span class="nf">hello_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test</span><span class="p">,</span> <span class="n">websockets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span> <span class="nf">hello_test</span><span class="p">():</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_test</span><span class="p">,</span> <span class="n">websockets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The program above will use Ajax to handle clicks on the Hello elements. You van verify this by using the debugging tools of your browser (in Chrome press CTRL+Shift+I and go to the "Network" tab)</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1784,27 +1783,27 @@
 <h2 id="ajax-page-reload">Ajax Page Reload<a class="headerlink" href="#ajax-page-reload" title="Permanent link">&para;</a></h2>
 <p>There may be cases where you do not want to use WebSockets but still want the content on the users' pages to refresh periodically. This is done in JustPy by setting the <code>reload_interval</code> attribute of the page to the number of seconds between each reload. The page does not reload in the strictest sense of that word, it just refreshes its content using an Ajax call to the server as you would do in a single page application. </p>
 <p>For example, this feature is useful for implementing dashboards. Below is a very simple dashboard that includes just one element that is updated by a background task every second while users' browser tabs poll the updated content every 2.5 seconds. </p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-
-<span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">wp</span><span class="o">.</span><span class="n">reload_interval</span> <span class="o">=</span> <span class="mf">2.5</span>
-<span class="n">count_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-center m-4 p-4 text-white bg-blue-500&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;font-size: 200px&#39;</span><span class="p">)</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">increment_counter</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
-    <span class="n">count_div</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">start</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">count_div</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">count_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_div</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
-        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">start_counting</span><span class="p">():</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">increment_counter</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">reload_demo</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">reload_demo</span><span class="p">,</span> <span class="n">startup</span><span class="o">=</span><span class="n">start_counting</span><span class="p">,</span> <span class="n">websockets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">asyncio</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">wp</span><span class="o">.</span><span class="n">reload_interval</span> <span class="o">=</span> <span class="mf">2.5</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">count_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;text-center m-4 p-4 text-white bg-blue-500&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;font-size: 200px&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">increment_counter</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">count_div</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">start</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="n">count_div</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="n">count_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_div</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">def</span> <span class="nf">start_counting</span><span class="p">():</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">increment_counter</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="k">def</span> <span class="nf">reload_demo</span><span class="p">():</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">reload_demo</span><span class="p">,</span> <span class="n">startup</span><span class="o">=</span><span class="n">start_counting</span><span class="p">,</span> <span class="n">websockets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
 

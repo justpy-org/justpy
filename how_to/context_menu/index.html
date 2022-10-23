@@ -1690,44 +1690,43 @@
 
 
 <h1 id="addiing-a-context-menu-right-click-in-browser">Addiing a Context Menu (right-click in browser)<a class="headerlink" href="#addiing-a-context-menu-right-click-in-browser" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-
-<span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Mouse button clicked: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="si">}</span><span class="s1">&#39;</span>
-    <span class="c1"># Show context menu div and place it near the click</span>
-    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">remove_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
-        <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;top</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">pageY</span><span class="si">}</span><span class="s1">px; left: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">pageX</span><span class="si">}</span><span class="s1">px;&#39;</span>
-
-
-<span class="k">def</span> <span class="nf">click_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">context_event_demo</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">head_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;script&gt;</span>
-<span class="s2">    window.oncontextmenu = function () {</span>
-<span class="s2">      return false;     // cancel default menu</span>
-<span class="s2">    }</span>
-<span class="s2">    &lt;/script&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-64 text-xl m-2 p-1 bg-blue-500 text-white&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;mousedown&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;mousedown&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;screenX&#39;</span><span class="p">,</span> <span class="s1">&#39;pageY&#39;</span><span class="p">,</span> <span class="s1">&#39;pageX&#39;</span><span class="p">,</span> <span class="s1">&#39;altKey&#39;</span><span class="p">,</span> <span class="s1">&#39;which&#39;</span><span class="p">,</span> <span class="s1">&#39;movementX&#39;</span><span class="p">,</span><span class="s1">&#39; button&#39;</span><span class="p">,</span> <span class="s1">&#39;buttons&#39;</span><span class="p">]</span>
-    <span class="c1"># In your case you would build a more elaborate div</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">context_menu</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;My context menu&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;hidden absolute border text-white bg-blue-500&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click__out&#39;</span><span class="p">,</span> <span class="n">click_out</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">context_event_demo</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">def</span> <span class="nf">my_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Mouse button clicked: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">which</span><span class="si">}</span><span class="s1">&#39;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="c1"># Show context menu div and place it near the click</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">which</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">remove_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;top</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">pageY</span><span class="si">}</span><span class="s1">px; left: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">pageX</span><span class="si">}</span><span class="s1">px;&#39;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">def</span> <span class="nf">click_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">set_class</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">def</span> <span class="nf">context_event_demo</span><span class="p">():</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">head_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="s2">    &lt;script&gt;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="s2">    window.oncontextmenu = function () {</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="s2">      return false;     // cancel default menu</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="s2">    }</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="s2">    &lt;/script&gt;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="s2">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Not clicked yet&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;w-64 text-xl m-2 p-1 bg-blue-500 text-white&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">d</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;mousedown&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;mousedown&#39;</span><span class="p">,</span> <span class="n">my_click</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="n">d</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;screenX&#39;</span><span class="p">,</span> <span class="s1">&#39;pageY&#39;</span><span class="p">,</span> <span class="s1">&#39;pageX&#39;</span><span class="p">,</span> <span class="s1">&#39;altKey&#39;</span><span class="p">,</span> <span class="s1">&#39;which&#39;</span><span class="p">,</span> <span class="s1">&#39;movementX&#39;</span><span class="p">,</span><span class="s1">&#39; button&#39;</span><span class="p">,</span> <span class="s1">&#39;buttons&#39;</span><span class="p">]</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="c1"># In your case you would build a more elaborate div</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">context_menu</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;My context menu&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;hidden absolute border text-white bg-blue-500&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;click__out&#39;</span><span class="p">,</span> <span class="n">click_out</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">context_event_demo</span><span class="p">)</span>
 </code></pre></div>
-
 <p>The JavaScript added to the page disables the default behavior of the context menu. Then, you use the mousedown event to detect which button was pressed. In order to do this we modify the element to add additional fields to msg from the JavaScript event.</p>
 <p>click__out is also used to hide the simple context menu when there is a click outside of it.</p>
 

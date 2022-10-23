@@ -1702,44 +1702,44 @@
 
 
 <h1 id="monitor-inactivity">Monitor Inactivity<a class="headerlink" href="#monitor-inactivity" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-
-
-<span class="k">def</span> <span class="nf">mouse_moved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mouse moved&#39;</span><span class="p">)</span>
-    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-    <span class="k">return</span> <span class="kc">True</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">idle_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 100vh&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">,</span> <span class="n">mouse_moved</span><span class="p">)</span>
-    <span class="n">wp</span><span class="o">.</span><span class="n">idle_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Idle time&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-
-    <span class="c1"># Has to be in request handler so can be specific per page</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">monitor_timer</span><span class="p">():</span>
-        <span class="n">keep_monitoring</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">idle_threshold</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="k">while</span> <span class="n">keep_monitoring</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-                <span class="n">idle_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">wp</span><span class="o">.</span><span class="n">start_time</span>
-                <span class="k">if</span> <span class="n">idle_time</span> <span class="o">&gt;</span> <span class="n">idle_threshold</span><span class="p">:</span>
-                    <span class="n">wp</span><span class="o">.</span><span class="n">idle_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Idle for </span><span class="si">{</span><span class="n">idle_time</span><span class="si">}</span><span class="s1"> seconds&#39;</span>
-                    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">update</span><span class="p">())</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="c1"># When page is closed, it will be erased, the exception will occur and the task will terminate</span>
-                <span class="n">keep_monitoring</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">monitor_timer</span><span class="p">())</span>
-
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">idle_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">time</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">asyncio</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">def</span> <span class="nf">mouse_moved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mouse moved&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">idle_test</span><span class="p">():</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 100vh&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">d</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">d</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;mousemove&#39;</span><span class="p">,</span> <span class="n">mouse_moved</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">wp</span><span class="o">.</span><span class="n">idle_div</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Idle time&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-4 text-lg&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="c1"># Has to be in request handler so can be specific per page</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">monitor_timer</span><span class="p">():</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="n">keep_monitoring</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">idle_threshold</span> <span class="o">=</span> <span class="mi">5</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="k">while</span> <span class="n">keep_monitoring</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>            <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>                <span class="n">idle_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">wp</span><span class="o">.</span><span class="n">start_time</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>                <span class="k">if</span> <span class="n">idle_time</span> <span class="o">&gt;</span> <span class="n">idle_threshold</span><span class="p">:</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>                    <span class="n">wp</span><span class="o">.</span><span class="n">idle_div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Idle for </span><span class="si">{</span><span class="n">idle_time</span><span class="si">}</span><span class="s1"> seconds&#39;</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>                    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">update</span><span class="p">())</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>            <span class="k">except</span><span class="p">:</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>                <span class="c1"># When page is closed, it will be erased, the exception will occur and the task will terminate</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>                <span class="n">keep_monitoring</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="n">monitor_timer</span><span class="p">())</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">idle_test</span><span class="p">)</span>
 </code></pre></div>
 
 

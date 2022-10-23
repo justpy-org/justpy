@@ -1708,35 +1708,35 @@
 <p class="admonition-title">Warning</p>
 <p>Don't forget to set justpy.env to load the enterprise version of ag-grid</p>
 </div>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">grid_options</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;getDataPath&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;function(data) { return data.orgHierarchy; }&#39;&#39;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;treeData&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s1">&#39;defaultColDef&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s1">&#39;sortable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s1">&#39;resizable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;columnDefs&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s1">&#39;headerName&#39;</span><span class="p">:</span> <span class="s2">&quot;job title&quot;</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s2">&quot;jobTitle&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;headerName&#39;</span><span class="p">:</span> <span class="s2">&quot;employment type&quot;</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s2">&quot;employmentType&quot;</span><span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;rowData&#39;</span> <span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;CEO&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">,</span> <span class="s1">&#39;Malcolm&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;VP&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;SVP&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;jo&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;eVP&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">grid_test9</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">)</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">evaluate</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;getDataPath&#39;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test9</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">grid_options</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="s1">&#39;getDataPath&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;function(data) { return data.orgHierarchy; }&#39;&#39;&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="s1">&#39;treeData&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="s1">&#39;defaultColDef&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="s1">&#39;sortable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="s1">&#39;resizable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="p">},</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="s1">&#39;columnDefs&#39;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="p">{</span><span class="s1">&#39;headerName&#39;</span><span class="p">:</span> <span class="s2">&quot;job title&quot;</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s2">&quot;jobTitle&quot;</span><span class="p">},</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="p">{</span><span class="s1">&#39;headerName&#39;</span><span class="p">:</span> <span class="s2">&quot;employment type&quot;</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s2">&quot;employmentType&quot;</span><span class="p">},</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="p">],</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="s1">&#39;rowData&#39;</span> <span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;CEO&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">},</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">,</span> <span class="s1">&#39;Malcolm&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;VP&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">},</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;SVP&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">},</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="p">{</span><span class="s1">&#39;orgHierarchy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Erica&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;jo&#39;</span><span class="p">],</span> <span class="s1">&#39;jobTitle&#39;</span><span class="p">:</span> <span class="s2">&quot;eVP&quot;</span><span class="p">,</span> <span class="s1">&#39;employmentType&#39;</span><span class="p">:</span> <span class="s2">&quot;Permanent&quot;</span><span class="p">}</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="p">]</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p">}</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="k">def</span> <span class="nf">grid_test9</span><span class="p">():</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">evaluate</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;getDataPath&#39;</span><span class="p">]</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test9</span><span class="p">)</span>
 </code></pre></div>
 
 

@@ -1702,81 +1702,76 @@
 
 
 <h1 id="creating-grids">Creating Grids<a class="headerlink" href="#creating-grids" title="Permanent link">&para;</a></h1>
-<p>Here is a simple example of a adding a grid to the page. </p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="n">grid_options</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">{</span>
-<span class="s2">    defaultColDef: {</span>
-<span class="s2">        filter: true,</span>
-<span class="s2">        sortable: true,</span>
-<span class="s2">        resizable: true,</span>
-<span class="s2">        cellStyle: {textAlign: &#39;center&#39;},</span>
-<span class="s2">        headerClass: &#39;font-bold&#39;</span>
-<span class="s2">    }, </span>
-<span class="s2">      columnDefs: [</span>
-<span class="s2">      {headerName: &quot;Make&quot;, field: &quot;make&quot;},</span>
-<span class="s2">      {headerName: &quot;Model&quot;, field: &quot;model&quot;},</span>
-<span class="s2">      {headerName: &quot;Price&quot;, field: &quot;price&quot;}</span>
-<span class="s2">    ],</span>
-<span class="s2">      rowData: [</span>
-<span class="s2">      {make: &quot;Toyota&quot;, model: &quot;Celica&quot;, price: 35000},</span>
-<span class="s2">      {make: &quot;Ford&quot;, model: &quot;Mondeo&quot;, price: 32000},</span>
-<span class="s2">      {make: &quot;Porsche&quot;, model: &quot;Boxter&quot;, price: 72000}</span>
-<span class="s2">    ]</span>
-<span class="s2">}</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">def</span> <span class="nf">grid_test4</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test4</span><span class="p">)</span>
+<p>Here is a simple example of a adding a grid to the page. 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">grid_options</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s2">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s2">    defaultColDef: {</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s2">        filter: true,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s2">        sortable: true,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s2">        resizable: true,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s2">        cellStyle: {textAlign: &#39;center&#39;},</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s2">        headerClass: &#39;font-bold&#39;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s2">    }, </span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="s2">      columnDefs: [</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s2">      {headerName: &quot;Make&quot;, field: &quot;make&quot;},</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s2">      {headerName: &quot;Model&quot;, field: &quot;model&quot;},</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="s2">      {headerName: &quot;Price&quot;, field: &quot;price&quot;}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s2">    ],</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="s2">      rowData: [</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="s2">      {make: &quot;Toyota&quot;, model: &quot;Celica&quot;, price: 35000},</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="s2">      {make: &quot;Ford&quot;, model: &quot;Mondeo&quot;, price: 32000},</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="s2">      {make: &quot;Porsche&quot;, model: &quot;Boxter&quot;, price: 72000}</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="s2">    ]</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="s2">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="k">def</span> <span class="nf">grid_test4</span><span class="p">():</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test4</span><span class="p">)</span>
 </code></pre></div>
-
-<p>In this case the grid options are defined using a string that represents a JavaScript object. It could also be a Python dictionary. The options object is described in the <a href="https://www.ag-grid.com/documentation-main/documentation.php">ag_Grid documentation</a>.</p>
+In this case the grid options are defined using a string that represents a JavaScript object. It could also be a Python dictionary. The options object is described in the <a href="https://www.ag-grid.com/documentation-main/documentation.php">ag_Grid documentation</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We will see later, that when working with pandas, JustPy can automate the process and there is no need to go into the grid specification details.</p>
 </div>
-<p>As mentioned above, AgGrid provides a default style to the grid when it is created. Let’s change that style. Replace the function <code>grid_test4</code> in the example above with the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">grid_test5</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
+<p>As mentioned above, AgGrid provides a default style to the grid when it is created. Let’s change that style. Replace the function <code>grid_test4</code> in the example above with the following:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">grid_test5</span><span class="p">():</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">return</span> <span class="n">wp</span>
 </code></pre></div>
-
-<p>When you run the program, the rendered grid is smaller.</p>
+When you run the program, the rendered grid is smaller.</p>
 <p>After the grid is created, you can modify its options further. Let's add a data row after the grid is created:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">grid_test6</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">rowData</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;make&#39;</span><span class="p">:</span> <span class="s1">&#39;Autocars&#39;</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;Sussita&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
-    <span class="k">return</span> <span class="n">wp</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">grid_test6</span><span class="p">():</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">rowData</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;make&#39;</span><span class="p">:</span> <span class="s1">&#39;Autocars&#39;</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;Sussita&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">return</span> <span class="n">wp</span>
 </code></pre></div>
-
-<p>Let's make all columns editable and add a checkbox in the second column.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">grid_test7</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">:</span>
-        <span class="n">col_def</span><span class="o">.</span><span class="n">editable</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">checkboxSelection</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="n">wp</span>
-</code></pre></div>
-
+<p>Let's make all columns editable and add a checkbox in the second column.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span> <span class="nf">grid_test7</span><span class="p">():</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="n">col_def</span><span class="o">.</span><span class="n">editable</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">checkboxSelection</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="k">return</span> <span class="n">wp</span>
+</code></pre></div></p>
 <p>You can now edit any cell in the grid. After selecting a cell, just start typing.
 The appearance of data in a column can be modified by assigning a list of classes to the <code>cellClass</code> attribute of a column definition. In the example below the appearance of the Model column is modified.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">grid_test8</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">:</span>
-        <span class="n">col_def</span><span class="o">.</span><span class="n">editable</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cellClass</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;text-2xl&#39;</span><span class="p">,</span><span class="s1">&#39;text-red-500&#39;</span><span class="p">,</span><span class="s1">&#39;hover:bg-blue-500&#39;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">wp</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">grid_test8</span><span class="p">():</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">AgGrid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">grid_options</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;height: 200px; width: 300px; margin: 0.25em&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="n">col_def</span><span class="o">.</span><span class="n">editable</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">grid</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">columnDefs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cellClass</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;text-2xl&#39;</span><span class="p">,</span><span class="s1">&#39;text-red-500&#39;</span><span class="p">,</span><span class="s1">&#39;hover:bg-blue-500&#39;</span><span class="p">]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">return</span> <span class="n">wp</span>
 </code></pre></div>
-
 <p>Ag_Grid is very rich in features, very few which are covered here. For a detailed description of the grid features, please look at its <a href="https://www.ag-grid.com/documentation-main/documentation.php">documentation</a>. </p>
 
 

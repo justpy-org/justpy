@@ -1702,18 +1702,18 @@
 
 
 <h1 id="how-to-toggle-full-screen-mode-in-quasar">How to Toggle Full Screen Mode in Quasar<a class="headerlink" href="#how-to-toggle-full-screen-mode-in-quasar" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">run_javascript</span><span class="p">(</span><span class="s1">&#39;Quasar.AppFullscreen.toggle()&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">full_screen_test</span><span class="p">():</span>
-    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md q-gutter-sm&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Toggle Screen&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">toggle_screen</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wp</span>
-
-<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">full_screen_test</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">run_javascript</span><span class="p">(</span><span class="s1">&#39;Quasar.AppFullscreen.toggle()&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">def</span> <span class="nf">full_screen_test</span><span class="p">():</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;q-pa-md q-gutter-sm&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">jp</span><span class="o">.</span><span class="n">QBtn</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Toggle Screen&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">toggle_screen</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">full_screen_test</span><span class="p">)</span>
 </code></pre></div>
 
 
