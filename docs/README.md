@@ -43,7 +43,7 @@ in the issue you'd like to get resolved.
 If you followed the procedure you are welcome to [open an issue](https://github.com/justpy-org/justpy/issues/new/choose) in the [JustPy Github repository](https://github.com/justpy-org/justpy)
 
 ## Hello World! example
-This is a simply hello world example for justpy.
+This is a simple hello world example for justpy.
 
 ```python
 import justpy as jp
