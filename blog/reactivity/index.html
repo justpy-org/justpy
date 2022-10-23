@@ -1798,7 +1798,7 @@
 <p>The following program takes a Python list and generates HTML from it:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
-<span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Go shopping&#39;</span><span class="p">,</span> <span class="s1">&#39;Learn JustPy&#39;</span><span class="p">,</span> <span class="s1">&#39;Do errands&#39;</span><span class="p">]</span>
+<span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Go shopping&quot;</span><span class="p">,</span> <span class="s2">&quot;Learn JustPy&quot;</span><span class="p">,</span> <span class="s2">&quot;Do errands&quot;</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">todo_app1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1818,21 +1818,21 @@
 
 
 <span class="k">def</span> <span class="nf">todo_app2</span><span class="p">():</span>
-    <span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Buy groceries&#39;</span><span class="p">,</span> <span class="s1">&#39;Learn JustPy&#39;</span><span class="p">,</span> <span class="s1">&#39;Do errands&#39;</span><span class="p">]</span>
+    <span class="n">todos</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Buy groceries&quot;</span><span class="p">,</span> <span class="s2">&quot;Learn JustPy&quot;</span><span class="p">,</span> <span class="s2">&quot;Do errands&quot;</span><span class="p">]</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">ol</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Ol</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">todo</span> <span class="ow">in</span> <span class="n">todos</span><span class="p">:</span>
         <span class="n">jp</span><span class="o">.</span><span class="n">Li</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">todo</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">ol</span><span class="p">)</span>
-    <span class="n">task</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Enter task&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter task&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="n">todos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">task</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">ol</span><span class="o">.</span><span class="n">delete_components</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">todo</span> <span class="ow">in</span> <span class="n">todos</span><span class="p">:</span>
             <span class="n">jp</span><span class="o">.</span><span class="n">Li</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">todo</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">ol</span><span class="p">)</span>
 
-    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Add Task&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_task</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;margin-left: 10px&#39;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Task&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_task</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;margin-left: 10px&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">wp</span>
 
@@ -1861,14 +1861,14 @@
 
 <span class="k">def</span> <span class="nf">todo_app3</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">todo_list</span> <span class="o">=</span> <span class="n">TodoList</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">todos</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Buy groceries&#39;</span><span class="p">,</span> <span class="s1">&#39;Learn JustPy&#39;</span><span class="p">,</span> <span class="s1">&#39;Do errands&#39;</span><span class="p">])</span>
-    <span class="n">task</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Enter task&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">todo_list</span> <span class="o">=</span> <span class="n">TodoList</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">todos</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Buy groceries&quot;</span><span class="p">,</span> <span class="s2">&quot;Learn JustPy&quot;</span><span class="p">,</span> <span class="s2">&quot;Do errands&quot;</span><span class="p">])</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter task&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="n">todo_list</span><span class="o">.</span><span class="n">todos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">task</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Add Task&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_task</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;margin-left: 10px&#39;</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Task&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="n">add_task</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;margin-left: 10px&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">wp</span>
 
@@ -1889,12 +1889,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">todos</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ol</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Ol</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s1">&#39;Enter task&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Add Task&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_task</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;margin-left: 10px&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Enter task&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Task&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">click</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_task</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;margin-left: 10px&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">todos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">react</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ol</span><span class="o">.</span><span class="n">delete_components</span><span class="p">()</span>
@@ -1904,7 +1906,7 @@
 
 <span class="k">def</span> <span class="nf">todo_app4</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">tailwind</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">TodoList</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">todos</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Buy groceries&#39;</span><span class="p">,</span> <span class="s1">&#39;Learn JustPy&#39;</span><span class="p">,</span> <span class="s1">&#39;Do errands&#39;</span><span class="p">])</span>
+    <span class="n">TodoList</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">todos</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Buy groceries&quot;</span><span class="p">,</span> <span class="s2">&quot;Learn JustPy&quot;</span><span class="p">,</span> <span class="s2">&quot;Do errands&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">todo_app4</span><span class="p">)</span>

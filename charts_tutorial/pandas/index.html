@@ -1798,9 +1798,13 @@
 
 <span class="k">def</span> <span class="nf">women_majors1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm_under_20</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;spline&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;The gender gap is transitory - even for extreme cases&#39;</span><span class="p">,</span>
-               <span class="n">subtitle</span><span class="o">=</span><span class="s1">&#39;Percentage of Bachelors conferred to women form 1970 to 2011 in the US for extreme cases where the percentage was less than 20</span><span class="si">% i</span><span class="s1">n 1970&#39;</span><span class="p">,</span>
-                <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 w-3/4&#39;</span><span class="p">)</span>
+    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+        <span class="n">wm_under_20</span><span class="p">,</span> 
+        <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;spline&#39;</span><span class="p">,</span> 
+        <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> 
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;The gender gap is transitory - even for extreme cases&#39;</span><span class="p">,</span>
+        <span class="n">subtitle</span><span class="o">=</span><span class="s1">&#39;Percentage of Bachelors conferred to women form 1970 to 2011 in the US for extreme cases where the percentage was less than 20</span><span class="si">% i</span><span class="s1">n 1970&#39;</span><span class="p">,</span>
+        <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 w-3/4&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">women_majors1</span><span class="p">)</span>
@@ -1827,7 +1831,9 @@
 
 
 <span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">wm_under_20</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="c1"># Create list of majors which start under 20%</span>
+<span class="n">wm_under_20</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+  <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span> <span class="c1"># Create list of majors which start under 20%</span>
 
 <span class="k">def</span> <span class="nf">women_majors2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
@@ -1854,7 +1860,6 @@
     <span class="n">o</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="s1">&#39;proximate&#39;</span>
     <span class="n">o</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span>
     <span class="n">o</span><span class="o">.</span><span class="n">plotOptions</span><span class="o">.</span><span class="n">series</span><span class="o">.</span><span class="n">marker</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
-
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">women_majors2</span><span class="p">)</span>
@@ -1875,7 +1880,9 @@ For example add the following line at the end of <code>women_majors</code> (just
 
 
 <span class="n">wm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://elimintz.github.io/women_majors.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">wm_under_20</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="c1"># Create list of majors which start under 20%</span>
+<span class="n">wm_under_20</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+  <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span> <span class="c1"># Create list of majors which start under 20%</span>
 
 
 <span class="k">def</span> <span class="nf">make_pairs_list</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">):</span>

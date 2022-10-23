@@ -1864,7 +1864,7 @@
 
 <span class="k">def</span> <span class="nf">create_chart_test1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 600px&#39;</span><span class="p">)</span>
+    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width: 600px&quot;</span><span class="p">)</span>
     <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">my_chart_def</span>
     <span class="k">return</span> <span class="n">wp</span>
 
@@ -1880,13 +1880,42 @@
 <h2 id="chart-types">Chart Types<a class="headerlink" href="#chart-types" title="Permanent link">&para;</a></h2>
 <p>Let's do something a little more complex. Change <code>create_chart_test1</code> in the above example to the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+
+<span class="c1"># Example from https://www.highcharts.com/docs/getting-started/your-first-chart</span>
+<span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">{</span>
+<span class="s2">        chart: {</span>
+<span class="s2">            type: &#39;bar&#39;</span>
+<span class="s2">        },</span>
+<span class="s2">        title: {</span>
+<span class="s2">            text: &#39;Fruit Consumption&#39;</span>
+<span class="s2">        },</span>
+<span class="s2">        xAxis: {</span>
+<span class="s2">            categories: [&#39;Apples&#39;, &#39;Bananas&#39;, &#39;Oranges&#39;]</span>
+<span class="s2">        },</span>
+<span class="s2">        yAxis: {</span>
+<span class="s2">            title: {</span>
+<span class="s2">                text: &#39;Fruit eaten&#39;</span>
+<span class="s2">            }</span>
+<span class="s2">        },</span>
+<span class="s2">        series: [{</span>
+<span class="s2">            name: &#39;Jane&#39;,</span>
+<span class="s2">            data: [1, 0, 4]</span>
+<span class="s2">        }, {</span>
+<span class="s2">            name: &#39;John&#39;,</span>
+<span class="s2">            data: [5, 7, 3]</span>
+<span class="s2">        }]</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
 <span class="k">def</span> <span class="nf">create_chart_test2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">chart_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;column&#39;</span><span class="p">,</span> <span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="s1">&#39;spline&#39;</span><span class="p">]:</span>
-        <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chart_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;column&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;spline&quot;</span><span class="p">]:</span>
+        <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border w-1/2&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
         <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">chart_type</span>
-        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Chart of Type </span><span class="si">{</span><span class="n">chart_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Subtitle </span><span class="si">{</span><span class="n">chart_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Chart of Type </span><span class="si">{</span><span class="n">chart_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Subtitle </span><span class="si">{</span><span class="n">chart_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">create_chart_test2</span><span class="p">)</span>
@@ -1939,10 +1968,12 @@
 <span class="s2">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
+
 <span class="k">def</span> <span class="nf">create_chart_test3</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border w-1/2&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
+
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">create_chart_test3</span><span class="p">)</span>
 </code></pre></div>
@@ -1974,12 +2005,14 @@
 <span class="s2">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
+
 <span class="k">def</span> <span class="nf">create_chart_test4</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-1/2&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
-    <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Tourists in </span><span class="se">\&#39;</span><span class="s1">000&#39;</span>
-    <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Tourists in Middle Earth&#39;</span>
+    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border w-1/2&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">my_chart_def</span><span class="p">)</span>
+    <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&#39;Tourists in </span><span class="se">\&#39;</span><span class="s2">000&#39;&quot;</span>
+    <span class="n">my_chart</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Tourists in Middle Earth&quot;</span>
     <span class="k">return</span> <span class="n">wp</span>
+
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">create_chart_test4</span><span class="p">)</span>
 </code></pre></div>
@@ -2010,14 +2043,14 @@
 
 <span class="k">def</span> <span class="nf">sine_test</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;border m-2 p-2 w-3/4&#39;</span><span class="p">)</span>
+    <span class="n">chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;border m-2 p-2 w-3/4&quot;</span><span class="p">)</span>
     <span class="n">o</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">options</span>
-    <span class="n">o</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Sines Galore&#39;</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Sines Galore&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">frequency</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">Dict</span><span class="p">()</span>
-        <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;F</span><span class="si">{</span><span class="n">frequency</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;F</span><span class="si">{</span><span class="n">frequency</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">s</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
         <span class="n">o</span><span class="o">.</span><span class="n">series</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
@@ -2036,16 +2069,17 @@
 <span class="c1"># https://github.com/elimintz/elimintz.github.io/tree/master/charts</span>
 <span class="c1"># Try https://127.0.0.1:8000/ + any one of the entries in charts</span>
 <span class="c1"># For example: http://127.0.0.1:8000/bubbles</span>
-<span class="n">charts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;org&#39;</span><span class="p">,</span> <span class="s1">&#39;bubbles&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;timeline&#39;</span><span class="p">,</span> <span class="s1">&#39;states&#39;</span><span class="p">,</span> <span class="s1">&#39;browsers&#39;</span><span class="p">,</span> <span class="s1">&#39;wheel&#39;</span><span class="p">]</span>
+<span class="n">charts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;org&quot;</span><span class="p">,</span> <span class="s2">&quot;bubbles&quot;</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="s2">&quot;timeline&quot;</span><span class="p">,</span> <span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="s2">&quot;browsers&quot;</span><span class="p">,</span> <span class="s2">&quot;wheel&quot;</span><span class="p">]</span>
 
-<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s1">&#39;/</span><span class="si">{chart_name}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{chart_name}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">create_chart_test5</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">chart_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;chart_name&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">)</span>   <span class="c1"># Default chart is item</span>
+    <span class="n">chart_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chart_name&quot;</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">)</span>   <span class="c1"># Default chart is item</span>
     <span class="k">if</span> <span class="n">chart_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">charts</span><span class="p">:</span>
-        <span class="n">chart_name</span> <span class="o">=</span> <span class="s1">&#39;item&#39;</span>
-    <span class="n">chart_options</span> <span class="o">=</span> <span class="k">await</span> <span class="n">jp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://elimintz.github.io/charts/</span><span class="si">{</span><span class="n">chart_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
-    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-2 p-2 border w-3/4&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_options</span><span class="p">)</span>
+        <span class="n">chart_name</span> <span class="o">=</span> <span class="s2">&quot;item&quot;</span>
+    <span class="n">chart_options</span> <span class="o">=</span> <span class="k">await</span> <span class="n">jp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://elimintz.github.io/charts/</span><span class="si">{</span><span class="n">chart_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span>
+    <span class="n">my_chart</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;m-2 p-2 border w-3/4&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">chart_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">create_chart_test5</span><span class="p">)</span>

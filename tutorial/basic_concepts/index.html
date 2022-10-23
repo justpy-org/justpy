@@ -1826,7 +1826,7 @@ and also build more complex components using other components as building blocks
 <p>A JustPy element is an instance of a component class.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Hello!&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello!&quot;</span>
 </code></pre></div>
 
 <p>In the example above, <code>p</code> is an instance of the class <code>P</code>. Its text attribute is set to 'Hello!'.
@@ -1836,7 +1836,7 @@ The above is similar to the HTML element:</p>
 
 <p>You can set the JustPy element attributes when the element is created (synonym for instantiated) using keyword arguments to make code shorter and clearer:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello!&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Just creating an element is not very useful. We need to get it on a web page and into the user's browser tab. We will do this next.</p>
@@ -1850,7 +1850,7 @@ The above is similar to the HTML element:</p>
 <p>Let's create an element and add it to the page:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
 <span class="n">wp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># Same as p.add_to(wp), wp = wp + p, wp += p</span>
 </code></pre></div>
 
@@ -1858,7 +1858,7 @@ The above is similar to the HTML element:</p>
 <p>Since adding an element to a page is very common, there is a way to do so using the keyword argument <code>a</code>:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
 </code></pre></div>
 
 <p>This code snippet has the same functionality as the one above it.</p>
@@ -1879,7 +1879,7 @@ The framework takes care of the rest.</p>
 
 <span class="k">def</span> <span class="nf">hello_world1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world1</span><span class="p">)</span>
@@ -1900,7 +1900,7 @@ You should see 'Hello World!' in your browser.</p>
 <span class="k">def</span> <span class="nf">hello_world2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">) Hello World!&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s1">px&#39;</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s2">px&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world2</span><span class="p">)</span>
@@ -1915,7 +1915,7 @@ You should see 'Hello World!' in your browser.</p>
 <p>The P instances are created inside a loop with the loop index being used to give each paragraph some different text and a different font size.</p>
 <p>The <code>style</code> attribute in JustPy is the same as the HTML <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style">style</a> attribute. It allows using <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> properties to style the element.</p>
 <p>For example, change the style assignment to:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;color: blue; font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s1">px&#39;</span>
+<div class="codehilite"><pre><span></span><code><span class="n">style</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;color: blue; font-size: </span><span class="si">{</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="si">}</span><span class="s2">px&quot;</span>
 </code></pre></div>
 
 <p>and see what happens.</p>
@@ -1933,7 +1933,7 @@ By default, instances of WebPage support styling using <a href="https://tailwind
     <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
     <span class="n">my_paragraph_design</span> <span class="o">=</span> <span class="s2">&quot;w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">) Hello World!&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
+        <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
 <span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">hello_world3</span><span class="p">)</span>
@@ -1948,7 +1948,7 @@ We can create a page one time, and serve the same page for all requests:</p>
 <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">(</span><span class="n">delete_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">my_paragraph_design</span> <span class="o">=</span> <span class="s2">&quot;w-64 bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded&quot;</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
-    <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">) Hello World!&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
+    <span class="n">jp</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Hello World!&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">my_paragraph_design</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">hello_world4</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">wp</span>

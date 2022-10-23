@@ -1989,6 +1989,12 @@
 </code></pre></div>
 
 <p>In the example above the type of <code>in1</code> is set to 'number'. Run the program and verify that only numbers can be input into the element.</p>
+<blockquote>
+<p>Note: <code>jp.Input(type='number'...</code> mimics the behavior of <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">HTML input number</a> thus the value is converted to a javascript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> after updating the value.
+This means large numbers can not be handled accurately as they are bound to the accuracy of <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">double-precision 64-bit binary format IEEE 754</a>.
+In python use float to have the same value as displayed in the input field.
+For details see <a href="https://github.com/justpy-org/justpy/issues/38">Issue#38</a></p>
+</blockquote>
 <h3 id="color-example">Color Example<a class="headerlink" href="#color-example" title="Permanent link">&para;</a></h3>
 <p>The Input component also allows you to choose colors.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>

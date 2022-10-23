@@ -2542,7 +2542,8 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <h2 id="calculator-component">Calculator Component<a class="headerlink" href="#calculator-component" title="Permanent link">&para;</a></h2>
 <h3 id="base-component">Base component<a class="headerlink" href="#base-component" title="Permanent link">&para;</a></h3>
 <p>We will build a calculator component in stages. First, we will create a component that does not handle events or the model attribute. Please run the following example.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
+<span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
 
 <span class="k">class</span> <span class="nc">Calculator</span><span class="p">(</span><span class="n">Div</span><span class="p">):</span>
 
@@ -2584,16 +2585,16 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
                 <span class="k">pass</span>
 
 
-<span class="k">def</span> <span class="nf">calculator_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">calculator_test1</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">WebPage</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">Calculator</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 border inline-block&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 250px&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test1</span><span class="p">)</span>
 </code></pre></div>
 
-<p>First let's look at the function <code>calculator_test</code>. This function creates a WebPage and adds ten instances of the Calculator component to it. Try changing the number of calculators on the page by changing the argument to range. Once a JustPy component has been defined, it is simple to reuse it. The Calculator component can be used now in multiple projects.</p>
+<p>First let's look at the function <code>calculator_test1</code>. This function creates a WebPage and adds ten instances of the Calculator component to it. Try changing the number of calculators on the page by changing the argument to range. Once a JustPy component has been defined, it is simple to reuse it. The Calculator component can be used now in multiple projects.</p>
 <p>JustPy components are Python classes. The Calculator component is therefore a Python class. The Calculator class inherits from Div so Calculator is endowed from the start will all the features and capabilities of the Div component. These features are used in  <code>__init__</code>, in order to add the other components needed to implement the calculator.</p>
 <p>The class <code>__init__</code> first calls the class <code>__init__</code> of the super class (in this case Div). If a class inherits from another JustPy component, you must run the <code>__init__</code> of the super class. It then sets the value attribute to 0 and adds two Input components, one for the tape and one for the result. The two Inputs are assigned to instance attributes for future reference and added to self (which is a Div and therefore other components can be added to it). The Inputs are also designated readonly so that the user cannot type in them.</p>
 <p>After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, <code>self.calculator_click</code> which is a static method of the Calculator class (we could have defined the event handler inside the <code>__init__</code>function instead). We also assign to the button <code>calc</code> attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.</p>
@@ -2601,6 +2602,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <h3 id="handling-the-change-event">Handling the change event<a class="headerlink" href="#handling-the-change-event" title="Permanent link">&para;</a></h3>
 <p>As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
+<span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">Calculator</span><span class="p">(</span><span class="n">Div</span><span class="p">):</span>
 
@@ -2668,14 +2670,14 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
 
-<span class="k">def</span> <span class="nf">calculator_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">calculator_test2</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">WebPage</span><span class="p">()</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">Calculator</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 border inline-block&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 250px&#39;</span><span class="p">,</span> <span class="n">change</span><span class="o">=</span><span class="n">calc_change</span><span class="p">)</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;border m-2 p-1 w-64 text-xl&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
     <span class="n">c</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test2</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Run the program above. You will see that the value of the calculator is reflected in the Div below it since that is what we defined the change event handler to do.</p>
@@ -2691,6 +2693,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <h3 id="adding-a-model-attribute">Adding a model attribute<a class="headerlink" href="#adding-a-model-attribute" title="Permanent link">&para;</a></h3>
 <p>To make Calculator complete, we will also add handling of the <code>model</code> attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the <code>model_update</code> method from the example below and see what happens.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
+<span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 
 <span class="k">class</span> <span class="nc">Calculator</span><span class="p">(</span><span class="n">Div</span><span class="p">):</span>
 
@@ -2756,14 +2759,14 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<span class="k">def</span> <span class="nf">calculator_test</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">calculator_test3</span><span class="p">():</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">WebPage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
     <span class="n">Calculator</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="s1">&#39;m-1 border inline-block&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;width: 250px&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
         <span class="n">Div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s1">&#39;border m-2 p-1 w-64 text-xl&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="p">[</span><span class="n">wp</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">wp</span>
 
-<span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">calculator_test3</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Notice that we have added a call to the method <code>set_model</code> in the click event handler. This method checks if the component has a model attribute and if so, sets it to the method's argument.  </p>
@@ -2997,7 +3000,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
     <span class="k">return</span> <span class="n">wp</span>
 
 
-<span class="n">justpy</span><span class="p">(</span><span class="n">tab_comp_test1</span><span class="p">)</span>
+<span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tab_comp_test1</span><span class="p">)</span>
 </code></pre></div>
 
 <h2 id="table-component">Table Component<a class="headerlink" href="#table-component" title="Permanent link">&para;</a></h2>
