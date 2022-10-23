@@ -1,8 +1,8 @@
 # Getting Started
 
 In order to take full advantage of this tutorial some knowledge of Python is required including an understanding
-of [object oriented programming](https://docs.python.org/3/tutorial/classes.html) in Python. 
-In addition, a basic understanding of HTML is required ([HTML - Getting Started](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started)). 
+of [object oriented programming](https://docs.python.org/3/tutorial/classes.html) in Python.
+In addition, a basic understanding of HTML is required ([HTML - Getting Started](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started)).
 
 !!! info
     The examples in this tutorial use [Python f-strings](https://realpython.com/python-f-strings/) which were added in Python 3.6
@@ -16,10 +16,13 @@ We recommend starting the demo-browser in a docker environment using the command
 scripts/rundocker example examples/demo_browser.py
 ```
 
-You can also start the demo-browser directly via the commandline as
+You can also start the demo-browser directly via the commandline via
 ```
-jpdemo
+https://github.com/justpy-org/justpy
+cd justpy
+scripts/jpdemo
 ```
+
 (as soon as [issue 555](https://github.com/justpy-org/justpy/issues/555) is implemented
 
 ## Installation
@@ -66,10 +69,10 @@ To run the program execute the following command:
 $ python3 test.py
 ```
 
-Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/ 
+Then, direct your browser to http://127.0.0.1:8000 or http://localhost:8000/
 
-This refers to port 8000 on the local machine and should work in most environments. 
+This refers to port 8000 on the local machine and should work in most environments.
 
-You should see 'Hello!' in your browser. Click it a few times also. It should report the number of times it has been clicked. 
+You should see 'Hello!' in your browser. Click it a few times also. It should report the number of times it has been clicked.
 
-In this tutorial, when asked to "run the program", follow the two steps above (there is no need to name the file "test.py", you can use any name you like). 
+In this tutorial, when asked to "run the program", follow the two steps above (there is no need to name the file "test.py", you can use any name you like).
