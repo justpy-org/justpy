@@ -97,7 +97,7 @@ nav:
           - Vue comparsion: 'blog/vue_comparison.md'
 
 
-google_analytics: ['UA-155125345-1', 'justpy.io']
+#google_analytics: ['UA-155125345-1', 'justpy.io']
 theme:
     name: material
     palette:

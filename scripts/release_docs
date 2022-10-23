@@ -14,5 +14,6 @@ fi
 cd "$docs_dir"
 echo "syncing $jp_dir to $docs_dir ..."
 rsync -avz $jp_dir/site/*  --delete .
+git add *
 git commit -a -m "new release by $USER"
-git push 
+git push

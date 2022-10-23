@@ -18,12 +18,13 @@ scripts/rundocker example examples/demo_browser.py
 
 You can also start the demo-browser directly via the commandline via
 ```
-https://github.com/justpy-org/justpy
+git clone https://github.com/justpy-org/justpy
 cd justpy
 scripts/jpdemo
 ```
 
-(as soon as [issue 555](https://github.com/justpy-org/justpy/issues/555) is implemented
+We intend to make the demo browser via pip install with [issue 555](https://github.com/justpy-org/justpy/issues/555) so that the
+git clone might not be necessary anymore.
 
 ## Installation
 
