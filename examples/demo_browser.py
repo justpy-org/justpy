@@ -13,7 +13,6 @@ import sys
 import psutil
 import socket
 import traceback
-import itertools
 from jpcore.demostarter import Demostarter
 from jpcore.tutorial import TutorialManager,Example
 from jpcore.demoapp import JustpyDemoApp
@@ -369,9 +368,10 @@ class DemoBrowser(BaseWebPage):
 
             self.video_list=self.bp.name_dict["thumbnail_list"]
             self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
-            self.slider = jp.QRange(a=self.toolbar, classes='m-8 p-2', style='width: 600px', input=self.change_range, label=True,
+            self.slider = jp.QRange(a=self.toolbar, classes='m-8 p-2', style='width: 400px', input=self.change_range, label=True,
                                      label_always=True,value=[1, 10], min=1, max=len(self.demo_starter.demos), snap=True, markers=True)
             self.mount_range_btn = QBtn(label=f'Mount range', a=self.toolbar, classes="q-mr-sm",click=self.on_mount_range_btn_click)
+            self.progress = jp.QBanner(a=self.toolbar, classes="bg-purple-8 text-white",style='width: 200px', text ='Progress of mounting will show up here', show= False)
             self.video_size=512
             icon_size=32
             style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
@@ -449,6 +449,7 @@ class DemoBrowser(BaseWebPage):
             demo.try_it_url=f"/{demo.wpfunc.__name__}"
             demo.status="✅"
             self.mounted[demo.name]=demo
+            self.progress.text = f"mounting {index}/{total}"
         except BaseException as ex:
             demo.status=self.get_html_error(ex)
               
@@ -456,24 +457,46 @@ class DemoBrowser(BaseWebPage):
         """
         mount all button has been clicked
         """
+        self.mount_all_btn.loading = True
+        self.slider.show = False
+        self.mount_range_btn.show = False
+        self.progress.show = True
         total=len(self.demo_starter.demos)
         print(f"mount all has been clicked ... trying to mount {total} demos ")
         for i,demo in enumerate(self.demo_starter.demos):
             self.mount(demo,i+1)
-
+            await self.wp.update()
+        self.reload_grid()
+        self.mount_all_btn.show = False
+        self.footer.text = f"{len(self.mounted)} apps mounted {self.page_load_count} page loads"
+        self.progress.text += " complete"
         await self.wp.update()
+        await asyncio.sleep(4)
+
 
     async def on_mount_range_btn_click(self,_msg):
         """
         mount all button has been clicked
         """
-        #total=len(self.demo_starter.demos)
-
-        print(f"mount range has been clicked ... trying to mount {self.endMount-self.startMount +1}  demos between {self.startMount} and {self.endMount}")
+        self.mount_range_btn.loading = True
+        self.slider.show = False
+        self.mount_all_btn.show = False
+        self.progress.show = True
+        total = self.endMount-self.startMount +1
+        print(f"mount range has been clicked ... trying to mount {total}  demos between {self.startMount} and {self.endMount}")
         for i,demo in enumerate(self.demo_starter.demos[self.startMount-1 : self.endMount-1], self.startMount):
             self.mount(demo, i)
+            await self.wp.update()
         self.reload_grid()
+        self.mount_range_btn.loading = False
+        self.mount_all_btn.show = True
+        self.slider.show = True
+        self.progress.text += " complete"
+        self.footer.text = f"{len(self.mounted)} apps mounted {self.page_load_count} page loads"
         await self.wp.update()
+        await asyncio.sleep(4)
+        self.progress.show = False
+
 
     def change_range(self, _msg):
         self.endMount = max(_msg.value.values())
