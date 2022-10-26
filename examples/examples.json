@@ -458,6 +458,30 @@
     {
       "name": "tutorial/pydeck/pydeck_demo.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/195996927-da459218-934b-4c26-8970-1ebe51b98c0b.gif"
+    },
+    {
+      "name": "tutorial/ajax/reload_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198147360-0b92dacf-91b4-4330-bf7d-19de4d1cbda2.gif"
+    },
+    {
+      "name": "tutorial/sessions/session_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198151168-459eb00f-cdbe-4db4-8c8c-67252f62f2ed.gif"
+    },
+    {
+      "name": "tutorial/sessions/login_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198156363-8ff6321f-2852-4801-8f43-f3ac3bd691c1.gif"
+    },
+    {
+      "name": "tutorial/static/static_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198158458-32b32f8a-d602-4c40-9372-6228fc51c9e5.gif"
+    },
+    {
+      "name": "tutorial/page_events/loading_page_no_stagger.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198159410-dff709e0-9bd4-440e-bf55-71c4e34953e9.gif"
+    },
+    {
+      "name": "tutorial/page_events/result_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198159743-db69699a-b46c-4f25-bb29-d2b784c27ebf.png"
     }
   ]
 }
