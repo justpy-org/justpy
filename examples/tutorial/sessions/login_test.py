@@ -78,7 +78,7 @@ async def login_page(request):
     except:
         pass
     wp = jp.WebPage()
-    wp.display_url = 'login'  # Sets the url to display in browser without reloading page
+    wp.display_url = 'login_page'  # Sets the url to display in browser without reloading page
     jp.Div(text='Please login', a=wp, classes='m-2 p-2 w-1/4 text-xl font-semibold')
     login_form = jp.parse_html(login_form_html, a=wp, classes='m-2 p-2 w-1/4')
     alert = jp.parse_html(alert_html, show=False, a=wp)
