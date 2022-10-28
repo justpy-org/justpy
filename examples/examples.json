@@ -482,6 +482,18 @@
     {
       "name": "tutorial/page_events/result_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/198159743-db69699a-b46c-4f25-bb29-d2b784c27ebf.png"
+    },
+    {
+      "name": "tutorial/uploading_files/download_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198618387-93a5b5d0-78fe-40fd-a9e3-7a56f68dd9f3.gif"
+    },
+    {
+      "name": "tutorial/uploading_files/download_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198629587-ee2cb9a4-e554-4b18-821f-4abb44b657c8.gif"
+    },
+    {
+      "name": "tutorial/uploading_files/upload_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198653785-fc0bb90f-b2f4-449e-a4d0-18c5255a2761.gif"
     }
   ]
 }
