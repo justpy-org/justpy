@@ -345,7 +345,7 @@ jp.justpy(dialog_test)
 
 # QDrawer
 
-Quasars [QDrawer](https://quasar.dev/layout/drawer) is the sidebar part of your QLayout.
+Quasars [QDrawer](https://quasar.dev/layout/drawer) is the sidebar part of QLayout which allows you to configure your views as a 3x3 matrix, containing optional left-side and/or right-side Drawers.
 The example below shows a minimal implementation of a collapsible side bar in JustPy.
 
 ```python
