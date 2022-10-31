@@ -388,7 +388,7 @@ jp.justpy(quasar_page)
 ```
 
 # QExpansionItem
-See also [quasar vue expansion-item].(https://quasar.dev/vue-components/expansion-item)
+See also [quasar vue expansion-item](https://quasar.dev/vue-components/expansion-item)
 The QExpansionItem component allows the hiding of content that is not immediately relevant to the user. 
 Think of them as accordion elements that expand when clicked on. It’s also known as a collapsible.
 
