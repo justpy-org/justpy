@@ -1,6 +1,7 @@
 The Quasar components are presented here in alphabetical order.
 You might want to try out the components in the order that is reasonable for your usecases.
 QInput e.g. might be a good start.
+Please see [here](https://github.com/justpy-org/justpy/blob/48c3e857461ebeeea05ac65ebe7f72ff49ae63af/justpy/quasarcomponents.py) for all available Quasar components.
 
 # Content
 - [QAjaxBar](#qajaxbar)
@@ -8,6 +9,7 @@ QInput e.g. might be a good start.
 - [QColor](#qcolor)
 - [QDate and QTime](#qdate-and-qtime)
 - [QDialog](#qdialog)
+- [QDrawer](#qdrawer)
 - [QExpansionItem](#qexpansionitem)
 - [QInput](#qinput)
 - [QList](#qlist-and-qitem)
@@ -339,6 +341,50 @@ def dialog_test():
 
 jp.justpy(dialog_test)
 
+```
+
+# QDrawer
+
+Quasars [QDrawer](https://quasar.dev/layout/drawer) is the sidebar part of your QLayout.
+The example below shows a minimal implementation of a collapsible side bar in JustPy.
+
+```python
+import justpy as jp
+
+
+def toggle_visible_drawer(self, msg):
+    self.drawer.value = not self.drawer.value
+
+
+def quasar_page():
+    wp = jp.QuasarPage()
+
+    btn_drawer = jp.QBtn(
+        flat=True,
+        round=True,
+        dense=True,
+        icon="menu",
+        a=wp,
+        click=toggle_visible_drawer,
+    )
+
+    wp_layout = jp.QLayout(a=wp)
+    PageContainer = jp.QPageContainer(a=wp_layout)
+    pageText = jp.Div(a=PageContainer, text="page container")
+
+    drawer = jp.QDrawer(
+        width=200,
+        breakpoint=500,
+        bordered=True,
+        a=wp_layout,
+    )
+    btn_drawer.drawer = drawer
+    ScrollArea = jp.QScrollArea(classes="fit", a=drawer)
+    c2 = jp.Div(a=ScrollArea, text="scroll area left")
+
+    return wp
+
+jp.justpy(quasar_page)
 ```
 
 # QExpansionItem
