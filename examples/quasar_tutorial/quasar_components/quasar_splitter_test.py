@@ -37,5 +37,5 @@ def quasar_splitter_test():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("quasar_splitter_test",quasar_splitter_test)
+from examples.basedemo import Demo
+Demo("quasar_splitter_test", quasar_splitter_test)

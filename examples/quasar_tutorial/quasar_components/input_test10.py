@@ -21,5 +21,5 @@ def input_test10():
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("input_test10",input_test10)
+from examples.basedemo import Demo
+Demo("input_test10", input_test10)

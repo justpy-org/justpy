@@ -18,5 +18,5 @@ def quasar_rating_test1():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("quasar_rating_test1",quasar_rating_test1)
+from examples.basedemo import Demo
+Demo("quasar_rating_test1", quasar_rating_test1)

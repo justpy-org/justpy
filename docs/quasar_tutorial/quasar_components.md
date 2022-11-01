@@ -203,6 +203,7 @@ def input_test3():
     in1.prepend_slot = date_slot
     in1.append_slot = time_slot
     return wp
+jp.justpy(input_test3)
 
 ```
 

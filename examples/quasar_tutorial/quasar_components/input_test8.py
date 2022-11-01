@@ -30,5 +30,5 @@ def input_test8(request):
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("input_test8",input_test8)
+from examples.basedemo import Demo
+Demo("input_test8", input_test8)

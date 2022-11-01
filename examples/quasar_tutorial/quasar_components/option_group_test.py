@@ -42,5 +42,5 @@ def option_group_test():
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("option_group_test",option_group_test)
+from examples.basedemo import Demo
+Demo("option_group_test", option_group_test)
