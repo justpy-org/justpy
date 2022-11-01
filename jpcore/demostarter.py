@@ -63,22 +63,19 @@ class Demostarter:
         """
         with open(self.example_json_file) as json_file:
             example_json = json.load(json_file)
-            if "examples" in example_json:
-                for i,video_record in enumerate(example_json["examples"]):
-                    name=video_record.get("name",None)
-                    video_url=video_record.get("video_url",None)
-                    if name and video_url:
-                        if name in self.demos_by_source_file:
-                            demo=self.demos_by_source_file[name]
-                            demo.video_url=video_url
-                        elif name in self.demos_by_name:
-                            demo=self.demos_by_name[name]
-                            demo.video_url=video_url
-                    else:
-                        raise Exception(f"name or url missing for example #{i}")
-                    
-            pass
-        
+        if "examples" in example_json:
+            for i, video_record in enumerate(example_json["examples"]):
+                name=video_record.get("name",None)
+                video_url=video_record.get("video_url",None)
+                if name and video_url:
+                    if name in self.demos_by_source_file:
+                        demo=self.demos_by_source_file[name]
+                        demo.video_url=video_url
+                    elif name in self.demos_by_name:
+                        demo=self.demos_by_name[name]
+                        demo.video_url=video_url
+                else:
+                    raise Exception(f"name or url missing for example #{i}")
             
     def as_list_of_dicts(self)->list:
         """

@@ -207,8 +207,9 @@ jp.justpy(input_test3)
 
 ```
 
-Or you can arrive at the same result by creating a reusable component:
+Or you can arrive at the same result by creating a reusable component (class):
 
+### Date and Time as QInput slots as class component
 ```python
 import justpy as jp
 

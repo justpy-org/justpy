@@ -27,7 +27,7 @@ class TestTutorial(Basetest):
         for i,tutorial in enumerate(tm.tutorials.values()):
             print (f"{i+1:3}:{tutorial.name} ({len(tutorial.lines):4} lines)")
             for j,example in enumerate(tutorial.examples.values()):
-                print (f"  {j+1:2}:{example.name} ({example.header}) - {example.example_source.url}")
+                print(f"  {j+1:2}:{example.name} ({example.header}) - {example.example_source.url}")
         header_missing=0
         html_used=0
         demo_missing=0
@@ -51,7 +51,7 @@ class TestTutorial(Basetest):
                         html_used+=1
         if debug:
             print(f"{demo_missing} demos missing {header_missing} headers missing {html_used} x html used")
-        self.assertEqual(0,header_missing+html_used)
+        self.assertEqual(0, header_missing + html_used, f"{demo_missing} demos missing; {header_missing} headers missing; {html_used} x html used")
         for demo in ds.demos:
             if not demo.name in tm.examples_by_name:
                 if demo.example_source.source_type=="tutorial":
@@ -63,10 +63,10 @@ class TestTutorial(Basetest):
         test the tutorial manager
         """
         debug=True
-        self.check_tutorial(self.tm,self.ds,debug=debug)
+        self.check_tutorial(self.tm, self.ds,debug=debug)
         if debug:
             print(f"found {len(self.tm.tutorials)} tutorial files")
-        self.assertTrue(len(self.tm.tutorials)>=70)
+        self.assertGreaterEqual(len(self.tm.tutorials), 70)
         
     def show_problems(self,problems):
         """
