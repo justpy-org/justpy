@@ -538,50 +538,6 @@
     {
       "name": "quasar_tutorial/quasar_components/date_time_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/199076666-ab36cc5f-1bc8-491c-9636-66b6af71bbe3.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test3.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199274330-1ffa72f7-5afb-4c5e-9440-c4e581b6d754.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test4.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199277757-b40781fa-3662-412a-aa83-3759e0289c5f.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/dialog_test.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199279385-ea862f39-3585-494b-bad7-db73ab376af0.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/quasar_expansion_item1.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199304908-453c0e01-8930-489d-b150-3c8c35cf097b.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/quasar_expansion_item2.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199308290-41b052db-22da-44c7-b966-a07ae4bbbe00.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test5.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199308989-1db5a19b-ee8c-4a74-8bb4-0d91772d693e.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test6.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199002676-38dc10f8-f06d-4a7f-953c-4c8fbd147398.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test7.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199310839-602e5a93-ef29-46e9-9c64-bd65f83854ff.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test8.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199311474-225c8502-e207-4737-bdc9-8f4428c89031.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test9.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199311853-8749e746-95ad-40f0-9f65-c1e8a1799081.gif"
-    },
-    {
-      "name": "quasar_tutorial/quasar_components/input_test10.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/199312558-872beb5f-4b4f-4c4f-b060-4532fdf6d31d.gif"
     }
   ]
 }
