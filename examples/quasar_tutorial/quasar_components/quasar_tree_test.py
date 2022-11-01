@@ -67,5 +67,5 @@ def quasar_tree_test():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("quasar_tree_test",quasar_tree_test)
+from examples.basedemo import Demo
+Demo("quasar_tree_test", quasar_tree_test)

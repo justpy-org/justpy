@@ -15,7 +15,15 @@ except:
 
 
 class AgGrid(JustpyBaseComponent):
-    # https://www.ag-grid.com/javascript-grid-features/
+    """
+    
+    support for 
+    https://www.ag-grid.com
+    
+    see
+    https://www.ag-grid.com/javascript-grid-features/
+    
+    """
 
     vue_type = "grid"
     default_grid_options = {
@@ -34,6 +42,9 @@ class AgGrid(JustpyBaseComponent):
     }
 
     def __init__(self, **kwargs):
+        """
+        constructor
+        """
         self.options = Dict(self.default_grid_options)
         self.classes = ""
         self.style = "height: 99vh; width: 99%; margin: 0.25rem; padding: 0.25rem;"
@@ -102,8 +113,14 @@ class AgGrid(JustpyBaseComponent):
         return self.options
 
     def load_pandas_frame(self, df):
+        """
+        load the given pandas dataframe
+        
+        Args:
+            df: the dataframe to load
+        """
         assert _has_pandas, f"Pandas not installed, cannot load frame"
-        self.options.columnDefs = []
+        columnDefs = []
         for i in df.columns:
             if is_numeric_dtype(df[i]):
                 col_filter = "agNumberColumnFilter"
@@ -111,13 +128,25 @@ class AgGrid(JustpyBaseComponent):
                 col_filter = "agDateColumnFilter"
             else:
                 col_filter = True  # Use default filter
-            self.options.columnDefs.append(Dict({"field": i, "filter": col_filter}))
+            columnDefs.append(Dict({"field": i, "filter": col_filter}))
         # Change NaN and similar to None for JSON compatibility
-        self.options.rowData = (
+        lod = (
             df.replace([np.inf, -np.inf], [sys.float_info.max, -sys.float_info.max])
             .where(pd.notnull(df), None)
             .to_dict("records")
         )
+        self.load_lod(lod=lod,columnDefs=columnDefs)
+        
+    def load_lod(self,lod:list,columnDefs:list=[]):
+        """
+        load the given list of dicts
+        
+        Args:
+            lod(list): a list of dicts to be loaded into the grid
+            columnDefs(list): a list of column definitions
+        """
+        self.options.columnDefs=columnDefs
+        self.options.rowData=lod
 
     async def run_api(self, command, page):
         await page.run_javascript(f"""cached_grid_def[{self.grid_id}].api.{command}""")

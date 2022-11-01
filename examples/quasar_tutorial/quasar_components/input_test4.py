@@ -49,5 +49,5 @@ def input_test4():
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("input_test4",input_test4)
+from examples.basedemo import Demo
+Demo("input_test4", input_test4)

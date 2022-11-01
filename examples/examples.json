@@ -88,10 +88,6 @@
       "video_url": "https://user-images.githubusercontent.com/95085996/190410256-23b50221-cca4-45ee-8133-c54928408bb7.gif"
     },
     {
-      "name": "tutorial/after_demo.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/190411043-059bc4f4-02ba-49bb-8bbf-e61c6b109683.gif"
-    },
-    {
       "name": "tutorial/routes/route1.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/190412782-05da8fa4-89b1-4e2a-a3c3-f27f84b96ce4.gif"
     },
@@ -134,10 +130,6 @@
     {
       "name": "tutorial/basic_concepts/hello_world3.py",
       "video_url": "https://user-images.githubusercontent.com/1336221/190648952-8469573a-5ecd-401e-981b-2744bcc4f3f6.png"
-    },
-    {
-      "name": "tutorial/plotly/plotly_test.py",
-      "video_url": "https://user-images.githubusercontent.com/1336221/190658278-de6446ba-1eb8-4167-ab36-5b82ebb32ed6.gif"
     },
     {
       "name": "issues/issue_500_aggrid_uuid.py",
@@ -466,6 +458,86 @@
     {
       "name": "tutorial/pydeck/pydeck_demo.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/195996927-da459218-934b-4c26-8970-1ebe51b98c0b.gif"
+    },
+    {
+      "name": "tutorial/ajax/reload_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198147360-0b92dacf-91b4-4330-bf7d-19de4d1cbda2.gif"
+    },
+    {
+      "name": "tutorial/sessions/session_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198151168-459eb00f-cdbe-4db4-8c8c-67252f62f2ed.gif"
+    },
+    {
+      "name": "tutorial/sessions/login_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198156363-8ff6321f-2852-4801-8f43-f3ac3bd691c1.gif"
+    },
+    {
+      "name": "tutorial/static/static_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198158458-32b32f8a-d602-4c40-9372-6228fc51c9e5.gif"
+    },
+    {
+      "name": "tutorial/page_events/loading_page_no_stagger.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198159410-dff709e0-9bd4-440e-bf55-71c4e34953e9.gif"
+    },
+    {
+      "name": "tutorial/page_events/result_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198159743-db69699a-b46c-4f25-bb29-d2b784c27ebf.png"
+    },
+    {
+      "name": "tutorial/uploading_files/download_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198618387-93a5b5d0-78fe-40fd-a9e3-7a56f68dd9f3.gif"
+    },
+    {
+      "name": "tutorial/uploading_files/download_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198629587-ee2cb9a4-e554-4b18-821f-4abb44b657c8.gif"
+    },
+    {
+      "name": "tutorial/uploading_files/upload_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/198653785-fc0bb90f-b2f4-449e-a4d0-18c5255a2761.gif"
+    },
+    {
+      "name": "quasar_tutorial/introduction/quasar_example1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199001724-4577c785-e0d0-46be-b490-9d324073c5df.gif"
+    },
+    {
+      "name": "quasar_tutorial/introduction/input_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199002676-38dc10f8-f06d-4a7f-953c-4c8fbd147398.gif"
+    },
+    {
+      "name": "quasar_tutorial/introduction/quasar_example2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199006070-0014360a-ebfe-4384-b837-402c5462cc85.gif"
+    },
+    {
+      "name": "quasar_tutorial/introduction/quasar_example3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199006672-530f2dd8-aeaf-4100-84eb-dd558de4c40f.gif"
+    },
+    {
+      "name": "quasar_tutorial/introduction/ripple_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199007065-837f5482-bac9-4029-ba1d-ccf9ac7bb02f.gif"
+    },
+    {
+      "name": "quasar_tutorial/introduction/bar_example.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199009063-9e819072-6646-4efd-bc3d-6ff47ae62240.gif"
+    },
+    {
+      "name": "quasar_tutorial/notify/quasar_notify_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199031708-f4663979-2080-450c-9d84-d622ab053790.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/ajax_bar_example.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199009063-9e819072-6646-4efd-bc3d-6ff47ae62240.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/button_toggle_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199040922-b39fdfb8-c573-45ed-b466-6088cb49caca.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/input_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199073734-74e0ab60-145d-44d5-9e2e-08a6cd307629.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/date_time_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/199076666-ab36cc5f-1bc8-491c-9636-66b6af71bbe3.gif"
     }
   ]
 }

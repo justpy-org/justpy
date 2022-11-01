@@ -1,0 +1,20 @@
+#!/bin/bash
+# WF 2022-10-19
+# get the justpy examples and tutorial files
+# remember the current directory
+pwd=$(pwd)
+# url of justpy repository
+giturl=https://github.com/justpy-org/justpy
+# get a temporary directory
+gitdir=$(mktemp -u)
+mkdir -p $gitdir
+# switch to the temporary directory
+cd $gitdir
+if [ ! -d justpy ]
+then
+  echo "cloning to $gitdir"
+  git clone --depth=1 $giturl
+fi
+rm -rf justpy/.git
+rsync -avz justpy/examples $pwd
+#rsync -avz justpy/tutorial $pwd

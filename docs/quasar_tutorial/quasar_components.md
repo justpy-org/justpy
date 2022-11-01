@@ -203,6 +203,7 @@ def input_test3():
     in1.prepend_slot = date_slot
     in1.append_slot = time_slot
     return wp
+jp.justpy(input_test3)
 
 ```
 
@@ -342,7 +343,7 @@ jp.justpy(dialog_test)
 ```
 
 # QExpansionItem
-See also [quasar vue expansion-item].(https://quasar.dev/vue-components/expansion-item)
+See also [quasar vue expansion-item](https://quasar.dev/vue-components/expansion-item)
 The QExpansionItem component allows the hiding of content that is not immediately relevant to the user. 
 Think of them as accordion elements that expand when clicked on. It’s also known as a collapsible.
 
@@ -378,7 +379,7 @@ jp.justpy(quasar_expansion_item1)
 
 ## QExpansionItem Example 2
 
-In this example we define a custom component base on QExpansionItem. This component adds an image from the site [Lorem Picsum](https://picsum.photos/) to the expansion item and in addition formats the expansion item.
+In this example we define a custom component based on QExpansionItem. This component adds an image from the site [Lorem Picsum](https://picsum.photos/) to the expansion item and in addition formats the expansion item.
 
 ```python
 import justpy as jp

@@ -81,5 +81,5 @@ async def stock_test(request):
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("stock_test",stock_test)
+from examples.basedemo import Demo
+Demo("stock_test", stock_test)

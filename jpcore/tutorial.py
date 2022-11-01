@@ -97,6 +97,7 @@ class Tutorial():
                             if c.isalnum() or c in "-_":
                                 anchor+=c
                         example_source.url=f"{self.tutorial_url}#{anchor}"
+                        example_source.anchor=anchor
                         example_source.description=header
                     example=Example(example_source,name=example_name,option=example_option,header=header,lines=python_code)
                     example.tutorial=self

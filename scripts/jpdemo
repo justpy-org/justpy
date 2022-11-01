@@ -1,0 +1,16 @@
+#!/bin/bash
+# WF 2022-10-23
+export PYTHONPATH=.
+host=$(hostname -f)
+port=8099
+
+webbrowser() {
+  local l_sleeptime=$1
+  local l_host=$2
+  local l_port=$3
+  sleep $l_sleeptime
+  open http://$l_host:$l_port
+}
+echo "Starting justpy demo browser on host $host port $port ..."
+webbrowser 1 $host $port&
+python examples/demo_browser.py --port $port --host $host

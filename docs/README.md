@@ -22,29 +22,28 @@ JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifie
 
 Hopefully, JustPy will enable teaching web development in introductory Python courses by reducing the complexity of web development.
 
-## If you have Questions, Suggestions or would like to get in touch
+## If you have questions, suggestions or would like to get in touch
 If you have a question about JustPy you are welcome to check
 [stackoverflow questions tagged justpy](https://stackoverflow.com/questions/tagged/justpy) and
 Especially questions which involve details of upstream frameworks such as
-[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), Highcharts, Pandas, Plotly, Quasar, Tailwind and others are best ask involving the larger stackoverflow 
-community and tagging your question with both "justpy" and the tag of 
-the specific library your are asking a question for such as "ag-grid", "highcharts","quasar", "pandas"
+[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), [highcharts](https://www.highcharts.com/), [pandas](https://pandas.pydata.org/), [plotly](https://plotly.com/python/), [quasar](https://quasar.dev/), [tailwind](https://tailwindcss.com/) and others are best ask involving the larger [stackoverflow](https://stackoverflow.com/) community and tagging your question with both "justpy" and the tag of the specific library your are asking a question for such as "ag-grid", "highcharts","quasar", "pandas"
 and others.
 
-If you'd like to specifically address the JustPy contributors the 
+If you'd like to specifically address the JustPy contributors the
 [github dicussions](https://github.com/justpy-org/justpy/discussions/new) are place to ask questions,
 propose new features and generally get in touch with the contributors.
 
 Our github dicussions are categorized. Please use the Category "Ideas" for feature requests.
 
-Issues and Pull Requests are also welcome. Please make sure that you follow the stackoverflow style guidelines when
+Issues and pull requests are also welcome. Please make sure that you follow the stackoverflow style guidelines when
 posting issues. A good way to do this is to state the problem as a stackoverflow question first. This way a larger audience
 is able to discuss solutions and work arounds and find out which part of the technology stack you are using is actually involved
 in the issue you'd like to get resolved.
 
-If your followed the procedure you are welcome to [open an issue](https://github.com/justpy-org/justpy/issues/new/choose) in the [JustPy Github repository](https://github.com/justpy-org/justpy) 
+If you followed the procedure you are welcome to [open an issue](https://github.com/justpy-org/justpy/issues/new/choose) in the [JustPy Github repository](https://github.com/justpy-org/justpy)
 
-## Hello World!
+## Hello World! example
+This is a simple hello world example for justpy.
 
 ```python
 import justpy as jp

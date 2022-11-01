@@ -9,5 +9,5 @@ def input_test9(request):
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("input_test9",input_test9)
+from examples.basedemo import Demo
+Demo("input_test9", input_test9)

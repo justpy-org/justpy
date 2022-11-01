@@ -3,7 +3,6 @@ Created on 2022-09-22
 
 @author: wf
 """
-import asyncio
 import json
 import os
 import sys
@@ -14,25 +13,29 @@ from examples.basedemo import Demo
 from jpcore.demoapp import JustpyDemoApp
 from jpcore.utilities import find_files
 
-
 class Demostarter:
     """
     start justpy demos on different ports
     """
 
-    def __init__(self, mode: str = None, debug: bool = False):
+    def __init__(self, base_path:str=None,mode: str = None, debug: bool = False):
         """
         constructor
 
         Args:
+            base_path(str): the base_path
             debug(bool): if True switch on debug mode
         """
         Demo.testmode = True
         self.debug = debug
         self.mode = mode
         self.script_dir = os.path.dirname(__file__)
-        self.justpy_dir = f"{os.path.dirname(self.script_dir)}/examples"
-        self.example_json_file=f"{os.path.dirname(self.script_dir)}/tutorial/examples.json"
+        if base_path is None:
+            base_path=os.path.dirname(self.script_dir)
+        if base_path.endswith("/examples"):
+            base_path=os.path.dirname(base_path)
+        self.justpy_dir = f"{base_path}/examples"
+        self.example_json_file=f"{self.justpy_dir}/examples.json"
         if self.debug:
             print(f"collecting examples from {self.justpy_dir}")
         pymodule_files = find_files(self.justpy_dir, ".py")
@@ -164,6 +167,13 @@ def main(argv=None):  # IGNORE:C0111
             default=None,
             help="the server start mode process/direct or None for os specific (default: %(default)s)",
         )
+        script_dir = os.path.dirname(__file__)
+        parser.add_argument(
+            "-p",
+            "--path",
+            default=os.path.dirname(script_dir),
+            help="path to the examples (default: %(default)s)",
+        )
         parser.add_argument(
             "--limit",
             type=int,
@@ -172,7 +182,7 @@ def main(argv=None):  # IGNORE:C0111
         )
 
         args = parser.parse_args(argv[1:])
-        demostarter = Demostarter(mode=args.mode, debug=args.debug)
+        demostarter = Demostarter(base_path=args.path,mode=args.mode, debug=args.debug)
         if args.debug:
             for demo in demostarter.demos:
                 print(demo)

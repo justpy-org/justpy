@@ -43,5 +43,5 @@ def button_toggle_test():
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("button_toggle_test",button_toggle_test)
+from examples.basedemo import Demo
+Demo("button_toggle_test", button_toggle_test)

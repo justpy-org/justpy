@@ -14,5 +14,5 @@ def input_test6(request):
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("input_test6",input_test6)
+from examples.basedemo import Demo
+Demo("input_test6", input_test6)

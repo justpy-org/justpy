@@ -62,7 +62,7 @@ nav:
     - Quasar Guide:
         - Introduction: 'quasar_tutorial/introduction.md'
         - Notifications: 'quasar_tutorial/notify.md'
-        - Quasar Components: 
+        - Quasar Components:
             - QAjaxBar: 'quasar_tutorial/quasar_components/#qajaxbar'
             - QBtnToggle: 'quasar_tutorial/quasar_components/#qbtntoggle'
             - QColor: 'quasar_tutorial/quasar_components/#qcolor'
@@ -90,20 +90,28 @@ nav:
           - Creating Select Elements: 'how_to/create_select.md'
           - Quasar Full Screen Mode: 'how_to/quasar_full_screen.md'
     - Blog:
+          - Justpy apps on heroku: 'blog/heroku.md'
           - From a Pandas DataFrame to a Web Site with an ag-Grid in 10 Lines of Python: 'blog/ag-grid_to_web_page.md'
           - Reactivity in JustPy: 'blog/reactivity.md'
           - Vue.js Examples in JustPy: 'blog/vue_examples.md'
           - Vue comparsion: 'blog/vue_comparison.md'
 
-google_analytics: ['UA-155125345-1', 'justpy.io']
+
+#google_analytics: ['UA-155125345-1', 'justpy.io']
 theme:
     name: material
     palette:
       primary: 'blue'
       accent: 'red'
 markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
   - admonition
-  - codehilite
+# - codehilite
   - toc:
       permalink: True
 edit_uri: ""

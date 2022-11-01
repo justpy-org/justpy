@@ -10,7 +10,6 @@ import gc
 import justpy as jp
 import os
 import sys
-import pandas as pd
 import psutil
 import socket
 import traceback
@@ -21,6 +20,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 from justpy import parse_html, QBtn
+from pydevd_file_utils import setup_client_server_paths
 
 class BaseWebPage():
     """
@@ -218,21 +218,51 @@ class DemoDisplay(BaseWebPage):
                 style="overflow:hidden; height:100vh; width:100%;"
         )
 
-
 class DemoBrowser(BaseWebPage):
     """
     Browser for demos
     """
-    def __init__(self):
+    def __init__(self,base_path:str=None,debug:bool=False):
         """
         constructor
+        
+        Args:
+            base_path(str): the path to search examples in
+            debug(bool): if True switchon debugging
         """
         BaseWebPage.__init__(self)
-        self.demo_starter=Demostarter()
+        self.demo_starter=Demostarter(base_path=base_path,debug=debug)
         self.tutorial_manager=TutorialManager()
         jp.app.add_jproute("/demo/{demo_name}",self.show_demo)
         self.mounted={}
         self.page_load_count=0
+        self.endMount = 10
+        self.startMount = 0
+
+        
+    def optionalDebug(self,args):   
+        '''
+        start the remote debugger if the arguments specify so
+        
+        Args:
+            args(): The command line arguments
+        '''
+        if args.debugServer:
+            import pydevd
+            print (args.debugPathMapping,flush=True)
+            if args.debugPathMapping:
+                if len(args.debugPathMapping)==2:
+                    remotePath=args.debugPathMapping[0] # path on the remote debugger side
+                    localPath=args.debugPathMapping[1]  # path on the local machine where the code runs
+                    MY_PATHS_FROM_ECLIPSE_TO_PYTHON = [
+                        (remotePath, localPath),
+                    ]
+                    setup_client_server_paths(MY_PATHS_FROM_ECLIPSE_TO_PYTHON)
+                    #os.environ["PATHS_FROM_ECLIPSE_TO_PYTHON"]='[["%s", "%s"]]' % (remotePath,localPath)
+                    #print("trying to debug with PATHS_FROM_ECLIPSE_TO_PYTHON=%s" % os.environ["PATHS_FROM_ECLIPSE_TO_PYTHON"]);
+         
+            pydevd.settrace(args.debugServer, port=args.debugPort,stdoutToServer=True, stderrToServer=True)
+            print("command line args are: %s" % str(sys.argv))
         
     async def onSizeColumnsToFit(self,_msg:dict):   
         """
@@ -265,7 +295,7 @@ class DemoBrowser(BaseWebPage):
                     await self.add_demo(demo,i+1)
                 pass
             else:
-                for i,demo in enumerate(self.mounted):
+                for i,demo in enumerate(self.mounted.values()):
                     await self.add_demo_tolist(demo)
                     
             self.page_load_count+=1
@@ -291,6 +321,9 @@ class DemoBrowser(BaseWebPage):
             demo(JustpyDemoApp): the demo app to add
             video_size(int): the size of the video (default: 512)
         """
+        if isinstance(demo, str):
+            print(f"{demo} is a string not a JustpyDemoApp")
+            return
         video_link=demo.video_link(video_size=video_size)
         list_item_html = f"""<q-item clickable v-ripple>
                             <q-item-section avatar>{demo.example_source.img_link}</q-item-section>
@@ -309,6 +342,7 @@ class DemoBrowser(BaseWebPage):
         list_item.name = demo.name
         list_item.video_url = demo.video_url
         self.video_list.add_component(list_item,0)
+        
         def delete_list_item(btn, _msg):
             """
             delete a list item
@@ -331,20 +365,15 @@ class DemoBrowser(BaseWebPage):
     </q-drawer>"""
         self.setup(extra_html)
         try:
+
             self.video_list=self.bp.name_dict["thumbnail_list"]
             self.mount_all_btn=QBtn(label="Mount all",a=self.toolbar,classes="q-mr-sm",click=self.on_mount_all_btn_click)
-            
+            self.slider = jp.QRange(a=self.toolbar, classes='m-8 p-2', style='width: 400px', input=self.change_range, label=True,
+                                     label_always=True,value=[1, 10], min=1, max=len(self.demo_starter.demos), snap=True, markers=True)
+            self.mount_range_btn = QBtn(label=f'Mount range', a=self.toolbar, classes="q-mr-sm",click=self.on_mount_range_btn_click)
+            self.progress = jp.QBanner(a=self.toolbar, classes="bg-purple-8 text-white",style='width: 200px', text ='Progress of mounting will show up here', show= False)
             self.video_size=512
             icon_size=32
-            lod=self.demo_starter.as_list_of_dicts()
-            for record in lod:
-                index=record["#"]
-                demo=self.demo_starter.demos[index-1]
-                example=self.tutorial_manager.examples_by_name.get(demo.name,None)
-                if example is not None:
-                    demo.example_source=example.example_source
-                    record["→"]=example.example_source.img_link
-            df=pd.DataFrame(lod)
             style='height: 90vh; width: 99%; margin: 0.25rem; padding: 0.25rem;'
             grid_options = """{
               'rowHeight': %s,
@@ -356,14 +385,41 @@ class DemoBrowser(BaseWebPage):
                 headerClass: 'font-bold'
             }
         }""" % icon_size
-            self.ag_grid=df.jp.ag_grid(a=self.main_page,style=style,options=grid_options )
-            self.ag_grid.html_columns = [1,2,3,4,5]
-            self.ag_grid.on('rowSelected', self.row_selected)
-            self.ag_grid.options.columnDefs[0].checkboxSelection = True
+            self.ag_grid=jp.AgGrid(a=self.main_page,style=style,options=grid_options )
+            self.reload_grid()
         except Exception as ex:
             self.handleException(ex)
         return self.wp
     
+    def get_lod(self):
+        self.lod=self.demo_starter.as_list_of_dicts()
+        for record in self.lod:
+            index=record["#"]
+            demo=self.demo_starter.demos[index-1]
+            example=self.tutorial_manager.examples_by_name.get(demo.name,None)
+            if example is not None:
+                demo.example_source=example.example_source
+                record["→"]=example.example_source.img_link
+
+    def reload_grid(self):
+        self.get_lod()
+        self.columnDefs= []
+        if len(self.lod)>0:
+            first=self.lod[0]
+            for key in first.keys():
+                self.columnDefs.append({
+                    'headerName': key, 
+                    'field': key}
+                )
+        #self.columnDefs= [
+        #        {'headerName': 'Name', 'field': 'name'},
+        #        {'headerName': 'Age', 'field': 'age'},
+        #]
+        self.columnDefs[0]["checkboxSelection"] = True
+        self.ag_grid.load_lod(lod=self.lod, columnDefs=self.columnDefs)
+        self.ag_grid.html_columns = [1,2,3,4,5]
+        self.ag_grid.on('rowSelected', self.row_selected)
+  
     async def row_selected(self,msg):
         """
         a grid row has been selected
@@ -374,6 +430,7 @@ class DemoBrowser(BaseWebPage):
                 index = row_data["#"]
                 demo=self.demo_starter.demos[index-1]
                 await self.add_demo(demo,index)
+                self.reload_grid()
             except Exception as ex:
                 self.handleException(ex)
         
@@ -392,6 +449,7 @@ class DemoBrowser(BaseWebPage):
             demo.try_it_url=f"/{demo.wpfunc.__name__}"
             demo.status="✅"
             self.mounted[demo.name]=demo
+            self.progress.text = f"mounting {index}/{total}"
         except BaseException as ex:
             demo.status=self.get_html_error(ex)
               
@@ -399,12 +457,54 @@ class DemoBrowser(BaseWebPage):
         """
         mount all button has been clicked
         """
+        self.mount_all_btn.loading = True
+        self.slider.show = False
+        self.mount_range_btn.show = False
+        self.progress.show = True
         total=len(self.demo_starter.demos)
         print(f"mount all has been clicked ... trying to mount {total} demos ")
         for i,demo in enumerate(self.demo_starter.demos):
             self.mount(demo,i+1)
+            await self.wp.update()
+        self.reload_grid()
+        self.mount_all_btn.show = False
+        self.footer.text = f"{len(self.mounted)} apps mounted {self.page_load_count} page loads"
+        self.progress.text += " complete"
         await self.wp.update()
-            
+        await asyncio.sleep(4)
+
+
+    async def on_mount_range_btn_click(self,_msg):
+        """
+        mount all button has been clicked
+        """
+        self.mount_range_btn.loading = True
+        self.slider.show = False
+        self.mount_all_btn.show = False
+        self.progress.show = True
+        total = self.endMount-self.startMount +1
+        print(f"mount range has been clicked ... trying to mount {total}  demos between {self.startMount} and {self.endMount}")
+        for i,demo in enumerate(self.demo_starter.demos[self.startMount-1 : self.endMount-1], self.startMount):
+            self.mount(demo, i)
+            await self.wp.update()
+        self.reload_grid()
+        self.mount_range_btn.loading = False
+        self.mount_all_btn.show = True
+        self.slider.show = True
+        self.progress.text += " complete"
+        self.footer.text = f"{len(self.mounted)} apps mounted {self.page_load_count} page loads"
+        await self.wp.update()
+        await asyncio.sleep(4)
+        self.progress.show = False
+
+
+    def change_range(self, _msg):
+        self.endMount = max(_msg.value.values())
+        self.startMount = min(_msg.value.values())
+        print(f'{self.startMount} - {self.endMount}')
+
+
+
     def show_demo(self,request):
         """
         show a demo by name
@@ -419,6 +519,7 @@ class DemoBrowser(BaseWebPage):
             else:
                 self.showError(f"example {demo_name} not found")
         self.showError("no example demo name specified")
+        
 
 def main(argv=None):  # IGNORE:C0111
     """main program."""
@@ -434,10 +535,29 @@ def main(argv=None):  # IGNORE:C0111
         parser.add_argument(
             "-d", "--debug", dest="debug", action="store_true", help="show debug info"
         )
+        parser.add_argument(
+            "--heroku", action="store_true", help="in heroku environment pick up port from env variable and set host to 0.0.0.0"
+        )
+        parser.add_argument(
+            "-p",
+            "--path",
+            default=os.getcwd(),
+            help="path to the examples (default: %(default)s)",
+        )
+        parser.add_argument('--debugServer',
+                                     help="remote debug Server")
+        parser.add_argument('--debugPort',type=int,
+                                     help="remote debug Port",default=5678)
+        parser.add_argument('--debugPathMapping',nargs='+',help="remote debug Server path mapping - needs two arguments 1st: remotePath 2nd: local Path")
+   
         parser.add_argument("--host", default=socket.getfqdn())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args(argv[1:])
-        demo_browser=DemoBrowser()
+        demo_browser=DemoBrowser(base_path=args.path,debug=args.debug)
+        if args.heroku:
+            args.port=os.environ["PORT"]
+            args.host="0.0.0.0"
+        demo_browser.optionalDebug(args)
         jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
     except Exception as e:
         indent = len(program_name) * " "
