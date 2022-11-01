@@ -47,5 +47,5 @@ def quasar_expansion_item2(request):
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("quasar_expansion_item2",quasar_expansion_item2)
+from examples.basedemo import Demo
+Demo("quasar_expansion_item2", quasar_expansion_item2)

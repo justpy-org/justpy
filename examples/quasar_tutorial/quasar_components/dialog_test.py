@@ -65,5 +65,5 @@ def dialog_test():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("dialog_test",dialog_test)
+from examples.basedemo import Demo
+Demo("dialog_test", dialog_test)

@@ -20,5 +20,5 @@ def quasar_expansion_item1():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("quasar_expansion_item1",quasar_expansion_item1)
+from examples.basedemo import Demo
+Demo("quasar_expansion_item1", quasar_expansion_item1)

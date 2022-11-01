@@ -35,5 +35,5 @@ def reactive_list_test():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("reactive_list_test",reactive_list_test)
+from examples.basedemo import Demo
+Demo("reactive_list_test", reactive_list_test)

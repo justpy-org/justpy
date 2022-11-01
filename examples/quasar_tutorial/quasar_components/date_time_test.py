@@ -26,5 +26,5 @@ def date_time_test():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("date_time_test",date_time_test)
+from examples.basedemo import Demo
+Demo("date_time_test", date_time_test)

@@ -13,5 +13,5 @@ def quasar_rating_test2():
 
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("quasar_rating_test2",quasar_rating_test2)
+from examples.basedemo import Demo
+Demo("quasar_rating_test2", quasar_rating_test2)

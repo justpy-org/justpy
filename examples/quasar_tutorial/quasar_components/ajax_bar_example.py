@@ -20,5 +20,5 @@ def ajax_bar_example():
     return wp
 
 # initialize the demo
-from  examples.basedemo import Demo
-Demo ("ajax_bar_example",ajax_bar_example)
+from examples.basedemo import Demo
+Demo("ajax_bar_example", ajax_bar_example)
