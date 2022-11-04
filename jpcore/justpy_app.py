@@ -502,7 +502,7 @@ class JustpyServer:
         """
         if host is None:
             host = socket.getfqdn() 
-            if self.host=="1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa":
+            if host=="1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa":
                 host="localhost"
             # host="127.0.0.1"
         self.host = host
