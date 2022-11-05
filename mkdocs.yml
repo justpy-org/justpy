@@ -8,6 +8,11 @@ repo_url: https://github.com/elimintz/justpy
 plugins:
     - search
     - macros
+    
+extra:
+    docdate: 2022-11-05
+    version: 0.10.5
+    
 nav:
     - What is JustPy: 'README.md'
     - 'Tutorial':

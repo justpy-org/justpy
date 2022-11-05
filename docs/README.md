@@ -22,6 +22,12 @@ JustPy integrates nicely with [pandas](https://pandas.pydata.org/) and simplifie
 
 Hopefully, JustPy will enable teaching web development in introductory Python courses by reducing the complexity of web development.
 
+## Current Version of justpy
+
+As of {{ docdate }} the current version of justpy is {{ version }}
+
+
+
 ## If you have questions, suggestions or would like to get in touch
 If you have a question about JustPy you are welcome to check
 [stackoverflow questions tagged justpy](https://stackoverflow.com/questions/tagged/justpy) and
