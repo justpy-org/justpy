@@ -11,7 +11,6 @@ import logging
 import os
 import pathlib
 import socket
-import re
 import psutil
 import sys
 import traceback
@@ -28,7 +27,7 @@ from starlette.templating import Jinja2Templates
 
 from jpcore.component import Component
 from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
-from jpcore.justpy_config import DECKGL, FAVICON, HIGHCHARTS,HTML_404_PAGE,KATEX, LATENCY
+from jpcore.justpy_config import DECKGL, FAVICON, HIGHCHARTS,KATEX, LATENCY
 from jpcore.justpy_config import NO_INTERNET, PLOTLY, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
 from jpcore.justpy_config import STATIC_DIRECTORY,STATIC_NAME
 from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, VEGA
@@ -37,7 +36,7 @@ from jpcore.template import Context
 from jpcore.webpage import WebPage
 from itsdangerous import Signer
 
-# TODO refacto to object oriented version where this is a property of some instance of some class
+# TODO refactor to object oriented version where this is a property of some instance of some class
 cookie_signer = Signer(str(SECRET_KEY))
 
 def create_component_file_list():
@@ -501,10 +500,7 @@ class JustpyServer:
             debug(bool): if True switch debugging on
         """
         if host is None:
-            host = socket.getfqdn() 
-            if host=="1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa":
-                host="localhost"
-            # host="127.0.0.1"
+            host=JustpyServer.getDefaultHost()
         self.host = host
         self.port = port
         self.sleep_time = sleep_time
@@ -519,6 +515,22 @@ class JustpyServer:
         self.mode = mode
         self.debug = debug
         self.running = False
+        
+    @classmethod
+    def getDefaultHost(cls):
+        """
+        get the default host as the fully qualifying hostname
+        of the computer the server runs on
+        
+        Returns:
+            str: the hostname
+        """
+        host = socket.getfqdn() 
+        # work around https://github.com/python/cpython/issues/79345
+        if host=="1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa":
+            host="localhost"
+            # host="127.0.0.1"
+        return host
 
     async def start(self, wpfunc,websockets: bool = True, **kwargs):
         """

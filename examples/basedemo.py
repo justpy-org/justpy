@@ -6,6 +6,7 @@ Created on 2022-09-07
 import argparse
 import socket
 import typing
+from jpcore.justpy_app import JustpyServer
 
 class Demo(object):
     """
@@ -30,7 +31,7 @@ class Demo(object):
         if Demo.testmode:
             return
         parser = argparse.ArgumentParser(description=name)
-        parser.add_argument("--host", default=socket.getfqdn())
+        parser.add_argument("--host", default=JustpyServer.getDefaultHost())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args()
         import justpy as jp

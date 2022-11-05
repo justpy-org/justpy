@@ -68,6 +68,7 @@ nav:
             - QColor: 'quasar_tutorial/quasar_components/#qcolor'
             - QDate and QTime: 'quasar_tutorial/quasar_components/#qdate-and-qtime'
             - QDialog: 'quasar_tutorial/quasar_components/#qdialog'
+            - QDrawer: 'quasar_tutorial/quasar_components/#qdrawer'
             - QExpansionItem: 'quasar_tutorial/quasar_components/#qexpansionitem'
             - QInput: 'quasar_tutorial/quasar_components/#qinput'
             - QList: 'quasar_tutorial/quasar_components/#qlist-and-qitem'

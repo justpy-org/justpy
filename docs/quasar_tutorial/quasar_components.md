@@ -269,7 +269,7 @@ jp.justpy(input_test4)
 
 Quasar provides a versatile [QDialog component](https://quasar.dev/vue-components/dialog). Checkout the many options in the Quasar documentation.
 
-In the program below, two examples are implemented. 
+In the program below, two examples are implemented.
 
 When a Dialog is closed by the user, it generates an input event.
 
@@ -351,6 +351,9 @@ Quasars [QDrawer](https://quasar.dev/layout/drawer) is the sidebar part of QLayo
 The example below shows a minimal implementation of a collapsible side bar in JustPy.
 
 ```python
+"""
+Quasar Drawer example see https://github.com/justpy-org/justpy/issues/589
+"""
 import justpy as jp
 
 
@@ -358,7 +361,7 @@ def toggle_visible_drawer(self, msg):
     self.drawer.value = not self.drawer.value
 
 
-def quasar_page():
+def qdrawer_page():
     wp = jp.QuasarPage()
 
     btn_drawer = jp.QBtn(
@@ -386,20 +389,20 @@ def quasar_page():
 
     return wp
 
-jp.justpy(quasar_page)
+jp.justpy(qdrawer_page)
 ```
 
 # QExpansionItem
 See also [quasar vue expansion-item](https://quasar.dev/vue-components/expansion-item)
-The QExpansionItem component allows the hiding of content that is not immediately relevant to the user. 
+The QExpansionItem component allows the hiding of content that is not immediately relevant to the user.
 Think of them as accordion elements that expand when clicked on. It’s also known as a collapsible.
 
 They are basically QItem components wrapped with additional functionality. So they can be included in QLists and inherit QItem component properties.
 
 ## QExpansionItem Example 1
 
-Three expansion items are defined in a loop. All three are added to a QList instance. Each expansion item includes a QCard with a QCardSection with text. 
- 
+Three expansion items are defined in a loop. All three are added to a QList instance. Each expansion item includes a QCard with a QCardSection with text.
+
 ```python
 import justpy as jp
 
@@ -943,9 +946,9 @@ jp.justpy(quasar_rating_test2)
 
 The [QSplitter component](https://quasar.dev/vue-components/splitter) allows containers to be split vertically and/or horizontally through a draggable separator bar.
 
-This component has three scoped slots or slots for short: `['before_slot', 'after_slot', 'separator_slot']` 
+This component has three scoped slots or slots for short: `['before_slot', 'after_slot', 'separator_slot']`
 
-QSplitter generates an input event when the the user changes the panes. 
+QSplitter generates an input event when the the user changes the panes.
 
 In the example below change the the panes and see the value of the splitter refelected in the chip at the bottom of the page and in the avatar that was put in the `separator_slot`.
 
@@ -1054,12 +1057,12 @@ def quasar_tree_test():
 
     tree = jp.QTree(a=d, node_key='label', nodes=node_string, tick_strategy="leaf", no_connectors=False, default_expand_all=True)
     d1 = jp.Div(text='', a=d)
-    
+
     def my_updated(self, msg):
         print('in my updated')
         d1.text = str(msg.value)
     tree.on('update:ticked', my_updated)
-    
+
     b1.tree = tree
     b2.tree = tree
     return wp

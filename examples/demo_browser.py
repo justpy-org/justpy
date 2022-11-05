@@ -16,6 +16,7 @@ import traceback
 from jpcore.demostarter import Demostarter
 from jpcore.tutorial import TutorialManager,Example
 from jpcore.demoapp import JustpyDemoApp
+from jpcore.justpy_app import JustpyServer
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
@@ -550,7 +551,7 @@ def main(argv=None):  # IGNORE:C0111
                                      help="remote debug Port",default=5678)
         parser.add_argument('--debugPathMapping',nargs='+',help="remote debug Server path mapping - needs two arguments 1st: remotePath 2nd: local Path")
    
-        parser.add_argument("--host", default=socket.getfqdn())
+        parser.add_argument("--host", default=JustpyServer.getDefaultHost())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args(argv[1:])
         demo_browser=DemoBrowser(base_path=args.path,debug=args.debug)
