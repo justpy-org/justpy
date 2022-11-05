@@ -1,8 +1,13 @@
 site_name: JustPy
 site_description: An object-oriented, component based, high-level Python Web Framework that requires no front-end programming
+site_author: Eliezer Mintz, Beyza Akyüz, Wolfgang Fahl
+
 repo_name: justpy
 repo_url: https://github.com/elimintz/justpy
 
+plugins:
+    - search
+    - macros
 nav:
     - What is JustPy: 'README.md'
     - 'Tutorial':

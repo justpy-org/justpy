@@ -1,0 +1,99 @@
+#!/bin/bash
+# WF 2022-09-19
+# justpy mkdocs support
+
+#ansi colors
+#http://www.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
+blue='\033[0;34m'
+red='\033[0;31m'
+green='\033[0;32m' # '\e[1;32m' is too bright for white bg.
+endColor='\033[0m'
+
+#
+# a colored message
+#   params:
+#     1: l_color - the color of the message
+#     2: l_msg - the message to display
+#
+color_msg() {
+  local l_color="$1"
+  local l_msg="$2"
+  echo -e "${l_color}$l_msg${endColor}"
+}
+
+#
+# error
+#
+# show the given error message on stderr and exit
+#
+#   params:
+#     1: l_msg - the error message to display
+#
+error() {
+  local l_msg="$1"
+  # use ansi red for error
+  color_msg $red "Error:" 1>&2
+  color_msg $red "\t$l_msg" 1>&2
+  exit 1
+}
+
+# show usage
+#
+usage() {
+  echo "$0  [-h|--help]"
+  echo "-h  |--help:  show this usage"
+  echo "-i  |--install: install mkdocs and plugins"
+  echo "-r  |--release: release a new version of the mkdocs documentation"
+  exit 1
+}
+
+#
+# release a new version of the docs
+#
+release() {
+  mkdocs build
+  jp_dir=$(pwd)
+  docs_dir="$HOME/source/html/justpy"
+  if [ -f "$docs_dir" ]
+  then
+    echo "$docs_dir doesn't exist"
+    echo "please create it with"
+    echo "git clone https://github.com/justpy-org/justpy --branch gh-pages --single-branch"
+    exit 1
+  fi
+  cd "$docs_dir"
+  echo "syncing $jp_dir to $docs_dir ..."
+  rsync -avz $jp_dir/site/*  --delete .
+  git add *
+  git commit -a -m "new release by $USER"
+  git push
+}
+
+#
+# install mkdocs
+#
+install() {
+  pip install mkdocs
+  pip install mkdocs-macros-plugin
+}
+
+# options
+while [  "$1" != ""  ]
+do
+  option="$1"
+  case $option in
+    -h|--help)
+      usage
+      ;;
+    -i|--install)
+      install
+      ;;
+    -r|--release)
+      release
+      ;;
+    *)
+      error "unknown option $option"
+      ;;
+  esac
+  shift
+done
