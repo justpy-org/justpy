@@ -589,6 +589,11 @@
       "video_url": "https://user-images.githubusercontent.com/1336221/200119950-15a27e13-cd6e-432b-9664-3dddfa28814e.gif",
       "issue": 594,
       "fixed": "2022-11-05"
+    },
+    {
+      "name": "tutorial/bokeh/bokeh_test.py",
+      "video_url": "https://user-images.githubusercontent.com/1336221/200132606-80846c71-6330-48a1-9d6a-be1a67a53730.gif",
+      "issue": 597
     }
   ]
 }
