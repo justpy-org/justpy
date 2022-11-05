@@ -21,6 +21,9 @@ from bokeh.sampledata.us_counties import data as counties1
 
 
 def create_iris_figure(*, width=500, height=500):
+	"""
+	create an iris figure with the given width and height
+	"""
     colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
     colors = [colormap[x] for x in flowers['species']]
 
@@ -34,6 +37,9 @@ def create_iris_figure(*, width=500, height=500):
 
 
 def create_texas_figure(*, width=500, height=500):
+	"""
+	create the texas figure with the given width and height
+	"""
     palette = tuple(reversed(palette1))
 
     counties = {
@@ -76,13 +82,14 @@ def bokeh_test(request):
     """
     test BOKEH charts
     """ 
-    wp = jp.WebPage(tailwind=True)
+    # show charts side by side
+    style="float:left; width:33%;"
     p = create_iris_figure()
-    wp.c = jp.BokehChart(chart=p, a=wp)
+    wp.c = jp.BokehChart(chart=p, a=wp,style=style)
     p1 = create_iris_figure(width=300, height=300)
-    jp.BokehChart(chart=p1, a=wp)
+    jp.BokehChart(chart=p1, a=wp,style=style)
     p2 = create_texas_figure()
-    jp.BokehChart(chart=p2, a=wp)
+    jp.BokehChart(chart=p2, a=wp,style=style)
     return wp
 
 
