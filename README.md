@@ -8,6 +8,10 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/elimintz/justpy.svg)](https://github.com/elimintz/justpy/issues/?q=is%3Aissue+is%3Aclosed)
 [![License](https://img.shields.io/github/license/elimintz/justpy.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
+## Introduction
+
+JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs.
+
 ## Docs and Tutorials
 [JustPy Docs and Tutorials](https://justpy.io)
 
@@ -33,12 +37,12 @@
 If you have a question about JustPy you are welcome to check
 [stackoverflow questions tagged justpy](https://stackoverflow.com/questions/tagged/justpy) and
 Especially questions which involve details of upstream frameworks such as
-[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), Highcharts, Pandas, Plotly, Quasar, Tailwind and others are best ask involving the larger stackoverflow 
-community and tagging your question with both "justpy" and the tag of 
+[ag-grid](https://stackoverflow.com/questions/tagged/ag-grid), Highcharts, Pandas, Plotly, Quasar, Tailwind and others are best ask involving the larger stackoverflow
+community and tagging your question with both "justpy" and the tag of
 the specific library your are asking a question for such as "ag-grid", "highcharts","quasar", "pandas"
 and others.
 
-If you'd like to specifically address the JustPy contributors the 
+If you'd like to specifically address the JustPy contributors the
 [github dicussions](https://github.com/justpy-org/justpy/discussions/new) are place to ask questions,
 propose new features and generally get in touch with the contributors.
 
@@ -49,7 +53,7 @@ posting issues. A good way to do this is to state the problem as a stackoverflow
 is able to discuss solutions and work arounds and find out which part of the technology stack you are using is actually involved
 in the issue you'd like to get resolved.
 
-If your followed the procedure you are welcome to [open an issue](https://github.com/justpy-org/justpy/issues/new/choose) in the [JustPy Github repository](https://github.com/justpy-org/justpy) 
+If your followed the procedure you are welcome to [open an issue](https://github.com/justpy-org/justpy/issues/new/choose) in the [JustPy Github repository](https://github.com/justpy-org/justpy)
 
 ## Trying out with docker
 ```bash
@@ -60,7 +64,7 @@ scripts/rundocker example examples/dogs.py
 scripts/rundocker dev
 scripts/rundocker example examples/demo_browser.py
 ```
-## Introduction
+## Introduction - with more Details
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs.
 
