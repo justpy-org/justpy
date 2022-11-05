@@ -20,6 +20,7 @@ The application will load these files automatically.
 
 ## Python 
 
+### Try [pad_test live demo]({{demo_url}}/pad_test)
 
 ```python
 import justpy as jp
