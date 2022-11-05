@@ -5,6 +5,9 @@ The program below serves a chart of stock price data.
 
 !!! warning
     You need to install pandas to run the program
+    
+[Stock Charts live demo]({{demo_url}}/stock_test1)
+    
 
 ```python
 import justpy as jp
@@ -64,8 +67,11 @@ The program uses pandas to read a CSV file corresponding to the ticker parameter
 The program needs to convert the dates to support the Highcharts (standard JavaScript) format which is number of milliseconds since the Epoch (1/1/1970). The short function convert_date1 does this using the Python datetime library. We use `map` to apply `convert_date1` to all values in the 'Date' column in order to generate the list of x values for the series.
 
 ## Stock Chart with Volume
+[Stock Chart with Volume live demo]({{demo_url}}/stock_test2)
 
-The CSV file contains additional data, not just the end of day price. We will now create a more sophisticated chart that uses this data.
+The CSV file contains additional data, not just the end of day price. 
+We will now create a more sophisticated chart that uses this data.
+
 ```python
 import justpy as jp
 import pandas as pd
