@@ -79,6 +79,10 @@
       
     </div>
     
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
     
       
 
@@ -1770,6 +1774,7 @@
 <p class="admonition-title">Warning</p>
 <p>You need to install pandas to run the program</p>
 </div>
+<p><a href="https://justpy-demo.herokuapp.com/demo/stock_test1">Stock Charts live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">datetime</span>
@@ -1822,7 +1827,9 @@
 <p>The program uses pandas to read a CSV file corresponding to the ticker parameter (only the tickers MSFT, AAPL, IBM and INTC have data behind them, the rest default to MSFT). Try http://127.0.0.1:8000/?ticker=intc for example.</p>
 <p>The program needs to convert the dates to support the Highcharts (standard JavaScript) format which is number of milliseconds since the Epoch (1/1/1970). The short function convert_date1 does this using the Python datetime library. We use <code>map</code> to apply <code>convert_date1</code> to all values in the 'Date' column in order to generate the list of x values for the series.</p>
 <h2 id="stock-chart-with-volume">Stock Chart with Volume<a class="headerlink" href="#stock-chart-with-volume" title="Permanent link">&para;</a></h2>
-<p>The CSV file contains additional data, not just the end of day price. We will now create a more sophisticated chart that uses this data.
+<p><a href="https://justpy-demo.herokuapp.com/demo/stock_test2">Stock Chart with Volume live demo</a></p>
+<p>The CSV file contains additional data, not just the end of day price. 
+We will now create a more sophisticated chart that uses this data.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span> <span class="nn">datetime</span>
@@ -1897,7 +1904,7 @@
 <a id="__codelineno-2-72" name="__codelineno-2-72" href="#__codelineno-2-72"></a>
 <a id="__codelineno-2-73" name="__codelineno-2-73" href="#__codelineno-2-73"></a>
 <a id="__codelineno-2-74" name="__codelineno-2-74" href="#__codelineno-2-74"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">stock_test2</span><span class="p">)</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>The chart is defined in this case using a standard Python dictionary. When assigned to the chart <code>options</code> attribute, it is automatically converted to a Dict in order to enable dot notation.</p>
 <p>In this example, reading the remote CSV file is done in a non-blocking manner (if you are unfamiliar with <code>asyncio</code>, please skip this paragraph). The loop that JustPy runs in can be found in <code>JustPy.loop</code>. It is used to run <code>pd.read_csv</code> in the default thread or process pool. In order to allow awaiting a coroutine, <code>stock_test</code> is also defined as a coroutine using the <code>async</code> keyword.</p>
 <p>The chart has two series with two different Y axis. The first series is a <a href="https://www.investopedia.com/trading/candlestick-charting-what-is-it/">candlestick</a> series and shows the OHLC (open high low close) data succinctly, and the second series is a simple column series that shows the volume. The data list for each series is created by zipping together the appropriate columns of the pandas frame.</p>
@@ -1975,7 +1982,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "0.10.5"}</script>
     
     
       <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>
