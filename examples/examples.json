@@ -381,7 +381,8 @@
     },
     {
       "name": "charts_tutorial/creating_charts/create_chart_test5.py",
-      "video_url": "https://user-images.githubusercontent.com/95085996/194865394-5c2a2648-1da3-4d73-801c-493f6cb35ff2.gif"
+      "video_url": "https://user-images.githubusercontent.com/95085996/194865394-5c2a2648-1da3-4d73-801c-493f6cb35ff2.gif",
+      "issue": "596"
     },
     {
       "name": "charts_tutorial/updating_charts/chart_test.py",

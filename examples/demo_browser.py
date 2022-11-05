@@ -21,7 +21,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 from justpy import parse_html, QBtn
-from pydevd_file_utils import setup_client_server_paths
+#from pydevd_file_utils import setup_client_server_paths
 
 class BaseWebPage():
     """
@@ -443,17 +443,19 @@ class DemoBrowser(BaseWebPage):
             demo(JustpyDemoApp): the demo to mount
             index(int): the index to mount the demo at
         """
-        try:
-            total=len(self.demo_starter.demos)
-            print (f"mounting {index}/{total}:{demo}")
-            demo.mount(jp.app)
-            demo.try_it_url=f"/{demo.wpfunc.__name__}"
-            demo.status="✅"
-            self.mounted[demo.name]=demo
-            self.progress.text = f"mounting {index}/{total}"
-        except BaseException as ex:
-            demo.status=self.get_html_error(ex)
-              
+        if(demo.issue is None or demo.fixed is not None):
+            try:
+                total=len(self.demo_starter.demos)
+                print (f"mounting {index}/{total}:{demo}")
+                demo.mount(jp.app)
+                demo.try_it_url=f"/{demo.wpfunc.__name__}"
+                demo.status="✅"
+                self.mounted[demo.name]=demo
+                self.progress.text = f"mounting {index}/{total}"
+            except BaseException as ex:
+                demo.status=self.get_html_error(ex)
+        else:
+            print("can't mount this")
     async def on_mount_all_btn_click(self,_msg):
         """
         mount all button has been clicked

@@ -40,6 +40,8 @@ class JustpyDemoApp:
         self.source_link=f"""<a href="{url}" target="_blank">{self.source_file}</a>"""
         self.video_url=None
         self.try_it_url=None
+        self.issue = None
+        self.fixed = None
         self.name=os.path.basename(self.source_file).replace(".py","")
         self.wpfunc = wpfunc
         self.debug=debug
