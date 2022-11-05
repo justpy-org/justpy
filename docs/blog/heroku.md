@@ -39,14 +39,18 @@ web: python examples/demo_browser.py --heroku -d
 # heroku  justpy demo browser dependencies
 #
 # install justpy
-justpy>=0.10.1
+# check for latest version at https://pypi.org/project/justpy/
+justpy>=0.10.5
 # install dependencies for examples
+altair
 bokeh
 matplotlib
 pandas
+pandas_datareader
 plotly
 pydeck
 pygments
+scipy
 seaborn
 vega_datasets
 # debugging

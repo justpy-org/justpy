@@ -60,15 +60,18 @@ Source = "https://github.com/justpy-org/justpy"
 [project.optional-dependencies]
 test = [
   "aiohttp",
+  "altair", # example
   "asynctest",
   "bokeh", # example
   "green",
   "matplotlib", #example
   "pandas", # example
+  #pandas_datareader", #example
   "plotly", # example
   "pydeck", # example
   "pygments", # demo_browser
   "seaborn", # example
+  #scipy", # example
   "selenium",
   "testfixtures",
   "vega_datasets", #example

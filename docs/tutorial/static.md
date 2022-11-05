@@ -1,5 +1,8 @@
 # Static Files
 
+The handling of static files is to be changed in an upcoming justpy
+version see https://github.com/justpy-org/justpy/issues/162
+
 ## The Basics
 
 Static resources are those that are not generated dynamically by the application. An image is an example of a static resource.

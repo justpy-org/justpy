@@ -2,14 +2,17 @@
 # heroku  justpy demo browser dependencies
 #
 # install justpy
-justpy>=0.10.2
+justpy>=0.10.4
 # install dependencies for examples
+altair
 bokeh
 matplotlib
 pandas
+pandas_datareader
 plotly
 pydeck
 pygments
+scipy
 seaborn
 vega_datasets
 # debugging
