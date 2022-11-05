@@ -62,6 +62,7 @@ class Demostarter:
         add video links to the demos
         """
         with open(self.example_json_file) as json_file:
+            # read in the example_json file
             example_json = json.load(json_file)
         if "examples" in example_json:
             for i, video_record in enumerate(example_json["examples"]):
@@ -70,10 +71,11 @@ class Demostarter:
                 if name and video_url:
                     if name in self.demos_by_source_file:
                         demo=self.demos_by_source_file[name]
-                        demo.video_url=video_url
                     elif name in self.demos_by_name:
                         demo=self.demos_by_name[name]
-                        demo.video_url=video_url
+                    demo.video_url=video_url
+                    demo.issue=video_record.get("issue",None)
+                    demo.fixed=video_record.get("fixed",None)
                 else:
                     raise Exception(f"name or url missing for example #{i}")
             

@@ -582,6 +582,12 @@
     {
       "name": "quasar_tutorial/quasar_components/input_test10.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/199312558-872beb5f-4b4f-4c4f-b060-4532fdf6d31d.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/input_demo_quasar1.py",
+      "video_url": "https://user-images.githubusercontent.com/1336221/200119950-15a27e13-cd6e-432b-9664-3dddfa28814e.gif",
+      "issue": 594,
+      "fixed": "2022-11-05"
     }
   ]
 }
