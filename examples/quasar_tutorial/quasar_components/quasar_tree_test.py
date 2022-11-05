@@ -56,12 +56,12 @@ def quasar_tree_test():
 
     tree = jp.QTree(a=d, node_key='label', nodes=node_string, tick_strategy="leaf", no_connectors=False, default_expand_all=True)
     d1 = jp.Div(text='', a=d)
-    
+
     def my_updated(self, msg):
         print('in my updated')
         d1.text = str(msg.value)
     tree.on('update:ticked', my_updated)
-    
+
     b1.tree = tree
     b2.tree = tree
     return wp
