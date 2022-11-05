@@ -435,15 +435,16 @@ class DemoBrowser(BaseWebPage):
             except Exception as ex:
                 self.handleException(ex)
         
-    def mount(self,demo,index:int):
+    def mount(self,demo,index:int,force:bool=False):
         """
         mount the given demo 
         
         Args:
             demo(JustpyDemoApp): the demo to mount
             index(int): the index to mount the demo at
+            force(bool): if True force the mount even if there is an issue for this demo
         """
-        if(demo.issue is None or demo.fixed is not None):
+        if(force or demo.issue is None or demo.fixed is not None):
             try:
                 total=len(self.demo_starter.demos)
                 print (f"mounting {index}/{total}:{demo}")
@@ -455,7 +456,8 @@ class DemoBrowser(BaseWebPage):
             except BaseException as ex:
                 demo.status=self.get_html_error(ex)
         else:
-            print("can't mount this")
+            demo.status=(f"can't mount due to unfixed issue {demo.issue}")
+            
     async def on_mount_all_btn_click(self,_msg):
         """
         mount all button has been clicked

@@ -3,6 +3,7 @@
 [Bokeh charts](https://docs.bokeh.org/en/latest/index.html) can be added to a web page using the `BokehChart` component. If you plan to update the chart, set the style or classes of the element to the height of the chart. This will eliminate flicker on update.
 
 The example below puts three bokeh charts on the page. 
+[Bokeh Charts live demo]({{demo_url}}/bokeh_test)
 
 ```python
 import justpy as jp
@@ -72,6 +73,9 @@ def create_texas_figure(*, width=500, height=500):
 
 
 def bokeh_test(request):
+    """
+    test BOKEH charts
+    """ 
     wp = jp.WebPage(tailwind=True)
     p = create_iris_figure()
     wp.c = jp.BokehChart(chart=p, a=wp)
