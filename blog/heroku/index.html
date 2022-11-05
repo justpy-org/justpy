@@ -1211,6 +1211,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../quasar_tutorial/quasar_components/#qdrawer" class="md-nav__link">
+        QDrawer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../quasar_tutorial/quasar_components/#qexpansionitem" class="md-nav__link">
         QExpansionItem
       </a>
@@ -2038,18 +2052,22 @@ follow the instructions to get your git repository</p>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># heroku  justpy demo browser dependencies</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">#</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># install justpy</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>justpy&gt;<span class="o">=</span><span class="m">0</span>.10.1
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># install dependencies for examples</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>bokeh
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>matplotlib
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>pandas
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>plotly
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>pydeck
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>pygments
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>seaborn
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>vega_datasets
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1"># debugging</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>pydevd
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># check for latest version at https://pypi.org/project/justpy/</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>justpy&gt;<span class="o">=</span><span class="m">0</span>.10.5
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># install dependencies for examples</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>altair
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>bokeh
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>matplotlib
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>pandas
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>pandas_datareader
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>plotly
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>pydeck
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>pygments
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>scipy
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>seaborn
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>vega_datasets
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="c1"># debugging</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>pydevd
 </code></pre></div>
 <h4 id="getjustpy">getjustpy<a class="headerlink" href="#getjustpy" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#!/bin/bash</span>
@@ -2070,7 +2088,7 @@ follow the instructions to get your git repository</p>
 <a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>  git clone --depth<span class="o">=</span><span class="m">1</span> <span class="nv">$giturl</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="k">fi</span>
 <a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>rm -rf justpy/.git
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>rsync -avz justpy/examples <span class="nv">$pwd</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>rsync -avz justpy/examples <span class="nv">$pwd</span> --delete
 </code></pre></div>
 <h4 id="get-the-justpy-examples">get the justpy examples<a class="headerlink" href="#get-the-justpy-examples" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># make script executable</span>
