@@ -21,7 +21,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 from justpy import parse_html, QBtn
-#from pydevd_file_utils import setup_client_server_paths
+from pydevd_file_utils import setup_client_server_paths
 
 class BaseWebPage():
     """
