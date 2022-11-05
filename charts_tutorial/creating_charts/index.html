@@ -1865,6 +1865,7 @@
 
 <h1 id="creating-charts">Creating Charts<a class="headerlink" href="#creating-charts" title="Permanent link">&para;</a></h1>
 <h2 id="your-first-chart">Your First Chart<a class="headerlink" href="#your-first-chart" title="Permanent link">&para;</a></h2>
+<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test1">Your First Chart live demo</a></p>
 <p>To begin, we'll use the Highchart's documentation <a href="https://www.highcharts.com/docs/getting-started/your-first-chart">Your First Chart</a> example.</p>
 <p>In JustPy this example would look like this:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -1911,6 +1912,7 @@
 <p>If a standard Python dictionary is assigned to the <code>options</code> attribute, it is also converted to a dictionary that allows dot notation access. Don't worry if this is not completely clear at this stage. There are plenty of examples coming that will make things clearer.</p>
 <p>Try for example, changing the text of the chart title in <code>my_chart_def</code> and running the program again.</p>
 <h2 id="chart-types">Chart Types<a class="headerlink" href="#chart-types" title="Permanent link">&para;</a></h2>
+<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test2">Chart Types live demo</a></p>
 <p>Let's do something a little more complex. Change <code>create_chart_test1</code> in the above example to the following:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1969,6 +1971,7 @@
 <p>Please go to https://api.highcharts.com/highcharts/chart.type and follow the link under "Try it" labeled <a href="https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/chart/type-bar/">"Bar"</a>. In the Highcharts documentation and in other discussions of Highcharts it is common to link to a JavaScript <a href="https://jsfiddle.net">jsfiddle</a> or <a href="https://codepen.io">codepen</a> working example. In this case, a jsfiddle window opens. Look at the JavaScript window in the lower left of the page. The second argument to <code>Highcharts.chart</code> is the JavaScript object that defines the chart. Let's copy this object and assign it to a Python string and try replicating this chart.</p>
 <p>If you simply copy the object like I did  below, you will get an error. Run the program and see for yourself there is an issue.</p>
 <h3 id="highcharts-example">highcharts example<a class="headerlink" href="#highcharts-example" title="Permanent link">&para;</a></h3>
+<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test3">highcharts example live demo</a>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -2008,9 +2011,10 @@
 <a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>
 <a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>
 <a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">create_chart_test3</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></p>
 <p>The problem is that the value of the <code>tooltip.formatter</code> key is a JavaScript function definition. JustPy does not support this. We will soon see how to define tooltip formatters in JustPy, but for now, please remove the whole tooltip section and run the program. Your program should look like this:</p>
 <h3 id="highcharts-example-with-removed-tooltip-section">highcharts example with removed tooltip section<a class="headerlink" href="#highcharts-example-with-removed-tooltip-section" title="Permanent link">&para;</a></h3>
+<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test4">highcharts example with removed tooltip live demo</a>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -2046,7 +2050,7 @@
 <a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>
 <a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>
 <a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">create_chart_test4</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></p>
 <p>This time, there is no error. When you copy a JavaScript object, make sure that it does not include function definitions or uses JavaScript language functions to compute values. These will cause errors.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
