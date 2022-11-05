@@ -678,13 +678,19 @@ You can control this yourself by setting the `disable_input_event` attribute to 
 The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputChange and QInputBlur instead of QInput.
 
 
-```html
+```python
 import justpy as jp
 
 def my_blur(self, msg):
+    """
+    event handler for loosing the focus
+    """
     self.div.text = self.value
 
 def input_demo_quasar1(request):
+    """
+    show how the blue event works
+    """
     wp = jp.QuasarPage()
     c1 = jp.Div(classes='q-pa-md', a=wp)
     c2 = jp.Div(classes='q-gutter-md', style='max-width: 300px', a=c1)
