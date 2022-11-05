@@ -676,6 +676,7 @@ In some cases the debounce feature may not be sufficient to provide a good user 
 You can control this yourself by setting the `disable_input_event` attribute to `True` or use the predefined QInputChange and QInputBlur components. QInputBlur will only update the value of the field when the component loses focus. QInputChange will update the value when the change event is fired. Both are very similar except that change will also fire when the Enter key is pressed and focus remains on the component.
 
 The regular QInput component generates an event each time a character is typed into the field. In some case this is not necessary and may put unwanted burden on the server. If you are not implementing a look ahead or validating the field on the server as the user is typing, it is preferable to use QInputChange and QInputBlur instead of QInput.
+[QInputChange and QInputBlur live demo]({{demo_url}}/input_demo_quasar1)
 
 
 ```python

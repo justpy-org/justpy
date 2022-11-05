@@ -1,6 +1,7 @@
 # Creating Charts
 
 ## Your First Chart
+[Your First Chart live demo]({{demo_url}}/create_chart_test1)
 
 To begin, we'll use the Highchart's documentation [Your First Chart](https://www.highcharts.com/docs/getting-started/your-first-chart) example.
 
@@ -57,6 +58,7 @@ If a standard Python dictionary is assigned to the `options` attribute, it is al
 Try for example, changing the text of the chart title in `my_chart_def` and running the program again.
 
 ## Chart Types
+[Chart Types live demo]({{demo_url}}/create_chart_test2)
 
 Let's do something a little more complex. Change `create_chart_test1` in the above example to the following:
 ```python
@@ -124,6 +126,7 @@ Please go to https://api.highcharts.com/highcharts/chart.type and follow the lin
 If you simply copy the object like I did  below, you will get an error. Run the program and see for yourself there is an issue.
 
 ### highcharts example
+[highcharts example live demo]({{demo_url}}/create_chart_test3)
 ```python
 import justpy as jp
 
@@ -168,6 +171,7 @@ jp.justpy(create_chart_test3)
 
 The problem is that the value of the `tooltip.formatter` key is a JavaScript function definition. JustPy does not support this. We will soon see how to define tooltip formatters in JustPy, but for now, please remove the whole tooltip section and run the program. Your program should look like this:
 ### highcharts example with removed tooltip section
+[highcharts example with removed tooltip live demo]({{demo_url}}/create_chart_test4)
 ```python
 import justpy as jp
 
