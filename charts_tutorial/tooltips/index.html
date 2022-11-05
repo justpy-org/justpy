@@ -1920,8 +1920,8 @@
 - <code>msg.y</code> - The y coordinate of the point
 - <code>msg.color</code> - The color of the point
 - <code>msg.series_name</code> - The name of the series the point is in
-- <code>msg.series_index</code> - The index the series the point is in
-- <code>msg.point_index</code> - The index the point in its series</p>
+- <code>msg.series_index</code> - The index of the series the point is in
+- <code>msg.point_index</code> - The index of the point in its series</p>
 <p>Let's use some of the fields above to create a more informative tooltip. Please replace <code>tooltip_formatter1</code> with this new version and run the program:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">tooltip_formatter2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">tooltip_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
@@ -2119,7 +2119,7 @@ to get the desired positioning. </p>
 </code></pre></div>
 <h3 id="custom-tooltips">Custom Tooltips<a class="headerlink" href="#custom-tooltips" title="Permanent link">&para;</a></h3>
 <p>In the example below we add three additional charts with custom tooltips to the page. In total, there are now six charts on the page. The first three use the default Highcharts tooltip and the second three use custom tooltips. The first custom tooltip is of type single, the second is of type shared and the third is a split tooltip.</p>
-<p>For single and shared tooltip handlers the first argument ofthe  <code>tooltip_update</code> is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.</p>
+<p>For single and shared tooltip handlers the first argument of the  <code>tooltip_update</code> is an HTML string. For split tooltip the first argument is a list of HTML strings. The first string is for the x value and the following strings on the list are the HTML strings per series.</p>
 <p>In the case of shared and split tooltips, the <code>msg</code> argument of the tooltip formatter includes a list of the properties of all the points with the corresponding x value. It is accessed as <code>msg.points</code>. As you will see in the example below, we iterate over this list in the tooltip handlers to generate the required output.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>

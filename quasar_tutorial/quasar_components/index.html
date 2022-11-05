@@ -1869,8 +1869,10 @@ QInput e.g. might be a good start.</p>
 <a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    <span class="n">in1</span><span class="o">.</span><span class="n">prepend_slot</span> <span class="o">=</span> <span class="n">date_slot</span>
 <a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    <span class="n">in1</span><span class="o">.</span><span class="n">append_slot</span> <span class="o">=</span> <span class="n">time_slot</span>
 <a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test3</span><span class="p">)</span>
 </code></pre></div>
-<p>Or you can arrive at the same result by creating a reusable component:</p>
+<p>Or you can arrive at the same result by creating a reusable component (class):</p>
+<h3 id="date-and-time-as-qinput-slots-as-class-component">Date and Time as QInput slots as class component<a class="headerlink" href="#date-and-time-as-qinput-slots-as-class-component" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># https://quasar.dev/vue-components/date#With-QInput</span>
@@ -1995,7 +1997,7 @@ QInput e.g. might be a good start.</p>
 <a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">dialog_test</span><span class="p">)</span>
 </code></pre></div>
 <h1 id="qexpansionitem">QExpansionItem<a class="headerlink" href="#qexpansionitem" title="Permanent link">&para;</a></h1>
-<p>See also [quasar vue expansion-item].(https://quasar.dev/vue-components/expansion-item)
+<p>See also <a href="https://quasar.dev/vue-components/expansion-item">quasar vue expansion-item</a>
 The QExpansionItem component allows the hiding of content that is not immediately relevant to the user. 
 Think of them as accordion elements that expand when clicked on. It’s also known as a collapsible.</p>
 <p>They are basically QItem components wrapped with additional functionality. So they can be included in QLists and inherit QItem component properties.</p>
@@ -2024,7 +2026,7 @@ Think of them as accordion elements that expand when clicked on. It’s also kno
 <a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_expansion_item1</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="qexpansionitem-example-2">QExpansionItem Example 2<a class="headerlink" href="#qexpansionitem-example-2" title="Permanent link">&para;</a></h2>
-<p>In this example we define a custom component base on QExpansionItem. This component adds an image from the site <a href="https://picsum.photos/">Lorem Picsum</a> to the expansion item and in addition formats the expansion item.</p>
+<p>In this example we define a custom component based on QExpansionItem. This component adds an image from the site <a href="https://picsum.photos/">Lorem Picsum</a> to the expansion item and in addition formats the expansion item.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">class</span> <span class="nc">My_expansion</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">QExpansionItem</span><span class="p">):</span>
