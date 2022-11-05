@@ -76,7 +76,7 @@ then
   git clone --depth=1 $giturl
 fi
 rm -rf justpy/.git
-rsync -avz justpy/examples $pwd
+rsync -avz justpy/examples $pwd --delete
 ```
 #### get the justpy examples
 ```bash
