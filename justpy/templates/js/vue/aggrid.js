@@ -82,12 +82,19 @@ Vue.component('grid', {
 
 
             function grid_ready(event) {
+				// handle the grid_ready event
                 if (auto_size) {
+					// array of all column Ids
                     var allColumnIds = [];
-                    grid_def.columnApi.getAllColumns().forEach(function (column) {
-                        allColumnIds.push(column.colId);
-                    });
-                    grid_def.columnApi.autoSizeColumns(allColumnIds);
+                    // get all columns - might be null
+                    var allColumns=grid_def.columnApi.getAllColumns()
+                    // loop if there are any columns
+                    if (allColumns) {
+                    	allColumns.forEach(function (column) {
+                        	allColumnIds.push(column.colId);
+                      	});
+                      	grid_def.columnApi.autoSizeColumns(allColumnIds);
+                    }
                 }
             }
 
