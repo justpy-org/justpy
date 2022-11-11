@@ -62,7 +62,7 @@ test = [
   "aiohttp",
   "altair", # example
   "asynctest",
-  "bokeh=2.3.2", # example
+  "bokeh==2.3.2", # example
   "green",
   "matplotlib", #example
   "pandas", # example
