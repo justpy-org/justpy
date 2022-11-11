@@ -103,6 +103,7 @@ in1.append_slot = e
 Just add '_slot' to the slot name and treat it as an instance attribute.
 
 ## Parsing Quasar Tags
+[Parsing Quasar Tags live demo]({{demo_url}}/quasar_example2)
 
 The JustPy `parse_html` function recognizes Quasar tags. This is convenient as it allows using examples in the Quasar documentation. The example below was taken from the [QList documentation](https://quasar.dev/vue-components/list-and-list-items).
 
@@ -201,9 +202,13 @@ html_string = """
 """
 
 def quasar_example2():
+    """
+    Show parsing and command generation
+    """
     wp = jp.QuasarPage()
-    c = jp.parse_html(html_string, a=wp)
-    for i in c.commands:
+    div_root_component = jp.parse_html(html_string, a=wp)
+    # print out all commands on console
+    for i in div_root_component.commands:
         print(i)
     return wp
 
