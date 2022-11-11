@@ -55,7 +55,7 @@ async def login_test(request):
 
             def log_out(self, msg):
                 users[self.s_id]['logged_in'] = False
-                msg.page.redirect = '/login_test'
+                msg.page.redirect = '/'
 
             log_out_btn.on('click', log_out)
 
