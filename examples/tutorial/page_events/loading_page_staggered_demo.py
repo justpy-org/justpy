@@ -1,22 +1,4 @@
-# Page Events
-
-As of version 0.1.2 pages support three events:
-
-* click - fires when page is clicked
-* [visibilitychange](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event) - fires when the page gains or loses visibility
-* page_ready - fires after a page is ready with an established websocket connection
-
-Added in version 0.1.3:
-
-* result_ready: fires when a result from the [`run_javascript`](/reference/webpage/#async-def-run_javascriptself-javascript_string-request_id-sendtrue) method is available.
-
-In the first example below, `page_ready` is used to load a page with 3,000 Div elements in a staggered manner in order to improve the user experience.
-
-Try the '/stagger' route and see how it compares to the default.
-### loading hundreds of div elements in a staggered manner
-[loading hundreds of div elements in a staggered manner live demo]({{demo_url}}/loading_page_staggered_demo)
-
-```python
+# Justpy Tutorial demo loading_page_staggered_demo from docs/tutorial/page_events.md
 import justpy as jp
 import asyncio
 import time
@@ -112,61 +94,6 @@ async def loading_page_staggered_demo():
     await stagger_demo.on_toggle_mode()
     return stagger_demo.wp    
 
-jp.justpy(loading_page_staggered_demo)
-```
-
-In the following example the result of running JavaScript in the browser is obtained:
-
-### run_javascript example
-[run javascript example live demo]({{demo_url}}/run_javascript_demo)
-
-
-```python
-import justpy as jp
-
-js_code = """
-var a = 3;
-var b = 5;
-var c = a * b;
-var d = {r: c, appName: navigator.appName, appVersion: navigator.appVersion};
-(d)
-"""
-
-class JavaScriptDemo:
-    """
-    a demo for running JavaScript code
-    """
-    def __init__(self):
-        """
-        constructor
-        """
-        self.wp = jp.WebPage()
-        self.wp.on("page_ready", self.page_ready)
-        self.wp.on("result_ready", self.result_ready)
-        self.result_div = jp.Div(text="Result will go here", classes="m-4 p-2 text-xl", a=self.wp)
-        jp.Pre(text=js_code, a=self.wp, classes="m-2 p-2 border")
-        
-
-    async def page_ready(self, _msg):
-        """
-        callback when page is ready
-        """
-        jp.run_task(self.wp.run_javascript(js_code))
-
-
-    async def result_ready(self, msg):
-        """
-        call back when result is ready
-        """
-        self.result_div.text = f"The result is: {msg.result}"
-
-
-def run_javascript_demo():
-    """
-	show how to run javascript code
-    """
-    javascript_demo=JavaScriptDemo()
-    return javascript_demo.wp
-    
-jp.justpy(run_javascript_demo)
-```
+# initialize the demo
+from examples.basedemo import Demo
+Demo("loading_page_staggered_demo", loading_page_staggered_demo)

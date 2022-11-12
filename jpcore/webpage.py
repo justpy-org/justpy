@@ -34,6 +34,9 @@ class WebPage:
     ]
 
     def __init__(self, **kwargs):
+        """
+        constructor
+        """
         self.page_id = WebPage.next_page_id
         WebPage.next_page_id += 1
         self.cache = None  # Set this attribute if you want to use the cache.
@@ -125,7 +128,13 @@ class WebPage:
         if k in self.cookies:
             del self.cookies[str(k)]
 
-    async def run_javascript(self, javascript_string, *, request_id=None, send=True):
+    async def run_javascript(self, javascript_string:str, *, request_id=None, send=True):
+        """
+        run the given java script code remotely
+        
+        Args:
+            javascript_string(str): the javascript code to run remotely
+        """
         try:
             websocket_dict = WebPage.sockets[self.page_id]
         except:
