@@ -1991,6 +1991,7 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 </code></pre></div></p>
 <p>Just add '_slot' to the slot name and treat it as an instance attribute.</p>
 <h2 id="parsing-quasar-tags">Parsing Quasar Tags<a class="headerlink" href="#parsing-quasar-tags" title="Permanent link">&para;</a></h2>
+<p><a href="https://justpy-demo.herokuapp.com/demo/quasar_example2">Parsing Quasar Tags live demo</a></p>
 <p>The JustPy <code>parse_html</code> function recognizes Quasar tags. This is convenient as it allows using examples in the Quasar documentation. The example below was taken from the <a href="https://quasar.dev/vue-components/list-and-list-items">QList documentation</a>.</p>
 <p>The parsing function also generates the <code>commands</code> attribute which is a list of JutPy commands required to generate the HTML. In the example below we print these commands.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -2084,13 +2085,17 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 <a id="__codelineno-5-89" name="__codelineno-5-89" href="#__codelineno-5-89"></a><span class="s2">&quot;&quot;&quot;</span>
 <a id="__codelineno-5-90" name="__codelineno-5-90" href="#__codelineno-5-90"></a>
 <a id="__codelineno-5-91" name="__codelineno-5-91" href="#__codelineno-5-91"></a><span class="k">def</span> <span class="nf">quasar_example2</span><span class="p">():</span>
-<a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-<a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-<a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
-<a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a>    <span class="k">return</span> <span class="n">wp</span>
-<a id="__codelineno-5-97" name="__codelineno-5-97" href="#__codelineno-5-97"></a>
-<a id="__codelineno-5-98" name="__codelineno-5-98" href="#__codelineno-5-98"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example2</span><span class="p">)</span>
+<a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a>    <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a><span class="sd">    Show parsing and command generation</span>
+<a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a>    <span class="n">div_root_component</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-5-97" name="__codelineno-5-97" href="#__codelineno-5-97"></a>    <span class="c1"># print out all commands on console</span>
+<a id="__codelineno-5-98" name="__codelineno-5-98" href="#__codelineno-5-98"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">div_root_component</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
+<a id="__codelineno-5-99" name="__codelineno-5-99" href="#__codelineno-5-99"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a id="__codelineno-5-100" name="__codelineno-5-100" href="#__codelineno-5-100"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-5-101" name="__codelineno-5-101" href="#__codelineno-5-101"></a>
+<a id="__codelineno-5-102" name="__codelineno-5-102" href="#__codelineno-5-102"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">quasar_example2</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="quasar-directives">Quasar Directives<a class="headerlink" href="#quasar-directives" title="Permanent link">&para;</a></h2>
 <p>JustPy supports the following Quasar Vue directives:
