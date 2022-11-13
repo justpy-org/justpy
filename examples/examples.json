@@ -625,6 +625,39 @@
       "name": "tutorial/ajax/hello_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/198144200-69c2a1e1-1211-4bc7-8448-449d8564392d.gif",
       "issue": 606
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/input_test11.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201528874-1a40a010-4856-4e5d-b4d3-7dd9f2e15aea.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/stock_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201531947-6d940f34-9e7d-4fab-9591-38480284b369.gif",
+      "issue": 618
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/reactive_list_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201532736-515623a7-e077-45d0-bc22-b5ee99083f42.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/option_group_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201533056-84e3c0e8-e2da-476a-b4d3-a603a3bf0edc.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/quasar_rating_test1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201533341-2a432730-bac9-4289-ba64-b58e6fa7703e.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/quasar_rating_test2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201533381-25c06f1e-3ec7-4cbf-83f5-9d255c14e5eb.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/quasar_splitter_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201533948-42bda88b-f158-4168-83b7-7ab42c42ec1a.gif"
+    },
+    {
+      "name": "quasar_tutorial/quasar_components/quasar_tree_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/201534368-911624a1-9c9c-4b82-a797-fc90d120ccfc.gif"
     }
   ]
 }
