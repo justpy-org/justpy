@@ -11,7 +11,6 @@ import justpy as jp
 import os
 import sys
 import psutil
-import socket
 import traceback
 from jpcore.demostarter import Demostarter
 from jpcore.tutorial import TutorialManager,Example

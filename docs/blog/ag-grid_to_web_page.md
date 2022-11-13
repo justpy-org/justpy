@@ -11,6 +11,7 @@
 [JustPy](https://justpy.io) is a Python package that allows you to build web applications without any JavaScript programming (I am the creator of JustPy). JustPy comes with a [Pandas extension](https://pandas.pydata.org/pandas-docs/stable/development/extending.html) that makes it very easy to insert the data from a DataFrame into an ag-Grid and into a web application.
 
 ## Basic Example
+[Basic Example live demo]({{demo_url}}/basic_example)
 
 The following program reads a a CSV file into a DataFrame and creates a web application that serves a web page with the ag-Grid. The [data](http://www.randalolson.com/2014/06/14/percentage-of-bachelors-degrees-conferred-to-women-by-major-1970-2012/) describes the percentage of bachelor's degrees conferred to women by major in the years 1970-2012.
 
@@ -21,12 +22,15 @@ import pandas as pd
 # Load data showing percent of women in different majors per year
 wm = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
-def grid_test1():
+def basic_exyample():
+	"""
+	basic AG Grid example reading a csv file and displaying it in a grid
+	"""
     wp = jp.WebPage()
     wm.jp.ag_grid(a=wp)  # a=wp adds the grid to WebPage wp
     return wp
 
-jp.justpy(grid_test1)
+jp.justpy(basic_example)
 
 ```
 

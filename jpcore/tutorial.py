@@ -4,22 +4,28 @@ Created on 2022-09-16
 @author: wf
 '''
 import os
+import sys
 import re
 from jpcore.utilities import find_files
 from jpcore.example import Example, ExampleSource
+from argparse import ArgumentParser
+from argparse import RawDescriptionHelpFormatter
+import traceback
 
 class TutorialManager:
     """
     justpy tutorial
     """
     
-    def __init__(self,docs_dir:str=None):
+    def __init__(self,docs_dir:str=None,debug:bool=False):
         """
         constructor
         
         Args:
             docs_dir(str): the path from which to read the tutorial files
+            debug(bool): if True switch debugging on
         """
+        self.debug=debug
         self.tutorials={}
         self.script_dir = os.path.dirname(__file__)
         if docs_dir is None:
@@ -39,6 +45,9 @@ class TutorialManager:
                     duplicate_example=self.examples_by_name[example.name]
                     raise Exception(f"duplicate example name '{example.name}' {example.tutorial.name} and {duplicate_example.tutorial.name}")
                 self.examples_by_name[example.name]=example
+        if self.debug:
+            print(f"{docs_dir} contains {len(self.tutorials)} tutorials with {self.total_examples} examples")
+            pass
                 
     def extract_all(self,target_path:str="/tmp",verbose:bool=True):
         """
@@ -156,3 +165,62 @@ class Tutorial():
         """
         text=self.path
         return text
+    
+def main(argv=None):  # IGNORE:C0111
+    """main program."""
+
+    if argv is None:
+        argv = sys.argv
+    try:
+        program_name = os.path.basename(sys.argv[0])
+        script_dir = os.path.dirname(__file__)
+        base_dir=os.path.dirname(script_dir)
+        # os.getcwd()
+        parser = ArgumentParser(
+            description="Tutorial Manager",
+            formatter_class=RawDescriptionHelpFormatter,
+        )
+        parser.add_argument(
+            "-d", "--debug", dest="debug", action="store_true", help="show debug info"
+        )
+        parser.add_argument(
+            "-dp",
+            "--docs_path",
+            default=f"{base_dir}/docs",
+            help="path to the docs directory (default: %(default)s)",
+        )
+        parser.add_argument(
+            "-ep",
+            "--examples_path",
+            default=f"{base_dir}/examples",
+            help="path to the examples directory (default: %(default)s)",
+        )
+        parser.add_argument(
+            "-ex",
+            "--extract",
+            default=None,
+            help="name of example to extract (default: %(default)s)",
+        )
+        args = parser.parse_args(argv[1:])
+        tm=TutorialManager(docs_dir=args.docs_path,debug=args.debug)
+        if args.extract:
+            example_name=args.extract
+            if example_name in tm.examples_by_name:
+                target_path=f"{args.examples_path}"
+                example=tm.examples_by_name[example_name]
+                print(f"extracting source code for example {example_name} to {target_path} ...")
+            else:
+                print(f"tutorial does not contain the example {example_name} ❌",file=sys.stderr)
+        else:
+            parser.print_help(sys.stderr)
+            sys.exit(1)
+    except Exception as e:
+        indent = len(program_name) * " "
+        sys.stderr.write(program_name + ": " + repr(e) + "\n")
+        sys.stderr.write(indent + "  for help use --help")
+        if args.debug:
+            print(traceback.format_exc())
+        return 2    
+    
+if __name__ == "__main__":
+    sys.exit(main())
