@@ -75,6 +75,7 @@ The framework takes care of the rest.
 Here is a basic example:
 
 ## First Hello World
+[First Hello World live demo]({{demo_url}}/hello_world1)
 
 ```python
 import justpy as jp
@@ -98,6 +99,7 @@ Run the program above (as explained in [getting started](../getting_started/#run
 You should see 'Hello World!' in your browser.
 
 ## More Hello World
+[More Hello World live demo]({{demo_url}}/hello_world2)
 
 Saying hello once isn't enough! We would like to say "hello" ten times. We also want to let the user know how many times we said "hello". More specifically, we would like "Hello World!" to show up ten times on the page and be enumerated. In addition, we would like to use a bigger font each time.
 
@@ -130,6 +132,7 @@ style=f"color: blue; font-size: {10*i}px"
 and see what happens.
 
 ## Tailwind and JustPy
+[Tailwind and JustPy live demo]({{demo_url}}/hello_world3)
 
 Another way to style elements is to use classes.
 By default, instances of WebPage support styling using [Tailwind](https://tailwindcss.com/) classes. If you are familiar with CSS, checkout Tailwind. For me, it is a joy to work with.
@@ -155,6 +158,7 @@ jp.justpy(hello_world3)
 In this program Tailwind classes are used to make the output a little nicer. The JustPy attribute `classes` is equivalent to the HTML attribute [class](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class) (which is a reserved word in Python).
 
 ## Creating Web Pages Once
+[Creating Web Pages Once live demo]({{demo_url}}/hello_world4)
 
 You may have noticed that since we have been serving the same page to everyone, there is no need to create a new page each time a request is made.
 We can create a page one time, and serve the same page for all requests:

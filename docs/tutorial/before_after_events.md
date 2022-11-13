@@ -1,4 +1,5 @@
 # The "before" and "after" Events
+[The "before" and "after" Events live demo]({{demo_url}}/after_demo)
 
 Occasionally, you need to do something before an event handler is run, or after the event handler is run.
 

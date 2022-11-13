@@ -1,4 +1,5 @@
 # Altair Charts
+[Altair Charts live demo]({{demo_url}}/altair_chart_test)
 
 [Altair charts](https://altair-viz.github.io/) are supported by JustPy using the `AltairChart` component.
 

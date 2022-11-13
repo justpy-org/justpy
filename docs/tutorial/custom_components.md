@@ -13,6 +13,8 @@ Some components described here have features that are covered in other parts of 
 Our first component is a very simple one. It is a Button that is formatted to look like a [pill](https://tailwindcss.com/components/buttons#pill).
 
 ### Custom Component PillButton - Button looking like a pill
+[PillButton live demo]({{demo_url}}/custom_comp_test1)
+
 ```python
 import justpy as jp
 
@@ -43,6 +45,8 @@ Without it, the instances of the components will not be created correctly. In mo
 Let's add a custom attribute to the component that will determine the background color of the button.
 
 ### Custom Component PillButton  with background color attribute
+[PillButton with color live demo]({{demo_url}}/custom_comp_test2)
+
 ```python
 import justpy as jp
 
@@ -82,6 +86,7 @@ Both methods work the same as Python uses the class attribute if it does not fin
 
 
 ## Alert Component
+[Alert Component live demo]({{demo_url}}/alert_test1)
 
 This component is based on this [example](https://tailwindcss.com/components/alerts/#top-accent-border) from the Tailwind documentation.
 
@@ -188,6 +193,7 @@ When you run the program above, notice that the title of the MyAlert instance is
     As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the `convert_object_to_dict` method that each component class has.
 
 ## The react Method
+[The React Method live demo]({{demo_url}}/alert_test2)
 
 Every JustPy component supports the `react` method. It is run just just before a class instance is converted to a dictionary. It receives two arguments, the instance and the `data` attribute of its parent element or that of the `WebPage` if it has no parent. In base JustPy elements, `react` does nothing. It is there to be overridden in user defined components.
 
@@ -258,6 +264,7 @@ In the request handler, `alert_test`, we use the new component to render alerts 
 We now have a component, `MyAlert` that we can reuse as we please in any project (and of course share with our fellow programmers).
 
 ## Date Card Component
+[Date Card Component live demo]({{demo_url}}/custom_comp_test3)
 
 Here is an example of a simple date card component based on [this](https://tailwindcomponents.com/component/calendar-date) design.
 
@@ -313,6 +320,8 @@ This component works well enough but has a flaw. The `inner_html` attribute is s
 To solve this problem, we need to move setting `inner_html` from the time the instance was created to the time it is rendered. Every JustPy component has a method called `react` that is called each time before the object is converted to a dict. The example above can therefore be written as follows:
 
 ### CalendarDate custom component using react
+[CalendarDate custom component live demo]({{demo_url}}/custom_comp_test4)
+
 ```python
 import justpy as jp
 
@@ -363,6 +372,8 @@ The `react` method accepts an additional argument to self. The argument `data` i
 
 For example, let's make the color of the component dependent on the `data` attribute of their parent container.
 ### CalendarDate custom component color dependent on data attribute of parent container
+[Color dependent CalendarDate custom component live demo]({{demo_url}}/custom_comp_test5)
+
 ```python
 import justpy as jp
 
@@ -425,6 +436,7 @@ The function `change_color` sets the value of the 'color' key in the data dictio
 A few more words about Select: A Select component includes Option components. In this example we add them to the Select using a predefined list of colors. When a specific option is selected, its value attribute becomes the value attribute of the Select. The change in value is acted upon by binding a method to the change event of the Select instance.
 
 ## Hello Component
+[Hello component live demo]({{demo_url}}/hello_test1)
 
 JustPy comes with a simple Hello component, which we will now examine.
 
@@ -448,6 +460,8 @@ The program puts five Hello elements on the page. Click any one of them. All fiv
 
 If we would like there to be independent components on the page, we would write the program in the following way:
 ### 5 x times jp.Hello as independent elements
+[live demo]({{demo_url}}/hello_test2)
+
 ```python
 import justpy as jp
 
@@ -483,6 +497,8 @@ Again, JustPy components are Python classes. In our case, `Hello` inherits from 
 In `__init__` we first initialize a counter for the instance. This is a new attribute that is not initialized by `Div`. Then we call the super class `__init__`, in our case the `__init__` of Div. This call provides `Hello` with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class `__init__` after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:
 
 ### 5 x times jp.Hello with a default counter value
+[live demo]({{demo_url}}/hello_test3)
+
 ```python
 import justpy as jp
 
@@ -503,6 +519,8 @@ Next, in the definition of `Hello`, we set the classes of the component to give 
 Let's say we are not pleased with the Hello message and its colors and want to define a better Hello component. This is how we would do it:
 
 ### 5 x times customized MyHello based on jp.Hello
+[live demo]({{demo_url}}/hello_test4)
+
 ```python
 import justpy as jp
 
@@ -528,6 +546,7 @@ We define a new component called `MyHello` which inherits from `Hello`. By runni
 ## Calculator Component
 
 ### Base component
+[live demo]({{demo_url}}/calculator_test1)
 
 We will build a calculator component in stages. First, we will create a component that does not handle events or the model attribute. Please run the following example.
 ```python
@@ -594,6 +613,7 @@ After the two Input elements are added to the instance, two nested loops are use
 In this example, for the sake of brevity, we implemented a very simple state machine for the calculator that is not perfect (for example, it does not handle 0 in front of a number), but for our purposes, it will do. The state machine is inside the `calculator_click` event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on `self.text` which is unique for each button.
 
 ### Handling the change event
+[live demo]({{demo_url}}/calculator_test2)
 
 As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like:
 
@@ -693,6 +713,7 @@ This method takes two arguments in addition to `self`. The first is the event ty
     Please note that `run_event_function` is an async method and therefore since `calculator_click` awaits it, it needs to be a coroutine also and is defined using async.
 
 ### Adding a model attribute
+[live demo]({{demo_url}}/calculator_test3)
 
 To make Calculator complete, we will also add handling of the `model` attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the `model_update` method from the example below and see what happens.
 
@@ -787,6 +808,7 @@ def set_model(self, value):
 The `model` attribute, as we defined it above is one directional. The component only sets `model` value but does not change any of its other attribute values based on changes in `model`.
 
 ## Tab Group Component
+[live demo]({{demo_url}}/tab_comp_test1)
 
 This component allows inserting content in tabs and displaying it based on the tab selected.
 
@@ -1022,6 +1044,7 @@ jp.justpy(tab_comp_test1)
 ```
 
 ## Table Component
+[live demo]({{demo_url}}/table_test)
 
 The AutoTable component takes a list of lists and formats it into a nice looking table. The first list is used as the headers for the table.
 
@@ -1082,7 +1105,7 @@ jp.justpy(table_test)
 ```
 
 ## Quasar QInput Component with Integrated QDate and QTime
-
+[live demo]({{demo_url}}/input_test)
 
 ```python
 import justpy as jp
@@ -1137,6 +1160,7 @@ jp.justpy(input_test)
 ```
 
 ## Component to Link Chart and Grid
+[live demo]({{demo_url}}/grid_test)
 
 Please see [linking charts and grids](grids_tutorial/grid_events?id=linking-a-chart-and-a-grid-using-grid-events) for an explanation.
 
