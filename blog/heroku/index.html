@@ -1773,6 +1773,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cancelling-builds" class="md-nav__link">
+    Cancelling builds
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2007,6 +2014,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cancelling-builds" class="md-nav__link">
+    Cancelling builds
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2125,6 +2139,12 @@ http://justpy-demo-wf.herokuapp.com/</p>
 <h3 id="configs">Configs<a class="headerlink" href="#configs" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>heroku config:set <span class="nv">PYTHONPATH</span><span class="o">=</span>.
 </code></pre></div>
+<h3 id="cancelling-builds">Cancelling builds<a class="headerlink" href="#cancelling-builds" title="Permanent link">&para;</a></h3>
+<p>E.g. in case you see Your account has reached its concurrent builds limit.
+see https://stackoverflow.com/a/60215424/1497139
+<code>`
+heroku plugins:install heroku-builds
+heroku builds:cancel</code></p>
 <h1 id="demo">Demo<a class="headerlink" href="#demo" title="Permanent link">&para;</a></h1>
 <p>http://justpy-demo.herokuapp.com/</p>
 
