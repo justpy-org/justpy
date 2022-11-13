@@ -147,14 +147,25 @@ class Tutorial():
             verbose(bool): if True print progress messages
         """
         sorted_example_names=sorted(self.examples)
+        for i,example_name in enumerate(sorted_example_names):
+            prefix=f"  {i+1:3}:"
+            self.extract_example(example_name,target_path,prefix=prefix)
+        
+    def extract_example(self,example_name:str,target_path:str,prefix:str="",verbose:bool=True):
+        """
+        extrac the example with the given name to the given base_path
+        """
+        if not example_name in self.examples:
+            raise Exception(f"{example_name} is not part of tutorial {self}")   
+        example=self.examples[example_name]
+        if not target_path.endswith("/"):
+            target_path+="/"
         base_path=f"{target_path}{self.tutorial_path}"
         os.makedirs(base_path, exist_ok=True)
-        for i,example_name in enumerate(sorted_example_names):
-            example=self.examples[example_name]
-            source_target_path=f"{base_path}/{example_name}.py"
-            if verbose:
-                print(f"  {i+1:3}:{example_name}:{example}",end="")
-            example.write_as_demo(source_target_path,verbose)
+        source_target_path=f"{base_path}/{example_name}.py"
+        if verbose:
+            print(f"{prefix}{example_name}:{example}",end="")
+        example.write_as_demo(source_target_path,verbose)
                     
     def __str__(self):
         """
@@ -165,6 +176,16 @@ class Tutorial():
         """
         text=self.path
         return text
+    
+def error(self,msg:str):
+    """
+    print the given error message and exit
+    
+    Args:
+        msg(str): the error message to print
+    """
+    print(msg,file=sys.stderr)
+    sys.exit(1)
     
 def main(argv=None):  # IGNORE:C0111
     """main program."""
@@ -208,13 +229,17 @@ def main(argv=None):  # IGNORE:C0111
             if example_name in tm.examples_by_name:
                 target_path=f"{args.examples_path}"
                 example=tm.examples_by_name[example_name]
-                print(f"extracting source code for example {example_name} to {target_path} ...")
-                
+                if example.tutorial is not None:
+                    prefix=f"extracting source code for "
+                    example.tutorial.extract_example(example_name,target_path,prefix=prefix)
+                else:
+                    error(f" found {example_name} but not tutorial entry for it ❌")
+                    print(f"found ")
             else:
-                print(f"tutorial does not contain the example {example_name} ❌",file=sys.stderr)
+                error(f"tutorial does not contain the example {example_name} ❌",file=sys.stderr)
         else:
             parser.print_help(sys.stderr)
-            sys.exit(1)
+            error("no valid option given")
     except Exception as e:
         indent = len(program_name) * " "
         sys.stderr.write(program_name + ": " + repr(e) + "\n")

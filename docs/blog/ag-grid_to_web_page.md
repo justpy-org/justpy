@@ -22,7 +22,7 @@ import pandas as pd
 # Load data showing percent of women in different majors per year
 wm = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
-def basic_exyample():
+def basic_example():
 	"""
 	basic AG Grid example reading a csv file and displaying it in a grid
 	"""
