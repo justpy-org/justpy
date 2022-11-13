@@ -77,16 +77,17 @@ class TestTutorial(Basetest):
         
     def test_update_from_tutorial(self):
         """
-        test updating a demo from the tutorial source
+        test updating an example from the tutorial source
         """
+        debug=self.debug
+        #debug=True
         debug=False
-        for demo_name in ["stock_test2"]:
-            demo=self.ds.demos_by_name[demo_name]
-            tutorial_example=self.tm.examples_by_name[demo_name]
-            tutorial_source=tutorial_example.example_source
-            target_path=f"/tmp/{demo_name}.py"
-            demo.update_from_tutorial(tutorial_source=tutorial_source,target_path=target_path)
-            update_source=ExampleSource(description=f"test for {demo_name}.py") 
+        for example_name in ["stock_test2"]:
+            target_path=f"/tmp/{example_name}.py"
+            demo=self.ds.demos_by_name[example_name]
+            tutorial_example=self.tm.examples_by_name[example_name]
+            demo.update_from_tutorial_example(tutorial_example=tutorial_example,target_path=target_path)
+            update_source=ExampleSource(description=f"test for {example_name}.py") 
             update_source.read_source(target_path)
             if debug:
                 for i,line in enumerate(update_source.lines):
@@ -101,7 +102,7 @@ class TestTutorial(Basetest):
         test extracting tutorial code
         """
         self.tm.extract_all("/tmp/")
-    
+        # @TODO - check the diff of the extraction
         
     def test_tutorial_diff(self):
         """

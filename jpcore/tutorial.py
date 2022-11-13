@@ -144,9 +144,8 @@ class Tutorial():
             example=self.examples[example_name]
             source_target_path=f"{base_path}/{example_name}.py"
             if verbose:
-                print(f"  {i+1:3}:{example_name}:{example}→{source_target_path}")
+                print(f"  {i+1:3}:{example_name}:{example}",end="")
             example.write_as_demo(source_target_path,verbose)
-        
                     
     def __str__(self):
         """
