@@ -119,5 +119,14 @@ heroku restart
 heroku config:set PYTHONPATH=.
 ```
 
+### Cancelling builds
+E.g. in case you see Your account has reached its concurrent builds limit.
+see https://stackoverflow.com/a/60215424/1497139
+```
+heroku plugins:install heroku-builds
+heroku builds:cancel
+``
+
+
 # Demo
 http://justpy-demo.herokuapp.com/
