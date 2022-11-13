@@ -110,6 +110,18 @@ class Example:
         self.header=header
         self.example_source.lines=lines
         
+    def write_as_demo(self,target_path,verbose:bool=True):
+        """
+        write my source lines as a demo
+           
+        Args:
+            target_path(str): the target path to extract the examples to
+            verbose(bool): if True print progress messages
+        """
+        with open(target_path, "w") as source_file:
+            for line in self.example_source.lines:
+                source_file.write(line+"\n")
+        
     def __str__(self):
         """
         return my string representation
@@ -117,5 +129,5 @@ class Example:
         Returns:
             str: a text representation
         """
-        text=f"{self.name}"
+        text=f"{self.name}({len(self.example_source.lines)} lines)"
         return text

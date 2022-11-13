@@ -95,6 +95,13 @@ class TestTutorial(Basetest):
             if debug:
                 self.show_problems(problems)       
             self.assertEqual(0,len(problems))
+            
+    def test_tutorial_extract(self):
+        """
+        test extracting tutorial code
+        """
+        self.tm.extract_all("/tmp/")
+    
         
     def test_tutorial_diff(self):
         """
