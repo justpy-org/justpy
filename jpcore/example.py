@@ -157,7 +157,7 @@ class ExampleManager:
         self.example_json_file=f"{self.examples_dir}/examples.json"
         if self.debug:
             print(f"collecting examples from {self.examples_dir}")
-        self.pymodule_files = find_files(self.justpy_dir, ".py")
+        self.pymodule_files = find_files(self.examples_dir, ".py")
     
 class Example:
     """

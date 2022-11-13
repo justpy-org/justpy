@@ -37,7 +37,7 @@ class Demostarter(ExampleManager):
         self.servers = {}
         self.errors = {}
         for pymodule_file in self.pymodule_files:
-            demo = JustpyDemoApp(examples_dir=self.justpy_dir,pymodule_file=pymodule_file,debug=debug)
+            demo = JustpyDemoApp(examples_dir=self.examples_dir,pymodule_file=pymodule_file,debug=debug)
             if demo.is_demo:
                 self.demos.append(demo)
                 self.demos_by_name[demo.name]=demo
