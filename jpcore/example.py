@@ -3,10 +3,11 @@ Created on 17.09.2022
 
 @author: wf
 '''
+import os
 import re
 import datetime
 from difflib import Differ
-import datetime
+from jpcore.utilities import find_files
 
 class ExampleSource:
     """
@@ -133,6 +134,31 @@ class ExampleSource:
         text=f"{self.source_type}:{self.description}({len(self.lines)} lines)" 
         return text
         
+class ExampleManager:
+    """
+    manages a collection of examples from a base directory
+    """
+    
+    def __init__(self,base_path:str=None,debug:bool=False):
+        """
+        constructor
+        
+        Args:
+            base_path(str): the base_path to use
+            debug(bool): if True switch on debug mode
+        """
+        self.debug = debug
+        self.script_dir = os.path.dirname(__file__)
+        if base_path is None:
+            base_path=os.path.dirname(self.script_dir)
+        if base_path.endswith("/examples"):
+            base_path=os.path.dirname(base_path)
+        self.examples_dir = f"{base_path}/examples"
+        self.example_json_file=f"{self.examples_dir}/examples.json"
+        if self.debug:
+            print(f"collecting examples from {self.examples_dir}")
+        self.pymodule_files = find_files(self.justpy_dir, ".py")
+    
 class Example:
     """
     an example

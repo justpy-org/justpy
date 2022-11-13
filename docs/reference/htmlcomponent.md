@@ -45,7 +45,7 @@ d.classes= 'text-red-500'
  
 The `text` attribute will always be rendered as the first child of the component. If you want a Div (or any container component) instance to render multiple texts in different locations, encompass the text in another container component and add that component to the Div at the location you want.
 
-If you want to render an [HTML Entity](https://developer.mozilla.org/en-US/docs/Glossary/Entity) use the HTMLEntity component or set the `html_enity` attribute to `True`.
+If you want to render an [HTML Entity](https://developer.mozilla.org/en-US/docs/Glossary/Entity) use the HTMLEntity component or set the `html_entity` attribute to `True`.
 
 ```python
 import justpy as jp

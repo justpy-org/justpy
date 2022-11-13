@@ -209,6 +209,7 @@ def main(argv=None):  # IGNORE:C0111
                 target_path=f"{args.examples_path}"
                 example=tm.examples_by_name[example_name]
                 print(f"extracting source code for example {example_name} to {target_path} ...")
+                
             else:
                 print(f"tutorial does not contain the example {example_name} ❌",file=sys.stderr)
         else:

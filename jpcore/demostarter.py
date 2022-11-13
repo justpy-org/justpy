@@ -10,10 +10,10 @@ import traceback
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from examples.basedemo import Demo
+from jpcore.example import ExampleManager
 from jpcore.demoapp import JustpyDemoApp
-from jpcore.utilities import find_files
 
-class Demostarter:
+class Demostarter(ExampleManager):
     """
     start justpy demos on different ports
     """
@@ -24,27 +24,19 @@ class Demostarter:
 
         Args:
             base_path(str): the base_path
+            mode(str): the mode of the demo starter
             debug(bool): if True switch on debug mode
         """
+        super().__init__(base_path=base_path,debug=debug)
         Demo.testmode = True
-        self.debug = debug
         self.mode = mode
-        self.script_dir = os.path.dirname(__file__)
-        if base_path is None:
-            base_path=os.path.dirname(self.script_dir)
-        if base_path.endswith("/examples"):
-            base_path=os.path.dirname(base_path)
-        self.justpy_dir = f"{base_path}/examples"
-        self.example_json_file=f"{self.justpy_dir}/examples.json"
-        if self.debug:
-            print(f"collecting examples from {self.justpy_dir}")
-        pymodule_files = find_files(self.justpy_dir, ".py")
+        
         self.demos = []
         self.demos_by_name={}
         self.demos_by_source_file={}
         self.servers = {}
         self.errors = {}
-        for pymodule_file in pymodule_files:
+        for pymodule_file in self.pymodule_files:
             demo = JustpyDemoApp(examples_dir=self.justpy_dir,pymodule_file=pymodule_file,debug=debug)
             if demo.is_demo:
                 self.demos.append(demo)
