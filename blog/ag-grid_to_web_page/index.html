@@ -1881,7 +1881,8 @@
 <p>For a more detailed explanation on how to get started using JustPy please see <a href="https://justpy.io/#/tutorial/getting_started">Getting Started</a> from the tutorial.</p>
 <p>Once the page loads, move the mouse to any of the column headers to try the interactive features of the grid.</p>
 <h2 id="several-grids-on-a-page">Several Grids on a Page<a class="headerlink" href="#several-grids-on-a-page" title="Permanent link">&para;</a></h2>
-<p>You can put as many ag-Grids on the page as you like. Below, we create another DataFrame only with the majors in which women started at less than 20% and put the original DataFrame and the new DataFrame on the page. Scroll down the browser tab to see the second grid.</p>
+<p><a href="https://justpy-demo.herokuapp.com/demo/several_grids_onapage">Several Grids on a Page</a>
+You can put as many ag-Grids on the page as you like. Below, we create another DataFrame only with the majors in which women started at less than 20% and put the original DataFrame and the new DataFrame on the page. Scroll down the browser tab to see the second grid.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
@@ -1889,13 +1890,16 @@
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">wm_under_20</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">wm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">wm_under_20</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">])</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span> <span class="nf">grid_test2</span><span class="p">():</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">wm_under_20</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">return</span> <span class="n">wp</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">grid_test2</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span> <span class="nf">several_grids_onapage</span><span class="p">():</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="sd">    show several grids on a page</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">wm</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">wm_under_20</span><span class="o">.</span><span class="n">jp</span><span class="o">.</span><span class="n">ag_grid</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">several_grids_onapage</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="customizing-grids">Customizing Grids<a class="headerlink" href="#customizing-grids" title="Permanent link">&para;</a></h2>
 <p>You can also specify further options for the ag-Grid after its creation. The Python class of JustPy that models the ag-Grid has an <code>options</code> attribute that is identical in structure to the JavaScript one. When it is modified, the grid on the page will reflect these changes.</p>

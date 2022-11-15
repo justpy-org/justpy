@@ -1783,6 +1783,7 @@
 
 <h1 id="using-ajax-instead-of-websockets">Using Ajax instead of WebSockets<a class="headerlink" href="#using-ajax-instead-of-websockets" title="Permanent link">&para;</a></h1>
 <h2 id="using-ajax-to-handle-events">Using Ajax to Handle Events<a class="headerlink" href="#using-ajax-to-handle-events" title="Permanent link">&para;</a></h2>
+<p><a href="https://justpy-demo.herokuapp.com/demo/hello_test">Using Ajax to Handle Events live demo</a></p>
 <p>By default, JustPy uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSockets</a> as the communication protocol between the frontend and the backend. The advantage of WebSockets is that it allows the server to "push" data to the browser. </p>
 <p>There may be applications where either you do not want to or cannot use WebSockets (due to hosting limitations for example). In the <code>justpy</code> command if the <code>websockets</code> keyword argument is set to <code>False</code>, web pages will not attempt to establish a WebSockets connection with the server. Instead, events and pertinent data will be sent to the backend using Ajax. Your program will still be able to respond to UI events in the browser but will not be able to push data to browsers (you will not be able to implement chat like applications for example).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -1801,6 +1802,7 @@
 <p>In most cases, users will not notice any difference in the performance of the application if you use Ajax instead of WebSockets. If your hosting solution does not support WebSockets, give the Ajax option a try.</p>
 </div>
 <h2 id="ajax-page-reload">Ajax Page Reload<a class="headerlink" href="#ajax-page-reload" title="Permanent link">&para;</a></h2>
+<p><a href="https://justpy-demo.herokuapp.com/demo/reload_demo">Ajax Page Reload live demo</a></p>
 <p>There may be cases where you do not want to use WebSockets but still want the content on the users' pages to refresh periodically. This is done in JustPy by setting the <code>reload_interval</code> attribute of the page to the number of seconds between each reload. The page does not reload in the strictest sense of that word, it just refreshes its content using an Ajax call to the server as you would do in a single page application. </p>
 <p>For example, this feature is useful for implementing dashboards. Below is a very simple dashboard that includes just one element that is updated by a background task every second while users' browser tabs poll the updated content every 2.5 seconds. </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
