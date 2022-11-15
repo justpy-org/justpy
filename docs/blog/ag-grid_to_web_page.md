@@ -23,9 +23,9 @@ import pandas as pd
 wm = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
 def basic_example():
-	"""
-	basic AG Grid example reading a csv file and displaying it in a grid
-	"""
+    """
+    basic AG Grid example reading a csv file and displaying it in a grid
+    """
     wp = jp.WebPage()
     wm.jp.ag_grid(a=wp)  # a=wp adds the grid to WebPage wp
     return wp
@@ -43,7 +43,7 @@ For a more detailed explanation on how to get started using JustPy please see [G
 Once the page loads, move the mouse to any of the column headers to try the interactive features of the grid.
 
 ## Several Grids on a Page
-
+[Several Grids on a Page]({{demo_url}}/several_grids_onapage)
 You can put as many ag-Grids on the page as you like. Below, we create another DataFrame only with the majors in which women started at less than 20% and put the original DataFrame and the new DataFrame on the page. Scroll down the browser tab to see the second grid.
 
 ```python
@@ -54,13 +54,16 @@ wm = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 wm_under_20 = wm[wm.loc[0, wm.loc[0] < 20].index]
 wm_under_20.insert(0, 'Year', wm['Year'])
 
-def grid_test2():
+def several_grids_onapage():
+    """
+    show several grids on a page
+    """
     wp = jp.WebPage()
     wm.jp.ag_grid(a=wp)
     wm_under_20.jp.ag_grid(a=wp)
     return wp
 
-jp.justpy(grid_test2)
+jp.justpy(several_grids_onapage)
 
 ```
 
