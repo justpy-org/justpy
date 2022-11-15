@@ -13,7 +13,7 @@ from .gridcomponents import *
 from .quasarcomponents import *
 
 from jpcore.justpy_app import cookie_signer, template_options, handle_event, JustpyApp,JustpyAjaxEndpoint
-from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
+from jpcore.justpy_config import JpConfig, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
 from jpcore.justpy_config import DEBUG,DECKGL, FAVICON, HIGHCHARTS,HOST,KATEX, LATENCY,LOGGING_LEVEL
 from jpcore.justpy_config import MEMORY_DEBUG, NO_INTERNET, PLOTLY, PORT, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
 from jpcore.justpy_config import SSL_CERTFILE, SSL_KEYFILE, SSL_VERSION, STATIC_DIRECTORY,STATIC_NAME, STATIC_ROUTE

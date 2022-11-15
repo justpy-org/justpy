@@ -26,7 +26,7 @@ from starlette.responses import HTMLResponse, JSONResponse,PlainTextResponse, Re
 from starlette.templating import Jinja2Templates
 
 from jpcore.component import Component
-from jpcore.justpy_config import config, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
+from jpcore.justpy_config import JpConfig,AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
 from jpcore.justpy_config import DECKGL, FAVICON, HIGHCHARTS,KATEX, LATENCY
 from jpcore.justpy_config import NO_INTERNET, PLOTLY, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
 from jpcore.justpy_config import STATIC_DIRECTORY,STATIC_NAME
@@ -60,7 +60,7 @@ FRONTEND_ENGINE_LIBS = [fn[:-3]
                         if fnmatch.fnmatch(fn, "*.js")
                         ]
 
-TEMPLATES_DIRECTORY = config(
+TEMPLATES_DIRECTORY = JpConfig.config(
     "TEMPLATES_DIRECTORY", cast=str, default=template_dir
 )
 
