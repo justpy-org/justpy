@@ -1,4 +1,5 @@
 # Adding HTML to Cells
+[Adding HTML to Cells live demo]({{demo_url}}/grid_add_test)
 
 If you want to add an image or specific formatting to a cell in the grid, you can do so by using the `html_columns` attribute. Assign to this attribute a list of the column numbers that should be formatted using HTML.
 

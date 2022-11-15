@@ -137,7 +137,7 @@ class AgGrid(JustpyBaseComponent):
         )
         self.load_lod(lod=lod,columnDefs=columnDefs)
         
-    def load_lod(self,lod:list,columnDefs:list=[]):
+    def load_lod(self,lod:list,columnDefs:list=None):
         """
         load the given list of dicts
         
@@ -145,6 +145,13 @@ class AgGrid(JustpyBaseComponent):
             lod(list): a list of dicts to be loaded into the grid
             columnDefs(list): a list of column definitions
         """
+        if columnDefs is None:
+            # assume lod
+            columnDefs = []
+            if len(lod)>0:
+                header=lod[0]
+                for key in header.keys():
+                    columnDefs.append({'field':key})
         self.options.columnDefs=columnDefs
         self.options.rowData=lod
 
