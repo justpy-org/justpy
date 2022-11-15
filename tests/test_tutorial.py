@@ -81,7 +81,7 @@ class TestTutorial(Basetest):
         """
         debug=self.debug
         #debug=True
-        debug=False
+        #debug=False
         for example_name in ["stock_test2"]:
             target_path=f"/tmp/{example_name}.py"
             demo=self.ds.demos_by_name[example_name]

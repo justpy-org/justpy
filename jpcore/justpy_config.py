@@ -26,6 +26,10 @@ class JpConfig(Config):
         pass
     
     @classmethod
+    def reset(cls):
+        cls.config=None
+        
+    @classmethod
     def setup(cls):
         if cls.config is None:
             config=JpConfig("justpy.env")

@@ -16,8 +16,9 @@ class TestIssue621(Basetest):
         """
         test singleton behavior
         """
-        Compatibility(0,11,1)
         from jpcore.justpy_config import JpConfig
+        JpConfig.reset()
+        Compatibility(0,11,1)
         self.assertIsNone(JpConfig.config)
         JpConfig.config=JpConfig()
         Compatibility.reset()
