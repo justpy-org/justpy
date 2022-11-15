@@ -29,8 +29,9 @@ class JpConfig(Config):
     def setup(cls):
         if cls.config is None:
             config=JpConfig("justpy.env")
+            cls.config=config
             global DEBUG; DEBUG= config("DEBUG", cast=bool, default=True)
-            global VERBOSE; VERBOSE = config("VERBOSE", case=bool, default=True)
+            global VERBOSE; VERBOSE = config("VERBOSE", cast=bool, default=True)
             global HOST; HOST = config("HOST", cast=str, default="127.0.0.1")
             global PORT; PORT = config("PORT", cast=int, default=8000)
             global CRASH; CRASH = config("CRASH", cast=bool, default=False)
