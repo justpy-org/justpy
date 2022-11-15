@@ -20,6 +20,7 @@ This guide/tutorial is far from complete and I will be adding examples to it ove
 ## Example
 
 ### QBtn example
+[QBtn example live demo]({{demo_url}}/quasar_example1)
 The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page.
 
 ```python
@@ -243,16 +244,22 @@ jp.justpy(quasar_example3)
 
 The value of the directive can be a dictionary for configuring more options:
 ### QDiv directive as dictionary
-
+[Ripple Example live demo]({{demo_url}}/ripple_test)
 ```python
 import justpy as jp
 # https://quasar.dev/vue-directives/material-ripple#Ripple-API
 
 def ripple_test():
+    """
+    show the Quasar ripple effect
+    """
     wp = jp.QuasarPage()
     d = jp.QDiv(classes="q-pa-md q-gutter-md row justify-center", a=wp)
-    d1 = jp.QDiv(v_ripple={'center': True, 'color': 'orange-5'}, classes="relative-position container bg-grey-3 text-black inline flex flex-center", text='center',
-                 style='border-radius: 50%; cursor: pointer; width: 150px; height: 150px', a=d)
+    d1 = jp.QDiv(
+      v_ripple={'center': True, 'color': 'orange-5'},
+      classes="relative-position container bg-grey-3 text-black inline flex flex-center",
+      text='center',
+      style='border-radius: 50%; cursor: pointer; width: 150px; height: 150px', a=d)
     return wp
 
 jp.justpy(ripple_test)

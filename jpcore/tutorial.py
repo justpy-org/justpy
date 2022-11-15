@@ -149,11 +149,17 @@ class Tutorial():
         sorted_example_names=sorted(self.examples)
         for i,example_name in enumerate(sorted_example_names):
             prefix=f"  {i+1:3}:"
-            self.extract_example(example_name,target_path,prefix=prefix)
+            self.extract_example(example_name,target_path,prefix=prefix,verbose=verbose)
         
     def extract_example(self,example_name:str,target_path:str,prefix:str="",verbose:bool=True):
         """
-        extrac the example with the given name to the given base_path
+        extract the example with the given name to the given base_path
+        
+        Args:
+            example_name(str): the name of the example to extract
+            target_path(str): the path to extract the example to
+            prefix(str): a prefix for the message to display
+            verbose(bool): if True show details of the extraction process
         """
         if not example_name in self.examples:
             raise Exception(f"{example_name} is not part of tutorial {self}")   
@@ -165,7 +171,9 @@ class Tutorial():
         source_target_path=f"{base_path}/{example_name}.py"
         if verbose:
             print(f"{prefix}{example_name}:{example}",end="")
-        example.write_as_demo(source_target_path,verbose)
+        header=f"""# see {self.github_url}
+"""
+        example.write_as_demo(source_target_path,header=header,verbose=verbose)
                     
     def __str__(self):
         """
