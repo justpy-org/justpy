@@ -89,7 +89,7 @@ async def justpy_startup():
         else:
             startup_func()
     protocol = "https" if jpconfig.SSL_KEYFILE else "http"
-    print(f"JustPy ready to go on {protocol}://{HOST}:{PORT}")
+    print(f"JustPy ready to go on {protocol}://{jpconfig.HOST}:{jpconfig.PORT}")
 
     
 @app.route("/zzz_justpy_ajax")
