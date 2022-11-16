@@ -10,7 +10,6 @@ and https://github.com/justpy-org/justpy/issues/389
 from tests.base_client_test import BaseClienttest
 import justpy as jp
 from starlette.responses import PlainTextResponse
-from jpcore.justpy_config import HTML_404_PAGE
 
 @jp.app.route("/plaintext")
 async def plainText(_request):
