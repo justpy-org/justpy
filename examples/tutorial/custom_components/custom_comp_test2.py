@@ -10,7 +10,7 @@ class PillButton(jp.Button):
 
 def custom_comp_test2():
     wp = jp.WebPage()
-    for color in ['blue', 'red', 'orange', 'pink']:
+    for color in ['blue', 'red', 'yellow', 'pink']:
         PillButton(bg_color=color, text='Pill Button', click='self.text="I was clicked"', a=wp, classes='m-2')
     return wp
 
