@@ -13,12 +13,9 @@ from .gridcomponents import *
 from .quasarcomponents import *
 
 from jpcore.justpy_app import cookie_signer, template_options, handle_event, JustpyApp,JustpyAjaxEndpoint
-from jpcore.justpy_config import JpConfig, AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
-from jpcore.justpy_config import DEBUG,DECKGL, FAVICON, HIGHCHARTS,HOST,KATEX, LATENCY,LOGGING_LEVEL
-from jpcore.justpy_config import MEMORY_DEBUG, NO_INTERNET, PLOTLY, PORT, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
-from jpcore.justpy_config import SSL_CERTFILE, SSL_KEYFILE, SSL_VERSION, STATIC_DIRECTORY,STATIC_NAME, STATIC_ROUTE
-from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, UVICORN_LOGGING_LEVEL, VEGA
-JustPy.LOGGING_LEVEL = LOGGING_LEVEL
+import jpcore.jpconfig as jpconfig
+from jpcore.justpy_config import JpConfig
+JustPy.LOGGING_LEVEL = jpconfig.LOGGING_LEVEL
 # from .misccomponents import *
 from .pandas import *
 from .routing import SetRoute
@@ -33,21 +30,22 @@ jp_server = None
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
 print(current_dir.replace("\\", "/"))
-print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
+if jpconfig.VERBOSE:
+    print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
 
-logging.basicConfig(level=LOGGING_LEVEL, format="%(levelname)s %(module)s: %(message)s")
+logging.basicConfig(level=jpconfig.LOGGING_LEVEL, format="%(levelname)s %(module)s: %(message)s")
 
 # modify middleware handling according to deprecation
 # https://github.com/encode/starlette/discussions/1762
 middleware = [Middleware(GZipMiddleware)]
-if SSL_KEYFILE and SSL_CERTFILE:
+if jpconfig.SSL_KEYFILE and jpconfig.SSL_CERTFILE:
     middleware.append(Middleware(HTTPSRedirectMiddleware))
 #@TODO     
 # implement https://github.com/justpy-org/justpy/issues/535
 #if SESSIONS:
 #    middleware.append(Middleware(SessionMiddleware, secret_key=SECRET_KEY))
-app = JustpyApp(middleware=middleware, debug=DEBUG)
-app.mount(STATIC_ROUTE, StaticFiles(directory=STATIC_DIRECTORY), name=STATIC_NAME)
+app = JustpyApp(middleware=middleware, debug=jpconfig.DEBUG)
+app.mount(jpconfig.STATIC_ROUTE, StaticFiles(directory=jpconfig.STATIC_DIRECTORY), name=jpconfig.STATIC_NAME)
 app.mount(
     "/templates", StaticFiles(directory=current_dir + "/templates"), name="templates"
 )
@@ -83,14 +81,14 @@ def server_error_func(request):
 async def justpy_startup():
     WebPage.loop = asyncio.get_event_loop()
     JustPy.loop = WebPage.loop
-    JustPy.STATIC_DIRECTORY = STATIC_DIRECTORY
+    JustPy.STATIC_DIRECTORY = jpconfig.STATIC_DIRECTORY
 
     if startup_func:
         if inspect.iscoroutinefunction(startup_func):
             await startup_func()
         else:
             startup_func()
-    protocol = "https" if SSL_KEYFILE else "http"
+    protocol = "https" if jpconfig.SSL_KEYFILE else "http"
     print(f"JustPy ready to go on {protocol}://{HOST}:{PORT}")
 
     
@@ -139,8 +137,8 @@ class JustpyEvents(WebSocketEndpoint):
             return
         if msg_type == "event" or msg_type == "page_event":
             # Message sent when an event occurs in the browser
-            session_cookie = websocket.cookies.get(SESSION_COOKIE_NAME)
-            if SESSIONS and session_cookie:
+            session_cookie = websocket.cookies.get(jpconfig.SESSION_COOKIE_NAME)
+            if jpconfig.SESSIONS and session_cookie:
                 session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
                 data_dict["event_data"]["session_id"] = session_id
             # await self._event(data_dict)
@@ -152,8 +150,8 @@ class JustpyEvents(WebSocketEndpoint):
             return
         if msg_type == "zzz_page_event":
             # Message sent when an event occurs in the browser
-            session_cookie = websocket.cookies.get(SESSION_COOKIE_NAME)
-            if SESSIONS and session_cookie:
+            session_cookie = websocket.cookies.get(jpconfig.SESSION_COOKIE_NAME)
+            if jpconfig.SESSIONS and session_cookie:
                 session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
                 data_dict["event_data"]["session_id"] = session_id
             data_dict["event_data"]["msg_type"] = msg_type
@@ -174,7 +172,7 @@ class JustpyEvents(WebSocketEndpoint):
         await WebPage.instances[pid].on_disconnect(
             websocket
         )  # Run the specific page disconnect function
-        if MEMORY_DEBUG:
+        if jpconfig.MEMORY_DEBUG:
             print("************************")
             print(
                 "Elements: ",
@@ -210,8 +208,8 @@ def justpy(
     *,
     start_server: bool = True,
     websockets: bool = True,
-    host: str = HOST,
-    port: int = PORT,
+    host: str = jpconfig.HOST,
+    port: int = jpconfig.PORT,
     startup=None,
     init_server: bool = True,
     **kwargs,
@@ -250,20 +248,20 @@ def justpy(
         template_options[k.lower()] = v
 
     if init_server:
-        if SSL_KEYFILE and SSL_CERTFILE:
+        if jpconfig.SSL_KEYFILE and jpconfig.SSL_CERTFILE:
             uvicorn_config = uvicorn.config.Config(
                 app,
                 host=host,
                 port=port,
-                log_level=UVICORN_LOGGING_LEVEL,
+                log_level=jpconfig.UVICORN_LOGGING_LEVEL,
                 proxy_headers=True,
-                ssl_keyfile=SSL_KEYFILE,
-                ssl_certfile=SSL_CERTFILE,
-                ssl_version=SSL_VERSION,
+                ssl_keyfile=jpconfig.SSL_KEYFILE,
+                ssl_certfile=jpconfig.SSL_CERTFILE,
+                ssl_version=jpconfig.SSL_VERSION,
             )
         else:
             uvicorn_config = uvicorn.config.Config(
-                app, host=host, port=port, log_level=UVICORN_LOGGING_LEVEL
+                app, host=host, port=port, log_level=jpconfig.UVICORN_LOGGING_LEVEL
             )
         jp_server = uvicorn.Server(uvicorn_config)
         if start_server:

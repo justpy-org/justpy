@@ -26,22 +26,21 @@ from starlette.responses import HTMLResponse, JSONResponse,PlainTextResponse, Re
 from starlette.templating import Jinja2Templates
 
 from jpcore.component import Component
-from jpcore.justpy_config import JpConfig,AGGRID, AGGRID_ENTERPRISE,BOKEH,COOKIE_MAX_AGE, CRASH
-from jpcore.justpy_config import DECKGL, FAVICON, HIGHCHARTS,KATEX, LATENCY
-from jpcore.justpy_config import NO_INTERNET, PLOTLY, SECRET_KEY, SESSION_COOKIE_NAME, SESSIONS
-from jpcore.justpy_config import STATIC_DIRECTORY,STATIC_NAME
-from jpcore.justpy_config import QUASAR, QUASAR_VERSION,TAILWIND, VEGA
-from jpcore.justpy_config import FRONTEND_ENGINE_TYPE
+import jpcore.jpconfig as jpconfig
+from jpcore.justpy_config import  JpConfig
 from jpcore.template import Context
 from jpcore.webpage import WebPage
 from itsdangerous import Signer
 
 # TODO refactor to object oriented version where this is a property of some instance of some class
-cookie_signer = Signer(str(SECRET_KEY))
+cookie_signer = Signer(str(jpconfig.SECRET_KEY))
 
 def create_component_file_list():
+    """
+    create the component file list
+    """
     file_list = []
-    component_dir = os.path.join(STATIC_DIRECTORY, "components")
+    component_dir = os.path.join(jpconfig.STATIC_DIRECTORY, "components")
     if os.path.isdir(component_dir):
         for file in os.listdir(component_dir):
             if fnmatch.fnmatch(file, "*.js"):
@@ -53,9 +52,9 @@ component_file_list = create_component_file_list()
 grand_parent = pathlib.Path(__file__).parent.parent.resolve()
 template_dir=f"{grand_parent}/justpy/templates"
 
-lib_dir = os.path.join(template_dir, "js", FRONTEND_ENGINE_TYPE)
+lib_dir = os.path.join(template_dir, "js", jpconfig.FRONTEND_ENGINE_TYPE)
 # remove .js extension
-FRONTEND_ENGINE_LIBS = [fn[:-3]
+jpconfig.FRONTEND_ENGINE_LIBS = [fn[:-3]
                         for fn in os.listdir(lib_dir)
                         if fnmatch.fnmatch(fn, "*.js")
                         ]
@@ -67,23 +66,31 @@ TEMPLATES_DIRECTORY = JpConfig.config(
 templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 template_options = {
-    "tailwind": TAILWIND,
-    "quasar": QUASAR,
-    "quasar_version": QUASAR_VERSION,
-    "highcharts": HIGHCHARTS,
-    "aggrid": AGGRID,
-    "aggrid_enterprise": AGGRID_ENTERPRISE,
-    "static_name": STATIC_NAME,
+    "tailwind": jpconfig.TAILWIND,
+    "quasar": jpconfig.QUASAR,
+    "quasar_version": jpconfig.QUASAR_VERSION,
+    "highcharts": jpconfig.HIGHCHARTS,
+    "aggrid": jpconfig.AGGRID,
+    "aggrid_enterprise": jpconfig.AGGRID_ENTERPRISE,
+    "static_name": jpconfig.STATIC_NAME,
     "component_file_list": component_file_list,
-    "no_internet": NO_INTERNET,
-    "katex": KATEX,
-    "plotly": PLOTLY,
-    "bokeh": BOKEH,
-    "deckgl": DECKGL,
-    "vega": VEGA,
+    "no_internet": jpconfig.NO_INTERNET,
+    "katex": jpconfig.KATEX,
+    "plotly": jpconfig.PLOTLY,
+    "bokeh": jpconfig.BOKEH,
+    "deckgl": jpconfig.DECKGL,
+    "vega": jpconfig.VEGA,
 }
 
 async def handle_event(data_dict, com_type=0, page_event=False):
+    """
+    handle the given event
+    
+    Args:
+        data_dict(dict): the dict with the data
+        com_type(int):  the communication type - default: 0
+        page_event(bool): if True handle as a page event
+    """
     # com_type 0: websocket, con_type 1: ajax
     connection_type = {0: "websocket", 1: "ajax"}
     logging.info(
@@ -136,7 +143,7 @@ async def handle_event(data_dict, com_type=0, page_event=False):
         logging.debug(f"Event result:{event_result}")
     except Exception as e:
         # raise Exception(e)
-        if CRASH:
+        if jpconfig.CRASH:
             print(traceback.format_exc())
             sys.exit(1)
         event_result = None
@@ -151,8 +158,8 @@ async def handle_event(data_dict, com_type=0, page_event=False):
     # If page is not to be updated, the event_function should return anything but None
     if event_result is None:
         if com_type == 0:  # WebSockets communication
-            if LATENCY:
-                await asyncio.sleep(LATENCY / 1000)
+            if jpconfig.LATENCY:
+                await asyncio.sleep(jpconfig.LATENCY / 1000)
             await p.update()
         elif com_type == 1:  # Ajax communication
             build_list = p.build_list()
@@ -282,8 +289,8 @@ class JustpyApp(Starlette):
             wp = await self.get_page_for_func(request, func)
             response = self.get_response_for_load_page(request, wp)
             response = self.set_cookie(request, response, wp, new_cookie)
-            if LATENCY:
-                await asyncio.sleep(LATENCY / 1000)
+            if jpconfig.LATENCY:
+                await asyncio.sleep(jpconfig.LATENCY / 1000)
             return response
     
         # return the decorated function, thus allowing access to the func
@@ -351,7 +358,7 @@ class JustpyApp(Starlette):
             "highcharts_theme": load_page.highcharts_theme,
             "debug": load_page.debug,
             "events": load_page.events,
-            "favicon": load_page.favicon if load_page.favicon else FAVICON,
+            "favicon": load_page.favicon if load_page.favicon else jpconfig.FAVICON,
         }
         if load_page.use_cache:
             page_dict = load_page.cache
@@ -366,8 +373,8 @@ class JustpyApp(Starlette):
             "options": template_options,
             "page_options": page_options,
             "html": load_page.html,
-            "frontend_engine_type": FRONTEND_ENGINE_TYPE,
-            "frontend_engine_libs": FRONTEND_ENGINE_LIBS
+            "frontend_engine_type": jpconfig.FRONTEND_ENGINE_TYPE,
+            "frontend_engine_libs": jpconfig.FRONTEND_ENGINE_LIBS
         }
         # wrap the context in a context object to make it available
         context_obj = Context(context)
@@ -383,9 +390,9 @@ class JustpyApp(Starlette):
             True if a new cookie and session has been created
         """
         # Handle web requests
-        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
+        session_cookie = request.cookies.get(jpconfig.SESSION_COOKIE_NAME)
         new_cookie=None
-        if SESSIONS:
+        if jpconfig.SESSIONS:
             new_cookie = False
             if session_cookie:
                 try:
@@ -414,14 +421,14 @@ class JustpyApp(Starlette):
         """
         if isinstance(new_cookie, Response):
             return new_cookie
-        if SESSIONS and new_cookie:
+        if jpconfig.SESSIONS and new_cookie:
             cookie_value = cookie_signer.sign(request.state.session_id)
             cookie_value = cookie_value.decode("utf-8")
             response.set_cookie(
-                SESSION_COOKIE_NAME, cookie_value, max_age=COOKIE_MAX_AGE, httponly=True
+                jpconfig.SESSION_COOKIE_NAME, cookie_value, max_age=jpconfig.COOKIE_MAX_AGE, httponly=True
             )
             for k, v in load_page.cookies.items():
-                response.set_cookie(k, v, max_age=COOKIE_MAX_AGE, httponly=True)
+                response.set_cookie(k, v, max_age=jpconfig.COOKIE_MAX_AGE, httponly=True)
         return response
 
 class JustpyAjaxEndpoint(HTTPEndpoint):
@@ -447,8 +454,8 @@ class JustpyAjaxEndpoint(HTTPEndpoint):
         if data_dict["event_data"]["event_type"] == "beforeunload":
             return await self.on_disconnect(data_dict["event_data"]["page_id"])
 
-        session_cookie = request.cookies.get(SESSION_COOKIE_NAME)
-        if SESSIONS and session_cookie:
+        session_cookie = request.cookies.get(jpconfig.SESSION_COOKIE_NAME)
+        if jpconfig.SESSIONS and session_cookie:
             session_id = cookie_signer.unsign(session_cookie).decode("utf-8")
             data_dict["event_data"]["session_id"] = session_id
 
@@ -458,8 +465,8 @@ class JustpyAjaxEndpoint(HTTPEndpoint):
         page_event = True if msg_type == "page_event" else False
         result = await handle_event(data_dict, com_type=1, page_event=page_event)
         if result:
-            if LATENCY:
-                await asyncio.sleep(LATENCY / 1000)
+            if jpconfig.LATENCY:
+                await asyncio.sleep(jpconfig.LATENCY / 1000)
             return JSONResponse(result)
         else:
             return JSONResponse(False)
