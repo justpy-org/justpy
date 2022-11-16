@@ -7,8 +7,7 @@ import unittest
 from starlette.requests import Request
 
 import justpy as jp
-from jpcore.justpy_app import JustpyApp
-from jpcore.justpy_config import SESSION_COOKIE_NAME
+import jpcore.jpconfig as jpconfig
 from tests.base_client_test import BaseClienttest
 
 
@@ -26,7 +25,7 @@ class TestJustpyApp(BaseClienttest):
         @jp.app.middleware("http")
         async def add_process_time_header(request: Request, call_next):
             cookies = request.cookies
-            cookies[SESSION_COOKIE_NAME] = "invalid token"
+            cookies[jpconfig.SESSION_COOKIE_NAME] = "invalid token"
             # func = request.app.get_func_for_request(request)
             response = await call_next(request)
             return response
