@@ -175,44 +175,52 @@ Vue.component('html_component', {
             };
             element.addEventListener('animationend', event_func);
         }),
+        /**
+         * Transition function that is called on page updates
+         */
         transitionFunction: (function () {
-            let el = this.$refs['r' + this.$props.jp_props.id];
             const props = this.$props.jp_props;
+            let el = this.$refs['r' + props.id];
             if (el.$el) el = el.$el;
-            const class_list = props.classes.trim().replace(/\s\s+/g, ' ').split(' ');
+            const class_list = this._getCssClassNamesFromString(props.classes);
             // Transition change from hidden to not hidden
-            if (props.transition.enter && this.previous_display == 'none' && (!class_list.includes('hidden'))) {
-
-                let enter_list = props.transition.enter.trim().replace(/\s\s+/g, ' ').split(' ');
-                let enter_start_list = props.transition.enter_start.trim().replace(/\s\s+/g, ' ').split(' ');
-                let enter_end_list = props.transition.enter_end.trim().replace(/\s\s+/g, ' ').split(' ');
+            if (props.transition.enter && this.previous_display === 'none' && (!class_list.includes('hidden'))) {
+                let enter_list = this._getCssClassNamesFromString(props.transition.enter);
+                let enter_start_list = this._getCssClassNamesFromString(props.transition.enter_start);
+                let enter_end_list = this._getCssClassNamesFromString(props.transition.enter_end);
+                // initialize transition
                 el.classList.add(...enter_start_list);
 
                 setTimeout(function () {
+                    // start transition
                     el.classList.remove(...enter_start_list);
                     el.classList.add(...enter_list);
                     el.classList.add(...enter_end_list);
                     let event_func = function () {
+                        // teardown transition (after completing the transition remove event listener and transition classes)
                         el.removeEventListener('transitionend', event_func);
                         el.classList.remove(...enter_list);
                         el.classList.remove(...enter_end_list);
                     };
                     el.addEventListener('transitionend', event_func);
-                }, 3);
+                }, 30);
             }
             // Transition change from not hidden to hidden
-            else if (props.transition.leave && this.previous_display != 'none' && (class_list.includes('hidden'))) {
-                let leave_list = props.transition.leave.trim().replace(/\s\s+/g, ' ').split(' ');
-                let leave_start_list = props.transition.leave_start.trim().replace(/\s\s+/g, ' ').split(' ');
-                let leave_end_list = props.transition.leave_end.trim().replace(/\s\s+/g, ' ').split(' ');
+            else if (props.transition.leave && this.previous_display !== 'none' && (class_list.includes('hidden'))) {
+                let leave_list = this._getCssClassNamesFromString(props.transition.leave);
+                let leave_start_list = this._getCssClassNamesFromString(props.transition.leave_start);
+                let leave_end_list = this._getCssClassNamesFromString(props.transition.leave_end);
+                // initialize transition
                 el.classList.add(...leave_start_list);
                 el.classList.remove('hidden');
 
                 setTimeout(function () {
+                    // start transition
                     el.classList.remove(...leave_start_list);
                     el.classList.add(...leave_list);
                     el.classList.add(...leave_end_list);
                     let event_func = function () {
+                        // teardown transition
                         el.removeEventListener('transitionend', event_func);
                         el.classList.remove(...leave_list);
                         el.classList.remove(...leave_end_list);
@@ -220,20 +228,37 @@ Vue.component('html_component', {
 
                     };
                     el.addEventListener('transitionend', event_func);
-                }, 3);
+                }, 30);
 
             }
         }),
+        /**
+         * Get list of CSS class names from string
+         * by splitting the string on whitespace
+         * @param {string} value - string with multiple CSS class names
+         *
+         * @return list of strings
+         */
+        _getCssClassNamesFromString: (function (value){
+            let cssClasses = null;
+            if (typeof value === "string"){
+                cssClasses = value.trim().replace(/\s\s+/g, ' ').split(' ');
+            }
+            return cssClasses;
+        }),
+        /**
+         * Transition function called on page load
+         */
         transitionLoadFunction: (function () {
             let el = this.$refs['r' + this.$props.jp_props.id];
             const props = this.$props.jp_props;
             if (el.$el) el = el.$el;
-            const class_list = props.classes.trim().replace(/\s\s+/g, ' ').split(' ');
+            const class_list = this._getCssClassNamesFromString(props.classes);
 
 
-                let load_list = props.transition.load.trim().replace(/\s\s+/g, ' ').split(' ');
-                let load_start_list = props.transition.load_start.trim().replace(/\s\s+/g, ' ').split(' ');
-                let load_end_list = props.transition.load_end.trim().replace(/\s\s+/g, ' ').split(' ');
+                let load_list = this._getCssClassNamesFromString(props.transition.load);
+                let load_start_list = this._getCssClassNamesFromString(props.transition.load_start);
+                let load_end_list = this._getCssClassNamesFromString(props.transition.load_end);
                 el.classList.add(...load_start_list);
 
                 setTimeout(function () {
@@ -246,7 +271,7 @@ Vue.component('html_component', {
                         el.classList.remove(...load_list);
                     };
                     el.addEventListener('transitionend', event_func);
-                }, 3)
+                }, 30)
 
         })
     },
