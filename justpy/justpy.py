@@ -230,7 +230,8 @@ def justpy(
 
     """
     global jp_server, func_to_run, startup_func, HOST, PORT
-
+    jpconfig.HOST = host
+    jpconfig.PORT = port
     HOST = host
     PORT = port
     if func:
