@@ -9,8 +9,15 @@ Vue.component('chart', {
     template:
         `<div v-bind:id="jp_props.id" :class="jp_props.classes"  :style="jp_props.style" ></div>`,
     methods: {
+
+        /**
+         * Evaluate given chart definition by setting the defined formatters
+         * @param {Object} def - chart definition containing the formatter
+         */
         evaluate_formatters(def) {
-            if (Array.isArray(def)) {
+            if (def === null){
+                // ignore
+            }else if (Array.isArray(def)) {
                 for (const element of def) {
                     this.evaluate_formatters(element);
                 }
@@ -24,29 +31,31 @@ Vue.component('chart', {
             }
         },
         graph_change() {
-            cached_graph_def[this.$props.jp_props.id] = JSON.stringify(this.$props.jp_props.def);
-            var container = this.$props.jp_props.id.toString();
+            let jpProps = this.$props.jp_props;
+            let jp_component_id = jpProps.id;
+            let chartDefinition = jpProps.def
+            cached_graph_def[jp_component_id] = JSON.stringify(chartDefinition);
+            let container = jp_component_id.toString();
             // Evaluate all properties that include 'formatter'
-            this.evaluate_formatters(this.$props.jp_props.def);
-            if (this.$props.jp_props.stock) {
-                var c = Highcharts.stockChart(container, this.$props.jp_props.def);
+            this.evaluate_formatters(chartDefinition);
+            if (jpProps.stock) {
+                var c = Highcharts.stockChart(container, chartDefinition);
             } else {
-                var c = Highcharts.chart(container, this.$props.jp_props.def);
+                var c = Highcharts.chart(container, chartDefinition);
             }
-            var id = this.$props.jp_props.id;
-            var tooltip_timeout_period = this.$props.jp_props.tooltip_debounce;
-            var props = this.$props.jp_props;
+            var tooltip_timeout_period = jpProps.tooltip_debounce;
+
             cached_graph_def['chart' + container] = c;
             var update_dict = {};
-            if (this.$props.jp_props.events.indexOf('tooltip') >= 0) {
+            if (jpProps.events.indexOf('tooltip') >= 0) {
                 var point_array = [];
                 update_dict.tooltip = {
                     useHTML: true,
                     shape: 'callout',
                     positioner: function (boxWidth, boxHeight, point) {
-                        var yf = props.tooltip_y;  // 40 is default
-                        var xf = props.tooltip_x;  // 40 is default
-                        if (props.tooltip_fixed) return {
+                        var yf = jpProps.tooltip_y;  // 40 is default
+                        var xf = jpProps.tooltip_x;  // 40 is default
+                        if (jpProps.tooltip_fixed) return {
                             x: xf,
                             y: yf
                         };
@@ -60,7 +69,7 @@ Vue.component('chart', {
                             // Tooltip not shared or split
                             var e = {
                                 event_type: 'tooltip',
-                                id: id,
+                                id: jp_component_id,
                                 x: this.point.x,
                                 y: this.point.y,
                                 z: this.point.z,
@@ -94,7 +103,7 @@ Vue.component('chart', {
                             var e = {
                                 event_type: 'tooltip',
                                 x: this.x,
-                                id: id,
+                                id: jp_component_id,
                                 points: point_array,
                                 page_id: page_id,
                                 websocket_id: websocket_id
@@ -136,7 +145,7 @@ Vue.component('chart', {
                 update_dict.plotOptions.series.point.events.click = function (e) {
                     var p = {
                         event_type: 'point_click',
-                        id: id,
+                        id: jp_component_id,
                         x: e.point.x,
                         y: e.point.y,
                         z: e.point.z,
@@ -159,7 +168,7 @@ Vue.component('chart', {
                 update_dict.plotOptions.series.point.events.select = function (e) {
                     var p = {
                         event_type: 'point_select',
-                        id: id,
+                        id: jp_component_id,
                         x: e.target.x,
                         y: e.target.y,
                         z: e.target.z,
@@ -201,7 +210,7 @@ Vue.component('chart', {
                 update_dict.plotOptions.series.point.events.unselect = function (e) {
                     var p = {
                         event_type: 'point_unselect',
-                        id: id,
+                        id: jp_component_id,
                         x: e.target.x,
                         y: e.target.y,
                         z: e.target.z,
@@ -243,7 +252,7 @@ Vue.component('chart', {
                 update_dict.plotOptions.series.events.hide = function (e) {
                     var p = {
                         event_type: 'series_hide',
-                        id: id,
+                        id: jp_component_id,
                         color: e.target.color,
                         type: e.type,
                         series_name: e.target.name,
@@ -259,7 +268,7 @@ Vue.component('chart', {
                 update_dict.plotOptions.series.events.show = function (e) {
                     var p = {
                         event_type: 'series_show',
-                        id: id,
+                        id: jp_component_id,
                         color: e.target.color,
                         type: e.type,
                         series_name: e.target.name,
@@ -275,7 +284,7 @@ Vue.component('chart', {
                 update_dict.plotOptions.series.events.click = function (e) {
                     var p = {
                         event_type: 'series_click',
-                        id: id,
+                        id: jp_component_id,
                         type: e.type,
                         x: e.point.x,
                         y: e.point.y,
@@ -301,7 +310,7 @@ Vue.component('chart', {
                 update_dict.xAxis.events.setExtremes = function (e) {
                     var p = {
                         event_type: 'zoom_x',
-                        id: id,
+                        id: jp_component_id,
                         type: e.type,
                         min: e.min,
                         max: e.max,
@@ -318,7 +327,7 @@ Vue.component('chart', {
                 update_dict.yAxis.events.setExtremes = function (e) {
                     var p = {
                         event_type: 'zoom_y',
-                        id: id,
+                        id: jp_component_id,
                         type: e.type,
                         min: e.min,
                         max: e.max,
@@ -336,14 +345,15 @@ Vue.component('chart', {
         this.graph_change();
     },
     updated() {
-        const container = this.$props.jp_props.id.toString();
+        let jpProps = this.$props.jp_props;
+        const container = jpProps.id.toString();
         const chart = cached_graph_def['chart' + container];
-        if (!this.$props.jp_props.use_cache || (JSON.stringify(this.$props.jp_props.def) != cached_graph_def[this.$props.jp_props.id])) {
-            cached_graph_def[this.$props.jp_props.id] = JSON.stringify(this.$props.jp_props.def);
-            if (this.$props.jp_props.update_create) {
+        if (!jpProps.use_cache || (JSON.stringify(jpProps.def) !== cached_graph_def[jpProps.id])) {
+            cached_graph_def[jpProps.id] = JSON.stringify(jpProps.def);
+            if (jpProps.update_create) {
                 this.graph_change();
             } else {
-                chart.update(this.$props.jp_props.def, true, true, this.$props.jp_props.update_animation);
+                chart.update(jpProps.def, true, true, jpProps.update_animation);
             }
         }
     },
