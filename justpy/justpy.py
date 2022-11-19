@@ -29,8 +29,8 @@ import typing
 jp_server = None
 current_module = sys.modules[__name__]
 current_dir = os.path.dirname(current_module.__file__)
-print(current_dir.replace("\\", "/"))
 if jpconfig.VERBOSE:
+    print(current_dir.replace("\\", "/"))
     print(f"Module directory: {current_dir}, Application directory: {os.getcwd()}")
 
 logging.basicConfig(level=jpconfig.LOGGING_LEVEL, format="%(levelname)s %(module)s: %(message)s")
