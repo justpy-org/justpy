@@ -658,6 +658,40 @@
     {
       "name": "quasar_tutorial/quasar_components/quasar_tree_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/201534368-911624a1-9c9c-4b82-a797-fc90d120ccfc.gif"
+    },
+    {
+      "name": "tutorial/advanced_components/pad_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203413680-233fc9c2-22ee-46b3-8db0-27aa44756652.gif"
+    },
+    {
+      "name": "tutorial/advanced_components/calendar_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203419355-a8f49c82-e2ea-4c72-939a-ed2a33d48690.gif",
+      "issue": 625
+    },
+    {
+      "name": "grids_tutorial/creating_grids/grid_test4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203421154-31d2c77c-ac9b-4a5f-9579-8fe8b9dd31a2.gif"
+    },
+    {
+      "name": "grids_tutorial/adding_html/grid_add_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203423635-50c87acf-f0a0-46fb-8306-0dfe0fb2fd12.gif"
+    },
+    {
+      "name": "grids_tutorial/pandas/grid_test16.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203425566-2bcb4ac8-4ee6-4401-b1ce-1cedea4e5686.gif"
+    },
+    {
+      "name": "grids_tutorial/pandas/grid_test17.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203425566-2bcb4ac8-4ee6-4401-b1ce-1cedea4e5686.gif"
+    },
+    {
+      "name": "grids_tutorial/pandas/grid_test18.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/203429921-a4b05b9d-bcd3-4c63-97f6-8c7bcb7e091f.gif"
+    },
+    {
+      "name": "grids_tutorial/database/db_test.py",
+      "video_url": "",
+      "issue": 626
     }
   ]
 }
