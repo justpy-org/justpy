@@ -272,7 +272,7 @@ import justpy as jp
 charts = ["org", "bubbles", "item", "timeline", "states", "browsers", "wheel"]
 
 
-@jp.SetRoute("/{chart_name}")
+@jp.SetRoute("/demo/create_chart_test5/{chart_name}")
 async def create_chart_test5(request):
     wp = jp.WebPage()
     chart_name = request.path_params.get("chart_name", "item")   # Default chart is item

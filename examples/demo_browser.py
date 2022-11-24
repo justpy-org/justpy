@@ -533,36 +533,51 @@ def main(argv=None):  # IGNORE:C0111
     try:
         program_name = os.path.basename(sys.argv[0])
         parser = ArgumentParser(
-            description="Justpy Examples browser",
-            formatter_class=RawDescriptionHelpFormatter,
-        )
+                description="Justpy Examples browser",
+                formatter_class=RawDescriptionHelpFormatter)
         parser.add_argument(
-            "-d", "--debug", dest="debug", action="store_true", help="show debug info"
-        )
+                "-d", "--debug",
+                dest="debug",
+                action="store_true",
+                help="show debug info")
         parser.add_argument(
-            "--heroku", action="store_true", help="in heroku environment pick up port from env variable and set host to 0.0.0.0"
-        )
+                "--heroku",
+                action="store_true",
+                help="in heroku environment pick up port from env variable and set host to 0.0.0.0")
         parser.add_argument(
-            "-p",
-            "--path",
-            default=os.getcwd(),
-            help="path to the examples (default: %(default)s)",
-        )
-        parser.add_argument('--debugServer',
-                                     help="remote debug Server")
-        parser.add_argument('--debugPort',type=int,
-                                     help="remote debug Port",default=5678)
-        parser.add_argument('--debugPathMapping',nargs='+',help="remote debug Server path mapping - needs two arguments 1st: remotePath 2nd: local Path")
+                "-p",
+                "--path",
+                default=os.getcwd(),
+                help="path to the examples (default: %(default)s)")
+        parser.add_argument(
+                '--debugServer',
+                help="remote debug Server")
+        parser.add_argument(
+                '--debugPort',
+                type=int,
+                help="remote debug Port",
+                default=5678)
+        parser.add_argument(
+                '--debugPathMapping',
+                nargs='+',
+                help="remote debug Server path mapping - needs two arguments 1st: remotePath 2nd: local Path")
    
         parser.add_argument("--host", default=JustpyServer.getDefaultHost())
         parser.add_argument("--port", type=int, default=8000)
         args = parser.parse_args(argv[1:])
-        demo_browser=DemoBrowser(base_path=args.path,debug=args.debug)
+        demo_browser = DemoBrowser(base_path=args.path, debug=args.debug)
         if args.heroku:
-            args.port=os.environ["PORT"]
-            args.host="0.0.0.0"
+            args.port = int(os.environ["PORT"])
+            args.host = "0.0.0.0"
         demo_browser.optionalDebug(args)
-        jp.justpy(demo_browser.web_page,host=args.host, port=args.port,PLOTLY=True,KATEX=True,VEGA=True)
+        jp.justpy(
+                demo_browser.web_page,
+                host=args.host,
+                port=args.port,
+                PLOTLY=True,
+                KATEX=True,
+                VEGA=True
+        )
     except Exception as e:
         indent = len(program_name) * " "
         sys.stderr.write(program_name + ": " + repr(e) + "\n")
@@ -571,6 +586,6 @@ def main(argv=None):  # IGNORE:C0111
             print(traceback.format_exc())
         return 2    
 
+
 if __name__ == "__main__":
     sys.exit(main())
-
