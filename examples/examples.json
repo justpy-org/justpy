@@ -260,7 +260,8 @@
     {
       "name": "tutorial/custom_components/custom_comp_test2.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/193044152-d5ce79db-39c7-4a17-b272-e1dd9a39f4eb.gif",
-      "issue": 598
+      "issue": 598,
+      "fixed": "2022-11-16"
     },
     {
       "name": "tutorial/custom_components/alert_test1.py",
@@ -273,7 +274,8 @@
     {
       "name": "tutorial/custom_components/custom_comp_test3.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/193408500-d5075077-f6ec-47f7-bf9f-87ce3440d9eb.gif",
-      "issue": 599
+      "issue": 599,
+      "fixed": "2022-11-16"
     },
     {
       "name": "tutorial/custom_components/custom_comp_test4.py",
@@ -359,7 +361,8 @@
     {
       "name": "tutorial/tailwind/text_colors.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/194646558-5120855c-f4af-41a1-8cb0-0264e2741218.gif",
-      "issue": 601
+      "issue": 601,
+      "fixed": "2022-11-16"
     },
     {
       "name": "tutorial/svg_components/svg_demo1.py",
@@ -414,11 +417,13 @@
     {
       "name": "charts_tutorial/tooltips/tool_tip_demo1.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/195665961-bbb0009d-d5fd-4cac-b95a-f0a591d514ce.png",
-      "issue": 604
+      "issue": 604,
+      "fixed": "2022-11-16"
     },{
       "name": "charts_tutorial/tooltips/tool_tip_demo2.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/200140536-9003966f-0db1-4a24-b805-847c1d4ecf20.png",
-      "issue": 604
+      "issue": 604,
+      "fixed": "2022-11-16"
     },
     {
       "name": "charts_tutorial/iris/iris_data.py",
@@ -492,7 +497,8 @@
     {
       "name": "tutorial/sessions/login_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/198156363-8ff6321f-2852-4801-8f43-f3ac3bd691c1.gif",
-      "issue": 607
+      "issue": 607,
+      "fixed": "2022-11-16"
     },
     {
       "name": "tutorial/static/static_test.py",
@@ -529,7 +535,8 @@
     {
       "name": "quasar_tutorial/introduction/quasar_example2.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/199006070-0014360a-ebfe-4384-b837-402c5462cc85.gif",
-      "issue": 608
+      "issue": 608,
+      "fixed": "2022-11-16"
     },
     {
       "name": "quasar_tutorial/introduction/quasar_example3.py",
@@ -610,7 +617,8 @@
     {
       "name": "tutorial/transitions/transition_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/194770997-868727e5-c50b-451d-abde-c6a33de4f511.gif",
-      "issue": 602
+      "issue": 602,
+      "fixed": "2022-11-17"
     },
     {
       "name": "quasar_tutorial/quasar_components/input_demo_quasar1.py",
@@ -634,7 +642,8 @@
     {
       "name": "quasar_tutorial/quasar_components/stock_test.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/201531947-6d940f34-9e7d-4fab-9591-38480284b369.gif",
-      "issue": 618
+      "issue": 618,
+      "fixed": "2022-11-16"
     },
     {
       "name": "quasar_tutorial/quasar_components/reactive_list_test.py",
