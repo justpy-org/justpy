@@ -14,6 +14,7 @@ def grid_test14():
     wp.df = df
     wp.c = df.jp.plot(0, [1,2,3,4], kind='column', a=wp, classes='m-2 p-2 border', title='Alcohol Consumption per Country')
     grid = df.jp.ag_grid(a=wp)
+    grid.options.columnDefs[0].rowDrag = True
     for event_name in ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']:
         grid.on(event_name, grid_change)
     return wp

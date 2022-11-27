@@ -4,7 +4,7 @@ Some advanced options in Ag-grid require providing a JavaScript function. The fi
 
 
 
-In the example below, [tree data mode](https://www.ag-grid.com/javascript-grid-tree-data/) is implemented. It is only available in the enterprise edition of ag-grid. 
+In the example below, [tree data mode](https://www.ag-grid.com/javascript-data-grid/tree-data/) is implemented. It is only available in the enterprise edition of ag-grid. 
 
 !!! warning
     Don't forget to set justpy.env to load the enterprise version of ag-grid

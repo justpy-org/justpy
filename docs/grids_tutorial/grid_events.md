@@ -141,7 +141,7 @@ jp.justpy(grid_test13)
 
 ## Event Properties
  
-Ag-Grid supports many [events](https://www.ag-grid.com/javascript-grid-events/). All the events supported by the community version can be captured and acted upon using JustPy. Each event contains different properties most of which JustPy makes available to the event handler through its second argument (`msg` in the tutorial).  
+Ag-Grid supports many [events](https://www.ag-grid.com/javascript-data-grid/grid-events/). All the events supported by the community version can be captured and acted upon using JustPy. Each event contains different properties most of which JustPy makes available to the event handler through its second argument (`msg` in the tutorial).  
 
 A simple way to see which properties are available is to print `msg`. Another way is to go [here](https://www.ag-grid.com/javascript-grid-events/#properties-and-hierarchy).
 
@@ -171,6 +171,7 @@ def grid_test14():
     wp.df = df
     wp.c = df.jp.plot(0, [1,2,3,4], kind='column', a=wp, classes='m-2 p-2 border', title='Alcohol Consumption per Country')
     grid = df.jp.ag_grid(a=wp)
+    grid.options.columnDefs[0].rowDrag = True
     for event_name in ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']:
         grid.on(event_name, grid_change)
     return wp
@@ -202,6 +203,7 @@ class LinkedChartGrid(jp.Div):
         self.chart = df.jp.plot(x, y, a=self, classes='m-2 p-2 border', kind=self.kind, stacking=self.stacking, title=self.title, subtitle=self.subtitle)
         self.grid = df.jp.ag_grid(a=self)
         self.grid.parent = self
+        self.grid.options.columnDefs[0].rowDrag = True
         for event_name in ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']:
             self.grid.on(event_name, self.grid_change)
 

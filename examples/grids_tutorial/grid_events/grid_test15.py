@@ -17,6 +17,7 @@ class LinkedChartGrid(jp.Div):
         self.chart = df.jp.plot(x, y, a=self, classes='m-2 p-2 border', kind=self.kind, stacking=self.stacking, title=self.title, subtitle=self.subtitle)
         self.grid = df.jp.ag_grid(a=self)
         self.grid.parent = self
+        self.grid.options.columnDefs[0].rowDrag = True
         for event_name in ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd']:
             self.grid.on(event_name, self.grid_change)
 
