@@ -12,7 +12,8 @@ Added in version 0.1.3:
 
 In the first example below, `page_ready` is used to load a page with 3,000 Div elements in a staggered manner in order to improve the user experience.
 
-Try the '/stagger' route and see how it compares to the default.
+Click the button to toggle between staggered and default to compare them. You can increase the number of divs on page by increasing/decreasing the slider by a factor of 200
+
 ### loading hundreds of div elements in a staggered manner
 [loading hundreds of div elements in a staggered manner live demo]({{demo_url}}/loading_page_staggered_demo)
 

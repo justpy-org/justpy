@@ -718,12 +718,14 @@
     {
       "name": "grids_tutorial/grid_events/grid_test14.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/204145307-8229fb6d-b44d-422a-9044-bcf5b0a565e6.gif",
-      "issue": 630
+      "issue": 630,
+      "fixed": "2022-12-02"
     },
     {
       "name": "grids_tutorial/grid_events/grid_test15.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/204145374-b8efdc15-8611-42d0-ad49-c2643805f7a6.gif",
-      "issue": 630
+      "issue": 630,
+      "fixed": "2022-12-02"
     },
     {
       "name": "grids_tutorial/checkbox/grid_test_checkbox1.py",
@@ -738,6 +740,85 @@
       "name": "grids_tutorial/grid_api/grid_test10.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/204153488-ea139498-bd0e-42d0-b542-74badfe719db.gif",
       "issue": 632
+    },
+    {
+      "name": "tutorial/model_and_data/model_demo2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205445668-22b6897b-3629-429a-9dd4-99fcd48a377f.gif",
+      "issue": 638
+    },
+    {
+      "name": "tutorial/model_and_data/model_demo3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205445668-22b6897b-3629-429a-9dd4-99fcd48a377f.gif",
+      "issue": 638
+    },
+    {
+      "name": "tutorial/bokeh/bokeh_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205447023-29d864bf-5562-43e3-8d17-b9e7194c199d.png",
+      "issue": 597
+    },
+    {
+      "name": "tutorial/page_events/loading_page_staggered_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205448459-7fad17ae-4221-4d57-90b5-9e0406b9f3cd.gif"
+    },
+    {
+      "name": "tutorial/page_events/run_javascript_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205448916-83215a78-bab5-43ff-a475-3623b983dccb.png"
+    },
+    {
+      "name": "tutorial/html_components/html_comps1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449045-63a6adde-0de9-4b6e-9fc6-653f78e0c4ff.png"
+    },
+    {
+      "name": "tutorial/html_components/html_comps2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449059-d2bc462c-76c0-4fab-bf5c-23a467a9787f.png"
+    },
+    {
+      "name": "tutorial/html_components/html_comps3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449097-8511e616-b269-45cf-b5f1-87d48c1f0a75.png"
+    },
+    {
+      "name": "tutorial/input/check_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449329-031dfb33-3103-4ac4-ac19-a38c8955b615.gif"
+    },
+    {
+      "name": "tutorial/basic_concepts/hello_world1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449394-839d76a7-c19e-4661-82e0-9243dc8c8b47.png"
+    },
+    {
+      "name": "tutorial/basic_concepts/hello_world2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449472-a38928da-f63d-4bc0-8940-5ca9cee1507c.png"
+    },
+    {
+      "name": "tutorial/basic_concepts/hello_world4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449536-8e106924-44c5-48a9-a5ea-efcfdb7661cb.gif"
+    },
+    {
+      "name": "tutorial/handling_events/target_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205449995-c8baebcf-c2eb-4042-b455-527202ce4477.gif"
+    },
+    {
+      "name": "tutorial/handling_events/event_demo3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205450180-e1ebc20e-17fe-437d-aa3e-a1d27f16ad14.gif"
+    },
+    {
+      "name": "tutorial/getting_started/hello_world.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205450254-2a0c7776-0056-480a-9c6d-e28158ba911f.gif"
+    },
+    {
+      "name": "blog/ag-grid_to_web_page/basic_example.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205487738-ed404dea-c2dd-45a1-994e-e69db21bd974.gif"
+    },
+    {
+      "name": "blog/ag-grid_to_web_page/several_grids_onapage.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205488111-73ec96c3-6627-456e-ada5-cc45d4ff1cbf.gif"
+    },
+    {
+      "name": "blog/reactivity/todo_app1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205488427-b3633117-cd67-45f4-bf5f-46c0e6d78afe.png"
+    },
+    {
+      "name": "blog/reactivity/todo_app2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif"
     }
   ]
 }
