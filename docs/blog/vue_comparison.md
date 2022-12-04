@@ -1,7 +1,8 @@
 # Comparing Vue.js to JustPy
 
 # Example from Vue Guide
-https://vuejs.org/v2/guide/components.html#Base-Example
+[Vue.js html components](https://vuejs.org/v2/guide/components.html)
+# Base-Example
 
 ```python
 import justpy as jp
@@ -16,7 +17,7 @@ class ButtonCounter(jp.Button):
     def button_clicked(self, msg):
         self.count += 1
 
-    def react1(self, data):
+    def react(self, data):
         self.text = f'You clicked me {self.count} times.'
 
 
@@ -56,7 +57,7 @@ class Products(jp.Div):
             total += product["quantity"]
         return total
 
-    def react2(self, data):
+    def react(self, data):
         self.ul.delete_components()
         for product in self.products:
             item = jp.Li(a=self.ul)
@@ -95,7 +96,7 @@ class TodoList(jp.Div):
         self.todos.append(self.task.value)
         self.task.value = ''
 
-    def react3(self, data):
+    def react(self, data):
         self.ol.delete_components()
         for todo in self.todos:
             jp.Li(text=todo, a=self.ol)
@@ -175,7 +176,7 @@ The Vue.js examples are [here](https://vuejs.org/v2/guide/list.html).
 
 ### Example of rendering a simple list
 
- ```python
+```python
 import justpy as jp
 
 def for_example1():
@@ -186,7 +187,7 @@ def for_example1():
     for item in items:
         jp.Li(text=f'{item["message"]}', a=ul)
     return wp
-
+ 
 jp.justpy(for_example1)
 ```
 
@@ -212,7 +213,9 @@ Note that the HTML elements are Python class instances and therefore we can assi
 
 ### Rendering an object
 
-https://vuejs.org/v2/guide/list.html#v-for-with-an-Object
+[List rendering](https://vuejs.org/v2/guide/list.html)
+
+#### v-for-with-an-Object
 Rendering keys and values of an object:
 
 ```python
