@@ -819,6 +819,39 @@
     {
       "name": "blog/reactivity/todo_app2.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif"
+    },
+    {
+      "name": "blog/vue_comparison/button_counter_demo_c.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205489926-713f6948-d66a-4db0-9410-49b48eddc786.gif"
+    },
+    {
+      "name": "blog/vue_comparison/product_app_c.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205491224-da351d83-75fb-4b9e-8212-5012c5e7e9d2.gif",
+      "issue": 639
+    },
+    {
+      "name": "blog/vue_comparison/todo_app.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205491346-c0a8998b-8bce-477f-8614-1f01fed0d82a.gif"
+    },
+    {
+      "name": "blog/vue_comparison/for_example1.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205492671-37df86fa-fe89-4ab3-8142-299a0e4f15d2.png"
+    },
+    {
+      "name": "blog/vue_comparison/for_example2.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205492765-2cae932f-f7d4-4cb0-98d5-8a8b580473ad.png"
+    },
+    {
+      "name": "blog/vue_comparison/for_example3.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205492923-1bca7221-9525-4ae7-b575-27a2733b6c4d.png"
+    },
+    {
+      "name": "blog/vue_comparison/for_example4.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205493016-5f1135d2-ae9d-4ed8-a079-2699d8e9dcbd.png"
+    },
+    {
+      "name": "blog/vue_comparison/alpine_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/205493397-38ddfbe0-b0f9-41f6-baee-13ee22144ab2.gif"
     }
   ]
 }
