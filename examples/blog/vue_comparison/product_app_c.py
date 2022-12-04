@@ -23,7 +23,7 @@ class Products(jp.Div):
             total += product["quantity"]
         return total
 
-    def react2(self, data):
+    def react(self, data):
         self.ul.delete_components()
         for product in self.products:
             item = jp.Li(a=self.ul)

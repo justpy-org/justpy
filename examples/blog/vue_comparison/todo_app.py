@@ -15,7 +15,7 @@ class TodoList(jp.Div):
         self.todos.append(self.task.value)
         self.task.value = ''
 
-    def react3(self, data):
+    def react(self, data):
         self.ol.delete_components()
         for todo in self.todos:
             jp.Li(text=todo, a=self.ol)

@@ -11,7 +11,7 @@ class ButtonCounter(jp.Button):
     def button_clicked(self, msg):
         self.count += 1
 
-    def react1(self, data):
+    def react(self, data):
         self.text = f'You clicked me {self.count} times.'
 
 
