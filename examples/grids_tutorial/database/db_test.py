@@ -7,10 +7,19 @@
 import justpy as jp
 import sqlite3
 import pandas as pd
+import os
+from jpcore.download import Download
 
 # Download the database file to the local directory
 # from: https://elimintz.github.io/chinook.db, originally from https://www.sqlitetutorial.net/
-db_con = sqlite3.connect('chinook.db')
+dbname = "chinook.db"
+url = f"https://elimintz.github.io/{dbname}"
+os.makedirs(Download.get_cache_path(), exist_ok=True)
+filePath = f"{Download.get_cache_path()}/{dbname}"
+Download.download_file(url, dbname, target_directory=Download.get_cache_path())
+
+db_con = sqlite3.connect(filePath)
+
 table_names = ['albums', 'artists', 'customers', 'sqlite_sequence', 'employees', 'genres', 'invoices', 'invoice_items',
           'media_types', 'playlists', 'playlist_track', 'tracks', 'sqlite_stat1']
 
