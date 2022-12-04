@@ -28,7 +28,8 @@ class TestDatabaseExample(BaseSeleniumTest):
         test database example from grids_tutorial/database.md
         """
         self.browser = await self.getBrowserForDemo()
-        from examples.grids_tutorial.database import db_test
+        #examples / grids_tutorial / database / db_test.py
+        from examples.grids_tutorial.database.db_test import db_test
         await self.server.start(db_test)
         url = self.server.get_url("/")
         self.browser.get(url)
