@@ -156,21 +156,21 @@ class AgGrid(JustpyBaseComponent):
         self.options.rowData=lod
 
     async def run_api(self, command, page):
-        await page.run_javascript(f"""cached_grid_def[{self.grid_id}].api.{command}""")
+        await page.run_javascript(f"""cached_grid_def['{self.grid_id}'].api.{command}""")
 
     async def select_all_rows(self, page):
         await page.run_javascript(
-            f"""cached_grid_def[{self.grid_id}].api.selectAll()"""
+            f"""cached_grid_def['{self.grid_id}'].api.selectAll()"""
         )
 
     async def deselect_rows(self, page):
         await page.run_javascript(
-            f"""cached_grid_def[{self.grid_id}].api.deselectAll()"""
+            f"""cached_grid_def['{self.grid_id}'].api.deselectAll()"""
         )
 
     async def apply_transaction(self, transaction, page):
         await page.run_javascript(
-            f"""cached_grid_def[{self.grid_id}].api.applyTransaction({transaction.__repr__()})"""
+            f"""cached_grid_def['{self.grid_id}'].api.applyTransaction({transaction.__repr__()})"""
         )
 
     def convert_object_to_dict(self):

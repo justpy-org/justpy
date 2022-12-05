@@ -130,7 +130,7 @@ class WebPage:
 
     async def run_javascript(self, javascript_string:str, *, request_id=None, send=True):
         """
-        run the given java script code remotely
+        run the given JavaScript code remotely
         
         Args:
             javascript_string(str): the javascript code to run remotely
