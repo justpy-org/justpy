@@ -22,6 +22,7 @@ Vue.component('grid', {
         },
         grid_change() {
             let jp_component_id = this.$props.jp_props.id;
+            let jp_grid_id = 'g' + jp_component_id
             let j = JSON.stringify(this.$props.jp_props.def);
             let grid_def = JSON.parse(j);  // Deep copy the grid definition
             // Define a default cell renderer if none is defined
@@ -77,7 +78,7 @@ Vue.component('grid', {
 
 
             new agGrid.Grid(document.getElementById(jp_component_id.toString()), grid_def);  // the api calls are added to grid_def
-            cached_grid_def['g' + jp_component_id] = grid_def;
+            cached_grid_def[jp_grid_id] = grid_def;
             var auto_size = this.$props.jp_props.auto_size;
 
 
