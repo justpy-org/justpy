@@ -5,7 +5,7 @@ corner_classes = 'p-3 absolute bg-gray-200 '
 
 class MyDiv(jp.Div):
 
-    def model_update1(self):
+    def model_update(self):
         # model has the form [wp, 'text'] for example
         if self.model[0].data[self.model[1]]:
             self.text = str(self.model[0].data[self.model[1]])

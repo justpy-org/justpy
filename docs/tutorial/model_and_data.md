@@ -145,7 +145,7 @@ corner_classes = 'p-3 absolute bg-gray-200 '
 
 class MyDiv(jp.Div):
 
-    def model_update1(self):
+    def model_update(self):
         # model has the form [wp, 'text'] for example
         if self.model[0].data[self.model[1]]:
             self.text = str(self.model[0].data[self.model[1]])
@@ -171,7 +171,7 @@ jp.justpy(model_demo2)
 We define a new component, `MyDiv` that inherits from `Div` and is identical except for the `model_update` method.
 The standard `model_update` method `Div` comes with is:
 ```python
-def model_update2(self):
+def model_update(self):
     # [wp, 'text-data'] for example
     self.text = str(self.model[0].data[self.model[1]])
 ```
@@ -189,7 +189,7 @@ corner_classes = 'p-3 absolute bg-gray-200 '
 
 class MyDiv(jp.Div):
 
-    def model_update3(self):
+    def model_update(self):
         # [wp, 'text-data'] for example
         if self.model[0].data[self.model[1]]:
             self.text = (str(self.model[0].data[self.model[1]]) + ' ')*self.repeat
