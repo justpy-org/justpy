@@ -27,11 +27,27 @@ class Products(jp.Div):
         self.ul.delete_components()
         for product in self.products:
             item = jp.Li(a=self.ul)
-            jp.Input(type='number', product=product, a=item, value=product["quantity"], input='self.product["quantity"] = self.value')
-            jp.Span(text=f'{product["quantity"]} {product["name"]}', a=item, style='margin-left: 10px')
+            jp.InputChangeOnly(
+                    type='number',
+                    product=product,
+                    a=item,
+                    value=product["quantity"],
+                    change='self.product["quantity"] = self.value'
+            )
+            jp.Span(
+                    text=f'{product["quantity"]} {product["name"]}',
+                    a=item,
+                    style='margin-left: 10px'
+            )
             if product["quantity"] == 0:
                 jp.Span(text=' - OUT OF STOCK', a=item)
-            jp.Button(text='Add', a=item, product=product, click='self.product["quantity"] += 1', style='margin-left: 10px')
+            jp.Button(
+                    text='Add',
+                    a=item,
+                    product=product,
+                    click='self.product["quantity"] += 1',
+                    style='margin-left: 10px'
+            )
         self.total_inventory.text = f'Total Inventory: {self.total_products()}'
 
 
