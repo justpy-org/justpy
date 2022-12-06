@@ -26,6 +26,6 @@ class TestIssue620(Basetest):
         ag_grid.load_lod(lod)
         if self.debug:
             print(ag_grid.options.columnDefs)
-        expected=[{'field': 'family_name'}, {'field': 'given_name'}]
+        expected=[{'field': 'family_name', 'filter': True}, {'field': 'given_name', 'filter': True}]
         self.assertEqual(expected, ag_grid.options.columnDefs)
         
