@@ -1,3 +1,5 @@
+import datetime
+
 import hjson
 
 from .htmlcomponents import *
@@ -150,8 +152,14 @@ class AgGrid(JustpyBaseComponent):
             columnDefs = []
             if len(lod)>0:
                 header=lod[0]
-                for key in header.keys():
-                    columnDefs.append({'field':key})
+                for key, value in header.items():
+                    if isinstance(value, int) or isinstance(value, float):
+                        col_filter = "agNumberColumnFilter"
+                    elif isinstance(value, datetime.date) or isinstance(value, datetime.date):
+                        col_filter = "agDateColumnFilter"
+                    else:
+                        col_filter = True  # Use default filter
+                    columnDefs.append(Dict({'field': key, "filter": col_filter}))
         self.options.columnDefs=columnDefs
         self.options.rowData=lod
 

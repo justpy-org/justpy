@@ -21,12 +21,14 @@ Vue.component('grid', {
             }
         },
         grid_change() {
-            let jp_component_id = this.$props.jp_props.id;
+            let jp_props = this.$props.jp_props;
+            let jp_component_id = jp_props.id;
             let jp_grid_id = 'g' + jp_component_id
-            let j = JSON.stringify(this.$props.jp_props.def);
+            let j = JSON.stringify(jp_props.def);
             let grid_def = JSON.parse(j);  // Deep copy the grid definition
             // Define a default cell renderer if none is defined
-            for (const column of this.$props.jp_props.html_columns) {
+            console.log(jp_props.html_columns);
+            for (const column of jp_props.html_columns) {
                 if (grid_def.columnDefs[column].cellRenderer === undefined){
                     grid_def.columnDefs[column].cellRenderer = function (params) {
                         return params.value ? params.value : '';
@@ -40,7 +42,7 @@ Vue.component('grid', {
             // @FIXME causes https://github.com/justpy-org/justpy/issues/467
             // and https://github.com/justpy-org/justpy/issues/369
             // this.evaluate_formatters(grid_def);
-            for (const field of this.$props.jp_props.evaluate) {
+            for (const field of jp_props.evaluate) {
                 eval('grid_def[field] = ' + grid_def[field]);
             }
             // Code for CheckboxRenderer https://blog.ag-grid.com/binding-boolean-values-to-checkboxes-in-ag-grid/
@@ -79,12 +81,10 @@ Vue.component('grid', {
 
             new agGrid.Grid(document.getElementById(jp_component_id.toString()), grid_def);  // the api calls are added to grid_def
             cached_grid_def[jp_grid_id] = grid_def;
-            var auto_size = this.$props.jp_props.auto_size;
-
 
             function grid_ready(event) {
 				// handle the grid_ready event
-                if (auto_size) {
+                if (jp_props.auto_size) {
 					// array of all column Ids
                     var allColumnIds = [];
                     // get all columns - might be null
@@ -100,8 +100,6 @@ Vue.component('grid', {
             }
 
             grid_def.api.addGlobalListener(global_listener);
-            var events = this.$props.jp_props.events;
-            var props = this.$props;
 
             /**
              * Gloabal event listener for the grid
@@ -110,15 +108,15 @@ Vue.component('grid', {
              * @param event_obj
              */
             function global_listener(event_name, event_obj) {
-                if (events.includes(event_name)) {
+                if (jp_props.events.includes(event_name)) {
                     var event_fields = ['data', 'rowIndex', 'type', 'value']; // for cellClicked and rowClicked
                     var e = {
                         'event_type': event_name,
                         'grid': 'ag-grid',
-                        'id': props.jp_props.id,
-                        'class_name': props.jp_props.class_name,
-                        'html_tag': props.jp_props.html_tag,
-                        'vue_type': props.jp_props.vue_type,
+                        'id': jp_props.id,
+                        'class_name': jp_props.class_name,
+                        'html_tag': jp_props.html_tag,
+                        'vue_type': jp_props.vue_type,
                         'page_id': page_id,
                         'websocket_id': websocket_id
                     };
