@@ -33,7 +33,7 @@ Vue.component('chart', {
         graph_change() {
             let jpProps = this.$props.jp_props;
             let jp_component_id = jpProps.id;
-            let chartDefinition = jpProps.def
+            let chartDefinition = jpProps.def;
             cached_graph_def[jp_component_id] = JSON.stringify(chartDefinition);
             let container = jp_component_id.toString();
             // Evaluate all properties that include 'formatter'
@@ -348,12 +348,13 @@ Vue.component('chart', {
         let jpProps = this.$props.jp_props;
         const container = jpProps.id.toString();
         const chart = cached_graph_def['chart' + container];
-        if (!jpProps.use_cache || (JSON.stringify(jpProps.def) !== cached_graph_def[jpProps.id])) {
-            cached_graph_def[jpProps.id] = JSON.stringify(jpProps.def);
-            if (jpProps.update_create) {
-                this.graph_change();
+        let chartDefinition = jpProps.def;
+        if (!jpProps.use_cache || (JSON.stringify(chartDefinition) !== cached_graph_def[jpProps.id])) {
+            cached_graph_def[jpProps.id] = JSON.stringify(chartDefinition);
+            if (chart === undefined || jpProps.update_create) {
+                  this.graph_change();
             } else {
-                chart.update(jpProps.def, true, true, jpProps.update_animation);
+                chart.update(chartDefinition, true, true, jpProps.update_animation);
             }
         }
     },

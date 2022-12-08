@@ -166,7 +166,7 @@ Vue.component('html_component', {
             element.classList.remove('hidden');
             var event_func = function () {
                 element.classList.remove('animated', animation);
-                if (animation.includes('Out')) {
+                if ((typeof animation === 'string' || animation instanceof String) && animation.includes('Out')) {
                     element.classList.add('hidden');
                 } else {
                     // element.classList.remove('hidden');

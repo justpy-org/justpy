@@ -843,7 +843,9 @@ class Tabs(Div):
     wrapper_style = 'display: flex; position: absolute; width: 100%; height: 100%;  align-items: center; justify-content: center; background-color: #fff;'
 
     def __init__(self, **kwargs):
-
+        """
+        constructor
+        """
         self.tabs = []  # list of {'id': id, 'label': label, 'content': content}
         self.value = None  # The value of the tabs component is the id of the selected tab
         self.content_height = 500
@@ -859,8 +861,11 @@ class Tabs(Div):
         self.content_div = Div(a=self)
         self.delete_list = []
 
-
     def __setattr__(self, key, value):
+        """
+        set object attribute
+        if key is value the old value is stored in previous value before overwriting it
+        """
         if key == 'value':
             try:
                 self.previous_value = self.value
@@ -888,15 +893,29 @@ class Tabs(Div):
         self.wrapper_div_classes = self.animation_speed  # Component in this will be centered
 
         if self.previous_value:
-            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_next, temp=True,
-                                   style=f'{self.wrapper_style} z-index: 50;', a=self.content_div)
+            self.wrapper_div = Div(
+                    classes=self.wrapper_div_classes,
+                    animation=self.animation_next,
+                    temp=True,
+                    style=f'{self.wrapper_style} z-index: 50;',
+                    a=self.content_div
+            )
             self.wrapper_div.add(tab['content'])
-            self.wrapper_div = Div(classes=self.wrapper_div_classes, animation=self.animation_prev, temp=True,
-                                   style=f'{self.wrapper_style} z-index: 0;', a=self.content_div)
+            self.wrapper_div = Div(
+                    classes=self.wrapper_div_classes,
+                    animation=self.animation_prev,
+                    temp=True,
+                    style=f'{self.wrapper_style} z-index: 0;',
+                    a=self.content_div
+            )
             self.wrapper_div.add(self.get_tab_by_id(self.previous_value)['content'])
         else:
-            self.wrapper_div = Div(classes=self.wrapper_div_classes, temp=True, a=self.content_div,
-                                   style=self.wrapper_style)
+            self.wrapper_div = Div(
+                    classes=self.wrapper_div_classes,
+                    temp=True,
+                    a=self.content_div,
+                    style=self.wrapper_style
+            )
             self.wrapper_div.add(tab['content'])
 
         self.content_div.set_classes('relative overflow-hidden border')
@@ -947,11 +966,21 @@ class Tabs(Div):
         for tab in self.tabs:
             if tab['id'] != self.value:
                 tab_li = Li(a=self.tab_list, classes=self.item_classes)
-                li_item = A(text=tab['label'], classes=self.tab_label_classes, a=tab_li, delete_flag=False)
+                li_item = A(
+                        text=tab['label'],
+                        classes=self.tab_label_classes,
+                        a=tab_li,
+                        delete_flag=False
+                )
                 self.delete_list.append(li_item)
             else:
                 tab_li = Li(a=self.tab_list, classes=self.item_classes_selected)
-                li_item = A(text=tab['label'], classes=self.tab_label_classes_selected, a=tab_li, delete_flag=False)
+                li_item = A(
+                        text=tab['label'],
+                        classes=self.tab_label_classes_selected,
+                        a=tab_li,
+                        delete_flag=False
+                )
                 self.delete_list.append(li_item)
                 if self.animation and (self.value != self.last_rendered_value):
                     self.set_content_animate(tab)
@@ -1010,10 +1039,22 @@ def tab_change(self, msg):
 def tab_comp_test1():
     wp = jp.WebPage(data={'tab': 'id2556'})
 
-    t = Tabs(a=wp, classes='w-3/4 m-4', style='', animation=True, content_height=550)
+    t = Tabs(
+            a=wp,
+            classes='w-3/4 m-4',
+            style='',
+            animation=True,
+            content_height=550
+    )
     for chart_type in ['bar', 'column', 'line', 'spline']:
         d = jp.Div(style=Tabs.wrapper_style, delete_flag=True)
-        my_chart = jp.HighCharts(a=d, classes='m-2 p-2 border', style='width: 1000px;', options=my_chart_def, use_cache=False)
+        my_chart = jp.HighCharts(
+                a=d,
+                classes='m-2 p-2 border',
+                style='width: 1000px;',
+                options=my_chart_def,
+                use_cache=False
+        )
         my_chart.options.chart.type = chart_type
         my_chart.options.title.text = f'Chart of Type {chart_type.capitalize()}'
         my_chart.options.subtitle.text = f'Subtitle {chart_type.capitalize()}'
@@ -1021,13 +1062,25 @@ def tab_comp_test1():
 
     d_flex = Div(classes='flex', a=wp)  # Container for the two dog pictures tabs
 
-    t = Tabs(a=d_flex, classes=' w-1/2 m-4', animation=True, content_height=550, model=[wp, 'tab'], change=tab_change)
+    t = Tabs(
+            a=d_flex,
+            classes=' w-1/2 m-4',
+            animation=True,
+            content_height=550,
+            model=[wp, 'tab'],
+            change=tab_change
+    )
     for pic_id in pics_papillons:
         d = jp.Div(style=Tabs.wrapper_style)
         jp.Img(src=f'https://images.dog.ceo/breeds/papillon/n02086910_{pic_id}.jpg', a=d)
         t.add_tab(f'id{pic_id}', f'Pic {pic_id}', d)
 
-    t = TabsPills(a=d_flex, classes='w-1/2 m-4', animation=True, content_height=550, change=tab_change)
+    t = TabsPills(
+            a=d_flex,
+            classes='w-1/2 m-4',
+            content_height=550,
+            change=tab_change
+    )
     for pic_id in pics_french_bulldogs:
         d = jp.Div(style=Tabs.wrapper_style)
         jp.Img(src=f'https://images.dog.ceo/breeds/bulldog-french/n02108915_{pic_id}.jpg', a=d)
