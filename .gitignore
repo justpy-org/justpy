@@ -27,3 +27,4 @@ venv*/
 geckodriver.log
 # mkdocs
 site
+**/chinook.db
