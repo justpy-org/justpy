@@ -14,7 +14,7 @@ class Histogram(jp.HighCharts):
         title: { text: 'Data' },
         alignTicks: false
     }, {
-        title: { text: 'Histogram' },
+        title: { text: 'MyHistogram' },
         alignTicks: false,
         opposite: true
     }],
@@ -22,7 +22,7 @@ class Histogram(jp.HighCharts):
     yAxis: [{
         title: { text: 'Data' }
     }, {
-        title: { text: 'Histogram' },
+        title: { text: 'MyHistogram' },
         opposite: true
     }],
 
@@ -32,7 +32,8 @@ class Histogram(jp.HighCharts):
         xAxis: 1,
         yAxis: 1,
         baseSeries: 's1',
-        zIndex: -1
+        zIndex: -1,
+        color: '#FF530D'
     }, {
         name: 'Data',
         type: 'scatter',
@@ -55,11 +56,11 @@ def histogram_test(request):
     wp = jp.WebPage()
     # Uniform distribution
     data = [random.randrange(10) for i in range(100)]
-    chart = jp.Histogram(data, a=wp, classes='m-2 border w-1/2')
+    chart = Histogram(data, a=wp, classes='m-2 border w-1/2')
     chart.options.title.text = 'Uniform Distribution Histogram'
     # Normal distribution
     data = [numpy.random.normal() for i in range(1000)]
-    chart = jp.Histogram(data, a=wp, classes='m-2 border w-1/2')
+    chart = jp.Histogram(data, a=wp, classes='m-2 border w-1/2')  # here we use the Histogram that comes with justpy
     chart.options.title.text = 'Normal Distribution Histogram'
     return wp
 
