@@ -16,7 +16,10 @@ Vue.component('bokehjp', {
         chart_create() {
             this.chart = this.$props.jp_props.chart;
             const chart_obj = JSON.parse(this.$props.jp_props.chart);
-            Bokeh.embed.embed_item(chart_obj, 'bokeh' + this.$props.jp_props.id.toString());
+            Bokeh.embed.embed_item(chart_obj, this.getBokehjpId());
+        },
+        getBokehjpId(){
+            return 'bokeh' + this.$props.jp_props.id.toString();
         }
     },
     mounted() {
@@ -24,7 +27,8 @@ Vue.component('bokehjp', {
     },
     updated() {
         if (this.chart != this.$props.jp_props.chart) {
-            document.getElementById('bokeh' + this.$props.jp_props.id.toString()).innerHTML = "";
+            let bokehjp_element = document.getElementById(this.getBokehjpId());
+            bokehjp_element.innerHTML = "";
             this.chart_create();
        }
     },

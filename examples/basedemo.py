@@ -32,7 +32,7 @@ class Demo(object):
             return
         parser = argparse.ArgumentParser(description=name)
         parser.add_argument("--host", default=JustpyServer.getDefaultHost())
-        parser.add_argument("--port", type=int, default=8000)
+        parser.add_argument("--port", type=int, default=8400)
         args = parser.parse_args()
         import justpy as jp
 

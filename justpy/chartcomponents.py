@@ -601,6 +601,8 @@ except:
 
 if _has_bokeh:
 
+    from bokeh.embed.standalone import json_item
+
     class BokehChart(Div):
 
         vue_type = "bokehjp"
@@ -614,7 +616,7 @@ if _has_bokeh:
             super().__init__(**kwargs)
 
         def convert_object_to_dict(self):
-            d = {}
+            d = dict()
             d["vue_type"] = self.vue_type
             d["id"] = self.id
             d["use_cache"] = self.use_cache
@@ -623,7 +625,7 @@ if _has_bokeh:
             d["style"] = self.style
             d["event_propagation"] = self.event_propagation
             if self.chart:
-                d["chart"] = json.dumps(bokeh.embed.standalone.json_item(self.chart))
+                d["chart"] = json.dumps(json_item(self.chart))
             else:
                 d["chart"] = self.chart_dict
             d["events"] = self.events
