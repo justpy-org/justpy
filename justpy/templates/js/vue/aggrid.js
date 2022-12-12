@@ -27,7 +27,6 @@ Vue.component('grid', {
             let j = JSON.stringify(jp_props.def);
             let grid_def = JSON.parse(j);  // Deep copy the grid definition
             // Define a default cell renderer if none is defined
-            console.log(jp_props.html_columns);
             for (const column of jp_props.html_columns) {
                 if (grid_def.columnDefs[column].cellRenderer === undefined){
                     grid_def.columnDefs[column].cellRenderer = function (params) {
@@ -78,17 +77,17 @@ Vue.component('grid', {
                 checkboxRenderer: CheckboxRenderer
             };
 
-
-            new agGrid.Grid(document.getElementById(jp_component_id.toString()), grid_def);  // the api calls are added to grid_def
+            let jp_component_element = document.getElementById(jp_component_id.toString())
+            new agGrid.Grid(jp_component_element, grid_def);  // the api calls are added to grid_def
             cached_grid_def[jp_grid_id] = grid_def;
 
             function grid_ready(event) {
 				// handle the grid_ready event
                 if (jp_props.auto_size) {
 					// array of all column Ids
-                    var allColumnIds = [];
+                    let allColumnIds = [];
                     // get all columns - might be null
-                    var allColumns=grid_def.columnApi.getAllColumns()
+                    let allColumns=grid_def.columnApi.getAllColumns()
                     // loop if there are any columns
                     if (allColumns) {
                     	allColumns.forEach(function (column) {
@@ -102,15 +101,14 @@ Vue.component('grid', {
             grid_def.api.addGlobalListener(global_listener);
 
             /**
-             * Gloabal event listener for the grid
+             * Global event listener for the grid
              * only listens to events included in $props.jp_props.events
              * @param {string} event_name - name of the event
              * @param event_obj
              */
             function global_listener(event_name, event_obj) {
                 if (jp_props.events.includes(event_name)) {
-                    var event_fields = ['data', 'rowIndex', 'type', 'value']; // for cellClicked and rowClicked
-                    var e = {
+                    let e = {
                         'event_type': event_name,
                         'grid': 'ag-grid',
                         'id': jp_props.id,
@@ -120,7 +118,7 @@ Vue.component('grid', {
                         'page_id': page_id,
                         'websocket_id': websocket_id
                     };
-                    var more_properties = ['value', 'oldValue', 'newValue', 'context', 'rowIndex', 'data', 'toIndex',
+                    const more_properties = ['value', 'oldValue', 'newValue', 'context', 'rowIndex', 'data', 'toIndex',
                         'firstRow', 'lastRow', 'clientWidth', 'clientHeight', 'started', 'finished', 'direction', 'top',
                         'left', 'animate', 'keepRenderedRows', 'newData', 'newPage', 'source', 'visible', 'pinned',
                         'filterInstance', 'rowPinned', 'forceBrowserFocus'];
@@ -129,9 +127,11 @@ Vue.component('grid', {
                             e[property] = event_obj[property];
                         }
                     }
+                    // add column properties to event message
                     if (typeof event_obj.column !== "undefined") {
                         e.colId = event_obj.column.colId;
                     }
+                    // add node properties to event message
                     if (typeof event_obj.node !== "undefined") {
                         let node_properties = ['selected', 'rowHeight'];
                         for (let property of node_properties) {
@@ -140,7 +140,9 @@ Vue.component('grid', {
                             }
                         }
                         e.selected = event_obj.node.selected;
+                        e.row_id = event_obj.node.id;
                     }
+                    // add row data to event message
                     const dataChangeEvents = ['sortChanged', 'filterChanged', 'columnMoved', 'rowDragEnd'];
                     if (dataChangeEvents.includes(event_name)) {
                         e.data = grid_def.api.getDataAsCsv();
@@ -156,7 +158,7 @@ Vue.component('grid', {
     },
     updated() {
         if (JSON.stringify(this.$props.jp_props.def) !== cached_grid_def[this.$props.jp_props.id]) {
-            var grid_to_destroy = cached_grid_def['g' + this.$props.jp_props.id];
+            let grid_to_destroy = cached_grid_def['g' + this.$props.jp_props.id];
             grid_to_destroy.api.destroy();
             this.grid_change(); // Explore option to check difference and update with api instead of destroying and creating new grid
         }
@@ -165,5 +167,3 @@ Vue.component('grid', {
         jp_props: Object
     }
 });
-
-// {* endraw *}

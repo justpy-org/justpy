@@ -24,13 +24,15 @@ grid_options = """
 }
 """
 
+
 def row_selected4(self, msg):
     print(msg.selected, msg)
     wp = msg.page
+    row_id = msg.row_id
     if msg.selected:
-        wp.selected_rows[msg.rowIndex] = msg.data
+        wp.selected_rows[row_id] = msg.data
     else:
-        wp.selected_rows.pop(msg.rowIndex)
+        wp.selected_rows.pop(row_id)
     s = f'Selected rows {sorted(list(wp.selected_rows.keys()))}'
     for i in sorted(wp.selected_rows):
         s = f'{s}\n Row {i}  Data: {wp.selected_rows[i]}'

@@ -134,7 +134,7 @@ function eventHandler(props, event, form_data, aux) {
  * @param {string} event_type - type of the event
  * @param {boolean} debug_flag - If true show debug messages in the console
  */
-function send_to_server(e, event_type, debug_flag) {
+function send_to_server(e, event_type, debug_flag=false) {
     if (debug_flag) {
         console.log('Sending message to server:');
         console.log({'type': event_type, 'event_data': e});
