@@ -11,6 +11,7 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 class SeleniumBrowsers:
@@ -19,6 +20,13 @@ class SeleniumBrowsers:
     """
 
     def __init__(self, headless: bool = True, cache_valid_range=7):
+        """
+        constructor
+        
+        Args:
+            headless(bool): if True run in headless mode
+            cache_valid_range(int): the 
+        """
         self.headless = headless
         self.cache_valid_range = cache_valid_range
         self.browsers = {}
@@ -51,7 +59,9 @@ class SeleniumBrowsers:
         """
         options = FirefoxOptions()
         options.headless = self.headless
-        browser = webdriver.Firefox(options=options)
+        exe=GeckoDriverManager().install()
+        browser = webdriver.Firefox(executable_path=exe,options=options)
+        # browser = webdriver.Firefox(options=options)
         return browser
 
     def _getChromeWebDriver(self) -> webdriver.Chrome:
@@ -60,7 +70,7 @@ class SeleniumBrowsers:
         """
         options = ChromeOptions()
         options.headless = self.headless
-        chrome_executable = ChromeDriverManager(cache_valid_range=365).install()
+        chrome_executable = ChromeDriverManager(cache_valid_range=self.cache_valid_range).install()
         service = ChromeService(chrome_executable)
         browser = webdriver.Chrome(service=service, options=options)
         return browser
