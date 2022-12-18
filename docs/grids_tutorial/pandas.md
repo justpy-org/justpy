@@ -40,7 +40,9 @@ wm_df = pd.read_csv('https://elimintz.github.io/women_majors.csv').round(2)
 
 def grid_test17():
     wp = jp.WebPage()
-    wm_df.jp.ag_grid(a=wp)
+    grid = jp.AgGrid(a=wp, auto_size=True, style = "height: 99vh; width: 100%", theme='ag-theme-material')
+    grid.load_pandas_frame(wm_df)
+    print(grid.options.rowData)
     return wp
 
 jp.justpy(grid_test17)

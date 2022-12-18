@@ -244,7 +244,7 @@ def main(argv=None):  # IGNORE:C0111
                     error(f" found {example_name} but not tutorial entry for it ❌")
                     print(f"found ")
             else:
-                error(f"tutorial does not contain the example {example_name} ❌",file=sys.stderr)
+                error(f"tutorial does not contain the example {example_name} ❌")
         else:
             parser.print_help(sys.stderr)
             error("no valid option given")
