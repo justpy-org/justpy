@@ -15,8 +15,8 @@ class TestDatabaseExample(BaseSeleniumTest):
     testing database example
     """
 
-    async def setUp(self):
-        await super().setUp(port=8127)
+    async def asyncSetUp(self):
+        await super().asyncSetUp(port=8127)
         
     def findElement(self,condition,timeout=4.0):
         element_present = EC.presence_of_element_located(condition)

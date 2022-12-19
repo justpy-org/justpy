@@ -18,7 +18,7 @@ class BaseSeleniumTest(BaseAsynctest):
     Base class for Selenium tests
     """
     
-    async def setUp(
+    async def asyncSetUp(
         self, 
         port:int=8123, 
         host:str="127.0.0.1", 
@@ -27,7 +27,7 @@ class BaseSeleniumTest(BaseAsynctest):
         debug=False, 
         profile=True, 
         mode=None):
-        await BaseAsynctest.setUp(self, port=port, host=host, sleep_time=sleep_time, with_server=with_server, debug=debug, profile=profile, mode=mode)
+        await BaseAsynctest.asyncSetUp(self, port=port, host=host, sleep_time=sleep_time, with_server=with_server, debug=debug, profile=profile, mode=mode)
         await asyncio.sleep(self.server.sleep_time)
         self.browser = SeleniumBrowsers(headless=Basetest.inPublicCI()).getFirst()
         

@@ -15,7 +15,7 @@ class BaseAsynctest(IsolatedAsyncioTestCase):
 
     # https://github.com/encode/starlette/blob/master/docs/testclient.md
 
-    async def setUp(
+    async def asyncSetUp(
         self,
         port: int = 8123,
         host: str = "127.0.0.1",
@@ -48,7 +48,7 @@ class BaseAsynctest(IsolatedAsyncioTestCase):
         msg = f"test {self._testMethodName}, debug={self.debug}"
         self.profiler = Profiler(msg, profile=self.profile)
 
-    async def tearDown(self):
+    async def asyncTearDown(self):
         """Shutdown the app."""
         if self.server is not None:
             await self.server.stop()
