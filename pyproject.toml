@@ -61,7 +61,6 @@ Source = "https://github.com/justpy-org/justpy"
 test = [
     "aiohttp",
     "altair", # example
-    "asynctest",
     "bokeh==3.0.3", # example
     "green",
     "matplotlib", #example
