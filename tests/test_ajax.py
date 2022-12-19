@@ -13,8 +13,8 @@ class TestAjaxWithSelenium(BaseSeleniumTest):
     testing ajax (non-websocket) behavior
     """
 
-    async def setUp(self):
-        await super().setUp(port=8126)
+    async def asyncSetUp(self):
+        await super().asyncSetUp(port=8126)
         
     async def testAjax(self):
         """

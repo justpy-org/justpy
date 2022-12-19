@@ -13,8 +13,8 @@ class TestClickDemoWithSelenium(BaseSeleniumTest):
     testing actual browser behavior with selenium
     """
 
-    async def setUp(self):
-        await BaseSeleniumTest.setUp(self,port=8124)
+    async def asyncSetUp(self):
+        await BaseSeleniumTest.asyncSetUp(self,port=8124)
 
     async def onDivClick(self, msg):
         """

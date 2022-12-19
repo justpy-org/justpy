@@ -18,17 +18,17 @@ class TestAgGrid(BaseSeleniumTest):
     testing AgGrid integration
     """
 
-    async def setUp(self, **kwargs):
+    async def asyncSetUp(self, **kwargs):
         """
         setup test environment
         """
-        await super().setUp(port=8124, **kwargs)
+        await super().asyncSetUp(port=8124, **kwargs)
         self.data = [
             {"name": "Bob", "age": 42, "birthdate": datetime.date(year=2000, month=1, day=1)},
             {"name": "Alice", "age": 24, "birthdate": datetime.date(year=2022, month=1, day=1)},
         ]
 
-    async def tearDown(self):
+    async def asyncTearDown(self):
         """
         close test environment
         """

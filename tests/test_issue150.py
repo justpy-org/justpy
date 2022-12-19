@@ -21,10 +21,10 @@ class TestIssue150(BaseSeleniumTest):
     https://github.com/justpy-org/justpy/issues/150
     """
 
-    async def setUp(self):
-        await BaseSeleniumTest.setUp(self,port=8124)
+    async def asyncSetUp(self):
+        await BaseSeleniumTest.asyncSetUp(self,port=8124)
 
-    async def tearDown(self):
+    async def asyncTearDown(self):
         self.browser.close()
         await asyncio.sleep(self.server.sleep_time)
         await self.server.stop()

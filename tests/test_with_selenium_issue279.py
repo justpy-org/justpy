@@ -14,8 +14,8 @@ class TestIssue279WithSelenium(BaseSeleniumTest):
     testing actual browser behavior with selenium
     """
 
-    async def setUp(self):
-        await super().setUp(port=8125)
+    async def asyncSetUp(self):
+        await super().asyncSetUp(port=8125)
    
     async def testIssue279(self):
         """

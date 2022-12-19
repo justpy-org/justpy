@@ -19,7 +19,7 @@ class TestIssue304(BaseSeleniumTest):
     https://github.com/justpy-org/justpy/issues/304
     """
 
-    async def tearDown(self):
+    async def asyncTearDown(self):
         """
         close selenium browser and stop server
         """
