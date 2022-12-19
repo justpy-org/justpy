@@ -15,6 +15,10 @@ env:
 jobs:
   build:
 
+    # https://github.com/SergeyPirogov/webdriver_manager/issues/433
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
