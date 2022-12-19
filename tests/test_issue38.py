@@ -4,7 +4,6 @@ Created on 2022-09-17
 @author: th
 """
 import asyncio
-import unittest
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,18 +11,16 @@ from selenium.webdriver.support import expected_conditions as EC
 import justpy as jp
 from tests.base_selenium_test import BaseSeleniumTest
 
-
-
 class TestIssue38(BaseSeleniumTest):
     """
     testing issue 38
     https://github.com/justpy-org/justpy/issues/38
     """
 
-    async def setUp(self):
-        await BaseSeleniumTest.setUp(self,port=8124)
+    async def asyncSetUp(self):
+        await BaseSeleniumTest.asyncSetUp(self,port=8124)
 
-    async def tearDown(self):
+    async def asyncTearDown(self):
         self.browser.close()
         await asyncio.sleep(self.server.sleep_time)
         await self.server.stop()
