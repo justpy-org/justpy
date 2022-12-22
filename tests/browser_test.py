@@ -47,10 +47,11 @@ class SeleniumBrowsers:
         """
         Returns a list of all browsers to test
         """
-        if platform == "linux":
-            self.browsers["firefox"] = self._getFirefoxWebDriver()
-        else:
-            self.browsers["chrome"] = self._getChromeWebDriver()
+        #if platform == "linux":
+        #    self.browsers["firefox"] = self._getFirefoxWebDriver()
+        #else:
+        # workaround https://github.com/canonical/bundle-kubeflow/issues/457
+        self.browsers["chrome"] = self._getChromeWebDriver()
         return self.browsers
 
     def _getFirefoxWebDriver(self) -> webdriver.Firefox:
