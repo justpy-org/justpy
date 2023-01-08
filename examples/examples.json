@@ -930,6 +930,26 @@
     {
       "name": "issues/issue_279_key_error.py",
       "video_url": "https://user-images.githubusercontent.com/95085996/210153777-5f38a692-eda6-46bd-9107-ef9e2d1e0c10.gif"
+    },
+    {
+      "name": "reference/webpage/input_demo.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/211191802-c2928ed1-8624-42b7-9455-cb22421ae1bd.gif"
+    },
+    {
+      "name": "reference/webpage/test_head.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/211193299-fc38b04a-c998-43f4-8128-6bad6d21bb0e.gif"
+    },
+    {
+      "name": "reference/webpage/close_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/211193526-f19e5d9d-5971-4ca0-a32e-22ece162873b.gif"
+    },
+    {
+      "name": "reference/webpage/javascript_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/211194247-527ad951-230a-42a4-a321-a1b416b134ff.gif"
+    },
+    {
+      "name": "reference/webpage/browser_location_test.py",
+      "video_url": "https://user-images.githubusercontent.com/95085996/211194363-f1a98256-c960-4933-868a-398f9ed8c46c.gif"
     }
   ]
 }
