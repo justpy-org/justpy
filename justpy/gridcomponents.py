@@ -155,7 +155,7 @@ class AgGrid(JustpyBaseComponent):
                 for key, value in header.items():
                     if isinstance(value, int) or isinstance(value, float):
                         col_filter = "agNumberColumnFilter"
-                    elif isinstance(value, datetime.date) or isinstance(value, datetime.date):
+                    elif isinstance(value, datetime.datetime) or isinstance(value, datetime.date):
                         col_filter = "agDateColumnFilter"
                     else:
                         col_filter = True  # Use default filter
