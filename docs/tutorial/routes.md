@@ -85,4 +85,4 @@ jp.Route('/hello/{name}', greeting_function)
 jp.justpy()#route_hello4
 ```
 
-For more examples using path and url parameters see [request object](/tutorials/request_object.md).
+For more examples using path and url parameters see [request object](/docs/tutorial/request_object.md).
