@@ -11,7 +11,10 @@ from jpcore.justpy_app import JustpyServer
 import justpy as jp
 from uuid import uuid4
 
+from tests.basetest import Basetest
 
+
+@unittest.skipIf(Basetest.inPublicCI(), "")
 class TestRestful(IsolatedAsyncioTestCase):
     """
     tests justpy restful capabilities
