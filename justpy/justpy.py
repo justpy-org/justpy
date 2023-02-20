@@ -1,4 +1,5 @@
 from starlette.applications import Starlette
+from starlette.requests import Request
 from starlette.responses import HTMLResponse, JSONResponse, Response
 from starlette.responses import PlainTextResponse
 from starlette.endpoints import WebSocketEndpoint
@@ -7,12 +8,15 @@ from starlette.middleware import Middleware
 from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.staticfiles import StaticFiles
+from starlette.websockets import WebSocket
+
 from justpy.htmlcomponents import *
 from .chartcomponents import *
 from .gridcomponents import *
 from .quasarcomponents import *
 
-from jpcore.justpy_app import cookie_signer, template_options, handle_event, JustpyApp,JustpyAjaxEndpoint
+from jpcore.justpy_app import CommunicationType, cookie_signer, template_options, handle_event, JustpyApp, \
+    JustpyAjaxEndpoint, Jp_Route_Callback
 import jpcore.jpconfig as jpconfig
 from jpcore.justpy_config import JpConfig
 JustPy.LOGGING_LEVEL = jpconfig.LOGGING_LEVEL
@@ -22,6 +26,7 @@ from .routing import SetRoute
 from jpcore.utilities import run_task, create_delayed_task
 import uvicorn, logging, sys, os, traceback
 import typing
+
 #
 # globals
 #
@@ -51,7 +56,7 @@ app.mount(
 )
 
 
-def initial_func(_request):
+def initial_func(_request) -> WebPage:
     """
     Default func/endpoint to be called if none has been specified
     """
@@ -68,7 +73,15 @@ func_to_run = initial_func
 startup_func = None
 
 
-def server_error_func(request):
+def server_error_func(request: Request) -> WebPage:
+    """
+    Show 500 - Server Error as request response
+    Args:
+        request:
+
+    Returns:
+        Webpage: simple justpy webpage displaying the error message
+    """
     wp = WebPage()
     Div(
         text="JustPy says: 500 - Server Error",
@@ -77,13 +90,14 @@ def server_error_func(request):
     )
     return wp
 
+
 @app.on_event("startup")
 async def justpy_startup():
     WebPage.loop = asyncio.get_event_loop()
     JustPy.loop = WebPage.loop
     JustPy.STATIC_DIRECTORY = jpconfig.STATIC_DIRECTORY
 
-    if startup_func:
+    if startup_func and isinstance(startup_func, typing.Callable):
         if inspect.iscoroutinefunction(startup_func):
             await startup_func()
         else:
@@ -97,7 +111,8 @@ class AjaxEndpoint(JustpyAjaxEndpoint):
     """
     Justpy ajax handler
     """
-    
+
+
 @app.websocket_route("/")
 class JustpyEvents(WebSocketEndpoint):
 
@@ -115,9 +130,12 @@ class JustpyEvents(WebSocketEndpoint):
             websocket.send_json({"type": "websocket_update", "data": websocket.id})
         )
 
-    async def on_receive(self, websocket, data):
+    async def on_receive(self, websocket: WebSocket, data: str):
         """
         Method to accept and act on data received from websocket
+        Args:
+            websocket: websocket that received the message
+            data: string data received on the websocket. Expected to be a JSON string
         """
         logging.debug("%s %s", f"Socket {websocket.id} data received:", data)
         data_dict = json.loads(data)
@@ -145,7 +163,7 @@ class JustpyEvents(WebSocketEndpoint):
             data_dict["event_data"]["msg_type"] = msg_type
             page_event = True if msg_type == "page_event" else False
             WebPage.loop.create_task(
-                handle_event(data_dict, com_type=0, page_event=page_event)
+                handle_event(data_dict, com_type=CommunicationType.WEBSOCKET, page_event=page_event)
             )
             return
         if msg_type == "zzz_page_event":
@@ -156,7 +174,7 @@ class JustpyEvents(WebSocketEndpoint):
                 data_dict["event_data"]["session_id"] = session_id
             data_dict["event_data"]["msg_type"] = msg_type
             WebPage.loop.create_task(
-                handle_event(data_dict, com_type=0, page_event=True)
+                handle_event(data_dict, com_type=CommunicationType.WEBSOCKET, page_event=True)
             )
             return
 
@@ -186,21 +204,30 @@ class JustpyEvents(WebSocketEndpoint):
             print(f"Memory used: {process.memory_info().rss:,}")
             print("************************")
 
+
 def get_server():
     """
     Workaround for global variable jp_server not working as expected
     """
     return jp_server
 
-def Route(path:str,wpfunc:typing.Callable):
+
+def Route(
+        path: str,
+        wpfunc: Jp_Route_Callback,
+        name: typing.Optional[str] = None,
+        methods: typing.Optional[typing.List[str]] = None
+):
     """
     legacy Route handling
     
     Args:
         path (str): the path of the route to add
         wpfunc(Callable): a WebPage returning function to be added
+        name(str): the name of the route
+        methods:
     """
-    app.add_jproute(path,wpfunc)
+    app.add_jproute(path, wpfunc, name=name, methods=methods)
 
 
 def justpy(
@@ -285,7 +312,7 @@ def convert_dict_to_object(d):
     return obj
 
 
-def redirect(url:str)->WebPage:
+def redirect(url: str) -> WebPage:
     """
     redirect to the given url
     
