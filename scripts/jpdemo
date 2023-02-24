@@ -1,9 +1,16 @@
 #!/bin/bash
 # WF 2022-10-23
+python -m venv --upgrade-deps venv
+source venv/bin/activate
+pip install '.[test]'
+
 export PYTHONPATH=.
 host=$(hostname -f)
 port=8099
 
+#
+# start the webbrowser
+#
 webbrowser() {
   local l_sleeptime=$1
   local l_host=$2
@@ -11,6 +18,36 @@ webbrowser() {
   sleep $l_sleeptime
   open http://$l_host:$l_port
 }
-echo "Starting justpy demo browser on host $host port $port ..."
-webbrowser 1 $host $port&
-python examples/demo_browser.py --port $port --host $host
+
+# show usage
+#
+usage() {
+  echo "$0 [-h|--help]"
+  echo "-s  |--server:  start justpy demo server"
+  echo "-b  |--browser: start local demo browser"
+  echo "-h  |--help:  show this usage"
+  exit 1
+}
+
+if [ $# -lt 1 ]
+then
+  usage
+else
+  while [  "$1" != ""  ]
+  do
+    option="$1"
+    case $option in
+      -h|--help)
+        usage
+	;;
+      -s|--serve)
+	echo "Starting justpy demo browser on host $host port $port ..."
+        python examples/demo_browser.py --port $port --host $host
+	;;
+      -b|--browse)
+        webbrowser 1 $host $port&
+	;;
+    esac
+    shift
+  done
+fi
