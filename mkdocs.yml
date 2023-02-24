@@ -12,7 +12,7 @@ plugins:
 extra:
     docdate: 2023-02-24
     version: 0.12.2
-    demo_url: https://justpy-demo.bitplan.com
+    demo_url: http://justpy-demo.bitplan.com
 
 nav:
     - What is JustPy: 'README.md'
