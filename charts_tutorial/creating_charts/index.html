@@ -1865,7 +1865,7 @@
 
 <h1 id="creating-charts">Creating Charts<a class="headerlink" href="#creating-charts" title="Permanent link">&para;</a></h1>
 <h2 id="your-first-chart">Your First Chart<a class="headerlink" href="#your-first-chart" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test1">Your First Chart live demo</a></p>
+<p><a href="https://justpy-demo.bitplan.com/create_chart_test1">Your First Chart live demo</a></p>
 <p>To begin, we'll use the Highchart's documentation <a href="https://www.highcharts.com/docs/getting-started/your-first-chart">Your First Chart</a> example.</p>
 <p>In JustPy this example would look like this:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -1912,7 +1912,7 @@
 <p>If a standard Python dictionary is assigned to the <code>options</code> attribute, it is also converted to a dictionary that allows dot notation access. Don't worry if this is not completely clear at this stage. There are plenty of examples coming that will make things clearer.</p>
 <p>Try for example, changing the text of the chart title in <code>my_chart_def</code> and running the program again.</p>
 <h2 id="chart-types">Chart Types<a class="headerlink" href="#chart-types" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test2">Chart Types live demo</a></p>
+<p><a href="https://justpy-demo.bitplan.com/create_chart_test2">Chart Types live demo</a></p>
 <p>Let's do something a little more complex. Change <code>create_chart_test1</code> in the above example to the following:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1971,7 +1971,7 @@
 <p>Please go to https://api.highcharts.com/highcharts/chart.type and follow the link under "Try it" labeled <a href="https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/chart/type-bar/">"Bar"</a>. In the Highcharts documentation and in other discussions of Highcharts it is common to link to a JavaScript <a href="https://jsfiddle.net">jsfiddle</a> or <a href="https://codepen.io">codepen</a> working example. In this case, a jsfiddle window opens. Look at the JavaScript window in the lower left of the page. The second argument to <code>Highcharts.chart</code> is the JavaScript object that defines the chart. Let's copy this object and assign it to a Python string and try replicating this chart.</p>
 <p>If you simply copy the object like I did  below, you will get an error. Run the program and see for yourself there is an issue.</p>
 <h3 id="highcharts-example">highcharts example<a class="headerlink" href="#highcharts-example" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test3">highcharts example live demo</a>
+<p><a href="https://justpy-demo.bitplan.com/create_chart_test3">highcharts example live demo</a>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -2014,7 +2014,7 @@
 </code></pre></div></p>
 <p>The problem is that the value of the <code>tooltip.formatter</code> key is a JavaScript function definition. JustPy does not support this. We will soon see how to define tooltip formatters in JustPy, but for now, please remove the whole tooltip section and run the program. Your program should look like this:</p>
 <h3 id="highcharts-example-with-removed-tooltip-section">highcharts example with removed tooltip section<a class="headerlink" href="#highcharts-example-with-removed-tooltip-section" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.herokuapp.com/demo/create_chart_test4">highcharts example with removed tooltip live demo</a>
+<p><a href="https://justpy-demo.bitplan.com/create_chart_test4">highcharts example with removed tooltip live demo</a>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">my_chart_def</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -2105,7 +2105,7 @@
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">charts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;org&quot;</span><span class="p">,</span> <span class="s2">&quot;bubbles&quot;</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="s2">&quot;timeline&quot;</span><span class="p">,</span> <span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="s2">&quot;browsers&quot;</span><span class="p">,</span> <span class="s2">&quot;wheel&quot;</span><span class="p">]</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{chart_name}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nd">@jp</span><span class="o">.</span><span class="n">SetRoute</span><span class="p">(</span><span class="s2">&quot;/demo/create_chart_test5/</span><span class="si">{chart_name}</span><span class="s2">&quot;</span><span class="p">)</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">create_chart_test5</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">WebPage</span><span class="p">()</span>
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">chart_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chart_name&quot;</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">)</span>   <span class="c1"># Default chart is item</span>
@@ -2194,7 +2194,7 @@ The chart definitions can be found <a href="https://github.com/elimintz/elimintz
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "0.10.5"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "0.12.2"}</script>
     
     
       <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>

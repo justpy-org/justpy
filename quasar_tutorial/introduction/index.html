@@ -1931,7 +1931,8 @@
 </div>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <h3 id="qbtn-example">QBtn example<a class="headerlink" href="#qbtn-example" title="Permanent link">&para;</a></h3>
-<p>The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page.</p>
+<p><a href="https://justpy-demo.bitplan.com/quasar_example1">QBtn example live demo</a>
+The following example puts some Quasar buttons on the page and toggles their color and label when they are clicked. Also, clicking any button toggles the dark mode of the page.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">random</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -1991,7 +1992,7 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 </code></pre></div></p>
 <p>Just add '_slot' to the slot name and treat it as an instance attribute.</p>
 <h2 id="parsing-quasar-tags">Parsing Quasar Tags<a class="headerlink" href="#parsing-quasar-tags" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.herokuapp.com/demo/quasar_example2">Parsing Quasar Tags live demo</a></p>
+<p><a href="https://justpy-demo.bitplan.com/quasar_example2">Parsing Quasar Tags live demo</a></p>
 <p>The JustPy <code>parse_html</code> function recognizes Quasar tags. This is convenient as it allows using examples in the Quasar documentation. The example below was taken from the <a href="https://quasar.dev/vue-components/list-and-list-items">QList documentation</a>.</p>
 <p>The parsing function also generates the <code>commands</code> attribute which is a list of JutPy commands required to generate the HTML. In the example below we print these commands.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -2121,18 +2122,25 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
 </code></pre></div>
 <p>The value of the directive can be a dictionary for configuring more options:</p>
 <h3 id="qdiv-directive-as-dictionary">QDiv directive as dictionary<a class="headerlink" href="#qdiv-directive-as-dictionary" title="Permanent link">&para;</a></h3>
+<p><a href="https://justpy-demo.bitplan.com/ripple_test">Ripple Example live demo</a>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># https://quasar.dev/vue-directives/material-ripple#Ripple-API</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">def</span> <span class="nf">ripple_test</span><span class="p">():</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md q-gutter-md row justify-center&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">v_ripple</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;orange-5&#39;</span><span class="p">},</span> <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;relative-position container bg-grey-3 text-black inline flex flex-center&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>                 <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 50%; cursor: pointer; width: 150px; height: 150px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="k">return</span> <span class="n">wp</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">ripple_test</span><span class="p">)</span>
-</code></pre></div>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sd">    show the Quasar ripple effect</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">wp</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QuasarPage</span><span class="p">()</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="s2">&quot;q-pa-md q-gutter-md row justify-center&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="n">d1</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="n">QDiv</span><span class="p">(</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>      <span class="n">v_ripple</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;orange-5&#39;</span><span class="p">},</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>      <span class="n">classes</span><span class="o">=</span><span class="s2">&quot;relative-position container bg-grey-3 text-black inline flex flex-center&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>      <span class="n">text</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>      <span class="n">style</span><span class="o">=</span><span class="s1">&#39;border-radius: 50%; cursor: pointer; width: 150px; height: 150px&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="k">return</span> <span class="n">wp</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">ripple_test</span><span class="p">)</span>
+</code></pre></div></p>
 <h2 id="running-quasar-component-methods">Running Quasar Component Methods<a class="headerlink" href="#running-quasar-component-methods" title="Permanent link">&para;</a></h2>
 <p>In order to run Quasar methods use the <code>run_method</code> method of the JustPy Quasar component.</p>
 <p>The following example runs the start() and stop() methods of <a href="https://quasar.dev/vue-components/ajax-bar#QAjaxBar-API">QAjaxBar</a></p>
@@ -2235,7 +2243,7 @@ In JustPy the attribute names are in snake case: <code>icon_right</code></p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "0.10.5"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "0.12.2"}</script>
     
     
       <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>
