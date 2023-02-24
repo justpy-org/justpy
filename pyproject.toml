@@ -67,6 +67,7 @@ test = [
     #pandas_datareader", #example
     "plotly", # example
     "pydeck", # example
+    "pydevd", # demo_browser
     "pygments", # demo_browser
     "seaborn", # example
     #scipy", # example
