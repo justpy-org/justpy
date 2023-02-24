@@ -74,7 +74,8 @@ test = [
     "testfixtures",
     "vega_datasets", #example
     "webdriver-manager",
-    "pandas-datareader" # example
+    "pandas-datareader", # example
+    "python-multipart"
 ]
 
 [tool.hatch.build.targets.wheel]

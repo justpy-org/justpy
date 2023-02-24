@@ -271,8 +271,15 @@ class JustpyBaseComponent(Component):
         return model_value
 
     async def run_event_function(
-        self, event_type, event_data, create_namespace_flag=True
+        self, event_type: str, event_data: dict, create_namespace_flag: bool = True
     ):
+        """
+        Run event_function with the given event_data
+        Args:
+            event_type: type of the event e.g. 'before', "after", 'click, 'change', ...
+            event_data: data sent along with the event
+            create_namespace_flag: If True convert event_data to Dict object
+        """
         event_function = getattr(self, "on_" + event_type)
         if create_namespace_flag:
             function_data = Dict(event_data)
