@@ -2117,7 +2117,7 @@
 <h2 id="pill-button-component">Pill Button Component<a class="headerlink" href="#pill-button-component" title="Permanent link">&para;</a></h2>
 <p>Our first component is a very simple one. It is a Button that is formatted to look like a <a href="https://tailwindcss.com/components/buttons#pill">pill</a>.</p>
 <h3 id="custom-component-pillbutton-button-looking-like-a-pill">Custom Component PillButton - Button looking like a pill<a class="headerlink" href="#custom-component-pillbutton-button-looking-like-a-pill" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/custom_comp_test1">PillButton live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/custom_comp_test1">PillButton live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">class</span> <span class="nc">PillButton</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
@@ -2144,7 +2144,7 @@
 <p>Without it, the instances of the components will not be created correctly. In most cases, only default values for keyword arguments should precede it.</p>
 <p>Let's add a custom attribute to the component that will determine the background color of the button.</p>
 <h3 id="custom-component-pillbutton-with-background-color-attribute">Custom Component PillButton  with background color attribute<a class="headerlink" href="#custom-component-pillbutton-with-background-color-attribute" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/custom_comp_test2">PillButton with color live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/custom_comp_test2">PillButton with color live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">PillButton</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Button</span><span class="p">):</span>
@@ -2175,7 +2175,7 @@
 </code></pre></div></p>
 <p>Both methods work the same as Python uses the class attribute if it does not find an instance attribute.</p>
 <h2 id="alert-component">Alert Component<a class="headerlink" href="#alert-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/alert_test1">Alert Component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/alert_test1">Alert Component live demo</a></p>
 <p>This component is based on this <a href="https://tailwindcss.com/components/alerts/#top-accent-border">example</a> from the Tailwind documentation.</p>
 <p>The HTML the component is based on looks like this:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">html_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -2270,7 +2270,7 @@
 <p>As part of the rendering process, JustPy converts class instances to a Python dictionary representation that will later be sent as JSON to the web page and will be the input to the Vue.js frontend. This is done using the <code>convert_object_to_dict</code> method that each component class has.</p>
 </div>
 <h2 id="the-react-method">The react Method<a class="headerlink" href="#the-react-method" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/alert_test2">The React Method live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/alert_test2">The React Method live demo</a></p>
 <p>Every JustPy component supports the <code>react</code> method. It is run just just before a class instance is converted to a dictionary. It receives two arguments, the instance and the <code>data</code> attribute of its parent element or that of the <code>WebPage</code> if it has no parent. In base JustPy elements, <code>react</code> does nothing. It is there to be overridden in user defined components.</p>
 <p>The modified program looks like this:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -2331,7 +2331,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>In the request handler, <code>alert_test</code>, we use the new component to render alerts with greetings in different languages. We also added an event handler for the mouse click that changes the title to "Hello".</p>
 <p>We now have a component, <code>MyAlert</code> that we can reuse as we please in any project (and of course share with our fellow programmers).</p>
 <h2 id="date-card-component">Date Card Component<a class="headerlink" href="#date-card-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/custom_comp_test3">Date Card Component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/custom_comp_test3">Date Card Component live demo</a></p>
 <p>Here is an example of a simple date card component based on <a href="https://tailwindcomponents.com/component/calendar-date">this</a> design.</p>
 <h3 id="calendardate-custom-component">CalendarDate custom component<a class="headerlink" href="#calendardate-custom-component" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -2379,7 +2379,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>This component works well enough but has a flaw. The <code>inner_html</code> attribute is set in <code>__init__</code> when the instance is created. If for example, the instance's <code>day</code> attribute is changed after <code>__init__</code> has run, it would not be reflected in the inner html and the component will not be rendered correctly.</p>
 <p>To solve this problem, we need to move setting <code>inner_html</code> from the time the instance was created to the time it is rendered. Every JustPy component has a method called <code>react</code> that is called each time before the object is converted to a dict. The example above can therefore be written as follows:</p>
 <h3 id="calendardate-custom-component-using-react">CalendarDate custom component using react<a class="headerlink" href="#calendardate-custom-component-using-react" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/custom_comp_test4">CalendarDate custom component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/custom_comp_test4">CalendarDate custom component live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">class</span> <span class="nc">CalendarDate</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
@@ -2427,7 +2427,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>The <code>react</code> method accepts an additional argument to self. The argument <code>data</code> is the <code>data</code> attribute of the element's direct parent. If the element has no parent, it is the <code>data</code> attribute of the page. Using <code>react</code> we can have child elements change their behavior when rendered based on the <code>data</code> attribute of their parent or the page they are on.</p>
 <p>For example, let's make the color of the component dependent on the <code>data</code> attribute of their parent container.</p>
 <h3 id="calendardate-custom-component-color-dependent-on-data-attribute-of-parent-container">CalendarDate custom component color dependent on data attribute of parent container<a class="headerlink" href="#calendardate-custom-component-color-dependent-on-data-attribute-of-parent-container" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/custom_comp_test5">Color dependent CalendarDate custom component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/custom_comp_test5">Color dependent CalendarDate custom component live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">class</span> <span class="nc">CalendarDate</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Div</span><span class="p">):</span>
@@ -2485,7 +2485,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>The function <code>change_color</code> sets the value of the 'color' key in the data dictionary of the Div that holds the CalendarDate instances to the new value of the <code>Select</code> element. In this example, we changed the <code>react</code> function so it uses this value instead of <code>self.color</code> (which was used in the previous example) to set the color to display.</p>
 <p>A few more words about Select: A Select component includes Option components. In this example we add them to the Select using a predefined list of colors. When a specific option is selected, its value attribute becomes the value attribute of the Select. The change in value is acted upon by binding a method to the change event of the Select instance.</p>
 <h2 id="hello-component">Hello Component<a class="headerlink" href="#hello-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/hello_test1">Hello component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/hello_test1">Hello component live demo</a></p>
 <p>JustPy comes with a simple Hello component, which we will now examine.</p>
 <p>First run the following short program.</p>
 <h3 id="5-x-times-jphello">5 x times jp.Hello<a class="headerlink" href="#5-x-times-jphello" title="Permanent link">&para;</a></h3>
@@ -2503,7 +2503,7 @@ In the <code>react</code> method, the <code>text</code> attributes of the paragr
 <p>The program puts five Hello elements on the page. Click any one of them. All five will show the number of times any element was clicked because each time through the loop, we add the same element to the page. There may be 5 rendered elements on the page, but for JustPy, these are the same element.</p>
 <p>If we would like there to be independent components on the page, we would write the program in the following way:</p>
 <h3 id="5-x-times-jphello-as-independent-elements">5 x times jp.Hello as independent elements<a class="headerlink" href="#5-x-times-jphello-as-independent-elements" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/hello_test2">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/hello_test2">live demo</a></p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="k">def</span> <span class="nf">hello_test2</span><span class="p">():</span>
@@ -2533,7 +2533,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <p>Again, JustPy components are Python classes. In our case, <code>Hello</code> inherits from <code>Div</code> and only changes <code>Div</code>'s <code>__init__</code>.</p>
 <p>In <code>__init__</code> we first initialize a counter for the instance. This is a new attribute that is not initialized by <code>Div</code>. Then we call the super class <code>__init__</code>, in our case the <code>__init__</code> of Div. This call provides <code>Hello</code> with the initializations required to work correctly inside the JustPy framework. Since we are calling the super class <code>__init__</code> after having provided a default value to the counter attribute, we can overwrite it with a keyword argument. Try running the following:</p>
 <h3 id="5-x-times-jphello-with-a-default-counter-value">5 x times jp.Hello with a default counter value<a class="headerlink" href="#5-x-times-jphello-with-a-default-counter-value" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/hello_test3">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/hello_test3">live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">def</span> <span class="nf">hello_test3</span><span class="p">():</span>
@@ -2548,7 +2548,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <p>Next, in the definition of <code>Hello</code>, we set the classes of the component to give it some basic design and we set the text. Then we define the click event handler and assign it to the instance. That's it.</p>
 <p>Let's say we are not pleased with the Hello message and its colors and want to define a better Hello component. This is how we would do it:</p>
 <h3 id="5-x-times-customized-myhello-based-on-jphello">5 x times customized MyHello based on jp.Hello<a class="headerlink" href="#5-x-times-customized-myhello-based-on-jphello" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/hello_test4">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/hello_test4">live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">class</span> <span class="nc">MyHello</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">Hello</span><span class="p">):</span>
@@ -2569,7 +2569,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <p>We define a new component called <code>MyHello</code> which inherits from <code>Hello</code>. By running the super class <code>__init__</code> in the <code>__init__</code> of <code>MyHello</code>, we get all the functionality of <code>Hello</code>. We then just modify the classes and text.</p>
 <h2 id="calculator-component">Calculator Component<a class="headerlink" href="#calculator-component" title="Permanent link">&para;</a></h2>
 <h3 id="base-component">Base component<a class="headerlink" href="#base-component" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/calculator_test1">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/calculator_test1">live demo</a></p>
 <p>We will build a calculator component in stages. First, we will create a component that does not handle events or the model attribute. Please run the following example.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
@@ -2628,7 +2628,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <p>After the two Input elements are added to the instance, two nested loops are used to add the calculator buttons based on the layout list which is a list of lists. Each child list represents a line of buttons. Each button is assigned the same click event handler, <code>self.calculator_click</code> which is a static method of the Calculator class (we could have defined the event handler inside the <code>__init__</code>function instead). We also assign to the button <code>calc</code> attribute a reference to the Calculator instance of which the button is part of. This is used in the click event handler to set the value of the Calculator instance.</p>
 <p>In this example, for the sake of brevity, we implemented a very simple state machine for the calculator that is not perfect (for example, it does not handle 0 in front of a number), but for our purposes, it will do. The state machine is inside the <code>calculator_click</code> event handler. All buttons on the calculator use the same event handler but it differentiates between the buttons based on <code>self.text</code> which is unique for each button.</p>
 <h3 id="handling-the-change-event">Handling the change event<a class="headerlink" href="#handling-the-change-event" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/calculator_test2">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/calculator_test2">live demo</a></p>
 <p>As it is currently defined, Calculator does not support any useful events. We would like to add a meaningful change event to it. This event will fire when the value of the Calculator instance changes. We do this by modifying the click event handler of the buttons. The value of the Calculator instance does not change unless some button is clicked. We therefore check if the specific button click changed the value and if that is the case, we run the change event handler of the Calculator instance. This is how the result looks like:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
 <a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -2719,7 +2719,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <p>Please note that <code>run_event_function</code> is an async method and therefore since <code>calculator_click</code> awaits it, it needs to be a coroutine also and is defined using async.</p>
 </div>
 <h3 id="adding-a-model-attribute">Adding a model attribute<a class="headerlink" href="#adding-a-model-attribute" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/calculator_test3">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/calculator_test3">live demo</a></p>
 <p>To make Calculator complete, we will also add handling of the <code>model</code> attribute to it. This is quite simple in our case. First, we need to remember that Calculator inherits from Div and is a derived (child) class of Div. The Div model_update method sets the Div instance's text attribute to the model. Therefore, we need to override it to do nothing so we don't see the value as text at the top of the calculator. Try removing the <code>model_update</code> method from the example below and see what happens.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">from</span> <span class="nn">justpy</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">WebPage</span><span class="p">,</span> <span class="n">justpy</span>
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
@@ -2805,7 +2805,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 </code></pre></div>
 <p>The <code>model</code> attribute, as we defined it above is one directional. The component only sets <code>model</code> value but does not change any of its other attribute values based on changes in <code>model</code>.</p>
 <h2 id="tab-group-component">Tab Group Component<a class="headerlink" href="#tab-group-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/tab_comp_test1">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/tab_comp_test1">live demo</a></p>
 <p>This component allows inserting content in tabs and displaying it based on the tab selected.</p>
 <p>If the <code>animation</code> attribute is set to <code>True</code>, the transition between tabs is animated. The type of animation and its speed can also be set.</p>
 <p>A tab is added by calling the <code>add_tab</code> method. This method accepts three arguments (in addition to self). The first is the id of the tab. When the tab is selected, its value will become the id of the tab selected. Converesely, when the <code>value</code> attribute is set, if a tab with a corresponding id exists, it will be shown.</p>
@@ -3084,7 +3084,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <a id="__codelineno-21-264" name="__codelineno-21-264" href="#__codelineno-21-264"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">tab_comp_test1</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="table-component">Table Component<a class="headerlink" href="#table-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/table_test">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/table_test">live demo</a></p>
 <p>The AutoTable component takes a list of lists and formats it into a nice looking table. The first list is used as the headers for the table.</p>
 <p>In the example below, we read a CSV file into a pandas frame, convert it to a list of lists and add the column names as the first list and then use the component.</p>
 <div class="admonition note">
@@ -3141,7 +3141,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <a id="__codelineno-22-48" name="__codelineno-22-48" href="#__codelineno-22-48"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">table_test</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="quasar-qinput-component-with-integrated-qdate-and-qtime">Quasar QInput Component with Integrated QDate and QTime<a class="headerlink" href="#quasar-qinput-component-with-integrated-qdate-and-qtime" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/input_test">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/input_test">live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
 <a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="c1"># https://quasar.dev/vue-components/date#With-QInput</span>
@@ -3193,7 +3193,7 @@ In this program, each time thorough the loop we create a new Hello element and a
 <a id="__codelineno-23-49" name="__codelineno-23-49" href="#__codelineno-23-49"></a><span class="n">jp</span><span class="o">.</span><span class="n">justpy</span><span class="p">(</span><span class="n">input_test</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="component-to-link-chart-and-grid">Component to Link Chart and Grid<a class="headerlink" href="#component-to-link-chart-and-grid" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/grid_test">live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/grid_test">live demo</a></p>
 <p>Please see <a href="grids_tutorial/grid_events?id=linking-a-chart-and-a-grid-using-grid-events">linking charts and grids</a> for an explanation.</p>
 <p>When you use ag-Grid's filtering and sorting options, the results are not just reflected in the grid, but also in the chart.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>

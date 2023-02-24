@@ -1798,7 +1798,7 @@
 <h1 id="chart-custom-components">Chart Custom Components<a class="headerlink" href="#chart-custom-components" title="Permanent link">&para;</a></h1>
 <p>Components in JustPy are Python classes that inherit from other JustPy components. Components that inherit from HighCharts can also be defined. For example, below we define and use a pie chart component.</p>
 <h2 id="pie-chart-component">Pie Chart Component<a class="headerlink" href="#pie-chart-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/pie_test">Pie Chart Component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/pie_test">Pie Chart Component live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">class</span> <span class="nc">MyPie</span><span class="p">(</span><span class="n">jp</span><span class="o">.</span><span class="n">HighCharts</span><span class="p">):</span>
@@ -1856,7 +1856,7 @@
 </code></pre></div>
 <p>The chart instance that is created can be further modified by changing its options. In the example above we change the chart title and the name of the series.</p>
 <h2 id="histogram-component">Histogram Component<a class="headerlink" href="#histogram-component" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/histogram_test">Histogram Component live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/histogram_test">Histogram Component live demo</a></p>
 <p>A component that comes with JustPy is Histogram. It simplifies creating a histogram chart. In this example, we include the  definition.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1932,7 +1932,7 @@
 <p>The Histogram class relies on a <a href="https://www.highcharts.com/docs/chart-and-series-types/histogram-series">chart definition</a> from the Highcharts documentation.</p>
 <p>Encompassing the chart definition in a class simplifies its use. If you build such classes for your favorite charts, please send them to me to include in JustPy. Once the Histogram class (component) is defined, reusing it is simple and does not require remembering the specifics of the Highcharts API. The instance of HighCharts can be further modified. In the example above, we change the chart titles after the chart has been created.</p>
 <h2 id="scatter-with-regression">Scatter with Regression<a class="headerlink" href="#scatter-with-regression" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/scatter_test">Scatter with Regression live demo</a>
+<p><a href="http://justpy-demo.bitplan.com/scatter_test">Scatter with Regression live demo</a>
 Let's build a component that automatically adds a regression line to a scatter chart. We will use the predefined JustPy Scatter component.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>

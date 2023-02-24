@@ -1789,7 +1789,7 @@
 <p>You need to install pandas to run the program successfully</p>
 </div>
 <h3 id="stock-charts-price-data">Stock Charts price data<a class="headerlink" href="#stock-charts-price-data" title="Permanent link">&para;</a></h3>
-<p><a href="https://justpy-demo.bitplan.com/stock_test1">Stock Charts price data live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/stock_test1">Stock Charts price data live demo</a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">datetime</span>
@@ -1842,7 +1842,7 @@
 <p>The program uses pandas to read a CSV file corresponding to the ticker parameter (only the tickers MSFT, AAPL, IBM and INTC have data behind them, the rest default to MSFT). Try http://127.0.0.1:8000/?ticker=intc for example.</p>
 <p>The program needs to convert the dates to support the Highcharts (standard JavaScript) format which is number of milliseconds since the Epoch (1/1/1970). The short function convert_date1 does this using the Python datetime library. We use <code>map</code> to apply <code>convert_date1</code> to all values in the 'Date' column in order to generate the list of x values for the series.</p>
 <h2 id="stock-chart-with-volume">Stock Chart with Volume<a class="headerlink" href="#stock-chart-with-volume" title="Permanent link">&para;</a></h2>
-<p><a href="https://justpy-demo.bitplan.com/stock_test2">Stock Chart with Volume live demo</a></p>
+<p><a href="http://justpy-demo.bitplan.com/stock_test2">Stock Chart with Volume live demo</a></p>
 <p>The CSV file contains additional data, not just the end of day price. 
 We will now create a more sophisticated chart that uses this data.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">justpy</span> <span class="k">as</span> <span class="nn">jp</span>
