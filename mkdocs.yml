@@ -10,9 +10,9 @@ plugins:
     - macros
 
 extra:
-    docdate: 2022-11-05
-    version: 0.10.5
-    demo_url: https://justpy-demo.herokuapp.com/demo
+    docdate: 2023-02-24
+    version: 0.12.2
+    demo_url: https://justpy-demo.bitplan.com
 
 nav:
     - What is JustPy: 'README.md'
