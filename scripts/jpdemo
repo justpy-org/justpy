@@ -2,7 +2,6 @@
 # WF 2022-10-23
 python -m venv --upgrade-deps venv
 source venv/bin/activate
-pip install '.[test]'
 
 export PYTHONPATH=.
 host=$(hostname -f)
@@ -23,9 +22,10 @@ webbrowser() {
 #
 usage() {
   echo "$0 [-h|--help]"
-  echo "-s  |--server:  start justpy demo server"
   echo "-b  |--browser: start local demo browser"
   echo "-h  |--help:  show this usage"
+  echo "-i  |--install:  install dependencies"
+  echo "-s  |--server:  start justpy demo server"
   exit 1
 }
 
@@ -39,6 +39,9 @@ else
     case $option in
       -h|--help)
         usage
+	;;
+      -i|--install)
+        pip install '.[test]'
 	;;
       -s|--serve)
 	echo "Starting justpy demo browser on host $host port $port ..."
