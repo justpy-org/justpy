@@ -133,4 +133,4 @@ The way JustPy removes the frontend/backend distinction is by intercepting the r
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-Copyright (c) 2019-2022, Eliezer Mintz
+Copyright (c) 2019-2023, Eliezer Mintz and justpy contributors
