@@ -21,6 +21,7 @@ import uuid
 from sys import platform
 from multiprocessing import Process
 from threading import Thread
+from fastapi import FastAPI
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.routing import Route
@@ -205,7 +206,7 @@ async def handle_event(
 # https://stackoverflow.com/questions/57412825/how-to-start-a-uvicorn-fastapi-in-background-when-testing-with-pytest
 # https://github.com/encode/uvicorn/discussions/1103
 # https://stackoverflow.com/questions/68603658/how-to-terminate-a-uvicorn-fastapi-application-cleanly-with-workers-2-when
-class JustpyApp(Starlette):
+class JustpyApp(FastAPI):
     """
     a justpy application is a special Starlette application
     
@@ -221,7 +222,7 @@ class JustpyApp(Starlette):
 
     def __init__(self,**kwargs):
         # https://www.starlette.io/applications/
-        Starlette.__init__(self,**kwargs)
+        FastAPI.__init__(self,**kwargs)
         # @Todo - legacy for SetRoute 
         JustpyApp.app=self
     
