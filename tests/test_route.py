@@ -20,7 +20,7 @@ async def urlFor(request):
     name=request.path_params["name"]
     print(f"calling url_for {name}")
     url=request.url_for(name)
-    return PlainTextResponse(url)
+    return PlainTextResponse(str(url))
 
 @jp.app.route("/greet/{name}")
 @jp.app.response
