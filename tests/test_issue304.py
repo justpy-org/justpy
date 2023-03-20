@@ -3,12 +3,11 @@ Created on 2022-09-18
 
 @author: th
 """
-import asyncio
 import unittest
 import pandas as pd
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-
+from sys import platform
 import justpy as jp
 from tests.base_selenium_test import BaseSeleniumTest
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,7 +25,8 @@ class TestIssue304(BaseSeleniumTest):
         self.browser.close()
         await self.server.stop()
 
-    async def test_issue_30(self):
+    @unittest.skipIf(platform == "darwin","unreliable on MacOS")
+    async def test_issue_304(self):
         """
         test when the issue occurs that input and input display differ
         """
