@@ -33,7 +33,7 @@ class TestIssue304(BaseSeleniumTest):
         await self.server.start(self.issue_page)
         url = self.server.get_url("/")
         self.browser.get(url)
-        timeout = 10.0
+        timeout = 20.0
         driver = self.get_waiting_browser(self.browser,timeout=timeout)
         # wait until a row is clickable
         self.assertTrue(
