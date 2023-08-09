@@ -12,6 +12,9 @@
 
 JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs.
 
+## Sunsetting justpy
+You are welome to join the [https://github.com/justpy-org/justpy/discussions/685](discussion) about the future of justpy.
+
 ## Docs and Tutorials
 [JustPy Docs and Tutorials](https://justpy.io)
 
