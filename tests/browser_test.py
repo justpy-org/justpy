@@ -12,7 +12,7 @@ from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-
+from webdriver_manager.core.driver_cache import DriverCacheManager
 
 class SeleniumBrowsers:
     """
@@ -71,7 +71,8 @@ class SeleniumBrowsers:
         """
         options = ChromeOptions()
         options.headless = self.headless
-        chrome_executable = ChromeDriverManager(cache_valid_range=self.cache_valid_range).install()
+        cache_mgr=DriverCacheManager(valid_range=self.cache_valid_range)
+        chrome_executable = ChromeDriverManager(cache_manager=cache_mgr).install()
         service = ChromeService(chrome_executable)
         browser = webdriver.Chrome(service=service, options=options)
         return browser
