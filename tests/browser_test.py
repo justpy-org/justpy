@@ -11,23 +11,20 @@ from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.core.driver_cache import DriverCacheManager
 
 class SeleniumBrowsers:
     """
     handle available selenium drivers/browsers
     """
 
-    def __init__(self, headless: bool = True, cache_valid_range=7):
+    def __init__(self, headless: bool = True):
         """
         constructor
         
         Args:
             headless(bool): if True run in headless mode
-            cache_valid_range(int): the 
         """
         self.headless = headless
-        self.cache_valid_range = cache_valid_range
         self.browsers = {}
 
     def getFirst(self):
@@ -59,9 +56,8 @@ class SeleniumBrowsers:
         """
         options = FirefoxOptions()
         options.headless = self.headless
-        exe=GeckoDriverManager().install()
-        browser = webdriver.Firefox(executable_path=exe,options=options)
-        # browser = webdriver.Firefox(options=options)
+        exe = GeckoDriverManager().install()
+        browser = webdriver.Firefox(executable_path=exe, options=options)
         return browser
 
     def _getChromeWebDriver(self) -> webdriver.Chrome:
@@ -70,8 +66,8 @@ class SeleniumBrowsers:
         """
         options = ChromeOptions()
         options.headless = self.headless
-        cache_mgr=DriverCacheManager(valid_range=self.cache_valid_range)
-        chrome_executable = ChromeDriverManager(cache_manager=cache_mgr).install()
+        chrome_executable = ChromeDriverManager().install()
         service = ChromeService(chrome_executable)
         browser = webdriver.Chrome(service=service, options=options)
         return browser
+
