@@ -20,7 +20,8 @@ class BaseSeleniumTest(BaseAsynctest):
     
     async def asyncSetUp(
         self, 
-        port:int=8123, 
+        # default testport
+        port:int=8193, 
         host:str="127.0.0.1", 
         sleep_time=None, 
         with_server=True, 
