@@ -15,7 +15,7 @@ With a few lines of only Python code, you could create interactive websites with
 JustPy could also be used to create graphic user interfaces for Python programs.
 
 ## Sunsetting justpy
-See [https://github.com/justpy-org/justpy/discussions/685](discussion) about the sunset of justpy.
+See [discussions-685](https://github.com/justpy-org/justpy/discussions/685) about the sunset of justpy.
 Version 14.0 is the sunset version. All issues have been closed as "won't fix".
 Pull Requests are still welcome and will be worked on in a "best effort" manner.
 You might want to migrate to nicegui (see below).
