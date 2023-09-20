@@ -7,7 +7,7 @@ import unittest
 import pandas as pd
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from sys import platform
+import platform
 import justpy as jp
 from tests.base_selenium_test import BaseSeleniumTest
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,13 +25,13 @@ class TestIssue304(BaseSeleniumTest):
         self.browser.close()
         await self.server.stop()
 
-    @unittest.skipIf(platform == "darwin","unreliable on MacOS")
+    @unittest.skipIf(platform.system() == "darwin","unreliable on MacOS")
     async def test_issue_304(self):
         """
         test when the issue occurs that input and input display differ
         """
-        print(f"issue 304 test on {platform}")
-        if platform=="darwin":
+        print(f"issue 304 test on {platform.system()}")
+        if platform.system()=="darwin":
             return
         await self.server.start(self.issue_page)
         url = self.server.get_url("/")
