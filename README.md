@@ -10,10 +10,15 @@
 
 ## Introduction
 
-JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. With a few lines of only Python code, you can create interactive websites without any JavaScript programming. JustPy can also be used to create graphic user interfaces for Python programs.
+JustPy was an object-oriented, component based, high-level Python Web Framework that required no front-end programming. 
+With a few lines of only Python code, you could create interactive websites without any JavaScript programming. 
+JustPy could also be used to create graphic user interfaces for Python programs.
 
 ## Sunsetting justpy
-You are welome to join the [https://github.com/justpy-org/justpy/discussions/685](discussion) about the future of justpy.
+See [https://github.com/justpy-org/justpy/discussions/685](discussion) about the sunset of justpy.
+Version 14.0 is the sunset version. All issues have been closed as "won't fix".
+Pull Requests are still welcome and will be worked on in a "best effort" manner.
+You might want to migrate to nicegui (see below).
 
 ## Docs and Tutorials
 [JustPy Docs and Tutorials](https://justpy.io)
@@ -47,11 +52,13 @@ and others.
 
 If you'd like to specifically address the JustPy contributors the
 [github dicussions](https://github.com/justpy-org/justpy/discussions/new) are place to ask questions,
-propose new features and generally get in touch with the contributors.
+propose ideas and generally get in touch with the contributors.
+
+New features are only possible via your own contribution.
 
 Our github dicussions are categorized. Please use the Category "Ideas" for feature requests.
 
-Issues and Pull Requests are also welcome. Please make sure that you follow the stackoverflow style guidelines when
+Issues for fixable bugs and Pull Requests are also welcome. Please make sure that you follow the stackoverflow style guidelines when
 posting issues. A good way to do this is to state the problem as a stackoverflow question first. This way a larger audience
 is able to discuss solutions and work arounds and find out which part of the technology stack you are using is actually involved
 in the issue you'd like to get resolved.
