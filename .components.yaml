@@ -3,726 +3,726 @@
 components:
 - name: clickdemo.py
   source: /examples/clickdemo.py
-  demo_url: https://user-images.githubusercontent.com/1336221/187233892-c97aa972-4445-4e12-a3a6-3a23538247b1.gif
+  demo_image_url: https://user-images.githubusercontent.com/1336221/187233892-c97aa972-4445-4e12-a3a6-3a23538247b1.gif
 - name: dogs.py
   source: /examples/dogs.py
-  demo_url: https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif
+  demo_image_url: https://user-images.githubusercontent.com/1336221/187136992-96616390-6c7a-4cd9-9f84-42105749b3c8.gif
 - name: blackjack.py
   source: /examples/blackjack.py
-  demo_url: https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif
+  demo_image_url: https://user-images.githubusercontent.com/1336221/187180379-88e5eaf1-c22e-44fa-9820-d946826e223c.gif
 - name: out_test.py
   source: /examples/tutorial/handling_events/out_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/187909520-370c8bff-6977-422b-b9ec-bb97999f4056.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/187909520-370c8bff-6977-422b-b9ec-bb97999f4056.gif
 - name: html_comps5.py
   source: /examples/tutorial/html_components/html_comps5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/187999454-584716d7-6868-485e-a825-e4a44982ed06.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/187999454-584716d7-6868-485e-a825-e4a44982ed06.gif
 - name: html_comps6.py
   source: /examples/tutorial/html_components/html_comps6.py
-  demo_url: https://user-images.githubusercontent.com/95085996/187999493-90cbb377-2794-4a73-9f7e-2770f3c91de0.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/187999493-90cbb377-2794-4a73-9f7e-2770f3c91de0.gif
 - name: link_demo2.py
   source: /examples/tutorial/html_components/link_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/187999560-0db3fa8b-5701-4342-b4fb-84d4d3730dd1.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/187999560-0db3fa8b-5701-4342-b4fb-84d4d3730dd1.gif
 - name: show_demo.py
   source: /examples/tutorial/html_components/show_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/187999674-3b5bcdc9-8351-4c22-be50-5b6ee0514d43.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/187999674-3b5bcdc9-8351-4c22-be50-5b6ee0514d43.gif
 - name: input_demo2.py
   source: /examples/tutorial/input/input_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/187999722-0ca9e532-e0ef-4c86-b71c-8e71d8749326.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/187999722-0ca9e532-e0ef-4c86-b71c-8e71d8749326.gif
 - name: comp_test.py
   source: /examples/tutorial/handling_events/comp_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190395221-ece357c8-34eb-42da-ba81-86efad596cf3.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190395221-ece357c8-34eb-42da-ba81-86efad596cf3.gif
 - name: debounce_test.py
   source: /examples/tutorial/handling_events/debounce_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190397654-5a1ce1af-5b79-467d-8ade-16333a663d3b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190397654-5a1ce1af-5b79-467d-8ade-16333a663d3b.gif
 - name: event_comp_test.py
   source: /examples/tutorial/handling_events/event_comp_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190400892-9b26c191-63d2-4360-bfea-e21f5057c087.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190400892-9b26c191-63d2-4360-bfea-e21f5057c087.gif
 - name: event_demo1.py
   source: /examples/tutorial/handling_events/event_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190401851-b50e720e-19d1-4882-ba56-2753dcaf2974.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190401851-b50e720e-19d1-4882-ba56-2753dcaf2974.gif
 - name: event_demo2.py
   source: /examples/tutorial/handling_events/event_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190403221-a2fd246d-6816-4d30-901d-92ab6a5afd44.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190403221-a2fd246d-6816-4d30-901d-92ab6a5afd44.gif
 - name: event_demo4.py
   source: /examples/tutorial/handling_events/event_demo4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190404228-64ec501d-7e6f-4076-ad29-27e4b62a841c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190404228-64ec501d-7e6f-4076-ad29-27e4b62a841c.gif
 - name: event_demo5.py
   source: /examples/tutorial/handling_events/event_demo5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190404851-7db02062-0914-4bb1-a4c0-652acf3fd5df.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190404851-7db02062-0914-4bb1-a4c0-652acf3fd5df.gif
 - name: event_demo6.py
   source: /examples/tutorial/handling_events/event_demo6.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190405180-c21b9245-6cdd-488c-88a1-33c9ce0da7f7.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190405180-c21b9245-6cdd-488c-88a1-33c9ce0da7f7.gif
 - name: event_demo7.py
   source: /examples/tutorial/handling_events/event_demo7.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190405624-f100776f-024d-4592-972a-243f90c6bb94.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190405624-f100776f-024d-4592-972a-243f90c6bb94.gif
 - name: target_test.py
   source: /examples/examples/tutorial/handling_events/target_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190407193-f94eee73-7d9d-4419-bffe-3099238c5bc1.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190407193-f94eee73-7d9d-4419-bffe-3099238c5bc1.gif
 - name: html_comps4.py
   source: /examples/tutorial/html_components/html_comps4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190408680-adacd6f4-a724-47f1-888b-4958aef5d66c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190408680-adacd6f4-a724-47f1-888b-4958aef5d66c.gif
 - name: link_demo1.py
   source: /examples/tutorial/html_components/link_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190409307-7b0f0739-ed23-4ea5-8ed5-92853eea122e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190409307-7b0f0739-ed23-4ea5-8ed5-92853eea122e.gif
 - name: list_demo.py
   source: /examples/tutorial/html_components/list_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190410256-23b50221-cca4-45ee-8133-c54928408bb7.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190410256-23b50221-cca4-45ee-8133-c54928408bb7.gif
 - name: route1.py
   source: /examples/tutorial/routes/route1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190412782-05da8fa4-89b1-4e2a-a3c3-f27f84b96ce4.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190412782-05da8fa4-89b1-4e2a-a3c3-f27f84b96ce4.gif
 - name: route2.py
   source: /examples/tutorial/routes/route2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190413790-e831aa6b-253d-4a3a-8c4e-f20793d80539.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190413790-e831aa6b-253d-4a3a-8c4e-f20793d80539.gif
 - name: route3.py
   source: /examples/tutorial/routes/route3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190414403-26955069-9b3d-421b-99f6-8ad1f83a5c25.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190414403-26955069-9b3d-421b-99f6-8ad1f83a5c25.gif
 - name: women_majors1.py
   source: /examples/charts_tutorial/pandas/women_majors1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190432374-5769fc82-0bc3-48ab-ad99-98d1707422c0.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190432374-5769fc82-0bc3-48ab-ad99-98d1707422c0.gif
 - name: women_majors2.py
   source: /examples/charts_tutorial/pandas/women_majors2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190433206-f1231d39-8a8b-4b4a-8313-8f573c3b16c1.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190433206-f1231d39-8a8b-4b4a-8313-8f573c3b16c1.gif
 - name: women_majors3.py
   source: /examples/charts_tutorial/pandas/women_majors3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/190436327-1766751c-66b6-4c31-b6f3-9ffea0fe2143.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/190436327-1766751c-66b6-4c31-b6f3-9ffea0fe2143.gif
 - fixed: '2022-10-11'
   issue: 603
   name: stock_test1.py
   source: /examples/charts_tutorial/stock_charts/stock_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195196223-efa2d502-cc87-4cc8-b80c-637c9af4ea1e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195196223-efa2d502-cc87-4cc8-b80c-637c9af4ea1e.gif
 - name: stock_test2.py
   source: /examples/charts_tutorial/stock_charts/stock_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195199865-b8eacc55-644a-4a97-bb7e-f0c91ae9f857.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195199865-b8eacc55-644a-4a97-bb7e-f0c91ae9f857.gif
 - name: plot_test1.py
   source: /examples/tutorial/matplotlib/plot_test1.py
-  demo_url: https://user-images.githubusercontent.com/1336221/190603282-529a607c-ad1d-42c9-bcc4-be3415af0dc2.png
+  demo_image_url: https://user-images.githubusercontent.com/1336221/190603282-529a607c-ad1d-42c9-bcc4-be3415af0dc2.png
 - name: rating_test1.py
   source: /examples/quasar_tutorial/QRating/rating_test1.py
-  demo_url: https://user-images.githubusercontent.com/1336221/190608483-fd434d41-6445-4d1d-8dcf-221f1f538b09.png
+  demo_image_url: https://user-images.githubusercontent.com/1336221/190608483-fd434d41-6445-4d1d-8dcf-221f1f538b09.png
 - name: hello_world3.py
   source: /examples/tutorial/basic_concepts/hello_world3.py
-  demo_url: https://user-images.githubusercontent.com/1336221/190648952-8469573a-5ecd-401e-981b-2744bcc4f3f6.png
+  demo_image_url: https://user-images.githubusercontent.com/1336221/190648952-8469573a-5ecd-401e-981b-2744bcc4f3f6.png
 - name: issue_500_aggrid_uuid.py
   source: /examples/issues/issue_500_aggrid_uuid.py
-  demo_url: https://user-images.githubusercontent.com/1336221/190847534-b8d37794-d49c-4d79-b949-04930c8ecec4.gif
+  demo_image_url: https://user-images.githubusercontent.com/1336221/190847534-b8d37794-d49c-4d79-b949-04930c8ecec4.gif
 - name: plot_test4.py
   source: /examples/tutorial/matplotlib/plot_test4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195892877-6dfce064-c885-415f-ba5f-869ed5b561bc.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195892877-6dfce064-c885-415f-ba5f-869ed5b561bc.gif
 - name: issue_50_ag_grid_cell_value_changed.py
   source: /examples/issues/issue_50_ag_grid_cell_value_changed.py
-  demo_url: https://user-images.githubusercontent.com/1336221/190888180-a28e070b-9225-4b00-bc5d-f5ddc6a1bc96.gif
+  demo_image_url: https://user-images.githubusercontent.com/1336221/190888180-a28e070b-9225-4b00-bc5d-f5ddc6a1bc96.gif
 - name: text_colors.py
   source: /examples/tutorial/tailwind/text_colors.py
-  demo_url: https://user-images.githubusercontent.com/1336221/190890796-2c942a93-3ec5-4eda-aadb-3e09baebe625.png
+  demo_image_url: https://user-images.githubusercontent.com/1336221/190890796-2c942a93-3ec5-4eda-aadb-3e09baebe625.png
 - name: input_demo1.py
   source: /examples/tutorial/input/input_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191027206-9361905b-0254-429b-bc4c-bd19cb8f2b06.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191027206-9361905b-0254-429b-bc4c-bd19cb8f2b06.gif
 - name: input_demo2.py
   source: /examples/tutorial/input/input_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191028190-732947ed-5342-48a3-b9b4-37ca52befdad.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191028190-732947ed-5342-48a3-b9b4-37ca52befdad.gif
 - name: input_demo3.py
   source: /examples/tutorial/input/input_demo3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191028850-bb025814-449a-40c2-abd8-5cdb651c8ee7.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191028850-bb025814-449a-40c2-abd8-5cdb651c8ee7.gif
 - name: input_demo4.py
   source: /examples/tutorial/input/input_demo4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191029504-5b3c2352-3161-4c20-b98b-8ebbf907c892.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191029504-5b3c2352-3161-4c20-b98b-8ebbf907c892.gif
 - name: color_demo.py
   source: /examples/tutorial/input/color_demo.py
-  demo_url: (https://user-images.githubusercontent.com/95085996/191030382-d212d969-9503-4924-8ff7-ab682b302b4b.gif
+  demo_image_url: (https://user-images.githubusercontent.com/95085996/191030382-d212d969-9503-4924-8ff7-ab682b302b4b.gif
 - name: radio_test1.py
   source: /examples/tutorial/input/radio_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191030883-cabed1bb-cbff-43f4-b095-a7e90cc48642.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191030883-cabed1bb-cbff-43f4-b095-a7e90cc48642.gif
 - name: radio_test2.py
   source: /examples/tutorial/input/radio_test2.py
-  demo_url: ttps://user-images.githubusercontent.com/95085996/191032427-4953cd6e-f858-42cb-84dc-9424bfbf5f8e.gif
+  demo_image_url: ttps://user-images.githubusercontent.com/95085996/191032427-4953cd6e-f858-42cb-84dc-9424bfbf5f8e.gif
 - name: 'check_test.py '
   source: '/examples/tutorial/input/check_test.py '
-  demo_url: https://user-images.githubusercontent.com/95085996/191032964-92a5e5c4-dd46-4627-99a2-065b7a5ee456.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191032964-92a5e5c4-dd46-4627-99a2-065b7a5ee456.gif
 - name: focus_test_input.py
   source: /examples/tutorial/input/focus_test_input.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191033812-505015a1-abe2-4071-9d4d-9b43203e8cfb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191033812-505015a1-abe2-4071-9d4d-9b43203e8cfb.gif
 - name: comp_test.py
   source: /examples/tutorial/input/comp_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191034349-53232222-7116-4b46-9ee7-a0955a808478.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191034349-53232222-7116-4b46-9ee7-a0955a808478.gif
 - name: input_demo5.py
   source: /examples/tutorial/input/input_demo5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191035060-3e175675-bb49-4b45-bce0-9483edb93cbb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191035060-3e175675-bb49-4b45-bce0-9483edb93cbb.gif
 - name: input_demo_model1.py
   source: /examples/tutorial/model_and_data/input_demo_model1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191038507-4a81f17c-81b6-40b7-b9db-06b21c67ae7e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191038507-4a81f17c-81b6-40b7-b9db-06b21c67ae7e.gif
 - name: input_demo_model2.py
   source: /examples/tutorial/model_and_data/input_demo_model2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191038905-c222a58e-c91f-4aa9-aba7-f8c668401167.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191038905-c222a58e-c91f-4aa9-aba7-f8c668401167.gif
 - name: input_demo_model3.py
   source: /examples/tutorial/model_and_data/input_demo_model3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191039469-9303606b-30e1-4197-ac75-715b4fce5b83.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191039469-9303606b-30e1-4197-ac75-715b4fce5b83.gif
 - name: input_demo_model4.py
   source: /examples/tutorial/model_and_data/input_demo_model4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191039973-6eb40b58-51e7-4bda-892d-60e91009e2bb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191039973-6eb40b58-51e7-4bda-892d-60e91009e2bb.gif
 - name: model_demo1.py
   source: /examples/tutorial/model_and_data/model_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/191040776-11d44bc8-3b44-43b8-85bd-00e53671794b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/191040776-11d44bc8-3b44-43b8-85bd-00e53671794b.gif
 - name: inner_demo.py
   source: /examples/tutorial/working_with_html/inner_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193000575-ff6bf338-8a4d-4752-9caa-79d603299dba.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193000575-ff6bf338-8a4d-4752-9caa-79d603299dba.png
 - name: html_demo.py
   source: /examples/tutorial/working_with_html/html_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193001679-35b8b2f3-b0ad-4eba-bab9-2fcf97796afd.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193001679-35b8b2f3-b0ad-4eba-bab9-2fcf97796afd.png
 - name: parse_demo1.py
   source: /examples/tutorial/working_with_html/parse_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193002170-ae5cdb95-4539-4b33-aa95-df97e8d039fe.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193002170-ae5cdb95-4539-4b33-aa95-df97e8d039fe.png
 - name: parse_demo2.py
   source: /examples/tutorial/working_with_html/parse_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193004223-7a38dfd4-d9ac-467c-981a-c78c41526086.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193004223-7a38dfd4-d9ac-467c-981a-c78c41526086.gif
 - name: commands_demo1.py
   source: /examples/tutorial/working_with_html/commands_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193006098-47e47ac7-3d48-4edd-86ca-628a43552933.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193006098-47e47ac7-3d48-4edd-86ca-628a43552933.png
 - name: commands_demo2.py
   source: /examples/tutorial/working_with_html/commands_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193006448-cbdd06f3-456a-49d5-8998-2a566f69da6c.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193006448-cbdd06f3-456a-49d5-8998-2a566f69da6c.png
 - name: clock_test.py
   source: /examples/tutorial/pushing_data/clock_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193007248-7e02d543-6eae-4602-81bb-b90e1b006b1d.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193007248-7e02d543-6eae-4602-81bb-b90e1b006b1d.gif
 - name: joint_edit.py
   source: /examples/tutorial/pushing_data/joint_edit.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193012839-8eba50dc-3c0d-4a79-99d6-a402a5de9935.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193012839-8eba50dc-3c0d-4a79-99d6-a402a5de9935.gif
 - name: message_demo.py
   source: /examples/tutorial/pushing_data/message_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193014625-382abb7c-75e3-4e9d-8fe7-327ddf4dabbb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193014625-382abb7c-75e3-4e9d-8fe7-327ddf4dabbb.gif
 - name: count_test.py
   source: /examples/tutorial/pushing_data/count_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193037141-8e47df6e-8c3c-4339-a0e8-8164234c1b47.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193037141-8e47df6e-8c3c-4339-a0e8-8164234c1b47.gif
 - name: custom_comp_test1.py
   source: /examples/tutorial/custom_components/custom_comp_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193037748-7e8ab66e-9106-4cc7-a376-a9bd94753309.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193037748-7e8ab66e-9106-4cc7-a376-a9bd94753309.gif
 - fixed: '2022-11-16'
   issue: 598
   name: custom_comp_test2.py
   source: /examples/tutorial/custom_components/custom_comp_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193044152-d5ce79db-39c7-4a17-b272-e1dd9a39f4eb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193044152-d5ce79db-39c7-4a17-b272-e1dd9a39f4eb.gif
 - name: alert_test1.py
   source: /examples/tutorial/custom_components/alert_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193048077-f5ceb4ab-007d-469a-a7c2-264964e0d2f4.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193048077-f5ceb4ab-007d-469a-a7c2-264964e0d2f4.png
 - name: alert_test2.py
   source: /examples/tutorial/custom_components/alert_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193407832-123bcc9c-2251-460e-ab26-53adb2e8836a.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193407832-123bcc9c-2251-460e-ab26-53adb2e8836a.gif
 - fixed: '2022-11-16'
   issue: 599
   name: custom_comp_test3.py
   source: /examples/tutorial/custom_components/custom_comp_test3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193408500-d5075077-f6ec-47f7-bf9f-87ce3440d9eb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193408500-d5075077-f6ec-47f7-bf9f-87ce3440d9eb.gif
 - name: custom_comp_test4.py
   source: /examples/tutorial/custom_components/custom_comp_test4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193409364-5204e6ca-ab3e-41c6-bd89-a63c76dc356f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193409364-5204e6ca-ab3e-41c6-bd89-a63c76dc356f.gif
 - name: custom_comp_test5.py
   source: /examples/tutorial/custom_components/custom_comp_test5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193417815-6595a144-f232-4d05-b583-841823739a59.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193417815-6595a144-f232-4d05-b583-841823739a59.gif
 - name: hello_test1.py
   source: /examples/tutorial/custom_components/hello_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193418009-a7753608-3761-4a32-8020-1e422b543e98.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193418009-a7753608-3761-4a32-8020-1e422b543e98.gif
 - name: hello_test2.py
   source: /examples/tutorial/custom_components/hello_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193418095-29bcdde1-d9f9-4ea6-ae00-d8045f066893.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193418095-29bcdde1-d9f9-4ea6-ae00-d8045f066893.gif
 - name: hello_test3.py
   source: /examples/tutorial/custom_components/hello_test3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193418363-f8a06156-da07-4574-9806-b9937ae636b5.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193418363-f8a06156-da07-4574-9806-b9937ae636b5.gif
 - name: hello_test4.py
   source: /examples/tutorial/custom_components/hello_test4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193418646-d8852970-39f1-4d2e-9a84-b2066136a508.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193418646-d8852970-39f1-4d2e-9a84-b2066136a508.gif
 - name: calculator_test1.py
   source: /examples/tutorial/custom_components/calculator_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193464975-6a705c16-219f-4666-9f64-5555bd6bd9ba.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193464975-6a705c16-219f-4666-9f64-5555bd6bd9ba.gif
 - name: calculator_test2.py
   source: /examples/tutorial/custom_components/calculator_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193466359-0337bfeb-d7c0-4621-b90f-4f36b6dbc61a.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193466359-0337bfeb-d7c0-4621-b90f-4f36b6dbc61a.gif
 - name: calculator_test3.py
   source: /examples/tutorial/custom_components/calculator_test3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/193472564-785a2d32-7934-4a96-a5e1-de8e6eb80e70.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/193472564-785a2d32-7934-4a96-a5e1-de8e6eb80e70.gif
 - name: table_test.py
   source: /examples/tutorial/custom_components/table_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194385841-fd18cea5-be6e-456c-bb8e-0a4668eb4aa6.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194385841-fd18cea5-be6e-456c-bb8e-0a4668eb4aa6.png
 - fixed: '2022-12-08'
   issue: 600
   name: tab_comp_test1.py
   source: /examples/tutorial/custom_components/tab_comp_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194161125-5ce961f4-1fe3-4aeb-b6da-d166f44a811e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194161125-5ce961f4-1fe3-4aeb-b6da-d166f44a811e.gif
 - name: input_test.py
   source: /examples/tutorial/custom_components/input_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194535321-662592c9-3ab0-4392-8be5-4dbf09c24e96.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194535321-662592c9-3ab0-4392-8be5-4dbf09c24e96.gif
 - name: grid_test.py
   source: /examples/tutorial/custom_components/grid_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194544377-3d3f5129-e28f-4e9b-8582-9abd7b669c19.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194544377-3d3f5129-e28f-4e9b-8582-9abd7b669c19.gif
 - name: after_demo.py
   source: /examples/tutorial/after_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194584043-9adeaf68-847b-43f8-b869-74299388d397.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194584043-9adeaf68-847b-43f8-b869-74299388d397.gif
 - name: demo_function.py
   source: /examples/tutorial/request_object/demo_function.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194589838-c90cc9d4-4742-4d37-b3b6-0e24851ea9bd.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194589838-c90cc9d4-4742-4d37-b3b6-0e24851ea9bd.gif
 - name: dog_pic1.py
   source: /examples/tutorial/request_object/dog_pic1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194592917-9aabb113-5056-412c-afbf-2caf3b469f0d.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194592917-9aabb113-5056-412c-afbf-2caf3b469f0d.gif
 - name: dog_pic2.py
   source: /examples/tutorial/request_object/dog_pic2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194594153-f8554ff9-84c0-48f4-92d2-b6e45b5e5185.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194594153-f8554ff9-84c0-48f4-92d2-b6e45b5e5185.gif
 - name: dog_pic3.py
   source: /examples/tutorial/request_object/dog_pic3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194595929-f9708822-c262-4b64-b07e-6c161e674996.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194595929-f9708822-c262-4b64-b07e-6c161e674996.gif
 - name: form_test.py
   source: /examples/tutorial/form/form_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194642369-52e17c8f-5ec6-4f3d-b0cd-f84bd60447a0.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194642369-52e17c8f-5ec6-4f3d-b0cd-f84bd60447a0.gif
 - name: drag_test.py
   source: /examples/tutorial/drag_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194644962-ec77d380-9620-4cb7-a5a1-12c1d9c87c53.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194644962-ec77d380-9620-4cb7-a5a1-12c1d9c87c53.gif
 - fixed: '2022-11-16'
   issue: 601
   name: text_colors.py
   source: /examples/tutorial/tailwind/text_colors.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194646558-5120855c-f4af-41a1-8cb0-0264e2741218.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194646558-5120855c-f4af-41a1-8cb0-0264e2741218.gif
 - name: svg_demo1.py
   source: /examples/tutorial/svg_components/svg_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194771669-3386e4f8-f5aa-4196-a501-c56d40862bd2.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194771669-3386e4f8-f5aa-4196-a501-c56d40862bd2.png
 - name: svg_demo2.py
   source: /examples/tutorial/svg_components/svg_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194771903-27423318-a083-4966-be6e-4de401ffa961.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194771903-27423318-a083-4966-be6e-4de401ffa961.gif
 - name: svg_demo3.py
   source: /examples/tutorial/svg_components/svg_demo3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194776058-5f3d6103-b3e4-46f6-b3c8-0b978d4e625b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194776058-5f3d6103-b3e4-46f6-b3c8-0b978d4e625b.gif
 - name: create_chart_test1.py
   source: /examples/charts_tutorial/creating_charts/create_chart_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194852171-12707a23-b9dc-43fe-bfd7-6996c7485445.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194852171-12707a23-b9dc-43fe-bfd7-6996c7485445.gif
 - name: create_chart_test2.py
   source: /examples/charts_tutorial/creating_charts/create_chart_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194856111-86f46a4e-4bdc-46ea-aa07-6f052155f4db.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194856111-86f46a4e-4bdc-46ea-aa07-6f052155f4db.gif
 - name: create_chart_test4.py
   source: /examples/charts_tutorial/creating_charts/create_chart_test4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194858047-54572b6b-8277-4339-a480-ab76b0f11608.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194858047-54572b6b-8277-4339-a480-ab76b0f11608.gif
 - name: sine_test.py
   source: /examples/charts_tutorial/creating_charts/sine_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194861116-3f0f5cea-1f56-4e6b-80b9-35331742e76c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194861116-3f0f5cea-1f56-4e6b-80b9-35331742e76c.gif
 - fixed: '2022-11-24'
   issue: 596
   name: create_chart_test5.py
   source: /examples/charts_tutorial/creating_charts/create_chart_test5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194865394-5c2a2648-1da3-4d73-801c-493f6cb35ff2.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194865394-5c2a2648-1da3-4d73-801c-493f6cb35ff2.gif
 - name: chart_test.py
   source: /examples/charts_tutorial/updating_charts/chart_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195203883-76cdbc1a-2484-4332-a3e1-fd1e6f0c4ce6.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195203883-76cdbc1a-2484-4332-a3e1-fd1e6f0c4ce6.gif
 - name: chart_test1.py
   source: /examples/charts_tutorial/tooltips/chart_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195618253-95f2f0af-6e1e-4d55-a2ad-eee6ad172ed7.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195618253-95f2f0af-6e1e-4d55-a2ad-eee6ad172ed7.gif
 - name: chart_test2.py
   source: /examples/charts_tutorial/tooltips/chart_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195622910-07b805c6-9b99-4b0e-8d37-297b9eff926c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195622910-07b805c6-9b99-4b0e-8d37-297b9eff926c.gif
 - name: chart_test3.py
   source: /examples/charts_tutorial/tooltips/chart_test3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195623873-78f99fcd-8c2c-4e4c-81cf-4475e4552590.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195623873-78f99fcd-8c2c-4e4c-81cf-4475e4552590.gif
 - fixed: '2022-11-16'
   issue: 604
   name: tool_tip_demo1.py
   source: /examples/charts_tutorial/tooltips/tool_tip_demo1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195665961-bbb0009d-d5fd-4cac-b95a-f0a591d514ce.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195665961-bbb0009d-d5fd-4cac-b95a-f0a591d514ce.png
 - fixed: '2022-11-16'
   issue: 604
   name: tool_tip_demo2.py
   source: /examples/charts_tutorial/tooltips/tool_tip_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/200140536-9003966f-0db1-4a24-b805-847c1d4ecf20.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/200140536-9003966f-0db1-4a24-b805-847c1d4ecf20.png
 - name: iris.py
   source: /examples/iris.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195683279-0b81a539-2e1b-4cca-8d2b-02bc5b76b378.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195683279-0b81a539-2e1b-4cca-8d2b-02bc5b76b378.gif
 - name: pie_test.py
   source: /examples/charts_tutorial/chart_components/pie_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195820662-0d25d620-9125-4610-b06a-eda4eb3d7a56.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195820662-0d25d620-9125-4610-b06a-eda4eb3d7a56.gif
 - fixed: '2022-12-08'
   issue: 605
   name: histogram_test.py
   source: /examples/charts_tutorial/chart_components/histogram_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195830539-b742f835-c7d2-4b1d-a702-a460971cc49b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195830539-b742f835-c7d2-4b1d-a702-a460971cc49b.gif
 - name: scatter_test.py
   source: /examples/charts_tutorial/chart_components/scatter_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195833130-acb6ba3a-487e-4b27-b9a8-91ec5a623d80.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195833130-acb6ba3a-487e-4b27-b9a8-91ec5a623d80.gif
 - name: plot_test2.py
   source: /examples/tutorial/matplotlib/plot_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195888841-6d63ecb8-5b6a-459c-9cd9-a2a9eff4a2e7.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195888841-6d63ecb8-5b6a-459c-9cd9-a2a9eff4a2e7.png
 - name: plot_test3.py
   source: /examples/tutorial/matplotlib/plot_test3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195891178-6a514189-cc6e-4b0f-8eb7-6b9ecf8de6a1.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195891178-6a514189-cc6e-4b0f-8eb7-6b9ecf8de6a1.gif
 - name: plot_test5.py
   source: /examples/tutorial/matplotlib/plot_test5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195893769-a8b76813-ccb7-47ce-bec3-7ae750462c80.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195893769-a8b76813-ccb7-47ce-bec3-7ae750462c80.gif
 - name: plot_test6.py
   source: /examples/tutorial/matplotlib/plot_test6.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195894763-3ac13aef-166e-418a-b0ac-07cbe6224989.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195894763-3ac13aef-166e-418a-b0ac-07cbe6224989.gif
 - name: plot_test7.py
   source: /examples/tutorial/matplotlib/plot_test7.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195991993-fc8a2d8e-2e73-45c5-8657-a6740f9a5cd2.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195991993-fc8a2d8e-2e73-45c5-8657-a6740f9a5cd2.gif
 - name: plot_test8.py
   source: /examples/tutorial/matplotlib/plot_test8.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195992063-06b4f3c3-f778-4eb0-a553-e13e272676c6.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195992063-06b4f3c3-f778-4eb0-a553-e13e272676c6.gif
 - name: plot_test9.py
   source: /examples/tutorial/matplotlib/plot_test9.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195992550-02c4c5a3-d28b-400d-a489-599a53d79fce.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195992550-02c4c5a3-d28b-400d-a489-599a53d79fce.gif
 - name: altair_chart_test.py
   source: /examples/tutorial/altair/altair_chart_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195993857-452b7516-c70d-4049-bd67-6390f64238ce.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195993857-452b7516-c70d-4049-bd67-6390f64238ce.gif
 - name: eq_test.py
   source: /examples/tutorial/equations/eq_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195995503-58091c57-8cea-40ab-ba59-24aff353dfb1.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195995503-58091c57-8cea-40ab-ba59-24aff353dfb1.gif
 - name: plotly_test.py
   source: /examples/tutorial/plotly/plotly_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195996372-cce2ec7a-fe23-46bb-8c65-f3ea3cbf0d15.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195996372-cce2ec7a-fe23-46bb-8c65-f3ea3cbf0d15.gif
 - name: pydeck_demo.py
   source: /examples/tutorial/pydeck/pydeck_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/195996927-da459218-934b-4c26-8970-1ebe51b98c0b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/195996927-da459218-934b-4c26-8970-1ebe51b98c0b.gif
 - name: reload_demo.py
   source: /examples/tutorial/ajax/reload_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198147360-0b92dacf-91b4-4330-bf7d-19de4d1cbda2.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198147360-0b92dacf-91b4-4330-bf7d-19de4d1cbda2.gif
 - name: session_test.py
   source: /examples/tutorial/sessions/session_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198151168-459eb00f-cdbe-4db4-8c8c-67252f62f2ed.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198151168-459eb00f-cdbe-4db4-8c8c-67252f62f2ed.gif
 - fixed: '2022-11-16'
   issue: 607
   name: login_test.py
   source: /examples/tutorial/sessions/login_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198156363-8ff6321f-2852-4801-8f43-f3ac3bd691c1.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198156363-8ff6321f-2852-4801-8f43-f3ac3bd691c1.gif
 - name: static_test.py
   source: /examples/tutorial/static/static_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198158458-32b32f8a-d602-4c40-9372-6228fc51c9e5.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198158458-32b32f8a-d602-4c40-9372-6228fc51c9e5.gif
 - name: loading_page_no_stagger.py
   source: /examples/tutorial/page_events/loading_page_no_stagger.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198159410-dff709e0-9bd4-440e-bf55-71c4e34953e9.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198159410-dff709e0-9bd4-440e-bf55-71c4e34953e9.gif
 - name: result_test.py
   source: /examples/tutorial/page_events/result_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198159743-db69699a-b46c-4f25-bb29-d2b784c27ebf.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198159743-db69699a-b46c-4f25-bb29-d2b784c27ebf.png
 - name: download_test1.py
   source: /examples/tutorial/uploading_files/download_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198618387-93a5b5d0-78fe-40fd-a9e3-7a56f68dd9f3.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198618387-93a5b5d0-78fe-40fd-a9e3-7a56f68dd9f3.gif
 - name: download_test2.py
   source: /examples/tutorial/uploading_files/download_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198629587-ee2cb9a4-e554-4b18-821f-4abb44b657c8.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198629587-ee2cb9a4-e554-4b18-821f-4abb44b657c8.gif
 - name: upload_test.py
   source: /examples/tutorial/uploading_files/upload_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198653785-fc0bb90f-b2f4-449e-a4d0-18c5255a2761.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198653785-fc0bb90f-b2f4-449e-a4d0-18c5255a2761.gif
 - name: quasar_example1.py
   source: /examples/quasar_tutorial/introduction/quasar_example1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199001724-4577c785-e0d0-46be-b490-9d324073c5df.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199001724-4577c785-e0d0-46be-b490-9d324073c5df.gif
 - name: input_test1.py
   source: /examples/quasar_tutorial/introduction/input_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199002676-38dc10f8-f06d-4a7f-953c-4c8fbd147398.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199002676-38dc10f8-f06d-4a7f-953c-4c8fbd147398.gif
 - fixed: '2022-11-16'
   issue: 608
   name: quasar_example2.py
   source: /examples/quasar_tutorial/introduction/quasar_example2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199006070-0014360a-ebfe-4384-b837-402c5462cc85.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199006070-0014360a-ebfe-4384-b837-402c5462cc85.gif
 - name: quasar_example3.py
   source: /examples/quasar_tutorial/introduction/quasar_example3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199006672-530f2dd8-aeaf-4100-84eb-dd558de4c40f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199006672-530f2dd8-aeaf-4100-84eb-dd558de4c40f.gif
 - name: ripple_test.py
   source: /examples/quasar_tutorial/introduction/ripple_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199007065-837f5482-bac9-4029-ba1d-ccf9ac7bb02f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199007065-837f5482-bac9-4029-ba1d-ccf9ac7bb02f.gif
 - name: bar_example.py
   source: /examples/quasar_tutorial/introduction/bar_example.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199009063-9e819072-6646-4efd-bc3d-6ff47ae62240.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199009063-9e819072-6646-4efd-bc3d-6ff47ae62240.gif
 - name: quasar_notify_test.py
   source: /examples/quasar_tutorial/notify/quasar_notify_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199031708-f4663979-2080-450c-9d84-d622ab053790.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199031708-f4663979-2080-450c-9d84-d622ab053790.gif
 - name: ajax_bar_example.py
   source: /examples/quasar_tutorial/quasar_components/ajax_bar_example.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199009063-9e819072-6646-4efd-bc3d-6ff47ae62240.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199009063-9e819072-6646-4efd-bc3d-6ff47ae62240.gif
 - name: button_toggle_test.py
   source: /examples/quasar_tutorial/quasar_components/button_toggle_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199040922-b39fdfb8-c573-45ed-b466-6088cb49caca.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199040922-b39fdfb8-c573-45ed-b466-6088cb49caca.gif
 - name: input_test2.py
   source: /examples/quasar_tutorial/quasar_components/input_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199073734-74e0ab60-145d-44d5-9e2e-08a6cd307629.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199073734-74e0ab60-145d-44d5-9e2e-08a6cd307629.gif
 - name: date_time_test.py
   source: /examples/quasar_tutorial/quasar_components/date_time_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199076666-ab36cc5f-1bc8-491c-9636-66b6af71bbe3.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199076666-ab36cc5f-1bc8-491c-9636-66b6af71bbe3.gif
 - name: input_test3.py
   source: /examples/quasar_tutorial/quasar_components/input_test3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199274330-1ffa72f7-5afb-4c5e-9440-c4e581b6d754.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199274330-1ffa72f7-5afb-4c5e-9440-c4e581b6d754.gif
 - name: input_test4.py
   source: /examples/quasar_tutorial/quasar_components/input_test4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199277757-b40781fa-3662-412a-aa83-3759e0289c5f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199277757-b40781fa-3662-412a-aa83-3759e0289c5f.gif
 - name: dialog_test.py
   source: /examples/quasar_tutorial/quasar_components/dialog_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199279385-ea862f39-3585-494b-bad7-db73ab376af0.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199279385-ea862f39-3585-494b-bad7-db73ab376af0.gif
 - name: quasar_expansion_item1.py
   source: /examples/quasar_tutorial/quasar_components/quasar_expansion_item1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199304908-453c0e01-8930-489d-b150-3c8c35cf097b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199304908-453c0e01-8930-489d-b150-3c8c35cf097b.gif
 - name: quasar_expansion_item2.py
   source: /examples/quasar_tutorial/quasar_components/quasar_expansion_item2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199308290-41b052db-22da-44c7-b966-a07ae4bbbe00.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199308290-41b052db-22da-44c7-b966-a07ae4bbbe00.gif
 - name: input_test5.py
   source: /examples/quasar_tutorial/quasar_components/input_test5.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199308989-1db5a19b-ee8c-4a74-8bb4-0d91772d693e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199308989-1db5a19b-ee8c-4a74-8bb4-0d91772d693e.gif
 - name: input_test6.py
   source: /examples/quasar_tutorial/quasar_components/input_test6.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199002676-38dc10f8-f06d-4a7f-953c-4c8fbd147398.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199002676-38dc10f8-f06d-4a7f-953c-4c8fbd147398.gif
 - name: input_test7.py
   source: /examples/quasar_tutorial/quasar_components/input_test7.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199310839-602e5a93-ef29-46e9-9c64-bd65f83854ff.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199310839-602e5a93-ef29-46e9-9c64-bd65f83854ff.gif
 - name: input_test8.py
   source: /examples/quasar_tutorial/quasar_components/input_test8.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199311474-225c8502-e207-4737-bdc9-8f4428c89031.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199311474-225c8502-e207-4737-bdc9-8f4428c89031.gif
 - name: input_test9.py
   source: /examples/quasar_tutorial/quasar_components/input_test9.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199311853-8749e746-95ad-40f0-9f65-c1e8a1799081.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199311853-8749e746-95ad-40f0-9f65-c1e8a1799081.gif
 - name: input_test10.py
   source: /examples/quasar_tutorial/quasar_components/input_test10.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199312558-872beb5f-4b4f-4c4f-b060-4532fdf6d31d.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199312558-872beb5f-4b4f-4c4f-b060-4532fdf6d31d.gif
 - fixed: '2022-11-17'
   issue: 602
   name: transition_test.py
   source: /examples/tutorial/transitions/transition_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/194770997-868727e5-c50b-451d-abde-c6a33de4f511.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/194770997-868727e5-c50b-451d-abde-c6a33de4f511.gif
 - fixed: '2022-11-05'
   issue: 594
   name: input_demo_quasar1.py
   source: /examples/quasar_tutorial/quasar_components/input_demo_quasar1.py
-  demo_url: https://user-images.githubusercontent.com/1336221/200119950-15a27e13-cd6e-432b-9664-3dddfa28814e.gif
+  demo_image_url: https://user-images.githubusercontent.com/1336221/200119950-15a27e13-cd6e-432b-9664-3dddfa28814e.gif
 - name: md_test.py
   source: /examples/tutorial/markdown/md_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/200140937-58e9b000-83da-4128-8c25-aada68c64c90.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/200140937-58e9b000-83da-4128-8c25-aada68c64c90.gif
 - issue: 606
   name: hello_test.py
   source: /examples/tutorial/ajax/hello_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/198144200-69c2a1e1-1211-4bc7-8448-449d8564392d.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/198144200-69c2a1e1-1211-4bc7-8448-449d8564392d.gif
 - name: input_test11.py
   source: /examples/quasar_tutorial/quasar_components/input_test11.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201528874-1a40a010-4856-4e5d-b4d3-7dd9f2e15aea.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201528874-1a40a010-4856-4e5d-b4d3-7dd9f2e15aea.gif
 - fixed: '2022-11-16'
   issue: 618
   name: stock_test.py
   source: /examples/quasar_tutorial/quasar_components/stock_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201531947-6d940f34-9e7d-4fab-9591-38480284b369.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201531947-6d940f34-9e7d-4fab-9591-38480284b369.gif
 - name: reactive_list_test.py
   source: /examples/quasar_tutorial/quasar_components/reactive_list_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201532736-515623a7-e077-45d0-bc22-b5ee99083f42.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201532736-515623a7-e077-45d0-bc22-b5ee99083f42.gif
 - name: option_group_test.py
   source: /examples/quasar_tutorial/quasar_components/option_group_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201533056-84e3c0e8-e2da-476a-b4d3-a603a3bf0edc.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201533056-84e3c0e8-e2da-476a-b4d3-a603a3bf0edc.gif
 - name: quasar_rating_test1.py
   source: /examples/quasar_tutorial/quasar_components/quasar_rating_test1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201533341-2a432730-bac9-4289-ba64-b58e6fa7703e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201533341-2a432730-bac9-4289-ba64-b58e6fa7703e.gif
 - name: quasar_rating_test2.py
   source: /examples/quasar_tutorial/quasar_components/quasar_rating_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201533381-25c06f1e-3ec7-4cbf-83f5-9d255c14e5eb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201533381-25c06f1e-3ec7-4cbf-83f5-9d255c14e5eb.gif
 - name: quasar_splitter_test.py
   source: /examples/quasar_tutorial/quasar_components/quasar_splitter_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201533948-42bda88b-f158-4168-83b7-7ab42c42ec1a.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201533948-42bda88b-f158-4168-83b7-7ab42c42ec1a.gif
 - name: quasar_tree_test.py
   source: /examples/quasar_tutorial/quasar_components/quasar_tree_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201534368-911624a1-9c9c-4b82-a797-fc90d120ccfc.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201534368-911624a1-9c9c-4b82-a797-fc90d120ccfc.gif
 - name: pad_test.py
   source: /examples/tutorial/advanced_components/pad_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203413680-233fc9c2-22ee-46b3-8db0-27aa44756652.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203413680-233fc9c2-22ee-46b3-8db0-27aa44756652.gif
 - name: calendar_test.py
   source: /examples/tutorial/advanced_components/calendar_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203419355-a8f49c82-e2ea-4c72-939a-ed2a33d48690.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203419355-a8f49c82-e2ea-4c72-939a-ed2a33d48690.gif
 - name: grid_test4.py
   source: /examples/grids_tutorial/creating_grids/grid_test4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203421154-31d2c77c-ac9b-4a5f-9579-8fe8b9dd31a2.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203421154-31d2c77c-ac9b-4a5f-9579-8fe8b9dd31a2.gif
 - name: grid_add_test.py
   source: /examples/grids_tutorial/adding_html/grid_add_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203423635-50c87acf-f0a0-46fb-8306-0dfe0fb2fd12.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203423635-50c87acf-f0a0-46fb-8306-0dfe0fb2fd12.gif
 - name: grid_test16.py
   source: /examples/grids_tutorial/pandas/grid_test16.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203425566-2bcb4ac8-4ee6-4401-b1ce-1cedea4e5686.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203425566-2bcb4ac8-4ee6-4401-b1ce-1cedea4e5686.gif
 - name: grid_test17.py
   source: /examples/grids_tutorial/pandas/grid_test17.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203425566-2bcb4ac8-4ee6-4401-b1ce-1cedea4e5686.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203425566-2bcb4ac8-4ee6-4401-b1ce-1cedea4e5686.gif
 - name: grid_test18.py
   source: /examples/grids_tutorial/pandas/grid_test18.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203429921-a4b05b9d-bcd3-4c63-97f6-8c7bcb7e091f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203429921-a4b05b9d-bcd3-4c63-97f6-8c7bcb7e091f.gif
 - issue: 626
   name: db_test.py
   source: /examples/grids_tutorial/database/db_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/203433516-110a2b5e-d82d-4977-8ae6-cd02ccef0629.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/203433516-110a2b5e-d82d-4977-8ae6-cd02ccef0629.png
 - name: grid_test11.py
   source: /examples/grids_tutorial/grid_events/grid_test11.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204141547-132d413a-a92f-42cf-a01f-8d146551ebcd.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204141547-132d413a-a92f-42cf-a01f-8d146551ebcd.gif
 - name: grid_test12.py
   source: /examples/grids_tutorial/grid_events/grid_test12.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204142293-5155273e-4eed-4f2f-a893-a9d7fde05af9.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204142293-5155273e-4eed-4f2f-a893-a9d7fde05af9.gif
 - name: grid_test13.py
   source: /examples/grids_tutorial/grid_events/grid_test13.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204142897-1003a7e5-66d6-40e2-b271-19326d9fcb93.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204142897-1003a7e5-66d6-40e2-b271-19326d9fcb93.gif
 - fixed: '2022-12-02'
   issue: 630
   name: grid_test14.py
   source: /examples/grids_tutorial/grid_events/grid_test14.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204145307-8229fb6d-b44d-422a-9044-bcf5b0a565e6.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204145307-8229fb6d-b44d-422a-9044-bcf5b0a565e6.gif
 - fixed: '2022-12-02'
   issue: 630
   name: grid_test15.py
   source: /examples/grids_tutorial/grid_events/grid_test15.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204145374-b8efdc15-8611-42d0-ad49-c2643805f7a6.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204145374-b8efdc15-8611-42d0-ad49-c2643805f7a6.gif
 - name: grid_test_checkbox1.py
   source: /examples/grids_tutorial/checkbox/grid_test_checkbox1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204149456-cc633675-1ae2-4e9e-8454-512c4c57538c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204149456-cc633675-1ae2-4e9e-8454-512c4c57538c.gif
 - issue: 631
   name: grid_test9.py
   source: /examples/grids_tutorial/field_evaluation/grid_test9.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204152027-cdfe7b41-d4e1-4680-a570-8fc5c0314234.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204152027-cdfe7b41-d4e1-4680-a570-8fc5c0314234.png
 - fixed: '2022-12-05'
   issue: 632
   name: grid_test10.py
   source: /examples/grids_tutorial/grid_api/grid_test10.py
-  demo_url: https://user-images.githubusercontent.com/95085996/204153488-ea139498-bd0e-42d0-b542-74badfe719db.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/204153488-ea139498-bd0e-42d0-b542-74badfe719db.gif
 - name: model_demo2.py
   source: /examples/tutorial/model_and_data/model_demo2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205445668-22b6897b-3629-429a-9dd4-99fcd48a377f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205445668-22b6897b-3629-429a-9dd4-99fcd48a377f.gif
 - name: model_demo3.py
   source: /examples/tutorial/model_and_data/model_demo3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205445668-22b6897b-3629-429a-9dd4-99fcd48a377f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205445668-22b6897b-3629-429a-9dd4-99fcd48a377f.gif
 - fixed: '2022-12-12'
   issue: 597
   name: bokeh_test.py
   source: /examples/tutorial/bokeh/bokeh_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205447023-29d864bf-5562-43e3-8d17-b9e7194c199d.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205447023-29d864bf-5562-43e3-8d17-b9e7194c199d.png
 - name: loading_page_staggered_demo.py
   source: /examples/tutorial/page_events/loading_page_staggered_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205448459-7fad17ae-4221-4d57-90b5-9e0406b9f3cd.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205448459-7fad17ae-4221-4d57-90b5-9e0406b9f3cd.gif
 - name: run_javascript_demo.py
   source: /examples/tutorial/page_events/run_javascript_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205448916-83215a78-bab5-43ff-a475-3623b983dccb.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205448916-83215a78-bab5-43ff-a475-3623b983dccb.png
 - name: html_comps1.py
   source: /examples/tutorial/html_components/html_comps1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449045-63a6adde-0de9-4b6e-9fc6-653f78e0c4ff.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449045-63a6adde-0de9-4b6e-9fc6-653f78e0c4ff.png
 - name: html_comps2.py
   source: /examples/tutorial/html_components/html_comps2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449059-d2bc462c-76c0-4fab-bf5c-23a467a9787f.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449059-d2bc462c-76c0-4fab-bf5c-23a467a9787f.png
 - name: html_comps3.py
   source: /examples/tutorial/html_components/html_comps3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449097-8511e616-b269-45cf-b5f1-87d48c1f0a75.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449097-8511e616-b269-45cf-b5f1-87d48c1f0a75.png
 - name: check_test.py
   source: /examples/tutorial/input/check_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449329-031dfb33-3103-4ac4-ac19-a38c8955b615.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449329-031dfb33-3103-4ac4-ac19-a38c8955b615.gif
 - name: hello_world1.py
   source: /examples/tutorial/basic_concepts/hello_world1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449394-839d76a7-c19e-4661-82e0-9243dc8c8b47.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449394-839d76a7-c19e-4661-82e0-9243dc8c8b47.png
 - name: hello_world2.py
   source: /examples/tutorial/basic_concepts/hello_world2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449472-a38928da-f63d-4bc0-8940-5ca9cee1507c.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449472-a38928da-f63d-4bc0-8940-5ca9cee1507c.png
 - name: hello_world4.py
   source: /examples/tutorial/basic_concepts/hello_world4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449536-8e106924-44c5-48a9-a5ea-efcfdb7661cb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449536-8e106924-44c5-48a9-a5ea-efcfdb7661cb.gif
 - name: target_test.py
   source: /examples/tutorial/handling_events/target_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205449995-c8baebcf-c2eb-4042-b455-527202ce4477.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205449995-c8baebcf-c2eb-4042-b455-527202ce4477.gif
 - name: event_demo3.py
   source: /examples/tutorial/handling_events/event_demo3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205450180-e1ebc20e-17fe-437d-aa3e-a1d27f16ad14.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205450180-e1ebc20e-17fe-437d-aa3e-a1d27f16ad14.gif
 - name: hello_world.py
   source: /examples/tutorial/getting_started/hello_world.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205450254-2a0c7776-0056-480a-9c6d-e28158ba911f.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205450254-2a0c7776-0056-480a-9c6d-e28158ba911f.gif
 - name: basic_example.py
   source: /examples/blog/ag-grid_to_web_page/basic_example.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205487738-ed404dea-c2dd-45a1-994e-e69db21bd974.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205487738-ed404dea-c2dd-45a1-994e-e69db21bd974.gif
 - name: several_grids_onapage.py
   source: /examples/blog/ag-grid_to_web_page/several_grids_onapage.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205488111-73ec96c3-6627-456e-ada5-cc45d4ff1cbf.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205488111-73ec96c3-6627-456e-ada5-cc45d4ff1cbf.gif
 - name: todo_app1.py
   source: /examples/blog/reactivity/todo_app1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205488427-b3633117-cd67-45f4-bf5f-46c0e6d78afe.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205488427-b3633117-cd67-45f4-bf5f-46c0e6d78afe.png
 - name: todo_app2.py
   source: /examples/blog/reactivity/todo_app2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif
 - name: todo_app3.py
   source: /examples/blog/reactivity/todo_app3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif
 - name: todo_app4.py
   source: /examples/blog/reactivity/todo_app4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205488915-68fd0d2d-c080-43ae-8414-665e60e076ae.gif
 - name: button_counter_demo_c.py
   source: /examples/blog/vue_comparison/button_counter_demo_c.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205489926-713f6948-d66a-4db0-9410-49b48eddc786.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205489926-713f6948-d66a-4db0-9410-49b48eddc786.gif
 - fixed: '2022-12-05'
   issue: 639
   name: product_app_c.py
   source: /examples/blog/vue_comparison/product_app_c.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205491224-da351d83-75fb-4b9e-8212-5012c5e7e9d2.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205491224-da351d83-75fb-4b9e-8212-5012c5e7e9d2.gif
 - name: todo_app.py
   source: /examples/blog/vue_comparison/todo_app.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205491346-c0a8998b-8bce-477f-8614-1f01fed0d82a.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205491346-c0a8998b-8bce-477f-8614-1f01fed0d82a.gif
 - name: for_example1.py
   source: /examples/blog/vue_comparison/for_example1.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205492671-37df86fa-fe89-4ab3-8142-299a0e4f15d2.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205492671-37df86fa-fe89-4ab3-8142-299a0e4f15d2.png
 - name: for_example2.py
   source: /examples/blog/vue_comparison/for_example2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205492765-2cae932f-f7d4-4cb0-98d5-8a8b580473ad.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205492765-2cae932f-f7d4-4cb0-98d5-8a8b580473ad.png
 - name: for_example3.py
   source: /examples/blog/vue_comparison/for_example3.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205492923-1bca7221-9525-4ae7-b575-27a2733b6c4d.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205492923-1bca7221-9525-4ae7-b575-27a2733b6c4d.png
 - name: for_example4.py
   source: /examples/blog/vue_comparison/for_example4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205493016-5f1135d2-ae9d-4ed8-a079-2699d8e9dcbd.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205493016-5f1135d2-ae9d-4ed8-a079-2699d8e9dcbd.png
 - name: alpine_test.py
   source: /examples/blog/vue_comparison/alpine_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/205493397-38ddfbe0-b0f9-41f6-baee-13ee22144ab2.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/205493397-38ddfbe0-b0f9-41f6-baee-13ee22144ab2.gif
 - name: entity_test.py
   source: /examples/reference/htmlcomponent/entity_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149011-ff2d21fd-468e-4fcd-96a7-f12d85d12a06.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149011-ff2d21fd-468e-4fcd-96a7-f12d85d12a06.png
 - name: classes_test.py
   source: /examples/reference/htmlcomponent/classes_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149139-685d4851-0635-4145-8d9d-1c6a506752ec.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149139-685d4851-0635-4145-8d9d-1c6a506752ec.gif
 - name: style_test.py
   source: /examples/reference/htmlcomponent/style_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149274-ef96e208-09fc-4df4-af72-1a35e1d48fe6.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149274-ef96e208-09fc-4df4-af72-1a35e1d48fe6.gif
 - name: shuffle_test.py
   source: /examples/reference/htmlcomponent/shuffle_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149372-a9383274-e1a0-46d8-a598-a59e1accbc47.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149372-a9383274-e1a0-46d8-a598-a59e1accbc47.gif
 - name: event_demo.py
   source: /examples/reference/htmlcomponent/event_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149743-05f86b10-6475-4891-8620-54db7289cefd.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149743-05f86b10-6475-4891-8620-54db7289cefd.gif
 - name: inner_html_test.py
   source: /examples/reference/htmlcomponent/inner_html_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149791-788b46fd-e16d-4700-95c7-beeac994eda7.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149791-788b46fd-e16d-4700-95c7-beeac994eda7.png
 - name: focus_test.py
   source: /examples/reference/htmlcomponent/focus_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210149991-da43d205-64ca-4821-adfb-98ce1c269060.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210149991-da43d205-64ca-4821-adfb-98ce1c269060.gif
 - name: children_test.py
   source: /examples/reference/htmlcomponent/children_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210150072-e06c5297-66f0-4a2f-86e0-2856846edca7.png
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210150072-e06c5297-66f0-4a2f-86e0-2856846edca7.png
 - name: animation_test.py
   source: /examples/reference/htmlcomponent/animation_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210150331-16f5375b-f75a-4e1b-adf8-1da39af6b390.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210150331-16f5375b-f75a-4e1b-adf8-1da39af6b390.gif
 - name: event_propagates.py
   source: /examples/reference/htmlcomponent/event_propagates.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210150461-4bc65763-de26-44a5-9732-8ead07355748.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210150461-4bc65763-de26-44a5-9732-8ead07355748.gif
 - name: rating_test2.py
   source: /examples/quasar_tutorial/QRating/rating_test2.py
-  demo_url: https://user-images.githubusercontent.com/95085996/201533381-25c06f1e-3ec7-4cbf-83f5-9d255c14e5eb.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/201533381-25c06f1e-3ec7-4cbf-83f5-9d255c14e5eb.gif
 - name: quasar_example4.py
   source: /examples/quasar_tutorial/QExpansionItem/quasar_example4.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199304908-453c0e01-8930-489d-b150-3c8c35cf097b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199304908-453c0e01-8930-489d-b150-3c8c35cf097b.gif
 - name: expansion_test.py
   source: /examples/quasar_tutorial/QExpansionItem/expansion_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/199308290-41b052db-22da-44c7-b966-a07ae4bbbe00.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/199308290-41b052db-22da-44c7-b966-a07ae4bbbe00.gif
 - name: qdrawer_page.py
   source: /examples/quasar_tutorial/quasar_components/qdrawer_page.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210150730-8e297fc4-5d30-4e82-bd67-1ec30000527a.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210150730-8e297fc4-5d30-4e82-bd67-1ec30000527a.gif
 - name: uber-nyc-pickups.py
   source: /examples/uber-nyc-pickups.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210151707-a653ee3e-dc74-44bb-b820-7cdaed9fba2c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210151707-a653ee3e-dc74-44bb-b820-7cdaed9fba2c.gif
 - name: multiuploads.py
   source: /examples/multiuploads.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210153231-f71e7b00-cd69-4a95-ba17-c9634de18cf0.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210153231-f71e7b00-cd69-4a95-ba17-c9634de18cf0.gif
 - name: issue_279_key_error.py
   source: /examples/issues/issue_279_key_error.py
-  demo_url: https://user-images.githubusercontent.com/95085996/210153777-5f38a692-eda6-46bd-9107-ef9e2d1e0c10.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/210153777-5f38a692-eda6-46bd-9107-ef9e2d1e0c10.gif
 - name: input_demo.py
   source: /examples/reference/webpage/input_demo.py
-  demo_url: https://user-images.githubusercontent.com/95085996/211191802-c2928ed1-8624-42b7-9455-cb22421ae1bd.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/211191802-c2928ed1-8624-42b7-9455-cb22421ae1bd.gif
 - name: test_head.py
   source: /examples/reference/webpage/test_head.py
-  demo_url: https://user-images.githubusercontent.com/95085996/211193299-fc38b04a-c998-43f4-8128-6bad6d21bb0e.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/211193299-fc38b04a-c998-43f4-8128-6bad6d21bb0e.gif
 - name: close_test.py
   source: /examples/reference/webpage/close_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/211193526-f19e5d9d-5971-4ca0-a32e-22ece162873b.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/211193526-f19e5d9d-5971-4ca0-a32e-22ece162873b.gif
 - name: javascript_test.py
   source: /examples/reference/webpage/javascript_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/211194247-527ad951-230a-42a4-a321-a1b416b134ff.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/211194247-527ad951-230a-42a4-a321-a1b416b134ff.gif
 - name: browser_location_test.py
   source: /examples/reference/webpage/browser_location_test.py
-  demo_url: https://user-images.githubusercontent.com/95085996/211194363-f1a98256-c960-4933-868a-398f9ed8c46c.gif
+  demo_image_url: https://user-images.githubusercontent.com/95085996/211194363-f1a98256-c960-4933-868a-398f9ed8c46c.gif
