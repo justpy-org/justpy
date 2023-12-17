@@ -7,6 +7,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "justpy"
+description = "JustPy is an object-oriented, component based, high-level Python Web Framework that requires no front-end programming. "
+keywords = ["nicegui", "gui", "webframework", "websockets"]
 authors = [
   {name = "Eli Mintz", email = "eli.mintz@gmail.com"}
 ]
@@ -49,7 +51,7 @@ classifiers=[
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License"
     ]
-dynamic = ["version", "description"]
+dynamic = ["version"]
 [tool.hatch.version]
 path = "justpy/__init__.py"
 
